@@ -1,25 +1,23 @@
-# Copy the template ----
-
-cpp11armadillo::pkg_template() # comment out this line after running it once
-
-# Load the package for development ----
+cpp11armadillo::pkg_template()
 
 devtools::clean_dll()
 cpp11::cpp_register()
 devtools::document()
 
 devtools::load_all()
+# devtools::install()
 
-# Test your code ----
+# Estimate the model mpg ~ wt + cyl{4,6,8} ----
+
+x <- cpp11armadillo::mtcars_mat$x
+y <- cpp11armadillo::mtcars_mat$y
+
+x <- x[, c("wt", "cyl4", "cyl6", "cyl8")]
 
 # Armadillo computation
-ols_(gapminder_am07$y, gapminder_am07$x)
+ols_mat(y, x)
+ols_double(y, x)
 
 # Base R computation
-X <- gapminder_am07$x
-y <- gapminder_am07$y
-solve(t(X) %*% X) %*% t(X) %*% y
-
-# Install the package ----
-
-# devtools::install()
+solve(t(x) %*% x) %*% t(x) %*% y
+lm(mpg ~ wt + as.factor(cyl) + 0, data = mtcars)

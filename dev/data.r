@@ -1,22 +1,37 @@
-library(gapminder)
-library(dplyr)
+x <- as.matrix(mtcars[, -1])
 
-gapminder <- gapminder %>%
-  filter(year == 2007, continent == "Americas")
+# cyl gear and carb are categorical variables
+str(mtcars)
+unique(mtcars$cyl)
+unique(mtcars$gear)
+unique(mtcars$carb)
 
-x <- matrix(NA, nrow = nrow(gapminder), ncol = 2)
+# add new column to x
+x <- cbind(x, cyl4 = as.numeric(mtcars$cyl == 4))
+x <- cbind(x, cyl6 = as.numeric(mtcars$cyl == 6))
+x <- cbind(x, cyl8 = as.numeric(mtcars$cyl == 8))
+x <- x[, !(colnames(x) == "cyl")]
 
-x[, 1] <- 1L
-x[, 2] <- gapminder$gdpPercap
+x <- cbind(x, gear3 = as.numeric(mtcars$gear == 3))
+x <- cbind(x, gear4 = as.numeric(mtcars$gear == 4))
+x <- cbind(x, gear5 = as.numeric(mtcars$gear == 5))
+x <- x[, !(colnames(x) == "gear")]
 
-rownames(x) <- gapminder$country
-colnames(x) <- c("Intercept", "GDP_per_capita")
+x <- cbind(x, carb1 = as.numeric(mtcars$carb == 1))
+x <- cbind(x, carb2 = as.numeric(mtcars$carb == 2))
+x <- cbind(x, carb3 = as.numeric(mtcars$carb == 3))
+x <- cbind(x, carb4 = as.numeric(mtcars$carb == 4))
+x <- cbind(x, carb6 = as.numeric(mtcars$carb == 6))
+x <- cbind(x, carb8 = as.numeric(mtcars$carb == 8))
+x <- x[, !(colnames(x) == "carb")]
 
-y <- matrix(gapminder$lifeExp, ncol = 1)
-rownames(y) <- gapminder$country
-colnames(y) <- "Life_expectancy"
+y <- matrix(mtcars[, 1])
+colnames(y) <- "mpg"
+rownames(y) <- rownames(mtcars)
 
-gapminder_am07 <- list(y = y, x = x)
+dim(x)
+dim(y)
 
-try(dir.create("inst/extdata/data"))
-save(gapminder_am07, file = "inst/extdata/data/gapminder_am07.RData")
+mtcars_mat <- list(x = x, y = y)
+
+use_data(mtcars_mat, overwrite = TRUE)

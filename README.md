@@ -61,16 +61,16 @@ using namespace arma;
 using namespace cpp11;
 using namespace std;
 
-[[cpp11::register]] doubles_matrix<> ols_(const doubles_matrix<>& y,
-                                          const doubles_matrix<>& x) {
-  Mat<double> Y = doubles_matrix_to_Mat_(y);
-  Mat<double> X = doubles_matrix_to_Mat_(x);
+[[cpp11::register]] doubles_matrix<> ols_mat(const doubles_matrix<>& y,
+                                             const doubles_matrix<>& x) {
+  Mat<double> Y = as_Mat(y);
+  Mat<double> X = as_Mat(x);
 
   Mat<double> XtX = X.t() * X;
   Mat<double> XtX_inv = inv(XtX);
   Mat<double> beta = XtX_inv * X.t() * Y;
 
-  return Mat_to_doubles_matrix_(beta);
+  return as_doubles_matrix(beta);
 }
 ```
 
@@ -82,21 +82,22 @@ This code:
 2.  Loads the corresponding namespaces (i.e., the `using namespace XYZ`
     lines) in order to simplify the notation (i.e., using `Mat` instead
     of `arma::Mat`).
-3.  Declares a function `ols_()` that takes inputs from R, does the
+3.  Declares a function `ols_mat()` that takes inputs from R, does the
     computation on C++ side, and it can be called from R scripts. The
     use of `const` and `&` are specific to the C++ language and allow to
     pass data from R to C++ while avoiding copying the data, therefore
     saving time and memory.
-4.  `doubles_matrix_to_Mat_()` is “diplomat” function that puts R and C+
-    data types in conversation and facilitates communications between
-    those two. This function is provided by `cpp11armadillo`.
+4.  `as_Mat()` is a C++ template (i.e., a “diplomat” function) that puts
+    R and C++ data types in conversation and facilitates communications
+    between those two. The templates for doubles/integers matrices are
+    provided by `cpp11armadillo`.
 5.  `XtX = X.t() * X` calculates the product of the transpose of `X` and
     `X`.
 6.  `inv(XtX)` calculates the inverse of `XtX`.
 7.  `XtX_inv * X.t() * Y` calculates the OLS estimator.
-8.  `Mat_to_doubles_matrix_()` is another “diplomat” function that takes
-    `beta`, expressed as a C++ data structure, and converts it to a data
-    structure that R understands.
+8.  `as_doubles_matrix()` is another template that takes `beta`,
+    expressed as a C++ data structure, and converts it to a data
+    structure that `cpp11` and R understand.
 
 Certainly, the goal is to use linear algebra. This is a very simple
 example and you are better-off using the `lm()` function from R for this

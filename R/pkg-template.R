@@ -46,8 +46,8 @@ pkg_template <- function(pkgname = NULL, path = NULL) {
 
   lines <- c(
     paste0("#' @useDynLib ", pkgname, ", .registration = TRUE"),
-    "@keywords internal",
-    "_PACKAGE"
+    "#' @keywords internal",
+    "\"_PACKAGE\""
   )
 
   writeLines(lines, con = paste0("R/", pkgname, "-package.R"))
@@ -73,7 +73,6 @@ pkg_template <- function(pkgname = NULL, path = NULL) {
     "License: MIT + file LICENSE",
     "BugReports: https://github.com/USERNAME/PKGNAME/issues",
     "URL: https://WEBSITE.COM",
-    "LazyData: true",
     "RoxygenNote: 7.3.0",
     "Encoding: UTF-8",
     "NeedsCompilation: yes",
