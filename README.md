@@ -1,15 +1,20 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# cpp11armadillo
+# cpp11armadillo <img src="man/figures/logo.svg" align="right" height="139" alt="" />
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of cpp11armadillo is to provide a novel approach to use the
-Armadillo C++ library by using the header-only cpp11 R package and to
-simplify things for the end-user.
+[Armadillo C++ library](https://arma.sourceforge.net/docs.html) by using
+the header-only cpp11 R package and to simplify things for the end-user.
+
+The idea is that you pass your matrices/vectors to C++ and then write
+pure C++/Armadillo code for your computation, and then it returns to R
+with the proper data structures.
 
 Ideally, you’ll be only focused on writing linear algebra, as the
 package already solved the BLAS/LAPACK setup on your behalf.
@@ -44,13 +49,12 @@ The idea of this package is to be naive and simple (like me).
 From RStudio/VSCode create a new project and run:
 
 ``` r
-cpp11::pkg_template()
+cpp11armadillo::pkg_template()
 ```
 
 Then follow the instructions from the README.
 
-On the C++ side, you have to be very explicit, here is an example from
-the package template:
+Here is a commented example from the package template:
 
 ``` cpp
 #include <armadillo.hpp>
