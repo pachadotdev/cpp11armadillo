@@ -7,17 +7,35 @@ using namespace std;
 
 // R to Armadillo
 
-Mat<double> doubles_matrix_to_Mat_(const doubles_matrix<>& A) {
-  int n = A.nrow();
-  int m = A.ncol();
-  Mat<double> B(REAL(A.data()), n, m, false, false);
-  return B;
-}
-
 Col<double> doubles_to_Vec_(const doubles& x) {
   int n = x.size();
   Col<double> y(REAL(x.data()), n, false);
   return y;
+}
+
+template <typename T>
+Mat<T> as_Mat(const T& x) {
+  // Generic implementation
+  throw runtime_error("Cannot convert to Mat");
+}
+
+template <typename T, typename U>
+Mat<T> as_Mat_(const U& x) {
+  int n = x.nrow();
+  int m = x.ncol();
+  Mat<T> B((is_same<U, doubles_matrix<>>::value
+                ? reinterpret_cast<T*>(REAL(x.data()))
+                : reinterpret_cast<T*>(INTEGER(x.data()))),
+           n, m, false, false);
+  return B;
+}
+
+Mat<double> as_Mat(const doubles_matrix<>& x) {
+  return as_Mat_<double, doubles_matrix<>>(x);
+}
+
+Mat<int> as_Mat(const integers_matrix<>& x) {
+  return as_Mat_<int, integers_matrix<>>(x);
 }
 
 // Armadillo to R

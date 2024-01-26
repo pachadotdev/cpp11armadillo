@@ -8,8 +8,8 @@ using namespace std;
 
 [[cpp11::register]] doubles_matrix<> ols_(const doubles_matrix<>& y,
                                           const doubles_matrix<>& x) {
-  Mat<double> Y = doubles_matrix_to_Mat_(y);
-  Mat<double> X = doubles_matrix_to_Mat_(x);
+  Mat<double> Y = as_Mat(y);
+  Mat<double> X = as_Mat(x);
 
   Mat<double> XtX = X.t() * X;
   Mat<double> XtX_inv = inv(XtX);
