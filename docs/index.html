@@ -74,10 +74,8 @@
 </h1></div>
 <!-- badges: start -->
 <p>The goal of cpp11armadillo is to provide a novel approach to use the <a href="https://arma.sourceforge.net/docs.html" class="external-link">Armadillo C++ library</a> by using the header-only cpp11 R package and to simplify things for the end-user.</p>
-<p>The idea is that you pass your matrices/vectors to C++ and then write pure C++/Armadillo code for your computation, and then it returns to R with the proper data structures.</p>
-<p>Ideally, you’ll be only focused on writing linear algebra, as the package already solved the BLAS/LAPACK setup on your behalf.</p>
+<p>The idea is to pass matrices/vectors from R to C++, write pure C++/Armadillo code for the computation, and then export the result back to R with the proper data structures.</p>
 <p>This follows from the same goals as cpp11:</p>
-<p>Changes that motivated cpp11 include:</p>
 <ul>
 <li>Enforcing copy-on-write semantics.</li>
 <li>Improving the safety of using the R API from C++ code.</li>
