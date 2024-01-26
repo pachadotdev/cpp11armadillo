@@ -45,10 +45,9 @@ pkg_template <- function(pkgname = NULL, path = NULL) {
   writeLines(lines, con = ".Rbuildignore")
 
   lines <- c(
-    paste0("#' @name ", pkgname, "-package"),
-    "#' @docType package",
     paste0("#' @useDynLib ", pkgname, ", .registration = TRUE"),
-    "NULL"
+    "@keywords internal",
+    "_PACKAGE"
   )
 
   writeLines(lines, con = paste0("R/", pkgname, "-package.R"))
