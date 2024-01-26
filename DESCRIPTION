@@ -1,7 +1,7 @@
 Package: cpp11armadillo
 Type: Package
 Title: R and Armadillo integration using the header-only cpp11 R package
-Version: 0.0.1
+Version: 0.1
 Authors@R: c(
     person(
         given = "Mauricio",

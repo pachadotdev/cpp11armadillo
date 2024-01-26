@@ -8,3 +8,4 @@
 ^dev$
 ^LICENSE\.md$
 ^README\.Rmd$
+^README\.html$
