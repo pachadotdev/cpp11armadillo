@@ -1,11 +1,18 @@
-cpp11armadillo::pkg_template()
+# run this line if you want to replace all the files provided by the template
+# cpp11armadillo::pkg_template()
+
+development <- TRUE
 
 devtools::clean_dll()
 cpp11::cpp_register()
 devtools::document()
 
-devtools::load_all()
-# devtools::install()
+if (isTRUE(development)) {
+  devtools::load_all()
+} else {
+  devtools::install()
+  devtools::load_all()
+}
 
 # Estimate the model mpg ~ wt + cyl{4,6,8} ----
 
