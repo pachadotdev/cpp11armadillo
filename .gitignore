@@ -6,3 +6,4 @@
 .vscode
 inst/doc
 README.html
+cpp11armadillotest/src/*.o

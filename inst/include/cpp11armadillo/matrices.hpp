@@ -40,6 +40,8 @@ inline Mat<int> as_Mat(const integers_matrix<>& x) {
 // Armadillo to R
 ////////////////////////////////////////////////////////////////
 
+// Double/Integer
+
 template <typename T, typename U>
 inline U Mat_to_dblint_matrix_(const Mat<T>& A) {
   int n = A.n_rows;
@@ -67,5 +69,29 @@ inline doubles_matrix<> as_doubles_matrix(const Mat<double>& A) {
 inline integers_matrix<> as_integers_matrix(const Mat<int>& A) {
   return Mat_to_dblint_matrix_<int, integers_matrix<>>(A);
 }
+
+// Complex
+
+// template <typename T>
+// inline list Mat_to_complex_matrix_(const Mat<T>& A) {
+//   static_assert(is_same<T, complex<double>>::value,
+//                 "T must be complex<double>");
+//   Mat<double> A_real = real(A);
+//   // Mat<double> A_imag = imag(A);
+
+//   writable::doubles_matrix<> A_real_2 = as_doubles_matrix(A_real);
+
+//   // return A_real;
+
+//   writable::list B;
+//   B.push_back({"aaa"_nm = A_real_2});
+//   // B.push_back({"imag"_nm = B_imag});
+
+//   return B;
+// }
+
+// inline list as_complex_matrix(const Mat<complex<double>>& A) {
+//   return Mat_to_complex_matrix_<complex<double>>(A);
+// }
 
 #endif

@@ -1,0 +1,31 @@
+Package: cpp11armadillotest
+Type: Package
+Title: Testing cpp11armadillo
+Version: 0.1
+Authors@R: c(
+    person(
+        given = "YOUR",
+        family = "NAME",
+        role = c("aut", "cre"),
+        email = "YOUR@EMAIL.COM",
+        comment = c(ORCID = "0000-0001-0002-0003"))
+    )
+Imports: 
+    cpp11,
+    cpp11armadillo
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Depends: R(>= 3.5.0)
+Description: Testing cpp11armadillo. I run this within a tiny package to test
+    the compiled code.
+License: MIT + file LICENSE
+BugReports: https://github.com/pachadotdev/cpp11armadillo/issues
+URL: https://github.com/pachadotdev/cpp11armadillo
+RoxygenNote: 7.3.0
+Encoding: UTF-8
+NeedsCompilation: yes
+VignetteBuilder: knitr
+LinkingTo: cpp11, cpp11armadillo
+Config/testthat/edition: 3
