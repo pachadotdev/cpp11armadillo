@@ -4,18 +4,21 @@ using namespace arma;
 using namespace cpp11;
 using namespace std;
 
+#ifndef MATRICES_HPP
+#define MATRICES_HPP
+
 ////////////////////////////////////////////////////////////////
 // R to Armadillo
 ////////////////////////////////////////////////////////////////
 
 template <typename T>
-Mat<T> as_Mat(const T& x) {
+inline Mat<T> as_Mat(const T& x) {
   // Generic implementation
   throw runtime_error("Cannot convert to Mat");
 }
 
 template <typename T, typename U>
-Mat<T> as_Mat_(const U& x) {
+inline Mat<T> as_Mat_(const U& x) {
   int n = x.nrow();
   int m = x.ncol();
   Mat<T> B((is_same<U, doubles_matrix<>>::value
@@ -25,11 +28,11 @@ Mat<T> as_Mat_(const U& x) {
   return B;
 }
 
-Mat<double> as_Mat(const doubles_matrix<>& x) {
+inline Mat<double> as_Mat(const doubles_matrix<>& x) {
   return as_Mat_<double, doubles_matrix<>>(x);
 }
 
-Mat<int> as_Mat(const integers_matrix<>& x) {
+inline Mat<int> as_Mat(const integers_matrix<>& x) {
   return as_Mat_<int, integers_matrix<>>(x);
 }
 
@@ -38,7 +41,7 @@ Mat<int> as_Mat(const integers_matrix<>& x) {
 ////////////////////////////////////////////////////////////////
 
 template <typename T, typename U>
-U Mat_to_dblint_matrix_(const Mat<T>& A) {
+inline U Mat_to_dblint_matrix_(const Mat<T>& A) {
   int n = A.n_rows;
   int m = A.n_cols;
 
@@ -57,10 +60,12 @@ U Mat_to_dblint_matrix_(const Mat<T>& A) {
   return B;
 }
 
-doubles_matrix<> as_doubles_matrix(const Mat<double>& A) {
+inline doubles_matrix<> as_doubles_matrix(const Mat<double>& A) {
   return Mat_to_dblint_matrix_<double, doubles_matrix<>>(A);
 }
 
-integers_matrix<> as_integers_matrix(const Mat<int>& A) {
+inline integers_matrix<> as_integers_matrix(const Mat<int>& A) {
   return Mat_to_dblint_matrix_<int, integers_matrix<>>(A);
 }
+
+#endif

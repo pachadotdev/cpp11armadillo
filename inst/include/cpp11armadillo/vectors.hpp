@@ -10,14 +10,17 @@ using namespace std;
 // R to Armadillo
 ////////////////////////////////////////////////////////////////
 
+#ifndef VECTORS_HPP
+#define VECTORS_HPP
+
 template <typename T>
-Col<T> as_Vec(const T& x) {
+inline Col<T> as_Vec(const T& x) {
   // Generic implementation
   throw runtime_error("Cannot convert to Vec");
 }
 
 template <typename T, typename U>
-Col<T> dblint_to_Vec_(const U& x) {
+inline Col<T> dblint_to_Vec_(const U& x) {
   int n = x.size();
   Col<T> y(
       (is_same<U, doubles>::value ? reinterpret_cast<T*>(REAL(x.data()))
@@ -26,11 +29,11 @@ Col<T> dblint_to_Vec_(const U& x) {
   return y;
 }
 
-Col<double> dblint_to_Vec(const doubles& x) {
+inline Col<double> dblint_to_Vec(const doubles& x) {
   return dblint_to_Vec_<double, doubles>(x);
 }
 
-Col<int> dblint_to_Vec(const integers& x) {
+inline Col<int> dblint_to_Vec(const integers& x) {
   return dblint_to_Vec_<int, integers>(x);
 }
 
@@ -39,7 +42,7 @@ Col<int> dblint_to_Vec(const integers& x) {
 ////////////////////////////////////////////////////////////////
 
 template <typename T, typename U>
-U Vec_to_dblint_(const Col<T>& x) {
+inline U Vec_to_dblint_(const Col<T>& x) {
   int n = x.n_rows;
 
   typename conditional<is_same<U, doubles>::value, writable::doubles,
@@ -54,16 +57,16 @@ U Vec_to_dblint_(const Col<T>& x) {
   return y;
 }
 
-doubles as_doubles(const Col<double>& x) {
+inline doubles as_doubles(const Col<double>& x) {
   return Vec_to_dblint_<double, doubles>(x);
 }
 
-integers as_integers(const Col<int>& x) {
+inline integers as_integers(const Col<int>& x) {
   return Vec_to_dblint_<int, integers>(x);
 }
 
 template <typename T, typename U>
-U Vec_to_dblint_matrix_(const Col<T>& x) {
+inline U Vec_to_dblint_matrix_(const Col<T>& x) {
   int n = x.n_rows;
   int m = 1;
 
@@ -80,10 +83,12 @@ U Vec_to_dblint_matrix_(const Col<T>& x) {
   return Y;
 }
 
-doubles_matrix<> as_doubles_matrix(const Col<double>& x) {
+inline doubles_matrix<> as_doubles_matrix(const Col<double>& x) {
   return Vec_to_dblint_matrix_<double, doubles_matrix<>>(x);
 }
 
-integers_matrix<> as_integers_matrix(const Col<int>& x) {
+inline integers_matrix<> as_integers_matrix(const Col<int>& x) {
   return Vec_to_dblint_matrix_<int, integers_matrix<>>(x);
 }
+
+#endif
