@@ -31,17 +31,37 @@ list eigen_gen_mat(const doubles_matrix<>& x) {
   return out;
 }
 
+list eigen_gen_mat_complex_wrapper(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+
+  Mat<complex<double>> y = eig_gen(X);
+
+  list out = as_complex_matrix(y);
+
+  return out;
+}
+
 list eigen_gen_dbl(const doubles_matrix<>& x) {
   Mat<double> X = as_Mat(x);
 
   Mat<complex<double>> y = eig_gen(X);
 
-  Mat<double> y_real = real(y);
-  Mat<double> y_imag = imag(y);
+  Col<double> y_real = real(y);
+  Col<double> y_imag = imag(y);
 
   writable::list out;
   out.push_back({"real"_nm = as_doubles(y_real)});
   out.push_back({"imag"_nm = as_doubles(y_imag)});
+
+  return out;
+}
+
+list eigen_gen_dbl_complex_wrapper(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+
+  Col<complex<double>> y = eig_gen(X);
+
+  list out = as_complex_doubles(y);
 
   return out;
 }

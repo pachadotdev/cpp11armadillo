@@ -14,13 +14,13 @@ using namespace std;
 #define VECTORS_HPP
 
 template <typename T>
-inline Col<T> as_Vec(const T& x) {
+inline Col<T> as_Col(const T& x) {
   // Generic implementation
-  throw runtime_error("Cannot convert to Vec");
+  throw runtime_error("Cannot convert to Col");
 }
 
 template <typename T, typename U>
-inline Col<T> dblint_to_Vec_(const U& x) {
+inline Col<T> dblint_to_Col_(const U& x) {
   int n = x.size();
   Col<T> y(
       (is_same<U, doubles>::value ? reinterpret_cast<T*>(REAL(x.data()))
@@ -29,20 +29,22 @@ inline Col<T> dblint_to_Vec_(const U& x) {
   return y;
 }
 
-inline Col<double> dblint_to_Vec(const doubles& x) {
-  return dblint_to_Vec_<double, doubles>(x);
+inline Col<double> dblint_to_Col(const doubles& x) {
+  return dblint_to_Col_<double, doubles>(x);
 }
 
-inline Col<int> dblint_to_Vec(const integers& x) {
-  return dblint_to_Vec_<int, integers>(x);
+inline Col<int> dblint_to_Col(const integers& x) {
+  return dblint_to_Col_<int, integers>(x);
 }
 
 ////////////////////////////////////////////////////////////////
 // Armadillo to R
 ////////////////////////////////////////////////////////////////
 
+// Double/Integer
+
 template <typename T, typename U>
-inline U Vec_to_dblint_(const Col<T>& x) {
+inline U Col_to_dblint_(const Col<T>& x) {
   int n = x.n_rows;
 
   typename conditional<is_same<U, doubles>::value, writable::doubles,
@@ -58,15 +60,15 @@ inline U Vec_to_dblint_(const Col<T>& x) {
 }
 
 inline doubles as_doubles(const Col<double>& x) {
-  return Vec_to_dblint_<double, doubles>(x);
+  return Col_to_dblint_<double, doubles>(x);
 }
 
 inline integers as_integers(const Col<int>& x) {
-  return Vec_to_dblint_<int, integers>(x);
+  return Col_to_dblint_<int, integers>(x);
 }
 
 template <typename T, typename U>
-inline U Vec_to_dblint_matrix_(const Col<T>& x) {
+inline U Col_to_dblint_matrix_(const Col<T>& x) {
   int n = x.n_rows;
   int m = 1;
 
@@ -84,11 +86,31 @@ inline U Vec_to_dblint_matrix_(const Col<T>& x) {
 }
 
 inline doubles_matrix<> as_doubles_matrix(const Col<double>& x) {
-  return Vec_to_dblint_matrix_<double, doubles_matrix<>>(x);
+  return Col_to_dblint_matrix_<double, doubles_matrix<>>(x);
 }
 
 inline integers_matrix<> as_integers_matrix(const Col<int>& x) {
-  return Vec_to_dblint_matrix_<int, integers_matrix<>>(x);
+  return Col_to_dblint_matrix_<int, integers_matrix<>>(x);
+}
+
+// Complex
+
+template <typename T>
+inline list Col_to_complex_dbl_(const Col<T>& x) {
+  static_assert(is_same<T, complex<double>>::value,
+                "T must be complex<double>");
+  Col<double> x_real = real(x);
+  Col<double> x_imag = imag(x);
+
+  writable::list y;
+  y.push_back({"real"_nm = as_doubles(x_real)});
+  y.push_back({"imag"_nm = as_doubles(x_imag)});
+
+  return y;
+}
+
+inline list as_complex_doubles(const Col<complex<double>>& x) {
+  return Col_to_complex_dbl_<complex<double>>(x);
 }
 
 #endif

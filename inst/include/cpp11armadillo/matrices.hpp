@@ -72,26 +72,22 @@ inline integers_matrix<> as_integers_matrix(const Mat<int>& A) {
 
 // Complex
 
-// template <typename T>
-// inline list Mat_to_complex_matrix_(const Mat<T>& A) {
-//   static_assert(is_same<T, complex<double>>::value,
-//                 "T must be complex<double>");
-//   Mat<double> A_real = real(A);
-//   // Mat<double> A_imag = imag(A);
+template <typename T>
+inline list Mat_to_complex_matrix_(const Mat<T>& A) {
+  static_assert(is_same<T, complex<double>>::value,
+                "T must be complex<double>");
+  Mat<double> A_real = real(A);
+  Mat<double> A_imag = imag(A);
 
-//   writable::doubles_matrix<> A_real_2 = as_doubles_matrix(A_real);
+  writable::list B;
+  B.push_back({"real"_nm = as_doubles_matrix(A_real)});
+  B.push_back({"imag"_nm = as_doubles_matrix(A_imag)});
 
-//   // return A_real;
+  return B;
+}
 
-//   writable::list B;
-//   B.push_back({"aaa"_nm = A_real_2});
-//   // B.push_back({"imag"_nm = B_imag});
-
-//   return B;
-// }
-
-// inline list as_complex_matrix(const Mat<complex<double>>& A) {
-//   return Mat_to_complex_matrix_<complex<double>>(A);
-// }
+inline list as_complex_matrix(const Mat<complex<double>>& A) {
+  return Mat_to_complex_matrix_<complex<double>>(A);
+}
 
 #endif

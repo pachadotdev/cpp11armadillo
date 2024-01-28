@@ -126,7 +126,7 @@ C++ parts (i.e., using complex numbers) and then passing the data back
 to R using creative ways (i.e., lists).
 
 Here is an example from those scripts, which creates a list of matrices
-and a list of vectors:
+without and with the use of a wrapper:
 
 ``` cpp
 list eigen_gen_mat(const doubles_matrix<>& x) {
@@ -144,17 +144,12 @@ list eigen_gen_mat(const doubles_matrix<>& x) {
   return out;
 }
 
-list eigen_gen_dbl(const doubles_matrix<>& x) {
+list eigen_gen_mat_complex_wrapper(const doubles_matrix<>& x) {
   Mat<double> X = as_Mat(x);
 
   Mat<complex<double>> y = eig_gen(X);
 
-  Mat<double> y_real = real(y);
-  Mat<double> y_imag = imag(y);
-
-  writable::list out;
-  out.push_back({"real"_nm = as_doubles(y_real)});
-  out.push_back({"imag"_nm = as_doubles(y_imag)});
+  list out = as_complex_matrix(y);
 
   return out;
 }
