@@ -151,6 +151,36 @@
 <h2 id="more-than-minimal-example">More than minimal example<a class="anchor" aria-label="anchor" href="#more-than-minimal-example"></a>
 </h2>
 <p>The <code>cpp11armadillotest</code> constains more examples that I use to test <code>cpp11armadillo</code>, it is an R package that contains different scripts using matrices and lists, and the idea is to be more expressive on the C++ parts (i.e., using complex numbers) and then passing the data back to R using creative ways (i.e., lists).</p>
+<p>Here is an example from those scripts, which creates a list of matrices and a list of vectors:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>list eigen_gen_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>  Mat&lt;complex&lt;<span class="dt">double</span>&gt;&gt; y = eig_gen(X);</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y_real = real(y);</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y_imag = imag(y);</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>  writable::list out;</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>  out.push_back({<span class="st">"real"_nm</span> = as_doubles_matrix(y_real)});</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>  out.push_back({<span class="st">"imag"_nm</span> = as_doubles_matrix(y_imag)});</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>}</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>list eigen_gen_dbl(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a>  Mat&lt;complex&lt;<span class="dt">double</span>&gt;&gt; y = eig_gen(X);</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y_real = real(y);</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y_imag = imag(y);</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true"></a>  writable::list out;</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true"></a>  out.push_back({<span class="st">"real"_nm</span> = as_doubles(y_real)});</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true"></a>  out.push_back({<span class="st">"imag"_nm</span> = as_doubles(y_imag)});</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="next-steps">Next steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
