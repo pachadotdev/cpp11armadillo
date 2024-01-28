@@ -159,3 +159,9 @@ list eigen_gen_mat_complex_wrapper(const doubles_matrix<>& x) {
 
 Provide support for sparse matrices. At the moment, `cpp11armadillo`
 only works with dense matrices.
+
+## Donating
+
+If this software is useful to you, please consider donating on [Buy Me A
+Coffee](https://buymeacoffee.com/pacha). All donations will be used to
+continue improving `cpp11armadillo`.

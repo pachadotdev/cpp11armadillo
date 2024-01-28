@@ -25,9 +25,9 @@
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:zoom="0.8591644"
-     inkscape:cx="325.31609"
-     inkscape:cy="88.458041"
+     inkscape:zoom="3.4366576"
+     inkscape:cx="163.96746"
+     inkscape:cy="94.85961"
      inkscape:window-width="1920"
      inkscape:window-height="1043"
      inkscape:window-x="1920"
@@ -152,6 +152,34 @@
          id="path100-4"
          inkscape:connector-curvature="0" />
     </clipPath>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 635.96801 : 1"
+       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_z="1500 : 635.96801 : 1"
+       inkscape:persp3d-origin="750 : 341.92255 : 1"
+       id="perspective4362-53" />
+    <clipPath
+       id="clp12-5">
+      <path
+         d="m 45.315,71.927 h 12.92 v 15.867 h -12.92 z"
+         id="path184-6"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <clipPath
+       id="clp21-29">
+      <path
+         d="m 123.91,72.178 h 26.23 v 15.294 h -26.23 z"
+         id="path592-1"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <clipPath
+       id="clp9-2">
+      <path
+         d="m 413.96,49.857 h 31.76 v 8.719 h -31.76 z"
+         id="path100-70"
+         inkscape:connector-curvature="0" />
+    </clipPath>
   </defs>
   <g
      inkscape:label="Layer 1"
@@ -209,7 +237,7 @@
          id="g193548">
         <path
            sodipodi:type="star"
-           style="fill:#fff6e7;fill-opacity:1;stroke:#4a280d;stroke-width:73.9932;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           style="fill:#fdf0e3;fill-opacity:1;stroke:#4a280d;stroke-width:73.9932;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            id="path4560"
            sodipodi:sides="6"
            sodipodi:cx="-5551.2134"
@@ -512,6 +540,25 @@
   <style
      type="text/css"
      id="style10296-9">
+	.st0{fill:#75AADB;}
+	.st1{fill:#4D4D4D;}
+	.st2{fill:#FFFFFF;}
+	.st3{fill:url(#SVGID_1_);}
+	.st4{fill:url(#SVGID_2_);}
+	.st5{fill:url(#SVGID_3_);}
+	.st6{fill:url(#SVGID_4_);}
+	.st7{fill:url(#SVGID_5_);}
+	.st8{fill:url(#SVGID_6_);}
+	.st9{fill:url(#SVGID_7_);}
+	.st10{fill:url(#SVGID_8_);}
+	.st11{fill:url(#SVGID_9_);}
+	.st12{fill:url(#SVGID_10_);}
+	.st13{opacity:0.18;fill:url(#SVGID_11_);}
+	.st14{opacity:0.3;}
+</style>
+  <style
+     type="text/css"
+     id="style10296-2">
 	.st0{fill:#75AADB;}
 	.st1{fill:#4D4D4D;}
 	.st2{fill:#FFFFFF;}
