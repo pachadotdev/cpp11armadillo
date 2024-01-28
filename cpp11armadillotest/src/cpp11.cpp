@@ -20,10 +20,17 @@ extern "C" SEXP _cpp11armadillotest_eigen_sym_dbl(SEXP x) {
   END_CPP11
 }
 // 00_main.cpp
-doubles_matrix<> eigen_gen_mat(const doubles_matrix<>& x);
+list eigen_gen_mat(const doubles_matrix<>& x);
 extern "C" SEXP _cpp11armadillotest_eigen_gen_mat(SEXP x) {
   BEGIN_CPP11
     return cpp11::as_sexp(eigen_gen_mat(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+  END_CPP11
+}
+// 00_main.cpp
+list eigen_gen_dbl(const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_eigen_gen_dbl(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(eigen_gen_dbl(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
 // 00_main.cpp
@@ -43,6 +50,7 @@ extern "C" SEXP _cpp11armadillotest_ols_dbl(SEXP y, SEXP x) {
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
+    {"_cpp11armadillotest_eigen_gen_dbl", (DL_FUNC) &_cpp11armadillotest_eigen_gen_dbl, 1},
     {"_cpp11armadillotest_eigen_gen_mat", (DL_FUNC) &_cpp11armadillotest_eigen_gen_mat, 1},
     {"_cpp11armadillotest_eigen_sym_dbl", (DL_FUNC) &_cpp11armadillotest_eigen_sym_dbl, 1},
     {"_cpp11armadillotest_eigen_sym_mat", (DL_FUNC) &_cpp11armadillotest_eigen_sym_mat, 1},

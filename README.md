@@ -116,3 +116,51 @@ C++ can address:
 5.  Through the Standard Template Library (STL), C++ has efficient
     implementations of many important data structures, from ordered maps
     to double-ended queues.
+
+## More than minimal example
+
+The `cpp11armadillotest` constains more examples that I use to test
+`cpp11armadillo`, it is an R package that contains different scripts
+using matrices and lists, and the idea is to be more expressive on the
+C++ parts (i.e., using complex numbers) and then passing the data back
+to R using creative ways (i.e., lists).
+
+Here is an example from those scripts, which creates a list of matrices
+and a list of vectors:
+
+``` cpp
+list eigen_gen_mat(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+
+  Mat<complex<double>> y = eig_gen(X);
+
+  Mat<double> y_real = real(y);
+  Mat<double> y_imag = imag(y);
+
+  writable::list out;
+  out.push_back({"real"_nm = as_doubles_matrix(y_real)});
+  out.push_back({"imag"_nm = as_doubles_matrix(y_imag)});
+
+  return out;
+}
+
+list eigen_gen_dbl(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+
+  Mat<complex<double>> y = eig_gen(X);
+
+  Mat<double> y_real = real(y);
+  Mat<double> y_imag = imag(y);
+
+  writable::list out;
+  out.push_back({"real"_nm = as_doubles(y_real)});
+  out.push_back({"imag"_nm = as_doubles(y_imag)});
+
+  return out;
+}
+```
+
+## Next steps
+
+Provide support for sparse matrices. At the moment, `cpp11armadillo`
+only works with dense matrices.

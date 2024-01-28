@@ -12,6 +12,10 @@ eigen_gen_mat <- function(x) {
   .Call(`_cpp11armadillotest_eigen_gen_mat`, x)
 }
 
+eigen_gen_dbl <- function(x) {
+  .Call(`_cpp11armadillotest_eigen_gen_dbl`, x)
+}
+
 ols_mat <- function(y, x) {
   .Call(`_cpp11armadillotest_ols_mat`, y, x)
 }
