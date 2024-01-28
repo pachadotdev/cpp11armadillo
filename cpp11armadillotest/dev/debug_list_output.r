@@ -1,5 +1,7 @@
 rebuild <- T
 
+# cpp11armadillo::cpp_vendor()
+
 if (rebuild) {
   devtools::clean_dll()
   cpp11::cpp_register()

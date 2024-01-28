@@ -107,9 +107,21 @@ cpp_vendor <- function(path = "./src/vendor") {
     showWarnings = FALSE
   )
 
+  dir.create(
+    file.path(path, "armadillo"),
+    recursive = TRUE,
+    showWarnings = FALSE
+  )
+
   current <- system.file(
     "include",
     "cpp11armadillo",
+    package = "cpp11armadillo"
+  )
+
+  current2 <- system.file(
+    "include",
+    "armadillo",
     package = "cpp11armadillo"
   )
 
@@ -126,6 +138,7 @@ cpp_vendor <- function(path = "./src/vendor") {
   )
 
   files <- list.files(current, full.names = TRUE)
+  files2 <- list.files(current2, full.names = TRUE)
 
   writeLines(
     c(
@@ -137,10 +150,27 @@ cpp_vendor <- function(path = "./src/vendor") {
     file.path(path, "cpp11armadillo.hpp")
   )
 
+  writeLines(
+    c(
+      cpp11armadillo_header,
+      readLines(
+        system.file("include", "armadillo.hpp", package = "cpp11armadillo")
+      )
+    ),
+    file.path(path, "armadillo.hpp")
+  )
+
   for (f in files) {
     writeLines(
       c(cpp11armadillo_header, readLines(f)),
       file.path(path, "cpp11armadillo", basename(f))
+    )
+  }
+
+  for (f in files2) {
+    writeLines(
+      c(cpp11armadillo_header, readLines(f)),
+      file.path(path, "armadillo", basename(f))
     )
   }
 
