@@ -62,13 +62,13 @@ cpp_vendor <- function(path = "./src/vendor") {
     showWarnings = FALSE
   )
 
-  current <- system.file(
+  current_cpp11 <- system.file(
     "include",
     "cpp11",
     package = "cpp11"
   )
 
-  if (!nzchar(current)) {
+  if (!nzchar(current_cpp11)) {
     stop("cpp11 is not installed", call. = FALSE)
   }
 
@@ -80,24 +80,15 @@ cpp_vendor <- function(path = "./src/vendor") {
     Sys.Date()
   )
 
-  files <- list.files(current, full.names = TRUE)
-
-  writeLines(
-    c(
-      cpp11_header,
-      readLines(
-        system.file("include", "cpp11.hpp", package = "cpp11")
-      )
-    ),
-    file.path(path, "cpp11.hpp")
+  write_header(
+    path, "cpp11.hpp", "cpp11",
+    cpp11_header
   )
 
-  for (f in files) {
-    writeLines(
-      c(cpp11_header, readLines(f)),
-      file.path(path, "cpp11", basename(f))
-    )
-  }
+  copy_files(
+    list.files(current_cpp11, full.names = TRUE),
+    path, "cpp11", cpp11_header
+  )
 
   # Vendor cpp11armadillo ----
 
@@ -113,19 +104,19 @@ cpp_vendor <- function(path = "./src/vendor") {
     showWarnings = FALSE
   )
 
-  current <- system.file(
+  current_cpp11armadillo <- system.file(
     "include",
     "cpp11armadillo",
     package = "cpp11armadillo"
   )
 
-  current2 <- system.file(
+  current_armadillo <- system.file(
     "include",
     "armadillo",
     package = "cpp11armadillo"
   )
 
-  if (!nzchar(current)) {
+  if (!nzchar(current_cpp11armadillo)) {
     stop("cpp11armadillo is not installed", call. = FALSE)
   }
 
@@ -137,42 +128,25 @@ cpp_vendor <- function(path = "./src/vendor") {
     Sys.Date()
   )
 
-  files <- list.files(current, full.names = TRUE)
-  files2 <- list.files(current2, full.names = TRUE)
-
-  writeLines(
-    c(
-      cpp11armadillo_header,
-      readLines(
-        system.file("include", "cpp11armadillo.hpp", package = "cpp11armadillo")
-      )
-    ),
-    file.path(path, "cpp11armadillo.hpp")
+  write_header(
+    path, "cpp11armadillo.hpp", "cpp11armadillo",
+    cpp11armadillo_header
   )
 
-  writeLines(
-    c(
-      cpp11armadillo_header,
-      readLines(
-        system.file("include", "armadillo.hpp", package = "cpp11armadillo")
-      )
-    ),
-    file.path(path, "armadillo.hpp")
+  write_header(
+    path, "armadillo.hpp", "cpp11armadillo",
+    cpp11armadillo_header
   )
 
-  for (f in files) {
-    writeLines(
-      c(cpp11armadillo_header, readLines(f)),
-      file.path(path, "cpp11armadillo", basename(f))
-    )
-  }
+  copy_files(
+    list.files(current_cpp11armadillo, full.names = TRUE),
+    path, "cpp11armadillo", cpp11armadillo_header
+  )
 
-  for (f in files2) {
-    writeLines(
-      c(cpp11armadillo_header, readLines(f)),
-      file.path(path, "armadillo", basename(f))
-    )
-  }
+  copy_files(
+    list.files(current_armadillo, full.names = TRUE),
+    path, "armadillo", cpp11armadillo_header
+  )
 
   # Additional steps to make vendoring work ----
 
@@ -188,7 +162,7 @@ cpp_vendor <- function(path = "./src/vendor") {
   makevars_file <- "src/Makevars"
   if (isTRUE(makevars_exists)) {
     makevars <- readLines(makevars_file)
-    alter_makevars(makevars, vendor_line)
+    alter_makevars(makevars, makevars_file, vendor_line)
   } else {
     create_makevars(makevars_file)
   }
@@ -196,7 +170,7 @@ cpp_vendor <- function(path = "./src/vendor") {
   makevars.win_file <- "src/Makevars.win"
   if (isTRUE(makevars.win_exists)) {
     makevars.win <- readLines(makevars.win_file)
-    alter_makevars(makevars.win, vendor_line)
+    alter_makevars(makevars.win, makevars.win_file, vendor_line)
   } else {
     create_makevars(makevars.win_file)
   }
@@ -232,7 +206,7 @@ cpp_vendor <- function(path = "./src/vendor") {
   invisible(path)
 }
 
-alter_makevars <- function(makevars, vendor_line) {
+alter_makevars <- function(makevars, makevars_file, vendor_line) {
   if (any(grepl("^PKG_CPPFLAGS", makevars))) {
     cat(
       "There is a `PKG_CPPFLAGS` line in src/Makevars. It will be modified.\n"
@@ -246,15 +220,13 @@ alter_makevars <- function(makevars, vendor_line) {
       makevars[cppflags_line] <- paste0(makevars[cppflags_line], vendor_line)
     }
 
-    writeLines(makevars, "src/Makevars")
+    writeLines(makevars, makevars_file)
   } else {
     # add the line
     makevars <- c(makevars, paste0("PKG_CPPFLAGS = ", vendor_line))
 
-    writeLines(makevars, "src/Makevars")
+    writeLines(makevars, makevars_file)
   }
-
-  cat("The existing src/Makevars was modified. Please check it.\n")
 }
 
 create_makevars <- function(filename, vendor_line) {
@@ -263,4 +235,25 @@ create_makevars <- function(filename, vendor_line) {
 
   # warn about the change
   cat("A new src/Makevars file was created.\n")
+}
+
+write_header <- function(path, header, pkg, cpp11armadillo_header) {
+  writeLines(
+    c(
+      cpp11armadillo_header,
+      readLines(
+        system.file("include", header, package = pkg)
+      )
+    ),
+    file.path(path, header)
+  )
+}
+
+copy_files <- function(files, path, out, cpp11armadillo_header) {
+  for (f in files) {
+    writeLines(
+      c(cpp11armadillo_header, readLines(f)),
+      file.path(path, out, basename(f))
+    )
+  }
 }
