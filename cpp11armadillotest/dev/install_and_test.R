@@ -1,7 +1,7 @@
 # run this line if you want to replace all the files provided by the template
 # cpp11armadillo::pkg_template()
 
-development <- TRUE
+development <- F
 
 devtools::clean_dll()
 cpp11::cpp_register()
@@ -11,7 +11,7 @@ if (isTRUE(development)) {
   devtools::load_all()
 } else {
   devtools::install()
-  devtools::load_all()
 }
 
 # devtools::test()
+# devtools::check()

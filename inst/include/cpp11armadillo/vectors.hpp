@@ -113,4 +113,30 @@ inline list as_complex_doubles(const Col<complex<double>>& x) {
   return Col_to_complex_dbl_<complex<double>>(x);
 }
 
+template <typename T>
+inline list Col_to_complex_matrix_(const Col<T>& x) {
+  static_assert(is_same<T, complex<double>>::value,
+                "T must be complex<double>");
+  Col<double> x_real = real(x);
+  Col<double> x_imag = imag(x);
+
+  // TODO: the previous template can fail with a complain about dbl vs int when
+  // the imaginary part is zero. This is a workaround.
+  int n = x.n_rows;
+  int m = 1;
+  writable::doubles_matrix<> x_real2(n, m);
+  writable::doubles_matrix<> x_imag2(n, m);
+
+  for (int i = 0; i < n; ++i) {
+    x_real2(i, 0) = x_real[i];
+    x_imag2(i, 0) = x_imag[i];
+  }
+
+  return writable::list({"real"_nm = x_real2, "imag"_nm = x_imag2});
+}
+
+inline list as_complex_matrix(const Col<complex<double>>& x) {
+  return Col_to_complex_matrix_<complex<double>>(x);
+}
+
 #endif

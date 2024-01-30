@@ -1,0 +1,52 @@
+==21978== Memcheck, a memory error detector
+==21978== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==21978== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==21978== Command: /usr/lib/R/bin/exec/R --vanilla -f dev/test-col-to-vec.r
+==21978== 
+
+R version 4.3.2 (2023-10-31) -- "Eye Holes"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> devtools::load_all()
+ℹ Loading cpp11armadillotest
+> x <- cpp11armadillo::mtcars_mat$x
+> y <- cpp11armadillo::mtcars_mat$y
+> 
+> x <- x[, c("wt", "cyl4", "cyl6", "cyl8")]
+> 
+> x <- cor(x)
+> 
+> eigen_gen_dbl_2(x)
+Error: Invalid input type, expected 'double' actual 'integer'
+Execution halted
+==21978== 
+==21978== HEAP SUMMARY:
+==21978==     in use at exit: 85,690,129 bytes in 18,876 blocks
+==21978==   total heap usage: 120,395 allocs, 101,519 frees, 205,320,441 bytes allocated
+==21978== 
+==21978== LEAK SUMMARY:
+==21978==    definitely lost: 0 bytes in 0 blocks
+==21978==    indirectly lost: 0 bytes in 0 blocks
+==21978==      possibly lost: 0 bytes in 0 blocks
+==21978==    still reachable: 85,690,129 bytes in 18,876 blocks
+==21978==                       of which reachable via heuristic:
+==21978==                         newarray           : 4,264 bytes in 1 blocks
+==21978==         suppressed: 0 bytes in 0 blocks
+==21978== Rerun with --leak-check=full to see details of leaked memory
+==21978== 
+==21978== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

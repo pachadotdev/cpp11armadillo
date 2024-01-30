@@ -24,6 +24,14 @@ eigen_gen_dbl_complex_wrapper <- function(x) {
   .Call(`_cpp11armadillotest_eigen_gen_dbl_complex_wrapper`, x)
 }
 
+eigen_gen_dbl_2 <- function(x) {
+  .Call(`_cpp11armadillotest_eigen_gen_dbl_2`, x)
+}
+
+eigen_gen_mat_complex_wrapper_2 <- function(x) {
+  .Call(`_cpp11armadillotest_eigen_gen_mat_complex_wrapper_2`, x)
+}
+
 ols_mat <- function(y, x) {
   .Call(`_cpp11armadillotest_ols_mat`, y, x)
 }

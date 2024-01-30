@@ -1,4 +1,4 @@
-#include "00_main.hpp"
+#include "00_main.h"
 
 doubles_matrix<> ols_mat(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   Mat<double> Y = as_Mat(y);

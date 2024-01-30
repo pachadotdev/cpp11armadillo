@@ -1,4 +1,5 @@
-devel <- T
+devel <- F
+pkgdown <- F
 
 # cpp_vendor() # run only when updating C++ headers
 devtools::clean_dll()
@@ -8,6 +9,8 @@ devtools::document()
 if (isTRUE(devel)) {
   devtools::load_all()
 } else {
-  pkgdown::build_site()
+  if (pkgdown) {
+    pkgdown::build_site()
+  }
   devtools::install()
 }
