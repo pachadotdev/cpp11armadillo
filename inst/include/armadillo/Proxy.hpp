@@ -84,8 +84,8 @@ struct Proxy_fixed {
 
   //// this may require T1::n_elem etc to be declared as static constexpr inline variables
   ///(C++17) / see also the notes in Mat::fixed /
-  ///https://en.cppreference.com/w/cpp/language/static /
-  ///https://en.cppreference.com/w/cpp/language/inline
+  /// https://en.cppreference.com/w/cpp/language/static /
+  /// https://en.cppreference.com/w/cpp/language/inline
   //
   // static constexpr uword get_n_rows() { return T1::n_rows; }
   // static constexpr uword get_n_cols() { return T1::n_cols; }
