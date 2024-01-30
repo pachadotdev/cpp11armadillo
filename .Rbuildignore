@@ -11,3 +11,5 @@
 ^README\.html$
 ^cpp11armadillotest$
 ^pkgdown$
+^.clang-format$
+^Makefile$
