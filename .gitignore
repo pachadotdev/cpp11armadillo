@@ -7,3 +7,4 @@
 inst/doc
 README.html
 cpp11armadillotest/src/*.o
+cpp11armadillotest/src/*.so
