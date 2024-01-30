@@ -26,11 +26,11 @@ jobs:
           extra-packages: any::covr
           needs: coverage
 
-      - name: Install cpp11test
+      - name: Install cpp11armadillotest
         run: |
           options(warn = 2)
-          pak::local_install_dev_deps("cpp11test", dependencies = TRUE)
-          install.packages("cpp11test", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
+          pak::local_install_dev_deps("cpp11armadillotest", dependencies = TRUE)
+          install.packages("cpp11armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
         shell: Rscript {0}
 
       - name: Test coverage
