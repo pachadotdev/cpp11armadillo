@@ -22,10 +22,9 @@ inline Col<T> as_Col(const T& x) {
 template <typename T, typename U>
 inline Col<T> dblint_to_Col_(const U& x) {
   int n = x.size();
-  Col<T> y(
-      (is_same<U, doubles>::value ? reinterpret_cast<T*>(REAL(x.data()))
-                                  : reinterpret_cast<T*>(INTEGER(x.data()))),
-      n, false);
+  Col<T> y((is_same<U, doubles>::value ? reinterpret_cast<T*>(REAL(x.data()))
+                                       : reinterpret_cast<T*>(INTEGER(x.data()))),
+           n, false);
   return y;
 }
 
@@ -51,8 +50,7 @@ inline U Col_to_dblint_(const Col<T>& x) {
                        writable::integers>::type y(n);
 
   for (int i = 0; i < n; ++i) {
-    typename conditional<is_same<U, doubles>::value, double, int>::type x_i =
-        x[i];
+    typename conditional<is_same<U, doubles>::value, double, int>::type x_i = x[i];
     y[i] = x_i;
   }
 
@@ -73,12 +71,12 @@ inline U Col_to_dblint_matrix_(const Col<T>& x) {
   int m = 1;
 
   typename conditional<is_same<U, writable::doubles_matrix<>>::value,
-                       writable::doubles_matrix<>,
-                       writable::integers_matrix<>>::type Y(n, m);
+                       writable::doubles_matrix<>, writable::integers_matrix<>>::type
+      Y(n, m);
 
   for (int i = 0; i < n; ++i) {
-    typename conditional<is_same<U, doubles_matrix<>>::value, double, int>::type
-        x_i = x[i];
+    typename conditional<is_same<U, doubles_matrix<>>::value, double, int>::type x_i =
+        x[i];
     Y(i, 0) = x_i;
   }
 
@@ -97,8 +95,7 @@ inline integers_matrix<> as_integers_matrix(const Col<int>& x) {
 
 template <typename T>
 inline list Col_to_complex_dbl_(const Col<T>& x) {
-  static_assert(is_same<T, complex<double>>::value,
-                "T must be complex<double>");
+  static_assert(is_same<T, complex<double>>::value, "T must be complex<double>");
   Col<double> x_real = real(x);
   Col<double> x_imag = imag(x);
 
@@ -115,8 +112,7 @@ inline list as_complex_doubles(const Col<complex<double>>& x) {
 
 template <typename T>
 inline list Col_to_complex_matrix_(const Col<T>& x) {
-  static_assert(is_same<T, complex<double>>::value,
-                "T must be complex<double>");
+  static_assert(is_same<T, complex<double>>::value, "T must be complex<double>");
   Col<double> x_real = real(x);
   Col<double> x_imag = imag(x);
 
