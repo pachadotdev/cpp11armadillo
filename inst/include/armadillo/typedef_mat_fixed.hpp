@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: Apache-2.0
-//
+// 
 // Copyright 2008-2016 Conrad Sanderson (http://conradsanderson.id.au)
 // Copyright 2008-2016 National ICT Australia (NICTA)
-//
+// 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+// 
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,82 +15,87 @@
 // limitations under the License.
 // ------------------------------------------------------------------------
 
+
 //! \addtogroup typedef_mat_fixed
 //! @{
 
-typedef umat::fixed<2, 2> umat22;
-typedef umat::fixed<3, 3> umat33;
-typedef umat::fixed<4, 4> umat44;
-typedef umat::fixed<5, 5> umat55;
-typedef umat::fixed<6, 6> umat66;
-typedef umat::fixed<7, 7> umat77;
-typedef umat::fixed<8, 8> umat88;
-typedef umat::fixed<9, 9> umat99;
 
-typedef imat::fixed<2, 2> imat22;
-typedef imat::fixed<3, 3> imat33;
-typedef imat::fixed<4, 4> imat44;
-typedef imat::fixed<5, 5> imat55;
-typedef imat::fixed<6, 6> imat66;
-typedef imat::fixed<7, 7> imat77;
-typedef imat::fixed<8, 8> imat88;
-typedef imat::fixed<9, 9> imat99;
 
-typedef fmat::fixed<2, 2> fmat22;
-typedef fmat::fixed<3, 3> fmat33;
-typedef fmat::fixed<4, 4> fmat44;
-typedef fmat::fixed<5, 5> fmat55;
-typedef fmat::fixed<6, 6> fmat66;
-typedef fmat::fixed<7, 7> fmat77;
-typedef fmat::fixed<8, 8> fmat88;
-typedef fmat::fixed<9, 9> fmat99;
+typedef umat::fixed<2,2> umat22;
+typedef umat::fixed<3,3> umat33;
+typedef umat::fixed<4,4> umat44;
+typedef umat::fixed<5,5> umat55;
+typedef umat::fixed<6,6> umat66;
+typedef umat::fixed<7,7> umat77;
+typedef umat::fixed<8,8> umat88;
+typedef umat::fixed<9,9> umat99;
 
-typedef dmat::fixed<2, 2> dmat22;
-typedef dmat::fixed<3, 3> dmat33;
-typedef dmat::fixed<4, 4> dmat44;
-typedef dmat::fixed<5, 5> dmat55;
-typedef dmat::fixed<6, 6> dmat66;
-typedef dmat::fixed<7, 7> dmat77;
-typedef dmat::fixed<8, 8> dmat88;
-typedef dmat::fixed<9, 9> dmat99;
+typedef imat::fixed<2,2> imat22;
+typedef imat::fixed<3,3> imat33;
+typedef imat::fixed<4,4> imat44;
+typedef imat::fixed<5,5> imat55;
+typedef imat::fixed<6,6> imat66;
+typedef imat::fixed<7,7> imat77;
+typedef imat::fixed<8,8> imat88;
+typedef imat::fixed<9,9> imat99;
 
-typedef mat::fixed<2, 2> mat22;
-typedef mat::fixed<3, 3> mat33;
-typedef mat::fixed<4, 4> mat44;
-typedef mat::fixed<5, 5> mat55;
-typedef mat::fixed<6, 6> mat66;
-typedef mat::fixed<7, 7> mat77;
-typedef mat::fixed<8, 8> mat88;
-typedef mat::fixed<9, 9> mat99;
+typedef fmat::fixed<2,2> fmat22;
+typedef fmat::fixed<3,3> fmat33;
+typedef fmat::fixed<4,4> fmat44;
+typedef fmat::fixed<5,5> fmat55;
+typedef fmat::fixed<6,6> fmat66;
+typedef fmat::fixed<7,7> fmat77;
+typedef fmat::fixed<8,8> fmat88;
+typedef fmat::fixed<9,9> fmat99;
 
-typedef cx_fmat::fixed<2, 2> cx_fmat22;
-typedef cx_fmat::fixed<3, 3> cx_fmat33;
-typedef cx_fmat::fixed<4, 4> cx_fmat44;
-typedef cx_fmat::fixed<5, 5> cx_fmat55;
-typedef cx_fmat::fixed<6, 6> cx_fmat66;
-typedef cx_fmat::fixed<7, 7> cx_fmat77;
-typedef cx_fmat::fixed<8, 8> cx_fmat88;
-typedef cx_fmat::fixed<9, 9> cx_fmat99;
+typedef dmat::fixed<2,2> dmat22;
+typedef dmat::fixed<3,3> dmat33;
+typedef dmat::fixed<4,4> dmat44;
+typedef dmat::fixed<5,5> dmat55;
+typedef dmat::fixed<6,6> dmat66;
+typedef dmat::fixed<7,7> dmat77;
+typedef dmat::fixed<8,8> dmat88;
+typedef dmat::fixed<9,9> dmat99;
 
-typedef cx_dmat::fixed<2, 2> cx_dmat22;
-typedef cx_dmat::fixed<3, 3> cx_dmat33;
-typedef cx_dmat::fixed<4, 4> cx_dmat44;
-typedef cx_dmat::fixed<5, 5> cx_dmat55;
-typedef cx_dmat::fixed<6, 6> cx_dmat66;
-typedef cx_dmat::fixed<7, 7> cx_dmat77;
-typedef cx_dmat::fixed<8, 8> cx_dmat88;
-typedef cx_dmat::fixed<9, 9> cx_dmat99;
+typedef mat::fixed<2,2> mat22;
+typedef mat::fixed<3,3> mat33;
+typedef mat::fixed<4,4> mat44;
+typedef mat::fixed<5,5> mat55;
+typedef mat::fixed<6,6> mat66;
+typedef mat::fixed<7,7> mat77;
+typedef mat::fixed<8,8> mat88;
+typedef mat::fixed<9,9> mat99;
 
-typedef cx_mat::fixed<2, 2> cx_mat22;
-typedef cx_mat::fixed<3, 3> cx_mat33;
-typedef cx_mat::fixed<4, 4> cx_mat44;
-typedef cx_mat::fixed<5, 5> cx_mat55;
-typedef cx_mat::fixed<6, 6> cx_mat66;
-typedef cx_mat::fixed<7, 7> cx_mat77;
-typedef cx_mat::fixed<8, 8> cx_mat88;
-typedef cx_mat::fixed<9, 9> cx_mat99;
+typedef cx_fmat::fixed<2,2> cx_fmat22;
+typedef cx_fmat::fixed<3,3> cx_fmat33;
+typedef cx_fmat::fixed<4,4> cx_fmat44;
+typedef cx_fmat::fixed<5,5> cx_fmat55;
+typedef cx_fmat::fixed<6,6> cx_fmat66;
+typedef cx_fmat::fixed<7,7> cx_fmat77;
+typedef cx_fmat::fixed<8,8> cx_fmat88;
+typedef cx_fmat::fixed<9,9> cx_fmat99;
+
+typedef cx_dmat::fixed<2,2> cx_dmat22;
+typedef cx_dmat::fixed<3,3> cx_dmat33;
+typedef cx_dmat::fixed<4,4> cx_dmat44;
+typedef cx_dmat::fixed<5,5> cx_dmat55;
+typedef cx_dmat::fixed<6,6> cx_dmat66;
+typedef cx_dmat::fixed<7,7> cx_dmat77;
+typedef cx_dmat::fixed<8,8> cx_dmat88;
+typedef cx_dmat::fixed<9,9> cx_dmat99;
+
+typedef cx_mat::fixed<2,2> cx_mat22;
+typedef cx_mat::fixed<3,3> cx_mat33;
+typedef cx_mat::fixed<4,4> cx_mat44;
+typedef cx_mat::fixed<5,5> cx_mat55;
+typedef cx_mat::fixed<6,6> cx_mat66;
+typedef cx_mat::fixed<7,7> cx_mat77;
+typedef cx_mat::fixed<8,8> cx_mat88;
+typedef cx_mat::fixed<9,9> cx_mat99;
+
 
 //
+
 
 typedef uvec::fixed<2> uvec2;
 typedef uvec::fixed<3> uvec3;
@@ -164,7 +169,9 @@ typedef cx_vec::fixed<7> cx_vec7;
 typedef cx_vec::fixed<8> cx_vec8;
 typedef cx_vec::fixed<9> cx_vec9;
 
+
 //
+
 
 typedef ucolvec::fixed<2> ucolvec2;
 typedef ucolvec::fixed<3> ucolvec3;
@@ -238,7 +245,9 @@ typedef cx_colvec::fixed<7> cx_colvec7;
 typedef cx_colvec::fixed<8> cx_colvec8;
 typedef cx_colvec::fixed<9> cx_colvec9;
 
+
 //
+
 
 typedef urowvec::fixed<2> urowvec2;
 typedef urowvec::fixed<3> urowvec3;
@@ -311,5 +320,7 @@ typedef cx_rowvec::fixed<6> cx_rowvec6;
 typedef cx_rowvec::fixed<7> cx_rowvec7;
 typedef cx_rowvec::fixed<8> cx_rowvec8;
 typedef cx_rowvec::fixed<9> cx_rowvec9;
+
+
 
 //! @}
