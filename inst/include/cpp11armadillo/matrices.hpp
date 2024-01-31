@@ -21,10 +21,10 @@ template <typename T, typename U>
 inline Mat<T> as_Mat_(const U& x) {
   int n = x.nrow();
   int m = x.ncol();
-  Mat<T> B(
-      (is_same<U, doubles_matrix<>>::value ? reinterpret_cast<T*>(REAL(x.data()))
-                                           : reinterpret_cast<T*>(INTEGER(x.data()))),
-      n, m, false, false);
+  Mat<T> B((is_same<U, doubles_matrix<>>::value
+                ? reinterpret_cast<T*>(REAL(x.data()))
+                : reinterpret_cast<T*>(INTEGER(x.data()))),
+           n, m, false, false);
   return B;
 }
 
@@ -47,13 +47,14 @@ inline U Mat_to_dblint_matrix_(const Mat<T>& A) {
   int n = A.n_rows;
   int m = A.n_cols;
 
-  typename conditional<is_same<U, doubles_matrix<>>::value, writable::doubles_matrix<>,
+  typename conditional<is_same<U, doubles_matrix<>>::value,
+                       writable::doubles_matrix<>,
                        writable::integers_matrix<>>::type B(n, m);
 
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < m; ++j) {
-      typename conditional<is_same<U, doubles_matrix<>>::value, double, int>::type a_ij =
-          A(i, j);
+      typename conditional<is_same<U, doubles_matrix<>>::value, double,
+                           int>::type a_ij = A(i, j);
       B(i, j) = a_ij;
     }
   }
@@ -73,7 +74,8 @@ inline integers_matrix<> as_integers_matrix(const Mat<int>& A) {
 
 template <typename T>
 inline list Mat_to_complex_matrix_(const Mat<T>& A) {
-  static_assert(is_same<T, complex<double>>::value, "T must be complex<double>");
+  static_assert(is_same<T, complex<double>>::value,
+                "T must be complex<double>");
   Mat<double> A_real = real(A);
   Mat<double> A_imag = imag(A);
 
