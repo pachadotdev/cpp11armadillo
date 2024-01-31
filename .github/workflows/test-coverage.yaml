@@ -10,7 +10,7 @@ name: test-coverage
 
 jobs:
   test-coverage:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
@@ -29,7 +29,6 @@ jobs:
       - name: Install cpp11armadillotest
         run: |
           options(warn = 2)
-          pak::pkg_install("pachadotdev/cpp11armadillo", dependencies = TRUE)
           pak::local_install_dev_deps("cpp11armadillotest", dependencies = TRUE)
           install.packages("cpp11armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
         shell: Rscript {0}
