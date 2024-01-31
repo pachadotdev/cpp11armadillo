@@ -42,7 +42,7 @@ pkg_template <- function(pkgname = NULL, path = NULL) {
     "^README\\.Rmd$"
   )
 
-  writeLines(lines, con = ".Rbuildignore")
+  writeLines(lines, con = paste0(path, "/.Rbuildignore"))
 
   lines <- c(
     paste0("#' @useDynLib ", pkgname, ", .registration = TRUE"),
@@ -50,7 +50,7 @@ pkg_template <- function(pkgname = NULL, path = NULL) {
     "\"_PACKAGE\""
   )
 
-  writeLines(lines, con = paste0("R/", pkgname, "-package.R"))
+  writeLines(lines, con = paste0(path, "/R/", pkgname, "-package.R"))
 
   lines <- c(
     paste("Package:", pkgname),
@@ -80,7 +80,7 @@ pkg_template <- function(pkgname = NULL, path = NULL) {
     "LinkingTo: cpp11, cpp11armadillo"
   )
 
-  writeLines(lines, con = "DESCRIPTION")
+  writeLines(lines, con = paste0(path, "/DESCRIPTION"))
 
-  return(invisible())
+  return(TRUE)
 }

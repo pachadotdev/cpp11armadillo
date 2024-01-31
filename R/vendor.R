@@ -17,39 +17,18 @@
 #' **you**. Bugfixes and new features in cpp11 and cpp11armadillo will not be
 #' available for your code until you run `cpp_vendor()` again.
 #'
-#' @param path The path to vendor the code into. The default is `src/vendor/`.
+#' @param path The path to vendor the code into. The default is `./src/vendor`.
 #' @return The file path to the vendored code (invisibly).
 #' @export
 #' @examples
 #' # create a new directory
-#' dir <- tempfile()
+#' dir <- tempdir()
 #' dir.create(dir)
-#'
-#' # vendor the cpp11 and cpp11armadillo headers into the directory
 #' cpp_vendor(dir)
-#'
-#' list.files(file.path(dir, "src", "vendor"))
-#'
-#' # cleanup
-#' unlink(dir, recursive = TRUE)
 cpp_vendor <- function(path = "./src/vendor") {
   if (dir.exists(path)) {
-    cat(
-      sprintf(
-        "The directory '%s' already exists. Do you want to overwrite it?\n",
-        path
-      )
-    )
-    if (interactive()) {
-      if (utils::menu(c("Yes", "No"), graphics = FALSE) == 1L) {
-        unlink(path, recursive = TRUE)
-      } else {
-        return(FALSE)
-      }
-    } else {
-      message("Running in non-interactive mode. Exiting.")
-      return(FALSE)
-    }
+    message("'", path, "' already exists\n * run unlink('", path, "', recursive = TRUE)", call. = FALSE)
+    return(FALSE)
   }
 
   dir.create(path, recursive = TRUE, showWarnings = FALSE)
@@ -203,7 +182,7 @@ cpp_vendor <- function(path = "./src/vendor") {
     cat("`LinkingTo: cpp11, cpp11armadillo` was removed from DESCRIPTION.\n")
   }
 
-  invisible(path)
+  return(TRUE)
 }
 
 alter_makevars <- function(makevars, makevars_file, vendor_line) {

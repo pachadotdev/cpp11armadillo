@@ -12,7 +12,8 @@ Authors@R: c(
     )
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 Depends: R(>= 3.5.0)
 Description: Add some description later. This is about linear algebra.
 License: Apache License (>= 2)
@@ -22,3 +23,4 @@ LazyData: true
 RoxygenNote: 7.3.0
 Encoding: UTF-8
 VignetteBuilder: knitr
+Config/testthat/edition: 3

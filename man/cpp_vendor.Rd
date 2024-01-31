@@ -7,7 +7,7 @@
 cpp_vendor(path = "./src/vendor")
 }
 \arguments{
-\item{path}{The path to vendor the code into. The default is `src/vendor/`.}
+\item{path}{The path to vendor the code into. The default is `./src/vendor`.}
 }
 \value{
 The file path to the vendored code (invisibly).
@@ -33,14 +33,7 @@ available for your code until you run `cpp_vendor()` again.
 }
 \examples{
 # create a new directory
-dir <- tempfile()
+dir <- tempdir()
 dir.create(dir)
-
-# vendor the cpp11 and cpp11armadillo headers into the directory
 cpp_vendor(dir)
-
-list.files(file.path(dir, "src", "vendor"))
-
-# cleanup
-unlink(dir, recursive = TRUE)
 }
