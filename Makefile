@@ -11,3 +11,4 @@ test: all
 clean:
 	@Rscript -e 'devtools::clean_dll()'
 	@Rscript -e 'devtools::clean_dll("cpp11armadillotest")'
+
