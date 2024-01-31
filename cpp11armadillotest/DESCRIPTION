@@ -29,5 +29,3 @@ NeedsCompilation: yes
 VignetteBuilder: knitr
 LinkingTo: cpp11, cpp11armadillo
 Config/testthat/edition: 3
-Remotes:
-    pachadotdev/cpp11armadillo
