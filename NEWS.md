@@ -8,3 +8,6 @@
 * Provides a conversion from complex vector/matrix to a list of double
   vectors/matrices.
   
+# cpp11armadillo 0.1.2
+
+* Improves vendoring.

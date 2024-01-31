@@ -11,6 +11,7 @@ if (isTRUE(development)) {
   devtools::load_all()
 } else {
   devtools::install()
+  pkgdown::build_site()
 }
 
 # devtools::test()

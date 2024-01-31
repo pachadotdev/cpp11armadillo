@@ -17,7 +17,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: YOUR NAME \email{YOUR@EMAIL.COM} (\href{https://orcid.org/0000-0001-0002-0003}{ORCID})
+\strong{Maintainer}: Mauricio Vargas Sepulveda \email{m.sepulveda@mail.utoronto.ca} (\href{https://orcid.org/0000-0003-1017-7574}{ORCID})
 
 }
 \keyword{internal}
