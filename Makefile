@@ -12,3 +12,6 @@ clean:
 	@Rscript -e 'devtools::clean_dll()'
 	@Rscript -e 'devtools::clean_dll("cpp11armadillotest")'
 
+clang_format=`which clang-format-14`
+format: $(shell find . -name '*.hpp') $(shell find . -name '*.h') $(shell find . -name '*.cpp')
+	@${clang_format} -i $?
