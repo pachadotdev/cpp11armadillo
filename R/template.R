@@ -82,5 +82,5 @@ pkg_template <- function(pkgname = NULL, path = NULL) {
 
   writeLines(lines, con = paste0(path, "/DESCRIPTION"))
 
-  return(TRUE)
+  invisible(path)
 }

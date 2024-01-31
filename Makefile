@@ -11,3 +11,12 @@ test: all
 clean:
 	@Rscript -e 'devtools::clean_dll()'
 	@Rscript -e 'devtools::clean_dll("cpp11armadillotest")'
+
+document:
+  @Rscript -e 'devtools::document()'
+
+build_site:
+	@Rscript -e 'pkgdown::build_site()'
+
+install:
+	@Rscript -e 'devtools::install()'

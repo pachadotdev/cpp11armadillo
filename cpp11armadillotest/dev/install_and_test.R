@@ -3,8 +3,6 @@
 
 development <- F
 
-devtools::clean_dll()
-cpp11::cpp_register()
 devtools::document()
 
 if (isTRUE(development)) {

@@ -10,4 +10,4 @@
   
 # cpp11armadillo 0.1.2
 
-* Improves vendoring.
+* Improves vendoring (i.e., does the same as `cpp11`)

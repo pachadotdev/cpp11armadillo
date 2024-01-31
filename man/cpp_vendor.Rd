@@ -4,10 +4,10 @@
 \alias{cpp_vendor}
 \title{Vendor the cpp11 and cpp11armadillo dependency}
 \usage{
-cpp_vendor(path = "./src/vendor")
+cpp_vendor(path = "./inst/include")
 }
 \arguments{
-\item{path}{The path to vendor the code into. The default is `./src/vendor`.}
+\item{path}{The path to vendor the code into. The default is `./inst/include`.}
 }
 \value{
 The file path to the vendored code (invisibly).
@@ -18,7 +18,7 @@ project is using. It is often used in the go language community.
 }
 \details{
 This function vendors cpp11 and cpp11armadillo into your package by copying
-the cpp11 and cpp11armadillo headers into the `src/vendor` folder and adding
+the cpp11 and cpp11armadillo headers into the `inst/include` folder and adding
 'cpp11 version: XYZ' and 'cpp11armadillo version: XYZ' to the top of the
 files, where XYZ is the version of cpp11 and cpp11armadillo currently
 installed on your machine.
@@ -35,5 +35,7 @@ available for your code until you run `cpp_vendor()` again.
 # create a new directory
 dir <- tempdir()
 dir.create(dir)
+
+# vendor the cpp11 headers into the directory
 cpp_vendor(dir)
 }
