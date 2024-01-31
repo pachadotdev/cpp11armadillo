@@ -1,5 +1,9 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+#
+# NOTE: This workflow is overkill for most R packages and
+# check-standard.yaml is likely a better choice.
+# usethis::use_github_action("check-standard") will install it.
 on:
   push:
     branches: [main, master]
@@ -12,22 +16,34 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) ${{ matrix.config.custom }}
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-latest,   r: 'release'}
+          - {os: macOS-latest,   r: 'release'}
+
           - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-latest,   r: 'release'}
+          # Use 3.6 to trigger usage of RTools35
+          - {os: windows-latest, r: '3.6'}
+
+          # Use older ubuntu to maximise backward compatibility
+          - {os: ubuntu-20.04,   r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-20.04,   r: 'release'}
+          - {os: ubuntu-20.04,   r: 'release', custom: 'no-cpp11armadillotest'}
+          - {os: ubuntu-20.04,   r: 'release', custom: 'gcc 4.8'}
+          - {os: ubuntu-20.04,   r: 'oldrel-1'}
+          - {os: ubuntu-20.04,   r: 'oldrel-2'}
+          - {os: ubuntu-20.04,   r: 'oldrel-3'}
+          - {os: ubuntu-20.04,   r: 'oldrel-4'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -37,11 +53,51 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      - name : Install compiler version
+        # We check on this old compiler specifically to support CentOS 7,
+        # which uses this gcc version. RStudio products support CentOS 7 through
+        # June 2024.
+        # https://github.com/r-lib/cpp11/pull/78
+        # https://www.rstudio.com/about/platform-support/
+        # Ubuntu 20.04 technically dropped support for gcc 4.8, so we have to
+        # add old archives back in manually to install it
+        # https://github.com/r-lib/cpp11/pull/279
+        if: matrix.config.custom == 'gcc 4.8'
+        run: |
+          echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial main" | sudo tee -a /etc/apt/sources.list
+          echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial universe" | sudo tee -a /etc/apt/sources.list
+          sudo apt update
+          sudo apt-get install -y g++-4.8 libgfortran-*
+          mkdir ~/.R/
+          echo $'CXX1X=g++-4.8\nCXX11=g++-4.8\nCC=gcc-4.8 -std=c99\nCXX=g++-4.8 -std=gnu++11' >> ~/.R/Makevars
+
+      - name: Install macOS system dependencies
+        if: runner.os == 'macOS'
+        run: brew install --cask xquartz
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - name: Install cpp11armadillotest
+        if: matrix.config.custom != 'no-cpp11armadillotest'
+        run: |
+          options(warn = 2)
+          pak::local_install_dev_deps("cpp11armadillotest", dependencies = TRUE)
+          install.packages(".", repos = NULL, type = "source")
+          install.packages("cpp11armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
+        shell: Rscript {0}
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
+
+      - name: Run cpp11armadillotest tests
+        if: matrix.config.custom != 'no-cpp11armadillotest'
+        run: |
+          setwd("cpp11armadillotest/tests")
+          library(testthat)
+          library(cpp11armadillotest)
+          test_check("cpp11armadillotest", reporter = "progress")
+        shell: Rscript {0}

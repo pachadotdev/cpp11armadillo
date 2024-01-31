@@ -14,4 +14,4 @@ if (isTRUE(development)) {
 }
 
 # devtools::test()
-# devtools::check()
+devtools::check()
