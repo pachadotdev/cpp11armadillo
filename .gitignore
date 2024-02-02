@@ -8,3 +8,6 @@ inst/doc
 README.html
 cpp11armadillotest/src/*.o
 cpp11armadillotest/src/*.so
+dev/benchmarks.rds
+dev/benchmarks.r
+dev/benchmarks_cpp11.cpp

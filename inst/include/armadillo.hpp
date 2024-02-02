@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: Apache-2.0
-// 
+//
 // Copyright 2008-2016 Conrad Sanderson (http://conradsanderson.id.au)
 // Copyright 2008-2016 National ICT Australia (NICTA)
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,13 +15,15 @@
 // limitations under the License.
 // ------------------------------------------------------------------------
 
-
 #ifndef ARMA_INCLUDES
 #define ARMA_INCLUDES
 
-// NOTE: functions that are designed to be user accessible are described in the documentation (docs.html).
-// NOTE: all other functions and classes (ie. not explicitly described in the documentation)
-// NOTE: are considered as internal implementation details, and may be changed or removed without notice.
+// NOTE: functions that are designed to be user accessible are described in the
+// documentation (docs.html). NOTE: all other functions and classes (ie. not explicitly
+// described in the documentation) NOTE: are considered as internal implementation
+// details, and may be changed or removed without notice.
+
+// clang-format off
 
 #include "armadillo/config.hpp"
 #include "armadillo/compiler_check.hpp"

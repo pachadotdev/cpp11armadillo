@@ -39,3 +39,7 @@ ols_mat <- function(y, x) {
 ols_dbl <- function(y, x) {
   .Call(`_cpp11armadillotest_ols_dbl`, y, x)
 }
+
+leontief_inverse <- function(x, d) {
+  .Call(`_cpp11armadillotest_leontief_inverse`, x, d)
+}

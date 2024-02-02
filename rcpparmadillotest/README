@@ -1,0 +1,12 @@
+How to use cpp11armadillo?
+
+1. Start a new project with RStudio.
+2. Open `dev/install_and_test.R` and run it.
+3. Open `src`, inspect the OLS function, and start creating your own
+   functions.
+4. Run `load_all()` as in the script from point 2, and use `install()` to
+   install the package locally when you are ready.
+5. Add your own README and favourite license with `usethis::use_readme_rmd()`
+   and `usethis::use_XYZ_license()`.
+
+See the details at https://github.com/pachadotdev/cpp11armadillo.

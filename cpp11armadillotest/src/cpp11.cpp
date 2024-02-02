@@ -75,6 +75,13 @@ extern "C" SEXP _cpp11armadillotest_ols_dbl(SEXP y, SEXP x) {
     return cpp11::as_sexp(ols_dbl(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
+// 00_main.cpp
+doubles_matrix<> leontief_inverse(const doubles_matrix<>& x, const doubles_matrix<>& d);
+extern "C" SEXP _cpp11armadillotest_leontief_inverse(SEXP x, SEXP d) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(leontief_inverse(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(d)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
@@ -86,6 +93,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_eigen_gen_mat_complex_wrapper_2", (DL_FUNC) &_cpp11armadillotest_eigen_gen_mat_complex_wrapper_2, 1},
     {"_cpp11armadillotest_eigen_sym_dbl",                   (DL_FUNC) &_cpp11armadillotest_eigen_sym_dbl,                   1},
     {"_cpp11armadillotest_eigen_sym_mat",                   (DL_FUNC) &_cpp11armadillotest_eigen_sym_mat,                   1},
+    {"_cpp11armadillotest_leontief_inverse",                (DL_FUNC) &_cpp11armadillotest_leontief_inverse,                2},
     {"_cpp11armadillotest_ols_dbl",                         (DL_FUNC) &_cpp11armadillotest_ols_dbl,                         2},
     {"_cpp11armadillotest_ols_mat",                         (DL_FUNC) &_cpp11armadillotest_ols_mat,                         2},
     {NULL, NULL, 0}

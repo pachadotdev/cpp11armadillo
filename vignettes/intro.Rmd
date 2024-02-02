@@ -1,0 +1,304 @@
+---
+title: "R and Armadillo integration using the header-only cpp11 R package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{intro}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Motivations
+
+The development of cpp11armadillo emerges from the desire to follow a simplified
+approach towards R and C++ integration by building on top of 
+[cpp11](https://cran.r-project.org/package=cpp11), a ground up rewrite of C++
+bindings to R with different design trade-offs and features. cpp11armadillo
+aims at providing an additional layer to put the end-user focus on the
+computation instead of configuration.
+
+[Armadillo](https://arma.sourceforge.net/) is a linear algebra library for the
+C++ language, aiming towards a good balance between speed and ease of use. It is
+justified in the fact that C++, in its current form, is very valuable to address
+bottlenecks that we find with interpreted languages such as R and Python but it
+does not provide data structures nor functions for linear algebra. CITE
+
+[RcppArmadillo](https://cran.r-project.org/package=RcppArmadillo) was first
+published to CRAN in 2010, and it allows to use Armadillo via
+[Rcpp](https://cran.r-project.org/package=Rcpp), a widely extended R package
+to call C++ functions from R.
+
+# Design choices
+
+The design choices in cpp11armadillo are:
+
+- Providing a simpler implementation that makes the library easier to
+  understand, maintain, and extend, benefiting both current users and future
+  contributors.
+- Offering a completely header-only approach, eliminating Application Binary
+  Interface compatibility issues and simplifying library integration and
+  distribution.
+- Facilitating vendoring, which allows for the inclusion of the library
+  directly in projects, thus simplifying dependency management and distribution.
+
+These ideas reflect a comprehensive effort to provide an efficient interface for
+integrating C++ and R that aligns with the Tidy philosophy CITE, addressing both
+the technical and community-driven aspects that influence software evolution.
+
+These choices have advantages and disadvantages. A disadvantage is that
+cpp11armadillo will not convert data types automatically, the user must be
+explicit about data types, especially when passing data from R to C++ and then
+exporting the final computation back to R. An advantage is that cpp11armadillo
+codes, including its internal templates, can be adapted to work with Python
+via [pybind11](https://pybind11.readthedocs.io/en/stable/index.html). CITE
+
+# Examples
+
+## Ordinary Least Squares
+
+Given a design matrix `x` and and outcome vector `y`, one function to obtain the
+OLS estimator as a matrix (i.e., column vector) is:
+
+```cpp
+#include <armadillo.hpp>
+#include <cpp11.hpp>
+#include <cpp11armadillo.hpp>
+
+using namespace arma;
+using namespace cpp11;
+
+[[cpp11::register]]
+doubles_matrix<> ols_mat(const doubles_matrix<>& y, const doubles_matrix<>& x) {
+  Mat<double> Y = as_Mat(y);
+  Mat<double> X = as_Mat(x);
+
+  Mat<double> XtX = X.t() * X; // X'X
+  Mat<double> XtX_inv = inv(XtX); // (X'X)^(-1)
+  Mat<double> beta = XtX_inv * X.t() * Y; // (X'X)^(-1)(X'Y)
+
+  return as_doubles_matrix(beta);
+}
+```
+
+This code:
+
+1. Includes the Armadillo, cpp11 and cpp11armadillo libraries and allows
+   interfacing C++ with R (i.e., the `#include <cpp11.hpp>`).
+2. Loads the corresponding namespaces (i.e., the `using namespace cpp11`)
+   in order to simplify the notation (i.e., using `Mat` instead of `arma::Mat`).
+3. Declares a function `ols_mat()` that takes inputs from R, does the
+   computation on C++ side, and it can be called from R scripts. The use of
+   `const` and `&` are specific to the C++ language and allow to pass data from
+   R to C++ while avoiding copying the data, therefore saving time and memory.
+4. `as_Mat()` is a cpp11armadillo function to pass a `matrix` object from R to
+   C++ and that Armadillo can read.
+5. `as_doubles_matrix()` is another cpp11armadillo function to pass a
+   `Mat<double>` or `Mat<int>` object from C++ to R.
+
+Another option is to provide the same computation as a vector:
+
+```cpp
+[[cpp11::register]]
+doubles ols_dbl(const doubles_matrix<>& y, const doubles_matrix<>& x) {
+  Mat<double> Y = as_Mat(y);
+  Mat<double> X = as_Mat(x);
+
+  Mat<double> XtX = X.t() * X;
+  Mat<double> XtX_inv = inv(XtX);
+  Mat<double> beta = XtX_inv * X.t() * Y;
+
+  return as_doubles(beta);
+}
+```
+
+## Leontief inverse
+
+Let `X` be the input-output matrix, and `d` the total final demand vector.
+
+In the Leontief Input-Output model, `X` and `d` determine the input requirement
+matrix `A` and the Leontief matrix `I-A`, where `I` is the identity matrix. 
+
+We can use the data from the leontief package as data inputs.
+
+```r
+library(leontief)
+
+X <- transaction_matrix
+d <- wage_demand_matrix[, "final_total_demand"]
+```
+
+One function to obtain the Leontief inverse is:
+
+```cpp
+#include <armadillo.hpp>
+#include <cpp11.hpp>
+#include <cpp11armadillo.hpp>
+
+using namespace arma;
+using namespace cpp11;
+
+[[cpp11::register]]
+doubles_matrix<> leontief_inverse(const doubles_matrix<>& x, 
+                                  const doubles_matrix<>& d) {
+  Mat<double> X = as_Mat(x);
+  Mat<double> D = as_Mat(d);
+
+  // Check dimensions
+  bool X_square = (X.n_rows == X.n_cols);
+  bool compatible_dimensions = (X.n_rows == D.n_rows);
+
+  if (X_square == false) {
+    stop("x must be square.");
+  }
+  if (compatible_dimensions == false) {
+    stop("d must have the same number of elements as the number of rows in x.");
+  }
+
+  // Input requirement matrix
+  Mat<double> Y = zeros(D.n_rows, D.n_rows);
+  Y.each_col() += D;
+  Mat<double> A = X / Y.t();
+
+  Mat<double> I = eye(X.n_rows, X.n_cols); // Identity matrix
+
+  Mat<double> out = inv(I - A); // Leontief inverse
+
+  return as_doubles_matrix(out);
+}
+```
+
+We can call this function from R:
+
+```r
+L <- leontief_inverse(X, d)
+```
+
+## Eigenvalues
+
+Two functions to obtain the eigenvalues of a symmetric matrix are:
+
+```cpp
+#include <armadillo.hpp>
+#include <cpp11.hpp>
+#include <cpp11armadillo.hpp>
+
+using namespace arma;
+using namespace cpp11;
+
+[[cpp11::register]]
+doubles_matrix<> eigen_sym_mat(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+  Mat<double> y = eig_sym(X);
+  return as_doubles_matrix(y);
+}
+
+[[cpp11::register]]
+doubles eigen_sym_dbl(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+  Mat<double> y = eig_sym(X);
+  return as_doubles(y);
+}
+```
+
+When the input matrix is symmetric, the eigenvalues are complex numbers.
+cpp11armadillo provides a wrapper to return the real and imaginary parts of the
+eigenvalues as list:
+
+```cpp
+[[cpp11::register]]
+list eigen_gen_mat(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+  Mat<complex<double>> y = eig_gen(X);
+  list out = as_complex_matrix(y);
+  return out;
+}
+```
+
+The idea of cpp11armadillo is to integrate with cpp11 to provide flexibility.
+The same can be achieved without using the `as_complex_matrix()` wrapper:
+
+```cpp
+[[cpp11::register]]
+list eigen_gen_mat(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+
+  Mat<complex<double>> y = eig_gen(X);
+
+  Mat<double> y_real = real(y);
+  Mat<double> y_imag = imag(y);
+
+  writable::list out;
+  out.push_back({"real"_nm = as_doubles_matrix(y_real)});
+  out.push_back({"imag"_nm = as_doubles_matrix(y_imag)});
+
+  return out;
+}
+```
+
+As with OLS, it is possible to return a list of vectors instead of a matrices:
+
+```cpp
+[[cpp11::register]]
+list eigen_gen_dbl(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+  Col<complex<double>> y = eig_gen(X);
+  list out = as_complex_doubles(y);
+  return out;
+}
+```
+
+# Benchmarks
+
+A proper benchmark is to compute eigenvalues for large matrices. Both
+cpp11armadillo and RcppArmadillo use Armadillo as a backend, and the marginal
+observed differences are because of how cpp11 and Rcpp pass data from R to C++
+and viceversa. The computation times are identical.
+
+|Input     | Median time cpp11armadillo | Median time RcppArmadillo |
+|:---------|---------------------------:|--------------------------:|
+|500x500   |                     35.07ms|                     36.4ms|
+|1000x1000 |                    260.28ms|                   263.21ms|
+|1500x1500 |                    874.62ms|                   857.31ms|
+|2000x2000 |                       2.21s|                      2.21s|
+
+|Input     | Memory allocation cpp11armadillo | Memory allocation RcppArmadillo |
+|:---------|---------------------------------:|--------------------------------:|
+|500x500   |                            17.1KB|                           4.62MB|
+|1000x1000 |                              21KB|                           4.62MB|
+|1500x1500 |                            24.9KB|                           4.63MB|
+|2000x2000 |                            28.8KB|                           4.63MB|
+
+The cpp11armadillo computation was obtained with the `eigen_sym_mat()` function
+already shown.
+
+The RcppArmadillo computation was obtained with the following function:
+
+```cpp
+#include <RcppArmadillo.h>
+// [[Rcpp::depends(RcppArmadillo)]]
+
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+arma::mat eigen_sym_mat(const arma::mat& x) {
+  arma::mat y = eig_sym(x);
+  return y;
+}
+```
+
+In order to get the RcppArmadillo function to work, we had to dedicate time
+to search online about the error `function 'enterRNGScope' not provided by
+package 'Rcpp'`, which required to load additional headers in our code on R
+side.
+
+## Conclusion
+
+RcppArmadillo has been and will continue to be widely successful. cpp11armadillo
+is a alternative templated implementation with different design trade-offs and
+features. Both packages can co-exist and continue to enrich the R community.

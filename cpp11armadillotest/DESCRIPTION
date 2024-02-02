@@ -15,12 +15,13 @@ Imports:
     cpp11armadillo (>= 0.1.1)
 Suggests: 
     knitr,
+    leontief,
     rmarkdown,
     testthat (>= 3.0.0)
 Depends: R(>= 3.5.0)
 Description: Testing cpp11armadillo. I run this within a tiny package to test
     the compiled code.
-License: MIT + file LICENSE
+License: Apache License (>= 2)
 BugReports: https://github.com/pachadotdev/cpp11armadillo/issues
 URL: https://github.com/pachadotdev/cpp11armadillo
 RoxygenNote: 7.3.0
@@ -29,5 +30,5 @@ NeedsCompilation: yes
 VignetteBuilder: knitr
 LinkingTo: cpp11, cpp11armadillo
 Config/testthat/edition: 3
-Remotes:  
+Remotes: 
     pachadotdev/cpp11armadillo

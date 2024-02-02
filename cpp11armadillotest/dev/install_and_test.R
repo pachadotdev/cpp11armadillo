@@ -3,13 +3,13 @@
 
 development <- F
 
+devtools::clean_dll()
 devtools::document()
 
 if (isTRUE(development)) {
   devtools::load_all()
 } else {
   devtools::install()
-  pkgdown::build_site()
 }
 
 # devtools::test()

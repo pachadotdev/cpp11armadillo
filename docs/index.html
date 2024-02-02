@@ -49,6 +49,18 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/intro.html">R and Armadillo integration using the header-only cpp11 R package</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="news/index.html">Changelog</a>
 </li>
@@ -96,7 +108,7 @@
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"pachadotdev/cpp11armadillo"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="minimal-example">Minimal example<a class="anchor" aria-label="anchor" href="#minimal-example"></a>
+<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <p>I have provided a package template for RStudio that also works with VS Code.</p>
 <p>The idea of this package is to be naive and simple (like me).</p>
@@ -104,81 +116,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">cpp11armadillo</span><span class="fu">::</span><span class="fu"><a href="reference/pkg_template.html">pkg_template</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Then follow the instructions from the README.</p>
-<p>Here is a commented example from the package template:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> arma;</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> cpp11;</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> std;</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; ols_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; y,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>                                             <span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Y = as_Mat(y);</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; XtX = X.t() * X;</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; XtX_inv = inv(XtX);</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; beta = XtX_inv * X.t() * Y;</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(beta);</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a>}</span></code></pre></div>
-<p>This code:</p>
-<ol style="list-style-type: decimal">
-<li>Includes the Armadillo, cpp11 and cpp11armadillo libraries and allows interfacing C++ with R (i.e., the <code>#include &lt;XYZ.hpp&gt;</code> lines).</li>
-<li>Loads the corresponding namespaces (i.e., the <code>using namespace XYZ</code> lines) in order to simplify the notation (i.e., using <code>Mat</code> instead of <code>arma::Mat</code>).</li>
-<li>Declares a function <code>ols_mat()</code> that takes inputs from R, does the computation on C++ side, and it can be called from R scripts. The use of <code>const</code> and <code>&amp;</code> are specific to the C++ language and allow to pass data from R to C++ while avoiding copying the data, therefore saving time and memory.</li>
-<li>
-<code>as_Mat()</code> is a C++ template (i.e., a “diplomat” function) that puts R and C++ data types in conversation and facilitates communications between those two. The templates for doubles/integers matrices are provided by <code>cpp11armadillo</code>.</li>
-<li>
-<code>XtX = X.t() * X</code> calculates the product of the transpose of <code>X</code> and <code>X</code>.</li>
-<li>
-<code>inv(XtX)</code> calculates the inverse of <code>XtX</code>.</li>
-<li>
-<code>XtX_inv * X.t() * Y</code> calculates the OLS estimator.</li>
-<li>
-<code>as_doubles_matrix()</code> is another template that takes <code>beta</code>, expressed as a C++ data structure, and converts it to a data structure that <code>cpp11</code> and R understand.</li>
-</ol>
-<p>Certainly, the goal is to use linear algebra. This is a very simple example and you are better-off using the <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> function from R for this particular case.</p>
-<p>For other tasks, you are better-off with C++-side computation because C++ can address:</p>
-<ol style="list-style-type: decimal">
-<li>Loops that cannot be easily vectorised because subsequent iterations depend on previous ones.</li>
-<li>Recursive functions, or problems which involve calling functions thousands/ millions of times.</li>
-<li>The overhead of calling a function in C++ is much lower than in R (and Python).</li>
-<li>Problems that require advanced data structures and algorithms that R does not provide.</li>
-<li>Through the Standard Template Library (STL), C++ has efficient implementations of many important data structures, from ordered maps to double-ended queues.</li>
-</ol>
-</div>
-<div class="section level2">
-<h2 id="more-than-minimal-example">More than minimal example<a class="anchor" aria-label="anchor" href="#more-than-minimal-example"></a>
-</h2>
-<p>The <code>cpp11armadillotest</code> constains more examples that I use to test <code>cpp11armadillo</code>, it is an R package that contains different scripts using matrices and lists, and the idea is to be more expressive on the C++ parts (i.e., using complex numbers) and then passing the data back to R using creative ways (i.e., lists).</p>
-<p>Here is an example from those scripts, which creates a list of matrices without and with the use of a wrapper:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>list eigen_gen_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>  Mat&lt;complex&lt;<span class="dt">double</span>&gt;&gt; y = eig_gen(X);</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y_real = real(y);</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y_imag = imag(y);</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>  writable::list out;</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>  out.push_back({<span class="st">"real"_nm</span> = as_doubles_matrix(y_real)});</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>  out.push_back({<span class="st">"imag"_nm</span> = as_doubles_matrix(y_imag)});</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>}</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>list eigen_gen_mat_complex_wrapper(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a>  Mat&lt;complex&lt;<span class="dt">double</span>&gt;&gt; y = eig_gen(X);</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a>  list out = as_complex_matrix(y);</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true"></a>}</span></code></pre></div>
+<p>The vignettes constain detailed examples that I use to test <code>cpp11armadillo</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="next-steps">Next steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
