@@ -15,3 +15,6 @@
 
 [[cpp11::register]] doubles_matrix<> leontief_inverse(const doubles_matrix<>& x,
                                                       const doubles_matrix<>& d);
+
+[[cpp11::register]] doubles_matrix<> capm(const doubles_matrix<>& r,
+                                          const doubles_matrix<>& m, double f);

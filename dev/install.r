@@ -11,3 +11,5 @@ if (isTRUE(devel)) {
   }
   devtools::install()
 }
+
+devtools::check()

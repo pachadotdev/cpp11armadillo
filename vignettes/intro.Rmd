@@ -58,6 +58,10 @@ exporting the final computation back to R. An advantage is that cpp11armadillo
 codes, including its internal templates, can be adapted to work with Python
 via [pybind11](https://pybind11.readthedocs.io/en/stable/index.html). CITE
 
+cpp11armadillo follows HANSEN notation, meaning that vectors are column vectors
+(i.e., Nx1 matrices) and matrices are column-major. It allows flexibility but
+all the examples in this vignette will use this convention for simplicity.
+
 # Examples
 
 ## Ordinary Least Squares
@@ -250,6 +254,48 @@ list eigen_gen_dbl(const doubles_matrix<>& x) {
   Col<complex<double>> y = eig_gen(X);
   list out = as_complex_doubles(y);
   return out;
+}
+```
+
+## Capital Asset Pricing Model (CAPM)
+
+Suppose there are two risky stocks, Pepsi and Coca-Cola, with returns for the
+last three days given by a matrix `r` in a market with a risk-free bond `f` with
+a 2% return and a risky market portfolio with returns for the last three days
+given by a vector `m`. The returns are given by:
+
+```r
+set.seed(200100)
+f <- 0.02
+m <- matrix(rnorm(3, 0, 0.1), nrow = 3, ncol = 1)
+r <- matrix(rnorm(6, 0, 0.1), nrow = 3, ncol = 2)
+```
+
+One function to obtain the CAPM betas for the two stocks is:
+
+```cpp
+#include <armadillo.hpp>
+#include <cpp11.hpp>
+#include <cpp11armadillo.hpp>
+
+using namespace arma;
+using namespace cpp11;
+
+[[cpp11::register]]
+doubles_matrix<> capm(const doubles_matrix<>& r, const doubles_matrix<>& m,
+                      double f) {
+  Mat<double> R = as_Mat(r);
+  Mat<double> M = as_Mat(m);
+  Mat<double> F = ones<Mat<double>>(R.n_cols, 1) * f;
+
+  // Market average return and CAPM betas
+  Mat<double> M_avg = ones<Mat<double>>(R.n_cols, 1) * as_scalar(mean(M, 0));
+  Mat<double> beta = cov(R, M) / as_scalar(var(M));
+
+  // Expected returns (% = pairwise multiplication)
+  Mat<double> out = F + beta % (M_avg - F);
+
+  return as_doubles_matrix(out);
 }
 ```
 

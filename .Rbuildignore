@@ -13,4 +13,4 @@
 ^rcpparmadillotest$
 ^pkgdown$
 ^Makefile$
-^clang-format$
+^\.clang-format$

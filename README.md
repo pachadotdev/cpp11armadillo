@@ -51,7 +51,8 @@ cpp11armadillo::pkg_template()
 Then follow the instructions from the README.
 
 The vignettes constain detailed examples that I use to test
-`cpp11armadillo`.
+`cpp11armadillo`, these include Ordinary Least Squares, Leontief
+inverse, eigenvalues, and the Capital Asset Pricing Model (CAPM).
 
 ## Next steps
 

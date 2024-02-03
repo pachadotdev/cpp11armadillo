@@ -43,3 +43,7 @@ ols_dbl <- function(y, x) {
 leontief_inverse <- function(x, d) {
   .Call(`_cpp11armadillotest_leontief_inverse`, x, d)
 }
+
+capm <- function(r, m, f) {
+  .Call(`_cpp11armadillotest_capm`, r, m, f)
+}

@@ -113,6 +113,7 @@
 </ul>
 <p>These ideas reflect a comprehensive effort to provide an efficient interface for integrating C++ and R that aligns with the Tidy philosophy CITE, addressing both the technical and community-driven aspects that influence software evolution.</p>
 <p>These choices have advantages and disadvantages. A disadvantage is that cpp11armadillo will not convert data types automatically, the user must be explicit about data types, especially when passing data from R to C++ and then exporting the final computation back to R. An advantage is that cpp11armadillo codes, including its internal templates, can be adapted to work with Python via <a href="https://pybind11.readthedocs.io/en/stable/index.html" class="external-link">pybind11</a>. CITE</p>
+<p>cpp11armadillo follows HANSEN notation, meaning that vectors are column vectors (i.e., Nx1 matrices) and matrices are column-major. It allows flexibility but all the examples in this vignette will use this convention for simplicity.</p>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
@@ -270,6 +271,40 @@
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="capital-asset-pricing-model-capm">Capital Asset Pricing Model (CAPM)<a class="anchor" aria-label="anchor" href="#capital-asset-pricing-model-capm"></a>
+</h3>
+<p>Suppose there are two risky stocks, Pepsi and Coca-Cola, with returns for the last three days given by a matrix <code>r</code> in a market with a risk-free bond <code>f</code> with a 2% return and a risky market portfolio with returns for the last three days given by a vector <code>m</code>. The returns are given by:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">200100</span><span class="op">)</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fl">0.02</span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0.1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">0</span>, <span class="fl">0.1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p>One function to obtain the CAPM betas for the two stocks is:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> arma;</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> cpp11;</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a>doubles_matrix&lt;&gt; capm(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; r, <span class="at">const</span> doubles_matrix&lt;&gt;&amp; m,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a>                      <span class="dt">double</span> f) {</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; R = as_Mat(r);</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; M = as_Mat(m);</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; F = ones&lt;Mat&lt;<span class="dt">double</span>&gt;&gt;(R.n_cols, <span class="dv">1</span>) * f;</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true"></a>  <span class="co">// Market average return and CAPM betas</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; M_avg = ones&lt;Mat&lt;<span class="dt">double</span>&gt;&gt;(R.n_cols, <span class="dv">1</span>) * as_scalar(mean(M, <span class="dv">0</span>));</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; beta = cov(R, M) / as_scalar(var(M));</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true"></a>  <span class="co">// Expected returns (% = pairwise multiplication)</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; out = F + beta % (M_avg - F);</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true"></a></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(out);</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="benchmarks">Benchmarks<a class="anchor" aria-label="anchor" href="#benchmarks"></a>
@@ -335,16 +370,16 @@
 </table>
 <p>The cpp11armadillo computation was obtained with the <code>eigen_sym_mat()</code> function already shown.</p>
 <p>The RcppArmadillo computation was obtained with the following function:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;RcppArmadillo.h&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="co">// [[Rcpp::depends(RcppArmadillo)]]</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> Rcpp;</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>arma::mat eigen_sym_mat(<span class="at">const</span> arma::mat&amp; x) {</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a>  arma::mat y = eig_sym(x);</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a>  <span class="cf">return</span> y;</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;RcppArmadillo.h&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="co">// [[Rcpp::depends(RcppArmadillo)]]</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> Rcpp;</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>arma::mat eigen_sym_mat(<span class="at">const</span> arma::mat&amp; x) {</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a>  arma::mat y = eig_sym(x);</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>  <span class="cf">return</span> y;</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a>}</span></code></pre></div>
 <p>In order to get the RcppArmadillo function to work, we had to dedicate time to search online about the error <code>function 'enterRNGScope' not provided by package 'Rcpp'</code>, which required to load additional headers in our code on R side.</p>
 <div class="section level3">
 <h3 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>

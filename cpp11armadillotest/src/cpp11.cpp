@@ -82,9 +82,17 @@ extern "C" SEXP _cpp11armadillotest_leontief_inverse(SEXP x, SEXP d) {
     return cpp11::as_sexp(leontief_inverse(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(d)));
   END_CPP11
 }
+// 00_main.cpp
+doubles_matrix<> capm(const doubles_matrix<>& r, const doubles_matrix<>& m, double f);
+extern "C" SEXP _cpp11armadillotest_capm(SEXP r, SEXP m, SEXP f) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(capm(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(r), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(m), cpp11::as_cpp<cpp11::decay_t<double>>(f)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
+    {"_cpp11armadillotest_capm",                            (DL_FUNC) &_cpp11armadillotest_capm,                            3},
     {"_cpp11armadillotest_eigen_gen_dbl",                   (DL_FUNC) &_cpp11armadillotest_eigen_gen_dbl,                   1},
     {"_cpp11armadillotest_eigen_gen_dbl_2",                 (DL_FUNC) &_cpp11armadillotest_eigen_gen_dbl_2,                 1},
     {"_cpp11armadillotest_eigen_gen_dbl_complex_wrapper",   (DL_FUNC) &_cpp11armadillotest_eigen_gen_dbl_complex_wrapper,   1},
