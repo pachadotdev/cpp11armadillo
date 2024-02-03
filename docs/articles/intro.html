@@ -98,9 +98,9 @@
 <div class="section level2">
 <h2 id="motivations">Motivations<a class="anchor" aria-label="anchor" href="#motivations"></a>
 </h2>
-<p>The development of cpp11armadillo emerges from the desire to follow a simplified approach towards R and C++ integration by building on top of <a href="https://cran.r-project.org/package=cpp11" class="external-link">cpp11</a>, a ground up rewrite of C++ bindings to R with different design trade-offs and features. cpp11armadillo aims at providing an additional layer to put the end-user focus on the computation instead of configuration.</p>
-<p><a href="https://arma.sourceforge.net/" class="external-link">Armadillo</a> is a linear algebra library for the C++ language, aiming towards a good balance between speed and ease of use. It is justified in the fact that C++, in its current form, is very valuable to address bottlenecks that we find with interpreted languages such as R and Python but it does not provide data structures nor functions for linear algebra. CITE</p>
-<p><a href="https://cran.r-project.org/package=RcppArmadillo" class="external-link">RcppArmadillo</a> was first published to CRAN in 2010, and it allows to use Armadillo via <a href="https://cran.r-project.org/package=Rcpp" class="external-link">Rcpp</a>, a widely extended R package to call C++ functions from R.</p>
+<p>The development of cpp11armadillo emerges from the desire to follow a simplified approach towards R and C++ integration by building on top of <a href="https://cran.r-project.org/package=cpp11" class="external-link">cpp11</a>, a ground up rewrite of C++ bindings to R with different design trade-offs and features. cpp11armadillo aims at providing an additional layer to put the end-user focus on the computation instead of configuration <span class="citation">(Vaughan, Hester, and François 2023)</span>.</p>
+<p><a href="https://arma.sourceforge.net/" class="external-link">Armadillo</a> is a linear algebra library for the C++ language, aiming towards a good balance between speed and ease of use. It is justified in the fact that C++, in its current form, is very valuable to address bottlenecks that we find with interpreted languages such as R and Python but it does not provide data structures nor functions for linear algebra <span class="citation">(Sanderson and Curtin 2016)</span>.</p>
+<p><a href="https://cran.r-project.org/package=RcppArmadillo" class="external-link">RcppArmadillo</a> was first published to CRAN in 2010, and it allows to use Armadillo via <a href="https://cran.r-project.org/package=Rcpp" class="external-link">Rcpp</a>, a widely extended R package to call C++ functions from R <span class="citation">(Eddelbuettel and Sanderson 2014)</span>.</p>
 </div>
 <div class="section level2">
 <h2 id="design-choices">Design choices<a class="anchor" aria-label="anchor" href="#design-choices"></a>
@@ -111,17 +111,18 @@
 <li>Offering a completely header-only approach, eliminating Application Binary Interface compatibility issues and simplifying library integration and distribution.</li>
 <li>Facilitating vendoring, which allows for the inclusion of the library directly in projects, thus simplifying dependency management and distribution.</li>
 </ul>
-<p>These ideas reflect a comprehensive effort to provide an efficient interface for integrating C++ and R that aligns with the Tidy philosophy CITE, addressing both the technical and community-driven aspects that influence software evolution.</p>
-<p>These choices have advantages and disadvantages. A disadvantage is that cpp11armadillo will not convert data types automatically, the user must be explicit about data types, especially when passing data from R to C++ and then exporting the final computation back to R. An advantage is that cpp11armadillo codes, including its internal templates, can be adapted to work with Python via <a href="https://pybind11.readthedocs.io/en/stable/index.html" class="external-link">pybind11</a>. CITE</p>
-<p>cpp11armadillo follows HANSEN notation, meaning that vectors are column vectors (i.e., Nx1 matrices) and matrices are column-major. It allows flexibility but all the examples in this vignette will use this convention for simplicity.</p>
+<p>These ideas reflect a comprehensive effort to provide an efficient interface for integrating C++ and R that aligns with the Tidy philosophy <span class="citation">(Wickham et al. 2019)</span>, addressing both the technical and community-driven aspects that influence software evolution.</p>
+<p>These choices have advantages and disadvantages. A disadvantage is that cpp11armadillo will not convert data types automatically, the user must be explicit about data types, especially when passing data from R to C++ and then exporting the final computation back to R. An advantage is that cpp11armadillo codes, including its internal templates, can be adapted to work with Python via <a href="https://pybind11.readthedocs.io/en/stable/index.html" class="external-link">pybind11</a> <span class="citation">(Jakob, Rhinelander, and Moldovan 2016)</span>.</p>
+<p>cpp11armadillo uses <span class="citation">Hansen (2022)</span> notation, meaning that matrices are column-major and vectors are expressed as column vectors (i.e., <span class="math inline">\(N\times1\)</span> matrices).</p>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
+<p>Convention: input R matrices are denoted by <code>x</code>, <code>y</code>, <code>z</code>, and output or intermediate C++ matrices are denoted by <code>X</code>, <code>Y</code>, <code>Z</code>.</p>
 <div class="section level3">
 <h3 id="ordinary-least-squares">Ordinary Least Squares<a class="anchor" aria-label="anchor" href="#ordinary-least-squares"></a>
 </h3>
-<p>Given a design matrix <code>x</code> and and outcome vector <code>y</code>, one function to obtain the OLS estimator as a matrix (i.e., column vector) is:</p>
+<p>Given a design matrix <span class="math inline">\(X\)</span> and and outcome vector <span class="math inline">\(y\)</span>, one function to obtain the OLS estimator <span class="math inline">\(\hat{\beta} = (X^tX)^{-1}(X^tY)\)</span> as a matrix (i.e., column vector) is:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
@@ -150,7 +151,7 @@
 <li>
 <code>as_doubles_matrix()</code> is another cpp11armadillo function to pass a <code>Mat&lt;double&gt;</code> or <code>Mat&lt;int&gt;</code> object from C++ to R.</li>
 </ol>
-<p>Another option is to provide the same computation as a vector:</p>
+<p>Another option is to express the same computation as a vector:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>doubles ols_dbl(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; y, <span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Y = as_Mat(y);</span>
@@ -166,9 +167,8 @@
 <div class="section level3">
 <h3 id="leontief-inverse">Leontief inverse<a class="anchor" aria-label="anchor" href="#leontief-inverse"></a>
 </h3>
-<p>Let <code>X</code> be the input-output matrix, and <code>d</code> the total final demand vector.</p>
-<p>In the Leontief Input-Output model, <code>X</code> and <code>d</code> determine the input requirement matrix <code>A</code> and the Leontief matrix <code>I-A</code>, where <code>I</code> is the identity matrix.</p>
-<p>We can use the data from the leontief package as data inputs.</p>
+<p>The Leontief Input-Output model posits that the equilibrium production in an economy (i.e., country) with <span class="math inline">\(N\)</span> industries (i.e., sectors) is given by <span class="math inline">\((I-A)^{-1}\)</span>, where <span class="math inline">\(I\)</span> is the identity matrix and <span class="math inline">\(A\)</span> contains the input requirement for each industry <span class="math inline">\(1\leq i \leq N\)</span> from any other <span class="math inline">\(1 \leq j \leq N-1\)</span> industry. <span class="math inline">\(A\)</span> is determined by a transaction matrix <span class="math inline">\(X\)</span> that reflects the final transactions between industries and an aggregate demand vector <span class="math inline">\(d\)</span> <span class="citation">(Leontief 1986)</span>.</p>
+<p>We can use the data from the leontief package as data inputs for the example.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pachamaltese.github.io/leontief" class="external-link">leontief</a></span><span class="op">)</span></span>
 <span></span>
@@ -217,6 +217,7 @@
 <div class="section level3">
 <h3 id="eigenvalues">Eigenvalues<a class="anchor" aria-label="anchor" href="#eigenvalues"></a>
 </h3>
+<p>Given a matrix <span class="math inline">\(X\)</span>, an eigenvalue of <span class="math inline">\(X\)</span> is any number <span class="math inline">\(t\)</span> such that <span class="math inline">\(Xv = tv\)</span>, where <span class="math inline">\(v\)</span> is a non-zero vector.</p>
 <p>Two functions to obtain the eigenvalues of a symmetric matrix are:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
@@ -274,7 +275,8 @@
 <div class="section level3">
 <h3 id="capital-asset-pricing-model-capm">Capital Asset Pricing Model (CAPM)<a class="anchor" aria-label="anchor" href="#capital-asset-pricing-model-capm"></a>
 </h3>
-<p>Suppose there are two risky stocks, Pepsi and Coca-Cola, with returns for the last three days given by a matrix <code>r</code> in a market with a risk-free bond <code>f</code> with a 2% return and a risky market portfolio with returns for the last three days given by a vector <code>m</code>. The returns are given by:</p>
+<p>Suppose there are two risky stocks, Pepsi and Coca-Cola, with returns for the last three days given by a matrix <span class="math inline">\(R\)</span> in a market with a risk-free bond with a return <span class="math inline">\(f=2\%\)</span> and a risky market portfolio with returns for the last three days given by a vector <span class="math inline">\(m\)</span>. The CAPM equation is given by <span class="math inline">\(R_i = f + \beta_i(E(m) - f)\)</span>, where <span class="math inline">\(\beta_i = \frac{\text{cov}(R_i, m)}{\text{var}(m)}\)</span>.</p>
+<p>The simulated returns are given by:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">200100</span><span class="op">)</span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fl">0.02</span></span>
@@ -381,10 +383,37 @@
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>  <span class="cf">return</span> y;</span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a>}</span></code></pre></div>
 <p>In order to get the RcppArmadillo function to work, we had to dedicate time to search online about the error <code>function 'enterRNGScope' not provided by package 'Rcpp'</code>, which required to load additional headers in our code on R side.</p>
-<div class="section level3">
-<h3 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
-</h3>
+</div>
+<div class="section level2">
+<h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
+</h2>
 <p>RcppArmadillo has been and will continue to be widely successful. cpp11armadillo is a alternative templated implementation with different design trade-offs and features. Both packages can co-exist and continue to enrich the R community.</p>
+</div>
+<div class="section level2">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references hanging-indent">
+<div id="ref-Eddelbuettel2014">
+<p>Eddelbuettel, Dirk, and Conrad Sanderson. 2014. “RcppArmadillo: Accelerating R with High-Performance C++ Linear Algebra.” <em>Computational Statistics &amp; Data Analysis</em> 71 (March): 1054–63. <a href="https://doi.org/10.1016/j.csda.2013.02.005" class="external-link">https://doi.org/10.1016/j.csda.2013.02.005</a>.</p>
+</div>
+<div id="ref-Hansen2022">
+<p>Hansen, Bruce. 2022. <em>Econometrics</em>. Princeton University Press.</p>
+</div>
+<div id="ref-pybind11">
+<p>Jakob, Wenzel, Jason Rhinelander, and Dean Moldovan. 2016. <em>Pybind11 — Seamless Operability Between C++11 and Python</em>. <a href="https://github.com/pybind/pybind11" class="external-link">https://github.com/pybind/pybind11</a>.</p>
+</div>
+<div id="ref-Leontief1986">
+<p>Leontief, Wassily. 1986. <em>Input-Output Economics</em>. Oxford University Press.</p>
+</div>
+<div id="ref-Sanderson2016">
+<p>Sanderson, Conrad, and Ryan Curtin. 2016. “Armadillo: A Template-Based C++ Library for Linear Algebra.” <em>Journal of Open Source Software</em> 1 (2): 26. <a href="https://doi.org/10.21105/joss.00026" class="external-link">https://doi.org/10.21105/joss.00026</a>.</p>
+</div>
+<div id="ref-cpp11">
+<p>Vaughan, Davis, Jim Hester, and Romain François. 2023. <em>Cpp11: A C++11 Interface for R’s c Interface</em>. <a href="https://CRAN.R-project.org/package=cpp11" class="external-link">https://CRAN.R-project.org/package=cpp11</a>.</p>
+</div>
+<div id="ref-Wickham2019">
+<p>Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. “Welcome to the Tidyverse.” <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686" class="external-link">https://doi.org/10.21105/joss.01686</a>.</p>
+</div>
 </div>
 </div>
   </div>

@@ -1,6 +1,7 @@
 ---
 title: "R and Armadillo integration using the header-only cpp11 R package"
 output: rmarkdown::html_vignette
+bibliography: "references.bib"
 vignette: >
   %\VignetteIndexEntry{intro}
   %\VignetteEngine{knitr::rmarkdown}
@@ -21,18 +22,19 @@ approach towards R and C++ integration by building on top of
 [cpp11](https://cran.r-project.org/package=cpp11), a ground up rewrite of C++
 bindings to R with different design trade-offs and features. cpp11armadillo
 aims at providing an additional layer to put the end-user focus on the
-computation instead of configuration.
+computation instead of configuration [@cpp11].
 
 [Armadillo](https://arma.sourceforge.net/) is a linear algebra library for the
 C++ language, aiming towards a good balance between speed and ease of use. It is
 justified in the fact that C++, in its current form, is very valuable to address
 bottlenecks that we find with interpreted languages such as R and Python but it
-does not provide data structures nor functions for linear algebra. CITE
+does not provide data structures nor functions for linear algebra
+[@Sanderson2016].
 
 [RcppArmadillo](https://cran.r-project.org/package=RcppArmadillo) was first
 published to CRAN in 2010, and it allows to use Armadillo via
 [Rcpp](https://cran.r-project.org/package=Rcpp), a widely extended R package
-to call C++ functions from R.
+to call C++ functions from R [@Eddelbuettel2014].
 
 # Design choices
 
@@ -48,26 +50,31 @@ The design choices in cpp11armadillo are:
   directly in projects, thus simplifying dependency management and distribution.
 
 These ideas reflect a comprehensive effort to provide an efficient interface for
-integrating C++ and R that aligns with the Tidy philosophy CITE, addressing both
-the technical and community-driven aspects that influence software evolution.
+integrating C++ and R that aligns with the Tidy philosophy [@Wickham2019],
+addressing both the technical and community-driven aspects that influence
+software evolution.
 
 These choices have advantages and disadvantages. A disadvantage is that
 cpp11armadillo will not convert data types automatically, the user must be
 explicit about data types, especially when passing data from R to C++ and then
 exporting the final computation back to R. An advantage is that cpp11armadillo
 codes, including its internal templates, can be adapted to work with Python
-via [pybind11](https://pybind11.readthedocs.io/en/stable/index.html). CITE
+via [pybind11](https://pybind11.readthedocs.io/en/stable/index.html)
+[@pybind11].
 
-cpp11armadillo follows HANSEN notation, meaning that vectors are column vectors
-(i.e., Nx1 matrices) and matrices are column-major. It allows flexibility but
-all the examples in this vignette will use this convention for simplicity.
+cpp11armadillo uses @Hansen2022 notation, meaning that matrices are column-major
+and vectors are expressed as column vectors (i.e., $N\times1$ matrices).
 
 # Examples
 
+Convention: input R matrices are denoted by `x`, `y`, `z`, and output or
+intermediate C++ matrices are denoted by `X`, `Y`, `Z`.
+
 ## Ordinary Least Squares
 
-Given a design matrix `x` and and outcome vector `y`, one function to obtain the
-OLS estimator as a matrix (i.e., column vector) is:
+Given a design matrix $X$ and and outcome vector $y$, one function to obtain the
+OLS estimator $\hat{\beta} = (X^tX)^{-1}(X^tY)$ as a matrix (i.e., column
+vector) is:
 
 ```cpp
 #include <armadillo.hpp>
@@ -105,7 +112,7 @@ This code:
 5. `as_doubles_matrix()` is another cpp11armadillo function to pass a
    `Mat<double>` or `Mat<int>` object from C++ to R.
 
-Another option is to provide the same computation as a vector:
+Another option is to express the same computation as a vector:
 
 ```cpp
 [[cpp11::register]]
@@ -123,12 +130,15 @@ doubles ols_dbl(const doubles_matrix<>& y, const doubles_matrix<>& x) {
 
 ## Leontief inverse
 
-Let `X` be the input-output matrix, and `d` the total final demand vector.
+The Leontief Input-Output model posits that the equilibrium production in an
+economy (i.e., country) with $N$ industries (i.e., sectors) is given by
+$(I-A)^{-1}$, where $I$ is the identity matrix and $A$ contains the input
+requirement for each industry $1\leq i \leq N$ from any other $1 \leq j \leq
+N-1$ industry. $A$ is determined by a transaction matrix $X$ that reflects the
+final transactions between industries and an aggregate demand vector $d$
+[@Leontief1986].
 
-In the Leontief Input-Output model, `X` and `d` determine the input requirement
-matrix `A` and the Leontief matrix `I-A`, where `I` is the identity matrix. 
-
-We can use the data from the leontief package as data inputs.
+We can use the data from the leontief package as data inputs for the example.
 
 ```r
 library(leontief)
@@ -184,6 +194,9 @@ L <- leontief_inverse(X, d)
 ```
 
 ## Eigenvalues
+
+Given a matrix $X$, an eigenvalue of $X$ is any number $t$ such that $Xv = tv$,
+where $v$ is a non-zero vector.
 
 Two functions to obtain the eigenvalues of a symmetric matrix are:
 
@@ -260,9 +273,13 @@ list eigen_gen_dbl(const doubles_matrix<>& x) {
 ## Capital Asset Pricing Model (CAPM)
 
 Suppose there are two risky stocks, Pepsi and Coca-Cola, with returns for the
-last three days given by a matrix `r` in a market with a risk-free bond `f` with
-a 2% return and a risky market portfolio with returns for the last three days
-given by a vector `m`. The returns are given by:
+last three days given by a matrix $R$ in a market with a risk-free bond with
+a return $f=2\%$ and a risky market portfolio with returns for the last three
+days given by a vector $m$. The CAPM equation is given by
+$R_i = f + \beta_i(E(m) - f)$, where
+$\beta_i = \frac{\text{cov}(R_i, m)}{\text{var}(m)}$.
+
+The simulated returns are given by:
 
 ```r
 set.seed(200100)
@@ -343,8 +360,10 @@ to search online about the error `function 'enterRNGScope' not provided by
 package 'Rcpp'`, which required to load additional headers in our code on R
 side.
 
-## Conclusion
+# Conclusion
 
 RcppArmadillo has been and will continue to be widely successful. cpp11armadillo
 is a alternative templated implementation with different design trade-offs and
 features. Both packages can co-exist and continue to enrich the R community.
+
+# References
