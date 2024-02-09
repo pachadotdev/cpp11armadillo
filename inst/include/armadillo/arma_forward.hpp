@@ -15,7 +15,6 @@
 // limitations under the License.
 // ------------------------------------------------------------------------
 
-using std::cerr;
 using std::cout;
 using std::endl;
 using std::ios;

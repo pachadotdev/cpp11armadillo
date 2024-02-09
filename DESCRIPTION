@@ -24,7 +24,7 @@ License: Apache License (>= 2)
 BugReports: https://github.com/pachadotdev/cpp11armadillo/issues
 URL: https://pacha.dev/cpp11armadillo/, https://github.com/pachadotdev/cpp11armadillo
 LazyData: true
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.1
 Encoding: UTF-8
 VignetteBuilder: knitr
 Config/testthat/edition: 3

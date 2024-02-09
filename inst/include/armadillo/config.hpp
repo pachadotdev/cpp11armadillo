@@ -236,7 +236,12 @@
 // for compatibility with earlier versions of Armadillo
 #define ARMA_CERR_STREAM ARMA_DEFAULT_OSTREAM
 #else
-#define ARMA_CERR_STREAM std::cerr
+// #define ARMA_CERR_STREAM std::cerr
+// R check() does not like std::cerr
+// I use stopstream() instead of stopstream
+// so that ARMA_CERR_STREAM is a std::ostream&
+// see inst/include/armadillo/r_compatible_messages.hpp
+#define ARMA_CERR_STREAM stopstream()
 #endif
 #endif
 
