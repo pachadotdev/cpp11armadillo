@@ -307,6 +307,65 @@
 <span id="cb11-22"><a href="#cb11-22" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(out);</span>
 <span id="cb11-23"><a href="#cb11-23" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="cholesky-decomposition">Cholesky decomposition<a class="anchor" aria-label="anchor" href="#cholesky-decomposition"></a>
+</h3>
+<p>One function to decompose a matrix <span class="math inline">\(X\)</span> into an upper (lower) triangular matrix <span class="math inline">\(R\)</span> such that <span class="math inline">\(X = R^tR\)</span> (<span class="math inline">\(X = RR^t\)</span>) is:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="pp"># include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="pp"># include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="pp"># include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>doubles_matrix&lt;&gt; chol_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x, <span class="bu">std::</span>string type) {</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; res;</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a>  <span class="cf">if</span> (type == <span class="st">"upper"</span>) {</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a>    res = chol(X);</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a>  } <span class="cf">else</span> <span class="cf">if</span> (type == <span class="st">"lower"</span>) {</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true"></a>    res = chol(X, <span class="st">"lower"</span>);</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true"></a>    stop(<span class="st">"Invalid type"</span>);</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true"></a>  }</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="qr-decomposition">QR decomposition<a class="anchor" aria-label="anchor" href="#qr-decomposition"></a>
+</h3>
+<p>One function to decompose a matrix <span class="math inline">\(X\)</span> into a product <span class="math inline">\(X=QR\)</span> where <span class="math inline">\(Q\)</span> is an orthogonal matrix and <span class="math inline">\(R\)</span> is an upper triangular matrix is:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="pp"># include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="pp"># include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="pp"># include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a>list qr_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x, <span class="dt">bool</span> econ) {</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Q;</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; R;</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true"></a>  <span class="dt">bool</span> computable;</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true"></a>  <span class="cf">if</span> (!econ) {</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true"></a>    computable = qr(Q, R, X);</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true"></a>    computable = qr_econ(Q, R, X);</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true"></a>  }</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true"></a>  <span class="cf">if</span> (!computable) {</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true"></a>    stop(<span class="st">"QR decomposition failed"</span>);</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true"></a>    writable::list out;</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true"></a>    out.push_back({<span class="st">"Q"_nm</span> = as_doubles_matrix(Q)});</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true"></a>    out.push_back({<span class="st">"R"_nm</span> = as_doubles_matrix(R)});</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true"></a>    <span class="cf">return</span> out;</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true"></a>  }</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true"></a>}</span></code></pre></div>
+<p>In this case, the function returns a list of matrices after using two different Armadillo implementations of the QR decomposition.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="benchmarks">Benchmarks<a class="anchor" aria-label="anchor" href="#benchmarks"></a>
@@ -372,16 +431,16 @@
 </table>
 <p>The cpp11armadillo computation was obtained with the <code>eigen_sym_mat()</code> function already shown.</p>
 <p>The RcppArmadillo computation was obtained with the following function:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;RcppArmadillo.h&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="co">// [[Rcpp::depends(RcppArmadillo)]]</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> Rcpp;</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>arma::mat eigen_sym_mat(<span class="at">const</span> arma::mat&amp; x) {</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a>  arma::mat y = eig_sym(x);</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>  <span class="cf">return</span> y;</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;RcppArmadillo.h&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="co">// [[Rcpp::depends(RcppArmadillo)]]</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> Rcpp;</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>arma::mat eigen_sym_mat(<span class="at">const</span> arma::mat&amp; x) {</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a>  arma::mat y = eig_sym(x);</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a>  <span class="cf">return</span> y;</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a>}</span></code></pre></div>
 <p>In order to get the RcppArmadillo function to work, we had to dedicate time to search online about the error <code>function 'enterRNGScope' not provided by package 'Rcpp'</code>, which required to load additional headers in our code on R side.</p>
 </div>
 <div class="section level2">

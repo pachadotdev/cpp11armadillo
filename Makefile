@@ -5,7 +5,7 @@ all:
 
 test: all
 	@echo "make: Entering directory 'cpp11armadillotest/tests/testthat'"
-	@Rscript -e 'devtools::test("cpp11armadillotest")'
+	@Rscript -e 'devtools::clean_dll(); devtools::test("cpp11armadillotest")'
 	@echo "make: Leaving directory 'cpp11armadillotest/tests/testthat'"
 
 clean:
@@ -15,12 +15,13 @@ clean:
 document:
   @Rscript -e 'devtools::document()'
 
-build_site:
+site:
 	@Rscript -e 'pkgdown::build_site()'
 
 install:
 	@Rscript -e 'devtools::install()'
 
 clang_format=`which clang-format-14`
+
 format: $(shell find . -name '*.h') $(shell find . -name '*.hpp') $(shell find . -name '*.cpp')
 	@${clang_format} -i $?

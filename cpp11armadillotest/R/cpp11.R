@@ -47,3 +47,11 @@ leontief_inverse <- function(x, d) {
 capm <- function(r, m, f) {
   .Call(`_cpp11armadillotest_capm`, r, m, f)
 }
+
+chol_mat <- function(x, type) {
+  .Call(`_cpp11armadillotest_chol_mat`, x, type)
+}
+
+qr_mat <- function(x, econ) {
+  .Call(`_cpp11armadillotest_qr_mat`, x, econ)
+}

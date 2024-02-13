@@ -18,3 +18,8 @@
 
 [[cpp11::register]] doubles_matrix<> capm(const doubles_matrix<>& r,
                                           const doubles_matrix<>& m, double f);
+
+[[cpp11::register]] doubles_matrix<> chol_mat(const doubles_matrix<>& x,
+                                              std::string type);
+
+[[cpp11::register]] list qr_mat(const doubles_matrix<>& x, bool econ);

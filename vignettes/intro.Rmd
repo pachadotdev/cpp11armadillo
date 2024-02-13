@@ -316,6 +316,73 @@ doubles_matrix<> capm(const doubles_matrix<>& r, const doubles_matrix<>& m,
 }
 ```
 
+## Cholesky decomposition
+
+One function to decompose a matrix $X$ into an upper (lower) triangular matrix
+$R$ such that $X = R^tR$ ($X = RR^t$) is:
+
+```cpp
+# include <armadillo.hpp>
+# include <cpp11.hpp>
+# include <cpp11armadillo.hpp>
+
+[[cpp11::register]]
+doubles_matrix<> chol_mat(const doubles_matrix<>& x, std::string type) {
+  Mat<double> X = as_Mat(x);
+
+  Mat<double> res;
+
+  if (type == "upper") {
+    res = chol(X);
+  } else if (type == "lower") {
+    res = chol(X, "lower");
+  } else {
+    stop("Invalid type");
+  }
+
+  return as_doubles_matrix(res);
+}
+```
+
+## QR decomposition
+
+One function to decompose a matrix $X$ into a product $X=QR$ where $Q$ is an
+orthogonal matrix and $R$ is an upper triangular matrix is:
+
+```cpp
+# include <armadillo.hpp>
+# include <cpp11.hpp>
+# include <cpp11armadillo.hpp>
+
+[[cpp11::register]]
+list qr_mat(const doubles_matrix<>& x, bool econ) {
+  Mat<double> X = as_Mat(x);
+
+  Mat<double> Q;
+  Mat<double> R;
+
+  bool computable;
+
+  if (!econ) {
+    computable = qr(Q, R, X);
+  } else {
+    computable = qr_econ(Q, R, X);
+  }
+
+  if (!computable) {
+    stop("QR decomposition failed");
+  } else {
+    writable::list out;
+    out.push_back({"Q"_nm = as_doubles_matrix(Q)});
+    out.push_back({"R"_nm = as_doubles_matrix(R)});
+    return out;
+  }
+}
+```
+
+In this case, the function returns a list of matrices after using two different
+Armadillo implementations of the QR decomposition.
+
 # Benchmarks
 
 A proper benchmark is to compute eigenvalues for large matrices. Both
