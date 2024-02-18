@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cpp11armadillo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2</span>
       </span>
     </div>
 
@@ -118,11 +118,7 @@
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p>Convention: input R matrices are denoted by <code>x</code>, <code>y</code>, <code>z</code>, and output or intermediate C++ matrices are denoted by <code>X</code>, <code>Y</code>, <code>Z</code>.</p>
-<div class="section level3">
-<h3 id="ordinary-least-squares">Ordinary Least Squares<a class="anchor" aria-label="anchor" href="#ordinary-least-squares"></a>
-</h3>
-<p>Given a design matrix <span class="math inline">\(X\)</span> and and outcome vector <span class="math inline">\(y\)</span>, one function to obtain the OLS estimator <span class="math inline">\(\hat{\beta} = (X^tX)^{-1}(X^tY)\)</span> as a matrix (i.e., column vector) is:</p>
+<p>Convention: input R matrices are denoted by <code>x</code>, <code>y</code>, <code>z</code>, and output or intermediate C++ matrices are denoted by <code>X</code>, <code>Y</code>, <code>Z</code>. The example functions can be called from R scripts and should have proper headers as in the following code:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
@@ -130,152 +126,143 @@
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> arma;</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> cpp11;</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>doubles_matrix&lt;&gt; ols_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; y, <span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Y = as_Mat(y);</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; XtX = X.t() * X; <span class="co">// X'X</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; XtX_inv = inv(XtX); <span class="co">// (X'X)^(-1)</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; beta = XtX_inv * X.t() * Y; <span class="co">// (X'X)^(-1)(X'Y)</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(beta);</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>}</span></code></pre></div>
-<p>This code:</p>
-<ol style="list-style-type: decimal">
-<li>Includes the Armadillo, cpp11 and cpp11armadillo libraries and allows interfacing C++ with R (i.e., the <code>#include &lt;cpp11.hpp&gt;</code>).</li>
-<li>Loads the corresponding namespaces (i.e., the <code>using namespace cpp11</code>) in order to simplify the notation (i.e., using <code>Mat</code> instead of <code>arma::Mat</code>).</li>
-<li>Declares a function <code>ols_mat()</code> that takes inputs from R, does the computation on C++ side, and it can be called from R scripts. The use of <code>const</code> and <code>&amp;</code> are specific to the C++ language and allow to pass data from R to C++ while avoiding copying the data, therefore saving time and memory.</li>
-<li>
-<code>as_Mat()</code> is a cpp11armadillo function to pass a <code>matrix</code> object from R to C++ and that Armadillo can read.</li>
-<li>
-<code>as_doubles_matrix()</code> is another cpp11armadillo function to pass a <code>Mat&lt;double&gt;</code> or <code>Mat&lt;int&gt;</code> object from C++ to R.</li>
-</ol>
-<p>Another option is to express the same computation as a vector:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>doubles ols_dbl(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; y, <span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Y = as_Mat(y);</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; XtX = X.t() * X;</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; XtX_inv = inv(XtX);</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; beta = XtX_inv * X.t() * Y;</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(beta);</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>}</span></code></pre></div>
-</div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] <span class="co">// allows using the function in R</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>doubles_matrix&lt;&gt; solve_mat(doubles_matrix&lt;&gt; x) {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Y = as_Mat(x); <span class="co">// convert from R to C++</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Yinv = inv(Y); <span class="co">// Y^(-1)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(Yinv); <span class="co">// convert from C++ to R</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>}</span></code></pre></div>
+<p>This example includes the Armadillo, cpp11 and cpp11armadillo libraries, and allows interfacing C++ with R (i.e., the <code>#include &lt;cpp11.hpp&gt;</code>). It also loads the corresponding namespaces (i.e., the <code>using namespace cpp11</code>) in order to simplify the notation (i.e., using <code>Mat</code> instead of <code>arma::Mat</code>).</p>
+<p>The <code>as_Mat()</code> function is provided by cpp11armadillo to pass a <code>matrix</code> object from R to C++ and that Armadillo can read.</p>
+<p>The <code>as_doubles_matrix()</code> function is also provided by cpp11armadillo to pass a <code>Mat&lt;double&gt;</code> or <code>Mat&lt;int&gt;</code> object from C++ to R.</p>
 <div class="section level3">
-<h3 id="leontief-inverse">Leontief inverse<a class="anchor" aria-label="anchor" href="#leontief-inverse"></a>
+<h3 id="ordinary-least-squares">Ordinary Least Squares<a class="anchor" aria-label="anchor" href="#ordinary-least-squares"></a>
 </h3>
-<p>The Leontief Input-Output model posits that the equilibrium production in an economy (i.e., country) with <span class="math inline">\(N\)</span> industries (i.e., sectors) is given by <span class="math inline">\((I-A)^{-1}\)</span>, where <span class="math inline">\(I\)</span> is the identity matrix and <span class="math inline">\(A\)</span> contains the input requirement for each industry <span class="math inline">\(1\leq i \leq N\)</span> from any other <span class="math inline">\(1 \leq j \leq N-1\)</span> industry. <span class="math inline">\(A\)</span> is determined by a transaction matrix <span class="math inline">\(X\)</span> that reflects the final transactions between industries and an aggregate demand vector <span class="math inline">\(d\)</span> <span class="citation">(Leontief 1986)</span>.</p>
-<p>We can use the data from the leontief package as data inputs for the example.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pachamaltese.github.io/leontief" class="external-link">leontief</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">transaction_matrix</span></span>
-<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">wage_demand_matrix</span><span class="op">[</span>, <span class="st">"final_total_demand"</span><span class="op">]</span></span></code></pre></div>
-<p>One function to obtain the Leontief inverse is:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> arma;</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> cpp11;</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>doubles_matrix&lt;&gt; leontief_inverse(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x, </span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>                                  <span class="at">const</span> doubles_matrix&lt;&gt;&amp; d) {</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; D = as_Mat(d);</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>  <span class="co">// Check dimensions</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>  <span class="dt">bool</span> X_square = (X.n_rows == X.n_cols);</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>  <span class="dt">bool</span> compatible_dimensions = (X.n_rows == D.n_rows);</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a>  <span class="cf">if</span> (X_square == <span class="kw">false</span>) {</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a>    stop(<span class="st">"x must be square."</span>);</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a>  }</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a>  <span class="cf">if</span> (compatible_dimensions == <span class="kw">false</span>) {</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a>    stop(<span class="st">"d must have the same number of elements as the number of rows in x."</span>);</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a>  }</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true"></a>  <span class="co">// Input requirement matrix</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Y = zeros(D.n_rows, D.n_rows);</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true"></a>  Y.each_col() += D;</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; A = X / Y.t();</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; I = eye(X.n_rows, X.n_cols); <span class="co">// Identity matrix</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; out = inv(I - A); <span class="co">// Leontief inverse</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true"></a></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(out);</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true"></a>}</span></code></pre></div>
-<p>We can call this function from R:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">L</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://pachamaltese.github.io/leontief/reference/leontief_inverse.html" class="external-link">leontief_inverse</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">d</span><span class="op">)</span></span></code></pre></div>
+<p>Given a design matrix <span class="math inline">\(X\)</span> and and outcome vector <span class="math inline">\(y\)</span>, one function to obtain the OLS estimator <span class="math inline">\(\hat{\beta} = (X^tX)^{-1}(X^tY)\)</span> as a matrix (i.e., column vector) is:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>doubles_matrix&lt;&gt; ols_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; y, <span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Y = as_Mat(y);</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; XtX = X.t() * X; <span class="co">// X'X</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; XtX_inv = inv(XtX); <span class="co">// (X'X)^(-1)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; beta = XtX_inv * X.t() * Y; <span class="co">// (X'X)^(-1)(X'Y)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(beta);</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>}</span></code></pre></div>
+<p>The <code>ols_mat()</code> function receives inputs from R, does the computation on C++ side. The use of <code>const</code> and <code>&amp;</code> are specific to the C++ language and allow to pass data from R to C++ while avoiding copying the data, therefore saving time and memory.</p>
+<p>Another option is to express the same computation as a vector:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>doubles ols_dbl(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; y, <span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Y = as_Mat(y);</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; XtX = X.t() * X;</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; XtX_inv = inv(XtX);</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; beta = XtX_inv * X.t() * Y;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(beta);</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="eigenvalues">Eigenvalues<a class="anchor" aria-label="anchor" href="#eigenvalues"></a>
 </h3>
 <p>Given a matrix <span class="math inline">\(X\)</span>, an eigenvalue of <span class="math inline">\(X\)</span> is any number <span class="math inline">\(t\)</span> such that <span class="math inline">\(Xv = tv\)</span>, where <span class="math inline">\(v\)</span> is a non-zero vector.</p>
 <p>Two functions to obtain the eigenvalues of a symmetric matrix are:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> arma;</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> cpp11;</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>doubles_matrix&lt;&gt; eigen_sym_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y = eig_sym(X);</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(y);</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>}</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a>doubles eigen_sym_dbl(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y = eig_sym(X);</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(y);</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true"></a>}</span></code></pre></div>
-<p>When the input matrix is symmetric, the eigenvalues are complex numbers. cpp11armadillo provides a wrapper to return the real and imaginary parts of the eigenvalues as list:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>doubles_matrix&lt;&gt; eigen_sym_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y = eig_sym(X);</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(y);</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>}</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>doubles eigen_sym_dbl(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y = eig_sym(X);</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(y);</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>}</span></code></pre></div>
+<p>When the input matrix is not symmetric, the eigenvalues are complex numbers. cpp11armadillo provides a wrapper to return the real and imaginary parts of the eigenvalues as a list:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>list eigen_gen_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  Mat&lt;complex&lt;<span class="dt">double</span>&gt;&gt; y = eig_gen(X);</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>  list out = as_complex_matrix(y);</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>}</span></code></pre></div>
+<p>The idea of cpp11armadillo is to integrate with cpp11 to provide flexibility, and the previous result can be obtained without using the <code>as_complex_matrix()</code> wrapper:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>list eigen_gen_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>  Mat&lt;complex&lt;<span class="dt">double</span>&gt;&gt; y = eig_gen(X);</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y_real = real(y);</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y_imag = imag(y);</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>  writable::list out;</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>  out.push_back({<span class="st">"real"_nm</span> = as_doubles_matrix(y_real)});</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>  out.push_back({<span class="st">"imag"_nm</span> = as_doubles_matrix(y_imag)});</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a>}</span></code></pre></div>
+<p>As with OLS, in this case it is possible to return a list of vectors instead of a matrices:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>list eigen_gen_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>list eigen_gen_dbl(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>  Mat&lt;complex&lt;<span class="dt">double</span>&gt;&gt; y = eig_gen(X);</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>  list out = as_complex_matrix(y);</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>  Col&lt;complex&lt;<span class="dt">double</span>&gt;&gt; y = eig_gen(X);</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>  list out = as_complex_doubles(y);</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>}</span></code></pre></div>
-<p>The idea of cpp11armadillo is to integrate with cpp11 to provide flexibility. The same can be achieved without using the <code>as_complex_matrix()</code> wrapper:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>list eigen_gen_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>  Mat&lt;complex&lt;<span class="dt">double</span>&gt;&gt; y = eig_gen(X);</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y_real = real(y);</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y_imag = imag(y);</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a>  writable::list out;</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>  out.push_back({<span class="st">"real"_nm</span> = as_doubles_matrix(y_real)});</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a>  out.push_back({<span class="st">"imag"_nm</span> = as_doubles_matrix(y_imag)});</span>
+</div>
+<div class="section level3">
+<h3 id="cholesky-decomposition">Cholesky decomposition<a class="anchor" aria-label="anchor" href="#cholesky-decomposition"></a>
+</h3>
+<p>One function to decompose a matrix <span class="math inline">\(X\)</span> into an upper (lower) triangular matrix <span class="math inline">\(R\)</span> such that <span class="math inline">\(X = R^tR\)</span> (<span class="math inline">\(X = RR^t\)</span>) is:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>doubles_matrix&lt;&gt; chol_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x, <span class="bu">std::</span>string type) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; res;</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>  <span class="cf">if</span> (type == <span class="st">"upper"</span>) {</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>    res = chol(X);</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>  } <span class="cf">else</span> <span class="cf">if</span> (type == <span class="st">"lower"</span>) {</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a>    res = chol(X, <span class="st">"lower"</span>);</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>    stop(<span class="st">"Invalid type"</span>);</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a>  }</span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a>}</span></code></pre></div>
-<p>As with OLS, it is possible to return a list of vectors instead of a matrices:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>list eigen_gen_dbl(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>  Col&lt;complex&lt;<span class="dt">double</span>&gt;&gt; y = eig_gen(X);</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>  list out = as_complex_doubles(y);</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>}</span></code></pre></div>
+<p>This function uses the second argument to avoid creating a new function for the lower triangular decomposition.</p>
+</div>
+<div class="section level3">
+<h3 id="qr-decomposition">QR decomposition<a class="anchor" aria-label="anchor" href="#qr-decomposition"></a>
+</h3>
+<p>One function to decompose a matrix <span class="math inline">\(X\)</span> into a product <span class="math inline">\(X=QR\)</span> where <span class="math inline">\(Q\)</span> is an orthogonal matrix and <span class="math inline">\(R\)</span> is an upper triangular matrix is:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>list qr_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x, <span class="dt">bool</span> econ) {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Q;</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; R;</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>  <span class="dt">bool</span> computable;</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a>  <span class="cf">if</span> (!econ) {</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a>    computable = qr(Q, R, X);</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a>    computable = qr_econ(Q, R, X);</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a>  }</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a>  <span class="cf">if</span> (!computable) {</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a>    stop(<span class="st">"QR decomposition failed"</span>);</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a>    writable::list out;</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a>    out.push_back({<span class="st">"Q"_nm</span> = as_doubles_matrix(Q)});</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a>    out.push_back({<span class="st">"R"_nm</span> = as_doubles_matrix(R)});</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true"></a>    <span class="cf">return</span> out;</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true"></a>  }</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true"></a>}</span></code></pre></div>
+<p>In this case, the function returns a list of matrices after using the second argument to use two different Armadillo implementations of the QR decomposition.</p>
 </div>
 <div class="section level3">
 <h3 id="capital-asset-pricing-model-capm">Capital Asset Pricing Model (CAPM)<a class="anchor" aria-label="anchor" href="#capital-asset-pricing-model-capm"></a>
 </h3>
-<p>Suppose there are two risky stocks, Pepsi and Coca-Cola, with returns for the last three days given by a matrix <span class="math inline">\(R\)</span> in a market with a risk-free bond with a return <span class="math inline">\(f=2\%\)</span> and a risky market portfolio with returns for the last three days given by a vector <span class="math inline">\(m\)</span>. The CAPM equation is given by <span class="math inline">\(R_i = f + \beta_i(E(m) - f)\)</span>, where <span class="math inline">\(\beta_i = \frac{\text{cov}(R_i, m)}{\text{var}(m)}\)</span>.</p>
+<p>Suppose there are two risky stocks, Pepsi and Coca-Cola, with returns for the last three days given by a matrix <span class="math inline">\(R\)</span> in a market with a risk-free bond with a return <span class="math inline">\(f=2\%\)</span> and a risky market portfolio with returns for the last three days given by a vector <span class="math inline">\(m\)</span>. The CAPM equation is given by <span class="math inline">\(R_i = f + \beta_i(E(m) - f)\)</span>, where <span class="math inline">\(\beta_i = \frac{\text{cov}(R_i, m)}{\text{var}(m)}\)</span> <span class="citation">(Bodie, Kane, and Marcus 2010)</span>.</p>
 <p>The simulated returns are given by:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">200100</span><span class="op">)</span></span>
@@ -283,88 +270,59 @@
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0.1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">0</span>, <span class="fl">0.1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p>One function to obtain the CAPM betas for the two stocks is:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> arma;</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> cpp11;</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a>doubles_matrix&lt;&gt; capm(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; r, <span class="at">const</span> doubles_matrix&lt;&gt;&amp; m,</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a>                      <span class="dt">double</span> f) {</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; R = as_Mat(r);</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; M = as_Mat(m);</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; F = ones&lt;Mat&lt;<span class="dt">double</span>&gt;&gt;(R.n_cols, <span class="dv">1</span>) * f;</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true"></a></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true"></a>  <span class="co">// Market average return and CAPM betas</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; M_avg = ones&lt;Mat&lt;<span class="dt">double</span>&gt;&gt;(R.n_cols, <span class="dv">1</span>) * as_scalar(mean(M, <span class="dv">0</span>));</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; beta = cov(R, M) / as_scalar(var(M));</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true"></a></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true"></a>  <span class="co">// Expected returns (% = pairwise multiplication)</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; out = F + beta % (M_avg - F);</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true"></a></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(out);</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>doubles_matrix&lt;&gt; capm(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; r, <span class="at">const</span> doubles_matrix&lt;&gt;&amp; m,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>                      <span class="dt">double</span> f) {</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; R = as_Mat(r);</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; M = as_Mat(m);</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; F = ones&lt;Mat&lt;<span class="dt">double</span>&gt;&gt;(R.n_cols, <span class="dv">1</span>) * f;</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a>  <span class="co">// Market average return and CAPM betas</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; M_avg = ones&lt;Mat&lt;<span class="dt">double</span>&gt;&gt;(R.n_cols, <span class="dv">1</span>) * as_scalar(mean(M, <span class="dv">0</span>));</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; beta = cov(R, M) / as_scalar(var(M));</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true"></a>  <span class="co">// Expected returns (% = pairwise multiplication)</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; out = F + beta % (M_avg - F);</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(out);</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="cholesky-decomposition">Cholesky decomposition<a class="anchor" aria-label="anchor" href="#cholesky-decomposition"></a>
+<h3 id="leontief-inverse">Leontief inverse<a class="anchor" aria-label="anchor" href="#leontief-inverse"></a>
 </h3>
-<p>One function to decompose a matrix <span class="math inline">\(X\)</span> into an upper (lower) triangular matrix <span class="math inline">\(R\)</span> such that <span class="math inline">\(X = R^tR\)</span> (<span class="math inline">\(X = RR^t\)</span>) is:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="pp"># include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="pp"># include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="pp"># include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>doubles_matrix&lt;&gt; chol_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x, <span class="bu">std::</span>string type) {</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; res;</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a>  <span class="cf">if</span> (type == <span class="st">"upper"</span>) {</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a>    res = chol(X);</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a>  } <span class="cf">else</span> <span class="cf">if</span> (type == <span class="st">"lower"</span>) {</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true"></a>    res = chol(X, <span class="st">"lower"</span>);</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true"></a>    stop(<span class="st">"Invalid type"</span>);</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true"></a>  }</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true"></a></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true"></a>}</span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="qr-decomposition">QR decomposition<a class="anchor" aria-label="anchor" href="#qr-decomposition"></a>
-</h3>
-<p>One function to decompose a matrix <span class="math inline">\(X\)</span> into a product <span class="math inline">\(X=QR\)</span> where <span class="math inline">\(Q\)</span> is an orthogonal matrix and <span class="math inline">\(R\)</span> is an upper triangular matrix is:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="pp"># include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="pp"># include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="pp"># include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]]</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a>list qr_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x, <span class="dt">bool</span> econ) {</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Q;</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; R;</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true"></a>  <span class="dt">bool</span> computable;</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true"></a>  <span class="cf">if</span> (!econ) {</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true"></a>    computable = qr(Q, R, X);</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true"></a>    computable = qr_econ(Q, R, X);</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true"></a>  }</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true"></a></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true"></a>  <span class="cf">if</span> (!computable) {</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true"></a>    stop(<span class="st">"QR decomposition failed"</span>);</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true"></a>    writable::list out;</span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true"></a>    out.push_back({<span class="st">"Q"_nm</span> = as_doubles_matrix(Q)});</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true"></a>    out.push_back({<span class="st">"R"_nm</span> = as_doubles_matrix(R)});</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true"></a>    <span class="cf">return</span> out;</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true"></a>  }</span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true"></a>}</span></code></pre></div>
-<p>In this case, the function returns a list of matrices after using two different Armadillo implementations of the QR decomposition.</p>
+<p>The Leontief Input-Output model posits that the equilibrium production in an economy (i.e., country) with <span class="math inline">\(N\)</span> industries (i.e., sectors) is given by <span class="math inline">\((I-A)^{-1}\)</span>, where <span class="math inline">\(I\)</span> is the identity matrix and <span class="math inline">\(A\)</span> contains the input requirement for each industry <span class="math inline">\(1\leq i \leq N\)</span> from any other <span class="math inline">\(1 \leq j \leq N-1\)</span> industry. <span class="math inline">\(A\)</span> is determined by a transaction matrix <span class="math inline">\(X\)</span> that reflects the final transactions between industries and an aggregate demand vector <span class="math inline">\(d\)</span> <span class="citation">(Leontief 1986)</span>.</p>
+<p>We can use the data from the leontief package as data inputs for the example.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pachamaltese.github.io/leontief" class="external-link">leontief</a></span><span class="op">)</span></span>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">transaction_matrix</span></span>
+<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">wage_demand_matrix</span><span class="op">[</span>, <span class="st">"final_total_demand"</span><span class="op">]</span></span></code></pre></div>
+<p>One function to obtain the Leontief inverse is:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a>doubles_matrix&lt;&gt; leontief_inverse(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>                                  <span class="at">const</span> doubles_matrix&lt;&gt;&amp; d) {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; D = as_Mat(d);</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a>  <span class="co">// Check dimensions</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a>  <span class="dt">bool</span> X_square = (X.n_rows == X.n_cols);</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a>  <span class="dt">bool</span> compatible_dimensions = (X.n_rows == D.n_rows);</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true"></a>  <span class="cf">if</span> (X_square == <span class="kw">false</span>) {</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true"></a>    stop(<span class="st">"x must be square."</span>);</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true"></a>  }</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true"></a>  <span class="cf">if</span> (compatible_dimensions == <span class="kw">false</span>) {</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true"></a>    stop(<span class="st">"d must have the same number of elements as the number of rows in x."</span>);</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true"></a>  }</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true"></a>  <span class="co">// Input requirement matrix</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Y = zeros(D.n_rows, D.n_rows);</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true"></a>  Y.each_col() += D;</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; A = X / Y.t();</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; I = eye(X.n_rows, X.n_cols); <span class="co">// Identity matrix</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; out = inv(I - A); <span class="co">// Leontief inverse</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true"></a></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(out);</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -452,6 +410,9 @@
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references hanging-indent">
+<div id="ref-Bodie2010">
+<p>Bodie, Z., A. Kane, and A. Marcus. 2010. <em>Investments</em>. McGraw-Hill Education.</p>
+</div>
 <div id="ref-Eddelbuettel2014">
 <p>Eddelbuettel, Dirk, and Conrad Sanderson. 2014. “RcppArmadillo: Accelerating R with High-Performance C++ Linear Algebra.” <em>Computational Statistics &amp; Data Analysis</em> 71 (March): 1054–63. <a href="https://doi.org/10.1016/j.csda.2013.02.005" class="external-link">https://doi.org/10.1016/j.csda.2013.02.005</a>.</p>
 </div>

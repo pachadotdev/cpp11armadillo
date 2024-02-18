@@ -68,13 +68,9 @@ and vectors are expressed as column vectors (i.e., $N\times1$ matrices).
 # Examples
 
 Convention: input R matrices are denoted by `x`, `y`, `z`, and output or
-intermediate C++ matrices are denoted by `X`, `Y`, `Z`.
-
-## Ordinary Least Squares
-
-Given a design matrix $X$ and and outcome vector $y$, one function to obtain the
-OLS estimator $\hat{\beta} = (X^tX)^{-1}(X^tY)$ as a matrix (i.e., column
-vector) is:
+intermediate C++ matrices are denoted by `X`, `Y`, `Z`. The example functions can
+be called from R scripts and should have proper headers as in the following
+code:
 
 ```cpp
 #include <armadillo.hpp>
@@ -84,7 +80,32 @@ vector) is:
 using namespace arma;
 using namespace cpp11;
 
-[[cpp11::register]]
+[[cpp11::register]] // allows using the function in R
+doubles_matrix<> solve_mat(doubles_matrix<> x) {
+  Mat<double> Y = as_Mat(x); // convert from R to C++
+  Mat<double> Yinv = inv(Y); // Y^(-1)
+  return as_doubles_matrix(Yinv); // convert from C++ to R
+}
+```
+
+This example includes the Armadillo, cpp11 and cpp11armadillo libraries, and
+allows interfacing C++ with R (i.e., the `#include <cpp11.hpp>`). It also loads
+the corresponding namespaces (i.e., the `using namespace cpp11`) in order to
+simplify the notation (i.e., using `Mat` instead of `arma::Mat`).
+
+The `as_Mat()` function is provided by cpp11armadillo to pass a `matrix` object
+from R to C++ and that Armadillo can read.
+
+The `as_doubles_matrix()` function is also provided by cpp11armadillo to pass a
+`Mat<double>` or `Mat<int>` object from C++ to R.
+
+## Ordinary Least Squares
+
+Given a design matrix $X$ and and outcome vector $y$, one function to obtain the
+OLS estimator $\hat{\beta} = (X^tX)^{-1}(X^tY)$ as a matrix (i.e., column
+vector) is:
+
+```cpp
 doubles_matrix<> ols_mat(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   Mat<double> Y = as_Mat(y);
   Mat<double> X = as_Mat(x);
@@ -97,25 +118,14 @@ doubles_matrix<> ols_mat(const doubles_matrix<>& y, const doubles_matrix<>& x) {
 }
 ```
 
-This code:
-
-1. Includes the Armadillo, cpp11 and cpp11armadillo libraries and allows
-   interfacing C++ with R (i.e., the `#include <cpp11.hpp>`).
-2. Loads the corresponding namespaces (i.e., the `using namespace cpp11`)
-   in order to simplify the notation (i.e., using `Mat` instead of `arma::Mat`).
-3. Declares a function `ols_mat()` that takes inputs from R, does the
-   computation on C++ side, and it can be called from R scripts. The use of
-   `const` and `&` are specific to the C++ language and allow to pass data from
-   R to C++ while avoiding copying the data, therefore saving time and memory.
-4. `as_Mat()` is a cpp11armadillo function to pass a `matrix` object from R to
-   C++ and that Armadillo can read.
-5. `as_doubles_matrix()` is another cpp11armadillo function to pass a
-   `Mat<double>` or `Mat<int>` object from C++ to R.
+The `ols_mat()` function receives inputs from R, does the computation on C++
+side. The use of `const` and `&` are specific to the C++ language and allow to
+pass data from R to C++ while avoiding copying the data, therefore saving time
+and memory.
 
 Another option is to express the same computation as a vector:
 
 ```cpp
-[[cpp11::register]]
 doubles ols_dbl(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   Mat<double> Y = as_Mat(y);
   Mat<double> X = as_Mat(x);
@@ -125,6 +135,172 @@ doubles ols_dbl(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   Mat<double> beta = XtX_inv * X.t() * Y;
 
   return as_doubles(beta);
+}
+```
+
+## Eigenvalues
+
+Given a matrix $X$, an eigenvalue of $X$ is any number $t$ such that $Xv = tv$,
+where $v$ is a non-zero vector.
+
+Two functions to obtain the eigenvalues of a symmetric matrix are:
+
+```cpp
+doubles_matrix<> eigen_sym_mat(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+  Mat<double> y = eig_sym(X);
+  return as_doubles_matrix(y);
+}
+
+doubles eigen_sym_dbl(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+  Mat<double> y = eig_sym(X);
+  return as_doubles(y);
+}
+```
+
+When the input matrix is not symmetric, the eigenvalues are complex numbers.
+cpp11armadillo provides a wrapper to return the real and imaginary parts of the
+eigenvalues as a list:
+
+```cpp
+list eigen_gen_mat(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+  Mat<complex<double>> y = eig_gen(X);
+  list out = as_complex_matrix(y);
+  return out;
+}
+```
+
+The idea of cpp11armadillo is to integrate with cpp11 to provide flexibility,
+and the previous result can be obtained without using the `as_complex_matrix()`
+wrapper:
+
+```cpp
+list eigen_gen_mat(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+
+  Mat<complex<double>> y = eig_gen(X);
+
+  Mat<double> y_real = real(y);
+  Mat<double> y_imag = imag(y);
+
+  writable::list out;
+  out.push_back({"real"_nm = as_doubles_matrix(y_real)});
+  out.push_back({"imag"_nm = as_doubles_matrix(y_imag)});
+
+  return out;
+}
+```
+
+As with OLS, in this case it is possible to return a list of vectors instead of
+a matrices:
+
+```cpp
+[[cpp11::register]]
+list eigen_gen_dbl(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+  Col<complex<double>> y = eig_gen(X);
+  list out = as_complex_doubles(y);
+  return out;
+}
+```
+
+## Cholesky decomposition
+
+One function to decompose a matrix $X$ into an upper (lower) triangular matrix
+$R$ such that $X = R^tR$ ($X = RR^t$) is:
+
+```cpp
+doubles_matrix<> chol_mat(const doubles_matrix<>& x, std::string type) {
+  Mat<double> X = as_Mat(x);
+
+  Mat<double> res;
+
+  if (type == "upper") {
+    res = chol(X);
+  } else if (type == "lower") {
+    res = chol(X, "lower");
+  } else {
+    stop("Invalid type");
+  }
+
+  return as_doubles_matrix(res);
+}
+```
+
+This function uses the second argument to avoid creating a new function for the
+lower triangular decomposition.
+
+## QR decomposition
+
+One function to decompose a matrix $X$ into a product $X=QR$ where $Q$ is an
+orthogonal matrix and $R$ is an upper triangular matrix is:
+
+```cpp
+list qr_mat(const doubles_matrix<>& x, bool econ) {
+  Mat<double> X = as_Mat(x);
+
+  Mat<double> Q;
+  Mat<double> R;
+
+  bool computable;
+
+  if (!econ) {
+    computable = qr(Q, R, X);
+  } else {
+    computable = qr_econ(Q, R, X);
+  }
+
+  if (!computable) {
+    stop("QR decomposition failed");
+  } else {
+    writable::list out;
+    out.push_back({"Q"_nm = as_doubles_matrix(Q)});
+    out.push_back({"R"_nm = as_doubles_matrix(R)});
+    return out;
+  }
+}
+```
+
+In this case, the function returns a list of matrices after using the second
+argument to use two different Armadillo implementations of the QR decomposition.
+
+## Capital Asset Pricing Model (CAPM)
+
+Suppose there are two risky stocks, Pepsi and Coca-Cola, with returns for the
+last three days given by a matrix $R$ in a market with a risk-free bond with
+a return $f=2\%$ and a risky market portfolio with returns for the last three
+days given by a vector $m$. The CAPM equation is given by
+$R_i = f + \beta_i(E(m) - f)$, where
+$\beta_i = \frac{\text{cov}(R_i, m)}{\text{var}(m)}$ [@Bodie2010].
+
+The simulated returns are given by:
+
+```r
+set.seed(200100)
+f <- 0.02
+m <- matrix(rnorm(3, 0, 0.1), nrow = 3, ncol = 1)
+r <- matrix(rnorm(6, 0, 0.1), nrow = 3, ncol = 2)
+```
+
+One function to obtain the CAPM betas for the two stocks is:
+
+```cpp
+doubles_matrix<> capm(const doubles_matrix<>& r, const doubles_matrix<>& m,
+                      double f) {
+  Mat<double> R = as_Mat(r);
+  Mat<double> M = as_Mat(m);
+  Mat<double> F = ones<Mat<double>>(R.n_cols, 1) * f;
+
+  // Market average return and CAPM betas
+  Mat<double> M_avg = ones<Mat<double>>(R.n_cols, 1) * as_scalar(mean(M, 0));
+  Mat<double> beta = cov(R, M) / as_scalar(var(M));
+
+  // Expected returns (% = pairwise multiplication)
+  Mat<double> out = F + beta % (M_avg - F);
+
+  return as_doubles_matrix(out);
 }
 ```
 
@@ -142,7 +318,6 @@ We can use the data from the leontief package as data inputs for the example.
 
 ```r
 library(leontief)
-
 X <- transaction_matrix
 d <- wage_demand_matrix[, "final_total_demand"]
 ```
@@ -150,14 +325,6 @@ d <- wage_demand_matrix[, "final_total_demand"]
 One function to obtain the Leontief inverse is:
 
 ```cpp
-#include <armadillo.hpp>
-#include <cpp11.hpp>
-#include <cpp11armadillo.hpp>
-
-using namespace arma;
-using namespace cpp11;
-
-[[cpp11::register]]
 doubles_matrix<> leontief_inverse(const doubles_matrix<>& x, 
                                   const doubles_matrix<>& d) {
   Mat<double> X = as_Mat(x);
@@ -186,202 +353,6 @@ doubles_matrix<> leontief_inverse(const doubles_matrix<>& x,
   return as_doubles_matrix(out);
 }
 ```
-
-We can call this function from R:
-
-```r
-L <- leontief_inverse(X, d)
-```
-
-## Eigenvalues
-
-Given a matrix $X$, an eigenvalue of $X$ is any number $t$ such that $Xv = tv$,
-where $v$ is a non-zero vector.
-
-Two functions to obtain the eigenvalues of a symmetric matrix are:
-
-```cpp
-#include <armadillo.hpp>
-#include <cpp11.hpp>
-#include <cpp11armadillo.hpp>
-
-using namespace arma;
-using namespace cpp11;
-
-[[cpp11::register]]
-doubles_matrix<> eigen_sym_mat(const doubles_matrix<>& x) {
-  Mat<double> X = as_Mat(x);
-  Mat<double> y = eig_sym(X);
-  return as_doubles_matrix(y);
-}
-
-[[cpp11::register]]
-doubles eigen_sym_dbl(const doubles_matrix<>& x) {
-  Mat<double> X = as_Mat(x);
-  Mat<double> y = eig_sym(X);
-  return as_doubles(y);
-}
-```
-
-When the input matrix is symmetric, the eigenvalues are complex numbers.
-cpp11armadillo provides a wrapper to return the real and imaginary parts of the
-eigenvalues as list:
-
-```cpp
-[[cpp11::register]]
-list eigen_gen_mat(const doubles_matrix<>& x) {
-  Mat<double> X = as_Mat(x);
-  Mat<complex<double>> y = eig_gen(X);
-  list out = as_complex_matrix(y);
-  return out;
-}
-```
-
-The idea of cpp11armadillo is to integrate with cpp11 to provide flexibility.
-The same can be achieved without using the `as_complex_matrix()` wrapper:
-
-```cpp
-[[cpp11::register]]
-list eigen_gen_mat(const doubles_matrix<>& x) {
-  Mat<double> X = as_Mat(x);
-
-  Mat<complex<double>> y = eig_gen(X);
-
-  Mat<double> y_real = real(y);
-  Mat<double> y_imag = imag(y);
-
-  writable::list out;
-  out.push_back({"real"_nm = as_doubles_matrix(y_real)});
-  out.push_back({"imag"_nm = as_doubles_matrix(y_imag)});
-
-  return out;
-}
-```
-
-As with OLS, it is possible to return a list of vectors instead of a matrices:
-
-```cpp
-[[cpp11::register]]
-list eigen_gen_dbl(const doubles_matrix<>& x) {
-  Mat<double> X = as_Mat(x);
-  Col<complex<double>> y = eig_gen(X);
-  list out = as_complex_doubles(y);
-  return out;
-}
-```
-
-## Capital Asset Pricing Model (CAPM)
-
-Suppose there are two risky stocks, Pepsi and Coca-Cola, with returns for the
-last three days given by a matrix $R$ in a market with a risk-free bond with
-a return $f=2\%$ and a risky market portfolio with returns for the last three
-days given by a vector $m$. The CAPM equation is given by
-$R_i = f + \beta_i(E(m) - f)$, where
-$\beta_i = \frac{\text{cov}(R_i, m)}{\text{var}(m)}$.
-
-The simulated returns are given by:
-
-```r
-set.seed(200100)
-f <- 0.02
-m <- matrix(rnorm(3, 0, 0.1), nrow = 3, ncol = 1)
-r <- matrix(rnorm(6, 0, 0.1), nrow = 3, ncol = 2)
-```
-
-One function to obtain the CAPM betas for the two stocks is:
-
-```cpp
-#include <armadillo.hpp>
-#include <cpp11.hpp>
-#include <cpp11armadillo.hpp>
-
-using namespace arma;
-using namespace cpp11;
-
-[[cpp11::register]]
-doubles_matrix<> capm(const doubles_matrix<>& r, const doubles_matrix<>& m,
-                      double f) {
-  Mat<double> R = as_Mat(r);
-  Mat<double> M = as_Mat(m);
-  Mat<double> F = ones<Mat<double>>(R.n_cols, 1) * f;
-
-  // Market average return and CAPM betas
-  Mat<double> M_avg = ones<Mat<double>>(R.n_cols, 1) * as_scalar(mean(M, 0));
-  Mat<double> beta = cov(R, M) / as_scalar(var(M));
-
-  // Expected returns (% = pairwise multiplication)
-  Mat<double> out = F + beta % (M_avg - F);
-
-  return as_doubles_matrix(out);
-}
-```
-
-## Cholesky decomposition
-
-One function to decompose a matrix $X$ into an upper (lower) triangular matrix
-$R$ such that $X = R^tR$ ($X = RR^t$) is:
-
-```cpp
-# include <armadillo.hpp>
-# include <cpp11.hpp>
-# include <cpp11armadillo.hpp>
-
-[[cpp11::register]]
-doubles_matrix<> chol_mat(const doubles_matrix<>& x, std::string type) {
-  Mat<double> X = as_Mat(x);
-
-  Mat<double> res;
-
-  if (type == "upper") {
-    res = chol(X);
-  } else if (type == "lower") {
-    res = chol(X, "lower");
-  } else {
-    stop("Invalid type");
-  }
-
-  return as_doubles_matrix(res);
-}
-```
-
-## QR decomposition
-
-One function to decompose a matrix $X$ into a product $X=QR$ where $Q$ is an
-orthogonal matrix and $R$ is an upper triangular matrix is:
-
-```cpp
-# include <armadillo.hpp>
-# include <cpp11.hpp>
-# include <cpp11armadillo.hpp>
-
-[[cpp11::register]]
-list qr_mat(const doubles_matrix<>& x, bool econ) {
-  Mat<double> X = as_Mat(x);
-
-  Mat<double> Q;
-  Mat<double> R;
-
-  bool computable;
-
-  if (!econ) {
-    computable = qr(Q, R, X);
-  } else {
-    computable = qr_econ(Q, R, X);
-  }
-
-  if (!computable) {
-    stop("QR decomposition failed");
-  } else {
-    writable::list out;
-    out.push_back({"Q"_nm = as_doubles_matrix(Q)});
-    out.push_back({"R"_nm = as_doubles_matrix(R)});
-    return out;
-  }
-}
-```
-
-In this case, the function returns a list of matrices after using two different
-Armadillo implementations of the QR decomposition.
 
 # Benchmarks
 

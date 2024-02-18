@@ -20,7 +20,7 @@ inline Col<T> as_Col(const T& x) {
 }
 
 template <typename T, typename U>
-inline Col<T> dblint_to_Col_(const U& x) {
+inline Col<T> as_Col_(const U& x) {
   int n = x.size();
   Col<T> y((is_same<U, doubles>::value ? reinterpret_cast<T*>(REAL(x.data()))
                                        : reinterpret_cast<T*>(INTEGER(x.data()))),
@@ -28,13 +28,9 @@ inline Col<T> dblint_to_Col_(const U& x) {
   return y;
 }
 
-inline Col<double> dblint_to_Col(const doubles& x) {
-  return dblint_to_Col_<double, doubles>(x);
-}
+inline Col<double> as_Col(const doubles& x) { return as_Col_<double, doubles>(x); }
 
-inline Col<int> dblint_to_Col(const integers& x) {
-  return dblint_to_Col_<int, integers>(x);
-}
+inline Col<int> as_Col(const integers& x) { return as_Col_<int, integers>(x); }
 
 ////////////////////////////////////////////////////////////////
 // Armadillo to R
