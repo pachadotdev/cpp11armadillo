@@ -7,6 +7,7 @@
 
 [![R-CMD-check](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/pachadotdev/cpp11armadillo/graph/badge.svg?token=mWfiUCgfNu)](https://codecov.io/gh/pachadotdev/cpp11armadillo)
+<a href="https://www.buymeacoffee.com/pacha" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 <!-- badges: end -->
 
 The goal of cpp11armadillo is to provide a novel approach to use the
@@ -26,6 +27,10 @@ This follows from the same goals as cpp11:
   - Having a more straightforward, simpler implementation.
   - Faster compilation time with lower memory requirements.
   - Growing vectors more efficiently.
+
+If this software is useful to you, please consider donating on [Buy Me A
+Coffee](https://www.buymeacoffee.com/pacha). All donations will be used
+to continue improving `cpp11armadillo`.
 
 ## Installation
 
@@ -58,9 +63,3 @@ inverse, eigenvalues, and the Capital Asset Pricing Model (CAPM).
 
 Provide support for sparse matrices. At the moment, `cpp11armadillo`
 only works with dense matrices.
-
-## Donating
-
-If this software is useful to you, please consider donating on [Buy Me A
-Coffee](https://buymeacoffee.com/pacha). All donations will be used to
-continue improving `cpp11armadillo`.

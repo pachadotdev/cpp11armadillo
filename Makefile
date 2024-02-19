@@ -1,19 +1,22 @@
-all:
-	@echo "make: Entering directory 'cpp11armadillotest/src'"
-	@Rscript -e 'devtools::load_all("cpp11armadillotest")'
-	@echo "make: Leaving directory 'cpp11armadillotest/src'"
-
-test: all
-	@echo "make: Entering directory 'cpp11armadillotest/tests/testthat'"
-	@Rscript -e 'devtools::clean_dll(); devtools::test("cpp11armadillotest")'
-	@echo "make: Leaving directory 'cpp11armadillotest/tests/testthat'"
-
 clean:
 	@Rscript -e 'devtools::clean_dll()'
 	@Rscript -e 'devtools::clean_dll("cpp11armadillotest")'
 
-document:
-  @Rscript -e 'devtools::document()'
+test:
+	@echo "Testing R code"
+	@Rscript -e 'devtools::document()'
+	@Rscript -e 'devtools::load_all(); devtools::test()'
+	@echo "Testing C++ code"
+	@Rscript -e 'devtools::load_all("cpp11armadillotest"); devtools::test("cpp11armadillotest")'
+
+check:
+	@echo "Local"
+	@Rscript -e 'devtools::check()'
+	@echo "RHub"
+	@Rscript -e 'devtools::check_rhub()'
+	@echo "Win Builder"
+	@Rscript -e 'devtools::check_win_release()'
+	@Rscript -e 'devtools::check_win_devel()'
 
 site:
 	@Rscript -e 'pkgdown::build_site()'

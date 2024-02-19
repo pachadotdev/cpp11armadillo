@@ -1,5 +1,5 @@
 ---
-title: "R and Armadillo integration using the header-only cpp11 R package"
+title: "R and Armadillo Integration using the Header-Only Cpp11 R Package"
 output: rmarkdown::html_vignette
 bibliography: "references.bib"
 vignette: >
