@@ -3,7 +3,7 @@ title: "R and Armadillo Integration using the Header-Only Cpp11 R Package"
 output: rmarkdown::html_vignette
 bibliography: "references.bib"
 vignette: >
-  %\VignetteIndexEntry{intro}
+  %\VignetteIndexEntry{R and Armadillo Integration using the Header-Only Cpp11 R Package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
