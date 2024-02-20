@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/pachadotdev/cpp11armadillo/graph/badge.svg?token=mWfiUCgfNu)](https://codecov.io/gh/pachadotdev/cpp11armadillo)
-[![BuyMeACoffee](man/figures/bmc-donate.svg)](https://www.buymeacoffee.com/pacha)
+[![BuyMeACoffee](https://raw.githubusercontent.com/pachadotdev/buymeacoffee-badges/main/bmc-donate-white.svg)](https://www.buymeacoffee.com/pacha)
 <!-- badges: end -->
 
 The goal of cpp11armadillo is to provide a novel approach to use the [Armadillo
