@@ -7,7 +7,7 @@
 
 [![R-CMD-check](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/pachadotdev/cpp11armadillo/graph/badge.svg?token=mWfiUCgfNu)](https://codecov.io/gh/pachadotdev/cpp11armadillo)
-<a href="https://www.buymeacoffee.com/pacha" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+[![BuyMeACoffee](man/figures/bmc-donate.svg)](https://www.buymeacoffee.com/pacha)
 <!-- badges: end -->
 
 The goal of cpp11armadillo is to provide a novel approach to use the
