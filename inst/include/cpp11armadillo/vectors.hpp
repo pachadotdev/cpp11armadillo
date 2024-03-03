@@ -13,6 +13,8 @@ using namespace std;
 #ifndef VECTORS_HPP
 #define VECTORS_HPP
 
+// vector or doubles/integers to Col<double/int>
+
 template <typename T>
 inline Col<T> as_Col(const T& x) {
   // Generic implementation
@@ -31,6 +33,27 @@ inline Col<T> as_Col_(const U& x) {
 inline Col<double> as_Col(const doubles& x) { return as_Col_<double, doubles>(x); }
 
 inline Col<int> as_Col(const integers& x) { return as_Col_<int, integers>(x); }
+
+// // vector of doubles/integers to Mat<double/int>
+
+// template <typename T>
+// inline Mat<T> as_Mat(const T& x) {
+//   // Generic implementation
+//   throw runtime_error("Cannot convert to Mat");
+// }
+
+// template <typename T, typename U>
+// inline Mat<T> as_Mat_(const U& x) {
+//   int n = x.size();
+//   Mat<T> y((is_same<U, doubles>::value ? reinterpret_cast<T*>(REAL(x.data()))
+//                                        : reinterpret_cast<T*>(INTEGER(x.data()))),
+//            n, 1, false);
+//   return y;
+// }
+
+// inline Mat<double> as_Mat(const doubles& x) { return as_Mat_<double, doubles>(x); }
+
+// inline Mat<int> as_Mat(const integers& x) { return as_Mat_<int, integers>(x); }
 
 ////////////////////////////////////////////////////////////////
 // Armadillo to R

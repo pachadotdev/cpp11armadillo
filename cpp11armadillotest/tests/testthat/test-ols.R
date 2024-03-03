@@ -21,9 +21,13 @@ test_that("Ordinary Least Squares Doubles (i.e., transposition and inverses)", {
 
   # Armadillo computation
   a <- matrix(ols_dbl(y, x), ncol = 1)
+  a2 <- matrix(ols_dbl2(y, x), ncol = 1)
+  a3 <- matrix(ols_dbl2(y, x), ncol = 1)
 
   # Base R computation
   b <- matrix(solve(t(x) %*% x) %*% t(x) %*% y, ncol = 1)
 
   expect_equal(a, b)
+  expect_equal(a2, b)
+  expect_equal(a3, b)
 })

@@ -18,7 +18,7 @@ inline Mat<T> as_Mat(const T& x) {
 }
 
 template <typename T, typename U>
-inline Mat<T> as_Mat_(const U& x) {
+inline Mat<T> dblint_matrix_to_Mat_(const U& x) {
   int n = x.nrow();
   int m = x.ncol();
   Mat<T> B(
@@ -28,13 +28,26 @@ inline Mat<T> as_Mat_(const U& x) {
   return B;
 }
 
+template <typename T, typename U>
+inline Mat<T> dblint_to_Mat_(const U& x) {
+  int n = x.size();
+  Mat<T> y((is_same<U, doubles>::value ? reinterpret_cast<T*>(REAL(x.data()))
+                                       : reinterpret_cast<T*>(INTEGER(x.data()))),
+           n, 1, false, false);
+  return y;
+}
+
 inline Mat<double> as_Mat(const doubles_matrix<>& x) {
-  return as_Mat_<double, doubles_matrix<>>(x);
+  return dblint_matrix_to_Mat_<double, doubles_matrix<>>(x);
 }
 
 inline Mat<int> as_Mat(const integers_matrix<>& x) {
-  return as_Mat_<int, integers_matrix<>>(x);
+  return dblint_matrix_to_Mat_<int, integers_matrix<>>(x);
 }
+
+inline Mat<double> as_Mat(const doubles& x) { return dblint_to_Mat_<double, doubles>(x); }
+
+inline Mat<int> as_Mat(const integers& x) { return dblint_to_Mat_<int, integers>(x); }
 
 ////////////////////////////////////////////////////////////////
 // Armadillo to R
