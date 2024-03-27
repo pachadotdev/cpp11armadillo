@@ -63,7 +63,9 @@ inline U Mat_to_dblint_matrix_(const Mat<T>& A) {
   typename conditional<is_same<U, doubles_matrix<>>::value, writable::doubles_matrix<>,
                        writable::integers_matrix<>>::type B(n, m);
 
+#ifdef _OPENMP
 #pragma omp parallel for collapse(2)
+#endif
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < m; ++j) {
       typename conditional<is_same<U, doubles_matrix<>>::value, double, int>::type a_ij =

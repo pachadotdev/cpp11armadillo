@@ -68,7 +68,9 @@ inline U Col_to_dblint_(const Col<T>& x) {
   typename conditional<is_same<U, doubles>::value, writable::doubles,
                        writable::integers>::type y(n);
 
+#ifdef _OPENMP
 #pragma omp parallel for
+#endif
   for (int i = 0; i < n; ++i) {
     typename conditional<is_same<U, doubles>::value, double, int>::type x_i = x[i];
     y[i] = x_i;
@@ -94,7 +96,9 @@ inline U Col_to_dblint_matrix_(const Col<T>& x) {
                        writable::doubles_matrix<>, writable::integers_matrix<>>::type
       Y(n, m);
 
+#ifdef _OPENMP
 #pragma omp parallel for
+#endif
   for (int i = 0; i < n; ++i) {
     typename conditional<is_same<U, doubles_matrix<>>::value, double, int>::type x_i =
         x[i];
@@ -144,7 +148,9 @@ inline list Col_to_complex_matrix_(const Col<T>& x) {
   writable::doubles_matrix<> x_real2(n, m);
   writable::doubles_matrix<> x_imag2(n, m);
 
+#ifdef _OPENMP
 #pragma omp parallel for
+#endif
   for (int i = 0; i < n; ++i) {
     x_real2(i, 0) = x_real[i];
     x_imag2(i, 0) = x_imag[i];
