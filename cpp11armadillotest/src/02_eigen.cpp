@@ -36,9 +36,7 @@ list eigen_gen_mat_complex_wrapper(const doubles_matrix<>& x) {
 
   Mat<complex<double>> y = eig_gen(X);
 
-  list out = as_complex_matrix(y);
-
-  return out;
+  return as_complex_matrix(y);
 }
 
 list eigen_gen_dbl(const doubles_matrix<>& x) {
