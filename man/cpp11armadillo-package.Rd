@@ -4,9 +4,9 @@
 \name{cpp11armadillo-package}
 \alias{cpp11armadillo}
 \alias{cpp11armadillo-package}
-\title{cpp11armadillo: R and Armadillo integration using the header-only cpp11 R package}
+\title{cpp11armadillo: An 'Armadillo' Interface}
 \description{
-Add some description later. This is about linear algebra.
+Provides function declarations and inline function definitions that facilitate communication between R and the 'Armadillo' 'C++' library for linear algebra and scientific computing.
 }
 \seealso{
 Useful links:

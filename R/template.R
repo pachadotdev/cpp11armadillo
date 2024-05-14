@@ -1,15 +1,20 @@
 # The function itself just echos its inputs and outputs to a file called INDEX,
 # which is then opened by RStudio when the new project is opened.
 #' Start a new project with the cpp11armadillo package template
-#' @param pkgname Name of the new package (defaults to the name of the current
-#'  working directory)
-#' @param path Path to the new project (defaults to working directory)
+#' @param path Path to the new project
+#' @param pkgname Name of the new package
+#' @return The file path to the copied template (invisibly).
+#' @examples
+#' # create a new directory
+#' dir <- tempdir()
+#' dir.create(dir)
+#'
+#' # copy the package template into the directory
+#' pkg_template(dir, "mynewpkg")
 #' @export
-pkg_template <- function(pkgname = NULL, path = NULL) {
-  # get current working directory
-  cwd <- getwd()
+pkg_template <- function(path = NULL, pkgname = NULL) {
   if (is.null(path)) {
-    path <- cwd
+    stop("You must provide a path to the new project", call. = FALSE)
   }
   if (is.null(pkgname)) {
     pkgname <- basename(path)

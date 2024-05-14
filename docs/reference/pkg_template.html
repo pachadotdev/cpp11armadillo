@@ -32,7 +32,7 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/intro.html">R and Armadillo Integration using the Header-Only Cpp11 R Package</a>
+      <a href="../articles/intro.html">Introduction to 'cpp11armadillo'</a>
     </li>
   </ul></li>
 <li>
@@ -63,21 +63,37 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pkg_template</span><span class="op">(</span>pkgname <span class="op">=</span> <span class="cn">NULL</span>, path <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pkg_template</span><span class="op">(</span>path <span class="op">=</span> <span class="cn">NULL</span>, pkgname <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>pkgname</dt>
-<dd><p>Name of the new package (defaults to the name of the current
-working directory)</p></dd>
+    <dl><dt>path</dt>
+<dd><p>Path to the new project</p></dd>
 
 
-<dt>path</dt>
-<dd><p>Path to the new project (defaults to working directory)</p></dd>
+<dt>pkgname</dt>
+<dd><p>Name of the new package</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
 
+<p>The file path to the copied template (invisibly).</p>
+    </div>
+
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># create a new directory</span></span></span>
+<span class="r-in"><span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'/tmp/RtmpQax6PF' already exists</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># copy the package template into the directory</span></span></span>
+<span class="r-in"><span><span class="fu">pkg_template</span><span class="op">(</span><span class="va">dir</span>, <span class="st">"mynewpkg"</span><span class="op">)</span></span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

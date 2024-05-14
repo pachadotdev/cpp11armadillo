@@ -1,13 +1,25 @@
-# cpp11armadillo 0.1
+# cpp11armadillo 0.2.5
 
-* First public version. Elemental vector/matrix conversion from/to R and C++.
+* Uses messages that do not generate warnings in the R API (#379d8d6).
+* Skips OpenMP on Mac hardware (#13e805b).
+* Provides a template to convert vectors to column matrices (#6138a35),
+* First version on CRAN.
+
+# cpp11armadillo 0.2.0
+
+* Uses OpenMP.
+* Sticks to Clang format.
+
+# cpp11armadillo 0.1.2
+
+* Improves vendoring (i.e., does the same as `cpp11`)
 
 # cpp11armadillo 0.1.1
 
 * Includes more formal tests in the `cpp11armadillotest` directory.
 * Provides a conversion from complex vector/matrix to a list of double
   vectors/matrices.
-  
-# cpp11armadillo 0.1.2
 
-* Improves vendoring (i.e., does the same as `cpp11`)
+# cpp11armadillo 0.1
+
+* First public version. Elemental vector/matrix conversion from/to R and C++.

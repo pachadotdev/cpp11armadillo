@@ -1,9 +1,9 @@
 ---
-title: "R and Armadillo Integration using the Header-Only Cpp11 R Package"
+title: "Introduction to 'cpp11armadillo'"
 output: rmarkdown::html_vignette
 bibliography: "references.bib"
 vignette: >
-  %\VignetteIndexEntry{R and Armadillo Integration using the Header-Only Cpp11 R Package}
+  %\VignetteIndexEntry{Introduction to 'cpp11armadillo'}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

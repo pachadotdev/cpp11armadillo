@@ -4,14 +4,24 @@
 \alias{pkg_template}
 \title{Start a new project with the cpp11armadillo package template}
 \usage{
-pkg_template(pkgname = NULL, path = NULL)
+pkg_template(path = NULL, pkgname = NULL)
 }
 \arguments{
-\item{pkgname}{Name of the new package (defaults to the name of the current
-working directory)}
+\item{path}{Path to the new project}
 
-\item{path}{Path to the new project (defaults to working directory)}
+\item{pkgname}{Name of the new package}
+}
+\value{
+The file path to the copied template (invisibly).
 }
 \description{
 Start a new project with the cpp11armadillo package template
+}
+\examples{
+# create a new directory
+dir <- tempdir()
+dir.create(dir)
+
+# copy the package template into the directory
+pkg_template(dir, "mynewpkg")
 }

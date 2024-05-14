@@ -4,10 +4,12 @@
 \alias{cpp_vendor}
 \title{Vendor the cpp11 and cpp11armadillo dependency}
 \usage{
-cpp_vendor(path = "./inst/include")
+cpp_vendor(dir = NULL, subdir = "/inst/include")
 }
 \arguments{
-\item{path}{The path to vendor the code into. The default is `./inst/include`.}
+\item{dir}{The directory to vendor the code into.}
+
+\item{subdir}{The subdirectory to vendor the code into.}
 }
 \value{
 The file path to the vendored code (invisibly).
@@ -18,14 +20,10 @@ project is using. It is often used in the go language community.
 }
 \details{
 This function vendors cpp11 and cpp11armadillo into your package by copying
-the cpp11 and cpp11armadillo headers into the `inst/include` folder and adding
-'cpp11 version: XYZ' and 'cpp11armadillo version: XYZ' to the top of the
-files, where XYZ is the version of cpp11 and cpp11armadillo currently
+the cpp11 and cpp11armadillo headers into the `inst/include` folder and
+adding 'cpp11 version: XYZ' and 'cpp11armadillo version: XYZ' to the top of
+the files, where XYZ is the version of cpp11 and cpp11armadillo currently
 installed on your machine.
-
-If you choose to vendor the headers you should _remove_ `LinkingTo:
-cpp11, cpp11armadillo` from your DESCRIPTION. This is done automatically by
-this function.
 
 **Note**: vendoring places the responsibility of updating the code on
 **you**. Bugfixes and new features in cpp11 and cpp11armadillo will not be

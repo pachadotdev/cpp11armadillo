@@ -1,6 +1,9 @@
 Package: cpp11armadillo
 Type: Package
-Title: R and Armadillo integration using the header-only cpp11 R package
+Title: An 'Armadillo' Interface
+Description: Provides function declarations and inline function definitions that
+    facilitate communication between R and the 'Armadillo' 'C++' library for
+    linear algebra and scientific computing.
 Version: 0.2.5
 Authors@R: c(
     person(
@@ -19,10 +22,10 @@ Suggests:
     testthat (>= 3.0.0),
     withr
 Depends: R(>= 3.5.0)
-Description: Add some description later. This is about linear algebra.
 License: Apache License (>= 2)
 BugReports: https://github.com/pachadotdev/cpp11armadillo/issues
-URL: https://pacha.dev/cpp11armadillo/, https://github.com/pachadotdev/cpp11armadillo
+URL: https://pacha.dev/cpp11armadillo/,
+    https://github.com/pachadotdev/cpp11armadillo
 LazyData: true
 RoxygenNote: 7.3.1
 Encoding: UTF-8

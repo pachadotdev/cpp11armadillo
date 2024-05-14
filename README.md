@@ -6,8 +6,10 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/pachadotdev/cpp11armadillo/graph/badge.svg?token=mWfiUCgfNu)](https://codecov.io/gh/pachadotdev/cpp11armadillo)
-[![BuyMeACoffee](https://raw.githubusercontent.com/pachadotdev/buymeacoffee-badges/main/bmc-donate-white.svg)](https://www.buymeacoffee.com/pacha)
+[![codecov](https://app.codecov.io/gh/pachadotdev/cpp11armadillo/graph/badge.svg?token=mWfiUCgfNu)](https://app.codecov.io/gh/pachadotdev/cpp11armadillo)
+[![BuyMeACoffee](https://raw.githubusercontent.com/pachadotdev/buymeacoffee-badges/main/bmc-donate-white.svg)](https://buymeacoffee.com/pacha)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/cpp11armadillo)](https://CRAN.R-project.org/package=cpp11armadillo)
 <!-- badges: end -->
 
 The goal of cpp11armadillo is to provide a novel approach to use the
@@ -29,8 +31,8 @@ This follows from the same goals as cpp11:
   - Growing vectors more efficiently.
 
 If this software is useful to you, please consider donating on [Buy Me A
-Coffee](https://www.buymeacoffee.com/pacha). All donations will be used
-to continue improving `cpp11armadillo`.
+Coffee](https://buymeacoffee.com/pacha). All donations will be used to
+continue improving `cpp11armadillo`.
 
 ## Installation
 
@@ -55,7 +57,7 @@ cpp11armadillo::pkg_template()
 
 Then follow the instructions from the README.
 
-The vignettes constain detailed examples that I use to test
+The vignettes contains detailed examples that I use to test
 `cpp11armadillo`, these include Ordinary Least Squares, Leontief
 inverse, eigenvalues, and the Capital Asset Pricing Model (CAPM).
 
