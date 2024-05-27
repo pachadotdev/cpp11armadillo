@@ -1,3 +1,8 @@
+# cpp11armadillo 0.2.6
+
+* Fewer implicit conversions.
+* Using balanced parallelization in OpenMP.
+
 # cpp11armadillo 0.2.5
 
 * Uses messages that do not generate warnings in the R API (#379d8d6).

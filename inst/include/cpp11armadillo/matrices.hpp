@@ -19,8 +19,8 @@ inline Mat<T> as_Mat(const T& x) {
 
 template <typename T, typename U>
 inline Mat<T> dblint_matrix_to_Mat_(const U& x) {
-  int n = x.nrow();
-  int m = x.ncol();
+  const int n = x.nrow();
+  const int m = x.ncol();
   Mat<T> B(
       (is_same<U, doubles_matrix<>>::value ? reinterpret_cast<T*>(REAL(x.data()))
                                            : reinterpret_cast<T*>(INTEGER(x.data()))),
@@ -30,7 +30,7 @@ inline Mat<T> dblint_matrix_to_Mat_(const U& x) {
 
 template <typename T, typename U>
 inline Mat<T> dblint_to_Mat_(const U& x) {
-  int n = x.size();
+  const int n = x.size();
   Mat<T> y((is_same<U, doubles>::value ? reinterpret_cast<T*>(REAL(x.data()))
                                        : reinterpret_cast<T*>(INTEGER(x.data()))),
            n, 1, false, false);
@@ -57,20 +57,24 @@ inline Mat<int> as_Mat(const integers& x) { return dblint_to_Mat_<int, integers>
 
 template <typename T, typename U>
 inline U Mat_to_dblint_matrix_(const Mat<T>& A) {
-  int n = A.n_rows;
-  int m = A.n_cols;
+  const int n = A.n_rows;
+  const int m = A.n_cols;
 
-  typename conditional<is_same<U, doubles_matrix<>>::value, writable::doubles_matrix<>,
-                       writable::integers_matrix<>>::type B(n, m);
+  using dblint_matrix =
+      typename conditional<is_same<U, doubles_matrix<>>::value,
+                           writable::doubles_matrix<>, writable::integers_matrix<>>::type;
+
+  using dblint_element =
+      typename conditional<is_same<U, doubles_matrix<>>::value, double, int>::type;
+
+  dblint_matrix B(n, m);
 
 #ifdef _OPENMP
-#pragma omp parallel for collapse(2)
+#pragma omp parallel for collapse(2) schedule(static)
 #endif
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < m; ++j) {
-      typename conditional<is_same<U, doubles_matrix<>>::value, double, int>::type a_ij =
-          A(i, j);
-      B(i, j) = a_ij;
+      B(i, j) = static_cast<dblint_element>(A(i, j));
     }
   }
 

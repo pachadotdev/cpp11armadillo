@@ -23,7 +23,7 @@ inline Col<T> as_Col(const T& x) {
 
 template <typename T, typename U>
 inline Col<T> as_Col_(const U& x) {
-  int n = x.size();
+  const int n = x.size();
   Col<T> y((is_same<U, doubles>::value ? reinterpret_cast<T*>(REAL(x.data()))
                                        : reinterpret_cast<T*>(INTEGER(x.data()))),
            n, false);
@@ -42,17 +42,21 @@ inline Col<int> as_Col(const integers& x) { return as_Col_<int, integers>(x); }
 
 template <typename T, typename U>
 inline U Col_to_dblint_(const Col<T>& x) {
-  int n = x.n_rows;
+  const int n = x.n_rows;
 
-  typename conditional<is_same<U, doubles>::value, writable::doubles,
-                       writable::integers>::type y(n);
+  using dblint_vector = typename conditional<is_same<U, doubles>::value,
+                                             writable::doubles, writable::integers>::type;
+
+  dblint_vector y(n);
+
+  using dblint_element =
+      typename conditional<is_same<U, doubles>::value, double, int>::type;
 
 #ifdef _OPENMP
-#pragma omp parallel for
+#pragma omp parallel for schedule(static)
 #endif
   for (int i = 0; i < n; ++i) {
-    typename conditional<is_same<U, doubles>::value, double, int>::type x_i = x[i];
-    y[i] = x_i;
+    y[i] = static_cast<dblint_element>(x[i]);
   }
 
   return y;
@@ -68,20 +72,23 @@ inline integers as_integers(const Col<int>& x) {
 
 template <typename T, typename U>
 inline U Col_to_dblint_matrix_(const Col<T>& x) {
-  int n = x.n_rows;
-  int m = 1;
+  const int n = x.n_rows;
+  const int m = 1;
 
-  typename conditional<is_same<U, writable::doubles_matrix<>>::value,
-                       writable::doubles_matrix<>, writable::integers_matrix<>>::type
-      Y(n, m);
+  using dblint_matrix =
+      typename conditional<is_same<U, writable::doubles_matrix<>>::value,
+                           writable::doubles_matrix<>, writable::integers_matrix<>>::type;
+
+  using dblint_element =
+      typename conditional<is_same<U, doubles_matrix<>>::value, double, int>::type;
+
+  dblint_matrix Y(n, m);
 
 #ifdef _OPENMP
-#pragma omp parallel for
+#pragma omp parallel for schedule(static)
 #endif
   for (int i = 0; i < n; ++i) {
-    typename conditional<is_same<U, doubles_matrix<>>::value, double, int>::type x_i =
-        x[i];
-    Y(i, 0) = x_i;
+    Y(i, 0) = static_cast<dblint_element>(x[i]);
   }
 
   return Y;
@@ -120,15 +127,14 @@ inline list Col_to_complex_matrix_(const Col<T>& x) {
   Col<double> x_real = real(x);
   Col<double> x_imag = imag(x);
 
-  // TODO: the previous template can fail with a complain about dbl vs int when
-  // the imaginary part is zero. This is a workaround.
+  // TODO: This is a workaround to avoid an error when the imaginary part is zero
   int n = x.n_rows;
   int m = 1;
   writable::doubles_matrix<> x_real2(n, m);
   writable::doubles_matrix<> x_imag2(n, m);
 
 #ifdef _OPENMP
-#pragma omp parallel for
+#pragma omp parallel for schedule(static)
 #endif
   for (int i = 0; i < n; ++i) {
     x_real2(i, 0) = x_real[i];
