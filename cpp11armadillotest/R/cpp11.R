@@ -12,12 +12,12 @@ eigen_gen_mat <- function(x) {
   .Call(`_cpp11armadillotest_eigen_gen_mat`, x)
 }
 
-eigen_gen_dbl <- function(x) {
-  .Call(`_cpp11armadillotest_eigen_gen_dbl`, x)
-}
-
 eigen_gen_mat_complex_wrapper <- function(x) {
   .Call(`_cpp11armadillotest_eigen_gen_mat_complex_wrapper`, x)
+}
+
+eigen_gen_dbl <- function(x) {
+  .Call(`_cpp11armadillotest_eigen_gen_dbl`, x)
 }
 
 eigen_gen_dbl_complex_wrapper <- function(x) {
@@ -62,4 +62,24 @@ chol_mat <- function(x, type) {
 
 qr_mat <- function(x, econ) {
   .Call(`_cpp11armadillotest_qr_mat`, x, econ)
+}
+
+typedef_Col_double <- function(x) {
+  .Call(`_cpp11armadillotest_typedef_Col_double`, x)
+}
+
+typedef_Col_int <- function(x) {
+  .Call(`_cpp11armadillotest_typedef_Col_int`, x)
+}
+
+typedef_uvec <- function(x) {
+  .Call(`_cpp11armadillotest_typedef_uvec`, x)
+}
+
+typedef_Mat_double <- function(x) {
+  .Call(`_cpp11armadillotest_typedef_Mat_double`, x)
+}
+
+typedef_Mat_int <- function(x) {
+  .Call(`_cpp11armadillotest_typedef_Mat_int`, x)
 }

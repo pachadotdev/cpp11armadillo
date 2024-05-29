@@ -1,6 +1,7 @@
 #include "00_main.h"
 
-doubles_matrix<> chol_mat(const doubles_matrix<>& x, std::string type) {
+[[cpp11::register]] doubles_matrix<> chol_mat(const doubles_matrix<>& x,
+                                              std::string type) {
   Mat<double> X = as_Mat(x);
 
   Mat<double> res;

@@ -1,6 +1,6 @@
 #include "00_main.h"
 
-doubles_matrix<> eigen_sym_mat(const doubles_matrix<>& x) {
+[[cpp11::register]] doubles_matrix<> eigen_sym_mat(const doubles_matrix<>& x) {
   Mat<double> X = as_Mat(x);
 
   Mat<double> y = eig_sym(X);
@@ -8,7 +8,7 @@ doubles_matrix<> eigen_sym_mat(const doubles_matrix<>& x) {
   return as_doubles_matrix(y);
 }
 
-doubles eigen_sym_dbl(const doubles_matrix<>& x) {
+[[cpp11::register]] doubles eigen_sym_dbl(const doubles_matrix<>& x) {
   Mat<double> X = as_Mat(x);
 
   Mat<double> y = eig_sym(X);
@@ -16,7 +16,7 @@ doubles eigen_sym_dbl(const doubles_matrix<>& x) {
   return as_doubles(y);
 }
 
-list eigen_gen_mat(const doubles_matrix<>& x) {
+[[cpp11::register]] list eigen_gen_mat(const doubles_matrix<>& x) {
   Mat<double> X = as_Mat(x);
 
   Mat<complex<double>> y = eig_gen(X);
@@ -31,7 +31,7 @@ list eigen_gen_mat(const doubles_matrix<>& x) {
   return out;
 }
 
-list eigen_gen_mat_complex_wrapper(const doubles_matrix<>& x) {
+[[cpp11::register]] list eigen_gen_mat_complex_wrapper(const doubles_matrix<>& x) {
   Mat<double> X = as_Mat(x);
 
   Mat<complex<double>> y = eig_gen(X);
@@ -39,7 +39,7 @@ list eigen_gen_mat_complex_wrapper(const doubles_matrix<>& x) {
   return as_complex_matrix(y);
 }
 
-list eigen_gen_dbl(const doubles_matrix<>& x) {
+[[cpp11::register]] list eigen_gen_dbl(const doubles_matrix<>& x) {
   Mat<double> X = as_Mat(x);
 
   Mat<complex<double>> y = eig_gen(X);
@@ -54,7 +54,7 @@ list eigen_gen_dbl(const doubles_matrix<>& x) {
   return out;
 }
 
-list eigen_gen_dbl_complex_wrapper(const doubles_matrix<>& x) {
+[[cpp11::register]] list eigen_gen_dbl_complex_wrapper(const doubles_matrix<>& x) {
   Mat<double> X = as_Mat(x);
 
   Col<complex<double>> y = eig_gen(X);
@@ -64,7 +64,7 @@ list eigen_gen_dbl_complex_wrapper(const doubles_matrix<>& x) {
   return out;
 }
 
-list eigen_gen_dbl_2(const doubles_matrix<>& x) {
+[[cpp11::register]] list eigen_gen_dbl_2(const doubles_matrix<>& x) {
   Mat<double> X = as_Mat(x);
 
   Mat<complex<double>> y = eig_gen(X);
@@ -89,7 +89,7 @@ list eigen_gen_dbl_2(const doubles_matrix<>& x) {
   return out;
 }
 
-list eigen_gen_mat_complex_wrapper_2(const doubles_matrix<>& x) {
+[[cpp11::register]] list eigen_gen_mat_complex_wrapper_2(const doubles_matrix<>& x) {
   Mat<double> X = as_Mat(x);
 
   Col<complex<double>> y = eig_gen(X);

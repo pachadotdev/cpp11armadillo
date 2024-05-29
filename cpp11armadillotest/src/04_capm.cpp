@@ -1,6 +1,7 @@
 #include "00_main.h"
 
-doubles_matrix<> capm(const doubles_matrix<>& r, const doubles_matrix<>& m, double f) {
+[[cpp11::register]] doubles_matrix<> capm(const doubles_matrix<>& r,
+                                          const doubles_matrix<>& m, double f) {
   Mat<double> R = as_Mat(r);
   Mat<double> M = as_Mat(m);
 

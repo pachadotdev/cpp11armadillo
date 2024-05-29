@@ -1,6 +1,6 @@
 #include "00_main.h"
 
-list qr_mat(const doubles_matrix<>& x, bool econ) {
+[[cpp11::register]] list qr_mat(const doubles_matrix<>& x, bool econ) {
   Mat<double> X = as_Mat(x);
 
   // no need to define the dimensions of Q and R

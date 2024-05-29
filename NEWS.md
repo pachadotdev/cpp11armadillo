@@ -1,3 +1,8 @@
+# cpp11armadillo 0.2.7
+
+* Provides wrappers for `arma::uvec` used to subset vectors.
+* Minimal optimizations in R to/from C++ templates.
+
 # cpp11armadillo 0.2.6
 
 * Fewer implicit conversions.

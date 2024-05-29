@@ -21,19 +21,30 @@ template <typename T, typename U>
 inline Mat<T> dblint_matrix_to_Mat_(const U& x) {
   const int n = x.nrow();
   const int m = x.ncol();
-  Mat<T> B(
-      (is_same<U, doubles_matrix<>>::value ? reinterpret_cast<T*>(REAL(x.data()))
-                                           : reinterpret_cast<T*>(INTEGER(x.data()))),
-      n, m, false, false);
-  return B;
+
+  Mat<T> y(n, m);
+
+  if (std::is_same<U, doubles_matrix<>>::value) {
+    y = Mat<T>(reinterpret_cast<T*>(REAL(x.data())), n, m, false, false);
+  } else {
+    y = Mat<T>(reinterpret_cast<T*>(INTEGER(x.data())), n, m, false, false);
+  }
+
+  return y;
 }
 
 template <typename T, typename U>
 inline Mat<T> dblint_to_Mat_(const U& x) {
   const int n = x.size();
-  Mat<T> y((is_same<U, doubles>::value ? reinterpret_cast<T*>(REAL(x.data()))
-                                       : reinterpret_cast<T*>(INTEGER(x.data()))),
-           n, 1, false, false);
+
+  Mat<T> y(n, 1);
+
+  if (std::is_same<U, doubles>::value) {
+    y = Mat<T>(reinterpret_cast<T*>(REAL(x.data())), n, 1, false, false);
+  } else {
+    y = Mat<T>(reinterpret_cast<T*>(INTEGER(x.data())), n, 1, false, false);
+  }
+
   return y;
 }
 
@@ -64,9 +75,6 @@ inline U Mat_to_dblint_matrix_(const Mat<T>& A) {
       typename conditional<is_same<U, doubles_matrix<>>::value,
                            writable::doubles_matrix<>, writable::integers_matrix<>>::type;
 
-  using dblint_element =
-      typename conditional<is_same<U, doubles_matrix<>>::value, double, int>::type;
-
   dblint_matrix B(n, m);
 
 #ifdef _OPENMP
@@ -74,7 +82,7 @@ inline U Mat_to_dblint_matrix_(const Mat<T>& A) {
 #endif
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < m; ++j) {
-      B(i, j) = static_cast<dblint_element>(A(i, j));
+      B(i, j) = A(i, j);
     }
   }
 
@@ -93,7 +101,6 @@ inline integers_matrix<> as_integers_matrix(const Mat<int>& A) {
 
 template <typename T>
 inline list Mat_to_complex_matrix_(const Mat<T>& A) {
-  static_assert(is_same<T, complex<double>>::value, "T must be complex<double>");
   Mat<double> A_real = real(A);
   Mat<double> A_imag = imag(A);
 

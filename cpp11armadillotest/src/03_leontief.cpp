@@ -1,6 +1,7 @@
 #include "00_main.h"
 
-doubles_matrix<> leontief_inverse(const doubles_matrix<>& x, const doubles_matrix<>& d) {
+[[cpp11::register]] doubles_matrix<> leontief_inverse(const doubles_matrix<>& x,
+                                                      const doubles_matrix<>& d) {
   Mat<double> X = as_Mat(x);
   Mat<double> D = as_Mat(d);
 

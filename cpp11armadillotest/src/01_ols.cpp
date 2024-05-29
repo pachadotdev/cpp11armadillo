@@ -1,6 +1,7 @@
 #include "00_main.h"
 
-doubles_matrix<> ols_mat(const doubles_matrix<>& y, const doubles_matrix<>& x) {
+[[cpp11::register]] doubles_matrix<> ols_mat(const doubles_matrix<>& y,
+                                             const doubles_matrix<>& x) {
   Mat<double> Y = as_Mat(y);
   Mat<double> X = as_Mat(x);
 
@@ -11,7 +12,8 @@ doubles_matrix<> ols_mat(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   return as_doubles_matrix(beta);
 }
 
-doubles ols_dbl(const doubles_matrix<>& y, const doubles_matrix<>& x) {
+[[cpp11::register]] doubles ols_dbl(const doubles_matrix<>& y,
+                                    const doubles_matrix<>& x) {
   Mat<double> Y = as_Mat(y);
   Mat<double> X = as_Mat(x);
 
@@ -22,7 +24,7 @@ doubles ols_dbl(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   return as_doubles(beta);
 }
 
-doubles ols_dbl2(const doubles& y, const doubles_matrix<>& x) {
+[[cpp11::register]] doubles ols_dbl2(const doubles& y, const doubles_matrix<>& x) {
   Mat<double> Y = as_Mat(y);
   Mat<double> X = as_Mat(x);
 
@@ -33,7 +35,7 @@ doubles ols_dbl2(const doubles& y, const doubles_matrix<>& x) {
   return as_doubles(beta);
 }
 
-doubles ols_dbl3(const doubles& y, const doubles_matrix<>& x) {
+[[cpp11::register]] doubles ols_dbl3(const doubles& y, const doubles_matrix<>& x) {
   Col<double> Y = as_Col(y);
   Mat<double> X = as_Mat(x);
 
