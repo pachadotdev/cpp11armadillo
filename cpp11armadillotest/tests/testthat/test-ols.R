@@ -1,6 +1,6 @@
 test_that("Ordinary Least Squares Matrix (i.e., transposition and inverses)", {
-  x <- cpp11armadillo::mtcars_mat$x
-  y <- cpp11armadillo::mtcars_mat$y
+  x <- mtcars_mat$x
+  y <- mtcars_mat$y
 
   x <- x[, c("wt", "cyl4", "cyl6", "cyl8")]
 
@@ -14,8 +14,8 @@ test_that("Ordinary Least Squares Matrix (i.e., transposition and inverses)", {
 })
 
 test_that("Ordinary Least Squares Doubles (i.e., transposition and inverses)", {
-  x <- cpp11armadillo::mtcars_mat$x
-  y <- cpp11armadillo::mtcars_mat$y
+  x <- mtcars_mat$x
+  y <- mtcars_mat$y
 
   x <- x[, c("wt", "cyl4", "cyl6", "cyl8")]
 

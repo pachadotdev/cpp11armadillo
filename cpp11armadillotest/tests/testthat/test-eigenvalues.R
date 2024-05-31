@@ -1,6 +1,6 @@
 test_that("cpp11armadillo vs base R (sorted)", {
-  x <- cpp11armadillo::mtcars_mat$x
-  y <- cpp11armadillo::mtcars_mat$y
+  x <- mtcars_mat$x
+  y <- mtcars_mat$y
 
   x <- x[, c("wt", "cyl4", "cyl6", "cyl8")]
 
@@ -16,8 +16,8 @@ test_that("cpp11armadillo vs base R (sorted)", {
 })
 
 test_that("eigen_gen wrappr works as expected", {
-  x <- cpp11armadillo::mtcars_mat$x
-  y <- cpp11armadillo::mtcars_mat$y
+  x <- mtcars_mat$x
+  y <- mtcars_mat$y
 
   x <- x[, c("wt", "cyl4", "cyl6", "cyl8")]
 

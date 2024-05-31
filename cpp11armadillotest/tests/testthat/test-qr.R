@@ -8,4 +8,8 @@ test_that("QR decomposition", {
 
   expect_equal(y$Q %*% y$R, x)
   expect_equal(z$Q %*% z$R, x)
+  
+  expect_error(eigen_gen_dbl(matrix(c(1.0, NA, 3.0, 4.0), nrow = 2)))
+  expect_error(eigen_gen_dbl(matrix(c(1.0, NaN, 3.0, 4.0), nrow = 2)))
+  expect_error(eigen_gen_dbl(matrix(c(1.0,Inf,3.0,4.0), nrow = 2)))
 })
