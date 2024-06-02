@@ -60,10 +60,11 @@ template <typename T, typename U>
 inline U Col_to_dblint_(const Col<T>& x) {
   const int n = x.n_rows;
 
-  using dblint = typename conditional<is_same<U, doubles>::value, writable::doubles, writable::integers>::type;
+  using dblint = typename conditional<is_same<U, doubles>::value, writable::doubles,
+                                      writable::integers>::type;
 
   dblint y(n);
-  
+
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
@@ -103,8 +104,9 @@ inline U Col_to_dblint_matrix_(const Col<T>& x) {
   const int n = x.n_rows;
   const int m = 1;
 
-  using dblint_matrix = typename conditional<is_same<U, doubles_matrix<>>::value,
-                                             writable::doubles_matrix<>, writable::integers_matrix<>>::type;
+  using dblint_matrix =
+      typename conditional<is_same<U, doubles_matrix<>>::value,
+                           writable::doubles_matrix<>, writable::integers_matrix<>>::type;
 
   dblint_matrix y(n, m);
 
@@ -132,10 +134,7 @@ inline list as_complex_doubles(const Col<complex<double>>& x) {
   Col<double> x_real = real(x);
   Col<double> x_imag = imag(x);
 
-  return writable::list({
-    "real"_nm = as_doubles(x_real),
-    "imag"_nm = as_doubles(x_imag)
-  });
+  return writable::list({"real"_nm = as_doubles(x_real), "imag"_nm = as_doubles(x_imag)});
 }
 
 inline list as_complex_matrix(const Col<complex<double>>& x) {
@@ -147,13 +146,13 @@ inline list as_complex_matrix(const Col<complex<double>>& x) {
 
   // int n = x.n_rows;
   // int m = 1;
-  
+
   // writable::doubles_matrix<> x_real2(n, m);
   // writable::doubles_matrix<> x_imag2(n, m);
 
-// #ifdef _OPENMP
-// #pragma omp parallel for schedule(static)
-// #endif
+  // #ifdef _OPENMP
+  // #pragma omp parallel for schedule(static)
+  // #endif
   // for (int i = 0; i < n; ++i) {
   //   x_real2(i, 0) = x_real[i];
   //   x_imag2(i, 0) = x_imag[i];
@@ -161,10 +160,8 @@ inline list as_complex_matrix(const Col<complex<double>>& x) {
 
   // return writable::list({"real"_nm = x_real2, "imag"_nm = x_imag2});
 
-  return writable::list({
-    "real"_nm = as_doubles_matrix(x_real),
-    "imag"_nm = as_doubles_matrix(x_imag)
-  });
+  return writable::list(
+      {"real"_nm = as_doubles_matrix(x_real), "imag"_nm = as_doubles_matrix(x_imag)});
 }
 
 #endif

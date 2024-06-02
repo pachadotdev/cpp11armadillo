@@ -25,8 +25,8 @@ adding 'cpp11 version: XYZ' and 'cpp11armadillo version: XYZ' to the top of
 the files, where XYZ is the version of cpp11 and cpp11armadillo currently
 installed on your machine.
 
-**Note**: vendoring places the responsibility of updating the code on
-**you**. Bugfixes and new features in cpp11 and cpp11armadillo will not be
+Vendoring places the responsibility of updating the code on
+you. Bugfixes and new features in cpp11 and cpp11armadillo will not be
 available for your code until you run `cpp_vendor()` again.
 }
 \examples{
