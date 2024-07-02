@@ -2,7 +2,6 @@
 
 using namespace arma;
 using namespace cpp11;
-using namespace std;
 
 #ifndef VECTORS_HPP
 #define VECTORS_HPP
@@ -18,7 +17,7 @@ using namespace std;
 template <typename T>
 inline Col<T> as_Col(const T& x) {
   // Generic implementation
-  throw runtime_error("Cannot convert to Col");
+  throw std::runtime_error("Cannot convert to Col");
 }
 
 template <typename T, typename U>
@@ -60,8 +59,8 @@ template <typename T, typename U>
 inline U Col_to_dblint_(const Col<T>& x) {
   const int n = x.n_rows;
 
-  using dblint = typename conditional<is_same<U, doubles>::value, writable::doubles,
-                                      writable::integers>::type;
+  using dblint = typename std::conditional<std::is_same<U, doubles>::value,
+                                           writable::doubles, writable::integers>::type;
 
   dblint y(n);
 
@@ -104,9 +103,9 @@ inline U Col_to_dblint_matrix_(const Col<T>& x) {
   const int n = x.n_rows;
   const int m = 1;
 
-  using dblint_matrix =
-      typename conditional<is_same<U, doubles_matrix<>>::value,
-                           writable::doubles_matrix<>, writable::integers_matrix<>>::type;
+  using dblint_matrix = typename std::conditional<std::is_same<U, doubles_matrix<>>::value,
+                                                  writable::doubles_matrix<>,
+                                                  writable::integers_matrix<>>::type;
 
   dblint_matrix y(n, m);
 
@@ -130,14 +129,14 @@ inline integers_matrix<> as_integers_matrix(const Col<int>& x) {
 
 // Complex
 
-inline list as_complex_doubles(const Col<complex<double>>& x) {
+inline list as_complex_doubles(const Col<std::complex<double>>& x) {
   Col<double> x_real = real(x);
   Col<double> x_imag = imag(x);
 
   return writable::list({"real"_nm = as_doubles(x_real), "imag"_nm = as_doubles(x_imag)});
 }
 
-inline list as_complex_matrix(const Col<complex<double>>& x) {
+inline list as_complex_matrix(const Col<std::complex<double>>& x) {
   Col<double> x_real = real(x);
   Col<double> x_imag = imag(x);
 

@@ -8,3 +8,4 @@
 #include <cpp11.hpp>
 #include <cpp11armadillo/matrices.hpp>
 #include <cpp11armadillo/vectors.hpp>
+#include <cpp11armadillo/sparse_matrices.hpp>

@@ -152,6 +152,20 @@ extern "C" SEXP _cpp11armadillotest_typedef_Mat_int(SEXP x) {
     return cpp11::as_sexp(typedef_Mat_int(cpp11::as_cpp<cpp11::decay_t<const integers_matrix<>&>>(x)));
   END_CPP11
 }
+// 07_typedefs.cpp
+doubles_matrix<> typedef_SpMat_double(const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_typedef_SpMat_double(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(typedef_SpMat_double(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+  END_CPP11
+}
+// 07_typedefs.cpp
+integers_matrix<> typedef_SpMat_int(const integers_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_typedef_SpMat_int(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(typedef_SpMat_int(cpp11::as_cpp<cpp11::decay_t<const integers_matrix<>&>>(x)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
@@ -175,6 +189,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_typedef_Col_int",                 (DL_FUNC) &_cpp11armadillotest_typedef_Col_int,                 1},
     {"_cpp11armadillotest_typedef_Mat_double",              (DL_FUNC) &_cpp11armadillotest_typedef_Mat_double,              1},
     {"_cpp11armadillotest_typedef_Mat_int",                 (DL_FUNC) &_cpp11armadillotest_typedef_Mat_int,                 1},
+    {"_cpp11armadillotest_typedef_SpMat_double",            (DL_FUNC) &_cpp11armadillotest_typedef_SpMat_double,            1},
+    {"_cpp11armadillotest_typedef_SpMat_int",               (DL_FUNC) &_cpp11armadillotest_typedef_SpMat_int,               1},
     {"_cpp11armadillotest_typedef_uvec",                    (DL_FUNC) &_cpp11armadillotest_typedef_uvec,                    1},
     {NULL, NULL, 0}
 };

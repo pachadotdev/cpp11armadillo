@@ -1,3 +1,8 @@
+# cpp11armadillo 0.2.8
+
+* Provides templates to convert to and from sparse matrices.
+* Removes `using namespace std;` from headers (see https://www.reddit.com/r/cpp_questions/comments/160eivk/is_using_namespace_std_really_considered_bad/)
+
 # cpp11armadillo 0.2.7
 
 * Provides wrappers for `arma::uvec` used to subset vectors.

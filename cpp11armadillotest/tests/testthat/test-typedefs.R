@@ -18,4 +18,13 @@ test_that("elemental tests for matrices", {
 
   y <- matrix(rpois(4,1), nrow = 2)
   expect_equal(y, typedef_Mat_int(y))
+
+  y2 <- y
+  diag(y2) <- 0
+  expect_equal(y2, typedef_SpMat_double(y2))
+  expect_error(typedef_SpMat_int(y2))
+
+  storage.mode(y2) <- "integer"
+  expect_equal(y2, typedef_SpMat_int(y2))
+  expect_error(typedef_SpMat_double(y2))
 })

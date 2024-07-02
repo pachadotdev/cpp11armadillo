@@ -2,7 +2,6 @@
 
 using namespace arma;
 using namespace cpp11;
-using namespace std;
 
 #ifndef MATRICES_HPP
 #define MATRICES_HPP
@@ -14,7 +13,7 @@ using namespace std;
 template <typename T>
 inline Mat<T> as_Mat(const T& x) {
   // Generic implementation
-  throw runtime_error("Cannot convert to Mat");
+  throw std::runtime_error("Cannot convert to Mat");
 }
 
 template <typename T, typename U>
@@ -72,7 +71,7 @@ inline U Mat_to_dblint_matrix_(const Mat<T>& A) {
   const int m = A.n_cols;
 
   using dblint_matrix =
-      typename conditional<is_same<U, doubles_matrix<>>::value,
+      typename std::conditional<std::is_same<U, doubles_matrix<>>::value,
                            writable::doubles_matrix<>, writable::integers_matrix<>>::type;
 
   dblint_matrix B(n, m);
@@ -111,8 +110,8 @@ inline list Mat_to_complex_matrix_(const Mat<T>& A) {
   return B;
 }
 
-inline list as_complex_matrix(const Mat<complex<double>>& A) {
-  return Mat_to_complex_matrix_<complex<double>>(A);
+inline list as_complex_matrix(const Mat<std::complex<double>>& A) {
+  return Mat_to_complex_matrix_<std::complex<double>>(A);
 }
 
 #endif

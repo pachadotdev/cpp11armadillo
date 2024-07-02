@@ -69,8 +69,3 @@ Then follow the instructions from the README.
 The vignettes contains detailed examples that I use to test `cpp11armadillo`,
 these include Ordinary Least Squares, Leontief inverse, eigenvalues, and the
 Capital Asset Pricing Model (CAPM).
-
-## Next steps
-
-Provide support for sparse matrices. At the moment, `cpp11armadillo` only works
-with dense matrices.

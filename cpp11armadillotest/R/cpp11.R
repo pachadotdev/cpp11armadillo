@@ -83,3 +83,11 @@ typedef_Mat_double <- function(x) {
 typedef_Mat_int <- function(x) {
   .Call(`_cpp11armadillotest_typedef_Mat_int`, x)
 }
+
+typedef_SpMat_double <- function(x) {
+  .Call(`_cpp11armadillotest_typedef_SpMat_double`, x)
+}
+
+typedef_SpMat_int <- function(x) {
+  .Call(`_cpp11armadillotest_typedef_SpMat_int`, x)
+}

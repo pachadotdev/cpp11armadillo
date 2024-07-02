@@ -1,5 +1,7 @@
 devel <- F
-pkgdown <- T
+pkgdown <- F
+
+setwd("~/github/cpp11armadillo")
 
 devtools::document()
 
@@ -11,5 +13,7 @@ if (isTRUE(devel)) {
   }
   devtools::install()
 }
+
+setwd("~/github/cpp11armadillo/cpp11armadillotest")
 
 devtools::check()

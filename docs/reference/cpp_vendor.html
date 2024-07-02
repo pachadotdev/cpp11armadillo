@@ -18,7 +18,7 @@ project is using. It is often used in the go language community."><meta property
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cpp11armadillo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.8</span>
       </span>
     </div>
 
@@ -91,8 +91,8 @@ the cpp11 and cpp11armadillo headers into the `inst/include` folder and
 adding 'cpp11 version: XYZ' and 'cpp11armadillo version: XYZ' to the top of
 the files, where XYZ is the version of cpp11 and cpp11armadillo currently
 installed on your machine.</p>
-<p>**Note**: vendoring places the responsibility of updating the code on
-**you**. Bugfixes and new features in cpp11 and cpp11armadillo will not be
+<p>Vendoring places the responsibility of updating the code on
+you. Bugfixes and new features in cpp11 and cpp11armadillo will not be
 available for your code until you run `cpp_vendor()` again.</p>
     </div>
 
@@ -101,7 +101,7 @@ available for your code until you run `cpp_vendor()` again.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># create a new directory</span></span></span>
 <span class="r-in"><span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'/tmp/RtmpBbW5TD' already exists</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'/tmp/RtmpHCi2Zv' already exists</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># vendor the cpp11 headers into the directory</span></span></span>
 <span class="r-in"><span><span class="fu">cpp_vendor</span><span class="op">(</span><span class="va">dir</span><span class="op">)</span></span></span>
