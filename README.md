@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/pachadotdev/cpp11armadillo/graph/badge.svg?token=mWfiUCgfNu)](https://codecov.io/gh/pachadotdev/cpp11armadillo)
+[![codecov](https://codecov.io/gh/pachadotdev/cpp11armadillo/graph/badge.svg?token=mWfiUCgfNu)](https://app.codecov.io/gh/pachadotdev/cpp11armadillo)
 [![BuyMeACoffee](https://raw.githubusercontent.com/pachadotdev/buymeacoffee-badges/main/bmc-donate-white.svg)](https://buymeacoffee.com/pacha)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/cpp11armadillo)](https://CRAN.R-project.org/package=cpp11armadillo)
@@ -60,8 +60,3 @@ Then follow the instructions from the README.
 The vignettes contains detailed examples that I use to test
 `cpp11armadillo`, these include Ordinary Least Squares, Leontief
 inverse, eigenvalues, and the Capital Asset Pricing Model (CAPM).
-
-## Next steps
-
-Provide support for sparse matrices. At the moment, `cpp11armadillo`
-only works with dense matrices.
