@@ -1,7 +1,7 @@
 devel <- F
 pkgdown <- F
 
-setwd("~/github/cpp11armadillo")
+setwd("~/github/armadillo")
 
 devtools::document()
 
@@ -14,6 +14,6 @@ if (isTRUE(devel)) {
   devtools::install()
 }
 
-setwd("~/github/cpp11armadillo/cpp11armadillotest")
+setwd("~/github/armadillo/armadillotest")
 
 devtools::check()

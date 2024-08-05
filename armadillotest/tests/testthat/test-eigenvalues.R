@@ -1,4 +1,4 @@
-test_that("cpp11armadillo vs base R (sorted)", {
+test_that("armadillo vs base R (sorted)", {
   x <- mtcars_mat$x
   y <- mtcars_mat$y
 

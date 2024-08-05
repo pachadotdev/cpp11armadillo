@@ -1,4 +1,4 @@
-Title: R package using cpp11armadillo
+Title: R package using armadillo
 Binding: start_project
 OpenFiles: README
-Icon: cpp11armadillo_small.png
+Icon: armadillo_small.png

@@ -22,9 +22,6 @@
     <loc>/articles/intro.html</loc>
   </url>
   <url>
-    <loc>/articles/motivations.html</loc>
-  </url>
-  <url>
     <loc>/authors.html</loc>
   </url>
   <url>
@@ -34,7 +31,7 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/cpp11armadillo-package.html</loc>
+    <loc>/reference/armadillo-package.html</loc>
   </url>
   <url>
     <loc>/reference/cpp_vendor.html</loc>

@@ -31,7 +31,7 @@ jobs:
           # Use older ubuntu to maximise backward compatibility
           - {os: ubuntu-20.04,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-20.04,   r: 'release'}
-          - {os: ubuntu-20.04,   r: 'release', custom: 'no-cpp11armadillotest'}
+          - {os: ubuntu-20.04,   r: 'release', custom: 'no-armadillotest'}
           - {os: ubuntu-20.04,   r: 'release', custom: 'gcc 4.8'}
           - {os: ubuntu-20.04,   r: 'oldrel-1'}
           - {os: ubuntu-20.04,   r: 'oldrel-2'}
@@ -62,24 +62,24 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - name: Install cpp11armadillotest
-        if: matrix.config.custom != 'no-cpp11armadillotest'
+      - name: Install armadillotest
+        if: matrix.config.custom != 'no-armadillotest'
         run: |
           options(warn = 2)
-          pak::local_install_dev_deps("cpp11armadillotest", dependencies = TRUE)
+          pak::local_install_dev_deps("armadillotest", dependencies = TRUE)
           install.packages(".", repos = NULL, type = "source")
-          install.packages("cpp11armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
+          install.packages("armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
         shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
 
-      - name: Run cpp11armadillotest tests
-        if: matrix.config.custom != 'no-cpp11armadillotest'
+      - name: Run armadillotest tests
+        if: matrix.config.custom != 'no-armadillotest'
         run: |
-          setwd("cpp11armadillotest/tests")
+          setwd("armadillotest/tests")
           library(testthat)
-          library(cpp11armadillotest)
-          test_check("cpp11armadillotest", reporter = "progress")
+          library(armadillotest)
+          test_check("armadillotest", reporter = "progress")
         shell: Rscript {0}

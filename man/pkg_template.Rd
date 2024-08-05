@@ -2,7 +2,7 @@
 % Please edit documentation in R/template.R
 \name{pkg_template}
 \alias{pkg_template}
-\title{Start a new project with the cpp11armadillo package template}
+\title{Start a new project with the armadillo package template}
 \usage{
 pkg_template(path = NULL, pkgname = NULL)
 }
@@ -15,7 +15,7 @@ pkg_template(path = NULL, pkgname = NULL)
 The file path to the copied template (invisibly).
 }
 \description{
-Start a new project with the cpp11armadillo package template
+Start a new project with the armadillo package template
 }
 \examples{
 # create a new directory

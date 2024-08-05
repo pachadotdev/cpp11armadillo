@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Introduction to 'cpp11armadillo' • cpp11armadillo</title>
+<title>Introduction to 'armadillo' • armadillo</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,8 +17,8 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to 'cpp11armadillo'">
-<meta property="og:description" content="cpp11armadillo">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to 'armadillo'">
+<meta property="og:description" content="armadillo">
 <meta property="og:image" content="/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -39,7 +39,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">cpp11armadillo</a>
+        <a class="navbar-link" href="../index.html">armadillo</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.8</span>
       </span>
     </div>
@@ -57,7 +57,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/intro.html">Introduction to 'cpp11armadillo'</a>
+      <a href="../articles/intro.html">Introduction to 'armadillo'</a>
     </li>
   </ul>
 </li>
@@ -67,7 +67,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/pachadotdev/cpp11armadillo/" class="external-link">
+  <a href="https://github.com/pachadotdev/armadillo/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,10 +85,10 @@
       </header><script src="intro_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Introduction to ‘cpp11armadillo’</h1>
+      <h1 data-toc-skip>Introduction to ‘armadillo’</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/pachadotdev/cpp11armadillo/blob/HEAD/vignettes/intro.Rmd" class="external-link"><code>vignettes/intro.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pachadotdev/armadillo/blob/HEAD/vignettes/intro.Rmd" class="external-link"><code>vignettes/intro.Rmd</code></a></small>
       <div class="hidden name"><code>intro.Rmd</code></div>
 
     </div>
@@ -98,22 +98,22 @@
 <div class="section level2">
 <h2 id="motivations">Motivations<a class="anchor" aria-label="anchor" href="#motivations"></a>
 </h2>
-<p>The development of cpp11armadillo emerges from the desire to follow a simplified approach towards R and C++ integration by building on top of <a href="https://cran.r-project.org/package=cpp11" class="external-link">cpp11</a>, a ground up rewrite of C++ bindings to R with different design trade-offs and features. cpp11armadillo aims at providing an additional layer to put the end-user focus on the computation instead of configuration <span class="citation">(Vaughan, Hester, and François 2023)</span>.</p>
+<p>The development of armadillo emerges from the desire to follow a simplified approach towards R and C++ integration by building on top of <a href="https://cran.r-project.org/package=cpp11" class="external-link">cpp11</a>, a ground up rewrite of C++ bindings to R with different design trade-offs and features. armadillo aims at providing an additional layer to put the end-user focus on the computation instead of configuration <span class="citation">(Vaughan, Hester, and François 2023)</span>.</p>
 <p><a href="https://arma.sourceforge.net/" class="external-link">Armadillo</a> is a linear algebra library for the C++ language, aiming towards a good balance between speed and ease of use. It is justified in the fact that C++, in its current form, is very valuable to address bottlenecks that we find with interpreted languages such as R and Python but it does not provide data structures nor functions for linear algebra <span class="citation">(Sanderson and Curtin 2016)</span>.</p>
 <p><a href="https://cran.r-project.org/package=RcppArmadillo" class="external-link">RcppArmadillo</a> was first published to CRAN in 2010, and it allows to use Armadillo via <a href="https://cran.r-project.org/package=Rcpp" class="external-link">Rcpp</a>, a widely extended R package to call C++ functions from R <span class="citation">(Eddelbuettel and Sanderson 2014)</span>.</p>
 </div>
 <div class="section level2">
 <h2 id="design-choices">Design choices<a class="anchor" aria-label="anchor" href="#design-choices"></a>
 </h2>
-<p>The design choices in cpp11armadillo are:</p>
+<p>The design choices in armadillo are:</p>
 <ul>
 <li>Providing a simpler implementation that makes the library easier to understand, maintain, and extend, benefiting both current users and future contributors.</li>
 <li>Offering a completely header-only approach, eliminating Application Binary Interface compatibility issues and simplifying library integration and distribution.</li>
 <li>Facilitating vendoring, which allows for the inclusion of the library directly in projects, thus simplifying dependency management and distribution.</li>
 </ul>
 <p>These ideas reflect a comprehensive effort to provide an efficient interface for integrating C++ and R that aligns with the Tidy philosophy <span class="citation">(Wickham et al. 2019)</span>, addressing both the technical and community-driven aspects that influence software evolution.</p>
-<p>These choices have advantages and disadvantages. A disadvantage is that cpp11armadillo will not convert data types automatically, the user must be explicit about data types, especially when passing data from R to C++ and then exporting the final computation back to R. An advantage is that cpp11armadillo codes, including its internal templates, can be adapted to work with Python via <a href="https://pybind11.readthedocs.io/en/stable/index.html" class="external-link">pybind11</a> <span class="citation">(Jakob, Rhinelander, and Moldovan 2016)</span>.</p>
-<p>cpp11armadillo uses <span class="citation">Hansen (2022)</span> notation, meaning that matrices are column-major and vectors are expressed as column vectors (i.e., <span class="math inline">\(N\times1\)</span> matrices).</p>
+<p>These choices have advantages and disadvantages. A disadvantage is that armadillo will not convert data types automatically, the user must be explicit about data types, especially when passing data from R to C++ and then exporting the final computation back to R. An advantage is that armadillo codes, including its internal templates, can be adapted to work with Python via <a href="https://pybind11.readthedocs.io/en/stable/index.html" class="external-link">pybind11</a> <span class="citation">(Jakob, Rhinelander, and Moldovan 2016)</span>.</p>
+<p>armadillo uses <span class="citation">Hansen (2022)</span> notation, meaning that matrices are column-major and vectors are expressed as column vectors (i.e., <span class="math inline">\(N\times1\)</span> matrices).</p>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
@@ -121,7 +121,7 @@
 <p>Convention: input R matrices are denoted by <code>x</code>, <code>y</code>, <code>z</code>, and output or intermediate C++ matrices are denoted by <code>X</code>, <code>Y</code>, <code>Z</code>. The example functions can be called from R scripts and should have proper headers as in the following code:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> arma;</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> cpp11;</span>
@@ -132,9 +132,9 @@
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Yinv = inv(Y); <span class="co">// Y^(-1)</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(Yinv); <span class="co">// convert from C++ to R</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>}</span></code></pre></div>
-<p>This example includes the Armadillo, cpp11 and cpp11armadillo libraries, and allows interfacing C++ with R (i.e., the <code>#include &lt;cpp11.hpp&gt;</code>). It also loads the corresponding namespaces (i.e., the <code>using namespace cpp11</code>) in order to simplify the notation (i.e., using <code>Mat</code> instead of <code>arma::Mat</code>).</p>
-<p>The <code>as_Mat()</code> function is provided by cpp11armadillo to pass a <code>matrix</code> object from R to C++ and that Armadillo can read.</p>
-<p>The <code>as_doubles_matrix()</code> function is also provided by cpp11armadillo to pass a <code>Mat&lt;double&gt;</code> or <code>Mat&lt;int&gt;</code> object from C++ to R.</p>
+<p>This example includes the Armadillo, cpp11 and armadillo libraries, and allows interfacing C++ with R (i.e., the <code>#include &lt;cpp11.hpp&gt;</code>). It also loads the corresponding namespaces (i.e., the <code>using namespace cpp11</code>) in order to simplify the notation (i.e., using <code>Mat</code> instead of <code>arma::Mat</code>).</p>
+<p>The <code>as_Mat()</code> function is provided by armadillo to pass a <code>matrix</code> object from R to C++ and that Armadillo can read.</p>
+<p>The <code>as_doubles_matrix()</code> function is also provided by armadillo to pass a <code>Mat&lt;double&gt;</code> or <code>Mat&lt;int&gt;</code> object from C++ to R.</p>
 <div class="section level3">
 <h3 id="ordinary-least-squares">Ordinary Least Squares<a class="anchor" aria-label="anchor" href="#ordinary-least-squares"></a>
 </h3>
@@ -193,14 +193,14 @@
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y = eig_sym(X);</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(y);</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>}</span></code></pre></div>
-<p>When the input matrix is not symmetric, the eigenvalues are complex numbers. cpp11armadillo provides a wrapper to return the real and imaginary parts of the eigenvalues as a list:</p>
+<p>When the input matrix is not symmetric, the eigenvalues are complex numbers. armadillo provides a wrapper to return the real and imaginary parts of the eigenvalues as a list:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>list eigen_gen_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  Mat&lt;complex&lt;<span class="dt">double</span>&gt;&gt; y = eig_gen(X);</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>  list out = as_complex_matrix(y);</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>}</span></code></pre></div>
-<p>The idea of cpp11armadillo is to integrate with cpp11 to provide flexibility, and the previous result can be obtained without using the <code>as_complex_matrix()</code> wrapper:</p>
+<p>The idea of armadillo is to integrate with cpp11 to provide flexibility, and the previous result can be obtained without using the <code>as_complex_matrix()</code> wrapper:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>list eigen_gen_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a></span>
@@ -343,11 +343,11 @@
 <div class="section level2">
 <h2 id="benchmarks">Benchmarks<a class="anchor" aria-label="anchor" href="#benchmarks"></a>
 </h2>
-<p>A proper benchmark is to compute eigenvalues for large matrices. Both cpp11armadillo and RcppArmadillo use Armadillo as a backend, and the marginal observed differences are because of how cpp11 and Rcpp pass data from R to C++ and viceversa. The computation times are identical.</p>
+<p>A proper benchmark is to compute eigenvalues for large matrices. Both armadillo and RcppArmadillo use Armadillo as a backend, and the marginal observed differences are because of how cpp11 and Rcpp pass data from R to C++ and viceversa. The computation times are identical.</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Input</th>
-<th align="right">Median time cpp11armadillo</th>
+<th align="right">Median time armadillo</th>
 <th align="right">Median time RcppArmadillo</th>
 </tr></thead>
 <tbody>
@@ -376,7 +376,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Input</th>
-<th align="right">Memory allocation cpp11armadillo</th>
+<th align="right">Memory allocation armadillo</th>
 <th align="right">Memory allocation RcppArmadillo</th>
 </tr></thead>
 <tbody>
@@ -402,7 +402,7 @@
 </tr>
 </tbody>
 </table>
-<p>The cpp11armadillo computation was obtained with the <code>eigen_sym_mat()</code> function already shown.</p>
+<p>The armadillo computation was obtained with the <code>eigen_sym_mat()</code> function already shown.</p>
 <p>The RcppArmadillo computation was obtained with the following function:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;RcppArmadillo.h&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="co">// [[Rcpp::depends(RcppArmadillo)]]</span></span>
@@ -419,7 +419,7 @@
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h2>
-<p>RcppArmadillo has been and will continue to be widely successful. cpp11armadillo is a alternative templated implementation with different design trade-offs and features. Both packages can co-exist and continue to enrich the R community.</p>
+<p>RcppArmadillo has been and will continue to be widely successful. armadillo is a alternative templated implementation with different design trade-offs and features. Both packages can co-exist and continue to enrich the R community.</p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

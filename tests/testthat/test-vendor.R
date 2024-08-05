@@ -1,5 +1,5 @@
 describe("cpp_vendor", {
-  it("errors if cpp11armadillo is not installed", {
+  it("errors if armadillo is not installed", {
     pkg <- local_package()
     mockery::stub(cpp_vendor, "system.file", "")
     expect_error(

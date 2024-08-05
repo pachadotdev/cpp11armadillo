@@ -1,6 +1,6 @@
 #include <armadillo.hpp>
 #include <cpp11.hpp>
-#include <cpp11armadillo.hpp>
+#include <r_armadillo_bindings.hpp>
 
 using namespace arma;
 using namespace cpp11;

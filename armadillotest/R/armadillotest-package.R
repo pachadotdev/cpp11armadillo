@@ -1,4 +1,4 @@
-#' @useDynLib cpp11armadillotest, .registration = TRUE
+#' @useDynLib armadillotest, .registration = TRUE
 #' @keywords internal
 "_PACKAGE"
 

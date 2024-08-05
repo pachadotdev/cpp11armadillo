@@ -1,4 +1,4 @@
-How to use cpp11armadillo?
+How to use armadillo?
 
 1. Start a new project with RStudio.
 2. Open `dev/install_and_test.R` and run it.
@@ -9,4 +9,4 @@ How to use cpp11armadillo?
 5. Add your own README and favourite license with `usethis::use_readme_rmd()`
    and `usethis::use_XYZ_license()`.
 
-See the details at https://github.com/pachadotdev/cpp11armadillo.
+See the details at https://github.com/pachadotdev/armadillo.

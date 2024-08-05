@@ -1,16 +1,16 @@
-#' Vendor the cpp11 and cpp11armadillo dependency
+#' Vendor the cpp11 and armadillo dependency
 #'
 #' Vendoring is the act of making your own copy of the 3rd party packages your
 #' project is using. It is often used in the go language community.
 #'
-#' This function vendors cpp11 and cpp11armadillo into your package by copying
-#' the cpp11 and cpp11armadillo headers into the `inst/include` folder and
-#' adding 'cpp11 version: XYZ' and 'cpp11armadillo version: XYZ' to the top of
-#' the files, where XYZ is the version of cpp11 and cpp11armadillo currently
+#' This function vendors cpp11 and armadillo into your package by copying
+#' the cpp11 and armadillo headers into the `inst/include` folder and
+#' adding 'cpp11 version: XYZ' and 'armadillo version: XYZ' to the top of
+#' the files, where XYZ is the version of cpp11 and armadillo currently
 #' installed on your machine.
 #'
 #' Vendoring places the responsibility of updating the code on
-#' you. Bugfixes and new features in cpp11 and cpp11armadillo will not be
+#' you. Bugfixes and new features in cpp11 and armadillo will not be
 #' available for your code until you run `cpp_vendor()` again.
 #'
 #' @param dir The directory to vendor the code into.
@@ -72,10 +72,10 @@ cpp_vendor <- function(dir = NULL, subdir = "/inst/include") {
     path, "cpp11", cpp11_header
   )
 
-  # Vendor cpp11armadillo ----
+  # Vendor armadillo ----
 
   dir.create(
-    file.path(path, "cpp11armadillo"),
+    file.path(path, "armadillo"),
     recursive = TRUE,
     showWarnings = FALSE
   )
@@ -86,48 +86,48 @@ cpp_vendor <- function(dir = NULL, subdir = "/inst/include") {
     showWarnings = FALSE
   )
 
-  current_cpp11armadillo <- system.file(
+  current_armadillo <- system.file(
     "include",
-    "cpp11armadillo",
-    package = "cpp11armadillo"
+    "armadillo",
+    package = "armadillo"
   )
 
   current_armadillo <- system.file(
     "include",
     "armadillo",
-    package = "cpp11armadillo"
+    package = "armadillo"
   )
 
-  if (!nzchar(current_cpp11armadillo)) {
-    stop("cpp11armadillo is not installed", call. = FALSE)
+  if (!nzchar(current_armadillo)) {
+    stop("armadillo is not installed", call. = FALSE)
   }
 
-  cpp11armadillo_version <- utils::packageVersion("cpp11armadillo")
+  armadillo_version <- utils::packageVersion("armadillo")
 
-  cpp11armadillo_header <- sprintf(
-    "// cpp11armadillo version: %s\n// vendored on: %s",
-    cpp11armadillo_version,
+  armadillo_header <- sprintf(
+    "// armadillo version: %s\n// vendored on: %s",
+    armadillo_version,
     Sys.Date()
   )
 
   write_header(
-    path, "cpp11armadillo.hpp", "cpp11armadillo",
-    cpp11armadillo_header
+    path, "armadillo.hpp", "armadillo",
+    armadillo_header
   )
 
   write_header(
-    path, "armadillo.hpp", "cpp11armadillo",
-    cpp11armadillo_header
-  )
-
-  copy_files(
-    list.files(current_cpp11armadillo, full.names = TRUE),
-    path, "cpp11armadillo", cpp11armadillo_header
+    path, "armadillo.hpp", "armadillo",
+    armadillo_header
   )
 
   copy_files(
     list.files(current_armadillo, full.names = TRUE),
-    path, "armadillo", cpp11armadillo_header
+    path, "armadillo", armadillo_header
+  )
+
+  copy_files(
+    list.files(current_armadillo, full.names = TRUE),
+    path, "armadillo", armadillo_header
   )
 
   # Additional steps to make vendoring work ----
@@ -142,10 +142,10 @@ cpp_vendor <- function(dir = NULL, subdir = "/inst/include") {
   invisible(path)
 }
 
-write_header <- function(path, header, pkg, cpp11armadillo_header) {
+write_header <- function(path, header, pkg, armadillo_header) {
   writeLines(
     c(
-      cpp11armadillo_header,
+      armadillo_header,
       readLines(
         system.file("include", header, package = pkg)
       )
@@ -154,10 +154,10 @@ write_header <- function(path, header, pkg, cpp11armadillo_header) {
   )
 }
 
-copy_files <- function(files, path, out, cpp11armadillo_header) {
+copy_files <- function(files, path, out, armadillo_header) {
   for (f in files) {
     writeLines(
-      c(cpp11armadillo_header, readLines(f)),
+      c(armadillo_header, readLines(f)),
       file.path(path, out, basename(f))
     )
   }
