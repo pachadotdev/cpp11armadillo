@@ -1,3 +1,8 @@
+# armadillo 0.2.9
+
+* Minimizes overhead by using `std::copy()` instead of for loops when possible
+  (i.e., it works when copying vectors from C++ to R)
+
 # armadillo 0.2.8
 
 * Provides templates to convert to and from sparse matrices.
