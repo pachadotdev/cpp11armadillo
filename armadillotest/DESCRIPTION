@@ -12,7 +12,6 @@ Authors@R: c(
     )
 Suggests: 
     knitr,
-    leontief,
     rmarkdown,
     testthat (>= 3.0.0)
 Depends: R(>= 3.5.0)

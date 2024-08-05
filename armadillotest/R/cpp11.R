@@ -48,10 +48,6 @@ ols_dbl3 <- function(y, x) {
   .Call(`_armadillotest_ols_dbl3`, y, x)
 }
 
-leontief_inverse <- function(x, d) {
-  .Call(`_armadillotest_leontief_inverse`, x, d)
-}
-
 capm <- function(r, m, f) {
   .Call(`_armadillotest_capm`, r, m, f)
 }
