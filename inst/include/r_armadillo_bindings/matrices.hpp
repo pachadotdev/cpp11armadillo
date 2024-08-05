@@ -72,7 +72,8 @@ inline U Mat_to_dblint_matrix_(const Mat<T>& A) {
 
   using dblint_matrix =
       typename std::conditional<std::is_same<U, doubles_matrix<>>::value,
-                           writable::doubles_matrix<>, writable::integers_matrix<>>::type;
+                                writable::doubles_matrix<>,
+                                writable::integers_matrix<>>::type;
 
   dblint_matrix B(n, m);
 
