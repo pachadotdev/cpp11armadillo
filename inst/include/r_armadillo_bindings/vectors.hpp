@@ -116,7 +116,7 @@ inline U Col_to_dblint_matrix_(const Col<T>& x) {
   for (int i = 0; i < n; ++i) {
     y(i, 0) = x[i];
   }
-  
+
   return y;
 }
 
