@@ -19,6 +19,7 @@ Suggests:
     knitr,
     mockery,
     rmarkdown,
+    ropenblas,
     testthat (>= 3.0.0),
     withr
 Depends: R(>= 3.5.0)

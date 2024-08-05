@@ -1,7 +1,8 @@
 # armadillo 0.2.9
 
-* Minimizes overhead by using `std::copy()` instead of for loops when possible
-  (i.e., it works when copying vectors from C++ to R)
+* Removes leontief dependency to test the functions.
+* Recommends `ropenblas`. Armadillo works with OpenBLAS, LAPACK, BLAS and ATLAS
+  installed from R or the system package manager (e.g, `apt`).
 
 # armadillo 0.2.8
 

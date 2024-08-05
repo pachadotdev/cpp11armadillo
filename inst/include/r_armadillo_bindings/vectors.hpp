@@ -64,7 +64,12 @@ inline U Col_to_dblint_(const Col<T>& x) {
 
   dblint y(n);
 
-  std::copy(x.memptr(), x.memptr() + n, y.begin());
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static)
+#endif
+  for (int i = 0; i < n; ++i) {
+    y[i] = x[i];
+  }
 
   return y;
 }
@@ -79,11 +84,16 @@ inline doubles as_doubles(const Col<double>& x) {
 
 inline integers as_integers(const uvec& x) {
   const int n = x.n_elem;
-  writable::integers res(n);
+  writable::integers y(n);
 
-  std::copy(x.begin(), x.end(), res.begin());
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static)
+#endif
+  for (int i = 0; i < n; ++i) {
+    y[i] = x[i];
+  }
 
-  return res;
+  return y;
 }
 
 // same as above, but for matrices
@@ -106,9 +116,7 @@ inline U Col_to_dblint_matrix_(const Col<T>& x) {
   for (int i = 0; i < n; ++i) {
     y(i, 0) = x[i];
   }
-
-  // std::copy(x.memptr(), x.memptr() + n, y.data());
-
+  
   return y;
 }
 
