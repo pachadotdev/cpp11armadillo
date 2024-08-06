@@ -319,56 +319,6 @@ doubles_matrix<> capm(const doubles_matrix<>& r, const doubles_matrix<>& m,
 }
 ```
 
-## Leontief inverse
-
-The Leontief Input-Output model posits that the equilibrium production in an
-economy (i.e., country) with $N$ industries (i.e., sectors) is given by
-$(I-A)^{-1}$, where $I$ is the identity matrix and $A$ contains the input
-requirement for each industry $1\leq i \leq N$ from any other $1 \leq j \leq
-N-1$ industry. $A$ is determined by a transaction matrix $X$ that reflects the
-final transactions between industries and an aggregate demand vector $d$
-[@Leontief1986].
-
-We can use the data from the leontief package as data inputs for the example.
-
-```r
-library(leontief)
-X <- transaction_matrix
-d <- wage_demand_matrix[, "final_total_demand"]
-```
-
-One function to obtain the Leontief inverse is:
-
-```cpp
-doubles_matrix<> leontief_inverse(const doubles_matrix<>& x, 
-                                  const doubles_matrix<>& d) {
-  Mat<double> X = as_Mat(x);
-  Mat<double> D = as_Mat(d);
-
-  // Check dimensions
-  bool X_square = (X.n_rows == X.n_cols);
-  bool compatible_dimensions = (X.n_rows == D.n_rows);
-
-  if (X_square == false) {
-    stop("x must be square.");
-  }
-  if (compatible_dimensions == false) {
-    stop("d must have the same number of elements as the number of rows in x.");
-  }
-
-  // Input requirement matrix
-  Mat<double> Y = zeros(D.n_rows, D.n_rows);
-  Y.each_col() += D;
-  Mat<double> A = X / Y.t();
-
-  Mat<double> I = eye(X.n_rows, X.n_cols); // Identity matrix
-
-  Mat<double> out = inv(I - A); // Leontief inverse
-
-  return as_doubles_matrix(out);
-}
-```
-
 # Benchmarks
 
 A proper benchmark is to compute eigenvalues for large matrices. Both

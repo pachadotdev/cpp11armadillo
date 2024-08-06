@@ -141,25 +141,6 @@ inline list as_complex_matrix(const Col<std::complex<double>>& x) {
   Col<double> x_real = real(x);
   Col<double> x_imag = imag(x);
 
-  // This is a workaround to avoid an error when the imaginary part is zero
-  // a more efficient implementation uses as_doubles_matrix inside a list
-
-  // int n = x.n_rows;
-  // int m = 1;
-
-  // writable::doubles_matrix<> x_real2(n, m);
-  // writable::doubles_matrix<> x_imag2(n, m);
-
-  // #ifdef _OPENMP
-  // #pragma omp parallel for schedule(static)
-  // #endif
-  // for (int i = 0; i < n; ++i) {
-  //   x_real2(i, 0) = x_real[i];
-  //   x_imag2(i, 0) = x_imag[i];
-  // }
-
-  // return writable::list({"real"_nm = x_real2, "imag"_nm = x_imag2});
-
   return writable::list(
       {"real"_nm = as_doubles_matrix(x_real), "imag"_nm = as_doubles_matrix(x_imag)});
 }
