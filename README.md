@@ -36,7 +36,13 @@ continue improving `armadillo`.
 
 ## Installation
 
-You can install the development version of armadillo like so:
+You can install the released version of armadillo from CRAN:
+
+``` r
+install.packages("armadillo")
+```
+
+You can install the development version of armadillo from GitHub:
 
 ``` r
 remotes::install_github("pachadotdev/armadillo")
@@ -57,6 +63,26 @@ armadillo::pkg_template()
 
 Then follow the instructions from the README.
 
-The vignettes contains detailed examples that I use to test
-`armadillo`, these include Ordinary Least Squares, Leontief
-inverse, eigenvalues, and the Capital Asset Pricing Model (CAPM).
+The vignettes contains detailed examples that I use to test `armadillo`,
+these include Ordinary Least Squares, eigenvalues, and the Capital Asset
+Pricing Model (CAPM).
+
+# Linear Algebra Libraries
+
+Armadillo supports OpenBLAS, Intel MKL, and the Accelerate framework
+(Mac). You can install OpenBLAS on Debian-based systems with:
+
+``` sh
+sudo apt-get install libopenblas-dev
+```
+
+You can also use other commands for your specific operating system.
+
+To verify that R is using OpenBLAS, you can run `sessionInfo()` after
+restarting R to check the BLAS/LAPACK libraries in use:
+
+``` r
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
+LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so; LAPACK version 3.10.0
+```

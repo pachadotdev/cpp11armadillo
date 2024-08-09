@@ -86,6 +86,7 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
 <div class="section level1">
 <div class="page-header"><h1 id="armadillo-">armadillo <img src="reference/figures/logo.svg" align="right" height="139" alt=""><a class="anchor" aria-label="anchor" href="#armadillo-"></a>
 </h1></div>
@@ -106,8 +107,11 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of armadillo like so:</p>
+<p>You can install the released version of armadillo from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"armadillo"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the development version of armadillo from GitHub:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"pachadotdev/armadillo"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -116,12 +120,24 @@
 <p>I have provided a package template for RStudio that also works with VS Code.</p>
 <p>The idea of this package is to be naive and simple (like me).</p>
 <p>From RStudio/VSCode create a new project and run:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">armadillo</span><span class="fu">::</span><span class="fu"><a href="reference/pkg_template.html">pkg_template</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Then follow the instructions from the README.</p>
-<p>The vignettes contains detailed examples that I use to test <code>armadillo</code>, these include Ordinary Least Squares, Leontief inverse, eigenvalues, and the Capital Asset Pricing Model (CAPM).</p>
+<p>The vignettes contains detailed examples that I use to test <code>armadillo</code>, these include Ordinary Least Squares, eigenvalues, and the Capital Asset Pricing Model (CAPM).</p>
 </div>
 </div>
+<div class="section level1">
+<h1 id="linear-algebra-libraries">Linear Algebra Libraries<a class="anchor" aria-label="anchor" href="#linear-algebra-libraries"></a>
+</h1>
+<p>Armadillo supports OpenBLAS, Intel MKL, and the Accelerate framework (Mac). You can install OpenBLAS on Debian-based systems with:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">sudo</span> apt-get install libopenblas-dev</span></code></pre></div>
+<p>You can also use other commands for your specific operating system.</p>
+<p>To verify that R is using OpenBLAS, you can run <code><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo()</a></code> after restarting R to check the BLAS/LAPACK libraries in use:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>Matrix products<span class="op">:</span><span class="st"> </span>default</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>BLAS<span class="op">:</span><span class="st">   </span><span class="er">/</span>usr<span class="op">/</span>lib<span class="op">/</span>x86_<span class="dv">64</span><span class="op">-</span>linux<span class="op">-</span>gnu<span class="op">/</span>openblas<span class="op">-</span>pthread<span class="op">/</span>libblas.so<span class="fl">.3</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>LAPACK<span class="op">:</span><span class="st"> </span><span class="er">/</span>usr<span class="op">/</span>lib<span class="op">/</span>x86_<span class="dv">64</span><span class="op">-</span>linux<span class="op">-</span>gnu<span class="op">/</span>openblas<span class="op">-</span>pthread<span class="op">/</span>libopenblasp<span class="op">-</span>r0.<span class="dv">3</span>.<span class="fl">20.</span>so; LAPACK version <span class="dv">3</span>.<span class="fl">10.0</span></span></code></pre></div>
+</div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
