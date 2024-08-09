@@ -1,7 +1,14 @@
 #include "00_main.h"
 
-[[cpp11::register]] list qr_mat(const doubles_matrix<>& x, bool econ) {
+// The same example from the first script but using QR instead of directly
+// obtaining the inverse
+
+Mat<double> ols_qr_(const doubles_matrix<>& y, const doubles_matrix<>& x,
+                    const bool econ) {
+  Mat<double> Y = as_Mat(y);  // Col<double> Y = as_Col(y); also works
   Mat<double> X = as_Mat(x);
+
+  Mat<double> XtX = X.t() * X;
 
   // no need to define the dimensions of Q and R
   // qr() will automatically initialize them
@@ -19,9 +26,20 @@
   if (!computable) {
     stop("QR decomposition failed");
   } else {
-    writable::list out;
-    out.push_back({"Q"_nm = as_doubles_matrix(Q)});
-    out.push_back({"R"_nm = as_doubles_matrix(R)});
-    return out;
+    return solve(R, Q.t() * Y);
   }
+}
+
+[[cpp11::register]] doubles_matrix<> ols_qr_mat(const doubles_matrix<>& y,
+                                             const doubles_matrix<>& x,
+                                             const bool econ) {
+  Mat<double> beta = ols_qr_(y, x, econ);
+  return as_doubles_matrix(beta);
+}
+
+[[cpp11::register]] doubles ols_qr_dbl(const doubles_matrix<>& y,
+                                    const doubles_matrix<>& x,
+                                    const bool econ) {
+  Mat<double> beta = ols_qr_(y, x, econ);
+  return as_doubles(beta);
 }

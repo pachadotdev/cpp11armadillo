@@ -26,7 +26,7 @@
 // clang-format off
 
 // workaround to avoid R check() notes about std::cerr
-#include "armadillo/r_compatible_messages.hpp"
+#include "armadillo/r_messages.hpp"
 
 #include "armadillo/config.hpp"
 #include "armadillo/compiler_check.hpp"
@@ -56,6 +56,8 @@
 #include <functional>
 #include <chrono>
 #include <atomic>
+
+#include <ostream>
 
 #if !defined(ARMA_DONT_USE_STD_MUTEX)
   #include <mutex>

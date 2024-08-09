@@ -2,6 +2,7 @@
 
 * Removes leontief dependency to test the functions.
 * Adds minimal documentation to use OpenBLAS with R and Armadillo.
+* New examples, which are clearer and more informative.
 
 # armadillo 0.2.8
 

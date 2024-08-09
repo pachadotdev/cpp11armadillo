@@ -1,15 +1,20 @@
-test_that("QR decomposition", {
-  # from https://en.wikipedia.org/wiki/QR_decomposition#Example
-  x <- matrix(c(12, -51, 4, 6, 167, -68, -4, 24, -41),
-    nrow = 3, ncol = 3, byrow = TRUE
-  )
-  y <- qr_mat(x, econ = FALSE)
-  z <- qr_mat(x, econ = TRUE)
+test_that("Ordinary Least Squares Matrix via QR", {
+  x <- mtcars_mat$x
+  y <- mtcars_mat$y
 
-  expect_equal(y$Q %*% y$R, x)
-  expect_equal(z$Q %*% z$R, x)
-  
-  expect_error(eigen_gen_dbl(matrix(c(1.0, NA, 3.0, 4.0), nrow = 2)))
-  expect_error(eigen_gen_dbl(matrix(c(1.0, NaN, 3.0, 4.0), nrow = 2)))
-  expect_error(eigen_gen_dbl(matrix(c(1.0,Inf,3.0,4.0), nrow = 2)))
+  x <- x[, c("wt", "cyl4", "cyl6", "cyl8")]
+
+  # Armadillo computation
+  a <- ols_qr_mat(y, x, econ = TRUE)
+  b <- matrix(ols_qr_dbl(y, x, econ = TRUE), ncol = 1)
+  c <- ols_qr_mat(y, x, econ = FALSE)
+  d <- matrix(ols_qr_dbl(y, x, econ = FALSE), ncol = 1)
+
+  # Base R computation
+  e <- matrix(solve(t(x) %*% x) %*% t(x) %*% y, ncol = 1)
+
+  expect_equal(a, e)
+  expect_equal(b, e)
+  expect_equal(c, e)
+  expect_equal(d, e)
 })

@@ -23,9 +23,7 @@ test_that("eigen_gen wrappr works as expected", {
 
   x <- cor(x)
 
-  expect_equal(eigen_gen_dbl(x), eigen_gen_dbl_complex_wrapper(x))
-
   expect_equal(eigen_gen_mat(x), eigen_gen_mat_complex_wrapper(x))
 
-  expect_equal(eigen_gen_dbl_2(x), eigen_gen_mat_complex_wrapper_2(x))
+  expect_equal(eigen_gen_mat_complex_wrapper(x), eigen_gen_no_wrapper(x))
 })
