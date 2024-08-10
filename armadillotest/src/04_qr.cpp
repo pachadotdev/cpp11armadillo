@@ -31,15 +31,14 @@ Mat<double> ols_qr_(const doubles_matrix<>& y, const doubles_matrix<>& x,
 }
 
 [[cpp11::register]] doubles_matrix<> ols_qr_mat(const doubles_matrix<>& y,
-                                             const doubles_matrix<>& x,
-                                             const bool econ) {
+                                                const doubles_matrix<>& x,
+                                                const bool econ) {
   Mat<double> beta = ols_qr_(y, x, econ);
   return as_doubles_matrix(beta);
 }
 
 [[cpp11::register]] doubles ols_qr_dbl(const doubles_matrix<>& y,
-                                    const doubles_matrix<>& x,
-                                    const bool econ) {
+                                       const doubles_matrix<>& x, const bool econ) {
   Mat<double> beta = ols_qr_(y, x, econ);
   return as_doubles(beta);
 }
