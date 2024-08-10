@@ -1,8 +1,11 @@
 # armadillo 0.2.9
 
+* Uses Armadillo version Cortisol Retox 12.6.7.
 * Removes leontief dependency to test the functions.
 * Adds minimal documentation to use OpenBLAS with R and Armadillo.
 * New examples, which are clearer and more informative.
+* New `Makevars` template with commented debbuging flags and that allows to set the number of cores.
+* Adds `armadillo_version()` to get the version of Armadillo from R.
 
 # armadillo 0.2.8
 

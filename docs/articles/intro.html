@@ -121,7 +121,7 @@
 <p>Convention: input R matrices are denoted by <code>x</code>, <code>y</code>, <code>z</code>, and output or intermediate C++ matrices are denoted by <code>X</code>, <code>Y</code>, <code>Z</code>. The example functions can be called from R scripts and should have proper headers as in the following code:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> arma;</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> cpp11;</span>
@@ -239,7 +239,7 @@
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>  arma::mat y = eig_sym(x);</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>  <span class="cf">return</span> y;</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>}</span></code></pre></div>
-<p>In order to get the RcppArmadillo function to work, we had to dedicate time to search online about the error <code>function 'enterRNGScope' not provided by package 'Rcpp'</code>, which required to load additional headers in our code on R side.</p>
+<p>In order to get the RcppArmadillo function to work, we had to dedicate time to search online about the error <code>function 'enterRNGScope' not provided by package 'Rcpp'</code>, which required to include <code>// [[Rcpp::depends(RcppArmadillo)]]</code> for the function to work.</p>
 </div>
 <div class="section level2">
 <h2 id="additional-examples">Additional Examples<a class="anchor" aria-label="anchor" href="#additional-examples"></a>

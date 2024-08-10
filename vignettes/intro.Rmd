@@ -75,7 +75,7 @@ code:
 ```cpp
 #include <armadillo.hpp>
 #include <cpp11.hpp>
-#include <armadillo.hpp>
+#include <cpp11armadillo.hpp>
 
 using namespace arma;
 using namespace cpp11;
@@ -178,8 +178,8 @@ arma::mat eigen_sym_mat(const arma::mat& x) {
 
 In order to get the RcppArmadillo function to work, we had to dedicate time
 to search online about the error `function 'enterRNGScope' not provided by
-package 'Rcpp'`, which required to load additional headers in our code on R
-side.
+package 'Rcpp'`, which required to include `// [[Rcpp::depends(RcppArmadillo)]]`
+for the function to work.
 
 # Additional Examples
 
