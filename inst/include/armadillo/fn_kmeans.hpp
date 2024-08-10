@@ -23,7 +23,7 @@ inline typename enable_if2<is_real<typename T1::elem_type>::value, bool>::result
     Mat<typename T1::elem_type>& means, const Base<typename T1::elem_type, T1>& data,
     const uword k, const gmm_seed_mode& seed_mode, const uword n_iter,
     const bool print_mode) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 

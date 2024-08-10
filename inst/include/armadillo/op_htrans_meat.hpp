@@ -21,7 +21,7 @@
 template <typename eT>
 inline void op_htrans::apply_mat_noalias(Mat<eT>& out, const Mat<eT>& A,
                                          const typename arma_not_cx<eT>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   op_strans::apply_mat_noalias(out, A);
@@ -30,7 +30,7 @@ inline void op_htrans::apply_mat_noalias(Mat<eT>& out, const Mat<eT>& A,
 template <typename eT>
 inline void op_htrans::apply_mat_noalias(Mat<eT>& out, const Mat<eT>& A,
                                          const typename arma_cx_only<eT>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   const uword A_n_rows = A.n_rows;
@@ -83,7 +83,7 @@ inline void op_htrans::block_worker(std::complex<T>* Y, const std::complex<T>* X
 template <typename T>
 inline void op_htrans::apply_mat_noalias_large(Mat<std::complex<T> >& out,
                                                const Mat<std::complex<T> >& A) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword n_rows = A.n_rows;
   const uword n_cols = A.n_cols;
@@ -137,7 +137,7 @@ inline void op_htrans::apply_mat_noalias_large(Mat<std::complex<T> >& out,
 template <typename eT>
 inline void op_htrans::apply_mat_inplace(Mat<eT>& out,
                                          const typename arma_not_cx<eT>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   op_strans::apply_mat_inplace(out);
@@ -146,14 +146,14 @@ inline void op_htrans::apply_mat_inplace(Mat<eT>& out,
 template <typename eT>
 inline void op_htrans::apply_mat_inplace(Mat<eT>& out,
                                          const typename arma_cx_only<eT>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   const uword n_rows = out.n_rows;
   const uword n_cols = out.n_cols;
 
   if (n_rows == n_cols) {
-    arma_extra_debug_print("doing in-place hermitian transpose of a square matrix");
+    arma_debug_print("doing in-place hermitian transpose of a square matrix");
 
     for (uword col = 0; col < n_cols; ++col) {
       eT* coldata = out.colptr(col);
@@ -180,7 +180,7 @@ inline void op_htrans::apply_mat_inplace(Mat<eT>& out,
 template <typename eT>
 inline void op_htrans::apply_mat(Mat<eT>& out, const Mat<eT>& A,
                                  const typename arma_not_cx<eT>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   op_strans::apply_mat(out, A);
@@ -189,7 +189,7 @@ inline void op_htrans::apply_mat(Mat<eT>& out, const Mat<eT>& A,
 template <typename eT>
 inline void op_htrans::apply_mat(Mat<eT>& out, const Mat<eT>& A,
                                  const typename arma_cx_only<eT>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   if (&out != &A) {
@@ -201,7 +201,7 @@ inline void op_htrans::apply_mat(Mat<eT>& out, const Mat<eT>& A,
 
 template <typename T1>
 inline void op_htrans::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy<T1>& P) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -237,7 +237,7 @@ inline void op_htrans::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy
 
 template <typename T1>
 inline void op_htrans::apply_direct(Mat<typename T1::elem_type>& out, const T1& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -281,7 +281,7 @@ template <typename T1>
 inline void op_htrans::apply(
     Mat<typename T1::elem_type>& out, const Op<T1, op_htrans>& in,
     const typename arma_not_cx<typename T1::elem_type>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   op_strans::apply_direct(out, in.m);
@@ -291,7 +291,7 @@ template <typename T1>
 inline void op_htrans::apply(
     Mat<typename T1::elem_type>& out, const Op<T1, op_htrans>& in,
     const typename arma_cx_only<typename T1::elem_type>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   op_htrans::apply_direct(out, in.m);
@@ -304,7 +304,7 @@ template <typename T1>
 inline void op_htrans2::apply(
     Mat<typename T1::elem_type>& out, const Op<T1, op_htrans2>& in,
     const typename arma_not_cx<typename T1::elem_type>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   op_strans::apply_direct(out, in.m);
@@ -316,7 +316,7 @@ template <typename T1>
 inline void op_htrans2::apply(
     Mat<typename T1::elem_type>& out, const Op<T1, op_htrans2>& in,
     const typename arma_cx_only<typename T1::elem_type>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   op_htrans::apply_direct(out, in.m);

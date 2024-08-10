@@ -94,7 +94,7 @@ inline void op_strans::block_worker(eT* Y, const eT* X, const uword X_n_rows,
 
 template <typename eT>
 inline void op_strans::apply_mat_noalias_large(Mat<eT>& out, const Mat<eT>& A) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword n_rows = A.n_rows;
   const uword n_cols = A.n_cols;
@@ -148,7 +148,7 @@ inline void op_strans::apply_mat_noalias_large(Mat<eT>& out, const Mat<eT>& A) {
 //! Immediate transpose of a dense matrix
 template <typename eT, typename TA>
 inline void op_strans::apply_mat_noalias(Mat<eT>& out, const TA& A) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword A_n_cols = A.n_cols;
   const uword A_n_rows = A.n_rows;
@@ -193,14 +193,13 @@ inline void op_strans::apply_mat_noalias(Mat<eT>& out, const TA& A) {
 
 template <typename eT>
 inline void op_strans::apply_mat_inplace(Mat<eT>& out) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword n_rows = out.n_rows;
   const uword n_cols = out.n_cols;
 
   if (n_rows == n_cols) {
-    arma_extra_debug_print(
-        "op_strans::apply(): doing in-place transpose of a square matrix");
+    arma_debug_print("op_strans::apply_mat_inplace(): square matrix");
 
     const uword N = n_rows;
 
@@ -227,17 +226,25 @@ inline void op_strans::apply_mat_inplace(Mat<eT>& out) {
       }
     }
   } else {
-    Mat<eT> tmp;
+    if (((n_rows == 1) || (n_cols == 1)) && (out.vec_state == 0) &&
+        (out.mem_state == 0)) {
+      arma_debug_print("op_strans::apply_mat_inplace(): swapping n_rows and n_cols");
 
-    op_strans::apply_mat_noalias(tmp, out);
+      access::rw(out.n_rows) = n_cols;
+      access::rw(out.n_cols) = n_rows;
+    } else {
+      Mat<eT> tmp;
 
-    out.steal_mem(tmp);
+      op_strans::apply_mat_noalias(tmp, out);
+
+      out.steal_mem(tmp);
+    }
   }
 }
 
 template <typename eT, typename TA>
 inline void op_strans::apply_mat(Mat<eT>& out, const TA& A) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (&out != &A) {
     op_strans::apply_mat_noalias(out, A);
@@ -248,7 +255,7 @@ inline void op_strans::apply_mat(Mat<eT>& out, const TA& A) {
 
 template <typename T1>
 inline void op_strans::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy<T1>& P) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -308,7 +315,7 @@ inline void op_strans::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy
 
 template <typename T1>
 inline void op_strans::apply_direct(Mat<typename T1::elem_type>& out, const T1& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -351,7 +358,7 @@ inline void op_strans::apply_direct(Mat<typename T1::elem_type>& out, const T1& 
 template <typename T1>
 inline void op_strans::apply(Mat<typename T1::elem_type>& out,
                              const Op<T1, op_strans>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   op_strans::apply_direct(out, in.m);
 }

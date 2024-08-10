@@ -178,7 +178,7 @@ template <typename eT>
 const eT Datum<eT>::inf = priv::Datum_helper::inf<eT>();
 
 template <typename eT>
-const eT Datum<eT>::m_u = eT(1.66053906660e-27);
+const eT Datum<eT>::m_u = eT(1.66053906892e-27);
 template <typename eT>
 const eT Datum<eT>::N_A = eT(6.02214076e23);
 template <typename eT>
@@ -186,11 +186,11 @@ const eT Datum<eT>::k = eT(1.380649e-23);
 template <typename eT>
 const eT Datum<eT>::k_evk = eT(8.617333262e-5);
 template <typename eT>
-const eT Datum<eT>::a_0 = eT(5.29177210903e-11);
+const eT Datum<eT>::a_0 = eT(5.29177210544e-11);
 template <typename eT>
-const eT Datum<eT>::mu_B = eT(9.2740100783e-24);
+const eT Datum<eT>::mu_B = eT(9.2740100657e-24);
 template <typename eT>
-const eT Datum<eT>::Z_0 = eT(376.730313668);
+const eT Datum<eT>::Z_0 = eT(376.730313412);
 template <typename eT>
 const eT Datum<eT>::G_0 = eT(7.748091729e-5);
 template <typename eT>
@@ -198,7 +198,7 @@ const eT Datum<eT>::k_e = eT(8.9875517923e9);
 template <typename eT>
 const eT Datum<eT>::eps_0 = eT(8.8541878128e-12);
 template <typename eT>
-const eT Datum<eT>::m_e = eT(9.1093837015e-31);
+const eT Datum<eT>::m_e = eT(9.1093837139e-31);
 template <typename eT>
 const eT Datum<eT>::eV = eT(1.602176634e-19);
 template <typename eT>
@@ -206,9 +206,9 @@ const eT Datum<eT>::ec = eT(1.602176634e-19);
 template <typename eT>
 const eT Datum<eT>::F = eT(96485.33212);
 template <typename eT>
-const eT Datum<eT>::alpha = eT(7.2973525693e-3);
+const eT Datum<eT>::alpha = eT(7.2973525643e-3);
 template <typename eT>
-const eT Datum<eT>::alpha_inv = eT(137.035999084);
+const eT Datum<eT>::alpha_inv = eT(137.035999177);
 template <typename eT>
 const eT Datum<eT>::K_J = eT(483597.8484e9);
 template <typename eT>
@@ -224,9 +224,9 @@ const eT Datum<eT>::h = eT(6.62607015e-34);
 template <typename eT>
 const eT Datum<eT>::h_bar = eT(1.054571817e-34);
 template <typename eT>
-const eT Datum<eT>::m_p = eT(1.67262192369e-27);
+const eT Datum<eT>::m_p = eT(1.67262192595e-27);
 template <typename eT>
-const eT Datum<eT>::R_inf = eT(10973731.568160);
+const eT Datum<eT>::R_inf = eT(10973731.568157);
 template <typename eT>
 const eT Datum<eT>::c_0 = eT(299792458.0);
 template <typename eT>

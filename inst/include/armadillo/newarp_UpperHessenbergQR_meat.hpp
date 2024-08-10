@@ -19,20 +19,20 @@ namespace newarp {
 
 template <typename eT>
 inline UpperHessenbergQR<eT>::UpperHessenbergQR() : n(0), computed(false) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename eT>
 inline UpperHessenbergQR<eT>::UpperHessenbergQR(const Mat<eT>& mat_obj)
     : n(mat_obj.n_rows), mat_T(n, n), rot_cos(n - 1), rot_sin(n - 1), computed(false) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   compute(mat_obj);
 }
 
 template <typename eT>
 void UpperHessenbergQR<eT>::compute(const Mat<eT>& mat_obj) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   n = mat_obj.n_rows;
   mat_T.set_size(n, n);
@@ -85,9 +85,9 @@ void UpperHessenbergQR<eT>::compute(const Mat<eT>& mat_obj) {
 
 template <typename eT>
 Mat<eT> UpperHessenbergQR<eT>::matrix_RQ() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check(
+  arma_conform_check(
       (computed == false),
       "newarp::UpperHessenbergQR::matrix_RQ(): need to call compute() first");
 
@@ -119,10 +119,11 @@ Mat<eT> UpperHessenbergQR<eT>::matrix_RQ() {
 
 template <typename eT>
 inline void UpperHessenbergQR<eT>::apply_YQ(Mat<eT>& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((computed == false),
-                   "newarp::UpperHessenbergQR::apply_YQ(): need to call compute() first");
+  arma_conform_check(
+      (computed == false),
+      "newarp::UpperHessenbergQR::apply_YQ(): need to call compute() first");
 
   eT *Y_col_i, *Y_col_i1;
   uword nrow = Y.n_rows;
@@ -141,19 +142,19 @@ inline void UpperHessenbergQR<eT>::apply_YQ(Mat<eT>& Y) {
 
 template <typename eT>
 inline TridiagQR<eT>::TridiagQR() : UpperHessenbergQR<eT>() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename eT>
 inline TridiagQR<eT>::TridiagQR(const Mat<eT>& mat_obj) : UpperHessenbergQR<eT>() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   this->compute(mat_obj);
 }
 
 template <typename eT>
 inline void TridiagQR<eT>::compute(const Mat<eT>& mat_obj) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   this->n = mat_obj.n_rows;
   this->mat_T.set_size(this->n, this->n);
@@ -214,10 +215,10 @@ inline void TridiagQR<eT>::compute(const Mat<eT>& mat_obj) {
 
 template <typename eT>
 Mat<eT> TridiagQR<eT>::matrix_RQ() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((this->computed == false),
-                   "newarp::TridiagQR::matrix_RQ(): need to call compute() first");
+  arma_conform_check((this->computed == false),
+                     "newarp::TridiagQR::matrix_RQ(): need to call compute() first");
 
   // Make a copy of the R matrix
   Mat<eT> RQ(this->n, this->n, arma_zeros_indicator());

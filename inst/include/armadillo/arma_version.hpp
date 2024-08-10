@@ -18,10 +18,10 @@
 //! \addtogroup arma_version
 //! @{
 
-#define ARMA_VERSION_MAJOR 12
-#define ARMA_VERSION_MINOR 6
-#define ARMA_VERSION_PATCH 7
-#define ARMA_VERSION_NAME "Cortisol Retox"
+#define ARMA_VERSION_MAJOR 14
+#define ARMA_VERSION_MINOR 0
+#define ARMA_VERSION_PATCH 2
+#define ARMA_VERSION_NAME "Stochastic Parrot"
 
 struct arma_version {
   static constexpr unsigned int major = ARMA_VERSION_MAJOR;

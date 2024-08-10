@@ -20,7 +20,7 @@
 
 template <typename T1>
 inline typename T1::pod_type op_cond::apply(const Base<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type T;
@@ -32,7 +32,7 @@ inline typename T1::pod_type op_cond::apply(const Base<typename T1::elem_type, T
   }
 
   if (is_op_diagmat<T1>::value || A.is_diagmat()) {
-    arma_extra_debug_print("op_cond::apply(): detected diagonal matrix");
+    arma_debug_print("op_cond::apply(): detected diagonal matrix");
 
     return op_cond::apply_diag(A);
   }
@@ -46,7 +46,7 @@ inline typename T1::pod_type op_cond::apply(const Base<typename T1::elem_type, T
       (is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd);
 
   if (do_sym) {
-    arma_extra_debug_print("op_cond: symmetric/hermitian optimisation");
+    arma_debug_print("op_cond: symmetric/hermitian optimisation");
 
     return op_cond::apply_sym(A);
   }
@@ -56,7 +56,7 @@ inline typename T1::pod_type op_cond::apply(const Base<typename T1::elem_type, T
 
 template <typename eT>
 inline typename get_pod_type<eT>::result op_cond::apply_diag(const Mat<eT>& A) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<eT>::result T;
 
@@ -69,7 +69,7 @@ inline typename get_pod_type<eT>::result op_cond::apply_diag(const Mat<eT>& A) {
     const T abs_val = std::abs(A.at(i, i));
 
     if (arma_isnan(abs_val)) {
-      arma_debug_warn_level(3, "cond(): failed");
+      arma_warn(3, "cond(): failed");
 
       return Datum<T>::nan;
     }
@@ -87,7 +87,7 @@ inline typename get_pod_type<eT>::result op_cond::apply_diag(const Mat<eT>& A) {
 
 template <typename eT>
 inline typename get_pod_type<eT>::result op_cond::apply_sym(Mat<eT>& A) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<eT>::result T;
 
@@ -96,7 +96,7 @@ inline typename get_pod_type<eT>::result op_cond::apply_sym(Mat<eT>& A) {
   const bool status = auxlib::eig_sym(eigval, A);
 
   if (status == false) {
-    arma_debug_warn_level(3, "cond(): failed");
+    arma_warn(3, "cond(): failed");
 
     return Datum<T>::nan;
   }
@@ -126,7 +126,7 @@ inline typename get_pod_type<eT>::result op_cond::apply_sym(Mat<eT>& A) {
 
 template <typename eT>
 inline typename get_pod_type<eT>::result op_cond::apply_gen(Mat<eT>& A) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<eT>::result T;
 
@@ -135,7 +135,7 @@ inline typename get_pod_type<eT>::result op_cond::apply_gen(Mat<eT>& A) {
   const bool status = auxlib::svd_dc(S, A);
 
   if (status == false) {
-    arma_debug_warn_level(3, "cond(): failed");
+    arma_warn(3, "cond(): failed");
 
     return Datum<T>::nan;
   }

@@ -22,7 +22,7 @@ template <typename T1>
 inline void op_roots::apply(
     Mat<std::complex<typename T1::pod_type> >& out,
     const mtOp<std::complex<typename T1::pod_type>, T1, op_roots>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_roots::apply_direct(out, expr.m);
 
@@ -35,7 +35,7 @@ inline void op_roots::apply(
 template <typename T1>
 inline bool op_roots::apply_direct(Mat<std::complex<typename T1::pod_type> >& out,
                                    const Base<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef std::complex<typename T1::pod_type> out_eT;
 
@@ -59,13 +59,13 @@ inline bool op_roots::apply_direct(Mat<std::complex<typename T1::pod_type> >& ou
 template <typename eT>
 inline bool op_roots::apply_noalias(
     Mat<std::complex<typename get_pod_type<eT>::result> >& out, const Mat<eT>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<eT>::result T;
 
   typedef std::complex<typename get_pod_type<eT>::result> out_eT;
 
-  arma_debug_check((X.is_vec() == false), "roots(): given object must be a vector");
+  arma_conform_check((X.is_vec() == false), "roots(): given object must be a vector");
 
   if (X.internal_has_nonfinite()) {
     return false;

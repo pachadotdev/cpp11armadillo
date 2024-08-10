@@ -22,15 +22,15 @@ template <typename obj_type>
 arma_warn_unused inline obj_type randg(
     const uword n_rows, const uword n_cols, const distr_param& param = distr_param(),
     const typename arma_Mat_Col_Row_only<obj_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename obj_type::elem_type eT;
 
   if (is_Col<obj_type>::value) {
-    arma_debug_check((n_cols != 1), "randg(): incompatible size");
+    arma_conform_check((n_cols != 1), "randg(): incompatible size");
   } else if (is_Row<obj_type>::value) {
-    arma_debug_check((n_rows != 1), "randg(): incompatible size");
+    arma_conform_check((n_rows != 1), "randg(): incompatible size");
   }
 
   double a = double(1);
@@ -38,7 +38,7 @@ arma_warn_unused inline obj_type randg(
 
   param.get_double_vals(a, b);
 
-  arma_debug_check(
+  arma_conform_check(
       ((a <= double(0)) || (b <= double(0))),
       "randg(): incorrect distribution parameters; a and b must be greater than zero");
 
@@ -53,7 +53,7 @@ template <typename obj_type>
 arma_warn_unused inline obj_type randg(
     const SizeMat& s, const distr_param& param = distr_param(),
     const typename arma_Mat_Col_Row_only<obj_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   return randg<obj_type>(s.n_rows, s.n_cols, param);
@@ -64,7 +64,7 @@ arma_warn_unused inline obj_type randg(
     const uword n_elem, const distr_param& param = distr_param(),
     const arma_empty_class junk1 = arma_empty_class(),
     const typename arma_Mat_Col_Row_only<obj_type>::result* junk2 = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk1);
   arma_ignore(junk2);
 
@@ -76,34 +76,34 @@ arma_warn_unused inline obj_type randg(
 
 arma_warn_unused inline mat randg(const uword n_rows, const uword n_cols,
                                   const distr_param& param = distr_param()) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return randg<mat>(n_rows, n_cols, param);
 }
 
 arma_warn_unused inline mat randg(const SizeMat& s,
                                   const distr_param& param = distr_param()) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return randg<mat>(s.n_rows, s.n_cols, param);
 }
 
 arma_warn_unused inline vec randg(const uword n_elem,
                                   const distr_param& param = distr_param()) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return randg<vec>(n_elem, uword(1), param);
 }
 
 arma_warn_unused inline double randg(const distr_param& param = distr_param()) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   double a = double(1);
   double b = double(1);
 
   param.get_double_vals(a, b);
 
-  arma_debug_check(
+  arma_conform_check(
       ((a <= double(0)) || (b <= double(0))),
       "randg(): incorrect distribution parameters; a and b must be greater than zero");
 
@@ -117,14 +117,14 @@ arma_warn_unused inline double randg(const distr_param& param = distr_param()) {
 template <typename eT>
 arma_warn_unused inline typename arma_real_or_cx_only<eT>::result randg(
     const distr_param& param = distr_param()) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   double a = double(1);
   double b = double(1);
 
   param.get_double_vals(a, b);
 
-  arma_debug_check(
+  arma_conform_check(
       ((a <= double(0)) || (b <= double(0))),
       "randg(): incorrect distribution parameters; a and b must be greater than zero");
 
@@ -140,7 +140,7 @@ arma_warn_unused inline cube_type randg(
     const uword n_rows, const uword n_cols, const uword n_slices,
     const distr_param& param = distr_param(),
     const typename arma_Cube_only<cube_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename cube_type::elem_type eT;
@@ -150,7 +150,7 @@ arma_warn_unused inline cube_type randg(
 
   param.get_double_vals(a, b);
 
-  arma_debug_check(
+  arma_conform_check(
       ((a <= double(0)) || (b <= double(0))),
       "randg(): incorrect distribution parameters; a and b must be greater than zero");
 
@@ -165,7 +165,7 @@ template <typename cube_type>
 arma_warn_unused inline cube_type randg(
     const SizeCube& s, const distr_param& param = distr_param(),
     const typename arma_Cube_only<cube_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   return randg<cube_type>(s.n_rows, s.n_cols, s.n_slices, param);
@@ -174,14 +174,14 @@ arma_warn_unused inline cube_type randg(
 arma_warn_unused inline cube randg(const uword n_rows, const uword n_cols,
                                    const uword n_slices,
                                    const distr_param& param = distr_param()) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return randg<cube>(n_rows, n_cols, n_slices, param);
 }
 
 arma_warn_unused inline cube randg(const SizeCube& s,
                                    const distr_param& param = distr_param()) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return randg<cube>(s.n_rows, s.n_cols, s.n_slices, param);
 }

@@ -21,7 +21,7 @@
 template <typename T1>
 arma_warn_unused arma_inline const mtOp<uword, T1, op_sort_index> sort_index(
     const Base<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return mtOp<uword, T1, op_sort_index>(X.get_ref(), uword(0), uword(0));
 }
@@ -31,12 +31,12 @@ arma_warn_unused inline
     typename enable_if2<((is_arma_type<T1>::value) && (is_same_type<T2, char>::value)),
                         const mtOp<uword, T1, op_sort_index> >::result
     sort_index(const T1& X, const T2* sort_direction) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const char sig = (sort_direction != nullptr) ? sort_direction[0] : char(0);
 
-  arma_debug_check(((sig != 'a') && (sig != 'd')),
-                   "sort_index(): unknown sort direction");
+  arma_conform_check(((sig != 'a') && (sig != 'd')),
+                     "sort_index(): unknown sort direction");
 
   return mtOp<uword, T1, op_sort_index>(X, ((sig == 'a') ? uword(0) : uword(1)),
                                         uword(0));
@@ -47,7 +47,7 @@ arma_warn_unused inline
 template <typename T1>
 arma_warn_unused arma_inline const mtOp<uword, T1, op_stable_sort_index>
 stable_sort_index(const Base<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return mtOp<uword, T1, op_stable_sort_index>(X.get_ref(), uword(0), uword(0));
 }
@@ -57,12 +57,12 @@ arma_warn_unused inline
     typename enable_if2<((is_arma_type<T1>::value) && (is_same_type<T2, char>::value)),
                         const mtOp<uword, T1, op_stable_sort_index> >::result
     stable_sort_index(const T1& X, const T2* sort_direction) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const char sig = (sort_direction != nullptr) ? sort_direction[0] : char(0);
 
-  arma_debug_check(((sig != 'a') && (sig != 'd')),
-                   "stable_sort_index(): unknown sort direction");
+  arma_conform_check(((sig != 'a') && (sig != 'd')),
+                     "stable_sort_index(): unknown sort direction");
 
   return mtOp<uword, T1, op_stable_sort_index>(X, ((sig == 'a') ? uword(0) : uword(1)),
                                                uword(0));

@@ -21,7 +21,7 @@
 inline SizeCube::SizeCube(const uword in_n_rows, const uword in_n_cols,
                           const uword in_n_slices)
     : n_rows(in_n_rows), n_cols(in_n_cols), n_slices(in_n_slices) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 inline uword SizeCube::operator[](const uword dim) const {
@@ -49,7 +49,7 @@ inline uword SizeCube::operator()(const uword dim) const {
     return n_slices;
   }
 
-  arma_debug_check_bounds(true, "size(): index out of bounds");
+  arma_conform_check_bounds(true, "size(): index out of bounds");
 
   return uword(1);
 }

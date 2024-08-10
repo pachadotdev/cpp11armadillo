@@ -21,7 +21,7 @@
 template <typename eT>
 inline void interp1_helper_nearest(const Mat<eT>& XG, const Mat<eT>& YG,
                                    const Mat<eT>& XI, Mat<eT>& YI, const eT extrap_val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const eT XG_min = XG.min();
   const eT XG_max = XG.max();
@@ -72,7 +72,7 @@ inline void interp1_helper_nearest(const Mat<eT>& XG, const Mat<eT>& YG,
 template <typename eT>
 inline void interp1_helper_linear(const Mat<eT>& XG, const Mat<eT>& YG, const Mat<eT>& XI,
                                   Mat<eT>& YI, const eT extrap_val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const eT XG_min = XG.min();
   const eT XG_max = XG.max();
@@ -144,16 +144,17 @@ inline void interp1_helper_linear(const Mat<eT>& XG, const Mat<eT>& YG, const Ma
 template <typename eT>
 inline void interp1_helper(const Mat<eT>& X, const Mat<eT>& Y, const Mat<eT>& XI,
                            Mat<eT>& YI, const uword sig, const eT extrap_val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check(
+  arma_conform_check(
       ((X.is_vec() == false) || (Y.is_vec() == false) || (XI.is_vec() == false)),
       "interp1(): currently only vectors are supported");
 
-  arma_debug_check((X.n_elem != Y.n_elem),
-                   "interp1(): X and Y must have the same number of elements");
+  arma_conform_check((X.n_elem != Y.n_elem),
+                     "interp1(): X and Y must have the same number of elements");
 
-  arma_debug_check((X.n_elem < 2), "interp1(): X must have at least two unique elements");
+  arma_conform_check((X.n_elem < 2),
+                     "interp1(): X must have at least two unique elements");
 
   // sig = 10: nearest neighbour
   // sig = 11: nearest neighbour, assume monotonic increase in X and XI
@@ -182,7 +183,8 @@ inline void interp1_helper(const Mat<eT>& X, const Mat<eT>& Y, const Mat<eT>& XI
 
   const uword N_subset = X_indices.n_elem;
 
-  arma_debug_check((N_subset < 2), "interp1(): X must have at least two unique elements");
+  arma_conform_check((N_subset < 2),
+                     "interp1(): X must have at least two unique elements");
 
   Mat<eT> X_sanitised(N_subset, 1, arma_nozeros_indicator());
   Mat<eT> Y_sanitised(N_subset, 1, arma_nozeros_indicator());
@@ -260,7 +262,7 @@ inline typename enable_if2<is_real<typename T1::elem_type>::value, void>::result
     const Base<typename T1::elem_type, T3>& XI, Mat<typename T1::elem_type>& YI,
     const char* method = "linear",
     const typename T1::elem_type extrap_val = Datum<typename T1::elem_type>::nan) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -288,7 +290,7 @@ inline typename enable_if2<is_real<typename T1::elem_type>::value, void>::result
         }
       }
 
-  arma_debug_check((sig == 0), "interp1(): unsupported interpolation type");
+  arma_conform_check((sig == 0), "interp1(): unsupported interpolation type");
 
   const quasi_unwrap<T1> X_tmp(X.get_ref());
   const quasi_unwrap<T2> Y_tmp(Y.get_ref());

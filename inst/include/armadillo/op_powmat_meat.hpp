@@ -21,7 +21,7 @@
 template <typename T1>
 inline void op_powmat::apply(Mat<typename T1::elem_type>& out,
                              const Op<T1, op_powmat>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword y = expr.aux_uword_a;
   const bool y_neg = (expr.aux_uword_b == uword(1));
@@ -38,7 +38,7 @@ template <typename T1>
 inline bool op_powmat::apply_direct(Mat<typename T1::elem_type>& out,
                                     const Base<typename T1::elem_type, T1>& X,
                                     const uword y, const bool y_neg) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -60,8 +60,8 @@ inline bool op_powmat::apply_direct(Mat<typename T1::elem_type>& out,
   } else {
     const quasi_unwrap<T1> U(X.get_ref());
 
-    arma_debug_check((U.M.is_square() == false),
-                     "powmat(): given matrix must be square sized");
+    arma_conform_check((U.M.is_square() == false),
+                       "powmat(): given matrix must be square sized");
 
     op_powmat::apply_direct_positive(out, U.M, y);
   }
@@ -72,7 +72,7 @@ inline bool op_powmat::apply_direct(Mat<typename T1::elem_type>& out,
 template <typename eT>
 inline void op_powmat::apply_direct_positive(Mat<eT>& out, const Mat<eT>& X,
                                              const uword y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword N = X.n_rows;
 
@@ -86,7 +86,7 @@ inline void op_powmat::apply_direct_positive(Mat<eT>& out, const Mat<eT>& X,
   }
 
   if (X.is_diagmat()) {
-    arma_extra_debug_print("op_powmat: detected diagonal matrix");
+    arma_debug_print("op_powmat: detected diagonal matrix");
 
     podarray<eT> tmp(N);  // use temporary array in case we have aliasing
 
@@ -137,7 +137,7 @@ template <typename T1>
 inline void op_powmat_cx::apply(
     Mat<std::complex<typename T1::pod_type> >& out,
     const mtOp<std::complex<typename T1::pod_type>, T1, op_powmat_cx>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::pod_type in_T;
 
@@ -155,14 +155,14 @@ template <typename T1>
 inline bool op_powmat_cx::apply_direct(Mat<std::complex<typename T1::pod_type> >& out,
                                        const Base<typename T1::elem_type, T1>& X,
                                        const typename T1::pod_type y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type in_eT;
   typedef typename T1::pod_type in_T;
   typedef std::complex<in_T> out_eT;
 
   if (y == in_T(int(y))) {
-    arma_extra_debug_print(
+    arma_debug_print(
         "op_powmat_cx::apply_direct(): integer exponent detected; redirecting to "
         "op_powmat");
 
@@ -185,13 +185,13 @@ inline bool op_powmat_cx::apply_direct(Mat<std::complex<typename T1::pod_type> >
   const quasi_unwrap<T1> U(X.get_ref());
   const Mat<in_eT>& A = U.M;
 
-  arma_debug_check((A.is_square() == false),
-                   "powmat(): given matrix must be square sized");
+  arma_conform_check((A.is_square() == false),
+                     "powmat(): given matrix must be square sized");
 
   const uword N = A.n_rows;
 
   if (A.is_diagmat()) {
-    arma_extra_debug_print("op_powmat_cx: detected diagonal matrix");
+    arma_debug_print("op_powmat_cx: detected diagonal matrix");
 
     podarray<out_eT> tmp(N);  // use temporary array in case we have aliasing
 
@@ -211,7 +211,7 @@ inline bool op_powmat_cx::apply_direct(Mat<std::complex<typename T1::pod_type> >
   const bool try_sympd = arma_config::optimise_sym && sym_helper::guess_sympd(A);
 
   if (try_sympd) {
-    arma_extra_debug_print("op_powmat_cx: attempting sympd optimisation");
+    arma_debug_print("op_powmat_cx: attempting sympd optimisation");
 
     Col<in_T> eigval;
     Mat<in_eT> eigvec;
@@ -228,7 +228,7 @@ inline bool op_powmat_cx::apply_direct(Mat<std::complex<typename T1::pod_type> >
       return true;
     }
 
-    arma_extra_debug_print("op_powmat_cx: sympd optimisation failed");
+    arma_debug_print("op_powmat_cx: sympd optimisation failed");
 
     // fallthrough if optimisation failed
   }

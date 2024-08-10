@@ -21,7 +21,7 @@
 template <typename T1>
 inline void spop_vectorise_col::apply(SpMat<typename T1::elem_type>& out,
                                       const SpOp<T1, spop_vectorise_col>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   spop_vectorise_col::apply_direct(out, in.m);
 }
@@ -29,7 +29,7 @@ inline void spop_vectorise_col::apply(SpMat<typename T1::elem_type>& out,
 template <typename T1>
 inline void spop_vectorise_col::apply_direct(SpMat<typename T1::elem_type>& out,
                                              const T1& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -49,7 +49,7 @@ inline void spop_vectorise_col::apply_direct(SpMat<typename T1::elem_type>& out,
 template <typename T1>
 inline void spop_vectorise_row::apply(SpMat<typename T1::elem_type>& out,
                                       const SpOp<T1, spop_vectorise_row>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   spop_vectorise_row::apply_direct(out, in.m);
 }
@@ -57,7 +57,7 @@ inline void spop_vectorise_row::apply(SpMat<typename T1::elem_type>& out,
 template <typename T1>
 inline void spop_vectorise_row::apply_direct(SpMat<typename T1::elem_type>& out,
                                              const T1& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -80,7 +80,7 @@ inline void spop_vectorise_row::apply_direct(SpMat<typename T1::elem_type>& out,
 template <typename T1>
 inline void spop_vectorise_all::apply(SpMat<typename T1::elem_type>& out,
                                       const SpOp<T1, spop_vectorise_all>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword dim = in.aux_uword_a;
 

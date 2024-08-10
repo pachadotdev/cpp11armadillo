@@ -24,17 +24,17 @@ inline bool qr(
     Mat<typename T1::elem_type>& Q, Mat<typename T1::elem_type>& R,
     const Base<typename T1::elem_type, T1>& X,
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
-  arma_debug_check((&Q == &R), "qr(): Q and R are the same object");
+  arma_conform_check((&Q == &R), "qr(): Q and R are the same object");
 
   const bool status = auxlib::qr(Q, R, X);
 
   if (status == false) {
     Q.soft_reset();
     R.soft_reset();
-    arma_debug_warn_level(3, "qr(): decomposition failed");
+    arma_warn(3, "qr(): decomposition failed");
   }
 
   return status;
@@ -46,17 +46,17 @@ inline bool qr_econ(
     Mat<typename T1::elem_type>& Q, Mat<typename T1::elem_type>& R,
     const Base<typename T1::elem_type, T1>& X,
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
-  arma_debug_check((&Q == &R), "qr_econ(): Q and R are the same object");
+  arma_conform_check((&Q == &R), "qr_econ(): Q and R are the same object");
 
   const bool status = auxlib::qr_econ(Q, R, X);
 
   if (status == false) {
     Q.soft_reset();
     R.soft_reset();
-    arma_debug_warn_level(3, "qr_econ(): decomposition failed");
+    arma_warn(3, "qr_econ(): decomposition failed");
   }
 
   return status;
@@ -68,14 +68,14 @@ inline typename enable_if2<is_supported_blas_type<typename T1::elem_type>::value
                            bool>::result
 qr(Mat<typename T1::elem_type>& Q, Mat<typename T1::elem_type>& R, Mat<uword>& P,
    const Base<typename T1::elem_type, T1>& X, const char* P_mode = "matrix") {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((&Q == &R), "qr(): Q and R are the same object");
+  arma_conform_check((&Q == &R), "qr(): Q and R are the same object");
 
   const char sig = (P_mode != nullptr) ? P_mode[0] : char(0);
 
-  arma_debug_check(((sig != 'm') && (sig != 'v')),
-                   "qr(): argument 'P_mode' must be \"vector\" or \"matrix\"");
+  arma_conform_check(((sig != 'm') && (sig != 'v')),
+                     "qr(): argument 'P_mode' must be \"vector\" or \"matrix\"");
 
   bool status = false;
 
@@ -103,7 +103,7 @@ qr(Mat<typename T1::elem_type>& Q, Mat<typename T1::elem_type>& R, Mat<uword>& P
     Q.soft_reset();
     R.soft_reset();
     P.soft_reset();
-    arma_debug_warn_level(3, "qr(): decomposition failed");
+    arma_warn(3, "qr(): decomposition failed");
   }
 
   return status;

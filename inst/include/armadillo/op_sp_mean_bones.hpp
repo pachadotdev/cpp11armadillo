@@ -15,24 +15,25 @@
 // limitations under the License.
 // ------------------------------------------------------------------------
 
-//! \addtogroup spop_mean
+//! \addtogroup op_sp_mean
 //! @{
 
 //! Class for finding mean values of a sparse matrix
-class spop_mean : public traits_op_xvec {
+class op_sp_mean : public traits_op_xvec {
  public:
   // Apply mean into an output sparse matrix (or vector).
   template <typename T1>
-  inline static void apply(SpMat<typename T1::elem_type>& out,
-                           const SpOp<T1, spop_mean>& in);
+  inline static void apply(
+      Mat<typename T1::elem_type>& out,
+      const mtSpReduceOp<typename T1::elem_type, T1, op_sp_mean>& in);
 
   template <typename T1>
-  inline static void apply_noalias_fast(SpMat<typename T1::elem_type>& out,
-                                        const SpProxy<T1>& p, const uword dim);
+  inline static void apply_fast(Mat<typename T1::elem_type>& out, const SpProxy<T1>& p,
+                                const uword dim);
 
   template <typename T1>
-  inline static void apply_noalias_slow(SpMat<typename T1::elem_type>& out,
-                                        const SpProxy<T1>& p, const uword dim);
+  inline static void apply_slow(Mat<typename T1::elem_type>& out, const SpProxy<T1>& p,
+                                const uword dim);
 
   // Take direct mean of a set of values.  Length of array and number of values can be
   // different.

@@ -23,7 +23,7 @@ arma_warn_unused arma_inline
     typename enable_if2<is_arma_type<T1>::value && resolves_to_vector<T1>::yes,
                         const Op<T1, op_cumprod_vec> >::result
     cumprod(const T1& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_cumprod_vec>(X);
 }
@@ -33,7 +33,7 @@ arma_warn_unused arma_inline
     typename enable_if2<is_arma_type<T1>::value && resolves_to_vector<T1>::no,
                         const Op<T1, op_cumprod> >::result
     cumprod(const T1& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_cumprod>(X, 0, 0);
 }
@@ -42,7 +42,7 @@ template <typename T1>
 arma_warn_unused arma_inline
     typename enable_if2<is_arma_type<T1>::value, const Op<T1, op_cumprod> >::result
     cumprod(const T1& X, const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_cumprod>(X, dim, 0);
 }

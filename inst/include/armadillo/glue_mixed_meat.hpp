@@ -23,7 +23,7 @@ template <typename T1, typename T2>
 inline void glue_mixed_times::apply(
     Mat<typename eT_promoter<T1, T2>::eT>& out,
     const mtGlue<typename eT_promoter<T1, T2>::eT, T1, T2, glue_mixed_times>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type in_eT1;
   typedef typename T2::elem_type in_eT2;
@@ -36,7 +36,7 @@ inline void glue_mixed_times::apply(
   const typename partial_unwrap<T1>::stored_type& A = tmp1.M;
   const typename partial_unwrap<T2>::stored_type& B = tmp2.M;
 
-  const bool use_alpha = partial_unwrap<T1>::do_times || partial_unwrap<T2>::do_times;
+  constexpr bool use_alpha = partial_unwrap<T1>::do_times || partial_unwrap<T2>::do_times;
   const out_eT alpha = use_alpha ? (upgrade_val<in_eT1, in_eT2>::apply(tmp1.get_val()) *
                                     upgrade_val<in_eT1, in_eT2>::apply(tmp2.get_val()))
                                  : out_eT(0);
@@ -44,7 +44,7 @@ inline void glue_mixed_times::apply(
   const bool do_trans_A = partial_unwrap<T1>::do_trans;
   const bool do_trans_B = partial_unwrap<T2>::do_trans;
 
-  arma_debug_assert_trans_mul_size<do_trans_A, do_trans_B>(
+  arma_conform_assert_trans_mul_size<do_trans_A, do_trans_B>(
       A.n_rows, A.n_cols, B.n_rows, B.n_cols, "matrix multiplication");
 
   const uword out_n_rows = (do_trans_A == false) ? A.n_rows : A.n_cols;
@@ -70,7 +70,7 @@ template <typename T1, typename T2>
 inline void glue_mixed_plus::apply(
     Mat<typename eT_promoter<T1, T2>::eT>& out,
     const mtGlue<typename eT_promoter<T1, T2>::eT, T1, T2, glue_mixed_plus>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT1;
   typedef typename T2::elem_type eT2;
@@ -82,7 +82,7 @@ inline void glue_mixed_plus::apply(
   const Proxy<T1> A(X.A);
   const Proxy<T2> B(X.B);
 
-  arma_debug_assert_same_size(A, B, "addition");
+  arma_conform_assert_same_size(A, B, "addition");
 
   const uword n_rows = A.get_n_rows();
   const uword n_cols = A.get_n_cols();
@@ -92,7 +92,7 @@ inline void glue_mixed_plus::apply(
   out_eT* out_mem = out.memptr();
   const uword n_elem = out.n_elem;
 
-  const bool use_at = (Proxy<T1>::use_at || Proxy<T2>::use_at);
+  constexpr bool use_at = (Proxy<T1>::use_at || Proxy<T2>::use_at);
 
   if (use_at == false) {
     typename Proxy<T1>::ea_type AA = A.get_ea();
@@ -126,7 +126,7 @@ template <typename T1, typename T2>
 inline void glue_mixed_minus::apply(
     Mat<typename eT_promoter<T1, T2>::eT>& out,
     const mtGlue<typename eT_promoter<T1, T2>::eT, T1, T2, glue_mixed_minus>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT1;
   typedef typename T2::elem_type eT2;
@@ -138,7 +138,7 @@ inline void glue_mixed_minus::apply(
   const Proxy<T1> A(X.A);
   const Proxy<T2> B(X.B);
 
-  arma_debug_assert_same_size(A, B, "subtraction");
+  arma_conform_assert_same_size(A, B, "subtraction");
 
   const uword n_rows = A.get_n_rows();
   const uword n_cols = A.get_n_cols();
@@ -148,7 +148,7 @@ inline void glue_mixed_minus::apply(
   out_eT* out_mem = out.memptr();
   const uword n_elem = out.n_elem;
 
-  const bool use_at = (Proxy<T1>::use_at || Proxy<T2>::use_at);
+  constexpr bool use_at = (Proxy<T1>::use_at || Proxy<T2>::use_at);
 
   if (use_at == false) {
     typename Proxy<T1>::ea_type AA = A.get_ea();
@@ -182,7 +182,7 @@ template <typename T1, typename T2>
 inline void glue_mixed_div::apply(
     Mat<typename eT_promoter<T1, T2>::eT>& out,
     const mtGlue<typename eT_promoter<T1, T2>::eT, T1, T2, glue_mixed_div>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT1;
   typedef typename T2::elem_type eT2;
@@ -194,7 +194,7 @@ inline void glue_mixed_div::apply(
   const Proxy<T1> A(X.A);
   const Proxy<T2> B(X.B);
 
-  arma_debug_assert_same_size(A, B, "element-wise division");
+  arma_conform_assert_same_size(A, B, "element-wise division");
 
   const uword n_rows = A.get_n_rows();
   const uword n_cols = A.get_n_cols();
@@ -204,7 +204,7 @@ inline void glue_mixed_div::apply(
   out_eT* out_mem = out.memptr();
   const uword n_elem = out.n_elem;
 
-  const bool use_at = (Proxy<T1>::use_at || Proxy<T2>::use_at);
+  constexpr bool use_at = (Proxy<T1>::use_at || Proxy<T2>::use_at);
 
   if (use_at == false) {
     typename Proxy<T1>::ea_type AA = A.get_ea();
@@ -238,7 +238,7 @@ template <typename T1, typename T2>
 inline void glue_mixed_schur::apply(
     Mat<typename eT_promoter<T1, T2>::eT>& out,
     const mtGlue<typename eT_promoter<T1, T2>::eT, T1, T2, glue_mixed_schur>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT1;
   typedef typename T2::elem_type eT2;
@@ -250,7 +250,7 @@ inline void glue_mixed_schur::apply(
   const Proxy<T1> A(X.A);
   const Proxy<T2> B(X.B);
 
-  arma_debug_assert_same_size(A, B, "element-wise multiplication");
+  arma_conform_assert_same_size(A, B, "element-wise multiplication");
 
   const uword n_rows = A.get_n_rows();
   const uword n_cols = A.get_n_cols();
@@ -260,7 +260,7 @@ inline void glue_mixed_schur::apply(
   out_eT* out_mem = out.memptr();
   const uword n_elem = out.n_elem;
 
-  const bool use_at = (Proxy<T1>::use_at || Proxy<T2>::use_at);
+  constexpr bool use_at = (Proxy<T1>::use_at || Proxy<T2>::use_at);
 
   if (use_at == false) {
     typename Proxy<T1>::ea_type AA = A.get_ea();
@@ -298,7 +298,7 @@ template <typename T1, typename T2>
 inline void glue_mixed_plus::apply(
     Cube<typename eT_promoter<T1, T2>::eT>& out,
     const mtGlueCube<typename eT_promoter<T1, T2>::eT, T1, T2, glue_mixed_plus>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT1;
   typedef typename T2::elem_type eT2;
@@ -310,7 +310,7 @@ inline void glue_mixed_plus::apply(
   const ProxyCube<T1> A(X.A);
   const ProxyCube<T2> B(X.B);
 
-  arma_debug_assert_same_size(A, B, "addition");
+  arma_conform_assert_same_size(A, B, "addition");
 
   const uword n_rows = A.get_n_rows();
   const uword n_cols = A.get_n_cols();
@@ -321,7 +321,7 @@ inline void glue_mixed_plus::apply(
   out_eT* out_mem = out.memptr();
   const uword n_elem = out.n_elem;
 
-  const bool use_at = (ProxyCube<T1>::use_at || ProxyCube<T2>::use_at);
+  constexpr bool use_at = (ProxyCube<T1>::use_at || ProxyCube<T2>::use_at);
 
   if (use_at == false) {
     typename ProxyCube<T1>::ea_type AA = A.get_ea();
@@ -347,7 +347,7 @@ template <typename T1, typename T2>
 inline void glue_mixed_minus::apply(
     Cube<typename eT_promoter<T1, T2>::eT>& out,
     const mtGlueCube<typename eT_promoter<T1, T2>::eT, T1, T2, glue_mixed_minus>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT1;
   typedef typename T2::elem_type eT2;
@@ -359,7 +359,7 @@ inline void glue_mixed_minus::apply(
   const ProxyCube<T1> A(X.A);
   const ProxyCube<T2> B(X.B);
 
-  arma_debug_assert_same_size(A, B, "subtraction");
+  arma_conform_assert_same_size(A, B, "subtraction");
 
   const uword n_rows = A.get_n_rows();
   const uword n_cols = A.get_n_cols();
@@ -370,7 +370,7 @@ inline void glue_mixed_minus::apply(
   out_eT* out_mem = out.memptr();
   const uword n_elem = out.n_elem;
 
-  const bool use_at = (ProxyCube<T1>::use_at || ProxyCube<T2>::use_at);
+  constexpr bool use_at = (ProxyCube<T1>::use_at || ProxyCube<T2>::use_at);
 
   if (use_at == false) {
     typename ProxyCube<T1>::ea_type AA = A.get_ea();
@@ -396,7 +396,7 @@ template <typename T1, typename T2>
 inline void glue_mixed_div::apply(
     Cube<typename eT_promoter<T1, T2>::eT>& out,
     const mtGlueCube<typename eT_promoter<T1, T2>::eT, T1, T2, glue_mixed_div>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT1;
   typedef typename T2::elem_type eT2;
@@ -408,7 +408,7 @@ inline void glue_mixed_div::apply(
   const ProxyCube<T1> A(X.A);
   const ProxyCube<T2> B(X.B);
 
-  arma_debug_assert_same_size(A, B, "element-wise division");
+  arma_conform_assert_same_size(A, B, "element-wise division");
 
   const uword n_rows = A.get_n_rows();
   const uword n_cols = A.get_n_cols();
@@ -419,7 +419,7 @@ inline void glue_mixed_div::apply(
   out_eT* out_mem = out.memptr();
   const uword n_elem = out.n_elem;
 
-  const bool use_at = (ProxyCube<T1>::use_at || ProxyCube<T2>::use_at);
+  constexpr bool use_at = (ProxyCube<T1>::use_at || ProxyCube<T2>::use_at);
 
   if (use_at == false) {
     typename ProxyCube<T1>::ea_type AA = A.get_ea();
@@ -445,7 +445,7 @@ template <typename T1, typename T2>
 inline void glue_mixed_schur::apply(
     Cube<typename eT_promoter<T1, T2>::eT>& out,
     const mtGlueCube<typename eT_promoter<T1, T2>::eT, T1, T2, glue_mixed_schur>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT1;
   typedef typename T2::elem_type eT2;
@@ -457,7 +457,7 @@ inline void glue_mixed_schur::apply(
   const ProxyCube<T1> A(X.A);
   const ProxyCube<T2> B(X.B);
 
-  arma_debug_assert_same_size(A, B, "element-wise multiplication");
+  arma_conform_assert_same_size(A, B, "element-wise multiplication");
 
   const uword n_rows = A.get_n_rows();
   const uword n_cols = A.get_n_cols();
@@ -468,7 +468,7 @@ inline void glue_mixed_schur::apply(
   out_eT* out_mem = out.memptr();
   const uword n_elem = out.n_elem;
 
-  const bool use_at = (ProxyCube<T1>::use_at || ProxyCube<T2>::use_at);
+  constexpr bool use_at = (ProxyCube<T1>::use_at || ProxyCube<T2>::use_at);
 
   if (use_at == false) {
     typename ProxyCube<T1>::ea_type AA = A.get_ea();

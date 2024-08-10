@@ -23,7 +23,7 @@ arma_warn_unused inline
     typename enable_if2<is_arma_type<T1>::value && resolves_to_vector<T1>::yes,
                         const Op<T1, op_reverse_vec> >::result
     reverse(const T1& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_reverse_vec>(X);
 }
@@ -33,7 +33,7 @@ arma_warn_unused inline
     typename enable_if2<is_arma_type<T1>::value && resolves_to_vector<T1>::no,
                         const Op<T1, op_reverse> >::result
     reverse(const T1& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_reverse>(X, 0, 0);
 }
@@ -42,7 +42,7 @@ template <typename T1>
 arma_warn_unused inline
     typename enable_if2<is_arma_type<T1>::value, const Op<T1, op_reverse> >::result
     reverse(const T1& X, const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_reverse>(X, dim, 0);
 }
@@ -50,7 +50,7 @@ arma_warn_unused inline
 template <typename T1>
 arma_warn_unused inline const SpOp<T1, spop_reverse> reverse(
     const SpBase<typename T1::elem_type, T1>& X, const uword dim = 0) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return SpOp<T1, spop_reverse>(X.get_ref(), dim, 0);
 }

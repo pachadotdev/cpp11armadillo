@@ -20,7 +20,7 @@
 
 template <typename worker_type>
 inline void spsolve_factoriser::delete_worker() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (worker_ptr != nullptr) {
     worker_type* ptr = reinterpret_cast<worker_type*>(worker_ptr);
@@ -32,7 +32,7 @@ inline void spsolve_factoriser::delete_worker() {
 }
 
 inline void spsolve_factoriser::cleanup() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
 #if defined(ARMA_USE_SUPERLU)
   {
@@ -55,21 +55,21 @@ inline void spsolve_factoriser::cleanup() {
 }
 
 inline spsolve_factoriser::~spsolve_factoriser() {
-  arma_extra_debug_sigprint_this(this);
+  arma_debug_sigprint_this(this);
 
   cleanup();
 }
 
-inline spsolve_factoriser::spsolve_factoriser() { arma_extra_debug_sigprint_this(this); }
+inline spsolve_factoriser::spsolve_factoriser() { arma_debug_sigprint_this(this); }
 
 inline void spsolve_factoriser::reset() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   cleanup();
 }
 
 inline double spsolve_factoriser::rcond() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return rcond_value;
 }
@@ -78,7 +78,7 @@ template <typename T1>
 inline bool spsolve_factoriser::factorise(
     const SpBase<typename T1::elem_type, T1>& A_expr, const spsolve_opts_base& settings,
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
 #if defined(ARMA_USE_SUPERLU)
@@ -98,9 +98,9 @@ inline bool spsolve_factoriser::factorise(
     const SpMat<eT>& A = U.M;
 
     if (A.is_square() == false) {
-      arma_debug_warn_level(1,
-                            "spsolve_factoriser::factorise(): solving under-determined / "
-                            "over-determined systems is currently not supported");
+      arma_warn(1,
+                "spsolve_factoriser::factorise(): solving under-determined / "
+                "over-determined systems is currently not supported");
       return false;
     }
 
@@ -115,7 +115,7 @@ inline bool spsolve_factoriser::factorise(
                                    : superlu_opts_default;
 
     if ((opts.pivot_thresh < double(0)) || (opts.pivot_thresh > double(1))) {
-      arma_debug_warn_level(
+      arma_warn(
           1,
           "spsolve_factoriser::factorise(): pivot_thresh must be in the [0,1] interval");
       return false;
@@ -126,8 +126,7 @@ inline bool spsolve_factoriser::factorise(
     worker_ptr = new (std::nothrow) worker_type;
 
     if (worker_ptr == nullptr) {
-      arma_debug_warn_level(
-          3, "spsolve_factoriser::factorise(): could not construct worker object");
+      arma_warn(3, "spsolve_factoriser::factorise(): could not construct worker object");
       return false;
     }
 
@@ -159,9 +158,8 @@ inline bool spsolve_factoriser::factorise(
     if ((status == false) || arma_isnan(local_rcond_value) ||
         ((opts.allow_ugly == false) &&
          (local_rcond_value < std::numeric_limits<T>::epsilon()))) {
-      arma_debug_warn_level(
-          3, "spsolve_factoriser::factorise(): factorisation failed; rcond: ",
-          local_rcond_value);
+      arma_warn(3, "spsolve_factoriser::factorise(): factorisation failed; rcond: ",
+                local_rcond_value);
       delete_worker<worker_type>();
       return false;
     }
@@ -183,7 +181,7 @@ template <typename T1>
 inline bool spsolve_factoriser::solve(
     Mat<typename T1::elem_type>& X, const Base<typename T1::elem_type, T1>& B_expr,
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
 #if defined(ARMA_USE_SUPERLU)
@@ -193,7 +191,7 @@ inline bool spsolve_factoriser::solve(
     typedef superlu_worker<eT> worker_type;
 
     if (worker_ptr == nullptr) {
-      arma_debug_warn_level(2, "spsolve_factoriser::solve(): no factorisation available");
+      arma_warn(2, "spsolve_factoriser::solve(): no factorisation available");
       X.soft_reset();
       return false;
     }
@@ -211,7 +209,7 @@ inline bool spsolve_factoriser::solve(
     }
 
     if (type_mismatch) {
-      arma_debug_warn_level(1, "spsolve_factoriser::solve(): matrix type mismatch");
+      arma_warn(1, "spsolve_factoriser::solve(): matrix type mismatch");
       X.soft_reset();
       return false;
     }
@@ -220,7 +218,7 @@ inline bool spsolve_factoriser::solve(
     const Mat<eT>& B = U.M;
 
     if (n_rows != B.n_rows) {
-      arma_debug_warn_level(1, "spsolve_factoriser::solve(): matrix size mismatch");
+      arma_warn(1, "spsolve_factoriser::solve(): matrix size mismatch");
       X.soft_reset();
       return false;
     }
@@ -240,7 +238,7 @@ inline bool spsolve_factoriser::solve(
     }
 
     if (status == false) {
-      arma_debug_warn_level(3, "spsolve_factoriser::solve(): solution not found");
+      arma_warn(3, "spsolve_factoriser::solve(): solution not found");
       X.soft_reset();
       return false;
     }

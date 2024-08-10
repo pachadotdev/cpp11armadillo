@@ -24,7 +24,7 @@ arma_warn_unused inline
     norm(const T1& X, const uword k = uword(2),
          const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk =
              nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::pod_type T;
@@ -46,7 +46,7 @@ arma_warn_unused inline
       return op_norm::vec_norm_2(P);
     }
 
-    arma_debug_check((k == 0), "norm(): unsupported vector norm type");
+    arma_conform_check((k == 0), "norm(): unsupported vector norm type");
 
     return op_norm::vec_norm_k(P, int(k));
   } else {
@@ -71,7 +71,7 @@ arma_warn_unused inline
     norm(const T1& X, const char* method,
          const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk =
              nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::pod_type T;
@@ -118,7 +118,7 @@ template <typename T1>
 arma_warn_unused inline typename enable_if2<is_arma_type<T1>::value, double>::result norm(
     const T1& X, const uword k = uword(2),
     const typename arma_integral_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   if (resolves_to_colvector<T1>::value) {
@@ -135,7 +135,7 @@ template <typename T1>
 arma_warn_unused inline typename enable_if2<is_arma_type<T1>::value, double>::result norm(
     const T1& X, const char* method,
     const typename arma_integral_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   if (resolves_to_colvector<T1>::value) {
@@ -157,7 +157,7 @@ arma_warn_unused inline
     norm(const T1& expr, const uword k = uword(2),
          const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk =
              nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::elem_type eT;
@@ -208,7 +208,7 @@ arma_warn_unused inline
     norm(const T1& expr, const char* method,
          const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk =
              nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::elem_type eT;
@@ -266,7 +266,7 @@ arma_warn_unused inline typename T1::pod_type norm2est(
     const Base<typename T1::elem_type, T1>& X, const typename T1::pod_type tolerance = 0,
     const uword max_iter = 100,
     const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   return op_norm2est::norm2est(X.get_ref(), tolerance, max_iter);
@@ -277,7 +277,7 @@ arma_warn_unused inline typename T1::pod_type norm2est(
     const SpBase<typename T1::elem_type, T1>& X,
     const typename T1::pod_type tolerance = 0, const uword max_iter = 100,
     const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   return op_norm2est::norm2est(X.get_ref(), tolerance, max_iter);

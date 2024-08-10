@@ -22,7 +22,7 @@ template <typename eT>
 inline void internal_regspace_default_delta(Mat<eT>& x,
                                             const typename Mat<eT>::pod_type start,
                                             const typename Mat<eT>::pod_type end) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename Mat<eT>::pod_type T;
 
@@ -49,8 +49,8 @@ template <typename eT, typename sT>
 inline typename enable_if2<(is_signed<sT>::value == true), void>::result
 internal_regspace_var_delta(Mat<eT>& x, const typename Mat<eT>::pod_type start,
                             const sT delta, const typename Mat<eT>::pod_type end) {
-  arma_extra_debug_sigprint();
-  arma_extra_debug_print("internal_regspace_var_delta(): signed version");
+  arma_debug_sigprint();
+  arma_debug_print("internal_regspace_var_delta(): signed version");
 
   typedef typename Mat<eT>::pod_type T;
 
@@ -87,8 +87,8 @@ template <typename eT, typename uT>
 inline typename enable_if2<(is_signed<uT>::value == false), void>::result
 internal_regspace_var_delta(Mat<eT>& x, const typename Mat<eT>::pod_type start,
                             const uT delta, const typename Mat<eT>::pod_type end) {
-  arma_extra_debug_sigprint();
-  arma_extra_debug_print("internal_regspace_var_delta(): unsigned version");
+  arma_debug_sigprint();
+  arma_debug_print("internal_regspace_var_delta(): unsigned version");
 
   typedef typename Mat<eT>::pod_type T;
 
@@ -125,8 +125,8 @@ inline typename enable_if2<is_Mat<vec_type>::value && (is_signed<sT>::value == t
                            vec_type>::result
 regspace(const typename vec_type::pod_type start, const sT delta,
          const typename vec_type::pod_type end) {
-  arma_extra_debug_sigprint();
-  arma_extra_debug_print("regspace(): signed version");
+  arma_debug_sigprint();
+  arma_debug_print("regspace(): signed version");
 
   vec_type x;
 
@@ -150,8 +150,8 @@ inline typename enable_if2<is_Mat<vec_type>::value && (is_signed<uT>::value == f
                            vec_type>::result
 regspace(const typename vec_type::pod_type start, const uT delta,
          const typename vec_type::pod_type end) {
-  arma_extra_debug_sigprint();
-  arma_extra_debug_print("regspace(): unsigned version");
+  arma_debug_sigprint();
+  arma_debug_print("regspace(): unsigned version");
 
   vec_type x;
 
@@ -173,7 +173,7 @@ regspace(const typename vec_type::pod_type start, const uT delta,
 template <typename vec_type>
 arma_warn_unused inline typename enable_if2<is_Mat<vec_type>::value, vec_type>::result
 regspace(const typename vec_type::pod_type start, const typename vec_type::pod_type end) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   vec_type x;
 
@@ -190,13 +190,13 @@ regspace(const typename vec_type::pod_type start, const typename vec_type::pod_t
 
 arma_warn_unused inline vec regspace(const double start, const double delta,
                                      const double end) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return regspace<vec>(start, delta, end);
 }
 
 arma_warn_unused inline vec regspace(const double start, const double end) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return regspace<vec>(start, end);
 }

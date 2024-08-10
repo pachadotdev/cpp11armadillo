@@ -22,7 +22,7 @@ template <typename T1>
 inline bool svd(
     Col<typename T1::pod_type>& S, const Base<typename T1::elem_type, T1>& X,
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::elem_type eT;
@@ -33,7 +33,7 @@ inline bool svd(
 
   if (status == false) {
     S.soft_reset();
-    arma_debug_warn_level(3, "svd(): decomposition failed");
+    arma_warn(3, "svd(): decomposition failed");
   }
 
   return status;
@@ -43,7 +43,7 @@ template <typename T1>
 arma_warn_unused inline Col<typename T1::pod_type> svd(
     const Base<typename T1::elem_type, T1>& X,
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::elem_type eT;
@@ -69,18 +69,18 @@ inline bool svd(
     Mat<typename T1::elem_type>& V, const Base<typename T1::elem_type, T1>& X,
     const char* method = "dc",
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::elem_type eT;
 
-  arma_debug_check(
+  arma_conform_check(
       (((void*)(&U) == (void*)(&S)) || (&U == &V) || ((void*)(&S) == (void*)(&V))),
       "svd(): two or more output objects are the same object");
 
   const char sig = (method != nullptr) ? method[0] : char(0);
 
-  arma_debug_check(((sig != 's') && (sig != 'd')), "svd(): unknown method specified");
+  arma_conform_check(((sig != 's') && (sig != 'd')), "svd(): unknown method specified");
 
   Mat<eT> A(X.get_ref());
 
@@ -90,7 +90,7 @@ inline bool svd(
     U.soft_reset();
     S.soft_reset();
     V.soft_reset();
-    arma_debug_warn_level(3, "svd(): decomposition failed");
+    arma_warn(3, "svd(): decomposition failed");
   }
 
   return status;
@@ -102,22 +102,22 @@ inline bool svd_econ(
     Mat<typename T1::elem_type>& V, const Base<typename T1::elem_type, T1>& X,
     const char mode, const char* method = "dc",
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::elem_type eT;
 
-  arma_debug_check(
+  arma_conform_check(
       (((void*)(&U) == (void*)(&S)) || (&U == &V) || ((void*)(&S) == (void*)(&V))),
       "svd_econ(): two or more output objects are the same object");
 
-  arma_debug_check(((mode != 'l') && (mode != 'r') && (mode != 'b')),
-                   "svd_econ(): parameter 'mode' is incorrect");
+  arma_conform_check(((mode != 'l') && (mode != 'r') && (mode != 'b')),
+                     "svd_econ(): parameter 'mode' is incorrect");
 
   const char sig = (method != nullptr) ? method[0] : char(0);
 
-  arma_debug_check(((sig != 's') && (sig != 'd')),
-                   "svd_econ(): unknown method specified");
+  arma_conform_check(((sig != 's') && (sig != 'd')),
+                     "svd_econ(): unknown method specified");
 
   Mat<eT> A(X.get_ref());
 
@@ -129,7 +129,7 @@ inline bool svd_econ(
     U.soft_reset();
     S.soft_reset();
     V.soft_reset();
-    arma_debug_warn_level(3, "svd_econ(): decomposition failed");
+    arma_warn(3, "svd_econ(): decomposition failed");
   }
 
   return status;
@@ -141,7 +141,7 @@ inline bool svd_econ(
     Mat<typename T1::elem_type>& V, const Base<typename T1::elem_type, T1>& X,
     const char* mode = "both", const char* method = "dc",
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   return svd_econ(U, S, V, X, ((mode != nullptr) ? mode[0] : char(0)), method);

@@ -27,7 +27,7 @@ template <typename T1, typename T2, typename op_n_unique_type>
 inline uword n_unique(const SpBase<typename T1::elem_type, T1>& x,
                       const SpBase<typename T2::elem_type, T2>& y,
                       const op_n_unique_type junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpProxy<T1> pa(x.get_ref());
   const SpProxy<T2> pb(y.get_ref());
@@ -38,7 +38,7 @@ inline uword n_unique(const SpBase<typename T1::elem_type, T1>& x,
 template <typename T1, typename T2, typename op_n_unique_type>
 arma_hot inline uword n_unique(const SpProxy<T1>& pa, const SpProxy<T2>& pb,
                                const op_n_unique_type junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typename SpProxy<T1>::const_iterator_type x_it = pa.begin();

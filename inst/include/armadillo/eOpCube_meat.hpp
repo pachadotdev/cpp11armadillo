@@ -21,14 +21,14 @@
 template <typename T1, typename eop_type>
 inline eOpCube<T1, eop_type>::eOpCube(const BaseCube<typename T1::elem_type, T1>& in_m)
     : P(in_m.get_ref()) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename T1, typename eop_type>
 inline eOpCube<T1, eop_type>::eOpCube(const BaseCube<typename T1::elem_type, T1>& in_m,
                                       const typename T1::elem_type in_aux)
     : P(in_m.get_ref()), aux(in_aux) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename T1, typename eop_type>
@@ -36,7 +36,7 @@ inline eOpCube<T1, eop_type>::eOpCube(const BaseCube<typename T1::elem_type, T1>
                                       const uword in_aux_uword_a,
                                       const uword in_aux_uword_b)
     : P(in_m.get_ref()), aux_uword_a(in_aux_uword_a), aux_uword_b(in_aux_uword_b) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename T1, typename eop_type>
@@ -48,7 +48,7 @@ inline eOpCube<T1, eop_type>::eOpCube(const BaseCube<typename T1::elem_type, T1>
       aux_uword_a(in_aux_uword_a),
       aux_uword_b(in_aux_uword_b),
       aux_uword_c(in_aux_uword_c) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename T1, typename eop_type>
@@ -62,12 +62,12 @@ inline eOpCube<T1, eop_type>::eOpCube(const BaseCube<typename T1::elem_type, T1>
       aux_uword_a(in_aux_uword_a),
       aux_uword_b(in_aux_uword_b),
       aux_uword_c(in_aux_uword_c) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename T1, typename eop_type>
 inline eOpCube<T1, eop_type>::~eOpCube() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename T1, typename eop_type>

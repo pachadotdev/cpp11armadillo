@@ -114,6 +114,8 @@ struct SpBase : public SpBase_eval<elem_type, derived, is_SpMat<derived>::value>
 
   arma_warn_unused inline const SpOp<derived, spop_vectorise_col> as_col() const;
   arma_warn_unused inline const SpOp<derived, spop_vectorise_row> as_row() const;
+
+  arma_warn_unused inline const SpToDOp<derived, op_sp_as_dense> as_dense() const;
 };
 
 //! @}

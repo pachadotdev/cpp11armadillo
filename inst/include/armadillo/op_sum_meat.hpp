@@ -20,12 +20,12 @@
 
 template <typename T1>
 inline void op_sum::apply(Mat<typename T1::elem_type>& out, const Op<T1, op_sum>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
   const uword dim = in.aux_uword_a;
-  arma_debug_check((dim > 1), "sum(): parameter 'dim' must be 0 or 1");
+  arma_conform_check((dim > 1), "sum(): parameter 'dim' must be 0 or 1");
 
   const Proxy<T1> P(in.m);
 
@@ -43,7 +43,7 @@ inline void op_sum::apply(Mat<typename T1::elem_type>& out, const Op<T1, op_sum>
 template <typename T1>
 inline void op_sum::apply_noalias(Mat<typename T1::elem_type>& out, const Proxy<T1>& P,
                                   const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (is_Mat<typename Proxy<T1>::stored_type>::value ||
       (arma_config::openmp && Proxy<T1>::use_mp)) {
@@ -56,7 +56,7 @@ inline void op_sum::apply_noalias(Mat<typename T1::elem_type>& out, const Proxy<
 template <typename T1>
 inline void op_sum::apply_noalias_unwrap(Mat<typename T1::elem_type>& out,
                                          const Proxy<T1>& P, const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -104,7 +104,7 @@ inline void op_sum::apply_noalias_unwrap(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_sum::apply_noalias_proxy(Mat<typename T1::elem_type>& out,
                                         const Proxy<T1>& P, const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -197,12 +197,12 @@ inline void op_sum::apply_noalias_proxy(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_sum::apply(Cube<typename T1::elem_type>& out,
                           const OpCube<T1, op_sum>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
   const uword dim = in.aux_uword_a;
-  arma_debug_check((dim > 2), "sum(): parameter 'dim' must be 0 or 1 or 2");
+  arma_conform_check((dim > 2), "sum(): parameter 'dim' must be 0 or 1 or 2");
 
   const ProxyCube<T1> P(in.m);
 
@@ -220,7 +220,7 @@ inline void op_sum::apply(Cube<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_sum::apply_noalias(Cube<typename T1::elem_type>& out,
                                   const ProxyCube<T1>& P, const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (is_Cube<typename ProxyCube<T1>::stored_type>::value ||
       (arma_config::openmp && ProxyCube<T1>::use_mp)) {
@@ -233,7 +233,7 @@ inline void op_sum::apply_noalias(Cube<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_sum::apply_noalias_unwrap(Cube<typename T1::elem_type>& out,
                                          const ProxyCube<T1>& P, const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -281,7 +281,7 @@ inline void op_sum::apply_noalias_unwrap(Cube<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_sum::apply_noalias_proxy(Cube<typename T1::elem_type>& out,
                                         const ProxyCube<T1>& P, const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 

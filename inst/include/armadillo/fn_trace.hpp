@@ -21,7 +21,7 @@
 template <typename T1>
 arma_warn_unused inline typename T1::elem_type trace(
     const Base<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -47,7 +47,7 @@ arma_warn_unused inline typename T1::elem_type trace(
 
 template <typename T1>
 arma_warn_unused inline typename T1::elem_type trace(const Op<T1, op_diagmat>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -69,7 +69,7 @@ template <typename T1, typename T2>
 arma_warn_unused inline
     typename enable_if2<is_cx<typename T1::elem_type>::no, typename T1::elem_type>::result
     trace(const Glue<T1, T2, glue_times>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -82,8 +82,8 @@ arma_warn_unused inline
   const bool use_alpha = partial_unwrap<T1>::do_times || partial_unwrap<T2>::do_times;
   const eT alpha = use_alpha ? (tmp1.get_val() * tmp2.get_val()) : eT(0);
 
-  arma_debug_assert_trans_mul_size<partial_unwrap<T1>::do_trans,
-                                   partial_unwrap<T2>::do_trans>(
+  arma_conform_assert_trans_mul_size<partial_unwrap<T1>::do_trans,
+                                     partial_unwrap<T2>::do_trans>(
       A.n_rows, A.n_cols, B.n_rows, B.n_cols, "matrix multiplication");
 
   if ((A.n_elem == 0) || (B.n_elem == 0)) {
@@ -173,7 +173,7 @@ template <typename T1, typename T2>
 arma_warn_unused inline typename enable_if2<is_cx<typename T1::elem_type>::yes,
                                             typename T1::elem_type>::result
 trace(const Glue<T1, T2, glue_times>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::pod_type T;
   typedef typename T1::elem_type eT;
@@ -187,8 +187,8 @@ trace(const Glue<T1, T2, glue_times>& X) {
   const bool use_alpha = partial_unwrap<T1>::do_times || partial_unwrap<T2>::do_times;
   const eT alpha = use_alpha ? (tmp1.get_val() * tmp2.get_val()) : eT(0);
 
-  arma_debug_assert_trans_mul_size<partial_unwrap<T1>::do_trans,
-                                   partial_unwrap<T2>::do_trans>(
+  arma_conform_assert_trans_mul_size<partial_unwrap<T1>::do_trans,
+                                     partial_unwrap<T2>::do_trans>(
       A.n_rows, A.n_cols, B.n_rows, B.n_cols, "matrix multiplication");
 
   if ((A.n_elem == 0) || (B.n_elem == 0)) {
@@ -331,7 +331,7 @@ trace(const Glue<T1, T2, glue_times>& X) {
 template <typename T1>
 arma_warn_unused inline typename T1::elem_type trace(
     const SpBase<typename T1::elem_type, T1>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -371,13 +371,13 @@ arma_warn_unused inline typename T1::elem_type trace(
 template <typename T1, typename T2>
 arma_warn_unused inline typename T1::elem_type trace(
     const SpGlue<T1, T2, spglue_plus>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<T1> UA(expr.A);
   const unwrap_spmat<T2> UB(expr.B);
 
-  arma_debug_assert_same_size(UA.M.n_rows, UA.M.n_cols, UB.M.n_rows, UB.M.n_cols,
-                              "addition");
+  arma_conform_assert_same_size(UA.M.n_rows, UA.M.n_cols, UB.M.n_rows, UB.M.n_cols,
+                                "addition");
 
   return (trace(UA.M) + trace(UB.M));
 }
@@ -386,13 +386,13 @@ arma_warn_unused inline typename T1::elem_type trace(
 template <typename T1, typename T2>
 arma_warn_unused inline typename T1::elem_type trace(
     const SpGlue<T1, T2, spglue_minus>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<T1> UA(expr.A);
   const unwrap_spmat<T2> UB(expr.B);
 
-  arma_debug_assert_same_size(UA.M.n_rows, UA.M.n_cols, UB.M.n_rows, UB.M.n_cols,
-                              "subtraction");
+  arma_conform_assert_same_size(UA.M.n_rows, UA.M.n_cols, UB.M.n_rows, UB.M.n_cols,
+                                "subtraction");
 
   return (trace(UA.M) - trace(UB.M));
 }
@@ -401,7 +401,7 @@ arma_warn_unused inline typename T1::elem_type trace(
 template <typename T1, typename T2>
 arma_warn_unused inline typename T1::elem_type trace(
     const SpGlue<T1, T2, spglue_schur>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -411,8 +411,8 @@ arma_warn_unused inline typename T1::elem_type trace(
   const SpMat<eT>& A = UA.M;
   const SpMat<eT>& B = UB.M;
 
-  arma_debug_assert_same_size(A.n_rows, A.n_cols, B.n_rows, B.n_cols,
-                              "element-wise multiplication");
+  arma_conform_assert_same_size(A.n_rows, A.n_cols, B.n_rows, B.n_cols,
+                                "element-wise multiplication");
 
   const uword N = (std::min)(A.n_rows, A.n_cols);
 
@@ -429,7 +429,7 @@ arma_warn_unused inline typename T1::elem_type trace(
 template <typename T1, typename T2>
 arma_warn_unused inline typename T1::elem_type trace(
     const SpGlue<T1, T2, spglue_times>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -441,8 +441,8 @@ arma_warn_unused inline typename T1::elem_type trace(
   const SpMat<eT>& A = UA.M;
   const SpMat<eT>& B = UB.M;
 
-  arma_debug_assert_mul_size(A.n_rows, A.n_cols, B.n_rows, B.n_cols,
-                             "matrix multiplication");
+  arma_conform_assert_mul_size(A.n_rows, A.n_cols, B.n_rows, B.n_cols,
+                               "matrix multiplication");
 
   if ((A.n_nonzero == 0) || (B.n_nonzero == 0)) {
     return eT(0);
@@ -481,7 +481,7 @@ template <typename T1, typename T2>
 arma_warn_unused inline
     typename enable_if2<is_cx<typename T1::elem_type>::no, typename T1::elem_type>::result
     trace(const SpGlue<SpOp<T1, spop_htrans>, T2, spglue_times>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -493,8 +493,8 @@ arma_warn_unused inline
 
   // NOTE: deliberately swapped A.n_rows and A.n_cols to take into account the requested
   // transpose operation
-  arma_debug_assert_mul_size(A.n_cols, A.n_rows, B.n_rows, B.n_cols,
-                             "matrix multiplication");
+  arma_conform_assert_mul_size(A.n_cols, A.n_rows, B.n_rows, B.n_cols,
+                               "matrix multiplication");
 
   if ((A.n_nonzero == 0) || (B.n_nonzero == 0)) {
     return eT(0);
@@ -532,7 +532,7 @@ template <typename T1, typename T2>
 arma_warn_unused inline typename enable_if2<is_cx<typename T1::elem_type>::yes,
                                             typename T1::elem_type>::result
 trace(const SpGlue<SpOp<T1, spop_htrans>, T2, spglue_times>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -544,8 +544,8 @@ trace(const SpGlue<SpOp<T1, spop_htrans>, T2, spglue_times>& expr) {
 
   // NOTE: deliberately swapped A.n_rows and A.n_cols to take into account the requested
   // transpose operation
-  arma_debug_assert_mul_size(A.n_cols, A.n_rows, B.n_rows, B.n_cols,
-                             "matrix multiplication");
+  arma_conform_assert_mul_size(A.n_cols, A.n_rows, B.n_rows, B.n_cols,
+                               "matrix multiplication");
 
   if ((A.n_nonzero == 0) || (B.n_nonzero == 0)) {
     return eT(0);

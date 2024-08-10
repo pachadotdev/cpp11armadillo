@@ -38,7 +38,7 @@ class herk_helper {
   template <typename eT>
   arma_hot inline static eT dot_conj_row(const uword n_elem, const eT* const A,
                                          const Mat<eT>& B, const uword row) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     typedef typename get_pod_type<eT>::result T;
 
@@ -70,7 +70,7 @@ class herk_vec {
   template <typename T, typename TA>
   arma_hot inline static void apply(Mat<std::complex<T>>& C, const TA& A,
                                     const T alpha = T(1), const T beta = T(0)) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     typedef std::complex<T> eT;
 
@@ -191,7 +191,7 @@ class herk_emul {
   template <typename T, typename TA>
   arma_hot inline static void apply(Mat<std::complex<T>>& C, const TA& A,
                                     const T alpha = T(1), const T beta = T(0)) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     typedef std::complex<T> eT;
 
@@ -254,7 +254,7 @@ class herk {
   template <typename T, typename TA>
   inline static void apply_blas_type(Mat<std::complex<T>>& C, const TA& A,
                                      const T alpha = T(1), const T beta = T(0)) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     const uword threshold = 16;
 
@@ -312,7 +312,7 @@ class herk {
           return;
         }
 
-        arma_extra_debug_print("blas::herk()");
+        arma_debug_print("blas::herk()");
 
         const char uplo = 'U';
 
@@ -326,7 +326,7 @@ class herk {
 
         const blas_int lda = (do_trans_A) ? k : n;
 
-        arma_extra_debug_print(arma_str::format("blas::herk(): trans_A = %c") % trans_A);
+        arma_debug_print(arma_str::format("blas::herk(): trans_A: %c") % trans_A);
 
         blas::herk<T>(&uplo, &trans_A, &n, &k, &local_alpha, A.mem, &lda, &local_beta,
                       C.memptr(),

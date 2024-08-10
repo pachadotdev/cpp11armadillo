@@ -23,7 +23,7 @@ arma_warn_unused inline typename enable_if2<
     is_supported_blas_type<typename T1::elem_type>::value,
     const mtOp<std::complex<typename T1::pod_type>, T1, op_roots> >::result
 roots(const Base<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return mtOp<std::complex<typename T1::pod_type>, T1, op_roots>(X.get_ref());
 }
@@ -33,13 +33,13 @@ inline typename enable_if2<is_supported_blas_type<typename T1::elem_type>::value
                            bool>::result
 roots(Mat<std::complex<typename T1::pod_type> >& out,
       const Base<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_roots::apply_direct(out, X.get_ref());
 
   if (status == false) {
     out.soft_reset();
-    arma_debug_warn_level(3, "roots(): eigen decomposition failed");
+    arma_warn(3, "roots(): eigen decomposition failed");
   }
 
   return status;

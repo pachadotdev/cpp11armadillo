@@ -20,26 +20,26 @@
 
 template <typename eT, typename T1>
 inline SpSubview_col_list<eT, T1>::~SpSubview_col_list() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename eT, typename T1>
 arma_inline SpSubview_col_list<eT, T1>::SpSubview_col_list(const SpMat<eT>& in_m,
                                                            const Base<uword, T1>& in_ci)
     : m(in_m), U_ci(in_ci.get_ref()) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const umat& ci = U_ci.M;
   const uword* ci_mem = ci.memptr();
   const uword ci_n_elem = ci.n_elem;
 
-  arma_debug_check(((ci.is_vec() == false) && (ci.is_empty() == false)),
-                   "SpMat::cols(): given object must be a vector");
+  arma_conform_check(((ci.is_vec() == false) && (ci.is_empty() == false)),
+                     "SpMat::cols(): given object must be a vector");
 
   for (uword ci_count = 0; ci_count < ci_n_elem; ++ci_count) {
     const uword i = ci_mem[ci_count];
 
-    arma_debug_check_bounds((i >= in_m.n_cols), "SpMat::cols(): index out of bounds");
+    arma_conform_check_bounds((i >= in_m.n_cols), "SpMat::cols(): index out of bounds");
   }
 }
 
@@ -47,7 +47,7 @@ arma_inline SpSubview_col_list<eT, T1>::SpSubview_col_list(const SpMat<eT>& in_m
 template <typename eT, typename T1>
 template <typename functor>
 inline void SpSubview_col_list<eT, T1>::for_each(functor F) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   SpMat<eT> tmp(*this);
 
@@ -59,7 +59,7 @@ inline void SpSubview_col_list<eT, T1>::for_each(functor F) {
 template <typename eT, typename T1>
 template <typename functor>
 inline void SpSubview_col_list<eT, T1>::for_each(functor F) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp(*this);
 
@@ -70,7 +70,7 @@ inline void SpSubview_col_list<eT, T1>::for_each(functor F) const {
 template <typename eT, typename T1>
 template <typename functor>
 inline void SpSubview_col_list<eT, T1>::transform(functor F) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   SpMat<eT> tmp(*this);
 
@@ -81,7 +81,7 @@ inline void SpSubview_col_list<eT, T1>::transform(functor F) {
 
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::replace(const eT old_val, const eT new_val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   SpMat<eT> tmp(*this);
 
@@ -93,7 +93,7 @@ inline void SpSubview_col_list<eT, T1>::replace(const eT old_val, const eT new_v
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::clean(
     const typename get_pod_type<eT>::result threshold) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   SpMat<eT> tmp(*this);
 
@@ -104,7 +104,7 @@ inline void SpSubview_col_list<eT, T1>::clean(
 
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::fill(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Mat<eT> tmp(m.n_rows, U_ci.M.n_elem, arma_nozeros_indicator());
   tmp.fill(val);
@@ -114,7 +114,7 @@ inline void SpSubview_col_list<eT, T1>::fill(const eT val) {
 
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::zeros() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   SpMat<eT>& m_local = const_cast<SpMat<eT>&>(m);
 
@@ -144,7 +144,7 @@ inline void SpSubview_col_list<eT, T1>::zeros() {
 
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::ones() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const Mat<eT> tmp(m.n_rows, U_ci.M.n_elem, fill::ones);
 
@@ -153,7 +153,7 @@ inline void SpSubview_col_list<eT, T1>::ones() {
 
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::operator+=(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp1(*this);
 
@@ -167,7 +167,7 @@ inline void SpSubview_col_list<eT, T1>::operator+=(const eT val) {
 
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::operator-=(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp1(*this);
 
@@ -181,7 +181,7 @@ inline void SpSubview_col_list<eT, T1>::operator-=(const eT val) {
 
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::operator*=(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (val == eT(0)) {
     (*this).zeros();
@@ -226,7 +226,7 @@ inline void SpSubview_col_list<eT, T1>::operator*=(const eT val) {
 
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::operator/=(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp1(*this);
 
@@ -241,7 +241,7 @@ inline void SpSubview_col_list<eT, T1>::operator/=(const eT val) {
 template <typename eT, typename T1>
 template <typename expr>
 inline void SpSubview_col_list<eT, T1>::operator=(const Base<eT, expr>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<expr> U(x.get_ref());
   const Mat<eT>& X = U.M;
@@ -252,8 +252,8 @@ inline void SpSubview_col_list<eT, T1>::operator=(const Base<eT, expr>& x) {
   const uword* ci_mem = ci.memptr();
   const uword ci_n_elem = ci.n_elem;
 
-  arma_debug_assert_same_size(m_local.n_rows, ci_n_elem, X.n_rows, X.n_cols,
-                              "SpMat::cols()");
+  arma_conform_assert_same_size(m_local.n_rows, ci_n_elem, X.n_rows, X.n_cols,
+                                "SpMat::cols()");
 
   const uword X_n_elem = X.n_elem;
   const eT* X_mem = X.memptr();
@@ -299,7 +299,7 @@ inline void SpSubview_col_list<eT, T1>::operator=(const Base<eT, expr>& x) {
 template <typename eT, typename T1>
 template <typename expr>
 inline void SpSubview_col_list<eT, T1>::operator+=(const Base<eT, expr>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const Mat<eT> tmp = SpMat<eT>(*this) + x.get_ref();
 
@@ -309,7 +309,7 @@ inline void SpSubview_col_list<eT, T1>::operator+=(const Base<eT, expr>& x) {
 template <typename eT, typename T1>
 template <typename expr>
 inline void SpSubview_col_list<eT, T1>::operator-=(const Base<eT, expr>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const Mat<eT> tmp = SpMat<eT>(*this) - x.get_ref();
 
@@ -319,7 +319,7 @@ inline void SpSubview_col_list<eT, T1>::operator-=(const Base<eT, expr>& x) {
 template <typename eT, typename T1>
 template <typename expr>
 inline void SpSubview_col_list<eT, T1>::operator%=(const Base<eT, expr>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp = SpMat<eT>(*this) % x.get_ref();
 
@@ -329,7 +329,7 @@ inline void SpSubview_col_list<eT, T1>::operator%=(const Base<eT, expr>& x) {
 template <typename eT, typename T1>
 template <typename expr>
 inline void SpSubview_col_list<eT, T1>::operator/=(const Base<eT, expr>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp = SpMat<eT>(*this) / x.get_ref();
 
@@ -338,7 +338,7 @@ inline void SpSubview_col_list<eT, T1>::operator/=(const Base<eT, expr>& x) {
 
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::operator=(const SpSubview_col_list<eT, T1>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp(x);
 
@@ -348,7 +348,7 @@ inline void SpSubview_col_list<eT, T1>::operator=(const SpSubview_col_list<eT, T
 template <typename eT, typename T1>
 template <typename T2>
 inline void SpSubview_col_list<eT, T1>::operator=(const SpSubview_col_list<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp(x);
 
@@ -358,7 +358,7 @@ inline void SpSubview_col_list<eT, T1>::operator=(const SpSubview_col_list<eT, T
 template <typename eT, typename T1>
 template <typename expr>
 inline void SpSubview_col_list<eT, T1>::operator=(const SpBase<eT, expr>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<expr> U(x.get_ref());
   const SpMat<eT>& X = U.M;
@@ -377,8 +377,8 @@ inline void SpSubview_col_list<eT, T1>::operator=(const SpBase<eT, expr>& x) {
   const uword* ci_mem = ci.memptr();
   const uword ci_n_elem = ci.n_elem;
 
-  arma_debug_assert_same_size(m_local.n_rows, ci_n_elem, X.n_rows, X.n_cols,
-                              "SpMat::cols()");
+  arma_conform_assert_same_size(m_local.n_rows, ci_n_elem, X.n_rows, X.n_cols,
+                                "SpMat::cols()");
 
   SpMat<eT> Y(arma_reserve_indicator(), X.n_rows, m_local.n_cols, X.n_nonzero);
 
@@ -414,7 +414,7 @@ inline void SpSubview_col_list<eT, T1>::operator=(const SpBase<eT, expr>& x) {
 template <typename eT, typename T1>
 template <typename expr>
 inline void SpSubview_col_list<eT, T1>::operator+=(const SpBase<eT, expr>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp = SpMat<eT>(*this) + x.get_ref();
 
@@ -424,7 +424,7 @@ inline void SpSubview_col_list<eT, T1>::operator+=(const SpBase<eT, expr>& x) {
 template <typename eT, typename T1>
 template <typename expr>
 inline void SpSubview_col_list<eT, T1>::operator-=(const SpBase<eT, expr>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp = SpMat<eT>(*this) - x.get_ref();
 
@@ -434,7 +434,7 @@ inline void SpSubview_col_list<eT, T1>::operator-=(const SpBase<eT, expr>& x) {
 template <typename eT, typename T1>
 template <typename expr>
 inline void SpSubview_col_list<eT, T1>::operator%=(const SpBase<eT, expr>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp = SpMat<eT>(*this) % x.get_ref();
 
@@ -444,7 +444,7 @@ inline void SpSubview_col_list<eT, T1>::operator%=(const SpBase<eT, expr>& x) {
 template <typename eT, typename T1>
 template <typename expr>
 inline void SpSubview_col_list<eT, T1>::operator/=(const SpBase<eT, expr>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   SpMat<eT> tmp(*this);
 
@@ -459,7 +459,7 @@ inline void SpSubview_col_list<eT, T1>::operator/=(const SpBase<eT, expr>& x) {
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::extract(SpMat<eT>& out,
                                                 const SpSubview_col_list<eT, T1>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   // NOTE: aliasing is handled by SpMat<eT>::operator=(const SpSubview_col_list<eT,T1>&
   // in)
@@ -520,7 +520,7 @@ inline void SpSubview_col_list<eT, T1>::extract(SpMat<eT>& out,
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::plus_inplace(SpMat<eT>& out,
                                                      const SpSubview_col_list& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp(in);
 
@@ -530,7 +530,7 @@ inline void SpSubview_col_list<eT, T1>::plus_inplace(SpMat<eT>& out,
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::minus_inplace(SpMat<eT>& out,
                                                       const SpSubview_col_list& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp(in);
 
@@ -540,7 +540,7 @@ inline void SpSubview_col_list<eT, T1>::minus_inplace(SpMat<eT>& out,
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::schur_inplace(SpMat<eT>& out,
                                                       const SpSubview_col_list& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp(in);
 
@@ -550,7 +550,7 @@ inline void SpSubview_col_list<eT, T1>::schur_inplace(SpMat<eT>& out,
 template <typename eT, typename T1>
 inline void SpSubview_col_list<eT, T1>::div_inplace(SpMat<eT>& out,
                                                     const SpSubview_col_list& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpMat<eT> tmp(in);
 

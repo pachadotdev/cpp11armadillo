@@ -20,7 +20,7 @@ namespace newarp {
 template <typename eT>
 inline SparseGenMatProd<eT>::SparseGenMatProd(const SpMat<eT>& mat_obj)
     : op_mat(mat_obj), n_rows(mat_obj.n_rows), n_cols(mat_obj.n_cols) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   op_mat_st = op_mat.st();  // pre-calculate transpose
 }
@@ -29,7 +29,7 @@ inline SparseGenMatProd<eT>::SparseGenMatProd(const SpMat<eT>& mat_obj)
 // y_out = A * x_in
 template <typename eT>
 inline void SparseGenMatProd<eT>::perform_op(eT* x_in, eT* y_out) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   // // OLD METHOD
   //

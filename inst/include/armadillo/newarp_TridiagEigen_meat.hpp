@@ -19,23 +19,23 @@ namespace newarp {
 
 template <typename eT>
 inline TridiagEigen<eT>::TridiagEigen() : n(0), computed(false) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename eT>
 inline TridiagEigen<eT>::TridiagEigen(const Mat<eT>& mat_obj)
     : n(mat_obj.n_rows), computed(false) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   compute(mat_obj);
 }
 
 template <typename eT>
 inline void TridiagEigen<eT>::compute(const Mat<eT>& mat_obj) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((mat_obj.is_square() == false),
-                   "newarp::TridiagEigen::compute(): matrix must be square");
+  arma_conform_check((mat_obj.is_square() == false),
+                     "newarp::TridiagEigen::compute(): matrix must be square");
 
   n = blas_int(mat_obj.n_rows);
 
@@ -59,7 +59,7 @@ inline void TridiagEigen<eT>::compute(const Mat<eT>& mat_obj) {
     blas_int iwork_query[2] = {};
     blas_int liwork_query = blas_int(-1);
 
-    arma_extra_debug_print("lapack::stedc()");
+    arma_debug_print("lapack::stedc()");
     lapack::stedc(&compz, &n, main_diag.memptr(), sub_diag.memptr(), evecs.memptr(), &n,
                   &work_query[0], &lwork_query, &iwork_query[0], &liwork_query, &info);
 
@@ -78,7 +78,7 @@ inline void TridiagEigen<eT>::compute(const Mat<eT>& mat_obj) {
   podarray<eT> work(static_cast<uword>(lwork));
   podarray<blas_int> iwork(static_cast<uword>(liwork));
 
-  arma_extra_debug_print("lapack::stedc()");
+  arma_debug_print("lapack::stedc()");
   lapack::stedc(&compz, &n, main_diag.memptr(), sub_diag.memptr(), evecs.memptr(), &n,
                 work.memptr(), &lwork, iwork.memptr(), &liwork, &info);
 
@@ -92,10 +92,10 @@ inline void TridiagEigen<eT>::compute(const Mat<eT>& mat_obj) {
 
 template <typename eT>
 inline Col<eT> TridiagEigen<eT>::eigenvalues() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((computed == false),
-                   "newarp::TridiagEigen::eigenvalues(): need to call compute() first");
+  arma_conform_check((computed == false),
+                     "newarp::TridiagEigen::eigenvalues(): need to call compute() first");
 
   // After calling compute(), main_diag will contain the eigenvalues.
   return main_diag;
@@ -103,10 +103,11 @@ inline Col<eT> TridiagEigen<eT>::eigenvalues() {
 
 template <typename eT>
 inline Mat<eT> TridiagEigen<eT>::eigenvectors() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((computed == false),
-                   "newarp::TridiagEigen::eigenvectors(): need to call compute() first");
+  arma_conform_check(
+      (computed == false),
+      "newarp::TridiagEigen::eigenvectors(): need to call compute() first");
 
   return evecs;
 }

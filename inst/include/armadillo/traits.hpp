@@ -516,24 +516,6 @@ struct is_op_diagmat<const Op<T1, op_diagmat> > {
 //
 
 template <typename T>
-struct is_Mat_trans {
-  static constexpr bool value = false;
-};
-
-template <typename T1>
-struct is_Mat_trans<Op<T1, op_htrans> > {
-  static constexpr bool value = is_Mat<T1>::value;
-};
-
-template <typename T1>
-struct is_Mat_trans<Op<T1, op_htrans2> > {
-  static constexpr bool value = is_Mat<T1>::value;
-};
-
-//
-//
-
-template <typename T>
 struct is_GenCube {
   static constexpr bool value = false;
 };
@@ -771,13 +753,23 @@ struct is_mtSpGlue<mtSpGlue<eT, T1, T2, spglue_type> > {
   static constexpr bool value = true;
 };
 
+template <typename T>
+struct is_mtSpReduceOp {
+  static constexpr bool value = false;
+};
+
+template <typename eT, typename T1, typename op_type>
+struct is_mtSpReduceOp<mtSpReduceOp<eT, T1, op_type> > {
+  static constexpr bool value = true;
+};
+
 template <typename T1>
 struct is_arma_sparse_type {
   static constexpr bool value =
       is_SpMat<T1>::value || is_SpSubview<T1>::value || is_SpSubview_col<T1>::value ||
       is_SpSubview_col_list<T1>::value || is_SpSubview_row<T1>::value ||
       is_spdiagview<T1>::value || is_SpOp<T1>::value || is_SpGlue<T1>::value ||
-      is_mtSpOp<T1>::value || is_mtSpGlue<T1>::value;
+      is_mtSpOp<T1>::value || is_mtSpGlue<T1>::value || is_mtSpReduceOp<T1>::value;
 };
 
 //
@@ -1329,6 +1321,33 @@ struct has_nested_glue_traits {
   static no& check(...);
 
   static constexpr bool value = (sizeof(check<T>(0)) == sizeof(yes));
+};
+
+template <typename T1>
+struct is_sym_expr {
+  static constexpr bool eval(const T1&) { return false; }
+};
+
+template <typename eT>
+struct is_sym_expr<Glue<Mat<eT>, Op<Mat<eT>, op_htrans>, glue_times> > {
+  static arma_inline bool eval(
+      const Glue<Mat<eT>, Op<Mat<eT>, op_htrans>, glue_times>& expr) {
+    const Mat<eT>& X = expr.A;
+    const Mat<eT>& Y = expr.B.m;
+
+    return (&X == &Y);
+  }
+};
+
+template <typename eT>
+struct is_sym_expr<Glue<Op<Mat<eT>, op_htrans>, Mat<eT>, glue_times> > {
+  static arma_inline bool eval(
+      const Glue<Op<Mat<eT>, op_htrans>, Mat<eT>, glue_times>& expr) {
+    const Mat<eT>& X = expr.A.m;
+    const Mat<eT>& Y = expr.B;
+
+    return (&X == &Y);
+  }
 };
 
 //! @}

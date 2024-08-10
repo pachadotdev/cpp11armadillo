@@ -30,27 +30,26 @@ template <typename T1>
 inline void op_sqrtmat::apply(
     Mat<std::complex<typename T1::elem_type> >& out,
     const mtOp<std::complex<typename T1::elem_type>, T1, op_sqrtmat>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_sqrtmat::apply_direct(out, in.m);
 
   if (status == false) {
-    arma_debug_warn_level(
-        3, "sqrtmat(): given matrix is singular; may not have a square root");
+    arma_warn(3, "sqrtmat(): given matrix is singular; may not have a square root");
   }
 }
 
 template <typename T1>
 inline bool op_sqrtmat::apply_direct(Mat<std::complex<typename T1::elem_type> >& out,
                                      const Op<T1, op_diagmat>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type T;
 
   const diagmat_proxy<T1> P(expr.m);
 
-  arma_debug_check((P.n_rows != P.n_cols),
-                   "sqrtmat(): given matrix must be square sized");
+  arma_conform_check((P.n_rows != P.n_cols),
+                     "sqrtmat(): given matrix must be square sized");
 
   const uword N = P.n_rows;
 
@@ -76,7 +75,7 @@ inline bool op_sqrtmat::apply_direct(Mat<std::complex<typename T1::elem_type> >&
 template <typename T1>
 inline bool op_sqrtmat::apply_direct(Mat<std::complex<typename T1::elem_type> >& out,
                                      const Base<typename T1::elem_type, T1>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type in_T;
   typedef typename std::complex<in_T> out_T;
@@ -84,8 +83,8 @@ inline bool op_sqrtmat::apply_direct(Mat<std::complex<typename T1::elem_type> >&
   const quasi_unwrap<T1> expr_unwrap(expr.get_ref());
   const Mat<in_T>& A = expr_unwrap.M;
 
-  arma_debug_check((A.is_square() == false),
-                   "sqrtmat(): given matrix must be square sized");
+  arma_conform_check((A.is_square() == false),
+                     "sqrtmat(): given matrix must be square sized");
 
   if (A.n_elem == 0) {
     out.reset();
@@ -97,7 +96,7 @@ inline bool op_sqrtmat::apply_direct(Mat<std::complex<typename T1::elem_type> >&
   }
 
   if (A.is_diagmat()) {
-    arma_extra_debug_print("op_sqrtmat: detected diagonal matrix");
+    arma_debug_print("op_sqrtmat: detected diagonal matrix");
 
     const uword N = A.n_rows;
 
@@ -120,7 +119,7 @@ inline bool op_sqrtmat::apply_direct(Mat<std::complex<typename T1::elem_type> >&
   const bool try_sympd = arma_config::optimise_sym && sym_helper::guess_sympd(A);
 
   if (try_sympd) {
-    arma_extra_debug_print("op_sqrtmat: attempting sympd optimisation");
+    arma_debug_print("op_sqrtmat: attempting sympd optimisation");
 
     // if matrix A is sympd, all its eigenvalues are positive
 
@@ -150,7 +149,7 @@ inline bool op_sqrtmat::apply_direct(Mat<std::complex<typename T1::elem_type> >&
       }
     }
 
-    arma_extra_debug_print("op_sqrtmat: sympd optimisation failed");
+    arma_debug_print("op_sqrtmat: sympd optimisation failed");
 
     // fallthrough if eigen decomposition failed or an eigenvalue is <= 0
   }
@@ -170,7 +169,7 @@ inline bool op_sqrtmat::apply_direct(Mat<std::complex<typename T1::elem_type> >&
   const bool schur_ok = auxlib::schur(U, S);
 
   if (schur_ok == false) {
-    arma_extra_debug_print("sqrtmat(): schur decomposition failed");
+    arma_debug_print("sqrtmat(): schur decomposition failed");
     out.soft_reset();
     return false;
   }
@@ -189,20 +188,19 @@ inline bool op_sqrtmat::apply_direct(Mat<std::complex<typename T1::elem_type> >&
 template <typename T1>
 inline void op_sqrtmat_cx::apply(Mat<typename T1::elem_type>& out,
                                  const Op<T1, op_sqrtmat_cx>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_sqrtmat_cx::apply_direct(out, in.m);
 
   if (status == false) {
-    arma_debug_warn_level(
-        3, "sqrtmat(): given matrix is singular; may not have a square root");
+    arma_warn(3, "sqrtmat(): given matrix is singular; may not have a square root");
   }
 }
 
 template <typename T1>
 inline bool op_sqrtmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
                                         const Op<T1, op_diagmat>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -226,12 +224,12 @@ inline bool op_sqrtmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline bool op_sqrtmat_cx::apply_direct_noalias(Mat<typename T1::elem_type>& out,
                                                 const diagmat_proxy<T1>& P) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
-  arma_debug_check((P.n_rows != P.n_cols),
-                   "sqrtmat(): given matrix must be square sized");
+  arma_conform_check((P.n_rows != P.n_cols),
+                     "sqrtmat(): given matrix must be square sized");
 
   const uword N = P.n_rows;
 
@@ -255,7 +253,7 @@ inline bool op_sqrtmat_cx::apply_direct_noalias(Mat<typename T1::elem_type>& out
 template <typename T1>
 inline bool op_sqrtmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
                                         const Base<typename T1::elem_type, T1>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::pod_type T;
   typedef typename T1::elem_type eT;
@@ -263,8 +261,8 @@ inline bool op_sqrtmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
   Mat<eT> U;
   Mat<eT> S = expr.get_ref();
 
-  arma_debug_check((S.n_rows != S.n_cols),
-                   "sqrtmat(): given matrix must be square sized");
+  arma_conform_check((S.n_rows != S.n_cols),
+                     "sqrtmat(): given matrix must be square sized");
 
   if (S.n_elem == 0) {
     out.reset();
@@ -276,7 +274,7 @@ inline bool op_sqrtmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
   }
 
   if (S.is_diagmat()) {
-    arma_extra_debug_print("op_sqrtmat_cx: detected diagonal matrix");
+    arma_debug_print("op_sqrtmat_cx: detected diagonal matrix");
 
     const uword N = S.n_rows;
 
@@ -292,7 +290,7 @@ inline bool op_sqrtmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
   const bool try_sympd = arma_config::optimise_sym && sym_helper::guess_sympd(S);
 
   if (try_sympd) {
-    arma_extra_debug_print("op_sqrtmat_cx: attempting sympd optimisation");
+    arma_debug_print("op_sqrtmat_cx: attempting sympd optimisation");
 
     // if matrix S is sympd, all its eigenvalues are positive
 
@@ -322,7 +320,7 @@ inline bool op_sqrtmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
       }
     }
 
-    arma_extra_debug_print("op_sqrtmat_cx: sympd optimisation failed");
+    arma_debug_print("op_sqrtmat_cx: sympd optimisation failed");
 
     // fallthrough if eigen decomposition failed or an eigenvalue is <= 0
   }
@@ -330,7 +328,7 @@ inline bool op_sqrtmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
   const bool schur_ok = auxlib::schur(U, S);
 
   if (schur_ok == false) {
-    arma_extra_debug_print("sqrtmat(): schur decomposition failed");
+    arma_debug_print("sqrtmat(): schur decomposition failed");
     out.soft_reset();
     return false;
   }
@@ -393,7 +391,7 @@ inline bool op_sqrtmat_cx::helper(Mat<std::complex<T> >& S) {
 template <typename T1>
 inline void op_sqrtmat_sympd::apply(Mat<typename T1::elem_type>& out,
                                     const Op<T1, op_sqrtmat_sympd>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_sqrtmat_sympd::apply_direct(out, in.m);
 
@@ -406,7 +404,7 @@ inline void op_sqrtmat_sympd::apply(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline bool op_sqrtmat_sympd::apply_direct(Mat<typename T1::elem_type>& out,
                                            const Base<typename T1::elem_type, T1>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
 #if defined(ARMA_USE_LAPACK)
   {
@@ -416,17 +414,16 @@ inline bool op_sqrtmat_sympd::apply_direct(Mat<typename T1::elem_type>& out,
     const unwrap<T1> U(expr.get_ref());
     const Mat<eT>& X = U.M;
 
-    arma_debug_check((X.is_square() == false),
-                     "sqrtmat_sympd(): given matrix must be square sized");
+    arma_conform_check((X.is_square() == false),
+                       "sqrtmat_sympd(): given matrix must be square sized");
 
-    if ((arma_config::debug) && (is_cx<eT>::yes) &&
+    if ((arma_config::check_conform) && (is_cx<eT>::yes) &&
         (sym_helper::check_diag_imag(X) == false)) {
-      arma_debug_warn_level(
-          1, "sqrtmat_sympd(): imaginary components on the diagonal are non-zero");
+      arma_warn(1, "sqrtmat_sympd(): imaginary components on the diagonal are non-zero");
     }
 
     if (is_op_diagmat<T1>::value || X.is_diagmat()) {
-      arma_extra_debug_print("op_sqrtmat_sympd: detected diagonal matrix");
+      arma_debug_print("op_sqrtmat_sympd: detected diagonal matrix");
 
       out = X;
 

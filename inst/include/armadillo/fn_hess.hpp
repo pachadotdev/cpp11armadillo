@@ -22,7 +22,7 @@ template <typename T1>
 inline bool hess(
     Mat<typename T1::elem_type>& H, const Base<typename T1::elem_type, T1>& X,
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::elem_type eT;
@@ -39,7 +39,7 @@ inline bool hess(
 
   if (status == false) {
     H.soft_reset();
-    arma_debug_warn_level(3, "hess(): decomposition failed");
+    arma_warn(3, "hess(): decomposition failed");
   }
 
   return status;
@@ -49,7 +49,7 @@ template <typename T1>
 arma_warn_unused inline Mat<typename T1::elem_type> hess(
     const Base<typename T1::elem_type, T1>& X,
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::elem_type eT;
@@ -78,10 +78,10 @@ inline bool hess(
     Mat<typename T1::elem_type>& U, Mat<typename T1::elem_type>& H,
     const Base<typename T1::elem_type, T1>& X,
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
-  arma_debug_check(void_ptr(&U) == void_ptr(&H), "hess(): 'U' is an alias of 'H'");
+  arma_conform_check(void_ptr(&U) == void_ptr(&H), "hess(): 'U' is an alias of 'H'");
 
   typedef typename T1::elem_type eT;
 
@@ -123,7 +123,7 @@ inline bool hess(
   if (status == false) {
     U.soft_reset();
     H.soft_reset();
-    arma_debug_warn_level(3, "hess(): decomposition failed");
+    arma_warn(3, "hess(): decomposition failed");
   }
 
   return status;

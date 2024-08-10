@@ -20,27 +20,27 @@
 
 template <typename eT, typename T1>
 inline subview_elem1<eT, T1>::~subview_elem1() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename eT, typename T1>
 arma_inline subview_elem1<eT, T1>::subview_elem1(const Mat<eT>& in_m,
                                                  const Base<uword, T1>& in_a)
     : m(in_m), a(in_a) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename eT, typename T1>
 arma_inline subview_elem1<eT, T1>::subview_elem1(const Cube<eT>& in_q,
                                                  const Base<uword, T1>& in_a)
     : fake_m(const_cast<eT*>(in_q.memptr()), in_q.n_elem, 1, false), m(fake_m), a(in_a) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename eT, typename T1>
 template <typename op_type>
 inline void subview_elem1<eT, T1>::inplace_op(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Mat<eT>& m_local = const_cast<Mat<eT>&>(m);
 
@@ -50,8 +50,8 @@ inline void subview_elem1<eT, T1>::inplace_op(const eT val) {
   const unwrap_check_mixed<T1> tmp(a.get_ref(), m_local);
   const umat& aa = tmp.M;
 
-  arma_debug_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
-                   "Mat::elem(): given object must be a vector");
+  arma_conform_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
+                     "Mat::elem(): given object must be a vector");
 
   const uword* aa_mem = aa.memptr();
   const uword aa_n_elem = aa.n_elem;
@@ -61,8 +61,8 @@ inline void subview_elem1<eT, T1>::inplace_op(const eT val) {
     const uword ii = aa_mem[iq];
     const uword jj = aa_mem[jq];
 
-    arma_debug_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
-                            "Mat::elem(): index out of bounds");
+    arma_conform_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
+                              "Mat::elem(): index out of bounds");
 
     if (is_same_type<op_type, op_internal_equ>::yes) {
       m_mem[ii] = val;
@@ -89,7 +89,7 @@ inline void subview_elem1<eT, T1>::inplace_op(const eT val) {
   if (iq < aa_n_elem) {
     const uword ii = aa_mem[iq];
 
-    arma_debug_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
+    arma_conform_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
 
     if (is_same_type<op_type, op_internal_equ>::yes) {
       m_mem[ii] = val;
@@ -112,12 +112,12 @@ inline void subview_elem1<eT, T1>::inplace_op(const eT val) {
 template <typename eT, typename T1>
 template <typename op_type, typename T2>
 inline void subview_elem1<eT, T1>::inplace_op(const subview_elem1<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   subview_elem1<eT, T1>& s = *this;
 
   if (&(s.m) == &(x.m)) {
-    arma_extra_debug_print("subview_elem1::inplace_op(): aliasing detected");
+    arma_debug_print("subview_elem1::inplace_op(): aliasing detected");
 
     const Mat<eT> tmp(x);
 
@@ -146,16 +146,16 @@ inline void subview_elem1<eT, T1>::inplace_op(const subview_elem1<eT, T2>& x) {
     const umat& s_aa = s_tmp.M;
     const umat& x_aa = x_tmp.M;
 
-    arma_debug_check((((s_aa.is_vec() == false) && (s_aa.is_empty() == false)) ||
-                      ((x_aa.is_vec() == false) && (x_aa.is_empty() == false))),
-                     "Mat::elem(): given object must be a vector");
+    arma_conform_check((((s_aa.is_vec() == false) && (s_aa.is_empty() == false)) ||
+                        ((x_aa.is_vec() == false) && (x_aa.is_empty() == false))),
+                       "Mat::elem(): given object must be a vector");
 
     const uword* s_aa_mem = s_aa.memptr();
     const uword* x_aa_mem = x_aa.memptr();
 
     const uword s_aa_n_elem = s_aa.n_elem;
 
-    arma_debug_check((s_aa_n_elem != x_aa.n_elem), "Mat::elem(): size mismatch");
+    arma_conform_check((s_aa_n_elem != x_aa.n_elem), "Mat::elem(): size mismatch");
 
     eT* s_m_mem = s_m_local.memptr();
     const uword s_m_n_elem = s_m_local.n_elem;
@@ -171,9 +171,9 @@ inline void subview_elem1<eT, T1>::inplace_op(const subview_elem1<eT, T2>& x) {
       const uword x_ii = x_aa_mem[iq];
       const uword x_jj = x_aa_mem[jq];
 
-      arma_debug_check_bounds((s_ii >= s_m_n_elem) || (s_jj >= s_m_n_elem) ||
-                                  (x_ii >= x_m_n_elem) || (x_jj >= x_m_n_elem),
-                              "Mat::elem(): index out of bounds");
+      arma_conform_check_bounds((s_ii >= s_m_n_elem) || (s_jj >= s_m_n_elem) ||
+                                    (x_ii >= x_m_n_elem) || (x_jj >= x_m_n_elem),
+                                "Mat::elem(): index out of bounds");
 
       if (is_same_type<op_type, op_internal_equ>::yes) {
         s_m_mem[s_ii] = x_m_mem[x_ii];
@@ -201,8 +201,8 @@ inline void subview_elem1<eT, T1>::inplace_op(const subview_elem1<eT, T2>& x) {
       const uword s_ii = s_aa_mem[iq];
       const uword x_ii = x_aa_mem[iq];
 
-      arma_debug_check_bounds(((s_ii >= s_m_n_elem) || (x_ii >= x_m_n_elem)),
-                              "Mat::elem(): index out of bounds");
+      arma_conform_check_bounds(((s_ii >= s_m_n_elem) || (x_ii >= x_m_n_elem)),
+                                "Mat::elem(): index out of bounds");
 
       if (is_same_type<op_type, op_internal_equ>::yes) {
         s_m_mem[s_ii] = x_m_mem[x_ii];
@@ -226,7 +226,7 @@ inline void subview_elem1<eT, T1>::inplace_op(const subview_elem1<eT, T2>& x) {
 template <typename eT, typename T1>
 template <typename op_type, typename T2>
 inline void subview_elem1<eT, T1>::inplace_op(const Base<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Mat<eT>& m_local = const_cast<Mat<eT>&>(m);
 
@@ -236,15 +236,15 @@ inline void subview_elem1<eT, T1>::inplace_op(const Base<eT, T2>& x) {
   const unwrap_check_mixed<T1> aa_tmp(a.get_ref(), m_local);
   const umat& aa = aa_tmp.M;
 
-  arma_debug_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
-                   "Mat::elem(): given object must be a vector");
+  arma_conform_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
+                     "Mat::elem(): given object must be a vector");
 
   const uword* aa_mem = aa.memptr();
   const uword aa_n_elem = aa.n_elem;
 
   const Proxy<T2> P(x.get_ref());
 
-  arma_debug_check((aa_n_elem != P.get_n_elem()), "Mat::elem(): size mismatch");
+  arma_conform_check((aa_n_elem != P.get_n_elem()), "Mat::elem(): size mismatch");
 
   const bool is_alias = P.is_alias(m);
 
@@ -256,8 +256,8 @@ inline void subview_elem1<eT, T1>::inplace_op(const Base<eT, T2>& x) {
       const uword ii = aa_mem[iq];
       const uword jj = aa_mem[jq];
 
-      arma_debug_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
-                              "Mat::elem(): index out of bounds");
+      arma_conform_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
+                                "Mat::elem(): index out of bounds");
 
       if (is_same_type<op_type, op_internal_equ>::yes) {
         m_mem[ii] = X[iq];
@@ -284,7 +284,7 @@ inline void subview_elem1<eT, T1>::inplace_op(const Base<eT, T2>& x) {
     if (iq < aa_n_elem) {
       const uword ii = aa_mem[iq];
 
-      arma_debug_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
+      arma_conform_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
 
       if (is_same_type<op_type, op_internal_equ>::yes) {
         m_mem[ii] = X[iq];
@@ -303,7 +303,7 @@ inline void subview_elem1<eT, T1>::inplace_op(const Base<eT, T2>& x) {
       }
     }
   } else {
-    arma_extra_debug_print("subview_elem1::inplace_op(): aliasing or use_at detected");
+    arma_debug_print("subview_elem1::inplace_op(): aliasing or use_at detected");
 
     const unwrap_check<typename Proxy<T2>::stored_type> tmp(P.Q, is_alias);
     const Mat<eT>& M = tmp.M;
@@ -315,8 +315,8 @@ inline void subview_elem1<eT, T1>::inplace_op(const Base<eT, T2>& x) {
       const uword ii = aa_mem[iq];
       const uword jj = aa_mem[jq];
 
-      arma_debug_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
-                              "Mat::elem(): index out of bounds");
+      arma_conform_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
+                                "Mat::elem(): index out of bounds");
 
       if (is_same_type<op_type, op_internal_equ>::yes) {
         m_mem[ii] = X[iq];
@@ -343,7 +343,7 @@ inline void subview_elem1<eT, T1>::inplace_op(const Base<eT, T2>& x) {
     if (iq < aa_n_elem) {
       const uword ii = aa_mem[iq];
 
-      arma_debug_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
+      arma_conform_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
 
       if (is_same_type<op_type, op_internal_equ>::yes) {
         m_mem[ii] = X[iq];
@@ -384,7 +384,7 @@ arma_inline const Op<subview_elem1<eT, T1>, op_strans> subview_elem1<eT, T1>::st
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::replace(const eT old_val, const eT new_val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Mat<eT>& m_local = const_cast<Mat<eT>&>(m);
 
@@ -394,8 +394,8 @@ inline void subview_elem1<eT, T1>::replace(const eT old_val, const eT new_val) {
   const unwrap_check_mixed<T1> tmp(a.get_ref(), m_local);
   const umat& aa = tmp.M;
 
-  arma_debug_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
-                   "Mat::elem(): given object must be a vector");
+  arma_conform_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
+                     "Mat::elem(): given object must be a vector");
 
   const uword* aa_mem = aa.memptr();
   const uword aa_n_elem = aa.n_elem;
@@ -404,7 +404,7 @@ inline void subview_elem1<eT, T1>::replace(const eT old_val, const eT new_val) {
     for (uword iq = 0; iq < aa_n_elem; ++iq) {
       const uword ii = aa_mem[iq];
 
-      arma_debug_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
+      arma_conform_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
 
       eT& val = m_mem[ii];
 
@@ -414,7 +414,7 @@ inline void subview_elem1<eT, T1>::replace(const eT old_val, const eT new_val) {
     for (uword iq = 0; iq < aa_n_elem; ++iq) {
       const uword ii = aa_mem[iq];
 
-      arma_debug_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
+      arma_conform_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
 
       eT& val = m_mem[ii];
 
@@ -425,7 +425,7 @@ inline void subview_elem1<eT, T1>::replace(const eT old_val, const eT new_val) {
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::clean(const pod_type threshold) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Mat<eT> tmp(*this);
 
@@ -436,7 +436,7 @@ inline void subview_elem1<eT, T1>::clean(const pod_type threshold) {
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::clamp(const eT min_val, const eT max_val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Mat<eT> tmp(*this);
 
@@ -447,28 +447,28 @@ inline void subview_elem1<eT, T1>::clamp(const eT min_val, const eT max_val) {
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::fill(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_equ>(val);
 }
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::zeros() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_equ>(eT(0));
 }
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::ones() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_equ>(eT(1));
 }
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::randu() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Mat<eT>& m_local = const_cast<Mat<eT>&>(m);
 
@@ -478,8 +478,8 @@ inline void subview_elem1<eT, T1>::randu() {
   const unwrap_check_mixed<T1> tmp(a.get_ref(), m_local);
   const umat& aa = tmp.M;
 
-  arma_debug_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
-                   "Mat::elem(): given object must be a vector");
+  arma_conform_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
+                     "Mat::elem(): given object must be a vector");
 
   const uword* aa_mem = aa.memptr();
   const uword aa_n_elem = aa.n_elem;
@@ -489,8 +489,8 @@ inline void subview_elem1<eT, T1>::randu() {
     const uword ii = aa_mem[iq];
     const uword jj = aa_mem[jq];
 
-    arma_debug_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
-                            "Mat::elem(): index out of bounds");
+    arma_conform_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
+                              "Mat::elem(): index out of bounds");
 
     const eT val1 = eT(arma_rng::randu<eT>());
     const eT val2 = eT(arma_rng::randu<eT>());
@@ -502,7 +502,7 @@ inline void subview_elem1<eT, T1>::randu() {
   if (iq < aa_n_elem) {
     const uword ii = aa_mem[iq];
 
-    arma_debug_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
+    arma_conform_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
 
     m_mem[ii] = eT(arma_rng::randu<eT>());
   }
@@ -510,7 +510,7 @@ inline void subview_elem1<eT, T1>::randu() {
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::randn() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Mat<eT>& m_local = const_cast<Mat<eT>&>(m);
 
@@ -520,8 +520,8 @@ inline void subview_elem1<eT, T1>::randn() {
   const unwrap_check_mixed<T1> tmp(a.get_ref(), m_local);
   const umat& aa = tmp.M;
 
-  arma_debug_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
-                   "Mat::elem(): given object must be a vector");
+  arma_conform_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
+                     "Mat::elem(): given object must be a vector");
 
   const uword* aa_mem = aa.memptr();
   const uword aa_n_elem = aa.n_elem;
@@ -531,8 +531,8 @@ inline void subview_elem1<eT, T1>::randn() {
     const uword ii = aa_mem[iq];
     const uword jj = aa_mem[jq];
 
-    arma_debug_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
-                            "Mat::elem(): index out of bounds");
+    arma_conform_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
+                              "Mat::elem(): index out of bounds");
 
     arma_rng::randn<eT>::dual_val(m_mem[ii], m_mem[jj]);
   }
@@ -540,7 +540,7 @@ inline void subview_elem1<eT, T1>::randn() {
   if (iq < aa_n_elem) {
     const uword ii = aa_mem[iq];
 
-    arma_debug_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
+    arma_conform_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
 
     m_mem[ii] = eT(arma_rng::randn<eT>());
   }
@@ -548,28 +548,28 @@ inline void subview_elem1<eT, T1>::randn() {
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::operator+=(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_plus>(val);
 }
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::operator-=(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_minus>(val);
 }
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::operator*=(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_schur>(val);
 }
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::operator/=(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_div>(val);
 }
@@ -580,7 +580,7 @@ inline void subview_elem1<eT, T1>::operator/=(const eT val) {
 template <typename eT, typename T1>
 template <typename T2>
 inline void subview_elem1<eT, T1>::operator_equ(const subview_elem1<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_equ>(x);
 }
@@ -588,7 +588,7 @@ inline void subview_elem1<eT, T1>::operator_equ(const subview_elem1<eT, T2>& x) 
 template <typename eT, typename T1>
 template <typename T2>
 inline void subview_elem1<eT, T1>::operator=(const subview_elem1<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   (*this).operator_equ(x);
 }
@@ -596,7 +596,7 @@ inline void subview_elem1<eT, T1>::operator=(const subview_elem1<eT, T2>& x) {
 //! work around compiler bugs
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::operator=(const subview_elem1<eT, T1>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   (*this).operator_equ(x);
 }
@@ -604,7 +604,7 @@ inline void subview_elem1<eT, T1>::operator=(const subview_elem1<eT, T1>& x) {
 template <typename eT, typename T1>
 template <typename T2>
 inline void subview_elem1<eT, T1>::operator+=(const subview_elem1<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_plus>(x);
 }
@@ -612,7 +612,7 @@ inline void subview_elem1<eT, T1>::operator+=(const subview_elem1<eT, T2>& x) {
 template <typename eT, typename T1>
 template <typename T2>
 inline void subview_elem1<eT, T1>::operator-=(const subview_elem1<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_minus>(x);
 }
@@ -620,7 +620,7 @@ inline void subview_elem1<eT, T1>::operator-=(const subview_elem1<eT, T2>& x) {
 template <typename eT, typename T1>
 template <typename T2>
 inline void subview_elem1<eT, T1>::operator%=(const subview_elem1<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_schur>(x);
 }
@@ -628,7 +628,7 @@ inline void subview_elem1<eT, T1>::operator%=(const subview_elem1<eT, T2>& x) {
 template <typename eT, typename T1>
 template <typename T2>
 inline void subview_elem1<eT, T1>::operator/=(const subview_elem1<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_div>(x);
 }
@@ -636,7 +636,7 @@ inline void subview_elem1<eT, T1>::operator/=(const subview_elem1<eT, T2>& x) {
 template <typename eT, typename T1>
 template <typename T2>
 inline void subview_elem1<eT, T1>::operator=(const Base<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_equ>(x);
 }
@@ -644,7 +644,7 @@ inline void subview_elem1<eT, T1>::operator=(const Base<eT, T2>& x) {
 template <typename eT, typename T1>
 template <typename T2>
 inline void subview_elem1<eT, T1>::operator+=(const Base<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_plus>(x);
 }
@@ -652,7 +652,7 @@ inline void subview_elem1<eT, T1>::operator+=(const Base<eT, T2>& x) {
 template <typename eT, typename T1>
 template <typename T2>
 inline void subview_elem1<eT, T1>::operator-=(const Base<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_minus>(x);
 }
@@ -660,7 +660,7 @@ inline void subview_elem1<eT, T1>::operator-=(const Base<eT, T2>& x) {
 template <typename eT, typename T1>
 template <typename T2>
 inline void subview_elem1<eT, T1>::operator%=(const Base<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_schur>(x);
 }
@@ -668,7 +668,7 @@ inline void subview_elem1<eT, T1>::operator%=(const Base<eT, T2>& x) {
 template <typename eT, typename T1>
 template <typename T2>
 inline void subview_elem1<eT, T1>::operator/=(const Base<eT, T2>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_div>(x);
 }
@@ -679,13 +679,13 @@ inline void subview_elem1<eT, T1>::operator/=(const Base<eT, T2>& x) {
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::extract(Mat<eT>& actual_out,
                                            const subview_elem1<eT, T1>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_check_mixed<T1> tmp1(in.a.get_ref(), actual_out);
   const umat& aa = tmp1.M;
 
-  arma_debug_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
-                   "Mat::elem(): given object must be a vector");
+  arma_conform_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
+                     "Mat::elem(): given object must be a vector");
 
   const uword* aa_mem = aa.memptr();
   const uword aa_n_elem = aa.n_elem;
@@ -698,7 +698,7 @@ inline void subview_elem1<eT, T1>::extract(Mat<eT>& actual_out,
   const bool alias = (&actual_out == &m_local);
 
   if (alias) {
-    arma_extra_debug_print("subview_elem1::extract(): aliasing detected");
+    arma_debug_print("subview_elem1::extract(): aliasing detected");
   }
 
   Mat<eT>* tmp_out = alias ? new Mat<eT>() : nullptr;
@@ -713,8 +713,8 @@ inline void subview_elem1<eT, T1>::extract(Mat<eT>& actual_out,
     const uword ii = aa_mem[i];
     const uword jj = aa_mem[j];
 
-    arma_debug_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
-                            "Mat::elem(): index out of bounds");
+    arma_conform_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
+                              "Mat::elem(): index out of bounds");
 
     out_mem[i] = m_mem[ii];
     out_mem[j] = m_mem[jj];
@@ -723,7 +723,7 @@ inline void subview_elem1<eT, T1>::extract(Mat<eT>& actual_out,
   if (i < aa_n_elem) {
     const uword ii = aa_mem[i];
 
-    arma_debug_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
+    arma_conform_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
 
     out_mem[i] = m_mem[ii];
   }
@@ -737,13 +737,13 @@ inline void subview_elem1<eT, T1>::extract(Mat<eT>& actual_out,
 template <typename eT, typename T1>
 template <typename op_type>
 inline void subview_elem1<eT, T1>::mat_inplace_op(Mat<eT>& out, const subview_elem1& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap<T1> tmp1(in.a.get_ref());
   const umat& aa = tmp1.M;
 
-  arma_debug_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
-                   "Mat::elem(): given object must be a vector");
+  arma_conform_check(((aa.is_vec() == false) && (aa.is_empty() == false)),
+                     "Mat::elem(): given object must be a vector");
 
   const uword* aa_mem = aa.memptr();
   const uword aa_n_elem = aa.n_elem;
@@ -754,7 +754,7 @@ inline void subview_elem1<eT, T1>::mat_inplace_op(Mat<eT>& out, const subview_el
   const eT* m_mem = m_local.memptr();
   const uword m_n_elem = m_local.n_elem;
 
-  arma_debug_check((out.n_elem != aa_n_elem), "Mat::elem(): size mismatch");
+  arma_conform_check((out.n_elem != aa_n_elem), "Mat::elem(): size mismatch");
 
   eT* out_mem = out.memptr();
 
@@ -763,8 +763,8 @@ inline void subview_elem1<eT, T1>::mat_inplace_op(Mat<eT>& out, const subview_el
     const uword ii = aa_mem[i];
     const uword jj = aa_mem[j];
 
-    arma_debug_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
-                            "Mat::elem(): index out of bounds");
+    arma_conform_check_bounds(((ii >= m_n_elem) || (jj >= m_n_elem)),
+                              "Mat::elem(): index out of bounds");
 
     if (is_same_type<op_type, op_internal_plus>::yes) {
       out_mem[i] += m_mem[ii];
@@ -787,7 +787,7 @@ inline void subview_elem1<eT, T1>::mat_inplace_op(Mat<eT>& out, const subview_el
   if (i < aa_n_elem) {
     const uword ii = aa_mem[i];
 
-    arma_debug_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
+    arma_conform_check_bounds((ii >= m_n_elem), "Mat::elem(): index out of bounds");
 
     if (is_same_type<op_type, op_internal_plus>::yes) {
       out_mem[i] += m_mem[ii];
@@ -806,28 +806,28 @@ inline void subview_elem1<eT, T1>::mat_inplace_op(Mat<eT>& out, const subview_el
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::plus_inplace(Mat<eT>& out, const subview_elem1& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   mat_inplace_op<op_internal_plus>(out, in);
 }
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::minus_inplace(Mat<eT>& out, const subview_elem1& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   mat_inplace_op<op_internal_minus>(out, in);
 }
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::schur_inplace(Mat<eT>& out, const subview_elem1& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   mat_inplace_op<op_internal_schur>(out, in);
 }
 
 template <typename eT, typename T1>
 inline void subview_elem1<eT, T1>::div_inplace(Mat<eT>& out, const subview_elem1& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   mat_inplace_op<op_internal_div>(out, in);
 }

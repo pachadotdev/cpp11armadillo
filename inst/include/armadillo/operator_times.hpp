@@ -23,7 +23,7 @@ template <typename T1>
 arma_inline
     typename enable_if2<is_arma_type<T1>::value, const eOp<T1, eop_scalar_times> >::result
     operator*(const T1& X, const typename T1::elem_type k) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return eOp<T1, eop_scalar_times>(X, k);
 }
@@ -33,7 +33,7 @@ template <typename T1>
 arma_inline
     typename enable_if2<is_arma_type<T1>::value, const eOp<T1, eop_scalar_times> >::result
     operator*(const typename T1::elem_type k, const T1& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return eOp<T1, eop_scalar_times>(X, k);  // NOTE: order is swapped
 }
@@ -45,7 +45,7 @@ arma_inline
                         const mtOp<typename std::complex<typename T1::pod_type>, T1,
                                    op_cx_scalar_times> >::result
     operator*(const T1& X, const std::complex<typename T1::pod_type>& k) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return mtOp<typename std::complex<typename T1::pod_type>, T1, op_cx_scalar_times>('j',
                                                                                     X, k);
@@ -58,7 +58,7 @@ arma_inline
                         const mtOp<typename std::complex<typename T1::pod_type>, T1,
                                    op_cx_scalar_times> >::result
     operator*(const std::complex<typename T1::pod_type>& k, const T1& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return mtOp<typename std::complex<typename T1::pod_type>, T1, op_cx_scalar_times>('j',
                                                                                     X, k);
@@ -68,7 +68,7 @@ arma_inline
 template <typename T1>
 arma_inline const Op<T1, op_htrans2> operator*(const typename T1::elem_type k,
                                                const Op<T1, op_htrans>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_htrans2>(X.m, k);
 }
@@ -77,7 +77,7 @@ arma_inline const Op<T1, op_htrans2> operator*(const typename T1::elem_type k,
 template <typename T1>
 arma_inline const Op<T1, op_htrans2> operator*(const Op<T1, op_htrans>& X,
                                                const typename T1::elem_type k) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_htrans2>(X.m, k);
 }
@@ -89,7 +89,7 @@ arma_inline typename enable_if2<
      is_same_type<typename T1::elem_type, typename T2::elem_type>::value),
     const Glue<T1, Op<T2, op_diagmat>, glue_times_diag> >::result
 operator*(const T1& X, const Op<T2, op_diagmat>& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Glue<T1, Op<T2, op_diagmat>, glue_times_diag>(X, Y);
 }
@@ -101,7 +101,7 @@ arma_inline typename enable_if2<
      is_same_type<typename T1::elem_type, typename T2::elem_type>::value),
     const Glue<Op<T1, op_diagmat>, T2, glue_times_diag> >::result
 operator*(const Op<T1, op_diagmat>& X, const T2& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Glue<Op<T1, op_diagmat>, T2, glue_times_diag>(X, Y);
 }
@@ -110,7 +110,7 @@ operator*(const Op<T1, op_diagmat>& X, const T2& Y) {
 template <typename T1, typename T2>
 inline Mat<typename promote_type<typename T1::elem_type, typename T2::elem_type>::result>
 operator*(const Op<T1, op_diagmat>& X, const Op<T2, op_diagmat>& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT1;
   typedef typename T2::elem_type eT2;
@@ -122,8 +122,8 @@ operator*(const Op<T1, op_diagmat>& X, const Op<T2, op_diagmat>& Y) {
   const diagmat_proxy<T1> A(X.m);
   const diagmat_proxy<T2> B(Y.m);
 
-  arma_debug_assert_mul_size(A.n_rows, A.n_cols, B.n_rows, B.n_cols,
-                             "matrix multiplication");
+  arma_conform_assert_mul_size(A.n_rows, A.n_cols, B.n_rows, B.n_cols,
+                               "matrix multiplication");
 
   Mat<out_eT> out(A.n_rows, B.n_cols, arma_zeros_indicator());
 
@@ -147,7 +147,7 @@ arma_inline typename enable_if2<
         is_same_type<typename T1::elem_type, typename T2::elem_type>::value,
     const Glue<T1, T2, glue_times> >::result
 operator*(const T1& X, const T2& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Glue<T1, T2, glue_times>(X, Y);
 }
@@ -161,7 +161,7 @@ inline typename enable_if2<
         typename promote_type<typename T1::elem_type, typename T2::elem_type>::result, T1,
         T2, glue_mixed_times> >::result
 operator*(const T1& X, const T2& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT1;
   typedef typename T2::elem_type eT2;
@@ -178,7 +178,7 @@ template <typename T1>
 inline typename enable_if2<is_arma_sparse_type<T1>::value,
                            SpOp<T1, spop_scalar_times> >::result
 operator*(const T1& X, const typename T1::elem_type k) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return SpOp<T1, spop_scalar_times>(X, k);
 }
@@ -187,7 +187,7 @@ template <typename T1>
 inline typename enable_if2<is_arma_sparse_type<T1>::value,
                            SpOp<T1, spop_scalar_times> >::result
 operator*(const typename T1::elem_type k, const T1& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return SpOp<T1, spop_scalar_times>(X, k);
 }
@@ -199,7 +199,7 @@ arma_inline typename enable_if2<(is_arma_sparse_type<T1>::value &&
                                 const mtSpOp<typename std::complex<typename T1::pod_type>,
                                              T1, spop_cx_scalar_times> >::result
 operator*(const T1& X, const std::complex<typename T1::pod_type>& k) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return mtSpOp<typename std::complex<typename T1::pod_type>, T1, spop_cx_scalar_times>(
       'j', X, k);
@@ -212,7 +212,7 @@ arma_inline typename enable_if2<(is_arma_sparse_type<T1>::value &&
                                 const mtSpOp<typename std::complex<typename T1::pod_type>,
                                              T1, spop_cx_scalar_times> >::result
 operator*(const std::complex<typename T1::pod_type>& k, const T1& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return mtSpOp<typename std::complex<typename T1::pod_type>, T1, spop_cx_scalar_times>(
       'j', X, k);
@@ -225,7 +225,7 @@ inline typename enable_if2<
      is_same_type<typename T1::elem_type, typename T2::elem_type>::value),
     const SpGlue<T1, T2, spglue_times> >::result
 operator*(const T1& x, const T2& y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return SpGlue<T1, T2, spglue_times>(x, y);
 }
@@ -237,7 +237,7 @@ inline typename enable_if2<
      is_same_type<typename T1::elem_type, typename T2::elem_type>::value),
     const SpToDGlue<T1, T2, glue_times_sparse_dense> >::result
 operator*(const T1& x, const T2& y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return SpToDGlue<T1, T2, glue_times_sparse_dense>(x, y);
 }
@@ -249,7 +249,7 @@ inline typename enable_if2<
      is_same_type<typename T1::elem_type, typename T2::elem_type>::value),
     const SpToDGlue<T1, T2, glue_times_dense_sparse> >::result
 operator*(const T1& x, const T2& y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return SpToDGlue<T1, T2, glue_times_dense_sparse>(x, y);
 }
@@ -263,7 +263,7 @@ inline typename enable_if2<
         typename promote_type<typename T1::elem_type, typename T2::elem_type>::result, T1,
         T2, spglue_times_mixed> >::result
 operator*(const T1& X, const T2& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT1;
   typedef typename T2::elem_type eT2;
@@ -283,7 +283,7 @@ inline typename enable_if2<
     Mat<typename promote_type<typename T1::elem_type, typename T2::elem_type>::result> >::
     result
     operator*(const T1& X, const T2& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Mat<typename promote_type<typename T1::elem_type, typename T2::elem_type>::result> out;
 
@@ -300,7 +300,7 @@ inline typename enable_if2<
     Mat<typename promote_type<typename T1::elem_type, typename T2::elem_type>::result> >::
     result
     operator*(const T1& X, const T2& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Mat<typename promote_type<typename T1::elem_type, typename T2::elem_type>::result> out;
 

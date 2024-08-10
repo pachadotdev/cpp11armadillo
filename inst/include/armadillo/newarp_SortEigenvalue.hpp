@@ -116,7 +116,7 @@ class SortEigenvalue {
 
  public:
   inline SortEigenvalue(const eT* start, const uword size) : pair_sort(size) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     for (uword i = 0; i < size; i++) {
       pair_sort[i].first = SortingTarget<eT, SelectionRule>::get(start[i]);
@@ -129,7 +129,7 @@ class SortEigenvalue {
   }
 
   inline std::vector<uword> index() {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     const uword len = pair_sort.size();
 

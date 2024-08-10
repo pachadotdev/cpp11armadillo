@@ -25,7 +25,7 @@ arma_warn_unused inline typename enable_if2<
         is_same_type<typename T1::elem_type, typename T2::elem_type>::value,
     const Glue<T1, T2, glue_cross> >::result
 cross(const T1& X, const T2& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Glue<T1, T2, glue_cross>(X, Y);
 }

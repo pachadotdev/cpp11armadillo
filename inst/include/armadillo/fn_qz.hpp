@@ -26,11 +26,11 @@ qz(Mat<typename T1::elem_type>& AA, Mat<typename T1::elem_type>& BB,
    Mat<typename T1::elem_type>& Q, Mat<typename T1::elem_type>& Z,
    const Base<typename T1::elem_type, T1>& A_expr,
    const Base<typename T1::elem_type, T2>& B_expr, const char* select = "none") {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const char sig = (select != nullptr) ? select[0] : char(0);
 
-  arma_debug_check(
+  arma_conform_check(
       ((sig != 'n') && (sig != 'l') && (sig != 'r') && (sig != 'i') && (sig != 'o')),
       "qz(): unknown select form");
 
@@ -41,7 +41,7 @@ qz(Mat<typename T1::elem_type>& AA, Mat<typename T1::elem_type>& BB,
     BB.soft_reset();
     Q.soft_reset();
     Z.soft_reset();
-    arma_debug_warn_level(3, "qz(): decomposition failed");
+    arma_warn(3, "qz(): decomposition failed");
   }
 
   return status;

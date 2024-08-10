@@ -29,9 +29,9 @@ class wall_clock {
   toc();  //!< return the number of seconds since the last call to tic()
 
  private:
-  bool valid = false;
-
   std::chrono::steady_clock::time_point chrono_time1;
+
+  bool valid = false;
 };
 
 //! @}

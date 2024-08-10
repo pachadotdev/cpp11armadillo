@@ -22,7 +22,7 @@
 //! both input matrices have the same element type
 template <typename eT>
 inline void glue_kron::direct_kron(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword A_rows = A.n_rows;
   const uword A_cols = A.n_cols;
@@ -49,7 +49,7 @@ inline void glue_kron::direct_kron(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>
 template <typename T>
 inline void glue_kron::direct_kron(Mat<std::complex<T> >& out,
                                    const Mat<std::complex<T> >& A, const Mat<T>& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename std::complex<T> eT;
 
@@ -80,7 +80,7 @@ inline void glue_kron::direct_kron(Mat<std::complex<T> >& out,
 template <typename T>
 inline void glue_kron::direct_kron(Mat<std::complex<T> >& out, const Mat<T>& A,
                                    const Mat<std::complex<T> >& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword A_rows = A.n_rows;
   const uword A_cols = A.n_cols;
@@ -106,7 +106,7 @@ inline void glue_kron::direct_kron(Mat<std::complex<T> >& out, const Mat<T>& A,
 template <typename T1, typename T2>
 inline void glue_kron::apply(Mat<typename T1::elem_type>& out,
                              const Glue<T1, T2, glue_kron>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 

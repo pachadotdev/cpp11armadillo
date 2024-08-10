@@ -44,7 +44,7 @@ class gemv_emul_tinysq {
   template <typename eT, typename TA>
   arma_cold inline static void apply(eT* y, const TA& A, const eT* x,
                                      const eT alpha = eT(1), const eT beta = eT(0)) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     const eT* Am = A.memptr();
 
@@ -175,7 +175,7 @@ class gemv_emul {
   template <typename eT, typename TA>
   arma_hot inline static void apply(eT* y, const TA& A, const eT* x,
                                     const eT alpha = eT(1), const eT beta = eT(0)) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     const uword A_n_rows = A.n_rows;
     const uword A_n_cols = A.n_cols;
@@ -255,19 +255,19 @@ class gemv {
   template <typename eT, typename TA>
   inline static void apply_blas_type(eT* y, const TA& A, const eT* x,
                                      const eT alpha = eT(1), const eT beta = eT(0)) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     if ((A.n_rows <= 4) && (A.n_rows == A.n_cols) && (is_cx<eT>::no)) {
       gemv_emul_tinysq<do_trans_A, use_alpha, use_beta>::apply(y, A, x, alpha, beta);
     } else {
 #if defined(ARMA_USE_ATLAS)
       {
-        arma_debug_assert_atlas_size(A);
+        arma_conform_assert_atlas_size(A);
 
         if (is_cx<eT>::no) {
           // use gemm() instead of gemv() to work around a speed issue in Atlas 3.8.4
 
-          arma_extra_debug_print("atlas::cblas_gemm()");
+          arma_debug_print("atlas::cblas_gemm()");
 
           atlas::cblas_gemm<eT>(
               atlas_CblasColMajor,
@@ -278,7 +278,7 @@ class gemv {
               A.n_rows, x, (do_trans_A) ? A.n_rows : A.n_cols, (use_beta) ? beta : eT(0),
               y, (do_trans_A) ? A.n_cols : A.n_rows);
         } else {
-          arma_extra_debug_print("atlas::cblas_gemv()");
+          arma_debug_print("atlas::cblas_gemv()");
 
           atlas::cblas_gemv<eT>(
               atlas_CblasColMajor,
@@ -290,9 +290,9 @@ class gemv {
       }
 #elif defined(ARMA_USE_BLAS)
       {
-        arma_extra_debug_print("blas::gemv()");
+        arma_debug_print("blas::gemv()");
 
-        arma_debug_assert_blas_size(A);
+        arma_conform_assert_blas_size(A);
 
         const char trans_A = (do_trans_A) ? (is_cx<eT>::yes ? 'C' : 'T') : 'N';
         const blas_int m = blas_int(A.n_rows);
@@ -302,7 +302,7 @@ class gemv {
         const blas_int inc = blas_int(1);
         const eT local_beta = (use_beta) ? beta : eT(0);
 
-        arma_extra_debug_print(arma_str::format("blas::gemv(): trans_A = %c") % trans_A);
+        arma_debug_print(arma_str::format("blas::gemv(): trans_A: %c") % trans_A);
 
         blas::gemv<eT>(&trans_A, &m, &n, &local_alpha, A.mem,
                        &m,  // lda

@@ -21,7 +21,7 @@
 template <typename T1, typename T2>
 inline void glue_atan2::apply(Mat<typename T1::elem_type>& out,
                               const Glue<T1, T2, glue_atan2>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -47,7 +47,7 @@ inline void glue_atan2::apply(Mat<typename T1::elem_type>& out,
 template <typename T1, typename T2>
 inline void glue_atan2::apply_noalias(Mat<typename T1::elem_type>& out,
                                       const Proxy<T1>& P1, const Proxy<T2>& P2) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -61,7 +61,7 @@ inline void glue_atan2::apply_noalias(Mat<typename T1::elem_type>& out,
 
   const bool use_mp = arma_config::openmp &&
                       mp_gate<eT, (Proxy<T1>::use_mp || Proxy<T2>::use_mp)>::eval(n_elem);
-  const bool use_at = Proxy<T1>::use_at || Proxy<T2>::use_at;
+  constexpr bool use_at = Proxy<T1>::use_at || Proxy<T2>::use_at;
 
   if (use_at == false) {
     typename Proxy<T1>::ea_type eaP1 = P1.get_ea();
@@ -101,7 +101,7 @@ inline void glue_atan2::apply_noalias(Mat<typename T1::elem_type>& out,
 template <typename T1, typename T2>
 inline void glue_atan2::apply(Cube<typename T1::elem_type>& out,
                               const GlueCube<T1, T2, glue_atan2>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -127,7 +127,7 @@ inline void glue_atan2::apply(Cube<typename T1::elem_type>& out,
 template <typename T1, typename T2>
 inline void glue_atan2::apply_noalias(Cube<typename T1::elem_type>& out,
                                       const ProxyCube<T1>& P1, const ProxyCube<T2>& P2) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -143,7 +143,7 @@ inline void glue_atan2::apply_noalias(Cube<typename T1::elem_type>& out,
   const bool use_mp =
       arma_config::openmp &&
       mp_gate<eT, (ProxyCube<T1>::use_mp || ProxyCube<T2>::use_mp)>::eval(n_elem);
-  const bool use_at = ProxyCube<T1>::use_at || ProxyCube<T2>::use_at;
+  constexpr bool use_at = ProxyCube<T1>::use_at || ProxyCube<T2>::use_at;
 
   if (use_at == false) {
     typename ProxyCube<T1>::ea_type eaP1 = P1.get_ea();

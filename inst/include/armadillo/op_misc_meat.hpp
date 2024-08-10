@@ -21,7 +21,7 @@
 template <typename T1>
 inline void op_real::apply(Mat<typename T1::pod_type>& out,
                            const mtOp<typename T1::pod_type, T1, op_real>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::pod_type T;
 
@@ -55,7 +55,7 @@ inline void op_real::apply(Mat<typename T1::pod_type>& out,
 template <typename T1>
 inline void op_real::apply(Cube<typename T1::pod_type>& out,
                            const mtOpCube<typename T1::pod_type, T1, op_real>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::pod_type T;
 
@@ -91,7 +91,7 @@ inline void op_real::apply(Cube<typename T1::pod_type>& out,
 template <typename T1>
 inline void op_imag::apply(Mat<typename T1::pod_type>& out,
                            const mtOp<typename T1::pod_type, T1, op_imag>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::pod_type T;
 
@@ -125,7 +125,7 @@ inline void op_imag::apply(Mat<typename T1::pod_type>& out,
 template <typename T1>
 inline void op_imag::apply(Cube<typename T1::pod_type>& out,
                            const mtOpCube<typename T1::pod_type, T1, op_imag>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::pod_type T;
 
@@ -161,7 +161,7 @@ inline void op_imag::apply(Cube<typename T1::pod_type>& out,
 template <typename T1>
 inline void op_abs::apply(Mat<typename T1::pod_type>& out,
                           const mtOp<typename T1::pod_type, T1, op_abs>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::pod_type T;
 
@@ -207,7 +207,7 @@ inline void op_abs::apply(Mat<typename T1::pod_type>& out,
 template <typename T1>
 inline void op_abs::apply(Cube<typename T1::pod_type>& out,
                           const mtOpCube<typename T1::pod_type, T1, op_abs>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::pod_type T;
 
@@ -255,7 +255,7 @@ inline void op_abs::apply(Cube<typename T1::pod_type>& out,
 template <typename T1>
 inline void op_arg::apply(Mat<typename T1::pod_type>& out,
                           const mtOp<typename T1::pod_type, T1, op_arg>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type T;
@@ -290,7 +290,7 @@ inline void op_arg::apply(Mat<typename T1::pod_type>& out,
 template <typename T1>
 inline void op_arg::apply(Cube<typename T1::pod_type>& out,
                           const mtOpCube<typename T1::pod_type, T1, op_arg>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type T;

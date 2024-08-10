@@ -23,7 +23,7 @@
 template <typename T1>
 arma_warn_unused inline SpMat<typename T1::elem_type> spones(
     const SpBase<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 

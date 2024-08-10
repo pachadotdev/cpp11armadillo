@@ -21,7 +21,7 @@
 template <typename T1, typename T2>
 inline void glue_intersect::apply(Mat<typename T1::elem_type>& out,
                                   const Glue<T1, T2, glue_intersect>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   uvec iA;
   uvec iB;
@@ -34,7 +34,7 @@ inline void glue_intersect::apply(Mat<typename T1::elem_type>& out, uvec& iA, uv
                                   const Base<typename T1::elem_type, T1>& A_expr,
                                   const Base<typename T1::elem_type, T2>& B_expr,
                                   const bool calc_indx) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 

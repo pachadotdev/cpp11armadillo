@@ -21,7 +21,7 @@
 template <typename eT>
 inline void spop_reverse::apply_spmat(SpMat<eT>& out, const SpMat<eT>& X,
                                       const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword X_n_rows = X.n_rows;
   const uword X_n_cols = X.n_cols;
@@ -78,7 +78,7 @@ inline void spop_reverse::apply_spmat(SpMat<eT>& out, const SpMat<eT>& X,
 template <typename T1>
 inline void spop_reverse::apply_proxy(SpMat<typename T1::elem_type>& out, const T1& X,
                                       const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -145,11 +145,11 @@ inline void spop_reverse::apply_proxy(SpMat<typename T1::elem_type>& out, const 
 template <typename T1>
 inline void spop_reverse::apply(SpMat<typename T1::elem_type>& out,
                                 const SpOp<T1, spop_reverse>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword dim = in.aux_uword_a;
 
-  arma_debug_check((dim > 1), "reverse(): parameter 'dim' must be 0 or 1");
+  arma_conform_check((dim > 1), "reverse(): parameter 'dim' must be 0 or 1");
 
   if (is_SpMat<T1>::value) {
     const unwrap_spmat<T1> tmp(in.m);

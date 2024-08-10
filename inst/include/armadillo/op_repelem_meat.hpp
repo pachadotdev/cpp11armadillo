@@ -22,7 +22,7 @@ template <typename obj>
 inline void op_repelem::apply_noalias(Mat<typename obj::elem_type>& out, const obj& X,
                                       const uword copies_per_row,
                                       const uword copies_per_col) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename obj::elem_type eT;
 
@@ -64,7 +64,7 @@ inline void op_repelem::apply_noalias(Mat<typename obj::elem_type>& out, const o
 template <typename T1>
 inline void op_repelem::apply(Mat<typename T1::elem_type>& out,
                               const Op<T1, op_repelem>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 

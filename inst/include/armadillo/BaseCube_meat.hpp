@@ -25,7 +25,7 @@ arma_inline const derived& BaseCube<elem_type, derived>::get_ref() const {
 
 template <typename elem_type, typename derived>
 inline void BaseCube<elem_type, derived>::print(const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_cube<derived> tmp((*this).get_ref());
 
@@ -43,7 +43,7 @@ inline void BaseCube<elem_type, derived>::print(const std::string extra_text) co
 template <typename elem_type, typename derived>
 inline void BaseCube<elem_type, derived>::print(std::ostream& user_stream,
                                                 const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_cube<derived> tmp((*this).get_ref());
 
@@ -60,7 +60,7 @@ inline void BaseCube<elem_type, derived>::print(std::ostream& user_stream,
 
 template <typename elem_type, typename derived>
 inline void BaseCube<elem_type, derived>::raw_print(const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_cube<derived> tmp((*this).get_ref());
 
@@ -78,7 +78,7 @@ inline void BaseCube<elem_type, derived>::raw_print(const std::string extra_text
 template <typename elem_type, typename derived>
 inline void BaseCube<elem_type, derived>::raw_print(std::ostream& user_stream,
                                                     const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_cube<derived> tmp((*this).get_ref());
 
@@ -96,7 +96,7 @@ inline void BaseCube<elem_type, derived>::raw_print(std::ostream& user_stream,
 template <typename elem_type, typename derived>
 inline void BaseCube<elem_type, derived>::brief_print(
     const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_cube<derived> tmp((*this).get_ref());
 
@@ -114,7 +114,7 @@ inline void BaseCube<elem_type, derived>::brief_print(
 template <typename elem_type, typename derived>
 inline void BaseCube<elem_type, derived>::brief_print(
     std::ostream& user_stream, const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_cube<derived> tmp((*this).get_ref());
 
@@ -146,7 +146,7 @@ inline uword BaseCube<elem_type, derived>::index_min() const {
   uword index = 0;
 
   if (P.get_n_elem() == 0) {
-    arma_debug_check(true, "index_min(): object has no elements");
+    arma_conform_check(true, "index_min(): object has no elements");
   } else {
     op_min::min_with_index(P, index);
   }
@@ -161,7 +161,7 @@ inline uword BaseCube<elem_type, derived>::index_max() const {
   uword index = 0;
 
   if (P.get_n_elem() == 0) {
-    arma_debug_check(true, "index_max(): object has no elements");
+    arma_conform_check(true, "index_max(): object has no elements");
   } else {
     op_max::max_with_index(P, index);
   }
@@ -172,11 +172,11 @@ inline uword BaseCube<elem_type, derived>::index_max() const {
 template <typename elem_type, typename derived>
 inline bool BaseCube<elem_type, derived>::is_zero(
     const typename get_pod_type<elem_type>::result tol) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<elem_type>::result T;
 
-  arma_debug_check((tol < T(0)), "is_zero(): parameter 'tol' must be >= 0");
+  arma_conform_check((tol < T(0)), "is_zero(): parameter 'tol' must be >= 0");
 
   if (ProxyCube<derived>::use_at ||
       is_Cube<typename ProxyCube<derived>::stored_type>::value) {
@@ -223,7 +223,7 @@ inline bool BaseCube<elem_type, derived>::is_zero(
 
 template <typename elem_type, typename derived>
 inline bool BaseCube<elem_type, derived>::is_empty() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const ProxyCube<derived> P((*this).get_ref());
 
@@ -232,10 +232,10 @@ inline bool BaseCube<elem_type, derived>::is_empty() const {
 
 template <typename elem_type, typename derived>
 inline bool BaseCube<elem_type, derived>::is_finite() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(
+    arma_warn(
         1,
         "is_finite(): detection of non-finite values is not reliable in fast math mode");
   }
@@ -265,10 +265,10 @@ inline bool BaseCube<elem_type, derived>::is_finite() const {
 
 template <typename elem_type, typename derived>
 inline bool BaseCube<elem_type, derived>::has_inf() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(
+    arma_warn(
         1, "has_inf(): detection of non-finite values is not reliable in fast math mode");
   }
 
@@ -297,10 +297,10 @@ inline bool BaseCube<elem_type, derived>::has_inf() const {
 
 template <typename elem_type, typename derived>
 inline bool BaseCube<elem_type, derived>::has_nan() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(
+    arma_warn(
         1, "has_nan(): detection of non-finite values is not reliable in fast math mode");
   }
 
@@ -329,12 +329,12 @@ inline bool BaseCube<elem_type, derived>::has_nan() const {
 
 template <typename elem_type, typename derived>
 inline bool BaseCube<elem_type, derived>::has_nonfinite() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(1,
-                          "has_nonfinite(): detection of non-finite values is not "
-                          "reliable in fast math mode");
+    arma_warn(1,
+              "has_nonfinite(): detection of non-finite values is not reliable in fast "
+              "math mode");
   }
 
   if (is_Cube<typename ProxyCube<derived>::stored_type>::value) {
@@ -377,7 +377,7 @@ inline const CubeToMatOp<derived, op_col_as_mat> BaseCube<elem_type, derived>::c
 
 template <typename elem_type, typename derived>
 arma_inline const derived& BaseCube_eval_Cube<elem_type, derived>::eval() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return static_cast<const derived&>(*this);
 }
@@ -387,7 +387,7 @@ arma_inline const derived& BaseCube_eval_Cube<elem_type, derived>::eval() const 
 
 template <typename elem_type, typename derived>
 inline Cube<elem_type> BaseCube_eval_expr<elem_type, derived>::eval() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Cube<elem_type>(static_cast<const derived&>(*this));
 }

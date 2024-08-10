@@ -20,7 +20,7 @@
 
 template <typename obj_type>
 inline void internal_randperm_helper(obj_type& x, const uword N, const uword N_keep) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename obj_type::elem_type eT;
 
@@ -66,7 +66,7 @@ inline void internal_randperm_helper(obj_type& x, const uword N, const uword N_k
 template <typename obj_type>
 arma_warn_unused inline typename enable_if2<is_Mat<obj_type>::value, obj_type>::result
 randperm(const uword N) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   obj_type x;
 
@@ -78,7 +78,7 @@ randperm(const uword N) {
 }
 
 arma_warn_unused inline uvec randperm(const uword N) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   uvec x;
 
@@ -92,9 +92,9 @@ arma_warn_unused inline uvec randperm(const uword N) {
 template <typename obj_type>
 arma_warn_unused inline typename enable_if2<is_Mat<obj_type>::value, obj_type>::result
 randperm(const uword N, const uword M) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((M > N), "randperm(): 'M' must be less than or equal to 'N'");
+  arma_conform_check((M > N), "randperm(): 'M' must be less than or equal to 'N'");
 
   obj_type x;
 
@@ -106,9 +106,9 @@ randperm(const uword N, const uword M) {
 }
 
 arma_warn_unused inline uvec randperm(const uword N, const uword M) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((M > N), "randperm(): 'M' must be less than or equal to 'N'");
+  arma_conform_check((M > N), "randperm(): 'M' must be less than or equal to 'N'");
 
   uvec x;
 

@@ -20,7 +20,7 @@
 
 template <typename T1>
 inline void op_cov::apply(Mat<typename T1::elem_type>& out, const Op<T1, op_cov>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -51,7 +51,7 @@ inline void op_cov::apply(Mat<typename T1::elem_type>& out, const Op<T1, op_cov>
 template <typename T1>
 inline void op_cov::apply(Mat<typename T1::elem_type>& out,
                           const Op<Op<T1, op_htrans>, op_cov>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 

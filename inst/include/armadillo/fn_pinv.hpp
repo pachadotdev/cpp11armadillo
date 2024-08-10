@@ -22,7 +22,7 @@ template <typename T1>
 arma_warn_unused inline typename enable_if2<is_real<typename T1::pod_type>::value,
                                             const Op<T1, op_pinv_default> >::result
 pinv(const Base<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_pinv_default>(X.get_ref());
 }
@@ -32,7 +32,7 @@ arma_warn_unused inline typename enable_if2<is_real<typename T1::pod_type>::valu
                                             const Op<T1, op_pinv> >::result
 pinv(const Base<typename T1::elem_type, T1>& X, const typename T1::pod_type tol,
      const char* method = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -41,7 +41,8 @@ pinv(const Base<typename T1::elem_type, T1>& X, const typename T1::pod_type tol,
   if (method != nullptr) {
     const char sig = method[0];
 
-    arma_debug_check(((sig != 's') && (sig != 'd')), "pinv(): unknown method specified");
+    arma_conform_check(((sig != 's') && (sig != 'd')),
+                       "pinv(): unknown method specified");
 
     if (sig == 's') {
       method_id = 1;
@@ -58,14 +59,15 @@ template <typename T1>
 inline typename enable_if2<is_real<typename T1::pod_type>::value, bool>::result pinv(
     Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type, T1>& X,
     const typename T1::pod_type tol = 0.0, const char* method = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   uword method_id = 0;  // default setting
 
   if (method != nullptr) {
     const char sig = method[0];
 
-    arma_debug_check(((sig != 's') && (sig != 'd')), "pinv(): unknown method specified");
+    arma_conform_check(((sig != 's') && (sig != 'd')),
+                       "pinv(): unknown method specified");
 
     if (sig == 's') {
       method_id = 1;
@@ -79,7 +81,7 @@ inline typename enable_if2<is_real<typename T1::pod_type>::value, bool>::result 
 
   if (status == false) {
     out.soft_reset();
-    arma_debug_warn_level(3, "pinv(): svd failed");
+    arma_warn(3, "pinv(): svd failed");
   }
 
   return status;

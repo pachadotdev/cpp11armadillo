@@ -19,7 +19,7 @@
 //! @{
 
 arma_warn_unused inline double chi2rnd(const double df) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   op_chi2rnd_varying_df<double> generator;
 
@@ -28,7 +28,7 @@ arma_warn_unused inline double chi2rnd(const double df) {
 
 template <typename eT>
 arma_warn_unused inline typename arma_real_only<eT>::result chi2rnd(const eT df) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   op_chi2rnd_varying_df<eT> generator;
 
@@ -40,7 +40,7 @@ arma_warn_unused inline typename enable_if2<(is_arma_type<T1>::value &&
                                              is_real<typename T1::elem_type>::value),
                                             const Op<T1, op_chi2rnd> >::result
 chi2rnd(const T1& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_chi2rnd>(expr);
 }
@@ -50,12 +50,12 @@ arma_warn_unused inline typename enable_if2<
     (is_Mat<obj_type>::value && is_real<typename obj_type::elem_type>::value),
     obj_type>::result
 chi2rnd(const typename obj_type::elem_type df, const uword n_rows, const uword n_cols) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (is_Col<obj_type>::value) {
-    arma_debug_check((n_cols != 1), "chi2rnd(): incompatible size");
+    arma_conform_check((n_cols != 1), "chi2rnd(): incompatible size");
   } else if (is_Row<obj_type>::value) {
-    arma_debug_check((n_rows != 1), "chi2rnd(): incompatible size");
+    arma_conform_check((n_rows != 1), "chi2rnd(): incompatible size");
   }
 
   obj_type out(n_rows, n_cols, arma_nozeros_indicator());
@@ -71,7 +71,7 @@ arma_warn_unused inline
                          is_real<typename obj_type::elem_type>::value),
                         obj_type>::result
     chi2rnd(const typename obj_type::elem_type df, const SizeMat& s) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return chi2rnd<obj_type>(df, s.n_rows, s.n_cols);
 }
@@ -82,7 +82,7 @@ arma_warn_unused inline
                          is_real<typename obj_type::elem_type>::value),
                         obj_type>::result
     chi2rnd(const typename obj_type::elem_type df, const uword n_elem) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (is_Row<obj_type>::value) {
     return chi2rnd<obj_type>(df, 1, n_elem);
@@ -93,19 +93,19 @@ arma_warn_unused inline
 
 arma_warn_unused inline mat chi2rnd(const double df, const uword n_rows,
                                     const uword n_cols) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return chi2rnd<mat>(df, n_rows, n_cols);
 }
 
 arma_warn_unused inline mat chi2rnd(const double df, const SizeMat& s) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return chi2rnd<mat>(df, s.n_rows, s.n_cols);
 }
 
 arma_warn_unused inline vec chi2rnd(const double df, const uword n_elem) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return chi2rnd<vec>(df, n_elem, 1);
 }

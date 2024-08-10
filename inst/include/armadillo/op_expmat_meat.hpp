@@ -27,7 +27,7 @@
 template <typename T1>
 inline void op_expmat::apply(Mat<typename T1::elem_type>& out,
                              const Op<T1, op_expmat>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_expmat::apply_direct(out, expr.m);
 
@@ -40,7 +40,7 @@ inline void op_expmat::apply(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline bool op_expmat::apply_direct(Mat<typename T1::elem_type>& out,
                                     const Base<typename T1::elem_type, T1>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type T;
@@ -48,9 +48,9 @@ inline bool op_expmat::apply_direct(Mat<typename T1::elem_type>& out,
   if (is_op_diagmat<T1>::value) {
     out = expr.get_ref();  // force the evaluation of diagmat()
 
-    arma_debug_check((out.is_square() == false),
-                     "expmat(): given matrix must be square sized",
-                     [&]() { out.soft_reset(); });
+    arma_conform_check((out.is_square() == false),
+                       "expmat(): given matrix must be square sized",
+                       [&]() { out.soft_reset(); });
 
     const uword N = (std::min)(out.n_rows, out.n_cols);
 
@@ -63,11 +63,11 @@ inline bool op_expmat::apply_direct(Mat<typename T1::elem_type>& out,
 
   Mat<eT> A = expr.get_ref();
 
-  arma_debug_check((A.is_square() == false),
-                   "expmat(): given matrix must be square sized");
+  arma_conform_check((A.is_square() == false),
+                     "expmat(): given matrix must be square sized");
 
   if (A.is_diagmat()) {
-    arma_extra_debug_print("op_expmat: detected diagonal matrix");
+    arma_debug_print("op_expmat: detected diagonal matrix");
 
     const uword N = (std::min)(A.n_rows, A.n_cols);
 
@@ -92,7 +92,7 @@ inline bool op_expmat::apply_direct(Mat<typename T1::elem_type>& out,
   }
 
   if (do_sym) {
-    arma_extra_debug_print("op_expmat: symmetric/hermitian optimisation");
+    arma_debug_print("op_expmat: symmetric/hermitian optimisation");
 
     Col<T> eigval;
     Mat<eT> eigvec;
@@ -174,7 +174,7 @@ inline bool op_expmat::apply_direct(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_expmat_sym::apply(Mat<typename T1::elem_type>& out,
                                  const Op<T1, op_expmat_sym>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_expmat_sym::apply_direct(out, in.m);
 
@@ -187,7 +187,7 @@ inline void op_expmat_sym::apply(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline bool op_expmat_sym::apply_direct(Mat<typename T1::elem_type>& out,
                                         const Base<typename T1::elem_type, T1>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
 #if defined(ARMA_USE_LAPACK)
   {
@@ -197,17 +197,16 @@ inline bool op_expmat_sym::apply_direct(Mat<typename T1::elem_type>& out,
     const unwrap<T1> U(expr.get_ref());
     const Mat<eT>& X = U.M;
 
-    arma_debug_check((X.is_square() == false),
-                     "expmat_sym(): given matrix must be square sized");
+    arma_conform_check((X.is_square() == false),
+                       "expmat_sym(): given matrix must be square sized");
 
-    if ((arma_config::debug) && (arma_config::warn_level > 0) && (is_cx<eT>::yes) &&
-        (sym_helper::check_diag_imag(X) == false)) {
-      arma_debug_warn_level(1,
-                            "inv_sympd(): imaginary components on diagonal are non-zero");
+    if ((arma_config::check_conform) && (arma_config::warn_level > 0) &&
+        (is_cx<eT>::yes) && (sym_helper::check_diag_imag(X) == false)) {
+      arma_warn(1, "inv_sympd(): imaginary components on diagonal are non-zero");
     }
 
     if (is_op_diagmat<T1>::value || X.is_diagmat()) {
-      arma_extra_debug_print("op_expmat_sym: detected diagonal matrix");
+      arma_debug_print("op_expmat_sym: detected diagonal matrix");
 
       out = X;
 

@@ -23,7 +23,7 @@ arma_warn_unused arma_inline const Op<T1, op_strans> strans(
     const T1& X,
     const typename enable_if<is_arma_type<T1>::value>::result* junk1 = nullptr,
     const typename arma_cx_only<typename T1::elem_type>::result* junk2 = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk1);
   arma_ignore(junk2);
 
@@ -38,7 +38,7 @@ arma_warn_unused arma_inline const Op<T1, op_htrans> strans(
     const T1& X,
     const typename enable_if<is_arma_type<T1>::value>::result* junk1 = nullptr,
     const typename arma_not_cx<typename T1::elem_type>::result* junk2 = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk1);
   arma_ignore(junk2);
 
@@ -53,7 +53,7 @@ arma_warn_unused arma_inline const SpOp<T1, spop_strans> strans(
     const T1& X,
     const typename enable_if<is_arma_sparse_type<T1>::value>::result* junk1 = nullptr,
     const typename arma_cx_only<typename T1::elem_type>::result* junk2 = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk1);
   arma_ignore(junk2);
 
@@ -65,7 +65,7 @@ arma_warn_unused arma_inline const SpOp<T1, spop_htrans> strans(
     const T1& X,
     const typename enable_if<is_arma_sparse_type<T1>::value>::result* junk1 = nullptr,
     const typename arma_not_cx<typename T1::elem_type>::result* junk2 = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk1);
   arma_ignore(junk2);
 

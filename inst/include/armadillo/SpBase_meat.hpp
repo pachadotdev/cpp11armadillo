@@ -45,7 +45,7 @@ inline const SpOp<derived, spop_strans> SpBase<elem_type, derived>::st() const {
 
 template <typename elem_type, typename derived>
 inline void SpBase<elem_type, derived>::print(const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -63,7 +63,7 @@ inline void SpBase<elem_type, derived>::print(const std::string extra_text) cons
 template <typename elem_type, typename derived>
 inline void SpBase<elem_type, derived>::print(std::ostream& user_stream,
                                               const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -80,7 +80,7 @@ inline void SpBase<elem_type, derived>::print(std::ostream& user_stream,
 
 template <typename elem_type, typename derived>
 inline void SpBase<elem_type, derived>::raw_print(const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -98,7 +98,7 @@ inline void SpBase<elem_type, derived>::raw_print(const std::string extra_text) 
 template <typename elem_type, typename derived>
 inline void SpBase<elem_type, derived>::raw_print(std::ostream& user_stream,
                                                   const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -115,7 +115,7 @@ inline void SpBase<elem_type, derived>::raw_print(std::ostream& user_stream,
 
 template <typename elem_type, typename derived>
 inline void SpBase<elem_type, derived>::print_dense(const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -133,7 +133,7 @@ inline void SpBase<elem_type, derived>::print_dense(const std::string extra_text
 template <typename elem_type, typename derived>
 inline void SpBase<elem_type, derived>::print_dense(std::ostream& user_stream,
                                                     const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -151,7 +151,7 @@ inline void SpBase<elem_type, derived>::print_dense(std::ostream& user_stream,
 template <typename elem_type, typename derived>
 inline void SpBase<elem_type, derived>::raw_print_dense(
     const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -169,7 +169,7 @@ inline void SpBase<elem_type, derived>::raw_print_dense(
 template <typename elem_type, typename derived>
 inline void SpBase<elem_type, derived>::raw_print_dense(
     std::ostream& user_stream, const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -186,7 +186,7 @@ inline void SpBase<elem_type, derived>::raw_print_dense(
 
 template <typename elem_type, typename derived>
 inline void SpBase<elem_type, derived>::brief_print(const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -204,7 +204,7 @@ inline void SpBase<elem_type, derived>::brief_print(const std::string extra_text
 template <typename elem_type, typename derived>
 inline void SpBase<elem_type, derived>::brief_print(std::ostream& user_stream,
                                                     const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -224,7 +224,7 @@ inline void SpBase<elem_type, derived>::brief_print(std::ostream& user_stream,
 
 template <typename elem_type, typename derived>
 inline const derived& SpBase_eval_SpMat<elem_type, derived>::eval() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return static_cast<const derived&>(*this);
 }
@@ -234,33 +234,33 @@ inline const derived& SpBase_eval_SpMat<elem_type, derived>::eval() const {
 
 template <typename elem_type, typename derived>
 inline SpMat<elem_type> SpBase_eval_expr<elem_type, derived>::eval() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return SpMat<elem_type>(static_cast<const derived&>(*this));
 }
 
 template <typename elem_type, typename derived>
 inline elem_type SpBase<elem_type, derived>::min() const {
-  return spop_min::min((*this).get_ref());
+  return op_sp_min::min((*this).get_ref());
 }
 
 template <typename elem_type, typename derived>
 inline elem_type SpBase<elem_type, derived>::max() const {
-  return spop_max::max((*this).get_ref());
+  return op_sp_max::max((*this).get_ref());
 }
 
 template <typename elem_type, typename derived>
 inline elem_type SpBase<elem_type, derived>::min(uword& index_of_min_val) const {
   const SpProxy<derived> P((*this).get_ref());
 
-  return spop_min::min_with_index(P, index_of_min_val);
+  return op_sp_min::min_with_index(P, index_of_min_val);
 }
 
 template <typename elem_type, typename derived>
 inline elem_type SpBase<elem_type, derived>::max(uword& index_of_max_val) const {
   const SpProxy<derived> P((*this).get_ref());
 
-  return spop_max::max_with_index(P, index_of_max_val);
+  return op_sp_max::max_with_index(P, index_of_max_val);
 }
 
 template <typename elem_type, typename derived>
@@ -270,7 +270,7 @@ inline elem_type SpBase<elem_type, derived>::min(uword& row_of_min_val,
 
   uword index = 0;
 
-  const elem_type val = spop_min::min_with_index(P, index);
+  const elem_type val = op_sp_min::min_with_index(P, index);
 
   const uword local_n_rows = P.get_n_rows();
 
@@ -287,7 +287,7 @@ inline elem_type SpBase<elem_type, derived>::max(uword& row_of_max_val,
 
   uword index = 0;
 
-  const elem_type val = spop_max::max_with_index(P, index);
+  const elem_type val = op_sp_max::max_with_index(P, index);
 
   const uword local_n_rows = P.get_n_rows();
 
@@ -304,9 +304,9 @@ inline uword SpBase<elem_type, derived>::index_min() const {
   uword index = 0;
 
   if (P.get_n_elem() == 0) {
-    arma_debug_check(true, "index_min(): object has no elements");
+    arma_conform_check(true, "index_min(): object has no elements");
   } else {
-    spop_min::min_with_index(P, index);
+    op_sp_min::min_with_index(P, index);
   }
 
   return index;
@@ -319,9 +319,9 @@ inline uword SpBase<elem_type, derived>::index_max() const {
   uword index = 0;
 
   if (P.get_n_elem() == 0) {
-    arma_debug_check(true, "index_max(): object has no elements");
+    arma_conform_check(true, "index_max(): object has no elements");
   } else {
-    spop_max::max_with_index(P, index);
+    op_sp_max::max_with_index(P, index);
   }
 
   return index;
@@ -329,7 +329,7 @@ inline uword SpBase<elem_type, derived>::index_max() const {
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_symmetric() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -339,7 +339,7 @@ inline bool SpBase<elem_type, derived>::is_symmetric() const {
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_symmetric(
     const typename get_pod_type<elem_type>::result tol) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -348,7 +348,7 @@ inline bool SpBase<elem_type, derived>::is_symmetric(
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_hermitian() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -358,7 +358,7 @@ inline bool SpBase<elem_type, derived>::is_hermitian() const {
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_hermitian(
     const typename get_pod_type<elem_type>::result tol) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<derived> tmp((*this).get_ref());
 
@@ -368,11 +368,11 @@ inline bool SpBase<elem_type, derived>::is_hermitian(
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_zero(
     const typename get_pod_type<elem_type>::result tol) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<elem_type>::result T;
 
-  arma_debug_check((tol < T(0)), "is_zero(): parameter 'tol' must be >= 0");
+  arma_conform_check((tol < T(0)), "is_zero(): parameter 'tol' must be >= 0");
 
   const SpProxy<derived> P((*this).get_ref());
 
@@ -425,7 +425,7 @@ inline bool SpBase<elem_type, derived>::is_zero(
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_trimatu() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpProxy<derived> P((*this).get_ref());
 
@@ -448,7 +448,7 @@ inline bool SpBase<elem_type, derived>::is_trimatu() const {
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_trimatl() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpProxy<derived> P((*this).get_ref());
 
@@ -471,7 +471,7 @@ inline bool SpBase<elem_type, derived>::is_trimatl() const {
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_diagmat() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpProxy<derived> P((*this).get_ref());
 
@@ -490,7 +490,7 @@ inline bool SpBase<elem_type, derived>::is_diagmat() const {
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_empty() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpProxy<derived> P((*this).get_ref());
 
@@ -499,7 +499,7 @@ inline bool SpBase<elem_type, derived>::is_empty() const {
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_square() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const SpProxy<derived> P((*this).get_ref());
 
@@ -508,7 +508,7 @@ inline bool SpBase<elem_type, derived>::is_square() const {
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_vec() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if ((SpProxy<derived>::is_row) || (SpProxy<derived>::is_col) ||
       (SpProxy<derived>::is_xvec)) {
@@ -522,7 +522,7 @@ inline bool SpBase<elem_type, derived>::is_vec() const {
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_colvec() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (SpProxy<derived>::is_col) {
     return true;
@@ -535,7 +535,7 @@ inline bool SpBase<elem_type, derived>::is_colvec() const {
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_rowvec() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (SpProxy<derived>::is_row) {
     return true;
@@ -548,10 +548,10 @@ inline bool SpBase<elem_type, derived>::is_rowvec() const {
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::is_finite() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(
+    arma_warn(
         1,
         "is_finite(): detection of non-finite values is not reliable in fast math mode");
   }
@@ -579,10 +579,10 @@ inline bool SpBase<elem_type, derived>::is_finite() const {
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::has_inf() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(
+    arma_warn(
         1, "has_inf(): detection of non-finite values is not reliable in fast math mode");
   }
 
@@ -609,10 +609,10 @@ inline bool SpBase<elem_type, derived>::has_inf() const {
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::has_nan() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(
+    arma_warn(
         1, "has_nan(): detection of non-finite values is not reliable in fast math mode");
   }
 
@@ -639,12 +639,12 @@ inline bool SpBase<elem_type, derived>::has_nan() const {
 
 template <typename elem_type, typename derived>
 inline bool SpBase<elem_type, derived>::has_nonfinite() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(1,
-                          "has_nonfinite(): detection of non-finite values is not "
-                          "reliable in fast math mode");
+    arma_warn(1,
+              "has_nonfinite(): detection of non-finite values is not reliable in fast "
+              "math mode");
   }
 
   if (is_SpMat<typename SpProxy<derived>::stored_type>::value) {
@@ -678,6 +678,12 @@ template <typename elem_type, typename derived>
 inline const SpOp<derived, spop_vectorise_row> SpBase<elem_type, derived>::as_row()
     const {
   return SpOp<derived, spop_vectorise_row>((*this).get_ref());
+}
+
+template <typename elem_type, typename derived>
+inline const SpToDOp<derived, op_sp_as_dense> SpBase<elem_type, derived>::as_dense()
+    const {
+  return SpToDOp<derived, op_sp_as_dense>((*this).get_ref());
 }
 
 //! @}

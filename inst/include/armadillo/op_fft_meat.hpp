@@ -29,7 +29,7 @@ class fft_engine_wrapper {
   fft_engine_fftw3<cx_type, inverse>* worker_fftw3 = nullptr;
 
   inline ~fft_engine_wrapper() {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     if (worker_kissfft != nullptr) {
       delete worker_kissfft;
@@ -40,7 +40,7 @@ class fft_engine_wrapper {
   }
 
   inline fft_engine_wrapper(const uword N_samples, const uword N_exec) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     const bool use_fftw3 = N_samples >= (threshold / N_exec);
 
@@ -52,7 +52,7 @@ class fft_engine_wrapper {
   }
 
   inline void run(cx_type* Y, const cx_type* X) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     if (worker_kissfft != nullptr) {
       (*worker_kissfft).run(Y, X);
@@ -71,7 +71,7 @@ template <typename T1>
 inline void op_fft_real::apply(
     Mat<std::complex<typename T1::pod_type> >& out,
     const mtOp<std::complex<typename T1::pod_type>, T1, op_fft_real>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::pod_type in_eT;
   typedef typename std::complex<in_eT> out_eT;
@@ -163,7 +163,7 @@ inline void op_fft_real::apply(
 template <typename T1>
 inline void op_fft_cx::apply(Mat<typename T1::elem_type>& out,
                              const Op<T1, op_fft_cx>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -183,7 +183,7 @@ inline void op_fft_cx::apply(Mat<typename T1::elem_type>& out,
 template <typename eT, bool inverse>
 inline void op_fft_cx::apply_noalias(Mat<eT>& out, const Mat<eT>& X, const uword a,
                                      const uword b) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword n_rows = X.n_rows;
   const uword n_cols = X.n_cols;
@@ -288,7 +288,7 @@ inline void op_fft_cx::apply_noalias(Mat<eT>& out, const Mat<eT>& X, const uword
 template <typename T1>
 inline void op_ifft_cx::apply(Mat<typename T1::elem_type>& out,
                               const Op<T1, op_ifft_cx>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 

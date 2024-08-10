@@ -21,7 +21,7 @@
 template <typename T1, typename T2>
 inline void glue_affmul::apply(Mat<typename T1::elem_type>& out,
                                const Glue<T1, T2, glue_affmul>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -44,13 +44,13 @@ inline void glue_affmul::apply(Mat<typename T1::elem_type>& out,
 template <typename T1, typename T2>
 inline void glue_affmul::apply_noalias(Mat<typename T1::elem_type>& out, const T1& A,
                                        const T2& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword A_n_cols = A.n_cols;
   const uword A_n_rows = A.n_rows;
   const uword B_n_rows = B.n_rows;
 
-  arma_debug_check((A_n_cols != B_n_rows + 1), "affmul(): size mismatch");
+  arma_conform_check((A_n_cols != B_n_rows + 1), "affmul(): size mismatch");
 
   if (A_n_rows == A_n_cols) {
     glue_affmul::apply_noalias_square(out, A, B);
@@ -64,7 +64,7 @@ inline void glue_affmul::apply_noalias(Mat<typename T1::elem_type>& out, const T
 template <typename T1, typename T2>
 inline void glue_affmul::apply_noalias_square(Mat<typename T1::elem_type>& out,
                                               const T1& A, const T2& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -242,7 +242,7 @@ inline void glue_affmul::apply_noalias_square(Mat<typename T1::elem_type>& out,
 template <typename T1, typename T2>
 inline void glue_affmul::apply_noalias_rectangle(Mat<typename T1::elem_type>& out,
                                                  const T1& A, const T2& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -409,7 +409,7 @@ inline void glue_affmul::apply_noalias_rectangle(Mat<typename T1::elem_type>& ou
 template <typename T1, typename T2>
 inline void glue_affmul::apply_noalias_generic(Mat<typename T1::elem_type>& out,
                                                const T1& A, const T2& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 

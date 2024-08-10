@@ -21,7 +21,7 @@
 template <typename T1>
 inline void op_flipud::apply(Mat<typename T1::elem_type>& out,
                              const Op<T1, op_flipud>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -48,7 +48,7 @@ inline void op_flipud::apply(Mat<typename T1::elem_type>& out,
 
 template <typename eT>
 inline void op_flipud::apply_direct(Mat<eT>& out, const Mat<eT>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword X_n_rows = X.n_rows;
   const uword X_n_cols = X.n_cols;
@@ -100,7 +100,7 @@ inline void op_flipud::apply_direct(Mat<eT>& out, const Mat<eT>& X) {
 template <typename T1>
 inline void op_flipud::apply_proxy_noalias(Mat<typename T1::elem_type>& out,
                                            const Proxy<T1>& P) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -145,7 +145,7 @@ inline void op_flipud::apply_proxy_noalias(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_fliplr::apply(Mat<typename T1::elem_type>& out,
                              const Op<T1, op_fliplr>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -172,7 +172,7 @@ inline void op_fliplr::apply(Mat<typename T1::elem_type>& out,
 
 template <typename eT>
 inline void op_fliplr::apply_direct(Mat<eT>& out, const Mat<eT>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword X_n_rows = X.n_rows;
   const uword X_n_cols = X.n_cols;
@@ -215,7 +215,7 @@ inline void op_fliplr::apply_direct(Mat<eT>& out, const Mat<eT>& X) {
 template <typename T1>
 inline void op_fliplr::apply_proxy_noalias(Mat<typename T1::elem_type>& out,
                                            const Proxy<T1>& P) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 

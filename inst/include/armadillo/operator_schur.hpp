@@ -28,7 +28,7 @@ arma_inline typename enable_if2<
         is_same_type<typename T1::elem_type, typename T2::elem_type>::value,
     const eGlue<T1, T2, eglue_schur> >::result
 operator%(const T1& X, const T2& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return eGlue<T1, T2, eglue_schur>(X, Y);
 }
@@ -43,7 +43,7 @@ inline typename enable_if2<
         typename promote_type<typename T1::elem_type, typename T2::elem_type>::result, T1,
         T2, glue_mixed_schur> >::result
 operator%(const T1& X, const T2& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT1;
   typedef typename T2::elem_type eT2;
@@ -62,7 +62,7 @@ inline typename enable_if2<
      is_same_type<typename T1::elem_type, typename T2::elem_type>::value),
     SpGlue<T1, T2, spglue_schur> >::result
 operator%(const T1& x, const T2& y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return SpGlue<T1, T2, spglue_schur>(x, y);
 }
@@ -74,7 +74,7 @@ inline typename enable_if2<
      is_same_type<typename T1::elem_type, typename T2::elem_type>::value),
     SpMat<typename T1::elem_type> >::result
 operator%(const T1& x, const T2& y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   SpMat<typename T1::elem_type> out;
 
@@ -90,7 +90,7 @@ inline typename enable_if2<
      is_same_type<typename T1::elem_type, typename T2::elem_type>::value),
     SpMat<typename T1::elem_type> >::result
 operator%(const T1& x, const T2& y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   SpMat<typename T1::elem_type> out;
 
@@ -113,7 +113,7 @@ inline typename enable_if2<
       is_same_type<op_type, op_sp_minus_post>::value)),
     SpMat<typename T1::elem_type> >::result
 operator%(const T1& x, const SpToDOp<T2, op_type>& y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   SpMat<typename T1::elem_type> out;
 
@@ -133,7 +133,7 @@ inline typename enable_if2<
       is_same_type<op_type, op_sp_minus_post>::value)),
     SpMat<typename T1::elem_type> >::result
 operator%(const SpToDOp<T1, op_type>& x, const T2& y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   SpMat<typename T1::elem_type> out;
 
@@ -154,7 +154,7 @@ inline typename enable_if2<
         typename promote_type<typename T1::elem_type, typename T2::elem_type>::result, T1,
         T2, spglue_schur_mixed> >::result
 operator%(const T1& X, const T2& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT1;
   typedef typename T2::elem_type eT2;
@@ -175,7 +175,7 @@ inline typename enable_if2<
     SpMat<typename promote_type<typename T1::elem_type,
                                 typename T2::elem_type>::result> >::result
 operator%(const T1& x, const T2& y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   SpMat<typename promote_type<typename T1::elem_type, typename T2::elem_type>::result>
       out;
@@ -194,7 +194,7 @@ inline typename enable_if2<
     SpMat<typename promote_type<typename T1::elem_type,
                                 typename T2::elem_type>::result> >::result
 operator%(const T1& x, const T2& y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   SpMat<typename promote_type<typename T1::elem_type, typename T2::elem_type>::result>
       out;
@@ -210,7 +210,7 @@ operator%(const T1& x, const T2& y) {
 template <typename parent, unsigned int mode, typename T2>
 inline Mat<typename parent::elem_type> operator%(
     const subview_each1<parent, mode>& X, const Base<typename parent::elem_type, T2>& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return subview_each1_aux::operator_schur(X, Y.get_ref());
 }
@@ -218,7 +218,7 @@ inline Mat<typename parent::elem_type> operator%(
 template <typename T1, typename parent, unsigned int mode>
 arma_inline Mat<typename parent::elem_type> operator%(
     const Base<typename parent::elem_type, T1>& X, const subview_each1<parent, mode>& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return subview_each1_aux::operator_schur(Y, X.get_ref());  // NOTE: swapped order
 }
@@ -227,7 +227,7 @@ template <typename parent, unsigned int mode, typename TB, typename T2>
 inline Mat<typename parent::elem_type> operator%(
     const subview_each2<parent, mode, TB>& X,
     const Base<typename parent::elem_type, T2>& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return subview_each2_aux::operator_schur(X, Y.get_ref());
 }
@@ -236,7 +236,7 @@ template <typename T1, typename parent, unsigned int mode, typename TB>
 arma_inline Mat<typename parent::elem_type> operator%(
     const Base<typename parent::elem_type, T1>& X,
     const subview_each2<parent, mode, TB>& Y) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return subview_each2_aux::operator_schur(Y, X.get_ref());  // NOTE: swapped order
 }

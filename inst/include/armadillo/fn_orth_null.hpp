@@ -22,7 +22,7 @@ template <typename T1>
 arma_warn_unused arma_inline typename enable_if2<is_real<typename T1::pod_type>::value,
                                                  const Op<T1, op_orth> >::result
 orth(const Base<typename T1::elem_type, T1>& X, const typename T1::pod_type tol = 0.0) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -33,13 +33,13 @@ template <typename T1>
 inline typename enable_if2<is_real<typename T1::pod_type>::value, bool>::result orth(
     Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type, T1>& X,
     const typename T1::pod_type tol = 0.0) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_orth::apply_direct(out, X.get_ref(), tol);
 
   if (status == false) {
     out.soft_reset();
-    arma_debug_warn_level(3, "orth(): svd failed");
+    arma_warn(3, "orth(): svd failed");
   }
 
   return status;
@@ -51,7 +51,7 @@ template <typename T1>
 arma_warn_unused arma_inline typename enable_if2<is_real<typename T1::pod_type>::value,
                                                  const Op<T1, op_null> >::result
 null(const Base<typename T1::elem_type, T1>& X, const typename T1::pod_type tol = 0.0) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -62,13 +62,13 @@ template <typename T1>
 inline typename enable_if2<is_real<typename T1::pod_type>::value, bool>::result null(
     Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type, T1>& X,
     const typename T1::pod_type tol = 0.0) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_null::apply_direct(out, X.get_ref(), tol);
 
   if (status == false) {
     out.soft_reset();
-    arma_debug_warn_level(3, "null(): svd failed");
+    arma_warn(3, "null(): svd failed");
   }
 
   return status;

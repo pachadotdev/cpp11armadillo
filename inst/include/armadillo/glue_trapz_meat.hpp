@@ -21,7 +21,7 @@
 template <typename T1, typename T2>
 inline void glue_trapz::apply(Mat<typename T1::elem_type>& out,
                               const Glue<T1, T2, glue_trapz>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -44,21 +44,21 @@ inline void glue_trapz::apply(Mat<typename T1::elem_type>& out,
 template <typename eT>
 inline void glue_trapz::apply_noalias(Mat<eT>& out, const Mat<eT>& X, const Mat<eT>& Y,
                                       const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((dim > 1), "trapz(): argument 'dim' must be 0 or 1");
+  arma_conform_check((dim > 1), "trapz(): argument 'dim' must be 0 or 1");
 
-  arma_debug_check(((X.is_vec() == false) && (X.is_empty() == false)),
-                   "trapz(): argument 'X' must be a vector");
+  arma_conform_check(((X.is_vec() == false) && (X.is_empty() == false)),
+                     "trapz(): argument 'X' must be a vector");
 
   const uword N = X.n_elem;
 
   if (dim == 0) {
-    arma_debug_check(
+    arma_conform_check(
         (N != Y.n_rows),
         "trapz(): length of X must equal the number of rows in Y when dim=0");
   } else if (dim == 1) {
-    arma_debug_check(
+    arma_conform_check(
         (N != Y.n_cols),
         "trapz(): length of X must equal the number of columns in Y when dim=1");
   }
@@ -89,7 +89,7 @@ inline void glue_trapz::apply_noalias(Mat<eT>& out, const Mat<eT>& X, const Mat<
 template <typename T1>
 inline void op_trapz::apply(Mat<typename T1::elem_type>& out,
                             const Op<T1, op_trapz>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -110,9 +110,9 @@ inline void op_trapz::apply(Mat<typename T1::elem_type>& out,
 
 template <typename eT>
 inline void op_trapz::apply_noalias(Mat<eT>& out, const Mat<eT>& Y, const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((dim > 1), "trapz(): argument 'dim' must be 0 or 1");
+  arma_conform_check((dim > 1), "trapz(): argument 'dim' must be 0 or 1");
 
   uword N = 0;
 

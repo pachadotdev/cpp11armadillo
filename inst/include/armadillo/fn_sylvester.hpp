@@ -25,7 +25,7 @@ inline bool syl(
     const Base<typename T1::elem_type, T2>& in_B,
     const Base<typename T1::elem_type, T3>& in_C,
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::elem_type eT;
@@ -42,7 +42,7 @@ inline bool syl(
 
   if (status == false) {
     out.soft_reset();
-    arma_debug_warn_level(3, "syl(): solution not found");
+    arma_warn(3, "syl(): solution not found");
   }
 
   return status;
@@ -64,7 +64,7 @@ arma_warn_unused inline Mat<typename T1::elem_type> syl(
     const Base<typename T1::elem_type, T2>& in_B,
     const Base<typename T1::elem_type, T3>& in_C,
     const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::elem_type eT;

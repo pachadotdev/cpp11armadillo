@@ -21,7 +21,7 @@
 template <typename T1, typename T2>
 inline void spglue_join_cols::apply(SpMat<typename T1::elem_type>& out,
                                     const SpGlue<T1, T2, spglue_join_cols>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -42,7 +42,7 @@ inline void spglue_join_cols::apply(SpMat<typename T1::elem_type>& out,
 template <typename eT>
 inline void spglue_join_cols::apply_noalias(SpMat<eT>& out, const SpMat<eT>& A,
                                             const SpMat<eT>& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword A_n_rows = A.n_rows;
   const uword A_n_cols = A.n_cols;
@@ -50,9 +50,9 @@ inline void spglue_join_cols::apply_noalias(SpMat<eT>& out, const SpMat<eT>& A,
   const uword B_n_rows = B.n_rows;
   const uword B_n_cols = B.n_cols;
 
-  arma_debug_check(((A_n_cols != B_n_cols) && ((A_n_rows > 0) || (A_n_cols > 0)) &&
-                    ((B_n_rows > 0) || (B_n_cols > 0))),
-                   "join_cols() / join_vert(): number of columns must be the same");
+  arma_conform_check(((A_n_cols != B_n_cols) && ((A_n_rows > 0) || (A_n_cols > 0)) &&
+                      ((B_n_rows > 0) || (B_n_cols > 0))),
+                     "join_cols() / join_vert(): number of columns must be the same");
 
   out.set_size(A_n_rows + B_n_rows, (std::max)(A_n_cols, B_n_cols));
 
@@ -71,7 +71,7 @@ template <typename eT, typename T1, typename T2, typename T3>
 inline void spglue_join_cols::apply(SpMat<eT>& out, const SpBase<eT, T1>& A_expr,
                                     const SpBase<eT, T2>& B_expr,
                                     const SpBase<eT, T3>& C_expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<T1> UA(A_expr.get_ref());
   const unwrap_spmat<T2> UB(B_expr.get_ref());
@@ -84,12 +84,12 @@ inline void spglue_join_cols::apply(SpMat<eT>& out, const SpBase<eT, T1>& A_expr
   const uword out_n_rows = A.n_rows + B.n_rows + C.n_rows;
   const uword out_n_cols = (std::max)((std::max)(A.n_cols, B.n_cols), C.n_cols);
 
-  arma_debug_check(((A.n_cols != out_n_cols) && ((A.n_rows > 0) || (A.n_cols > 0))),
-                   "join_cols() / join_vert(): number of columns must be the same");
-  arma_debug_check(((B.n_cols != out_n_cols) && ((B.n_rows > 0) || (B.n_cols > 0))),
-                   "join_cols() / join_vert(): number of columns must be the same");
-  arma_debug_check(((C.n_cols != out_n_cols) && ((C.n_rows > 0) || (C.n_cols > 0))),
-                   "join_cols() / join_vert(): number of columns must be the same");
+  arma_conform_check(((A.n_cols != out_n_cols) && ((A.n_rows > 0) || (A.n_cols > 0))),
+                     "join_cols() / join_vert(): number of columns must be the same");
+  arma_conform_check(((B.n_cols != out_n_cols) && ((B.n_rows > 0) || (B.n_cols > 0))),
+                     "join_cols() / join_vert(): number of columns must be the same");
+  arma_conform_check(((C.n_cols != out_n_cols) && ((C.n_rows > 0) || (C.n_cols > 0))),
+                     "join_cols() / join_vert(): number of columns must be the same");
 
   out.set_size(out_n_rows, out_n_cols);
 
@@ -125,7 +125,7 @@ inline void spglue_join_cols::apply(SpMat<eT>& out, const SpBase<eT, T1>& A_expr
                                     const SpBase<eT, T2>& B_expr,
                                     const SpBase<eT, T3>& C_expr,
                                     const SpBase<eT, T4>& D_expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<T1> UA(A_expr.get_ref());
   const unwrap_spmat<T2> UB(B_expr.get_ref());
@@ -141,14 +141,14 @@ inline void spglue_join_cols::apply(SpMat<eT>& out, const SpBase<eT, T1>& A_expr
   const uword out_n_cols =
       (std::max)(((std::max)((std::max)(A.n_cols, B.n_cols), C.n_cols)), D.n_cols);
 
-  arma_debug_check(((A.n_cols != out_n_cols) && ((A.n_rows > 0) || (A.n_cols > 0))),
-                   "join_cols() / join_vert(): number of columns must be the same");
-  arma_debug_check(((B.n_cols != out_n_cols) && ((B.n_rows > 0) || (B.n_cols > 0))),
-                   "join_cols() / join_vert(): number of columns must be the same");
-  arma_debug_check(((C.n_cols != out_n_cols) && ((C.n_rows > 0) || (C.n_cols > 0))),
-                   "join_cols() / join_vert(): number of columns must be the same");
-  arma_debug_check(((D.n_cols != out_n_cols) && ((D.n_rows > 0) || (D.n_cols > 0))),
-                   "join_cols() / join_vert(): number of columns must be the same");
+  arma_conform_check(((A.n_cols != out_n_cols) && ((A.n_rows > 0) || (A.n_cols > 0))),
+                     "join_cols() / join_vert(): number of columns must be the same");
+  arma_conform_check(((B.n_cols != out_n_cols) && ((B.n_rows > 0) || (B.n_cols > 0))),
+                     "join_cols() / join_vert(): number of columns must be the same");
+  arma_conform_check(((C.n_cols != out_n_cols) && ((C.n_rows > 0) || (C.n_cols > 0))),
+                     "join_cols() / join_vert(): number of columns must be the same");
+  arma_conform_check(((D.n_cols != out_n_cols) && ((D.n_rows > 0) || (D.n_cols > 0))),
+                     "join_cols() / join_vert(): number of columns must be the same");
 
   out.set_size(out_n_rows, out_n_cols);
 
@@ -189,7 +189,7 @@ inline void spglue_join_cols::apply(SpMat<eT>& out, const SpBase<eT, T1>& A_expr
 template <typename T1, typename T2>
 inline void spglue_join_rows::apply(SpMat<typename T1::elem_type>& out,
                                     const SpGlue<T1, T2, spglue_join_rows>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -210,7 +210,7 @@ inline void spglue_join_rows::apply(SpMat<typename T1::elem_type>& out,
 template <typename eT>
 inline void spglue_join_rows::apply_noalias(SpMat<eT>& out, const SpMat<eT>& A,
                                             const SpMat<eT>& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword A_n_rows = A.n_rows;
   const uword A_n_cols = A.n_cols;
@@ -220,9 +220,9 @@ inline void spglue_join_rows::apply_noalias(SpMat<eT>& out, const SpMat<eT>& A,
   const uword B_n_cols = B.n_cols;
   const uword B_n_nz = B.n_nonzero;
 
-  arma_debug_check(((A_n_rows != B.n_rows) && ((A_n_rows > 0) || (A_n_cols > 0)) &&
-                    ((B_n_rows > 0) || (B_n_cols > 0))),
-                   "join_rows() / join_horiz(): number of rows must be the same");
+  arma_conform_check(((A_n_rows != B.n_rows) && ((A_n_rows > 0) || (A_n_cols > 0)) &&
+                      ((B_n_rows > 0) || (B_n_cols > 0))),
+                     "join_rows() / join_horiz(): number of rows must be the same");
 
   const uword C_n_rows = (std::max)(A_n_rows, B_n_rows);
   const uword C_n_cols = A_n_cols + B_n_cols;
@@ -296,7 +296,7 @@ template <typename eT, typename T1, typename T2, typename T3>
 inline void spglue_join_rows::apply(SpMat<eT>& out, const SpBase<eT, T1>& A_expr,
                                     const SpBase<eT, T2>& B_expr,
                                     const SpBase<eT, T3>& C_expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<T1> UA(A_expr.get_ref());
   const unwrap_spmat<T2> UB(B_expr.get_ref());
@@ -317,7 +317,7 @@ inline void spglue_join_rows::apply(SpMat<eT>& out, const SpBase<eT, T1>& A_expr
                                     const SpBase<eT, T2>& B_expr,
                                     const SpBase<eT, T3>& C_expr,
                                     const SpBase<eT, T4>& D_expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_spmat<T1> UA(A_expr.get_ref());
   const unwrap_spmat<T2> UB(B_expr.get_ref());

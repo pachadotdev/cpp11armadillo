@@ -21,7 +21,7 @@
 template <typename eT>
 inline typename enable_if2<is_cx<eT>::no, void>::result inplace_htrans(
     Mat<eT>& X, const char* method = "std") {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_strans(X, method);
 }
@@ -29,12 +29,12 @@ inline typename enable_if2<is_cx<eT>::no, void>::result inplace_htrans(
 template <typename eT>
 inline typename enable_if2<is_cx<eT>::yes, void>::result inplace_htrans(
     Mat<eT>& X, const char* method = "std") {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const char sig = (method != nullptr) ? method[0] : char(0);
 
-  arma_debug_check(((sig != 's') && (sig != 'l')),
-                   "inplace_htrans(): unknown method specified");
+  arma_conform_check(((sig != 's') && (sig != 'l')),
+                     "inplace_htrans(): unknown method specified");
 
   const bool low_memory = (sig == 'l');
 
@@ -50,12 +50,12 @@ inline typename enable_if2<is_cx<eT>::yes, void>::result inplace_htrans(
 template <typename eT>
 inline typename enable_if2<is_cx<eT>::no, void>::result inplace_trans(
     Mat<eT>& X, const char* method = "std") {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const char sig = (method != nullptr) ? method[0] : char(0);
 
-  arma_debug_check(((sig != 's') && (sig != 'l')),
-                   "inplace_trans(): unknown method specified");
+  arma_conform_check(((sig != 's') && (sig != 'l')),
+                     "inplace_trans(): unknown method specified");
 
   inplace_strans(X, method);
 }
@@ -63,12 +63,12 @@ inline typename enable_if2<is_cx<eT>::no, void>::result inplace_trans(
 template <typename eT>
 inline typename enable_if2<is_cx<eT>::yes, void>::result inplace_trans(
     Mat<eT>& X, const char* method = "std") {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const char sig = (method != nullptr) ? method[0] : char(0);
 
-  arma_debug_check(((sig != 's') && (sig != 'l')),
-                   "inplace_trans(): unknown method specified");
+  arma_conform_check(((sig != 's') && (sig != 'l')),
+                     "inplace_trans(): unknown method specified");
 
   inplace_htrans(X, method);
 }

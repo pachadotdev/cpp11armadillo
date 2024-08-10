@@ -24,7 +24,7 @@ arma_warn_unused inline typename enable_if2<
      is_same_type<typename T1::elem_type, typename T2::elem_type>::value),
     const Glue<T1, T2, glue_intersect> >::result
 intersect(const T1& A, const T2& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Glue<T1, T2, glue_intersect>(A, B);
 }
@@ -33,7 +33,7 @@ template <typename T1, typename T2>
 inline void intersect(Mat<typename T1::elem_type>& C, uvec& iA, uvec& iB,
                       const Base<typename T1::elem_type, T1>& A,
                       const Base<typename T1::elem_type, T2>& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   glue_intersect::apply(C, iA, iB, A.get_ref(), B.get_ref(), true);
 }

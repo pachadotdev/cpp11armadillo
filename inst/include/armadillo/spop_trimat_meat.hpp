@@ -21,7 +21,7 @@
 template <typename T1>
 inline void spop_trimat::apply_noalias(SpMat<typename T1::elem_type>& out,
                                        const SpProxy<T1>& P, const bool upper) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typename SpProxy<T1>::const_iterator_type it = P.begin();
 
@@ -95,14 +95,14 @@ inline void spop_trimat::apply_noalias(SpMat<typename T1::elem_type>& out,
 template <typename T1>
 inline void spop_trimat::apply(SpMat<typename T1::elem_type>& out,
                                const SpOp<T1, spop_trimat>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
   const SpProxy<T1> P(in.m);
 
-  arma_debug_check((P.get_n_rows() != P.get_n_cols()),
-                   "trimatu()/trimatl(): given matrix must be square sized");
+  arma_conform_check((P.get_n_rows() != P.get_n_cols()),
+                     "trimatu()/trimatl(): given matrix must be square sized");
 
   const bool upper = (in.aux_uword_a == 0);
 
@@ -121,14 +121,14 @@ template <typename eT>
 inline void spop_trimatu_ext::apply_noalias(SpMat<eT>& out, const SpMat<eT>& A,
                                             const uword row_offset,
                                             const uword col_offset) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword n_rows = A.n_rows;
   const uword n_cols = A.n_cols;
 
-  arma_debug_check_bounds(((row_offset > 0) && (row_offset >= n_rows)) ||
-                              ((col_offset > 0) && (col_offset >= n_cols)),
-                          "trimatu(): requested diagonal is out of bounds");
+  arma_conform_check_bounds(((row_offset > 0) && (row_offset >= n_rows)) ||
+                                ((col_offset > 0) && (col_offset >= n_cols)),
+                            "trimatu(): requested diagonal is out of bounds");
 
   if (A.n_nonzero == 0) {
     out.zeros(n_rows, n_cols);
@@ -194,15 +194,15 @@ inline void spop_trimatu_ext::apply_noalias(SpMat<eT>& out, const SpMat<eT>& A,
 template <typename T1>
 inline void spop_trimatu_ext::apply(SpMat<typename T1::elem_type>& out,
                                     const SpOp<T1, spop_trimatu_ext>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
   const unwrap_spmat<T1> U(in.m);
   const SpMat<eT>& A = U.M;
 
-  arma_debug_check((A.is_square() == false),
-                   "trimatu(): given matrix must be square sized");
+  arma_conform_check((A.is_square() == false),
+                     "trimatu(): given matrix must be square sized");
 
   const uword row_offset = in.aux_uword_a;
   const uword col_offset = in.aux_uword_b;
@@ -222,14 +222,14 @@ template <typename eT>
 inline void spop_trimatl_ext::apply_noalias(SpMat<eT>& out, const SpMat<eT>& A,
                                             const uword row_offset,
                                             const uword col_offset) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword n_rows = A.n_rows;
   const uword n_cols = A.n_cols;
 
-  arma_debug_check_bounds(((row_offset > 0) && (row_offset >= n_rows)) ||
-                              ((col_offset > 0) && (col_offset >= n_cols)),
-                          "trimatl(): requested diagonal is out of bounds");
+  arma_conform_check_bounds(((row_offset > 0) && (row_offset >= n_rows)) ||
+                                ((col_offset > 0) && (col_offset >= n_cols)),
+                            "trimatl(): requested diagonal is out of bounds");
 
   if (A.n_nonzero == 0) {
     out.zeros(n_rows, n_cols);
@@ -290,15 +290,15 @@ inline void spop_trimatl_ext::apply_noalias(SpMat<eT>& out, const SpMat<eT>& A,
 template <typename T1>
 inline void spop_trimatl_ext::apply(SpMat<typename T1::elem_type>& out,
                                     const SpOp<T1, spop_trimatl_ext>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
   const unwrap_spmat<T1> U(in.m);
   const SpMat<eT>& A = U.M;
 
-  arma_debug_check((A.is_square() == false),
-                   "trimatl(): given matrix must be square sized");
+  arma_conform_check((A.is_square() == false),
+                     "trimatl(): given matrix must be square sized");
 
   const uword row_offset = in.aux_uword_a;
   const uword col_offset = in.aux_uword_b;

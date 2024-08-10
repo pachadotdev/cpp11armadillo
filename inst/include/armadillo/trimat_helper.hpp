@@ -22,7 +22,7 @@ namespace trimat_helper {
 
 template <typename eT>
 inline bool is_triu(const Mat<eT>& A) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   // NOTE: assuming that A has a square size
 
@@ -61,7 +61,7 @@ inline bool is_triu(const Mat<eT>& A) {
 
 template <typename eT>
 inline bool is_tril(const Mat<eT>& A) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   // NOTE: assuming that A has a square size
 
@@ -102,7 +102,7 @@ inline bool is_tril(const Mat<eT>& A) {
 
 template <typename eT>
 inline bool has_nonfinite_tril(const Mat<eT>& A) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   // NOTE: assuming that A has a square size
 
@@ -124,7 +124,7 @@ inline bool has_nonfinite_tril(const Mat<eT>& A) {
 
 template <typename eT>
 inline bool has_nonfinite_triu(const Mat<eT>& A) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   // NOTE: assuming that A has a square size
 

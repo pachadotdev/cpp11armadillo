@@ -22,7 +22,7 @@ template <typename T1, typename T2>
 inline Mat<typename T1::elem_type> diags(const Base<typename T1::elem_type, T1>& V_expr,
                                          const Base<sword, T2>& D_expr,
                                          const uword n_rows, const uword n_cols) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -32,11 +32,11 @@ inline Mat<typename T1::elem_type> diags(const Base<typename T1::elem_type, T1>&
   const quasi_unwrap<T2> UD(D_expr.get_ref());
   const Mat<sword>& D = UD.M;
 
-  arma_debug_check(((D.is_vec() == false) && (D.is_empty() == false)),
-                   "D must be a vector");
+  arma_conform_check(((D.is_vec() == false) && (D.is_empty() == false)),
+                     "D must be a vector");
 
-  arma_debug_check((V.n_cols != D.n_elem),
-                   "number of colums in matrix V must match the length of vector D");
+  arma_conform_check((V.n_cols != D.n_elem),
+                     "number of colums in matrix V must match the length of vector D");
 
   Mat<eT> out(n_rows, n_cols, fill::zeros);
 
@@ -46,9 +46,9 @@ inline Mat<typename T1::elem_type> diags(const Base<typename T1::elem_type, T1>&
     const uword row_offset = (diag_id < 0) ? uword(-diag_id) : 0;
     const uword col_offset = (diag_id > 0) ? uword(diag_id) : 0;
 
-    arma_debug_check_bounds(((row_offset > 0) && (row_offset >= n_rows)) ||
-                                ((col_offset > 0) && (col_offset >= n_cols)),
-                            "diags(): requested diagonal out of bounds");
+    arma_conform_check_bounds(((row_offset > 0) && (row_offset >= n_rows)) ||
+                                  ((col_offset > 0) && (col_offset >= n_cols)),
+                              "diags(): requested diagonal out of bounds");
 
     const uword diag_len = (std::min)(n_rows - row_offset, n_cols - col_offset);
 
@@ -74,7 +74,7 @@ template <typename T1, typename T2>
 inline SpMat<typename T1::elem_type> spdiags(
     const Base<typename T1::elem_type, T1>& V_expr, const Base<sword, T2>& D_expr,
     const uword n_rows, const uword n_cols) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -84,11 +84,11 @@ inline SpMat<typename T1::elem_type> spdiags(
   const quasi_unwrap<T2> UD(D_expr.get_ref());
   const Mat<sword>& D = UD.M;
 
-  arma_debug_check(((D.is_vec() == false) && (D.is_empty() == false)),
-                   "D must be a vector");
+  arma_conform_check(((D.is_vec() == false) && (D.is_empty() == false)),
+                     "D must be a vector");
 
-  arma_debug_check((V.n_cols != D.n_elem),
-                   "number of colums in matrix V must match the length of vector D");
+  arma_conform_check((V.n_cols != D.n_elem),
+                     "number of colums in matrix V must match the length of vector D");
 
   MapMat<eT> tmp(n_rows, n_cols);
 
@@ -98,9 +98,9 @@ inline SpMat<typename T1::elem_type> spdiags(
     const uword row_offset = (diag_id < 0) ? uword(-diag_id) : 0;
     const uword col_offset = (diag_id > 0) ? uword(diag_id) : 0;
 
-    arma_debug_check_bounds(((row_offset > 0) && (row_offset >= n_rows)) ||
-                                ((col_offset > 0) && (col_offset >= n_cols)),
-                            "diags(): requested diagonal out of bounds");
+    arma_conform_check_bounds(((row_offset > 0) && (row_offset >= n_rows)) ||
+                                  ((col_offset > 0) && (col_offset >= n_cols)),
+                              "diags(): requested diagonal out of bounds");
 
     const uword diag_len = (std::min)(n_rows - row_offset, n_cols - col_offset);
 

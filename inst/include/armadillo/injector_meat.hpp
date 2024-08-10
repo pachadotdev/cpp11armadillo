@@ -22,7 +22,7 @@ template <typename T1>
 inline mat_injector<T1>::mat_injector(T1& in_parent,
                                       const typename mat_injector<T1>::elem_type val)
     : parent(in_parent) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   values.reserve(16);
   rowend.reserve(16);
@@ -33,7 +33,7 @@ inline mat_injector<T1>::mat_injector(T1& in_parent,
 template <typename T1>
 inline mat_injector<T1>::mat_injector(T1& in_parent, const injector_end_of_row<>&)
     : parent(in_parent) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   values.reserve(16);
   rowend.reserve(16);
@@ -43,7 +43,7 @@ inline mat_injector<T1>::mat_injector(T1& in_parent, const injector_end_of_row<>
 
 template <typename T1>
 inline mat_injector<T1>::~mat_injector() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword N = values.size();
 
@@ -73,7 +73,7 @@ inline mat_injector<T1>::~mat_injector() {
   n_cols = (std::max)(n_cols, n_cols_in_row);
 
   if (is_Row<T1>::value) {
-    arma_debug_check((n_rows > 1), "matrix initialisation: incompatible dimensions");
+    arma_conform_check((n_rows > 1), "matrix initialisation: incompatible dimensions");
 
     parent.zeros(1, n_cols);
 
@@ -90,7 +90,8 @@ inline mat_injector<T1>::~mat_injector() {
   } else if (is_Col<T1>::value) {
     const bool is_vec = ((n_cols == 1) || (n_rows == 1));
 
-    arma_debug_check((is_vec == false), "matrix initialisation: incompatible dimensions");
+    arma_conform_check((is_vec == false),
+                       "matrix initialisation: incompatible dimensions");
 
     if (n_cols == 1) {
       parent.zeros(n_rows, 1);
@@ -142,7 +143,7 @@ inline mat_injector<T1>::~mat_injector() {
 template <typename T1>
 inline void mat_injector<T1>::insert(
     const typename mat_injector<T1>::elem_type val) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   values.push_back(val);
   rowend.push_back(char(0));
@@ -150,7 +151,7 @@ inline void mat_injector<T1>::insert(
 
 template <typename T1>
 inline void mat_injector<T1>::end_of_row() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename mat_injector<T1>::elem_type eT;
 
@@ -161,7 +162,7 @@ inline void mat_injector<T1>::end_of_row() const {
 template <typename T1>
 inline const mat_injector<T1>& operator<<(
     const mat_injector<T1>& ref, const typename mat_injector<T1>::elem_type val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   ref.insert(val);
 
@@ -171,7 +172,7 @@ inline const mat_injector<T1>& operator<<(
 template <typename T1>
 inline const mat_injector<T1>& operator<<(const mat_injector<T1>& ref,
                                           const injector_end_of_row<>&) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   ref.end_of_row();
 
@@ -186,7 +187,7 @@ template <typename T1>
 inline field_injector<T1>::field_injector(
     T1& in_parent, const typename field_injector<T1>::object_type& val)
     : parent(in_parent) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   insert(val);
 }
@@ -194,14 +195,14 @@ inline field_injector<T1>::field_injector(
 template <typename T1>
 inline field_injector<T1>::field_injector(T1& in_parent, const injector_end_of_row<>&)
     : parent(in_parent) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   end_of_row();
 }
 
 template <typename T1>
 inline field_injector<T1>::~field_injector() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword N = values.size();
 
@@ -249,7 +250,7 @@ inline field_injector<T1>::~field_injector() {
 template <typename T1>
 inline void field_injector<T1>::insert(
     const typename field_injector<T1>::object_type& val) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   values.push_back(val);
   rowend.push_back(char(0));
@@ -257,7 +258,7 @@ inline void field_injector<T1>::insert(
 
 template <typename T1>
 inline void field_injector<T1>::end_of_row() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename field_injector<T1>::object_type oT;
 
@@ -268,7 +269,7 @@ inline void field_injector<T1>::end_of_row() const {
 template <typename T1>
 inline const field_injector<T1>& operator<<(
     const field_injector<T1>& ref, const typename field_injector<T1>::object_type& val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   ref.insert(val);
 
@@ -278,7 +279,7 @@ inline const field_injector<T1>& operator<<(
 template <typename T1>
 inline const field_injector<T1>& operator<<(const field_injector<T1>& ref,
                                             const injector_end_of_row<>&) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   ref.end_of_row();
 

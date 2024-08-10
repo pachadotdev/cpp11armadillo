@@ -1,3 +1,7 @@
+# armadillo 0.3.0
+
+* Uses Armadillo version "Stochastic Parrot 14.0.2".
+
 # armadillo 0.2.9
 
 * Uses Armadillo version Cortisol Retox 12.6.7.

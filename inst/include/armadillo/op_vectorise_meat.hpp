@@ -21,7 +21,7 @@
 template <typename T1>
 inline void op_vectorise_col::apply(Mat<typename T1::elem_type>& out,
                                     const Op<T1, op_vectorise_col>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   op_vectorise_col::apply_direct(out, in.m);
 }
@@ -29,7 +29,7 @@ inline void op_vectorise_col::apply(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_vectorise_col::apply_direct(Mat<typename T1::elem_type>& out,
                                            const T1& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -92,7 +92,7 @@ inline void op_vectorise_col::apply_direct(Mat<typename T1::elem_type>& out,
 
 template <typename eT>
 inline void op_vectorise_col::apply_subview(Mat<eT>& out, const subview<eT>& sv) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword sv_n_rows = sv.n_rows;
   const uword sv_n_cols = sv.n_cols;
@@ -111,7 +111,7 @@ inline void op_vectorise_col::apply_subview(Mat<eT>& out, const subview<eT>& sv)
 template <typename T1>
 inline void op_vectorise_col::apply_proxy(Mat<typename T1::elem_type>& out,
                                           const Proxy<T1>& P) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -160,7 +160,7 @@ inline void op_vectorise_col::apply_proxy(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_vectorise_row::apply(Mat<typename T1::elem_type>& out,
                                     const Op<T1, op_vectorise_row>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   op_vectorise_row::apply_direct(out, in.m);
 }
@@ -168,7 +168,7 @@ inline void op_vectorise_row::apply(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_vectorise_row::apply_direct(Mat<typename T1::elem_type>& out,
                                            const T1& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -188,7 +188,7 @@ inline void op_vectorise_row::apply_direct(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_vectorise_row::apply_proxy(Mat<typename T1::elem_type>& out,
                                           const Proxy<T1>& P) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -235,7 +235,7 @@ inline void op_vectorise_row::apply_proxy(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_vectorise_all::apply(Mat<typename T1::elem_type>& out,
                                     const Op<T1, op_vectorise_all>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword dim = in.aux_uword_a;
 
@@ -251,7 +251,7 @@ inline void op_vectorise_all::apply(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_vectorise_cube_col::apply(
     Mat<typename T1::elem_type>& out, const CubeToMatOp<T1, op_vectorise_cube_col>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -270,7 +270,7 @@ inline void op_vectorise_cube_col::apply(
 template <typename eT>
 inline void op_vectorise_cube_col::apply_subview(Mat<eT>& out,
                                                  const subview_cube<eT>& sv) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword sv_nr = sv.n_rows;
   const uword sv_nc = sv.n_cols;
@@ -291,7 +291,7 @@ inline void op_vectorise_cube_col::apply_subview(Mat<eT>& out,
 template <typename T1>
 inline void op_vectorise_cube_col::apply_unwrap(Mat<typename T1::elem_type>& out,
                                                 const T1& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const unwrap_cube<T1> U(expr);
 
@@ -303,7 +303,7 @@ inline void op_vectorise_cube_col::apply_unwrap(Mat<typename T1::elem_type>& out
 template <typename T1>
 inline void op_vectorise_cube_col::apply_proxy(Mat<typename T1::elem_type>& out,
                                                const T1& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 

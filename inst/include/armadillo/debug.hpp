@@ -125,10 +125,9 @@ arma_cold arma_noinline static void arma_print(const T1& x, const T2& y, const T
 //
 // arma_sigprint
 
-//! print a message to the log stream with a preceding @ character.
-//! by default the log stream is cout.
+//! print a message to the cerr stream with a preceding @ character.
 //! used for printing the signature of a function
-//! (see the arma_extra_debug_sigprint macro)
+//! (see the arma_debug_sigprint macro)
 inline void arma_sigprint(const char* x) { get_cerr_stream() << "@ " << x; }
 
 //
@@ -150,77 +149,76 @@ inline void arma_bktprint(const T1& x, const T2& y) {
 // arma_thisprint
 
 inline void arma_thisprint(const void* this_ptr) {
-  get_cerr_stream() << " [this = " << this_ptr << ']' << std::endl;
+  get_cerr_stream() << " [this: " << this_ptr << ']' << std::endl;
+}
+
+//
+// arma_plain_warn
+
+//! print a message to the warn stream
+template <typename T1>
+arma_cold arma_noinline static void arma_plain_warn(const T1& arg1) {
+  get_cerr_stream() << "\nwarning: " << arg1 << std::endl;
+}
+
+template <typename T1, typename T2>
+arma_cold arma_noinline static void arma_plain_warn(const T1& arg1, const T2& arg2) {
+  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << std::endl;
+}
+
+template <typename T1, typename T2, typename T3>
+arma_cold arma_noinline static void arma_plain_warn(const T1& arg1, const T2& arg2,
+                                                    const T3& arg3) {
+  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << arg3 << std::endl;
+}
+
+template <typename T1, typename T2, typename T3, typename T4>
+arma_cold arma_noinline static void arma_plain_warn(const T1& arg1, const T2& arg2,
+                                                    const T3& arg3, const T4& arg4) {
+  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << arg3 << arg4 << std::endl;
 }
 
 //
 // arma_warn
 
-//! print a message to the warn stream
 template <typename T1>
-arma_cold arma_noinline static void arma_warn(const T1& arg1) {
-  get_cerr_stream() << "\nwarning: " << arg1 << std::endl;
-}
-
-template <typename T1, typename T2>
-arma_cold arma_noinline static void arma_warn(const T1& arg1, const T2& arg2) {
-  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << std::endl;
-}
-
-template <typename T1, typename T2, typename T3>
-arma_cold arma_noinline static void arma_warn(const T1& arg1, const T2& arg2,
-                                              const T3& arg3) {
-  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << arg3 << std::endl;
-}
-
-template <typename T1, typename T2, typename T3, typename T4>
-arma_cold arma_noinline static void arma_warn(const T1& arg1, const T2& arg2,
-                                              const T3& arg3, const T4& arg4) {
-  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << arg3 << arg4 << std::endl;
-}
-
-//
-// arma_warn_level
-
-template <typename T1>
-inline void arma_warn_level(const uword level, const T1& arg1) {
+inline void arma_warn(const uword level, const T1& arg1) {
   constexpr uword config_level =
       (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : uword(0);
 
   if ((config_level > 0) && (level <= config_level)) {
-    arma_warn(arg1);
+    arma_plain_warn(arg1);
   }
 }
 
 template <typename T1, typename T2>
-inline void arma_warn_level(const uword level, const T1& arg1, const T2& arg2) {
+inline void arma_warn(const uword level, const T1& arg1, const T2& arg2) {
   constexpr uword config_level =
       (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : uword(0);
 
   if ((config_level > 0) && (level <= config_level)) {
-    arma_warn(arg1, arg2);
+    arma_plain_warn(arg1, arg2);
   }
 }
 
 template <typename T1, typename T2, typename T3>
-inline void arma_warn_level(const uword level, const T1& arg1, const T2& arg2,
-                            const T3& arg3) {
+inline void arma_warn(const uword level, const T1& arg1, const T2& arg2, const T3& arg3) {
   constexpr uword config_level =
       (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : uword(0);
 
   if ((config_level > 0) && (level <= config_level)) {
-    arma_warn(arg1, arg2, arg3);
+    arma_plain_warn(arg1, arg2, arg3);
   }
 }
 
 template <typename T1, typename T2, typename T3, typename T4>
-inline void arma_warn_level(const uword level, const T1& arg1, const T2& arg2,
-                            const T3& arg3, const T4& arg4) {
+inline void arma_warn(const uword level, const T1& arg1, const T2& arg2, const T3& arg3,
+                      const T4& arg4) {
   constexpr uword config_level =
       (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : uword(0);
 
   if ((config_level > 0) && (level <= config_level)) {
-    arma_warn(arg1, arg2, arg3, arg4);
+    arma_plain_warn(arg1, arg2, arg3, arg4);
   }
 }
 
@@ -337,7 +335,7 @@ arma_hot arma_inline void arma_assert_same_size(const uword A_n_rows,
   }
 }
 
-//! stop if given matrices have different sizes
+//! stop if given matrices do not have the same size
 template <typename eT1, typename eT2>
 arma_hot inline void arma_assert_same_size(const Mat<eT1>& A, const Mat<eT2>& B,
                                            const char* x) {
@@ -353,7 +351,7 @@ arma_hot inline void arma_assert_same_size(const Mat<eT1>& A, const Mat<eT2>& B,
   }
 }
 
-//! stop if given proxies have different sizes
+//! stop if given proxies do not have the same size
 template <typename eT1, typename eT2>
 arma_hot inline void arma_assert_same_size(const Proxy<eT1>& A, const Proxy<eT2>& B,
                                            const char* x) {
@@ -505,7 +503,7 @@ arma_hot inline void arma_assert_same_size(const uword A_n_rows, const uword A_n
   }
 }
 
-//! stop if given cubes have different sizes
+//! stop if given cubes do not have the same size
 template <typename eT1, typename eT2>
 arma_hot inline void arma_assert_same_size(const Cube<eT1>& A, const Cube<eT2>& B,
                                            const char* x) {
@@ -559,7 +557,7 @@ arma_hot inline void arma_assert_same_size(const subview_cube<eT>& A,
   }
 }
 
-//! stop if given cube proxies have different sizes
+//! stop if given cube proxies do not have the same size
 template <typename eT1, typename eT2>
 arma_hot inline void arma_assert_same_size(const ProxyCube<eT1>& A,
                                            const ProxyCube<eT2>& B, const char* x) {
@@ -882,40 +880,43 @@ arma_hot inline void arma_assert_atlas_size(const T1& A, const T2& B) {
 // #define ARMA_STRING2(x) ARMA_STRING1(x)
 // #define ARMA_FILELINE  __FILE__ ": " ARMA_STRING2(__LINE__)
 
-#if defined(ARMA_NO_DEBUG)
+#if defined(ARMA_CHECK_CONFORMANCE)
 
-#define arma_debug_print true ? (void)0 : arma_print
-#define arma_debug_warn true ? (void)0 : arma_warn
-#define arma_debug_warn_level true ? (void)0 : arma_warn_level
-#define arma_debug_check true ? (void)0 : arma_check
-#define arma_debug_check_bounds true ? (void)0 : arma_check_bounds
-#define arma_debug_set_error true ? (void)0 : arma_set_error
-#define arma_debug_assert_same_size true ? (void)0 : arma_assert_same_size
-#define arma_debug_assert_mul_size true ? (void)0 : arma_assert_mul_size
-#define arma_debug_assert_trans_mul_size true ? (void)0 : arma_assert_trans_mul_size
-#define arma_debug_assert_cube_as_mat true ? (void)0 : arma_assert_cube_as_mat
-#define arma_debug_assert_blas_size true ? (void)0 : arma_assert_blas_size
-#define arma_debug_assert_atlas_size true ? (void)0 : arma_assert_atlas_size
+#define arma_conform_check arma_check
+#define arma_conform_check_bounds arma_check_bounds
+#define arma_conform_set_error arma_set_error
+#define arma_conform_assert_same_size arma_assert_same_size
+#define arma_conform_assert_mul_size arma_assert_mul_size
+#define arma_conform_assert_trans_mul_size arma_assert_trans_mul_size
+#define arma_conform_assert_cube_as_mat arma_assert_cube_as_mat
+#define arma_conform_assert_blas_size arma_assert_blas_size
+#define arma_conform_assert_atlas_size arma_assert_atlas_size
 
 #else
 
-#define arma_debug_print arma_print
-#define arma_debug_warn arma_warn
-#define arma_debug_warn_level arma_warn_level
-#define arma_debug_check arma_check
-#define arma_debug_check_bounds arma_check_bounds
-#define arma_debug_set_error arma_set_error
-#define arma_debug_assert_same_size arma_assert_same_size
-#define arma_debug_assert_mul_size arma_assert_mul_size
-#define arma_debug_assert_trans_mul_size arma_assert_trans_mul_size
-#define arma_debug_assert_cube_as_mat arma_assert_cube_as_mat
-#define arma_debug_assert_blas_size arma_assert_blas_size
-#define arma_debug_assert_atlas_size arma_assert_atlas_size
+#define arma_conform_check true ? (void)0 : arma_check
+#define arma_conform_check_bounds true ? (void)0 : arma_check_bounds
+#define arma_conform_set_error true ? (void)0 : arma_set_error
+#define arma_conform_assert_same_size true ? (void)0 : arma_assert_same_size
+#define arma_conform_assert_mul_size true ? (void)0 : arma_assert_mul_size
+#define arma_conform_assert_trans_mul_size true ? (void)0 : arma_assert_trans_mul_size
+#define arma_conform_assert_cube_as_mat true ? (void)0 : arma_assert_cube_as_mat
+#define arma_conform_assert_blas_size true ? (void)0 : arma_assert_blas_size
+#define arma_conform_assert_atlas_size true ? (void)0 : arma_assert_atlas_size
 
 #endif
 
-#if defined(ARMA_EXTRA_DEBUG)
+#if defined(ARMA_DEBUG)
 
+#define arma_debug_sigprint  \
+  arma_sigprint(ARMA_FNSIG); \
+  arma_bktprint
+#define arma_debug_sigprint_this \
+  arma_sigprint(ARMA_FNSIG);     \
+  arma_thisprint
+#define arma_debug_print arma_print
+
+// for compatibility with earlier versions of Armadillo
 #define arma_extra_debug_sigprint \
   arma_sigprint(ARMA_FNSIG);      \
   arma_bktprint
@@ -926,71 +927,74 @@ arma_hot inline void arma_assert_atlas_size(const T1& A, const T2& B) {
 
 #else
 
+#define arma_debug_sigprint true ? (void)0 : arma_bktprint
+#define arma_debug_sigprint_this true ? (void)0 : arma_thisprint
+#define arma_debug_print true ? (void)0 : arma_print
+
+// for compatibility with earlier versions of Armadillo
 #define arma_extra_debug_sigprint true ? (void)0 : arma_bktprint
 #define arma_extra_debug_sigprint_this true ? (void)0 : arma_thisprint
 #define arma_extra_debug_print true ? (void)0 : arma_print
 
 #endif
 
-#if defined(ARMA_EXTRA_DEBUG)
+// for compatibility with earlier versions of Armadillo
+arma_frown("use arma_conform_check() instead") inline void arma_debug_check(
+    bool state, const char* msg) {
+  arma_conform_check(state, msg);
+}
+
+#if defined(ARMA_DEBUG)
 
 namespace junk {
-class arma_first_extra_debug_message {
+class arma_first_debug_message {
  public:
-  inline arma_first_extra_debug_message() {
-    union {
-      unsigned short a;
-      unsigned char b[sizeof(unsigned short)];
-    } endian_test;
-
-    endian_test.a = 1;
-
-    const bool little_endian = (endian_test.b[0] == 1);
+  inline arma_first_debug_message() {
     const char* nickname = ARMA_VERSION_NAME;
 
     std::ostream& out = get_cerr_stream();
 
     out << "@ ---" << '\n';
     out << "@ Armadillo " << arma_version::major << '.' << arma_version::minor << '.'
-        << arma_version::patch << " (" << nickname << ")\n";
+        << arma_version::patch << " (" << nickname << ')';
 
-    out << "@ arma_config::wrapper          = " << arma_config::wrapper << '\n';
-    out << "@ arma_config::cxx14            = " << arma_config::cxx14 << '\n';
-    out << "@ arma_config::cxx17            = " << arma_config::cxx17 << '\n';
-    out << "@ arma_config::cxx20            = " << arma_config::cxx20 << '\n';
-    out << "@ arma_config::std_mutex        = " << arma_config::std_mutex << '\n';
-    out << "@ arma_config::posix            = " << arma_config::posix << '\n';
-    out << "@ arma_config::openmp           = " << arma_config::openmp << '\n';
-    out << "@ arma_config::lapack           = " << arma_config::lapack << '\n';
-    out << "@ arma_config::blas             = " << arma_config::blas << '\n';
-    out << "@ arma_config::newarp           = " << arma_config::newarp << '\n';
-    out << "@ arma_config::arpack           = " << arma_config::arpack << '\n';
-    out << "@ arma_config::superlu          = " << arma_config::superlu << '\n';
-    out << "@ arma_config::atlas            = " << arma_config::atlas << '\n';
-    out << "@ arma_config::hdf5             = " << arma_config::hdf5 << '\n';
-    out << "@ arma_config::good_comp        = " << arma_config::good_comp << '\n';
-    out << "@ arma_config::extra_code       = " << arma_config::extra_code << '\n';
-    out << "@ arma_config::hidden_args      = " << arma_config::hidden_args << '\n';
-    out << "@ arma_config::mat_prealloc     = " << arma_config::mat_prealloc << '\n';
-    out << "@ arma_config::mp_threshold     = " << arma_config::mp_threshold << '\n';
-    out << "@ arma_config::mp_threads       = " << arma_config::mp_threads << '\n';
-    out << "@ arma_config::optimise_band    = " << arma_config::optimise_band << '\n';
-    out << "@ arma_config::optimise_sym     = " << arma_config::optimise_sym << '\n';
-    out << "@ arma_config::optimise_invexpr = " << arma_config::optimise_invexpr << '\n';
-    out << "@ arma_config::check_nonfinite  = " << arma_config::check_nonfinite << '\n';
-    out << "@ arma_config::zero_init        = " << arma_config::zero_init << '\n';
-    out << "@ arma_config::fast_math        = " << arma_config::fast_math << '\n';
-    out << "@ sizeof(void*)    = " << sizeof(void*) << '\n';
-    out << "@ sizeof(int)      = " << sizeof(int) << '\n';
-    out << "@ sizeof(long)     = " << sizeof(long) << '\n';
-    out << "@ sizeof(uword)    = " << sizeof(uword) << '\n';
-    out << "@ sizeof(blas_int) = " << sizeof(blas_int) << '\n';
-    out << "@ little_endian    = " << little_endian << '\n';
-    out << "@ ---" << std::endl;
+    out << "\n@ arma_config::wrapper          = " << arma_config::wrapper;
+    out << "\n@ arma_config::cxx14            = " << arma_config::cxx14;
+    out << "\n@ arma_config::cxx17            = " << arma_config::cxx17;
+    out << "\n@ arma_config::cxx20            = " << arma_config::cxx20;
+    out << "\n@ arma_config::cxx23            = " << arma_config::cxx23;
+    out << "\n@ arma_config::std_mutex        = " << arma_config::std_mutex;
+    out << "\n@ arma_config::posix            = " << arma_config::posix;
+    out << "\n@ arma_config::openmp           = " << arma_config::openmp;
+    out << "\n@ arma_config::lapack           = " << arma_config::lapack;
+    out << "\n@ arma_config::blas             = " << arma_config::blas;
+    out << "\n@ arma_config::newarp           = " << arma_config::newarp;
+    out << "\n@ arma_config::arpack           = " << arma_config::arpack;
+    out << "\n@ arma_config::superlu          = " << arma_config::superlu;
+    out << "\n@ arma_config::atlas            = " << arma_config::atlas;
+    out << "\n@ arma_config::hdf5             = " << arma_config::hdf5;
+    out << "\n@ arma_config::good_comp        = " << arma_config::good_comp;
+    out << "\n@ arma_config::extra_code       = " << arma_config::extra_code;
+    out << "\n@ arma_config::hidden_args      = " << arma_config::hidden_args;
+    out << "\n@ arma_config::mat_prealloc     = " << arma_config::mat_prealloc;
+    out << "\n@ arma_config::mp_threshold     = " << arma_config::mp_threshold;
+    out << "\n@ arma_config::mp_threads       = " << arma_config::mp_threads;
+    out << "\n@ arma_config::optimise_band    = " << arma_config::optimise_band;
+    out << "\n@ arma_config::optimise_sym     = " << arma_config::optimise_sym;
+    out << "\n@ arma_config::optimise_invexpr = " << arma_config::optimise_invexpr;
+    out << "\n@ arma_config::check_conform    = " << arma_config::check_conform;
+    out << "\n@ arma_config::check_nonfinite  = " << arma_config::check_nonfinite;
+    out << "\n@ arma_config::fast_math        = " << arma_config::fast_math;
+    out << "\n@ sizeof(void*)    = " << sizeof(void*);
+    out << "\n@ sizeof(int)      = " << sizeof(int);
+    out << "\n@ sizeof(long)     = " << sizeof(long);
+    out << "\n@ sizeof(uword)    = " << sizeof(uword);
+    out << "\n@ sizeof(blas_int) = " << sizeof(blas_int);
+    out << "\n@ ---" << std::endl;
   }
 };
 
-static arma_first_extra_debug_message arma_first_extra_debug_message_run;
+static arma_first_debug_message arma_first_debug_message_run;
 }  // namespace junk
 
 #endif

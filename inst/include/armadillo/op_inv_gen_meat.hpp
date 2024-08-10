@@ -21,7 +21,7 @@
 template <typename T1>
 inline void op_inv_gen_default::apply(Mat<typename T1::elem_type>& out,
                                       const Op<T1, op_inv_gen_default>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_inv_gen_default::apply_direct(out, X.m, "inv()");
 
@@ -35,7 +35,7 @@ template <typename T1>
 inline bool op_inv_gen_default::apply_direct(Mat<typename T1::elem_type>& out,
                                              const Base<typename T1::elem_type, T1>& expr,
                                              const char* caller_sig) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return op_inv_gen_full::apply_direct<T1, false>(out, expr, caller_sig, uword(0));
 }
@@ -45,7 +45,7 @@ inline bool op_inv_gen_default::apply_direct(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_inv_gen_full::apply(Mat<typename T1::elem_type>& out,
                                    const Op<T1, op_inv_gen_full>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword flags = X.aux_uword_a;
 
@@ -61,16 +61,16 @@ template <typename T1, const bool has_user_flags>
 inline bool op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out,
                                           const Base<typename T1::elem_type, T1>& expr,
                                           const char* caller_sig, const uword flags) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type T;
 
   if (has_user_flags == true) {
-    arma_extra_debug_print("op_inv_gen_full: has_user_flags = true");
+    arma_debug_print("op_inv_gen_full: has_user_flags = true");
   }
   if (has_user_flags == false) {
-    arma_extra_debug_print("op_inv_gen_full: has_user_flags = false");
+    arma_debug_print("op_inv_gen_full: has_user_flags = false");
   }
 
   const bool fast = has_user_flags && bool(flags & inv_opts::flag_fast);
@@ -78,23 +78,23 @@ inline bool op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out,
   const bool no_ugly = has_user_flags && bool(flags & inv_opts::flag_no_ugly);
 
   if (has_user_flags) {
-    arma_extra_debug_print("op_inv_gen_full: enabled flags:");
+    arma_debug_print("op_inv_gen_full: enabled flags:");
 
     if (fast) {
-      arma_extra_debug_print("fast");
+      arma_debug_print("fast");
     }
     if (allow_approx) {
-      arma_extra_debug_print("allow_approx");
+      arma_debug_print("allow_approx");
     }
     if (no_ugly) {
-      arma_extra_debug_print("no_ugly");
+      arma_debug_print("no_ugly");
     }
 
-    arma_debug_check((fast && allow_approx),
-                     "inv(): options 'fast' and 'allow_approx' are mutually exclusive");
-    arma_debug_check((fast && no_ugly),
-                     "inv(): options 'fast' and 'no_ugly' are mutually exclusive");
-    arma_debug_check(
+    arma_conform_check((fast && allow_approx),
+                       "inv(): options 'fast' and 'allow_approx' are mutually exclusive");
+    arma_conform_check((fast && no_ugly),
+                       "inv(): options 'fast' and 'no_ugly' are mutually exclusive");
+    arma_conform_check(
         (no_ugly && allow_approx),
         "inv(): options 'no_ugly' and 'allow_approx' are mutually exclusive");
   }
@@ -152,8 +152,8 @@ inline bool op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out,
 
   out = expr.get_ref();
 
-  arma_debug_check((out.is_square() == false), caller_sig,
-                   ": given matrix must be square sized", [&]() { out.soft_reset(); });
+  arma_conform_check((out.is_square() == false), caller_sig,
+                     ": given matrix must be square sized", [&]() { out.soft_reset(); });
 
   const uword N = out.n_rows;
 
@@ -186,7 +186,7 @@ inline bool op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out,
   }
 
   if (is_op_diagmat<T1>::value || out.is_diagmat()) {
-    arma_extra_debug_print("op_inv_gen_full: detected diagonal matrix");
+    arma_debug_print("op_inv_gen_full: detected diagonal matrix");
 
     eT* colmem = out.memptr();
 
@@ -226,7 +226,7 @@ inline bool op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out,
   const bool try_sympd = arma_config::optimise_sym && sym_helper::guess_sympd(out);
 
   if (try_sympd) {
-    arma_extra_debug_print("op_inv_gen_full: attempting sympd optimisation");
+    arma_debug_print("op_inv_gen_full: attempting sympd optimisation");
 
     Mat<eT> tmp = out;
 
@@ -243,7 +243,7 @@ inline bool op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out,
       return false;
     }
 
-    arma_extra_debug_print("op_inv_gen_full: sympd optimisation failed");
+    arma_debug_print("op_inv_gen_full: sympd optimisation failed");
 
     // fallthrough if optimisation failed
   }
@@ -253,7 +253,7 @@ inline bool op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out,
 
 template <typename eT>
 inline bool op_inv_gen_full::apply_tiny_2x2(Mat<eT>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<eT>::result T;
 
@@ -286,7 +286,7 @@ inline bool op_inv_gen_full::apply_tiny_2x2(Mat<eT>& X) {
 
 template <typename eT>
 inline bool op_inv_gen_full::apply_tiny_3x3(Mat<eT>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<eT>::result T;
 
@@ -358,7 +358,7 @@ template <typename T1>
 inline bool op_inv_gen_rcond::apply_direct(
     Mat<typename T1::elem_type>& out, op_inv_gen_state<typename T1::pod_type>& out_state,
     const Base<typename T1::elem_type, T1>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type T;
@@ -367,11 +367,12 @@ inline bool op_inv_gen_rcond::apply_direct(
   out_state.size = out.n_rows;
   out_state.rcond = T(0);
 
-  arma_debug_check((out.is_square() == false), "inv(): given matrix must be square sized",
-                   [&]() { out.soft_reset(); });
+  arma_conform_check((out.is_square() == false),
+                     "inv(): given matrix must be square sized",
+                     [&]() { out.soft_reset(); });
 
   if (is_op_diagmat<T1>::value || out.is_diagmat()) {
-    arma_extra_debug_print("op_inv_gen_rcond: detected diagonal matrix");
+    arma_debug_print("op_inv_gen_rcond: detected diagonal matrix");
 
     out_state.is_diag = true;
 
@@ -429,7 +430,7 @@ inline bool op_inv_gen_rcond::apply_direct(
       ((auxlib::crippled_lapack(out)) ? false : sym_helper::guess_sympd(out));
 
   if (try_sympd) {
-    arma_extra_debug_print("op_inv_gen_rcond: attempting sympd optimisation");
+    arma_debug_print("op_inv_gen_rcond: attempting sympd optimisation");
 
     out_state.is_sym = true;
 
@@ -448,7 +449,7 @@ inline bool op_inv_gen_rcond::apply_direct(
       return false;
     }
 
-    arma_extra_debug_print("op_inv_gen_rcond: sympd optimisation failed");
+    arma_debug_print("op_inv_gen_rcond: sympd optimisation failed");
 
     // fallthrough if optimisation failed
   }

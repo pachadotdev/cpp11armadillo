@@ -32,7 +32,7 @@ class gemm_mixed_large {
   arma_hot inline static void apply(Mat<out_eT>& C, const Mat<in_eT1>& A,
                                     const Mat<in_eT2>& B, const out_eT alpha = out_eT(1),
                                     const out_eT beta = out_eT(0)) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     const uword A_n_rows = A.n_rows;
     const uword A_n_cols = A.n_cols;
@@ -233,7 +233,7 @@ class gemm_mixed {
   inline static void apply(Mat<out_eT>& C, const Mat<in_eT1>& A, const Mat<in_eT2>& B,
                            const out_eT alpha = out_eT(1),
                            const out_eT beta = out_eT(0)) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     if ((is_cx<in_eT1>::yes && do_trans_A) || (is_cx<in_eT2>::yes && do_trans_B)) {
       // better-than-nothing handling of hermitian transpose

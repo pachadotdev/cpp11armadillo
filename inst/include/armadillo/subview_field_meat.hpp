@@ -20,7 +20,7 @@
 
 template <typename oT>
 inline subview_field<oT>::~subview_field() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename oT>
@@ -35,7 +35,7 @@ arma_inline subview_field<oT>::subview_field(const field<oT>& in_f, const uword 
       n_cols(in_n_cols),
       n_slices((in_f.n_slices > 0) ? uword(1) : uword(0)),
       n_elem(in_n_rows * in_n_cols * n_slices) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename oT>
@@ -51,16 +51,16 @@ arma_inline subview_field<oT>::subview_field(const field<oT>& in_f, const uword 
       n_cols(in_n_cols),
       n_slices(in_n_slices),
       n_elem(in_n_rows * in_n_cols * in_n_slices) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename oT>
 inline void subview_field<oT>::operator=(const field<oT>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   subview_field<oT>& t = *this;
 
-  arma_debug_check(
+  arma_conform_check(
       (t.n_rows != x.n_rows) || (t.n_cols != x.n_cols) || (t.n_slices != x.n_slices),
       "incompatible field dimensions");
 
@@ -81,7 +81,7 @@ inline void subview_field<oT>::operator=(const field<oT>& x) {
 //! x.subfield(...) = y.subfield(...)
 template <typename oT>
 inline void subview_field<oT>::operator=(const subview_field<oT>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (check_overlap(x)) {
     const field<oT> tmp(x);
@@ -93,7 +93,7 @@ inline void subview_field<oT>::operator=(const subview_field<oT>& x) {
 
   subview_field<oT>& t = *this;
 
-  arma_debug_check(
+  arma_conform_check(
       (t.n_rows != x.n_rows) || (t.n_cols != x.n_cols) || (t.n_slices != x.n_slices),
       "incompatible field dimensions");
 
@@ -147,16 +147,16 @@ arma_inline const oT& subview_field<oT>::operator[](const uword i) const {
 
 template <typename oT>
 arma_inline oT& subview_field<oT>::operator()(const uword i) {
-  arma_debug_check_bounds((i >= n_elem),
-                          "subview_field::operator(): index out of bounds");
+  arma_conform_check_bounds((i >= n_elem),
+                            "subview_field::operator(): index out of bounds");
 
   return operator[](i);
 }
 
 template <typename oT>
 arma_inline const oT& subview_field<oT>::operator()(const uword i) const {
-  arma_debug_check_bounds((i >= n_elem),
-                          "subview_field::operator(): index out of bounds");
+  arma_conform_check_bounds((i >= n_elem),
+                            "subview_field::operator(): index out of bounds");
 
   return operator[](i);
 }
@@ -175,7 +175,7 @@ arma_inline const oT& subview_field<oT>::operator()(const uword in_row,
 template <typename oT>
 arma_inline oT& subview_field<oT>::operator()(const uword in_row, const uword in_col,
                                               const uword in_slice) {
-  arma_debug_check_bounds(
+  arma_conform_check_bounds(
       ((in_row >= n_rows) || (in_col >= n_cols) || (in_slice >= n_slices)),
       "subview_field::operator(): index out of bounds");
 
@@ -189,7 +189,7 @@ template <typename oT>
 arma_inline const oT& subview_field<oT>::operator()(const uword in_row,
                                                     const uword in_col,
                                                     const uword in_slice) const {
-  arma_debug_check_bounds(
+  arma_conform_check_bounds(
       ((in_row >= n_rows) || (in_col >= n_cols) || (in_slice >= n_slices)),
       "subview_field::operator(): index out of bounds");
 
@@ -276,7 +276,7 @@ inline bool subview_field<oT>::check_overlap(const subview_field<oT>& x) const {
 
 template <typename oT>
 inline void subview_field<oT>::print(const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (extra_text.length() != 0) {
     const std::streamsize orig_width = get_cout_stream().width();
@@ -292,7 +292,7 @@ inline void subview_field<oT>::print(const std::string extra_text) const {
 template <typename oT>
 inline void subview_field<oT>::print(std::ostream& user_stream,
                                      const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (extra_text.length() != 0) {
     const std::streamsize orig_width = user_stream.width();
@@ -308,7 +308,7 @@ inline void subview_field<oT>::print(std::ostream& user_stream,
 template <typename oT>
 template <typename functor>
 inline void subview_field<oT>::for_each(functor F) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   subview_field<oT>& t = *this;
 
@@ -329,7 +329,7 @@ inline void subview_field<oT>::for_each(functor F) {
 template <typename oT>
 template <typename functor>
 inline void subview_field<oT>::for_each(functor F) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const subview_field<oT>& t = *this;
 
@@ -349,7 +349,7 @@ inline void subview_field<oT>::for_each(functor F) const {
 
 template <typename oT>
 inline void subview_field<oT>::fill(const oT& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   subview_field<oT>& t = *this;
 
@@ -371,7 +371,7 @@ inline void subview_field<oT>::fill(const oT& x) {
 template <typename oT>
 inline void subview_field<oT>::extract(field<oT>& actual_out,
                                        const subview_field<oT>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   //
   const bool alias = (&actual_out == &in.f);
@@ -387,9 +387,9 @@ inline void subview_field<oT>::extract(field<oT>& actual_out,
 
   out.set_size(n_rows, n_cols, n_slices);
 
-  arma_extra_debug_print(
-      arma_str::format("out.n_rows = %u   out.n_cols = %u   out.n_slices = %u    "
-                       "in.m.n_rows = %u  in.m.n_cols = %u  in.m.n_slices = %u") %
+  arma_debug_print(
+      arma_str::format("out.n_rows: %u; out.n_cols: %u; out.n_slices: %u; in.f.n_rows: "
+                       "%u; in.f.n_cols: %u; in.f.n_slices: %u") %
       out.n_rows % out.n_cols % out.n_slices % in.f.n_rows % in.f.n_cols % in.f.n_slices);
 
   if (n_slices == 1) {

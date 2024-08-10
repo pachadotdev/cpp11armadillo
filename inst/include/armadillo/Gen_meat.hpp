@@ -21,12 +21,12 @@
 template <typename T1, typename gen_type>
 arma_inline Gen<T1, gen_type>::Gen(const uword in_n_rows, const uword in_n_cols)
     : n_rows(in_n_rows), n_cols(in_n_cols) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename T1, typename gen_type>
 arma_inline Gen<T1, gen_type>::~Gen() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename T1, typename gen_type>
@@ -67,7 +67,7 @@ arma_inline typename T1::elem_type Gen<T1, gen_type>::at_alt(const uword ii) con
 
 template <typename T1, typename gen_type>
 inline void Gen<T1, gen_type>::apply(Mat<typename T1::elem_type>& out) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   // NOTE: we're assuming that the matrix has already been set to the correct size;
   // this is done by either the Mat contructor or operator=()
@@ -84,9 +84,9 @@ inline void Gen<T1, gen_type>::apply(Mat<typename T1::elem_type>& out) const {
 template <typename T1, typename gen_type>
 inline void Gen<T1, gen_type>::apply_inplace_plus(
     Mat<typename T1::elem_type>& out) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_same_size(out.n_rows, out.n_cols, n_rows, n_cols, "addition");
+  arma_conform_assert_same_size(out.n_rows, out.n_cols, n_rows, n_cols, "addition");
 
   typedef typename T1::elem_type eT;
 
@@ -104,9 +104,9 @@ inline void Gen<T1, gen_type>::apply_inplace_plus(
 template <typename T1, typename gen_type>
 inline void Gen<T1, gen_type>::apply_inplace_minus(
     Mat<typename T1::elem_type>& out) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_same_size(out.n_rows, out.n_cols, n_rows, n_cols, "subtraction");
+  arma_conform_assert_same_size(out.n_rows, out.n_cols, n_rows, n_cols, "subtraction");
 
   typedef typename T1::elem_type eT;
 
@@ -124,10 +124,10 @@ inline void Gen<T1, gen_type>::apply_inplace_minus(
 template <typename T1, typename gen_type>
 inline void Gen<T1, gen_type>::apply_inplace_schur(
     Mat<typename T1::elem_type>& out) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_same_size(out.n_rows, out.n_cols, n_rows, n_cols,
-                              "element-wise multiplication");
+  arma_conform_assert_same_size(out.n_rows, out.n_cols, n_rows, n_cols,
+                                "element-wise multiplication");
 
   typedef typename T1::elem_type eT;
 
@@ -146,10 +146,10 @@ inline void Gen<T1, gen_type>::apply_inplace_schur(
 
 template <typename T1, typename gen_type>
 inline void Gen<T1, gen_type>::apply_inplace_div(Mat<typename T1::elem_type>& out) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_same_size(out.n_rows, out.n_cols, n_rows, n_cols,
-                              "element-wise division");
+  arma_conform_assert_same_size(out.n_rows, out.n_cols, n_rows, n_cols,
+                                "element-wise division");
 
   typedef typename T1::elem_type eT;
 
@@ -167,7 +167,7 @@ inline void Gen<T1, gen_type>::apply_inplace_div(Mat<typename T1::elem_type>& ou
 
 template <typename T1, typename gen_type>
 inline void Gen<T1, gen_type>::apply(subview<typename T1::elem_type>& out) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   // NOTE: we're assuming that the submatrix has the same dimensions as the Gen object
   // this is checked by subview::operator=()

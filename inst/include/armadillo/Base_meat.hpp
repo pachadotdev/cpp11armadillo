@@ -25,7 +25,7 @@ arma_inline const derived& Base<elem_type, derived>::get_ref() const {
 
 template <typename elem_type, typename derived>
 inline void Base<elem_type, derived>::print(const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<derived> tmp((*this).get_ref());
 
@@ -43,7 +43,7 @@ inline void Base<elem_type, derived>::print(const std::string extra_text) const 
 template <typename elem_type, typename derived>
 inline void Base<elem_type, derived>::print(std::ostream& user_stream,
                                             const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<derived> tmp((*this).get_ref());
 
@@ -60,7 +60,7 @@ inline void Base<elem_type, derived>::print(std::ostream& user_stream,
 
 template <typename elem_type, typename derived>
 inline void Base<elem_type, derived>::raw_print(const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<derived> tmp((*this).get_ref());
 
@@ -78,7 +78,7 @@ inline void Base<elem_type, derived>::raw_print(const std::string extra_text) co
 template <typename elem_type, typename derived>
 inline void Base<elem_type, derived>::raw_print(std::ostream& user_stream,
                                                 const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<derived> tmp((*this).get_ref());
 
@@ -95,7 +95,7 @@ inline void Base<elem_type, derived>::raw_print(std::ostream& user_stream,
 
 template <typename elem_type, typename derived>
 inline void Base<elem_type, derived>::brief_print(const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<derived> tmp((*this).get_ref());
 
@@ -113,7 +113,7 @@ inline void Base<elem_type, derived>::brief_print(const std::string extra_text) 
 template <typename elem_type, typename derived>
 inline void Base<elem_type, derived>::brief_print(std::ostream& user_stream,
                                                   const std::string extra_text) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<derived> tmp((*this).get_ref());
 
@@ -193,7 +193,7 @@ inline uword Base<elem_type, derived>::index_min() const {
   uword index = 0;
 
   if (P.get_n_elem() == 0) {
-    arma_debug_check(true, "index_min(): object has no elements");
+    arma_conform_check(true, "index_min(): object has no elements");
   } else {
     op_min::min_with_index(P, index);
   }
@@ -208,7 +208,7 @@ inline uword Base<elem_type, derived>::index_max() const {
   uword index = 0;
 
   if (P.get_n_elem() == 0) {
-    arma_debug_check(true, "index_max(): object has no elements");
+    arma_conform_check(true, "index_max(): object has no elements");
   } else {
     op_max::max_with_index(P, index);
   }
@@ -218,7 +218,7 @@ inline uword Base<elem_type, derived>::index_max() const {
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_symmetric() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<derived> U((*this).get_ref());
 
@@ -258,7 +258,7 @@ inline bool Base<elem_type, derived>::is_symmetric() const {
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_symmetric(
     const typename get_pod_type<elem_type>::result tol) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<elem_type>::result T;
 
@@ -266,7 +266,7 @@ inline bool Base<elem_type, derived>::is_symmetric(
     return (*this).is_symmetric();
   }
 
-  arma_debug_check((tol < T(0)), "is_symmetric(): parameter 'tol' must be >= 0");
+  arma_conform_check((tol < T(0)), "is_symmetric(): parameter 'tol' must be >= 0");
 
   const quasi_unwrap<derived> U((*this).get_ref());
 
@@ -292,7 +292,7 @@ inline bool Base<elem_type, derived>::is_symmetric(
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_hermitian() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<elem_type>::result T;
 
@@ -345,7 +345,7 @@ inline bool Base<elem_type, derived>::is_hermitian() const {
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_hermitian(
     const typename get_pod_type<elem_type>::result tol) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<elem_type>::result T;
 
@@ -353,7 +353,7 @@ inline bool Base<elem_type, derived>::is_hermitian(
     return (*this).is_hermitian();
   }
 
-  arma_debug_check((tol < T(0)), "is_hermitian(): parameter 'tol' must be >= 0");
+  arma_conform_check((tol < T(0)), "is_hermitian(): parameter 'tol' must be >= 0");
 
   const quasi_unwrap<derived> U((*this).get_ref());
 
@@ -380,11 +380,11 @@ inline bool Base<elem_type, derived>::is_hermitian(
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_zero(
     const typename get_pod_type<elem_type>::result tol) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<elem_type>::result T;
 
-  arma_debug_check((tol < T(0)), "is_zero(): parameter 'tol' must be >= 0");
+  arma_conform_check((tol < T(0)), "is_zero(): parameter 'tol' must be >= 0");
 
   if (Proxy<derived>::use_at || is_Mat<typename Proxy<derived>::stored_type>::value) {
     const quasi_unwrap<derived> U((*this).get_ref());
@@ -430,7 +430,7 @@ inline bool Base<elem_type, derived>::is_zero(
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_trimatu() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<derived> U((*this).get_ref());
 
@@ -447,7 +447,7 @@ inline bool Base<elem_type, derived>::is_trimatu() const {
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_trimatl() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<derived> U((*this).get_ref());
 
@@ -464,7 +464,7 @@ inline bool Base<elem_type, derived>::is_trimatl() const {
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_diagmat() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<derived> U((*this).get_ref());
 
@@ -502,7 +502,7 @@ inline bool Base<elem_type, derived>::is_diagmat() const {
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_empty() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const Proxy<derived> P((*this).get_ref());
 
@@ -511,7 +511,7 @@ inline bool Base<elem_type, derived>::is_empty() const {
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_square() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const Proxy<derived> P((*this).get_ref());
 
@@ -520,7 +520,7 @@ inline bool Base<elem_type, derived>::is_square() const {
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_vec() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if ((Proxy<derived>::is_row) || (Proxy<derived>::is_col) || (Proxy<derived>::is_xvec)) {
     return true;
@@ -533,7 +533,7 @@ inline bool Base<elem_type, derived>::is_vec() const {
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_colvec() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (Proxy<derived>::is_col) {
     return true;
@@ -546,7 +546,7 @@ inline bool Base<elem_type, derived>::is_colvec() const {
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_rowvec() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (Proxy<derived>::is_row) {
     return true;
@@ -559,10 +559,10 @@ inline bool Base<elem_type, derived>::is_rowvec() const {
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::is_finite() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(
+    arma_warn(
         1,
         "is_finite(): detection of non-finite values is not reliable in fast math mode");
   }
@@ -602,10 +602,10 @@ inline bool Base<elem_type, derived>::is_finite() const {
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::has_inf() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(
+    arma_warn(
         1, "has_inf(): detection of non-finite values is not reliable in fast math mode");
   }
 
@@ -644,10 +644,10 @@ inline bool Base<elem_type, derived>::has_inf() const {
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::has_nan() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(
+    arma_warn(
         1, "has_nan(): detection of non-finite values is not reliable in fast math mode");
   }
 
@@ -686,12 +686,12 @@ inline bool Base<elem_type, derived>::has_nan() const {
 
 template <typename elem_type, typename derived>
 inline bool Base<elem_type, derived>::has_nonfinite() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(1,
-                          "has_nonfinite(): detection of non-finite values is not "
-                          "reliable in fast math mode");
+    arma_warn(1,
+              "has_nonfinite(): detection of non-finite values is not reliable in fast "
+              "math mode");
   }
 
   if (is_Mat<typename Proxy<derived>::stored_type>::value) {
@@ -748,7 +748,7 @@ inline const Op<derived, op_inv_gen_default> Base_extra_yes<elem_type, derived>:
 
 template <typename elem_type, typename derived>
 inline bool Base_extra_yes<elem_type, derived>::is_sympd() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<elem_type>::result T;
 
@@ -773,11 +773,11 @@ inline bool Base_extra_yes<elem_type, derived>::is_sympd() const {
 template <typename elem_type, typename derived>
 inline bool Base_extra_yes<elem_type, derived>::is_sympd(
     typename get_pod_type<elem_type>::result tol) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<elem_type>::result T;
 
-  arma_debug_check((tol < T(0)), "is_sympd(): parameter 'tol' must be >= 0");
+  arma_conform_check((tol < T(0)), "is_sympd(): parameter 'tol' must be >= 0");
 
   Mat<elem_type> X = static_cast<const derived&>(*this);
 
@@ -799,7 +799,7 @@ inline bool Base_extra_yes<elem_type, derived>::is_sympd(
 
 template <typename elem_type, typename derived>
 arma_inline const derived& Base_eval_Mat<elem_type, derived>::eval() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return static_cast<const derived&>(*this);
 }
@@ -809,7 +809,7 @@ arma_inline const derived& Base_eval_Mat<elem_type, derived>::eval() const {
 
 template <typename elem_type, typename derived>
 inline Mat<elem_type> Base_eval_expr<elem_type, derived>::eval() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Mat<elem_type>(static_cast<const derived&>(*this));
 }

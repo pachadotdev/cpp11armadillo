@@ -22,7 +22,7 @@ template <typename T1>
 arma_warn_unused arma_inline const Op<T1, op_htrans> trans(
     const T1& X,
     const typename enable_if<is_arma_type<T1>::value>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   return Op<T1, op_htrans>(X);
@@ -32,7 +32,7 @@ template <typename T1>
 arma_warn_unused arma_inline const Op<T1, op_htrans> htrans(
     const T1& X,
     const typename enable_if<is_arma_type<T1>::value>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   return Op<T1, op_htrans>(X);
@@ -45,7 +45,7 @@ template <typename T1>
 arma_warn_unused arma_inline const SpOp<T1, spop_htrans> trans(
     const T1& X,
     const typename enable_if<is_arma_sparse_type<T1>::value>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   return SpOp<T1, spop_htrans>(X);
@@ -55,7 +55,7 @@ template <typename T1>
 arma_warn_unused arma_inline const SpOp<T1, spop_htrans> htrans(
     const T1& X,
     const typename enable_if<is_arma_sparse_type<T1>::value>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   return SpOp<T1, spop_htrans>(X);

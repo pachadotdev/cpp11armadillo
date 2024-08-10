@@ -24,11 +24,11 @@ arma_inline void_ptr plan_dft_1d(int N, eT* input, eT* output, int fftw3_sign,
   arma_type_check((is_cx<eT>::value == false));
 
   if (is_cx_float<eT>::value) {
-    return fftwf_plan_dft_1d(N, (cx_float*)input, (cx_float*)output, fftw3_sign,
-                             fftw3_flags);
+    return fftwf_plan_dft_1d(N, (fftwf_complex*)(input), (fftwf_complex*)(output),
+                             fftw3_sign, fftw3_flags);
   } else if (is_cx_double<eT>::value) {
-    return fftw_plan_dft_1d(N, (cx_double*)input, (cx_double*)output, fftw3_sign,
-                            fftw3_flags);
+    return fftw_plan_dft_1d(N, (fftw_complex*)(input), (fftw_complex*)(output),
+                            fftw3_sign, fftw3_flags);
   }
 
   return nullptr;
@@ -39,9 +39,9 @@ arma_inline void execute(void_ptr plan) {
   arma_type_check((is_cx<eT>::value == false));
 
   if (is_cx_float<eT>::value) {
-    fftwf_execute(plan);
+    fftwf_execute(fftwf_plan(plan));
   } else if (is_cx_double<eT>::value) {
-    fftw_execute(plan);
+    fftw_execute(fftw_plan(plan));
   }
 }
 
@@ -50,9 +50,9 @@ arma_inline void destroy_plan(void_ptr plan) {
   arma_type_check((is_cx<eT>::value == false));
 
   if (is_cx_float<eT>::value) {
-    fftwf_destroy_plan(plan);
+    fftwf_destroy_plan(fftwf_plan(plan));
   } else if (is_cx_double<eT>::value) {
-    fftw_destroy_plan(plan);
+    fftw_destroy_plan(fftw_plan(plan));
   }
 }
 

@@ -31,7 +31,7 @@ class diagmat_proxy_default {
         P_is_col(T1::is_col || (P.get_n_cols() == 1)),
         n_rows(P_is_vec ? P.get_n_elem() : P.get_n_rows()),
         n_cols(P_is_vec ? P.get_n_elem() : P.get_n_cols()) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
   }
 
   arma_inline elem_type operator[](const uword i) const {
@@ -77,7 +77,7 @@ class diagmat_proxy_fixed {
   typedef typename T1::elem_type elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
 
-  inline diagmat_proxy_fixed(const T1& X) : P(X) { arma_extra_debug_sigprint(); }
+  inline diagmat_proxy_fixed(const T1& X) : P(X) { arma_debug_sigprint(); }
 
   arma_inline elem_type operator[](const uword i) const {
     return (P_is_vec) ? P[i] : P.at(i, i);
@@ -139,7 +139,7 @@ class diagmat_proxy<Mat<eT> > {
         P_is_vec((X.n_rows == 1) || (X.n_cols == 1)),
         n_rows(P_is_vec ? X.n_elem : X.n_rows),
         n_cols(P_is_vec ? X.n_elem : X.n_cols) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
   }
 
   arma_inline elem_type operator[](const uword i) const {
@@ -166,7 +166,7 @@ class diagmat_proxy<Row<eT> > {
   typedef typename get_pod_type<elem_type>::result pod_type;
 
   inline diagmat_proxy(const Row<eT>& X) : P(X), n_rows(X.n_elem), n_cols(X.n_elem) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
   }
 
   arma_inline elem_type operator[](const uword i) const { return P[i]; }
@@ -192,7 +192,7 @@ class diagmat_proxy<Col<eT> > {
   typedef typename get_pod_type<elem_type>::result pod_type;
 
   inline diagmat_proxy(const Col<eT>& X) : P(X), n_rows(X.n_elem), n_cols(X.n_elem) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
   }
 
   arma_inline elem_type operator[](const uword i) const { return P[i]; }
@@ -219,7 +219,7 @@ class diagmat_proxy<subview_row<eT> > {
 
   inline diagmat_proxy(const subview_row<eT>& X)
       : P(X), n_rows(X.n_elem), n_cols(X.n_elem) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
   }
 
   arma_inline elem_type operator[](const uword i) const { return P[i]; }
@@ -246,7 +246,7 @@ class diagmat_proxy<subview_col<eT> > {
 
   inline diagmat_proxy(const subview_col<eT>& X)
       : P(X), n_rows(X.n_elem), n_cols(X.n_elem) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
   }
 
   arma_inline elem_type operator[](const uword i) const { return P[i]; }
@@ -277,7 +277,7 @@ class diagmat_proxy<Glue<T1, T2, glue_times> > {
     n_rows = P.n_rows;
     n_cols = P.n_cols;
 
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
   }
 
   arma_inline elem_type operator[](const uword i) const { return P.at(i, i); }

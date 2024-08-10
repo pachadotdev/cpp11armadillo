@@ -23,7 +23,7 @@ arma_warn_unused arma_inline
     typename enable_if2<is_arma_type<T1>::value && resolves_to_vector<T1>::yes,
                         const Op<T1, op_sort_vec> >::result
     sort(const T1& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_sort_vec>(X, 0, 0);
 }
@@ -33,7 +33,7 @@ arma_warn_unused arma_inline
     typename enable_if2<is_arma_type<T1>::value && resolves_to_vector<T1>::no,
                         const Op<T1, op_sort> >::result
     sort(const T1& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_sort>(X, 0, 0);
 }
@@ -44,11 +44,11 @@ arma_warn_unused inline
                             is_same_type<T2, char>::value,
                         const Op<T1, op_sort_vec> >::result
     sort(const T1& X, const T2* sort_direction) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const char sig = (sort_direction != nullptr) ? sort_direction[0] : char(0);
 
-  arma_debug_check((sig != 'a') && (sig != 'd'), "sort(): unknown sort direction");
+  arma_conform_check((sig != 'a') && (sig != 'd'), "sort(): unknown sort direction");
 
   const uword sort_type = (sig == 'a') ? 0 : 1;
 
@@ -61,11 +61,11 @@ arma_warn_unused inline
                             is_same_type<T2, char>::value,
                         const Op<T1, op_sort> >::result
     sort(const T1& X, const T2* sort_direction) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const char sig = (sort_direction != nullptr) ? sort_direction[0] : char(0);
 
-  arma_debug_check((sig != 'a') && (sig != 'd'), "sort(): unknown sort direction");
+  arma_conform_check((sig != 'a') && (sig != 'd'), "sort(): unknown sort direction");
 
   const uword sort_type = (sig == 'a') ? 0 : 1;
 
@@ -77,11 +77,11 @@ arma_warn_unused inline
     typename enable_if2<((is_arma_type<T1>::value) && (is_same_type<T2, char>::value)),
                         const Op<T1, op_sort> >::result
     sort(const T1& X, const T2* sort_direction, const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const char sig = (sort_direction != nullptr) ? sort_direction[0] : char(0);
 
-  arma_debug_check((sig != 'a') && (sig != 'd'), "sort(): unknown sort direction");
+  arma_conform_check((sig != 'a') && (sig != 'd'), "sort(): unknown sort direction");
 
   const uword sort_type = (sig == 'a') ? 0 : 1;
 

@@ -27,7 +27,7 @@ arma_warn_unused inline
                         const Glue<T1, T2, glue_solve_gen_default> >::result
     solve(const Base<typename T1::elem_type, T1>& A,
           const Base<typename T1::elem_type, T2>& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Glue<T1, T2, glue_solve_gen_default>(A.get_ref(), B.get_ref());
 }
@@ -37,13 +37,13 @@ inline typename enable_if2<is_supported_blas_type<typename T1::elem_type>::value
                            bool>::result
 solve(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type, T1>& A,
       const Base<typename T1::elem_type, T2>& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = glue_solve_gen_default::apply(out, A.get_ref(), B.get_ref());
 
   if (status == false) {
     out.soft_reset();
-    arma_debug_warn_level(3, "solve(): solution not found");
+    arma_warn(3, "solve(): solution not found");
   }
 
   return status;
@@ -55,7 +55,7 @@ arma_warn_unused inline
                         const Glue<T1, T2, glue_solve_gen_full> >::result
     solve(const Base<typename T1::elem_type, T1>& A,
           const Base<typename T1::elem_type, T2>& B, const solve_opts::opts& opts) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Glue<T1, T2, glue_solve_gen_full>(A.get_ref(), B.get_ref(), opts.flags);
 }
@@ -65,14 +65,14 @@ inline typename enable_if2<is_supported_blas_type<typename T1::elem_type>::value
                            bool>::result
 solve(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type, T1>& A,
       const Base<typename T1::elem_type, T2>& B, const solve_opts::opts& opts) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status =
       glue_solve_gen_full::apply(out, A.get_ref(), B.get_ref(), opts.flags);
 
   if (status == false) {
     out.soft_reset();
-    arma_debug_warn_level(3, "solve(): solution not found");
+    arma_warn(3, "solve(): solution not found");
   }
 
   return status;
@@ -86,7 +86,7 @@ arma_warn_unused inline
     typename enable_if2<is_supported_blas_type<typename T1::elem_type>::value,
                         const Glue<T1, T2, glue_solve_tri_default> >::result
     solve(const Op<T1, op_trimat>& A, const Base<typename T1::elem_type, T2>& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   uword flags = uword(0);
 
@@ -106,7 +106,7 @@ arma_warn_unused inline
                         const Glue<T1, T2, glue_solve_tri_full> >::result
     solve(const Op<T1, op_trimat>& A, const Base<typename T1::elem_type, T2>& B,
           const solve_opts::opts& opts) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   uword flags = opts.flags;
 
@@ -125,7 +125,7 @@ inline typename enable_if2<is_supported_blas_type<typename T1::elem_type>::value
                            bool>::result
 solve(Mat<typename T1::elem_type>& out, const Op<T1, op_trimat>& A,
       const Base<typename T1::elem_type, T2>& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   uword flags = uword(0);
 
@@ -140,7 +140,7 @@ solve(Mat<typename T1::elem_type>& out, const Op<T1, op_trimat>& A,
 
   if (status == false) {
     out.soft_reset();
-    arma_debug_warn_level(3, "solve(): solution not found");
+    arma_warn(3, "solve(): solution not found");
   }
 
   return status;
@@ -151,7 +151,7 @@ inline typename enable_if2<is_supported_blas_type<typename T1::elem_type>::value
                            bool>::result
 solve(Mat<typename T1::elem_type>& out, const Op<T1, op_trimat>& A,
       const Base<typename T1::elem_type, T2>& B, const solve_opts::opts& opts) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   uword flags = opts.flags;
 
@@ -166,7 +166,7 @@ solve(Mat<typename T1::elem_type>& out, const Op<T1, op_trimat>& A,
 
   if (status == false) {
     out.soft_reset();
-    arma_debug_warn_level(3, "solve(): solution not found");
+    arma_warn(3, "solve(): solution not found");
   }
 
   return status;

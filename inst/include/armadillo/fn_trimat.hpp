@@ -21,7 +21,7 @@
 template <typename T1>
 arma_warn_unused arma_inline const Op<T1, op_trimat> trimatu(
     const Base<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_trimat>(X.get_ref(), 0, 0);
 }
@@ -29,7 +29,7 @@ arma_warn_unused arma_inline const Op<T1, op_trimat> trimatu(
 template <typename T1>
 arma_warn_unused arma_inline const Op<T1, op_trimat> trimatl(
     const Base<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_trimat>(X.get_ref(), 1, 0);
 }
@@ -37,7 +37,7 @@ arma_warn_unused arma_inline const Op<T1, op_trimat> trimatl(
 template <typename T1>
 arma_warn_unused arma_inline const SpOp<T1, spop_trimat> trimatu(
     const SpBase<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return SpOp<T1, spop_trimat>(X.get_ref(), 0, 0);
 }
@@ -45,7 +45,7 @@ arma_warn_unused arma_inline const SpOp<T1, spop_trimat> trimatu(
 template <typename T1>
 arma_warn_unused arma_inline const SpOp<T1, spop_trimat> trimatl(
     const SpBase<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return SpOp<T1, spop_trimat>(X.get_ref(), 1, 0);
 }
@@ -55,7 +55,7 @@ arma_warn_unused arma_inline const SpOp<T1, spop_trimat> trimatl(
 template <typename T1>
 arma_warn_unused arma_inline const Op<T1, op_trimatl_ext> trimatl(
     const Base<typename T1::elem_type, T1>& X, const sword k) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword row_offset = (k < 0) ? uword(-k) : uword(0);
   const uword col_offset = (k > 0) ? uword(k) : uword(0);
@@ -66,7 +66,7 @@ arma_warn_unused arma_inline const Op<T1, op_trimatl_ext> trimatl(
 template <typename T1>
 arma_warn_unused arma_inline const Op<T1, op_trimatu_ext> trimatu(
     const Base<typename T1::elem_type, T1>& X, const sword k) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword row_offset = (k < 0) ? uword(-k) : uword(0);
   const uword col_offset = (k > 0) ? uword(k) : uword(0);
@@ -77,7 +77,7 @@ arma_warn_unused arma_inline const Op<T1, op_trimatu_ext> trimatu(
 template <typename T1>
 arma_warn_unused arma_inline const SpOp<T1, spop_trimatu_ext> trimatu(
     const SpBase<typename T1::elem_type, T1>& X, const sword k) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword row_offset = (k < 0) ? uword(-k) : uword(0);
   const uword col_offset = (k > 0) ? uword(k) : uword(0);
@@ -88,7 +88,7 @@ arma_warn_unused arma_inline const SpOp<T1, spop_trimatu_ext> trimatu(
 template <typename T1>
 arma_warn_unused arma_inline const SpOp<T1, spop_trimatl_ext> trimatl(
     const SpBase<typename T1::elem_type, T1>& X, const sword k) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword row_offset = (k < 0) ? uword(-k) : uword(0);
   const uword col_offset = (k > 0) ? uword(k) : uword(0);

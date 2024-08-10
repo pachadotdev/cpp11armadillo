@@ -15,14 +15,22 @@
 // limitations under the License.
 // ------------------------------------------------------------------------
 
-//! \addtogroup spop_sum
+//! \addtogroup op_sp_stddev
 //! @{
 
-class spop_sum : public traits_op_xvec {
+class op_sp_stddev : public traits_op_xvec {
  public:
   template <typename T1>
-  inline static void apply(SpMat<typename T1::elem_type>& out,
-                           const SpOp<T1, spop_sum>& in);
+  inline static void apply(
+      Mat<typename T1::pod_type>& out,
+      const mtSpReduceOp<typename T1::pod_type, T1, op_sp_stddev>& in);
+
+  template <typename T1>
+  inline static void apply_slow(Mat<typename T1::pod_type>& out, const SpProxy<T1>& p,
+                                const uword norm_type, const uword dim);
+
+  template <typename T1>
+  inline static typename T1::pod_type stddev_vec(const T1& X, const uword norm_type = 0);
 };
 
 //! @}

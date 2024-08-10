@@ -21,10 +21,10 @@
 template <typename eT>
 inline void glue_hist::apply_noalias(Mat<uword>& out, const Mat<eT>& X, const Mat<eT>& C,
                                      const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check(((C.is_vec() == false) && (C.is_empty() == false)),
-                   "hist(): parameter 'centers' must be a vector");
+  arma_conform_check(((C.is_vec() == false) && (C.is_empty() == false)),
+                     "hist(): parameter 'centers' must be a vector");
 
   const uword X_n_rows = X.n_rows;
   const uword X_n_cols = X.n_cols;
@@ -36,7 +36,7 @@ inline void glue_hist::apply_noalias(Mat<uword>& out, const Mat<eT>& X, const Ma
     return;
   }
 
-  arma_debug_check(
+  arma_conform_check(
       ((Col<eT>(const_cast<eT*>(C.memptr()), C_n_elem, false, false))
            .is_sorted("strictascend") == false),
       "hist(): given 'centers' vector does not contain monotonically increasing values");
@@ -172,11 +172,11 @@ inline void glue_hist::apply_noalias(Mat<uword>& out, const Mat<eT>& X, const Ma
 template <typename T1, typename T2>
 inline void glue_hist::apply(Mat<uword>& out,
                              const mtGlue<uword, T1, T2, glue_hist>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword dim = expr.aux_uword;
 
-  arma_debug_check((dim > 1), "hist(): parameter 'dim' must be 0 or 1");
+  arma_conform_check((dim > 1), "hist(): parameter 'dim' must be 0 or 1");
 
   const quasi_unwrap<T1> UA(expr.A);
   const quasi_unwrap<T2> UB(expr.B);
@@ -195,7 +195,7 @@ inline void glue_hist::apply(Mat<uword>& out,
 template <typename T1, typename T2>
 inline void glue_hist_default::apply(
     Mat<uword>& out, const mtGlue<uword, T1, T2, glue_hist_default>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<T1> UA(expr.A);
   const quasi_unwrap<T2> UB(expr.B);

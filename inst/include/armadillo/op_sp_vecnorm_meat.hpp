@@ -15,14 +15,14 @@
 // limitations under the License.
 // ------------------------------------------------------------------------
 
-//! \addtogroup spop_vecnorm
+//! \addtogroup op_sp_vecnorm
 //! @{
 
 template <typename T1>
-inline void spop_vecnorm::apply(
-    SpMat<typename T1::pod_type>& out,
-    const mtSpOp<typename T1::pod_type, T1, spop_vecnorm>& expr) {
-  arma_extra_debug_sigprint();
+inline void op_sp_vecnorm::apply(
+    Mat<typename T1::pod_type>& out,
+    const mtSpReduceOp<typename T1::pod_type, T1, op_sp_vecnorm>& expr) {
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type T;
@@ -30,8 +30,8 @@ inline void spop_vecnorm::apply(
   const uword k = expr.aux_uword_a;
   const uword dim = expr.aux_uword_b;
 
-  arma_debug_check((k == 0), "vecnorm(): unsupported vector norm type");
-  arma_debug_check((dim > 1), "vecnorm(): parameter 'dim' must be 0 or 1");
+  arma_conform_check((k == 0), "vecnorm(): unsupported vector norm type");
+  arma_conform_check((dim > 1), "vecnorm(): parameter 'dim' must be 0 or 1");
 
   const unwrap_spmat<T1> U(expr.m);
   const SpMat<eT>& X = U.M;
@@ -39,27 +39,23 @@ inline void spop_vecnorm::apply(
   X.sync();
 
   if (dim == 0) {
-    Mat<T> tmp;
-
-    spop_vecnorm::apply_direct(tmp, X, k);
-
-    out = tmp;
+    op_sp_vecnorm::apply_direct(out, X, k);
   } else if (dim == 1) {
     Mat<T> tmp;
     SpMat<eT> Xt;
 
     spop_strans::apply_noalias(Xt, X);
 
-    spop_vecnorm::apply_direct(tmp, Xt, k);
+    op_sp_vecnorm::apply_direct(tmp, Xt, k);
 
     out = tmp.t();
   }
 }
 
 template <typename eT>
-inline void spop_vecnorm::apply_direct(Mat<typename get_pod_type<eT>::result>& out,
-                                       const SpMat<eT>& X, const uword k) {
-  arma_extra_debug_sigprint();
+inline void op_sp_vecnorm::apply_direct(Mat<typename get_pod_type<eT>::result>& out,
+                                        const SpMat<eT>& X, const uword k) {
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<eT>::result T;
 
@@ -98,10 +94,10 @@ inline void spop_vecnorm::apply_direct(Mat<typename get_pod_type<eT>::result>& o
 //
 
 template <typename T1>
-inline void spop_vecnorm_ext::apply(
-    SpMat<typename T1::pod_type>& out,
-    const mtSpOp<typename T1::pod_type, T1, spop_vecnorm_ext>& expr) {
-  arma_extra_debug_sigprint();
+inline void op_sp_vecnorm_ext::apply(
+    Mat<typename T1::pod_type>& out,
+    const mtSpReduceOp<typename T1::pod_type, T1, op_sp_vecnorm_ext>& expr) {
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type T;
@@ -109,8 +105,8 @@ inline void spop_vecnorm_ext::apply(
   const uword method_id = expr.aux_uword_a;
   const uword dim = expr.aux_uword_b;
 
-  arma_debug_check((method_id == 0), "vecnorm(): unsupported vector norm type");
-  arma_debug_check((dim > 1), "vecnorm(): parameter 'dim' must be 0 or 1");
+  arma_conform_check((method_id == 0), "vecnorm(): unsupported vector norm type");
+  arma_conform_check((dim > 1), "vecnorm(): parameter 'dim' must be 0 or 1");
 
   const unwrap_spmat<T1> U(expr.m);
   const SpMat<eT>& X = U.M;
@@ -118,27 +114,23 @@ inline void spop_vecnorm_ext::apply(
   X.sync();
 
   if (dim == 0) {
-    Mat<T> tmp;
-
-    spop_vecnorm_ext::apply_direct(tmp, X, method_id);
-
-    out = tmp;
+    op_sp_vecnorm_ext::apply_direct(out, X, method_id);
   } else if (dim == 1) {
     Mat<T> tmp;
     SpMat<eT> Xt;
 
     spop_strans::apply_noalias(Xt, X);
 
-    spop_vecnorm_ext::apply_direct(tmp, Xt, method_id);
+    op_sp_vecnorm_ext::apply_direct(tmp, Xt, method_id);
 
     out = tmp.t();
   }
 }
 
 template <typename eT>
-inline void spop_vecnorm_ext::apply_direct(Mat<typename get_pod_type<eT>::result>& out,
-                                           const SpMat<eT>& X, const uword method_id) {
-  arma_extra_debug_sigprint();
+inline void op_sp_vecnorm_ext::apply_direct(Mat<typename get_pod_type<eT>::result>& out,
+                                            const SpMat<eT>& X, const uword method_id) {
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<eT>::result T;
 

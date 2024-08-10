@@ -21,9 +21,9 @@
 template <typename eT>
 inline void op_hist::apply_noalias(Mat<uword>& out, const Mat<eT>& A, const uword n_bins,
                                    const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check(
+  arma_conform_check(
       ((A.is_vec() == false) && (A.is_empty() == false)),
       "hist(): only vectors are supported when automatically determining bin centers");
 
@@ -95,7 +95,7 @@ inline void op_hist::apply_noalias(Mat<uword>& out, const Mat<eT>& A, const uwor
 
 template <typename T1>
 inline void op_hist::apply(Mat<uword>& out, const mtOp<uword, T1, op_hist>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword n_bins = X.aux_uword_a;
 

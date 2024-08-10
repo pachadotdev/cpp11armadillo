@@ -212,6 +212,9 @@ inline eT dot(const uword n_elem, const eT* x, const eT* y) {
 
       eT result[2];  // paranoia: using two elements instead of one
 
+      result[0] = eT(0);
+      result[1] = eT(0);
+
       blas::gemv(&trans, &m, &n, &alpha, x, &m, y, &inc, &beta, &result[0], &inc);
 
       return result[0];
@@ -249,6 +252,9 @@ inline eT dot(const uword n_elem, const eT* x, const eT* y) {
 
     eT result[2];  // paranoia: using two elements instead of one
 
+    result[0] = eT(0);
+    result[1] = eT(0);
+
     blas::gemv(&trans, &m, &n, &alpha, x, &m, y, &inc, &beta, &result[0], &inc);
 
     return result[0];
@@ -262,6 +268,9 @@ arma_inline eT asum(const uword n_elem, const eT* x) {
   arma_type_check((is_supported_blas_type<eT>::value == false));
 
   if (is_float<eT>::value) {
+    // WARNING: sasum() from Accelerate framework (macOS) may return 'double' instead of
+    // 'float'
+
     blas_int n = blas_int(n_elem);
     blas_int inc = 1;
 
@@ -283,6 +292,9 @@ arma_inline eT nrm2(const uword n_elem, const eT* x) {
   arma_type_check((is_supported_blas_type<eT>::value == false));
 
   if (is_float<eT>::value) {
+    // WARNING: snrm2() from Accelerate framework (macOS) may return 'double' instead of
+    // 'float'
+
     blas_int n = blas_int(n_elem);
     blas_int inc = 1;
 

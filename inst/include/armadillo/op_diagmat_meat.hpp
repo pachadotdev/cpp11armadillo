@@ -21,7 +21,7 @@
 template <typename T1>
 inline void op_diagmat::apply(Mat<typename T1::elem_type>& out,
                               const Op<T1, op_diagmat>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -89,7 +89,7 @@ inline void op_diagmat::apply(Mat<typename T1::elem_type>& out,
 
 template <typename T1>
 inline void op_diagmat::apply(Mat<typename T1::elem_type>& out, const Proxy<T1>& P) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword n_rows = P.get_n_rows();
   const uword n_cols = P.get_n_cols();
@@ -137,7 +137,7 @@ inline void op_diagmat::apply(Mat<typename T1::elem_type>& out, const Proxy<T1>&
 template <typename T1, typename T2>
 inline void op_diagmat::apply(Mat<typename T1::elem_type>& out,
                               const Op<Glue<T1, T2, glue_times>, op_diagmat>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   op_diagmat::apply_times(out, X.m.A, X.m.B);
 }
@@ -146,7 +146,7 @@ template <typename T1, typename T2>
 inline void op_diagmat::apply_times(
     Mat<typename T1::elem_type>& actual_out, const T1& X, const T2& Y,
     const typename arma_not_cx<typename T1::elem_type>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::elem_type eT;
@@ -157,11 +157,11 @@ inline void op_diagmat::apply_times(
   const typename partial_unwrap<T1>::stored_type& A = UA.M;
   const typename partial_unwrap<T2>::stored_type& B = UB.M;
 
-  arma_debug_assert_trans_mul_size<partial_unwrap<T1>::do_trans,
-                                   partial_unwrap<T2>::do_trans>(
+  arma_conform_assert_trans_mul_size<partial_unwrap<T1>::do_trans,
+                                     partial_unwrap<T2>::do_trans>(
       A.n_rows, A.n_cols, B.n_rows, B.n_cols, "matrix multiplication");
 
-  const bool use_alpha = partial_unwrap<T1>::do_times || partial_unwrap<T2>::do_times;
+  constexpr bool use_alpha = partial_unwrap<T1>::do_times || partial_unwrap<T2>::do_times;
   const eT alpha = use_alpha ? (UA.get_val() * UB.get_val()) : eT(0);
 
   const uword A_n_rows = A.n_rows;
@@ -175,7 +175,7 @@ inline void op_diagmat::apply_times(
   if ((partial_unwrap<T1>::do_trans == false) &&
       (partial_unwrap<T2>::do_trans == false)) {
     if ((A_n_rows == 1) || (B_n_cols == 1)) {
-      arma_extra_debug_print("trans_A = false; trans_B = false; vector result");
+      arma_debug_print("trans_A = false; trans_B = false; vector result");
 
       const Mat<eT> C = A * B;
       const eT* C_mem = C.memptr();
@@ -192,7 +192,7 @@ inline void op_diagmat::apply_times(
   } else if ((partial_unwrap<T1>::do_trans == true) &&
              (partial_unwrap<T2>::do_trans == false)) {
     if ((A_n_cols == 1) || (B_n_cols == 1)) {
-      arma_extra_debug_print("trans_A = true; trans_B = false; vector result");
+      arma_debug_print("trans_A = true; trans_B = false; vector result");
 
       const Mat<eT> C = trans(A) * B;
       const eT* C_mem = C.memptr();
@@ -209,7 +209,7 @@ inline void op_diagmat::apply_times(
   } else if ((partial_unwrap<T1>::do_trans == false) &&
              (partial_unwrap<T2>::do_trans == true)) {
     if ((A_n_rows == 1) || (B_n_rows == 1)) {
-      arma_extra_debug_print("trans_A = false; trans_B = true; vector result");
+      arma_debug_print("trans_A = false; trans_B = true; vector result");
 
       const Mat<eT> C = A * trans(B);
       const eT* C_mem = C.memptr();
@@ -226,7 +226,7 @@ inline void op_diagmat::apply_times(
   } else if ((partial_unwrap<T1>::do_trans == true) &&
              (partial_unwrap<T2>::do_trans == true)) {
     if ((A_n_cols == 1) || (B_n_rows == 1)) {
-      arma_extra_debug_print("trans_A = true; trans_B = true; vector result");
+      arma_debug_print("trans_A = true; trans_B = true; vector result");
 
       const Mat<eT> C = trans(A) * trans(B);
       const eT* C_mem = C.memptr();
@@ -251,7 +251,7 @@ inline void op_diagmat::apply_times(
 
   if ((partial_unwrap<T1>::do_trans == false) &&
       (partial_unwrap<T2>::do_trans == false)) {
-    arma_extra_debug_print("trans_A = false; trans_B = false; matrix result");
+    arma_debug_print("trans_A = false; trans_B = false; matrix result");
 
     out.zeros(A_n_rows, B_n_cols);
 
@@ -289,7 +289,7 @@ inline void op_diagmat::apply_times(
     }
   } else if ((partial_unwrap<T1>::do_trans == true) &&
              (partial_unwrap<T2>::do_trans == false)) {
-    arma_extra_debug_print("trans_A = true; trans_B = false; matrix result");
+    arma_debug_print("trans_A = true; trans_B = false; matrix result");
 
     out.zeros(A_n_cols, B_n_cols);
 
@@ -307,7 +307,7 @@ inline void op_diagmat::apply_times(
     }
   } else if ((partial_unwrap<T1>::do_trans == false) &&
              (partial_unwrap<T2>::do_trans == true)) {
-    arma_extra_debug_print("trans_A = false; trans_B = true; matrix result");
+    arma_debug_print("trans_A = false; trans_B = true; matrix result");
 
     out.zeros(A_n_rows, B_n_rows);
 
@@ -326,7 +326,7 @@ inline void op_diagmat::apply_times(
     }
   } else if ((partial_unwrap<T1>::do_trans == true) &&
              (partial_unwrap<T2>::do_trans == true)) {
-    arma_extra_debug_print("trans_A = true; trans_B = true; matrix result");
+    arma_debug_print("trans_A = true; trans_B = true; matrix result");
 
     out.zeros(A_n_cols, B_n_rows);
 
@@ -356,7 +356,7 @@ template <typename T1, typename T2>
 inline void op_diagmat::apply_times(
     Mat<typename T1::elem_type>& actual_out, const T1& X, const T2& Y,
     const typename arma_cx_only<typename T1::elem_type>::result* junk) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::pod_type T;
@@ -368,11 +368,11 @@ inline void op_diagmat::apply_times(
   const typename partial_unwrap<T1>::stored_type& A = UA.M;
   const typename partial_unwrap<T2>::stored_type& B = UB.M;
 
-  arma_debug_assert_trans_mul_size<partial_unwrap<T1>::do_trans,
-                                   partial_unwrap<T2>::do_trans>(
+  arma_conform_assert_trans_mul_size<partial_unwrap<T1>::do_trans,
+                                     partial_unwrap<T2>::do_trans>(
       A.n_rows, A.n_cols, B.n_rows, B.n_cols, "matrix multiplication");
 
-  const bool use_alpha = partial_unwrap<T1>::do_times || partial_unwrap<T2>::do_times;
+  constexpr bool use_alpha = partial_unwrap<T1>::do_times || partial_unwrap<T2>::do_times;
   const eT alpha = use_alpha ? (UA.get_val() * UB.get_val()) : eT(0);
 
   const uword A_n_rows = A.n_rows;
@@ -386,7 +386,7 @@ inline void op_diagmat::apply_times(
   if ((partial_unwrap<T1>::do_trans == false) &&
       (partial_unwrap<T2>::do_trans == false)) {
     if ((A_n_rows == 1) || (B_n_cols == 1)) {
-      arma_extra_debug_print("trans_A = false; trans_B = false; vector result");
+      arma_debug_print("trans_A = false; trans_B = false; vector result");
 
       const Mat<eT> C = A * B;
       const eT* C_mem = C.memptr();
@@ -403,7 +403,7 @@ inline void op_diagmat::apply_times(
   } else if ((partial_unwrap<T1>::do_trans == true) &&
              (partial_unwrap<T2>::do_trans == false)) {
     if ((A_n_cols == 1) || (B_n_cols == 1)) {
-      arma_extra_debug_print("trans_A = true; trans_B = false; vector result");
+      arma_debug_print("trans_A = true; trans_B = false; vector result");
 
       const Mat<eT> C = trans(A) * B;
       const eT* C_mem = C.memptr();
@@ -420,7 +420,7 @@ inline void op_diagmat::apply_times(
   } else if ((partial_unwrap<T1>::do_trans == false) &&
              (partial_unwrap<T2>::do_trans == true)) {
     if ((A_n_rows == 1) || (B_n_rows == 1)) {
-      arma_extra_debug_print("trans_A = false; trans_B = true; vector result");
+      arma_debug_print("trans_A = false; trans_B = true; vector result");
 
       const Mat<eT> C = A * trans(B);
       const eT* C_mem = C.memptr();
@@ -437,7 +437,7 @@ inline void op_diagmat::apply_times(
   } else if ((partial_unwrap<T1>::do_trans == true) &&
              (partial_unwrap<T2>::do_trans == true)) {
     if ((A_n_cols == 1) || (B_n_rows == 1)) {
-      arma_extra_debug_print("trans_A = true; trans_B = true; vector result");
+      arma_debug_print("trans_A = true; trans_B = true; vector result");
 
       const Mat<eT> C = trans(A) * trans(B);
       const eT* C_mem = C.memptr();
@@ -462,7 +462,7 @@ inline void op_diagmat::apply_times(
 
   if ((partial_unwrap<T1>::do_trans == false) &&
       (partial_unwrap<T2>::do_trans == false)) {
-    arma_extra_debug_print("trans_A = false; trans_B = false; matrix result");
+    arma_debug_print("trans_A = false; trans_B = false; matrix result");
 
     out.zeros(A_n_rows, B_n_cols);
 
@@ -498,7 +498,7 @@ inline void op_diagmat::apply_times(
     }
   } else if ((partial_unwrap<T1>::do_trans == true) &&
              (partial_unwrap<T2>::do_trans == false)) {
-    arma_extra_debug_print("trans_A = true; trans_B = false; matrix result");
+    arma_debug_print("trans_A = true; trans_B = false; matrix result");
 
     out.zeros(A_n_cols, B_n_cols);
 
@@ -537,7 +537,7 @@ inline void op_diagmat::apply_times(
     }
   } else if ((partial_unwrap<T1>::do_trans == false) &&
              (partial_unwrap<T2>::do_trans == true)) {
-    arma_extra_debug_print("trans_A = false; trans_B = true; matrix result");
+    arma_debug_print("trans_A = false; trans_B = true; matrix result");
 
     out.zeros(A_n_rows, B_n_rows);
 
@@ -571,7 +571,7 @@ inline void op_diagmat::apply_times(
     }
   } else if ((partial_unwrap<T1>::do_trans == true) &&
              (partial_unwrap<T2>::do_trans == true)) {
-    arma_extra_debug_print("trans_A = true; trans_B = true; matrix result");
+    arma_debug_print("trans_A = true; trans_B = true; matrix result");
 
     out.zeros(A_n_cols, B_n_rows);
 
@@ -619,7 +619,7 @@ inline void op_diagmat::apply_times(
 template <typename T1>
 inline void op_diagmat2::apply(Mat<typename T1::elem_type>& out,
                                const Op<T1, op_diagmat2>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -642,7 +642,7 @@ inline void op_diagmat2::apply(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline void op_diagmat2::apply(Mat<typename T1::elem_type>& out, const Proxy<T1>& P,
                                const uword row_offset, const uword col_offset) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword n_rows = P.get_n_rows();
   const uword n_cols = P.get_n_cols();
@@ -679,9 +679,9 @@ inline void op_diagmat2::apply(Mat<typename T1::elem_type>& out, const Proxy<T1>
     }
   } else  // P represents a matrix
   {
-    arma_debug_check_bounds(((row_offset > 0) && (row_offset >= n_rows)) ||
-                                ((col_offset > 0) && (col_offset >= n_cols)),
-                            "diagmat(): requested diagonal out of bounds");
+    arma_conform_check_bounds(((row_offset > 0) && (row_offset >= n_rows)) ||
+                                  ((col_offset > 0) && (col_offset >= n_cols)),
+                              "diagmat(): requested diagonal out of bounds");
 
     out.zeros(n_rows, n_cols);
 

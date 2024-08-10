@@ -27,7 +27,7 @@ template <typename T1>
 inline void op_logmat::apply(
     Mat<std::complex<typename T1::elem_type> >& out,
     const mtOp<std::complex<typename T1::elem_type>, T1, op_logmat>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_logmat::apply_direct(out, in.m, in.aux_uword_a);
 
@@ -40,13 +40,14 @@ inline void op_logmat::apply(
 template <typename T1>
 inline bool op_logmat::apply_direct(Mat<std::complex<typename T1::elem_type> >& out,
                                     const Op<T1, op_diagmat>& expr, const uword) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type T;
 
   const diagmat_proxy<T1> P(expr.m);
 
-  arma_debug_check((P.n_rows != P.n_cols), "logmat(): given matrix must be square sized");
+  arma_conform_check((P.n_rows != P.n_cols),
+                     "logmat(): given matrix must be square sized");
 
   const uword N = P.n_rows;
 
@@ -69,7 +70,7 @@ template <typename T1>
 inline bool op_logmat::apply_direct(Mat<std::complex<typename T1::elem_type> >& out,
                                     const Base<typename T1::elem_type, T1>& expr,
                                     const uword n_iters) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type in_T;
   typedef typename std::complex<in_T> out_T;
@@ -77,8 +78,8 @@ inline bool op_logmat::apply_direct(Mat<std::complex<typename T1::elem_type> >& 
   const quasi_unwrap<T1> expr_unwrap(expr.get_ref());
   const Mat<in_T>& A = expr_unwrap.M;
 
-  arma_debug_check((A.is_square() == false),
-                   "logmat(): given matrix must be square sized");
+  arma_conform_check((A.is_square() == false),
+                     "logmat(): given matrix must be square sized");
 
   if (A.n_elem == 0) {
     out.reset();
@@ -90,7 +91,7 @@ inline bool op_logmat::apply_direct(Mat<std::complex<typename T1::elem_type> >& 
   }
 
   if (A.is_diagmat()) {
-    arma_extra_debug_print("op_logmat: detected diagonal matrix");
+    arma_debug_print("op_logmat: detected diagonal matrix");
 
     const uword N = A.n_rows;
 
@@ -112,7 +113,7 @@ inline bool op_logmat::apply_direct(Mat<std::complex<typename T1::elem_type> >& 
   const bool try_sympd = arma_config::optimise_sym && sym_helper::guess_sympd(A);
 
   if (try_sympd) {
-    arma_extra_debug_print("op_logmat: attempting sympd optimisation");
+    arma_debug_print("op_logmat: attempting sympd optimisation");
 
     // if matrix A is sympd, all its eigenvalues are positive
 
@@ -142,7 +143,7 @@ inline bool op_logmat::apply_direct(Mat<std::complex<typename T1::elem_type> >& 
       }
     }
 
-    arma_extra_debug_print("op_logmat: sympd optimisation failed");
+    arma_debug_print("op_logmat: sympd optimisation failed");
 
     // fallthrough if eigen decomposition failed or an eigenvalue is <= 0
   }
@@ -164,7 +165,7 @@ inline bool op_logmat::apply_direct(Mat<std::complex<typename T1::elem_type> >& 
 template <typename T1>
 inline void op_logmat_cx::apply(Mat<typename T1::elem_type>& out,
                                 const Op<T1, op_logmat_cx>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_logmat_cx::apply_direct(out, in.m, in.aux_uword_a);
 
@@ -177,7 +178,7 @@ inline void op_logmat_cx::apply(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline bool op_logmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
                                        const Op<T1, op_diagmat>& expr, const uword) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -201,9 +202,10 @@ inline bool op_logmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline bool op_logmat_cx::apply_direct_noalias(Mat<typename T1::elem_type>& out,
                                                const diagmat_proxy<T1>& P) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((P.n_rows != P.n_cols), "logmat(): given matrix must be square sized");
+  arma_conform_check((P.n_rows != P.n_cols),
+                     "logmat(): given matrix must be square sized");
 
   const uword N = P.n_rows;
 
@@ -220,14 +222,15 @@ template <typename T1>
 inline bool op_logmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
                                        const Base<typename T1::elem_type, T1>& expr,
                                        const uword n_iters) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::pod_type T;
   typedef typename T1::elem_type eT;
 
   Mat<eT> S = expr.get_ref();
 
-  arma_debug_check((S.n_rows != S.n_cols), "logmat(): given matrix must be square sized");
+  arma_conform_check((S.n_rows != S.n_cols),
+                     "logmat(): given matrix must be square sized");
 
   if (S.n_elem == 0) {
     out.reset();
@@ -239,7 +242,7 @@ inline bool op_logmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
   }
 
   if (S.is_diagmat()) {
-    arma_extra_debug_print("op_logmat_cx: detected diagonal matrix");
+    arma_debug_print("op_logmat_cx: detected diagonal matrix");
 
     const uword N = S.n_rows;
 
@@ -255,7 +258,7 @@ inline bool op_logmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
   const bool try_sympd = arma_config::optimise_sym && sym_helper::guess_sympd(S);
 
   if (try_sympd) {
-    arma_extra_debug_print("op_logmat_cx: attempting sympd optimisation");
+    arma_debug_print("op_logmat_cx: attempting sympd optimisation");
 
     // if matrix S is sympd, all its eigenvalues are positive
 
@@ -285,7 +288,7 @@ inline bool op_logmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
       }
     }
 
-    arma_extra_debug_print("op_logmat_cx: sympd optimisation failed");
+    arma_debug_print("op_logmat_cx: sympd optimisation failed");
 
     // fallthrough if eigen decomposition failed or an eigenvalue is <= 0
   }
@@ -296,7 +299,7 @@ inline bool op_logmat_cx::apply_direct(Mat<typename T1::elem_type>& out,
 template <typename T>
 inline bool op_logmat_cx::apply_common(Mat<std::complex<T> >& out,
                                        Mat<std::complex<T> >& S, const uword n_iters) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename std::complex<T> eT;
 
@@ -305,7 +308,7 @@ inline bool op_logmat_cx::apply_common(Mat<std::complex<T> >& out,
   const bool schur_ok = auxlib::schur(U, S);
 
   if (schur_ok == false) {
-    arma_extra_debug_print("logmat(): schur decomposition failed");
+    arma_debug_print("logmat(): schur decomposition failed");
     return false;
   }
 
@@ -348,7 +351,7 @@ inline bool op_logmat_cx::apply_common(Mat<std::complex<T> >& out,
       }
 
       // sanity check, for development purposes only
-      arma_debug_check((j2 > j1), "internal error: op_logmat::apply_direct(): j2 > j1");
+      arma_conform_check((j2 > j1), "internal error: op_logmat::apply_direct(): j2 > j1");
 
       if (((j1 - j2) <= 1) || (p == 2)) {
         m = j1;
@@ -359,7 +362,7 @@ inline bool op_logmat_cx::apply_common(Mat<std::complex<T> >& out,
     const bool sqrtmat_ok = op_sqrtmat_cx::apply_direct(S, S);
 
     if (sqrtmat_ok == false) {
-      arma_extra_debug_print("logmat(): sqrtmat() failed");
+      arma_debug_print("logmat(): sqrtmat() failed");
       return false;
     }
 
@@ -367,7 +370,7 @@ inline bool op_logmat_cx::apply_common(Mat<std::complex<T> >& out,
   }
 
   if (iter >= n_iters) {
-    arma_debug_warn_level(2, "logmat(): reached max iterations without full convergence");
+    arma_warn(2, "logmat(): reached max iterations without full convergence");
   }
 
   S.diag() -= eT(1);
@@ -389,7 +392,7 @@ inline bool op_logmat_cx::apply_common(Mat<std::complex<T> >& out,
 
 template <typename eT>
 inline bool op_logmat_cx::helper(Mat<eT>& A, const uword m) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (A.internal_has_nonfinite()) {
     return false;
@@ -408,7 +411,7 @@ inline bool op_logmat_cx::helper(Mat<eT>& A, const uword m) {
   const bool eig_ok = eig_sym_helper(eigval, eigvec, tmp, 'd', "logmat()");
 
   if (eig_ok == false) {
-    arma_extra_debug_print("logmat(): eig_sym() failed");
+    arma_debug_print("logmat(): eig_sym() failed");
     return false;
   }
 
@@ -430,7 +433,7 @@ inline bool op_logmat_cx::helper(Mat<eT>& A, const uword m) {
         solve(X, trimatu(nodes(i) * A + eye<Mat<eT> >(N, N)), A, solve_opts::no_approx);
 
     if (solve_ok == false) {
-      arma_extra_debug_print("logmat(): solve() failed");
+      arma_debug_print("logmat(): solve() failed");
       return false;
     }
 
@@ -445,7 +448,7 @@ inline bool op_logmat_cx::helper(Mat<eT>& A, const uword m) {
 template <typename T1>
 inline void op_logmat_sympd::apply(Mat<typename T1::elem_type>& out,
                                    const Op<T1, op_logmat_sympd>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_logmat_sympd::apply_direct(out, in.m);
 
@@ -458,7 +461,7 @@ inline void op_logmat_sympd::apply(Mat<typename T1::elem_type>& out,
 template <typename T1>
 inline bool op_logmat_sympd::apply_direct(Mat<typename T1::elem_type>& out,
                                           const Base<typename T1::elem_type, T1>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
 #if defined(ARMA_USE_LAPACK)
   {
@@ -468,17 +471,16 @@ inline bool op_logmat_sympd::apply_direct(Mat<typename T1::elem_type>& out,
     const unwrap<T1> U(expr.get_ref());
     const Mat<eT>& X = U.M;
 
-    arma_debug_check((X.is_square() == false),
-                     "logmat_sympd(): given matrix must be square sized");
+    arma_conform_check((X.is_square() == false),
+                       "logmat_sympd(): given matrix must be square sized");
 
-    if ((arma_config::debug) && (arma_config::warn_level > 0) && (is_cx<eT>::yes) &&
-        (sym_helper::check_diag_imag(X) == false)) {
-      arma_debug_warn_level(
-          1, "logmat_sympd(): imaginary components on diagonal are non-zero");
+    if ((arma_config::check_conform) && (arma_config::warn_level > 0) &&
+        (is_cx<eT>::yes) && (sym_helper::check_diag_imag(X) == false)) {
+      arma_warn(1, "logmat_sympd(): imaginary components on diagonal are non-zero");
     }
 
     if (is_op_diagmat<T1>::value || X.is_diagmat()) {
-      arma_extra_debug_print("op_logmat_sympd: detected diagonal matrix");
+      arma_debug_print("op_logmat_sympd: detected diagonal matrix");
 
       out = X;
 

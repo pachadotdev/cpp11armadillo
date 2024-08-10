@@ -53,7 +53,7 @@ class syrk_vec {
   template <typename eT, typename TA>
   arma_hot inline static void apply(Mat<eT>& C, const TA& A, const eT alpha = eT(1),
                                     const eT beta = eT(0)) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     const uword A_n1 = (do_trans_A == false) ? A.n_rows : A.n_cols;
     const uword A_n2 = (do_trans_A == false) ? A.n_cols : A.n_rows;
@@ -155,7 +155,7 @@ class syrk_emul {
   template <typename eT, typename TA>
   arma_hot inline static void apply(Mat<eT>& C, const TA& A, const eT alpha = eT(1),
                                     const eT beta = eT(0)) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     // do_trans_A == false  ->   C = alpha * A   * A^T + beta*C
     // do_trans_A == true   ->   C = alpha * A^T * A   + beta*C
@@ -212,7 +212,7 @@ class syrk {
   template <typename eT, typename TA>
   inline static void apply_blas_type(Mat<eT>& C, const TA& A, const eT alpha = eT(1),
                                      const eT beta = eT(0)) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     if (A.is_vec()) {
       // work around poor handling of vectors by syrk() in standard BLAS
@@ -266,7 +266,7 @@ class syrk {
           return;
         }
 
-        arma_extra_debug_print("blas::syrk()");
+        arma_debug_print("blas::syrk()");
 
         const char uplo = 'U';
 
@@ -280,7 +280,7 @@ class syrk {
 
         const blas_int lda = (do_trans_A) ? k : n;
 
-        arma_extra_debug_print(arma_str::format("blas::syrk(): trans_A = %c") % trans_A);
+        arma_debug_print(arma_str::format("blas::syrk(): trans_A: %c") % trans_A);
 
         blas::syrk<eT>(&uplo, &trans_A, &n, &k, &local_alpha, A.mem, &lda, &local_beta,
                        C.memptr(),

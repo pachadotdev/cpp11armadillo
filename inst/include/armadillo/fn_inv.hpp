@@ -23,7 +23,7 @@ arma_warn_unused arma_inline
     typename enable_if2<is_supported_blas_type<typename T1::elem_type>::value,
                         const Op<T1, op_inv_gen_default> >::result
     inv(const Base<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_inv_gen_default>(X.get_ref());
 }
@@ -32,13 +32,13 @@ template <typename T1>
 inline typename enable_if2<is_supported_blas_type<typename T1::elem_type>::value,
                            bool>::result
 inv(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = op_inv_gen_default::apply_direct(out, X.get_ref(), "inv()");
 
   if (status == false) {
     out.soft_reset();
-    arma_debug_warn_level(3, "inv(): matrix is singular");
+    arma_warn(3, "inv(): matrix is singular");
   }
 
   return status;
@@ -49,7 +49,7 @@ arma_warn_unused arma_inline
     typename enable_if2<is_supported_blas_type<typename T1::elem_type>::value,
                         const Op<T1, op_inv_gen_full> >::result
     inv(const Base<typename T1::elem_type, T1>& X, const inv_opts::opts& opts) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Op<T1, op_inv_gen_full>(X.get_ref(), opts.flags, uword(0));
 }
@@ -59,14 +59,14 @@ inline typename enable_if2<is_supported_blas_type<typename T1::elem_type>::value
                            bool>::result
 inv(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type, T1>& X,
     const inv_opts::opts& opts) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status =
       op_inv_gen_full::apply_direct(out, X.get_ref(), "inv()", opts.flags);
 
   if (status == false) {
     out.soft_reset();
-    arma_debug_warn_level(3, "inv(): matrix is singular");
+    arma_warn(3, "inv(): matrix is singular");
   }
 
   return status;
@@ -77,7 +77,7 @@ inline typename enable_if2<is_supported_blas_type<typename T1::elem_type>::value
                            bool>::result
 inv(Mat<typename T1::elem_type>& out_inv, typename T1::pod_type& out_rcond,
     const Base<typename T1::elem_type, T1>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::pod_type T;
 
@@ -90,7 +90,7 @@ inv(Mat<typename T1::elem_type>& out_inv, typename T1::pod_type& out_rcond,
   if (status == false) {
     out_rcond = T(0);
     out_inv.soft_reset();
-    arma_debug_warn_level(3, "inv(): matrix is singular");
+    arma_warn(3, "inv(): matrix is singular");
   }
 
   return status;

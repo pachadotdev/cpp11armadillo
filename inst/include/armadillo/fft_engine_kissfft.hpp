@@ -101,7 +101,7 @@ class fft_engine_kissfft {
   }
 
   inline fft_engine_kissfft(const uword in_N) : N(in_N) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     const uword len = calc_radix<false>();
 
@@ -124,7 +124,7 @@ class fft_engine_kissfft {
   }
 
   arma_hot inline void butterfly_2(cx_type* Y, const uword stride, const uword m) const {
-    // arma_extra_debug_sigprint();
+    // arma_debug_sigprint();
 
     const cx_type* coeffs = coeffs_array.memptr();
 
@@ -137,7 +137,7 @@ class fft_engine_kissfft {
   }
 
   arma_hot inline void butterfly_3(cx_type* Y, const uword stride, const uword m) const {
-    // arma_extra_debug_sigprint();
+    // arma_debug_sigprint();
 
     arma_aligned cx_type tmp[5];
 
@@ -176,7 +176,7 @@ class fft_engine_kissfft {
   }
 
   arma_hot inline void butterfly_4(cx_type* Y, const uword stride, const uword m) const {
-    // arma_extra_debug_sigprint();
+    // arma_debug_sigprint();
 
     arma_aligned cx_type tmp[7];
 
@@ -213,7 +213,7 @@ class fft_engine_kissfft {
   }
 
   arma_hot inline void butterfly_5(cx_type* Y, const uword stride, const uword m) const {
-    // arma_extra_debug_sigprint();
+    // arma_debug_sigprint();
 
     arma_aligned cx_type tmp[13];
 
@@ -275,7 +275,7 @@ class fft_engine_kissfft {
 
   arma_hot inline void butterfly_N(cx_type* Y, const uword stride, const uword m,
                                    const uword r) {
-    // arma_extra_debug_sigprint();
+    // arma_debug_sigprint();
 
     const cx_type* coeffs = coeffs_array.memptr();
 
@@ -314,7 +314,7 @@ class fft_engine_kissfft {
 
   inline void run(cx_type* Y, const cx_type* X, const uword stage = 0,
                   const uword stride = 1) {
-    arma_extra_debug_sigprint();
+    arma_debug_sigprint();
 
     const uword m = residue[stage];
     const uword r = radix[stage];

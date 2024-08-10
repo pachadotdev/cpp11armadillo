@@ -24,17 +24,17 @@ inline bool svds_helper(
     Mat<typename T1::elem_type>& V, const SpBase<typename T1::elem_type, T1>& X,
     const uword k, const typename T1::pod_type tol, const bool calc_UV,
     const typename arma_real_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type T;
 
-  arma_debug_check(
+  arma_conform_check(
       (((void*)(&U) == (void*)(&S)) || (&U == &V) || ((void*)(&S) == (void*)(&V))),
       "svds(): two or more output objects are the same object");
 
-  arma_debug_check((tol < T(0)), "svds(): tol must be >= 0");
+  arma_conform_check((tol < T(0)), "svds(): tol must be >= 0");
 
   const unwrap_spmat<T1> tmp(X.get_ref());
   const SpMat<eT>& A = tmp.M;
@@ -121,7 +121,7 @@ inline bool svds_helper(
   }
 
   if (S.n_elem < k) {
-    arma_debug_warn_level(1, "svds(): found fewer singular values than specified");
+    arma_warn(1, "svds(): found fewer singular values than specified");
   }
 
   return true;
@@ -133,7 +133,7 @@ inline bool svds_helper(
     Mat<typename T1::elem_type>& V, const SpBase<typename T1::elem_type, T1>& X,
     const uword k, const typename T1::pod_type tol, const bool calc_UV,
     const typename arma_cx_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   typedef typename T1::elem_type eT;
@@ -145,11 +145,11 @@ inline bool svds_helper(
     return false;
   }
 
-  arma_debug_check(
+  arma_conform_check(
       (((void*)(&U) == (void*)(&S)) || (&U == &V) || ((void*)(&S) == (void*)(&V))),
       "svds(): two or more output objects are the same object");
 
-  arma_debug_check((tol < T(0)), "svds(): tol must be >= 0");
+  arma_conform_check((tol < T(0)), "svds(): tol must be >= 0");
 
   const unwrap_spmat<T1> tmp(X.get_ref());
   const SpMat<eT>& A = tmp.M;
@@ -238,7 +238,7 @@ inline bool svds_helper(
   }
 
   if (S.n_elem < k) {
-    arma_debug_warn_level(1, "svds(): found fewer singular values than specified");
+    arma_warn(1, "svds(): found fewer singular values than specified");
   }
 
   return true;
@@ -252,13 +252,13 @@ inline bool svds(
     Mat<typename T1::elem_type>& V, const SpBase<typename T1::elem_type, T1>& X,
     const uword k, const typename T1::pod_type tol = 0.0,
     const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   const bool status = svds_helper(U, S, V, X.get_ref(), k, tol, true);
 
   if (status == false) {
-    arma_debug_warn_level(3, "svds(): decomposition failed");
+    arma_warn(3, "svds(): decomposition failed");
   }
 
   return status;
@@ -270,7 +270,7 @@ inline bool svds(
     Col<typename T1::pod_type>& S, const SpBase<typename T1::elem_type, T1>& X,
     const uword k, const typename T1::pod_type tol = 0.0,
     const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   Mat<typename T1::elem_type> U;
@@ -279,7 +279,7 @@ inline bool svds(
   const bool status = svds_helper(U, S, V, X.get_ref(), k, tol, false);
 
   if (status == false) {
-    arma_debug_warn_level(3, "svds(): decomposition failed");
+    arma_warn(3, "svds(): decomposition failed");
   }
 
   return status;
@@ -291,7 +291,7 @@ arma_warn_unused inline Col<typename T1::pod_type> svds(
     const SpBase<typename T1::elem_type, T1>& X, const uword k,
     const typename T1::pod_type tol = 0.0,
     const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   arma_ignore(junk);
 
   Col<typename T1::pod_type> S;

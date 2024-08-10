@@ -15,32 +15,15 @@
 // limitations under the License.
 // ------------------------------------------------------------------------
 
-//! \addtogroup spop_vecnorm
+//! \addtogroup op_sp_diagvec
 //! @{
 
-class spop_vecnorm : public traits_op_xvec {
- public:
-  template <typename T1>
-  inline static void apply(SpMat<typename T1::pod_type>& out,
-                           const mtSpOp<typename T1::pod_type, T1, spop_vecnorm>& expr);
-
-  template <typename eT>
-  inline static void apply_direct(Mat<typename get_pod_type<eT>::result>& out,
-                                  const SpMat<eT>& X, const uword k);
-};
-
-//
-
-class spop_vecnorm_ext : public traits_op_xvec {
+class op_sp_diagvec : public traits_op_col {
  public:
   template <typename T1>
   inline static void apply(
-      SpMat<typename T1::pod_type>& out,
-      const mtSpOp<typename T1::pod_type, T1, spop_vecnorm_ext>& expr);
-
-  template <typename eT>
-  inline static void apply_direct(Mat<typename get_pod_type<eT>::result>& out,
-                                  const SpMat<eT>& X, const uword method_id);
+      Mat<typename T1::elem_type>& out,
+      const mtSpReduceOp<typename T1::elem_type, T1, op_sp_diagvec>& in);
 };
 
 //! @}

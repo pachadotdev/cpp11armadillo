@@ -21,7 +21,7 @@
 template <typename T1>
 inline void op_shift_vec::apply(Mat<typename T1::elem_type>& out,
                                 const Op<T1, op_shift_vec>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -47,12 +47,17 @@ inline void op_shift_vec::apply(Mat<typename T1::elem_type>& out,
 template <typename eT>
 inline void op_shift::apply_noalias(Mat<eT>& out, const Mat<eT>& X, const uword len,
                                     const uword neg, const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check_bounds(((dim == 0) && (len >= X.n_rows)),
-                          "shift(): shift amount out of bounds");
-  arma_debug_check_bounds(((dim == 1) && (len >= X.n_cols)),
-                          "shift(): shift amount out of bounds");
+  arma_conform_check_bounds(((dim == 0) && (len >= X.n_rows)),
+                            "shift(): shift amount out of bounds");
+  arma_conform_check_bounds(((dim == 1) && (len >= X.n_cols)),
+                            "shift(): shift amount out of bounds");
+
+  if (len == 0) {
+    out = X;
+    return;
+  }
 
   out.copy_size(X);
 

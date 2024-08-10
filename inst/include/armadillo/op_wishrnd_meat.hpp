@@ -26,7 +26,7 @@
 template <typename T1>
 inline void op_wishrnd::apply(Mat<typename T1::elem_type>& out,
                               const Op<T1, op_wishrnd>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -45,7 +45,7 @@ template <typename T1>
 inline bool op_wishrnd::apply_direct(Mat<typename T1::elem_type>& out,
                                      const Base<typename T1::elem_type, T1>& X,
                                      const typename T1::elem_type df, const uword mode) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -78,10 +78,10 @@ inline bool op_wishrnd::apply_direct(Mat<typename T1::elem_type>& out,
 
 template <typename eT>
 inline bool op_wishrnd::apply_noalias_mode1(Mat<eT>& out, const Mat<eT>& S, const eT df) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((S.is_square() == false),
-                   "wishrnd(): given matrix must be square sized");
+  arma_conform_check((S.is_square() == false),
+                     "wishrnd(): given matrix must be square sized");
 
   if (S.is_empty()) {
     out.reset();
@@ -105,11 +105,11 @@ inline bool op_wishrnd::apply_noalias_mode1(Mat<eT>& out, const Mat<eT>& S, cons
 
 template <typename eT>
 inline bool op_wishrnd::apply_noalias_mode2(Mat<eT>& out, const Mat<eT>& D, const eT df) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((df <= eT(0)), "df must be greater than zero");
-  arma_debug_check((D.is_square() == false),
-                   "wishrnd(): given matrix must be square sized");
+  arma_conform_check((df <= eT(0)), "df must be greater than zero");
+  arma_conform_check((D.is_square() == false),
+                     "wishrnd(): given matrix must be square sized");
 
   if (D.is_empty()) {
     out.reset();
@@ -119,7 +119,7 @@ inline bool op_wishrnd::apply_noalias_mode2(Mat<eT>& out, const Mat<eT>& D, cons
   const uword N = D.n_rows;
 
   if (df < eT(N)) {
-    arma_extra_debug_print("simple generator");
+    arma_debug_print("simple generator");
 
     const uword df_floor = uword(std::floor(df));
 
@@ -127,7 +127,7 @@ inline bool op_wishrnd::apply_noalias_mode2(Mat<eT>& out, const Mat<eT>& D, cons
 
     out = tmp.t() * tmp;
   } else {
-    arma_extra_debug_print("standard generator");
+    arma_debug_print("standard generator");
 
     op_chi2rnd_varying_df<eT> chi2rnd_generator;
 
@@ -156,7 +156,7 @@ inline bool op_wishrnd::apply_noalias_mode2(Mat<eT>& out, const Mat<eT>& D, cons
 template <typename T1>
 inline void op_iwishrnd::apply(Mat<typename T1::elem_type>& out,
                                const Op<T1, op_iwishrnd>& expr) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -177,7 +177,7 @@ template <typename T1>
 inline bool op_iwishrnd::apply_direct(Mat<typename T1::elem_type>& out,
                                       const Base<typename T1::elem_type, T1>& X,
                                       const typename T1::elem_type df, const uword mode) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -211,10 +211,10 @@ inline bool op_iwishrnd::apply_direct(Mat<typename T1::elem_type>& out,
 template <typename eT>
 inline bool op_iwishrnd::apply_noalias_mode1(Mat<eT>& out, const Mat<eT>& T,
                                              const eT df) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((T.is_square() == false),
-                   "iwishrnd(): given matrix must be square sized");
+  arma_conform_check((T.is_square() == false),
+                     "iwishrnd(): given matrix must be square sized");
 
   if (T.is_empty()) {
     out.reset();
@@ -246,11 +246,11 @@ inline bool op_iwishrnd::apply_noalias_mode1(Mat<eT>& out, const Mat<eT>& T,
 template <typename eT>
 inline bool op_iwishrnd::apply_noalias_mode2(Mat<eT>& out, const Mat<eT>& Dinv,
                                              const eT df) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_check((df <= eT(0)), "df must be greater than zero");
-  arma_debug_check((Dinv.is_square() == false),
-                   "iwishrnd(): given matrix must be square sized");
+  arma_conform_check((df <= eT(0)), "df must be greater than zero");
+  arma_conform_check((Dinv.is_square() == false),
+                     "iwishrnd(): given matrix must be square sized");
 
   if (Dinv.is_empty()) {
     out.reset();

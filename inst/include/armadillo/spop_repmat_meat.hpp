@@ -21,7 +21,7 @@
 template <typename T1>
 inline void spop_repmat::apply(SpMat<typename T1::elem_type>& out,
                                const SpOp<T1, spop_repmat>& X) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type eT;
 
@@ -41,7 +41,7 @@ inline void spop_repmat::apply(SpMat<typename T1::elem_type>& out,
 template <typename eT>
 inline void spop_repmat::apply_noalias(SpMat<eT>& out, const uword A_n_rows,
                                        const uword A_n_cols, const SpMat<eT>& B) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword B_n_rows = B.n_rows;
   const uword B_n_cols = B.n_cols;
@@ -80,7 +80,7 @@ inline void spop_repmat::apply_noalias(SpMat<eT>& out, const uword A_n_rows,
 // void
 // spop_repmat::apply(SpMat<typename T1::elem_type>& out, const SpOp<T1, spop_repmat>& in)
 //   {
-//   arma_extra_debug_sigprint();
+//   arma_debug_sigprint();
 //
 //   typedef typename T1::elem_type eT;
 //

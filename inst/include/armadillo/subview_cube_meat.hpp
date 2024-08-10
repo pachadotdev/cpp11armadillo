@@ -20,7 +20,7 @@
 
 template <typename eT>
 inline subview_cube<eT>::~subview_cube() {
-  arma_extra_debug_sigprint_this(this);
+  arma_debug_sigprint_this(this);
 }
 
 template <typename eT>
@@ -37,7 +37,7 @@ arma_inline subview_cube<eT>::subview_cube(const Cube<eT>& in_m, const uword in_
       n_elem_slice(in_n_rows * in_n_cols),
       n_slices(in_n_slices),
       n_elem(n_elem_slice * in_n_slices) {
-  arma_extra_debug_sigprint_this(this);
+  arma_debug_sigprint_this(this);
 }
 
 template <typename eT>
@@ -51,7 +51,7 @@ inline subview_cube<eT>::subview_cube(const subview_cube<eT>& in)
       n_elem_slice(in.n_elem_slice),
       n_slices(in.n_slices),
       n_elem(in.n_elem) {
-  arma_extra_debug_sigprint(arma_str::format("this = %x   in = %x") % this % &in);
+  arma_debug_sigprint(arma_str::format("this: %x; in: %x") % this % &in);
 }
 
 template <typename eT>
@@ -65,7 +65,7 @@ inline subview_cube<eT>::subview_cube(subview_cube<eT>&& in)
       n_elem_slice(in.n_elem_slice),
       n_slices(in.n_slices),
       n_elem(in.n_elem) {
-  arma_extra_debug_sigprint(arma_str::format("this = %x   in = %x") % this % &in);
+  arma_debug_sigprint(arma_str::format("this: %x; in: %x") % this % &in);
 
   // for paranoia
 
@@ -82,7 +82,7 @@ inline subview_cube<eT>::subview_cube(subview_cube<eT>&& in)
 template <typename eT>
 template <typename op_type>
 inline void subview_cube<eT>::inplace_op(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   subview_cube<eT>& t = *this;
 
@@ -111,7 +111,7 @@ template <typename eT>
 template <typename op_type, typename T1>
 inline void subview_cube<eT>::inplace_op(const BaseCube<eT, T1>& in,
                                          const char* identifier) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const ProxyCube<T1> P(in.get_ref());
 
@@ -121,14 +121,14 @@ inline void subview_cube<eT>::inplace_op(const BaseCube<eT, T1>& in,
   const uword t_n_cols = t.n_cols;
   const uword t_n_slices = t.n_slices;
 
-  arma_debug_assert_same_size(t, P, identifier);
+  arma_conform_assert_same_size(t, P, identifier);
 
   const bool use_mp =
       arma_config::openmp && ProxyCube<T1>::use_mp && mp_gate<eT>::eval(t.n_elem);
   const bool has_overlap = P.has_overlap(t);
 
   if (has_overlap) {
-    arma_extra_debug_print("aliasing or overlap detected");
+    arma_debug_print("aliasing or overlap detected");
   }
 
   if ((is_Cube<typename ProxyCube<T1>::stored_type>::value) || (use_mp) ||
@@ -236,7 +236,7 @@ template <typename eT>
 template <typename op_type>
 inline void subview_cube<eT>::inplace_op(const subview_cube<eT>& x,
                                          const char* identifier) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (check_overlap(x)) {
     const Cube<eT> tmp(x);
@@ -262,7 +262,7 @@ inline void subview_cube<eT>::inplace_op(const subview_cube<eT>& x,
 
   subview_cube<eT>& t = *this;
 
-  arma_debug_assert_same_size(t, x, identifier);
+  arma_conform_assert_same_size(t, x, identifier);
 
   const uword t_n_rows = t.n_rows;
   const uword t_n_cols = t.n_cols;
@@ -290,10 +290,10 @@ inline void subview_cube<eT>::inplace_op(const subview_cube<eT>& x,
 
 template <typename eT>
 inline void subview_cube<eT>::operator=(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (n_elem != 1) {
-    arma_debug_assert_same_size(n_rows, n_cols, n_slices, 1, 1, 1, "copy into subcube");
+    arma_conform_assert_same_size(n_rows, n_cols, n_slices, 1, 1, 1, "copy into subcube");
   }
 
   Cube<eT>& Q = const_cast<Cube<eT>&>(m);
@@ -303,28 +303,28 @@ inline void subview_cube<eT>::operator=(const eT val) {
 
 template <typename eT>
 inline void subview_cube<eT>::operator+=(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_plus>(val);
 }
 
 template <typename eT>
 inline void subview_cube<eT>::operator-=(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_minus>(val);
 }
 
 template <typename eT>
 inline void subview_cube<eT>::operator*=(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_schur>(val);
 }
 
 template <typename eT>
 inline void subview_cube<eT>::operator/=(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_div>(val);
 }
@@ -332,7 +332,7 @@ inline void subview_cube<eT>::operator/=(const eT val) {
 template <typename eT>
 template <typename T1>
 inline void subview_cube<eT>::operator=(const BaseCube<eT, T1>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_equ>(in, "copy into subcube");
 }
@@ -340,7 +340,7 @@ inline void subview_cube<eT>::operator=(const BaseCube<eT, T1>& in) {
 template <typename eT>
 template <typename T1>
 inline void subview_cube<eT>::operator+=(const BaseCube<eT, T1>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_plus>(in, "addition");
 }
@@ -348,7 +348,7 @@ inline void subview_cube<eT>::operator+=(const BaseCube<eT, T1>& in) {
 template <typename eT>
 template <typename T1>
 inline void subview_cube<eT>::operator-=(const BaseCube<eT, T1>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_minus>(in, "subtraction");
 }
@@ -356,7 +356,7 @@ inline void subview_cube<eT>::operator-=(const BaseCube<eT, T1>& in) {
 template <typename eT>
 template <typename T1>
 inline void subview_cube<eT>::operator%=(const BaseCube<eT, T1>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_schur>(in, "element-wise multiplication");
 }
@@ -364,7 +364,7 @@ inline void subview_cube<eT>::operator%=(const BaseCube<eT, T1>& in) {
 template <typename eT>
 template <typename T1>
 inline void subview_cube<eT>::operator/=(const BaseCube<eT, T1>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_div>(in, "element-wise division");
 }
@@ -372,35 +372,35 @@ inline void subview_cube<eT>::operator/=(const BaseCube<eT, T1>& in) {
 //! x.subcube(...) = y.subcube(...)
 template <typename eT>
 inline void subview_cube<eT>::operator=(const subview_cube<eT>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_equ>(x, "copy into subcube");
 }
 
 template <typename eT>
 inline void subview_cube<eT>::operator+=(const subview_cube<eT>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_plus>(x, "addition");
 }
 
 template <typename eT>
 inline void subview_cube<eT>::operator-=(const subview_cube<eT>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_minus>(x, "subtraction");
 }
 
 template <typename eT>
 inline void subview_cube<eT>::operator%=(const subview_cube<eT>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_schur>(x, "element-wise multiplication");
 }
 
 template <typename eT>
 inline void subview_cube<eT>::operator/=(const subview_cube<eT>& x) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   inplace_op<op_internal_div>(x, "element-wise division");
 }
@@ -408,7 +408,7 @@ inline void subview_cube<eT>::operator/=(const subview_cube<eT>& x) {
 template <typename eT>
 template <typename T1>
 inline void subview_cube<eT>::operator=(const Base<eT, T1>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<T1> tmp(in.get_ref());
 
@@ -480,7 +480,7 @@ inline void subview_cube<eT>::operator=(const Base<eT, T1>& in) {
       }
     }
   } else {
-    if (arma_config::debug) {
+    if (arma_config::check_conform) {
       arma_stop_logic_error(arma_incompat_size_string(t, x, "copy into subcube"));
     }
   }
@@ -489,7 +489,7 @@ inline void subview_cube<eT>::operator=(const Base<eT, T1>& in) {
 template <typename eT>
 template <typename T1>
 inline void subview_cube<eT>::operator+=(const Base<eT, T1>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<T1> tmp(in.get_ref());
 
@@ -559,7 +559,7 @@ inline void subview_cube<eT>::operator+=(const Base<eT, T1>& in) {
       }
     }
   } else {
-    if (arma_config::debug) {
+    if (arma_config::check_conform) {
       arma_stop_logic_error(arma_incompat_size_string(t, x, "addition"));
     }
   }
@@ -568,7 +568,7 @@ inline void subview_cube<eT>::operator+=(const Base<eT, T1>& in) {
 template <typename eT>
 template <typename T1>
 inline void subview_cube<eT>::operator-=(const Base<eT, T1>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<T1> tmp(in.get_ref());
 
@@ -638,7 +638,7 @@ inline void subview_cube<eT>::operator-=(const Base<eT, T1>& in) {
       }
     }
   } else {
-    if (arma_config::debug) {
+    if (arma_config::check_conform) {
       arma_stop_logic_error(arma_incompat_size_string(t, x, "subtraction"));
     }
   }
@@ -647,7 +647,7 @@ inline void subview_cube<eT>::operator-=(const Base<eT, T1>& in) {
 template <typename eT>
 template <typename T1>
 inline void subview_cube<eT>::operator%=(const Base<eT, T1>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<T1> tmp(in.get_ref());
 
@@ -717,7 +717,7 @@ inline void subview_cube<eT>::operator%=(const Base<eT, T1>& in) {
       }
     }
   } else {
-    if (arma_config::debug) {
+    if (arma_config::check_conform) {
       arma_stop_logic_error(
           arma_incompat_size_string(t, x, "element-wise multiplication"));
     }
@@ -727,7 +727,7 @@ inline void subview_cube<eT>::operator%=(const Base<eT, T1>& in) {
 template <typename eT>
 template <typename T1>
 inline void subview_cube<eT>::operator/=(const Base<eT, T1>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const quasi_unwrap<T1> tmp(in.get_ref());
 
@@ -797,7 +797,7 @@ inline void subview_cube<eT>::operator/=(const Base<eT, T1>& in) {
       }
     }
   } else {
-    if (arma_config::debug) {
+    if (arma_config::check_conform) {
       arma_stop_logic_error(arma_incompat_size_string(t, x, "element-wise division"));
     }
   }
@@ -806,10 +806,10 @@ inline void subview_cube<eT>::operator/=(const Base<eT, T1>& in) {
 template <typename eT>
 template <typename gen_type>
 inline void subview_cube<eT>::operator=(const GenCube<eT, gen_type>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_same_size(n_rows, n_cols, n_slices, in.n_rows, in.n_cols, in.n_slices,
-                              "copy into subcube");
+  arma_conform_assert_same_size(n_rows, n_cols, n_slices, in.n_rows, in.n_cols,
+                                in.n_slices, "copy into subcube");
 
   in.apply(*this);
 }
@@ -818,7 +818,7 @@ inline void subview_cube<eT>::operator=(const GenCube<eT, gen_type>& in) {
 template <typename eT>
 template <typename functor>
 inline void subview_cube<eT>::for_each(functor F) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Cube<eT>& Q = const_cast<Cube<eT>&>(m);
 
@@ -840,7 +840,7 @@ inline void subview_cube<eT>::for_each(functor F) {
 template <typename eT>
 template <typename functor>
 inline void subview_cube<eT>::for_each(functor F) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const Cube<eT>& Q = m;
 
@@ -863,7 +863,7 @@ inline void subview_cube<eT>::for_each(functor F) const {
 template <typename eT>
 template <typename functor>
 inline void subview_cube<eT>::transform(functor F) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Cube<eT>& Q = const_cast<Cube<eT>&>(m);
 
@@ -886,7 +886,7 @@ inline void subview_cube<eT>::transform(functor F) {
 template <typename eT>
 template <typename functor>
 inline void subview_cube<eT>::imbue(functor F) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Cube<eT>& Q = const_cast<Cube<eT>&>(m);
 
@@ -908,7 +908,7 @@ inline void subview_cube<eT>::imbue(functor F) {
 //! apply a lambda function to each slice, where each slice is interpreted as a matrix
 template <typename eT>
 inline void subview_cube<eT>::each_slice(const std::function<void(Mat<eT>&)>& F) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Mat<eT> tmp1(n_rows, n_cols, arma_nozeros_indicator());
   Mat<eT> tmp2('j', tmp1.memptr(), n_rows, n_cols);
@@ -929,7 +929,7 @@ inline void subview_cube<eT>::each_slice(const std::function<void(Mat<eT>&)>& F)
 template <typename eT>
 inline void subview_cube<eT>::each_slice(
     const std::function<void(const Mat<eT>&)>& F) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   Mat<eT> tmp1(n_rows, n_cols, arma_nozeros_indicator());
   const Mat<eT> tmp2('j', tmp1.memptr(), n_rows, n_cols);
@@ -945,7 +945,7 @@ inline void subview_cube<eT>::each_slice(
 
 template <typename eT>
 inline void subview_cube<eT>::replace(const eT old_val, const eT new_val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword local_n_rows = n_rows;
   const uword local_n_cols = n_cols;
@@ -960,7 +960,7 @@ inline void subview_cube<eT>::replace(const eT old_val, const eT new_val) {
 
 template <typename eT>
 inline void subview_cube<eT>::clean(const typename get_pod_type<eT>::result threshold) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword local_n_rows = n_rows;
   const uword local_n_cols = n_cols;
@@ -975,16 +975,16 @@ inline void subview_cube<eT>::clean(const typename get_pod_type<eT>::result thre
 
 template <typename eT>
 inline void subview_cube<eT>::clamp(const eT min_val, const eT max_val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (is_cx<eT>::no) {
-    arma_debug_check((access::tmp_real(min_val) > access::tmp_real(max_val)),
-                     "subview_cube::clamp(): min_val must be less than max_val");
+    arma_conform_check((access::tmp_real(min_val) > access::tmp_real(max_val)),
+                       "subview_cube::clamp(): min_val must be less than max_val");
   } else {
-    arma_debug_check(
+    arma_conform_check(
         (access::tmp_real(min_val) > access::tmp_real(max_val)),
         "subview_cube::clamp(): real(min_val) must be less than real(max_val)");
-    arma_debug_check(
+    arma_conform_check(
         (access::tmp_imag(min_val) > access::tmp_imag(max_val)),
         "subview_cube::clamp(): imag(min_val) must be less than imag(max_val)");
   }
@@ -1002,7 +1002,7 @@ inline void subview_cube<eT>::clamp(const eT min_val, const eT max_val) {
 
 template <typename eT>
 inline void subview_cube<eT>::fill(const eT val) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword local_n_rows = n_rows;
   const uword local_n_cols = n_cols;
@@ -1017,7 +1017,7 @@ inline void subview_cube<eT>::fill(const eT val) {
 
 template <typename eT>
 inline void subview_cube<eT>::zeros() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword local_n_rows = n_rows;
   const uword local_n_cols = n_cols;
@@ -1032,14 +1032,14 @@ inline void subview_cube<eT>::zeros() {
 
 template <typename eT>
 inline void subview_cube<eT>::ones() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   fill(eT(1));
 }
 
 template <typename eT>
 inline void subview_cube<eT>::randu() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword local_n_rows = n_rows;
   const uword local_n_cols = n_cols;
@@ -1054,7 +1054,7 @@ inline void subview_cube<eT>::randu() {
 
 template <typename eT>
 inline void subview_cube<eT>::randn() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword local_n_rows = n_rows;
   const uword local_n_cols = n_cols;
@@ -1069,10 +1069,10 @@ inline void subview_cube<eT>::randn() {
 
 template <typename eT>
 inline bool subview_cube<eT>::is_finite() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(
+    arma_warn(
         1,
         "is_finite(): detection of non-finite values is not reliable in fast math mode");
   }
@@ -1094,7 +1094,7 @@ inline bool subview_cube<eT>::is_finite() const {
 
 template <typename eT>
 inline bool subview_cube<eT>::is_zero(const typename get_pod_type<eT>::result tol) const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const uword local_n_rows = n_rows;
   const uword local_n_cols = n_cols;
@@ -1113,10 +1113,10 @@ inline bool subview_cube<eT>::is_zero(const typename get_pod_type<eT>::result to
 
 template <typename eT>
 inline bool subview_cube<eT>::has_inf() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(
+    arma_warn(
         1, "has_inf(): detection of non-finite values is not reliable in fast math mode");
   }
 
@@ -1137,10 +1137,10 @@ inline bool subview_cube<eT>::has_inf() const {
 
 template <typename eT>
 inline bool subview_cube<eT>::has_nan() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(
+    arma_warn(
         1, "has_nan(): detection of non-finite values is not reliable in fast math mode");
   }
 
@@ -1161,12 +1161,12 @@ inline bool subview_cube<eT>::has_nan() const {
 
 template <typename eT>
 inline bool subview_cube<eT>::has_nonfinite() const {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   if (arma_config::fast_math_warn) {
-    arma_debug_warn_level(1,
-                          "has_nonfinite(): detection of non-finite values is not "
-                          "reliable in fast math mode");
+    arma_warn(1,
+              "has_nonfinite(): detection of non-finite values is not reliable in fast "
+              "math mode");
   }
 
   const uword local_n_rows = n_rows;
@@ -1221,7 +1221,8 @@ inline eT subview_cube<eT>::operator[](const uword i) const {
 
 template <typename eT>
 inline eT& subview_cube<eT>::operator()(const uword i) {
-  arma_debug_check_bounds((i >= n_elem), "subview_cube::operator(): index out of bounds");
+  arma_conform_check_bounds((i >= n_elem),
+                            "subview_cube::operator(): index out of bounds");
 
   const uword in_slice = i / n_elem_slice;
   const uword offset = in_slice * n_elem_slice;
@@ -1238,7 +1239,8 @@ inline eT& subview_cube<eT>::operator()(const uword i) {
 
 template <typename eT>
 inline eT subview_cube<eT>::operator()(const uword i) const {
-  arma_debug_check_bounds((i >= n_elem), "subview_cube::operator(): index out of bounds");
+  arma_conform_check_bounds((i >= n_elem),
+                            "subview_cube::operator(): index out of bounds");
 
   const uword in_slice = i / n_elem_slice;
   const uword offset = in_slice * n_elem_slice;
@@ -1256,7 +1258,7 @@ inline eT subview_cube<eT>::operator()(const uword i) const {
 template <typename eT>
 arma_inline eT& subview_cube<eT>::operator()(const uword in_row, const uword in_col,
                                              const uword in_slice) {
-  arma_debug_check_bounds(
+  arma_conform_check_bounds(
       ((in_row >= n_rows) || (in_col >= n_cols) || (in_slice >= n_slices)),
       "subview_cube::operator(): location out of bounds");
 
@@ -1269,7 +1271,7 @@ arma_inline eT& subview_cube<eT>::operator()(const uword in_row, const uword in_
 template <typename eT>
 arma_inline eT subview_cube<eT>::operator()(const uword in_row, const uword in_col,
                                             const uword in_slice) const {
-  arma_debug_check_bounds(
+  arma_conform_check_bounds(
       ((in_row >= n_rows) || (in_col >= n_cols) || (in_slice >= n_slices)),
       "subview_cube::operator(): location out of bounds");
 
@@ -1380,7 +1382,7 @@ inline bool subview_cube<eT>::check_overlap(const Mat<eT>& x) const {
 //! cube X = Y.subcube(...)
 template <typename eT>
 inline void subview_cube<eT>::extract(Cube<eT>& out, const subview_cube<eT>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   // NOTE: we're assuming that the cube has already been set to the correct size and there
   // is no aliasing; size setting and alias checking is done by either the Cube contructor
@@ -1390,9 +1392,9 @@ inline void subview_cube<eT>::extract(Cube<eT>& out, const subview_cube<eT>& in)
   const uword n_cols = in.n_cols;
   const uword n_slices = in.n_slices;
 
-  arma_extra_debug_print(
-      arma_str::format("out.n_rows = %u   out.n_cols = %u    out.n_slices = %u    "
-                       "in.m.n_rows = %u   in.m.n_cols = %u   in.m.n_slices = %u") %
+  arma_debug_print(
+      arma_str::format("out.n_rows: %u; out.n_cols: %u; out.n_slices: %u; in.m.n_rows: "
+                       "%u; in.m.n_cols: %u; in.m.n_slices: %u") %
       out.n_rows % out.n_cols % out.n_slices % in.m.n_rows % in.m.n_cols % in.m.n_slices);
 
   if ((in.aux_row1 == 0) && (n_rows == in.m.n_rows)) {
@@ -1412,9 +1414,9 @@ inline void subview_cube<eT>::extract(Cube<eT>& out, const subview_cube<eT>& in)
 //! cube X += Y.subcube(...)
 template <typename eT>
 inline void subview_cube<eT>::plus_inplace(Cube<eT>& out, const subview_cube<eT>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_same_size(out, in, "addition");
+  arma_conform_assert_same_size(out, in, "addition");
 
   const uword n_rows = out.n_rows;
   const uword n_cols = out.n_cols;
@@ -1431,9 +1433,9 @@ inline void subview_cube<eT>::plus_inplace(Cube<eT>& out, const subview_cube<eT>
 //! cube X -= Y.subcube(...)
 template <typename eT>
 inline void subview_cube<eT>::minus_inplace(Cube<eT>& out, const subview_cube<eT>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_same_size(out, in, "subtraction");
+  arma_conform_assert_same_size(out, in, "subtraction");
 
   const uword n_rows = out.n_rows;
   const uword n_cols = out.n_cols;
@@ -1450,9 +1452,9 @@ inline void subview_cube<eT>::minus_inplace(Cube<eT>& out, const subview_cube<eT
 //! cube X %= Y.subcube(...)
 template <typename eT>
 inline void subview_cube<eT>::schur_inplace(Cube<eT>& out, const subview_cube<eT>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_same_size(out, in, "element-wise multiplication");
+  arma_conform_assert_same_size(out, in, "element-wise multiplication");
 
   const uword n_rows = out.n_rows;
   const uword n_cols = out.n_cols;
@@ -1469,9 +1471,9 @@ inline void subview_cube<eT>::schur_inplace(Cube<eT>& out, const subview_cube<eT
 //! cube X /= Y.subcube(...)
 template <typename eT>
 inline void subview_cube<eT>::div_inplace(Cube<eT>& out, const subview_cube<eT>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_same_size(out, in, "element-wise division");
+  arma_conform_assert_same_size(out, in, "element-wise division");
 
   const uword n_rows = out.n_rows;
   const uword n_cols = out.n_cols;
@@ -1488,9 +1490,9 @@ inline void subview_cube<eT>::div_inplace(Cube<eT>& out, const subview_cube<eT>&
 //! mat X = Y.subcube(...)
 template <typename eT>
 inline void subview_cube<eT>::extract(Mat<eT>& out, const subview_cube<eT>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_cube_as_mat(out, in, "copy into matrix", false);
+  arma_conform_assert_cube_as_mat(out, in, "copy into matrix", false);
 
   const uword in_n_rows = in.n_rows;
   const uword in_n_cols = in.n_cols;
@@ -1561,9 +1563,9 @@ inline void subview_cube<eT>::extract(Mat<eT>& out, const subview_cube<eT>& in) 
 //! mat X += Y.subcube(...)
 template <typename eT>
 inline void subview_cube<eT>::plus_inplace(Mat<eT>& out, const subview_cube<eT>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_cube_as_mat(out, in, "addition", true);
+  arma_conform_assert_cube_as_mat(out, in, "addition", true);
 
   const uword in_n_rows = in.n_rows;
   const uword in_n_cols = in.n_cols;
@@ -1574,7 +1576,7 @@ inline void subview_cube<eT>::plus_inplace(Mat<eT>& out, const subview_cube<eT>&
   const uword out_vec_state = out.vec_state;
 
   if (in_n_slices == 1) {
-    if ((arma_config::debug) &&
+    if ((arma_config::check_conform) &&
         ((out_n_rows != in_n_rows) || (out_n_cols != in_n_cols))) {
       std::ostringstream tmp;
 
@@ -1641,9 +1643,9 @@ inline void subview_cube<eT>::plus_inplace(Mat<eT>& out, const subview_cube<eT>&
 //! mat X -= Y.subcube(...)
 template <typename eT>
 inline void subview_cube<eT>::minus_inplace(Mat<eT>& out, const subview_cube<eT>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_cube_as_mat(out, in, "subtraction", true);
+  arma_conform_assert_cube_as_mat(out, in, "subtraction", true);
 
   const uword in_n_rows = in.n_rows;
   const uword in_n_cols = in.n_cols;
@@ -1654,7 +1656,7 @@ inline void subview_cube<eT>::minus_inplace(Mat<eT>& out, const subview_cube<eT>
   const uword out_vec_state = out.vec_state;
 
   if (in_n_slices == 1) {
-    if ((arma_config::debug) &&
+    if ((arma_config::check_conform) &&
         ((out_n_rows != in_n_rows) || (out_n_cols != in_n_cols))) {
       std::ostringstream tmp;
 
@@ -1721,9 +1723,9 @@ inline void subview_cube<eT>::minus_inplace(Mat<eT>& out, const subview_cube<eT>
 //! mat X %= Y.subcube(...)
 template <typename eT>
 inline void subview_cube<eT>::schur_inplace(Mat<eT>& out, const subview_cube<eT>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_cube_as_mat(out, in, "element-wise multiplication", true);
+  arma_conform_assert_cube_as_mat(out, in, "element-wise multiplication", true);
 
   const uword in_n_rows = in.n_rows;
   const uword in_n_cols = in.n_cols;
@@ -1734,7 +1736,7 @@ inline void subview_cube<eT>::schur_inplace(Mat<eT>& out, const subview_cube<eT>
   const uword out_vec_state = out.vec_state;
 
   if (in_n_slices == 1) {
-    if ((arma_config::debug) &&
+    if ((arma_config::check_conform) &&
         ((out_n_rows != in_n_rows) || (out_n_cols != in_n_cols))) {
       std::ostringstream tmp;
 
@@ -1801,9 +1803,9 @@ inline void subview_cube<eT>::schur_inplace(Mat<eT>& out, const subview_cube<eT>
 //! mat X /= Y.subcube(...)
 template <typename eT>
 inline void subview_cube<eT>::div_inplace(Mat<eT>& out, const subview_cube<eT>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
-  arma_debug_assert_cube_as_mat(out, in, "element-wise division", true);
+  arma_conform_assert_cube_as_mat(out, in, "element-wise division", true);
 
   const uword in_n_rows = in.n_rows;
   const uword in_n_cols = in.n_cols;
@@ -1814,7 +1816,7 @@ inline void subview_cube<eT>::div_inplace(Mat<eT>& out, const subview_cube<eT>& 
   const uword out_vec_state = out.vec_state;
 
   if (in_n_slices == 1) {
-    if ((arma_config::debug) &&
+    if ((arma_config::check_conform) &&
         ((out_n_rows != in_n_rows) || (out_n_cols != in_n_cols))) {
       std::ostringstream tmp;
 
@@ -1923,7 +1925,7 @@ inline subview_cube<eT>::iterator::iterator()
       aux_col1(0),
       aux_row2_p1(0),
       aux_col2_p1(0) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   // Technically this iterator is invalid (it does not point to a valid element)
 }
 
@@ -1938,7 +1940,7 @@ inline subview_cube<eT>::iterator::iterator(const iterator& X)
       aux_col1(X.aux_col1),
       aux_row2_p1(X.aux_row2_p1),
       aux_col2_p1(X.aux_col2_p1) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename eT>
@@ -1953,7 +1955,7 @@ inline subview_cube<eT>::iterator::iterator(subview_cube<eT>& in_sv, const uword
       aux_col1(in_sv.aux_col1),
       aux_row2_p1(in_sv.aux_row1 + in_sv.n_rows),
       aux_col2_p1(in_sv.aux_col1 + in_sv.n_cols) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename eT>
@@ -2026,7 +2028,7 @@ inline subview_cube<eT>::const_iterator::const_iterator()
       aux_col1(0),
       aux_row2_p1(0),
       aux_col2_p1(0) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
   // Technically this iterator is invalid (it does not point to a valid element)
 }
 
@@ -2041,7 +2043,7 @@ inline subview_cube<eT>::const_iterator::const_iterator(const iterator& X)
       aux_col1(X.aux_col1),
       aux_row2_p1(X.aux_row2_p1),
       aux_col2_p1(X.aux_col2_p1) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename eT>
@@ -2055,7 +2057,7 @@ inline subview_cube<eT>::const_iterator::const_iterator(const const_iterator& X)
       aux_col1(X.aux_col1),
       aux_row2_p1(X.aux_row2_p1),
       aux_col2_p1(X.aux_col2_p1) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename eT>
@@ -2072,7 +2074,7 @@ inline subview_cube<eT>::const_iterator::const_iterator(const subview_cube<eT>& 
       aux_col1(in_sv.aux_col1),
       aux_row2_p1(in_sv.aux_row1 + in_sv.n_rows),
       aux_col2_p1(in_sv.aux_col1 + in_sv.n_cols) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 template <typename eT>

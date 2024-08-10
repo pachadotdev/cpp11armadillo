@@ -18,13 +18,12 @@
 #ifndef ARMA_INCLUDES
 #define ARMA_INCLUDES
 
-// NOTE: functions that are designed to be user accessible are described in the
-// documentation (docs.html). NOTE: all other functions and classes (ie. not explicitly
-// described in the documentation) NOTE: are considered as internal implementation
-// details, and may be changed or removed without notice.
+// WARNING: the documentation (docs.html) describes the public API (functions, classes,
+// constants); WARNING: any functionality which is _not explicitly_ described in the
+// documentation WARNING: is considered as internal implementation detail, and may be
+// changed or removed without notice.
 
 // clang-format off
-
 // workaround to avoid R check() notes about std::cerr
 #include "armadillo/r_messages.hpp"
 
@@ -40,6 +39,7 @@
 #include <cmath>
 #include <ctime>
 
+#include <memory>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -57,9 +57,7 @@
 #include <chrono>
 #include <atomic>
 
-#include <ostream>
-
-#if !defined(ARMA_DONT_USE_STD_MUTEX)
+#if defined(ARMA_USE_STD_MUTEX)
   #include <mutex>
 #endif
 
@@ -228,6 +226,7 @@ namespace arma
   #include "armadillo/OpCube_bones.hpp"
   #include "armadillo/SpOp_bones.hpp"
   #include "armadillo/SpToDOp_bones.hpp"
+  #include "armadillo/mtSpReduceOp_bones.hpp"
   
   #include "armadillo/eOp_bones.hpp"
   #include "armadillo/eOpCube_bones.hpp"
@@ -321,12 +320,22 @@ namespace arma
   #include "armadillo/op_roots_bones.hpp"
   #include "armadillo/op_cond_bones.hpp"
   #include "armadillo/op_rcond_bones.hpp"
-  #include "armadillo/op_sp_plus_bones.hpp"
-  #include "armadillo/op_sp_minus_bones.hpp"
   #include "armadillo/op_powmat_bones.hpp"
   #include "armadillo/op_rank_bones.hpp"
   #include "armadillo/op_row_as_mat_bones.hpp"
   #include "armadillo/op_col_as_mat_bones.hpp"
+  #include "armadillo/op_sp_plus_bones.hpp"
+  #include "armadillo/op_sp_minus_bones.hpp"
+  #include "armadillo/op_sp_sum_bones.hpp"
+  #include "armadillo/op_sp_max_bones.hpp"
+  #include "armadillo/op_sp_min_bones.hpp"
+  #include "armadillo/op_sp_mean_bones.hpp"
+  #include "armadillo/op_sp_var_bones.hpp"
+  #include "armadillo/op_sp_stddev_bones.hpp"
+  #include "armadillo/op_sp_vecnorm_bones.hpp"
+  #include "armadillo/op_sp_diagvec_bones.hpp"
+  #include "armadillo/op_sp_nonzeros_bones.hpp"
+  #include "armadillo/op_sp_as_dense_bones.hpp"
   
   #include "armadillo/glue_times_bones.hpp"
   #include "armadillo/glue_times_misc_bones.hpp"
@@ -359,15 +368,10 @@ namespace arma
   #include "armadillo/gmm_diag_bones.hpp"
   #include "armadillo/gmm_full_bones.hpp"
   
-  #include "armadillo/spop_max_bones.hpp"
-  #include "armadillo/spop_min_bones.hpp"
-  #include "armadillo/spop_sum_bones.hpp"
   #include "armadillo/spop_strans_bones.hpp"
   #include "armadillo/spop_htrans_bones.hpp"
   #include "armadillo/spop_misc_bones.hpp"
   #include "armadillo/spop_diagmat_bones.hpp"
-  #include "armadillo/spop_mean_bones.hpp"
-  #include "armadillo/spop_var_bones.hpp"
   #include "armadillo/spop_trimat_bones.hpp"
   #include "armadillo/spop_symmat_bones.hpp"
   #include "armadillo/spop_normalise_bones.hpp"
@@ -375,7 +379,8 @@ namespace arma
   #include "armadillo/spop_repmat_bones.hpp"
   #include "armadillo/spop_vectorise_bones.hpp"
   #include "armadillo/spop_norm_bones.hpp"
-  #include "armadillo/spop_vecnorm_bones.hpp"
+  #include "armadillo/spop_shift_bones.hpp"
+  #include "armadillo/spop_relational_bones.hpp"
   
   #include "armadillo/spglue_plus_bones.hpp"
   #include "armadillo/spglue_minus_bones.hpp"
@@ -630,6 +635,7 @@ namespace arma
   #include "armadillo/mtOp_meat.hpp"
   #include "armadillo/mtOpCube_meat.hpp"
   #include "armadillo/mtSpOp_meat.hpp"
+  #include "armadillo/mtSpReduceOp_meat.hpp"
   
   #include "armadillo/Glue_meat.hpp"
   #include "armadillo/GlueCube_meat.hpp"
@@ -768,12 +774,22 @@ namespace arma
   #include "armadillo/op_roots_meat.hpp"
   #include "armadillo/op_cond_meat.hpp"
   #include "armadillo/op_rcond_meat.hpp"
-  #include "armadillo/op_sp_plus_meat.hpp"
-  #include "armadillo/op_sp_minus_meat.hpp"
   #include "armadillo/op_powmat_meat.hpp"
   #include "armadillo/op_rank_meat.hpp"
   #include "armadillo/op_row_as_mat_meat.hpp"
   #include "armadillo/op_col_as_mat_meat.hpp"
+  #include "armadillo/op_sp_plus_meat.hpp"
+  #include "armadillo/op_sp_minus_meat.hpp"
+  #include "armadillo/op_sp_sum_meat.hpp"
+  #include "armadillo/op_sp_max_meat.hpp"
+  #include "armadillo/op_sp_min_meat.hpp"
+  #include "armadillo/op_sp_mean_meat.hpp"
+  #include "armadillo/op_sp_var_meat.hpp"
+  #include "armadillo/op_sp_stddev_meat.hpp"
+  #include "armadillo/op_sp_vecnorm_meat.hpp"
+  #include "armadillo/op_sp_diagvec_meat.hpp"
+  #include "armadillo/op_sp_nonzeros_meat.hpp"
+  #include "armadillo/op_sp_as_dense_meat.hpp"
   
   #include "armadillo/glue_times_meat.hpp"
   #include "armadillo/glue_times_misc_meat.hpp"
@@ -806,15 +822,10 @@ namespace arma
   #include "armadillo/gmm_diag_meat.hpp"
   #include "armadillo/gmm_full_meat.hpp"
   
-  #include "armadillo/spop_max_meat.hpp"
-  #include "armadillo/spop_min_meat.hpp"
-  #include "armadillo/spop_sum_meat.hpp"
   #include "armadillo/spop_strans_meat.hpp"
   #include "armadillo/spop_htrans_meat.hpp"
   #include "armadillo/spop_misc_meat.hpp"
   #include "armadillo/spop_diagmat_meat.hpp"
-  #include "armadillo/spop_mean_meat.hpp"
-  #include "armadillo/spop_var_meat.hpp"
   #include "armadillo/spop_trimat_meat.hpp"
   #include "armadillo/spop_symmat_meat.hpp"
   #include "armadillo/spop_normalise_meat.hpp"
@@ -822,7 +833,8 @@ namespace arma
   #include "armadillo/spop_repmat_meat.hpp"
   #include "armadillo/spop_vectorise_meat.hpp"
   #include "armadillo/spop_norm_meat.hpp"
-  #include "armadillo/spop_vecnorm_meat.hpp"
+  #include "armadillo/spop_shift_meat.hpp"
+  #include "armadillo/spop_relational_meat.hpp"
   
   #include "armadillo/spglue_plus_meat.hpp"
   #include "armadillo/spglue_minus_meat.hpp"

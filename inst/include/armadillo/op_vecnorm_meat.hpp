@@ -21,7 +21,7 @@
 template <typename T1>
 inline void op_vecnorm::apply(Mat<typename T1::pod_type>& out,
                               const mtOp<typename T1::pod_type, T1, op_vecnorm>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type in_eT;
   typedef typename T1::pod_type out_eT;
@@ -32,8 +32,8 @@ inline void op_vecnorm::apply(Mat<typename T1::pod_type>& out,
   const uword k = in.aux_uword_a;
   const uword dim = in.aux_uword_b;
 
-  arma_debug_check((k == 0), "vecnorm(): unsupported vector norm type");
-  arma_debug_check((dim > 1), "vecnorm(): parameter 'dim' must be 0 or 1");
+  arma_conform_check((k == 0), "vecnorm(): unsupported vector norm type");
+  arma_conform_check((dim > 1), "vecnorm(): parameter 'dim' must be 0 or 1");
 
   if (U.is_alias(out)) {
     Mat<out_eT> tmp;
@@ -50,7 +50,7 @@ template <typename in_eT>
 inline void op_vecnorm::apply_noalias(Mat<typename get_pod_type<in_eT>::result>& out,
                                       const Mat<in_eT>& X, const uword k,
                                       const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<in_eT>::result out_eT;
 
@@ -58,7 +58,7 @@ inline void op_vecnorm::apply_noalias(Mat<typename get_pod_type<in_eT>::result>&
   const uword X_n_cols = X.n_cols;
 
   if (dim == 0) {
-    arma_extra_debug_print("op_vecnorm::apply(): dim = 0");
+    arma_debug_print("op_vecnorm::apply(): dim = 0");
 
     out.set_size((X_n_rows > 0) ? 1 : 0, X_n_cols);
 
@@ -70,7 +70,7 @@ inline void op_vecnorm::apply_noalias(Mat<typename get_pod_type<in_eT>::result>&
       }
     }
   } else if (dim == 1) {
-    arma_extra_debug_print("op_vecnorm::apply(): dim = 1");
+    arma_debug_print("op_vecnorm::apply(): dim = 1");
 
     out.set_size(X_n_rows, (X_n_cols > 0) ? 1 : 0);
 
@@ -92,7 +92,7 @@ inline void op_vecnorm::apply_noalias(Mat<typename get_pod_type<in_eT>::result>&
 template <typename in_eT>
 inline void op_vecnorm::apply_rawmem(typename get_pod_type<in_eT>::result& out_val,
                                      const in_eT* mem, const uword N, const uword k) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<in_eT>::result out_eT;
 
@@ -123,7 +123,7 @@ template <typename T1>
 inline void op_vecnorm_ext::apply(
     Mat<typename T1::pod_type>& out,
     const mtOp<typename T1::pod_type, T1, op_vecnorm_ext>& in) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename T1::elem_type in_eT;
   typedef typename T1::pod_type out_eT;
@@ -134,8 +134,8 @@ inline void op_vecnorm_ext::apply(
   const uword method_id = in.aux_uword_a;
   const uword dim = in.aux_uword_b;
 
-  arma_debug_check((method_id == 0), "vecnorm(): unsupported vector norm type");
-  arma_debug_check((dim > 1), "vecnorm(): parameter 'dim' must be 0 or 1");
+  arma_conform_check((method_id == 0), "vecnorm(): unsupported vector norm type");
+  arma_conform_check((dim > 1), "vecnorm(): parameter 'dim' must be 0 or 1");
 
   if (U.is_alias(out)) {
     Mat<out_eT> tmp;
@@ -152,7 +152,7 @@ template <typename in_eT>
 inline void op_vecnorm_ext::apply_noalias(Mat<typename get_pod_type<in_eT>::result>& out,
                                           const Mat<in_eT>& X, const uword method_id,
                                           const uword dim) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<in_eT>::result out_eT;
 
@@ -160,7 +160,7 @@ inline void op_vecnorm_ext::apply_noalias(Mat<typename get_pod_type<in_eT>::resu
   const uword X_n_cols = X.n_cols;
 
   if (dim == 0) {
-    arma_extra_debug_print("op_vecnorm_ext::apply(): dim = 0");
+    arma_debug_print("op_vecnorm_ext::apply(): dim = 0");
 
     out.set_size((X_n_rows > 0) ? 1 : 0, X_n_cols);
 
@@ -172,7 +172,7 @@ inline void op_vecnorm_ext::apply_noalias(Mat<typename get_pod_type<in_eT>::resu
       }
     }
   } else if (dim == 1) {
-    arma_extra_debug_print("op_vecnorm_ext::apply(): dim = 1");
+    arma_debug_print("op_vecnorm_ext::apply(): dim = 1");
 
     out.set_size(X_n_rows, (X_n_cols > 0) ? 1 : 0);
 
@@ -195,7 +195,7 @@ template <typename in_eT>
 inline void op_vecnorm_ext::apply_rawmem(typename get_pod_type<in_eT>::result& out_val,
                                          const in_eT* mem, const uword N,
                                          const uword method_id) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   typedef typename get_pod_type<in_eT>::result out_eT;
 

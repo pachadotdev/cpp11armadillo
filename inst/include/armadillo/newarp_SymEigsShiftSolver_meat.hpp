@@ -19,7 +19,7 @@ namespace newarp {
 
 template <typename eT, int SelectionRule, typename OpType>
 inline void SymEigsShiftSolver<eT, SelectionRule, OpType>::sort_ritzpair() {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   // First transform back the Ritz values, and then sort
   for (uword i = 0; i < this->nev; i++) {
@@ -33,7 +33,7 @@ inline SymEigsShiftSolver<eT, SelectionRule, OpType>::SymEigsShiftSolver(
     const OpType& op_, uword nev_, uword ncv_, const eT sigma_)
     : SymEigsSolver<eT, SelectionRule, OpType>::SymEigsSolver(op_, nev_, ncv_),
       sigma(sigma_) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 }
 
 }  // namespace newarp

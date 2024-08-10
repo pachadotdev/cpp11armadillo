@@ -23,5 +23,5 @@ armadillo_version <- function() {
 
   # paste(name, paste(number, collapse = "."))
 
-  return("Cortisol Retox 12.6.7")
+  return("Stochastic Parrot 14.0.2")
 }

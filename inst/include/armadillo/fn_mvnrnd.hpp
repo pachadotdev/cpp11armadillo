@@ -23,7 +23,7 @@ arma_warn_unused inline typename enable_if2<is_real<typename T1::elem_type>::val
                                             const Glue<T1, T2, glue_mvnrnd_vec> >::result
 mvnrnd(const Base<typename T1::elem_type, T1>& M,
        const Base<typename T1::elem_type, T2>& C) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Glue<T1, T2, glue_mvnrnd_vec>(M.get_ref(), C.get_ref());
 }
@@ -33,7 +33,7 @@ arma_warn_unused inline typename enable_if2<is_real<typename T1::elem_type>::val
                                             const Glue<T1, T2, glue_mvnrnd> >::result
 mvnrnd(const Base<typename T1::elem_type, T1>& M,
        const Base<typename T1::elem_type, T2>& C, const uword N) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   return Glue<T1, T2, glue_mvnrnd>(M.get_ref(), C.get_ref(), N);
 }
@@ -42,13 +42,13 @@ template <typename T1, typename T2>
 inline typename enable_if2<is_real<typename T1::elem_type>::value, bool>::result mvnrnd(
     Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type, T1>& M,
     const Base<typename T1::elem_type, T2>& C) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = glue_mvnrnd::apply_direct(out, M.get_ref(), C.get_ref(), uword(1));
 
   if (status == false) {
     out.soft_reset();
-    arma_debug_warn_level(
+    arma_warn(
         3, "mvnrnd(): given covariance matrix is not symmetric positive semi-definite");
   }
 
@@ -59,13 +59,13 @@ template <typename T1, typename T2>
 inline typename enable_if2<is_real<typename T1::elem_type>::value, bool>::result mvnrnd(
     Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type, T1>& M,
     const Base<typename T1::elem_type, T2>& C, const uword N) {
-  arma_extra_debug_sigprint();
+  arma_debug_sigprint();
 
   const bool status = glue_mvnrnd::apply_direct(out, M.get_ref(), C.get_ref(), N);
 
   if (status == false) {
     out.soft_reset();
-    arma_debug_warn_level(
+    arma_warn(
         3, "mvnrnd(): given covariance matrix is not symmetric positive semi-definite");
   }
 
