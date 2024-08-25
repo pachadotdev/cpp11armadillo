@@ -1,7 +1,7 @@
 setwd("~/github/cpp11armadillo")
 
 devtools::document()
-pkgdown::build_site()
+# pkgdown::build_site()
 devtools::check()
 devtools::install()
 

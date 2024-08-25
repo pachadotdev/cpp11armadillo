@@ -1,6 +1,6 @@
 ---
 title: "cpp11armadillo: An R Package to Use the Armadillo C++ Library"
-date: 2024-08-17
+date: 2024-08-25
 author1: "Mauricio Vargas Sepúlveda (ORCID 0000-0003-1017-7574)"
 email1: m.sepulveda@mail.utoronto.ca
 affiliation11: Department of Political Science, University of Toronto
@@ -618,7 +618,7 @@ using namespace cpp11;
 }
 ```
 
-The previous example, instead of directly inverting $X^tX$, creates empty matrices $Q$ and $R$, and a boolean (e.g., logical) value for `qr_econ()`, and then the QR function tries to decompose $X^tX$ into an orthogonal matrix $Q$ and an upper triangular matrix $R$ such that $XtX = QR$. If the composition is sucessful, the function returns "true" or "false" otherwise. The `solve()` arguments come from the fact that $R$ is upper triangular, and backsolving from the last equation results in $R\beta = QX^ty$.
+The previous example, instead of directly inverting $X^tX$, creates empty matrices $Q$ and $R$, and a boolean (e.g., logical) value for `qr_econ()`, and then the QR function tries to decompose $X^tX$ into an orthogonal matrix $Q$ and an upper triangular matrix $R$ such that $XtX = QR$. If the composition is successful, the function returns "true" or "false" otherwise. The `solve()` arguments come from the fact that $R$ is upper triangular, and backsolving from the last equation results in $R\beta = QX^ty$.
 
 ## Logistic regression
 
