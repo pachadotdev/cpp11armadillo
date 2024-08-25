@@ -47,7 +47,15 @@ jobs:
 
       - name: Install macOS system dependencies
         if: runner.os == 'macOS'
-        run: brew install --cask xquartz
+        run:
+          brew install --cask xquartz
+          brew install gcc
+
+      - name: Install Windows system dependencies
+        if: runner.os == 'Windows'
+        run: |
+          choco install rtools
+          choco install r
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
