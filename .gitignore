@@ -12,3 +12,10 @@ dev/benchmarks.rds
 dev/benchmarks.r
 dev/benchmarks_cpp11.cpp
 pkgdown
+paper/*.log
+paper/*.aux
+paper/*.idx
+paper/*.toc
+paper/*.out
+paper/*.pdf
+paper/*.tex

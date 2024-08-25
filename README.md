@@ -1,18 +1,18 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# armadillo <img src="man/figures/logo.svg" align="right" height="139" alt="" />
+# cpp11armadillo <img src="man/figures/logo.svg" align="right" height="139" alt="" />
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/pachadotdev/armadillo/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/pachadotdev/armadillo/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/pachadotdev/armadillo/graph/badge.svg?token=mWfiUCgfNu)](https://app.codecov.io/gh/pachadotdev/armadillo)
+[![R-CMD-check](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml)
+[![codecov](https://codecov.io/gh/pachadotdev/cpp11armadillo/graph/badge.svg?token=mWfiUCgfNu)](https://app.codecov.io/gh/pachadotdev/cpp11armadillo)
 [![BuyMeACoffee](https://raw.githubusercontent.com/pachadotdev/buymeacoffee-badges/main/bmc-donate-white.svg)](https://buymeacoffee.com/pacha)
 [![CRAN
-status](https://www.r-pkg.org/badges/version/armadillo)](https://CRAN.R-project.org/package=armadillo)
+status](https://www.r-pkg.org/badges/version/cpp11armadillo)](https://CRAN.R-project.org/package=cpp11armadillo)
 <!-- badges: end -->
 
-The goal of armadillo is to provide a novel approach to use the
+The goal of cpp11armadillo is to provide a novel approach to use the
 [Armadillo C++ library](https://arma.sourceforge.net/docs.html) by using
 the header-only cpp11 R package and to simplify things for the end-user.
 
@@ -32,20 +32,20 @@ This follows from the same goals as cpp11:
 
 If this software is useful to you, please consider donating on [Buy Me A
 Coffee](https://buymeacoffee.com/pacha). All donations will be used to
-continue improving `armadillo`.
+continue improving `cpp11armadillo`.
 
 ## Installation
 
-You can install the released version of armadillo from CRAN:
+You can install the released version of cpp11armadillo from CRAN:
 
 ``` r
-install.packages("armadillo")
+install.packages("cpp11armadillo")
 ```
 
-You can install the development version of armadillo from GitHub:
+You can install the development version of cpp11armadillo from GitHub:
 
 ``` r
-remotes::install_github("pachadotdev/armadillo")
+remotes::install_github("pachadotdev/cpp11armadillo")
 ```
 
 ## Examples
@@ -58,14 +58,14 @@ The idea of this package is to be naive and simple (like me).
 From RStudio/VSCode create a new project and run:
 
 ``` r
-armadillo::pkg_template()
+cpp11armadillo::pkg_template()
 ```
 
 Then follow the instructions from the README.
 
-The vignettes contains detailed examples that I use to test `armadillo`,
-these include Ordinary Least Squares, eigenvalues, and the Capital Asset
-Pricing Model (CAPM).
+The vignettes contains detailed examples that I use to test
+`cpp11armadillo`, these include Ordinary Least Squares, eigenvalues, and
+the Capital Asset Pricing Model (CAPM).
 
 # Linear Algebra Libraries
 

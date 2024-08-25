@@ -17,5 +17,5 @@ knitr::opts_chunk$set(
 Write extended documentation for your package.
 
 ```{r setup}
-library(armadillotest)
+library(cpp11armadillotest)
 ```

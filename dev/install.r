@@ -1,19 +1,12 @@
-devel <- F
-pkgdown <- F
-
-setwd("~/github/armadillo")
+setwd("~/github/cpp11armadillo")
 
 devtools::document()
+pkgdown::build_site()
+devtools::check()
+devtools::install()
 
-if (isTRUE(devel)) {
-  devtools::load_all()
-} else {
-  if (pkgdown) {
-    pkgdown::build_site()
-  }
-  devtools::install()
-}
+setwd("~/github/cpp11armadillo/cpp11armadillotest")
 
-setwd("~/github/armadillo/armadillotest")
-
+devtools::clean_dll()
+devtools::document()
 devtools::check()

@@ -2,7 +2,7 @@
 % Please edit documentation in R/vendor.R
 \name{cpp_vendor}
 \alias{cpp_vendor}
-\title{Vendor the cpp11 and armadillo dependency}
+\title{Vendor the cpp11 and cpp11armadillo dependency}
 \usage{
 cpp_vendor(dir = NULL, subdir = "/inst/include")
 }
@@ -19,14 +19,14 @@ Vendoring is the act of making your own copy of the 3rd party packages your
 project is using. It is often used in the go language community.
 }
 \details{
-This function vendors cpp11 and armadillo into your package by copying
-the cpp11 and armadillo headers into the `inst/include` folder and
-adding 'cpp11 version: XYZ' and 'armadillo version: XYZ' to the top of
-the files, where XYZ is the version of cpp11 and armadillo currently
+This function vendors cpp11 and cpp11armadillo into your package by copying
+the cpp11 and cpp11armadillo headers into the `inst/include` folder and
+adding 'cpp11 version: XYZ' and 'cpp11armadillo version: XYZ' to the top of
+the files, where XYZ is the version of cpp11 and cpp11armadillo currently
 installed on your machine.
 
 Vendoring places the responsibility of updating the code on
-you. Bugfixes and new features in cpp11 and armadillo will not be
+you. Bugfixes and new features in cpp11 and cpp11armadillo will not be
 available for your code until you run `cpp_vendor()` again.
 }
 \examples{

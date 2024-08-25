@@ -9,10 +9,10 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^README\.html$
-^armadillotest$
-^rcpparmadillotest$
+^cpp11armadillotest$
 ^pkgdown$
 ^Makefile$
 ^\.clang-format$
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
+paper/

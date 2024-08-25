@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(armadillotest)
+library(cpp11armadillotest)
 
-test_check("armadillotest")
+test_check("cpp11armadillotest")

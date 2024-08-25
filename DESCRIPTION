@@ -1,17 +1,21 @@
-Package: armadillo
+Package: cpp11armadillo
 Type: Package
 Title: An 'Armadillo' Interface
 Description: Provides function declarations and inline function definitions that
     facilitate communication between R and the 'Armadillo' 'C++' library for
     linear algebra and scientific computing.
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(
     person(
         given = "Mauricio",
         family = "Vargas Sepulveda",
         role = c("aut", "cre"),
         email = "m.sepulveda@mail.utoronto.ca",
-        comment = c(ORCID = "0000-0003-1017-7574"))
+        comment = c(ORCID = "0000-0003-1017-7574")),
+    person(
+        given = "Jonathan",
+        family = "Schneider Malamud",
+        role = c("ctb"))
     )
 Suggests: 
     cpp11,
@@ -23,9 +27,9 @@ Suggests:
     withr
 Depends: R(>= 3.5.0)
 License: Apache License (>= 2)
-BugReports: https://github.com/pachadotdev/armadillo/issues
-URL: https://pacha.dev/armadillo/,
-    https://github.com/pachadotdev/armadillo
+BugReports: https://github.com/pachadotdev/cpp11armadillo/issues
+URL: https://pacha.dev/cpp11armadillo/,
+    https://github.com/pachadotdev/cpp11armadillo
 LazyData: true
 RoxygenNote: 7.3.1
 Encoding: UTF-8

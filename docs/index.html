@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>An Armadillo Interface • armadillo</title>
+<title>An Armadillo Interface • cpp11armadillo</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -41,8 +41,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">armadillo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
+        <a class="navbar-link" href="index.html">cpp11armadillo</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.1</span>
       </span>
     </div>
 
@@ -69,7 +69,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/pachadotdev/armadillo/" class="external-link">
+  <a href="https://github.com/pachadotdev/cpp11armadillo/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,10 +88,10 @@
   <div class="contents col-md-9">
 
 <div class="section level1">
-<div class="page-header"><h1 id="armadillo-">armadillo <img src="reference/figures/logo.svg" align="right" height="139" alt=""><a class="anchor" aria-label="anchor" href="#armadillo-"></a>
+<div class="page-header"><h1 id="cpp11armadillo-">cpp11armadillo <img src="reference/figures/logo.svg" align="right" height="139" alt=""><a class="anchor" aria-label="anchor" href="#cpp11armadillo-"></a>
 </h1></div>
 <!-- badges: start -->
-<p>The goal of armadillo is to provide a novel approach to use the <a href="https://arma.sourceforge.net/docs.html" class="external-link">Armadillo C++ library</a> by using the header-only cpp11 R package and to simplify things for the end-user.</p>
+<p>The goal of cpp11armadillo is to provide a novel approach to use the <a href="https://arma.sourceforge.net/docs.html" class="external-link">Armadillo C++ library</a> by using the header-only cpp11 R package and to simplify things for the end-user.</p>
 <p>The idea is to pass matrices/vectors from R to C++, write pure C++/Armadillo code for the computation, and then export the result back to R with the proper data structures.</p>
 <p>This follows from the same goals as cpp11:</p>
 <ul>
@@ -103,16 +103,16 @@
 <li>Faster compilation time with lower memory requirements.</li>
 <li>Growing vectors more efficiently.</li>
 </ul>
-<p>If this software is useful to you, please consider donating on <a href="https://buymeacoffee.com/pacha" class="external-link">Buy Me A Coffee</a>. All donations will be used to continue improving <code>armadillo</code>.</p>
+<p>If this software is useful to you, please consider donating on <a href="https://buymeacoffee.com/pacha" class="external-link">Buy Me A Coffee</a>. All donations will be used to continue improving <code>cpp11armadillo</code>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the released version of armadillo from CRAN:</p>
+<p>You can install the released version of cpp11armadillo from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"armadillo"</span><span class="op">)</span></span></code></pre></div>
-<p>You can install the development version of armadillo from GitHub:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"cpp11armadillo"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the development version of cpp11armadillo from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"pachadotdev/armadillo"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"pachadotdev/cpp11armadillo"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
@@ -121,9 +121,9 @@
 <p>The idea of this package is to be naive and simple (like me).</p>
 <p>From RStudio/VSCode create a new project and run:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">armadillo</span><span class="fu">::</span><span class="fu"><a href="reference/pkg_template.html">pkg_template</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">cpp11armadillo</span><span class="fu">::</span><span class="fu"><a href="reference/pkg_template.html">pkg_template</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Then follow the instructions from the README.</p>
-<p>The vignettes contains detailed examples that I use to test <code>armadillo</code>, these include Ordinary Least Squares, eigenvalues, and the Capital Asset Pricing Model (CAPM).</p>
+<p>The vignettes contains detailed examples that I use to test <code>cpp11armadillo</code>, these include Ordinary Least Squares, eigenvalues, and the Capital Asset Pricing Model (CAPM).</p>
 </div>
 </div>
 <div class="section level1">
@@ -144,8 +144,9 @@
     <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/pachadotdev/armadillo/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/pachadotdev/armadillo/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://cloud.r-project.org/package=cpp11armadillo" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/pachadotdev/cpp11armadillo/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/pachadotdev/cpp11armadillo/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -169,7 +170,7 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing armadillo</a></li>
+<li><a href="authors.html#citation">Citing cpp11armadillo</a></li>
 </ul>
 </div>
 
@@ -177,16 +178,17 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Mauricio Vargas Sepulveda <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-1017-7574" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/pachadotdev/armadillo/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/pachadotdev/armadillo/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/pachadotdev/armadillo" class="external-link"><img src="https://codecov.io/gh/pachadotdev/armadillo/graph/badge.svg?token=mWfiUCgfNu" alt="codecov"></a></li>
+<li><a href="https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/pachadotdev/cpp11armadillo" class="external-link"><img src="https://codecov.io/gh/pachadotdev/cpp11armadillo/graph/badge.svg?token=mWfiUCgfNu" alt="codecov"></a></li>
 <li><a href="https://buymeacoffee.com/pacha" class="external-link"><img src="https://raw.githubusercontent.com/pachadotdev/buymeacoffee-badges/main/bmc-donate-white.svg" alt="BuyMeACoffee"></a></li>
-<li><a href="https://CRAN.R-project.org/package=armadillo" class="external-link"><img src="https://www.r-pkg.org/badges/version/armadillo" alt="CRAN status"></a></li>
+<li><a href="https://CRAN.R-project.org/package=cpp11armadillo" class="external-link"><img src="https://www.r-pkg.org/badges/version/cpp11armadillo" alt="CRAN status"></a></li>
 </ul>
 </div>
 

@@ -1,6 +1,6 @@
 # The function itself just echos its inputs and outputs to a file called INDEX,
 # which is then opened by RStudio when the new project is opened.
-#' Start a new project with the armadillo package template
+#' Start a new project with the cpp11armadillo package template
 #' @param path Path to the new project
 #' @param pkgname Name of the new package
 #' @return The file path to the copied template (invisibly).
@@ -26,7 +26,7 @@ pkg_template <- function(path = NULL, pkgname = NULL) {
   # copy files
   file.copy(
     list.files(
-      system.file("extdata", "", package = "armadillo"),
+      system.file("extdata", "", package = "cpp11armadillo"),
       full.names = TRUE
     ),
     path,
@@ -82,7 +82,7 @@ pkg_template <- function(path = NULL, pkgname = NULL) {
     "Encoding: UTF-8",
     "NeedsCompilation: yes",
     "VignetteBuilder: knitr",
-    "LinkingTo: cpp11, armadillo"
+    "LinkingTo: cpp11, cpp11armadillo"
   )
 
   writeLines(lines, con = paste0(path, "/DESCRIPTION"))

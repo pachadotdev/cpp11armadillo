@@ -31,10 +31,10 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/armadillo-package.html</loc>
+    <loc>/reference/armadillo_version.html</loc>
   </url>
   <url>
-    <loc>/reference/armadillo_version.html</loc>
+    <loc>/reference/cpp11armadillo-package.html</loc>
   </url>
   <url>
     <loc>/reference/cpp_vendor.html</loc>

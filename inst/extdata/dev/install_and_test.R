@@ -1,5 +1,5 @@
 # run this line if you want to replace all the files provided by the template
-# armadillo::pkg_template()
+# cpp11armadillo::pkg_template()
 
 development <- TRUE
 
@@ -16,8 +16,8 @@ if (isTRUE(development)) {
 
 # Estimate the model mpg ~ wt + cyl{4,6,8} ----
 
-x <- armadillo::mtcars_mat$x
-y <- armadillo::mtcars_mat$y
+x <- cpp11armadillo::mtcars_mat$x
+y <- cpp11armadillo::mtcars_mat$y
 
 x <- x[, c("wt", "cyl4", "cyl6", "cyl8")]
 
