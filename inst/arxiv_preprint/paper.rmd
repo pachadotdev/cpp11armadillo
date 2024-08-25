@@ -12,7 +12,7 @@ output:
     latex_engine: pdflatex
     template: "template.tex"
     keep_tex: true
-bibliography: ../inst/references.bib
+bibliography: references.bib
 csl: chicago.csl
 fontsize: 12pt
 linespacing: 1.5
@@ -38,13 +38,13 @@ algebra operations more approachable for R users without extensive programming b
 
 # Introduction
 
-R is widely used by non-programmers [@Wickham2019], and this article aims to introduce computational concepts in a non-technical yet formal manner for social scientists. Our goal is to explain when and why moving code to C++ is beneficial in terms of speed or syntax and how to do it using ['cpp11armadillo'](https://pacha.dev/cpp11armadillo), our novel Armadillo and R integration for linear algebra.
+R is widely used by non-programmers [@wickham2019], and this article aims to introduce computational concepts in a non-technical yet formal manner for social scientists. Our goal is to explain when and why moving code to C++ is beneficial in terms of speed or syntax and how to do it using ['cpp11armadillo'](https://pacha.dev/cpp11armadillo), our novel Armadillo and R integration for linear algebra.
 
-[Armadillo](https://arma.sourceforge.net/) is a C++ library designed for linear algebra, emphasizing a balance between performance and ease of use. C++ is highly efficient for computationally intensive tasks but lacks built-in data structures and functions for linear algebra operations. Armadillo fills this gap by providing an intuitive syntax similar to MATLAB [@Sanderson2016].
+[Armadillo](https://arma.sourceforge.net/) is a C++ library designed for linear algebra, emphasizing a balance between performance and ease of use. C++ is highly efficient for computationally intensive tasks but lacks built-in data structures and functions for linear algebra operations. Armadillo fills this gap by providing an intuitive syntax similar to MATLAB [@sanderson2016].
 
-['RcppArmadillo'](https://cran.r-project.org/package=RcppArmadillo), introduced in 2010, integrates Armadillo with R through the Rcpp package, enabling the use of C++ for performance-critical parts of R code [@Eddelbuettel2014]. 'RcppArmadillo' is a widely successful project, and at the time of writing this article, there are around 1,100 packages on CRAN that depend on it.
+['RcppArmadillo'](https://cran.r-project.org/package=RcppArmadillo), introduced in 2010, integrates Armadillo with R through the Rcpp package, enabling the use of C++ for performance-critical parts of R code [@eddelbuettel2014]. 'RcppArmadillo' is a widely successful project, and at the time of writing this article, there are around 1,100 packages on CRAN that depend on it.
 
-'cpp11armadillo' is an independent project that aims to simplify the integration of R and C++ by using 'cpp11', an R package that eases using C++ functions from R, and it is aligned with the tidyverse philosophy of simplicity and user-centric design [@Wickham2019; @cpp11].
+'cpp11armadillo' is an independent project that aims to simplify the integration of R and C++ by using 'cpp11', an R package that eases using C++ functions from R, and it is aligned with the tidyverse philosophy of simplicity and user-centric design [@wickham2019; @cpp11].
 
 'cpp11armadillo' is useful in cases where vectorization (e.g., applying an operation to a vector or matrix as a whole rather than looping over each element) is not possible or challenging, and it can help to solve some bottlenecks as it simplifies the task of rewriting R code that involves linear algebra as C++ code.
 
@@ -54,7 +54,7 @@ For cases where vectorization is applicable, @burns2011r provides a good introdu
 
 We followed four design principles when developing 'cpp11armadillo':
 
-1. **Column-oriented**: It follows the column-major order for its internals and all the documentation and examples, consistent with @Hansen2022, where vectors are column vectors.
+1. **Column-oriented**: It follows the column-major order for its internals and all the documentation and examples, consistent with @hansen2022, where vectors are column vectors.
 2. **Package oriented**: It is designed to be used in an R package, which is the recommended way to organize code in medium and large scale projects.
 3. **Header-only**: No separate actions are required; it only requires to include 'cpp11armadillo' as a dependency.
 4. **Vendoring-capable**: It provides a dedicated function to copy the entire codebase into R packages, providing the option to make it a one-time dependency. This feature allows to run code in restricted environments (e.g., where installing packages from CRAN or GitHub is blocked by a firewall or available for administrators only).
@@ -176,7 +176,7 @@ for (i in 1:2) {
 
 The problem with this loop is that it is particularly slow, for two 1000x1000 matrices filled with `rnorm()`, it takes takes 422 miliseconds to run while the `pmax()` function takes 7 miliseconds, meaning that the implemented loop is twenty times slower.
 
-Loops should be used in computations where the one step depends on the previous steps. One example of this is the Gram-Schmidt method to obtain an orthogonal matrix from a square matrix $X$, in which case the $N$ vector depends on the previous $N-1$ computed vectors, and it consists of the following algorithm [@Strang1988]:
+Loops should be used in computations where the one step depends on the previous steps. One example of this is the Gram-Schmidt method to obtain an orthogonal matrix from a square matrix $X$, in which case the $N$ vector depends on the previous $N-1$ computed vectors, and it consists of the following algorithm [@strang1988]:
 
 * Step 1: Construct a matrix $X$ of dimension $M \times N$ with the vectors to be orthonormalized as column vectors.
 * Step 2: Construct a matrix $U$ of the same dimension as $X$ filled with zeroes to store the orthonormal basis later.
@@ -349,7 +349,7 @@ The second function is a reduced form of the first, and in practical terms it is
 
 # Gauss-Jordan C++ implementation
 
-Consider the following system of linear equations from @vargas2024hitchhikers:
+Consider the following system of linear equations from @vargas2024:
 
 \begin{equation*}
 \begin{bmatrix}
@@ -403,7 +403,7 @@ The system can be solved with row operations to obtain the inverse matrix:
 \end{bmatrix}
 \end{equation*}
 
-The same can be done with a naive implementation of the Gauss-Jordan algorithm that has complexity $O(n^3)$ [@Strang1988]. It should serve as a starting point to understand the syntax and the data structures.
+The same can be done with a naive implementation of the Gauss-Jordan algorithm that has complexity $O(n^3)$ [@strang1988]. It should serve as a starting point to understand the syntax and the data structures.
 
 ```cpp
 #include <cpp11.hpp>
@@ -535,7 +535,7 @@ install.packages("cpp11armadillo")
 cpp11armadillo::create_package("cpp11armadilloexample")
 ```
 
-Given a design matrix $X$ and outcome vector $y$, one naive function (available in the package template) to obtain the Ordinary Least Squares (OLS) estimator $\hat{\beta} = (X^tX)^{-1}(X^tY)$ [@Hansen2022] as a matrix (column vector) is:
+Given a design matrix $X$ and outcome vector $y$, one naive function (available in the package template) to obtain the Ordinary Least Squares (OLS) estimator $\hat{\beta} = (X^tX)^{-1}(X^tY)$ [@hansen2022] as a matrix (column vector) is:
 
 ```cpp
 #include <armadillo.hpp>
@@ -624,14 +624,14 @@ The previous example, instead of directly inverting $X^tX$, creates empty matric
 
 Armadillo also provides additional data structures, such as field and cube, which ressemble a list of scalars, vectors or matrices and that are particularly useful for loops.
 
-Adapting from the OLS examples, it is possible to fit a logistic regression with a loop that repeats calls to a function that returns the OLS coefficients. To do this, the starting point is to transform the data by the logistic link function [@mccullagh_generalized_2019; @vargas2024hitchhikers]:
+Adapting from the OLS examples, it is possible to fit a logistic regression with a loop that repeats calls to a function that returns the OLS coefficients. To do this, the starting point is to transform the data by the logistic link function [@mccullagh1989; @vargas2024]:
 \begin{align*}
 \mu &= \frac{y + 1/2}{2} \\
 \eta &= \log\left(\frac{\mu}{1-\mu}\right) \\
 z &= \eta + \frac{y - \mu}{\mu}
 \end{align*}
 
-From the transformed outcome $z$ and a design matrix $X$, we can implement a Re-Weighted Least Squares (RWLS) algorithm to obtain the coefficients of the logistic regression [@mccullagh_generalized_2019]. The following code is a naive implementation of the RWLS algorithm:
+From the transformed outcome $z$ and a design matrix $X$, we can implement a Re-Weighted Least Squares (RWLS) algorithm to obtain the coefficients of the logistic regression [@mccullagh1989]. The following code is a naive implementation of the RWLS algorithm:
 
 ```cpp
 #include <armadillo.hpp>

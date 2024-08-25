@@ -15,4 +15,5 @@
 ^\.clang-format$
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
-paper/
+inst/arxiv_preprint
+inst/rjournal_submission

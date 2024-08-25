@@ -1,0 +1,135 @@
+\documentclass[$fontsize$]{article}
+
+\usepackage[$paper$, margin=$margin$in]{geometry}
+
+$if(pdflatex)$
+  \usepackage[protrusion=true,expansion=true]{microtype}
+$endif$
+
+\usepackage[colorlinks]{hyperref}
+\usepackage{makeidx}
+\usepackage{framed}
+\usepackage{fancyvrb}
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{colorlinks = true, allcolors = blue}
+\usepackage{float}
+\usepackage{flafter}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{afterpage}
+
+\usepackage{datetime}
+\renewcommand{\dateseparator}{-}
+\yyyymmdddate
+
+$if(linespacing)$
+  \usepackage{setspace}
+  % custom spacing for paragraphs
+  \setstretch{$linespacing$}
+
+  % set spacing 1.0 for tables and code
+  \AtBeginEnvironment{tabular}{\singlespacing}
+  \AtBeginEnvironment{table}{\singlespacing}
+  \AtBeginEnvironment{longtable}{\singlespacing}
+  \AtBeginEnvironment{verbatim}{\singlespacing}
+  \AtBeginEnvironment{Shaded}{\singlespacing}
+$endif$
+
+% texlive >= 2020
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{cslreferences}[2]
+  {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}
+  {\par}
+$endif$
+
+$if(customfonts)$
+  \usepackage[mathlf,textlf,minionint,openg]{MinionPro}
+  % the pkg was renamed
+  \usepackage[cal=boondoxo,bb=lucida,bbscaled=.9]{mathalpha}
+$else$
+  \usepackage{amsmath}
+  \usepackage{amssymb}
+$endif$
+
+$if(amsthm)$
+  \usepackage{amsthm}
+$endif$
+
+% set text colour to #2c2e35
+\usepackage{xcolor}
+\definecolor{dark}{HTML}{2c2e35}
+\color{dark}
+
+% set link colour to #1e3765
+\definecolor{myblue}{HTML}{1e3765}
+\hypersetup{colorlinks,linkcolor=myblue,urlcolor=myblue}
+
+$if(sansserif)$
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\sansmath
+$endif$
+
+$if(creativecommons)$
+  \usepackage{hyperxmp}
+  \usepackage[type={CC}, modifier={$creativecommons$}, version={4.0}]{doclicense}
+$endif$
+
+\makeindex
+
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% To pass between YAML and LaTeX the dollar signs are added by CII
+% Syntax highlighting #22
+$if(highlighting-macros)$
+  $highlighting-macros$
+$endif$
+
+\author{
+  $author1$\\$affiliation11$\\$affiliation12$\\
+  \smallskip\\
+  $author2$\\$affiliation2$\\
+  \smallskip\\
+  Corresponding author: $email1$
+}
+\title{$title$}
+\date{Last updated: \today\ \currenttime}
+
+\setlength\parindent{0pt}
+\setlength\parskip{2pt}
+
+% Change the university
+\newcommand{\university}{$university$}
+% Change the department
+\newcommand{\department}{$department$}
+
+\begin{document}
+
+\maketitle
+
+$if(creativecommons)$
+\doclicenseThis
+$endif$
+
+\thispagestyle{empty}
+$if(outline)$
+\tableofcontents
+$endif$
+\setcounter{page}{0}
+\clearpage
+
+\afterpage{\setlength\parskip{10pt}}
+
+$body$
+
+% Index?
+% \printindex
+
+\end{document}
