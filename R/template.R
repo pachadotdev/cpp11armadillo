@@ -33,6 +33,8 @@ pkg_template <- function(path = NULL, pkgname = NULL) {
     recursive = TRUE
   )
 
+  dir.create(paste0(path, "/R"), recursive = TRUE, showWarnings = FALSE)
+
   lines <- c(
     "^.*\\.Rproj$",
     "^\\.Rproj\\.user$",
@@ -75,7 +77,7 @@ pkg_template <- function(path = NULL, pkgname = NULL) {
     "    rmarkdown",
     "Depends: R(>= 3.5.0)",
     "Description: ADD DESCRIPTION. TWO OR MORE LINES",
-    "License: MIT + file LICENSE",
+    "License: ADD LICENSE",
     "BugReports: https://github.com/USERNAME/PKGNAME/issues",
     "URL: https://WEBSITE.COM",
     "RoxygenNote: 7.3.0",

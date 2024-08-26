@@ -1,6 +1,7 @@
 # cpp11armadillo 0.3.2
 
 * Includes `armadillo.hpp` only once in the headers.
+* Improved package template.
 
 # cpp11armadillo 0.3.1
 
