@@ -11,7 +11,8 @@ test:
 
 check:
 	@echo "Local"
-	@Rscript -e 'devtools::check()'
+	@Rscript -e 'devtools::document()'
+	@Rscript -e 'devtools::check(); devtools::check("cpp11armadillotest")'
 	# this says "SSL certificate problem: self-signed certificate"
 	# @echo "RHub"
 	# @Rscript -e 'devtools::check_rhub()'
