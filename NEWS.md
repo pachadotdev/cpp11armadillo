@@ -2,6 +2,7 @@
 
 * Adds Jonathan as a contributor.
 * Includes the working paper for arXiv.
+* Avoids duplicating `mtcars_mat` for the tests.
 
 # cpp11armadillo 0.3.0
 
