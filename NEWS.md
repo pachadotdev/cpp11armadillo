@@ -49,7 +49,7 @@
 
 # cpp11armadillo 0.1.1
 
-* Includes more formal tests in the `armadillotest` directory.
+* Includes more formal tests in the `cpp11armadillotest` directory.
 * Provides a conversion from complex vector/matrix to a list of double
   vectors/matrices.
 
