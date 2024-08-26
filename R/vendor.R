@@ -75,21 +75,15 @@ cpp_vendor <- function(dir = NULL, subdir = "/inst/include") {
   # Vendor cpp11armadillo ----
 
   dir.create(
-    file.path(path, "cpp11armadillo"),
+    file.path(path, "armadillo"),
     recursive = TRUE,
     showWarnings = FALSE
   )
 
   dir.create(
-    file.path(path, "cpp11armadillo"),
+    file.path(path, "wrappers"),
     recursive = TRUE,
     showWarnings = FALSE
-  )
-
-  current_armadillo <- system.file(
-    "include",
-    "cpp11armadillo",
-    package = "cpp11armadillo"
   )
 
   current_armadillo <- system.file(
@@ -98,7 +92,13 @@ cpp_vendor <- function(dir = NULL, subdir = "/inst/include") {
     package = "cpp11armadillo"
   )
 
-  if (!nzchar(current_armadillo)) {
+  current_wrappers <- system.file(
+    "include",
+    "wrappers",
+    package = "cpp11armadillo"
+  )
+
+  if (!nzchar(current_armadillo) || !nzchar(current_wrappers)) {
     stop("cpp11armadillo is not installed", call. = FALSE)
   }
 
@@ -116,18 +116,18 @@ cpp_vendor <- function(dir = NULL, subdir = "/inst/include") {
   )
 
   write_header(
-    path, "armadillo.hpp", "cpp11armadillo",
+    path, "cpp11armadillo.hpp", "cpp11armadillo",
     armadillo_header
   )
 
   copy_files(
     list.files(current_armadillo, full.names = TRUE),
-    path, "cpp11armadillo", armadillo_header
+    path, "armadillo", armadillo_header
   )
 
   copy_files(
-    list.files(current_armadillo, full.names = TRUE),
-    path, "cpp11armadillo", armadillo_header
+    list.files(current_wrappers, full.names = TRUE),
+    path, "wrappers", armadillo_header
   )
 
   # Additional steps to make vendoring work ----
