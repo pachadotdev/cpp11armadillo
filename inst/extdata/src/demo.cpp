@@ -4,7 +4,6 @@
 
 using namespace arma;
 using namespace cpp11;
-using namespace std;
 
 [[cpp11::register]] doubles_matrix<> ols_mat(const doubles_matrix<>& y,
                                              const doubles_matrix<>& x) {
