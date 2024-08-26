@@ -1,9 +1,5 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
-#
-# NOTE: This workflow is overkill for most R packages and
-# check-standard.yaml is likely a better choice.
-# usethis::use_github_action("check-standard") will install it.
 on:
   push:
     branches: [main]
@@ -12,30 +8,30 @@ on:
 
 name: R-CMD-check
 
+permissions: read-all
+
 jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) ${{ matrix.config.custom }}
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'release'}
-
+          - {os: macos-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
-
-          - {os: ubuntu-22.04,   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-22.04,   r: 'release'}
-          - {os: ubuntu-22.04,   r: 'release', custom: 'no-cpp11armadillotest'}
+          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-latest,   r: 'release'}
+          - {os: ubuntu-latest,   r: 'release', custom: 'no-cpp11armadillotest'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -44,12 +40,6 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
-
-      - name: Install macOS system dependencies
-        if: runner.os == 'macOS'
-        run: |
-          brew install --cask xquartz
-          brew install gcc
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -68,6 +58,7 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
 
       - name: Run cpp11armadillotest tests
         if: matrix.config.custom != 'no-cpp11armadillotest'
