@@ -1,4 +1,3 @@
-#include <armadillo.hpp>
 #include <cpp11.hpp>
 #include <cpp11armadillo.hpp>
 
