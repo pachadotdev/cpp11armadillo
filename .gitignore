@@ -6,8 +6,8 @@
 .vscode
 inst/doc
 README.html
-armadillotest/src/*.o
-armadillotest/src/*.so
+*.o
+*.so
 dev/benchmarks.rds
 dev/benchmarks.r
 dev/benchmarks_cpp11.cpp
