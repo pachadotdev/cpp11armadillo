@@ -53,8 +53,6 @@ inline uvec as_uvec(const cpp11::integers& x) {
 
 // Double/Integer to vector
 
-// we can use std::copy from R to Armadillo, not the other way around
-
 template <typename T, typename U>
 inline U Col_to_dblint_(const Col<T>& x) {
   const int n = x.n_rows;
