@@ -2,6 +2,6 @@ pandoc: 2.9.2.1
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
-  intro: intro.html
-last_built: 2024-08-31T17:02Z
+  usage: usage.html
+last_built: 2024-08-31T17:49Z
 

@@ -1,0 +1,143 @@
+---
+title: "Basic 'cpp11armadillo' usage"
+output: rmarkdown::html_vignette
+bibliography: "references.bib"
+vignette: >
+  %\VignetteIndexEntry{Introduction to 'cpp11armadillo'}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Ordinary Least Squares Examples
+
+The Ordinary Least Squares (OLS) estimator is $\hat{\beta} = (X^tX)^{-1}(X^tY)$
+for a design matrix $X$ and an outcome vector $Y$ [@Hansen2022].
+
+The following code shows how to compute the OLS estimator using Armadillo and
+sending data from R to C++ and viceversa using `cpp11` and `cpp11armadillo`
+[@Sanderson2016]:
+
+```cpp
+#include <cpp11.hpp>
+#include <cpp11armadillo.hpp>
+
+using namespace arma;
+using namespace cpp11;
+
+[[cpp11::register]] doubles_matrix<> ols_mat_(const doubles_matrix<>& x) {
+  Mat<double> Y = as_Mat(x); // convert from R to C++
+  Mat<double> Yinv = inv(Y); // Y^(-1)
+  return as_doubles_matrix(Yinv); // convert from C++ to R
+}
+```
+
+The previous code includes the `cpp11` and `cpp11armadillo` libraries
+(cpp11armadillo calls Armadillo) to allow interfacing C++ with R. It also loads
+the corresponding namespaces in order to simplify the notation (i.e., using
+`Mat` instead of `arma::Mat`), and the function `as_Mat()` and
+`as_doubles_mat()` are provided by `cpp11armadillo` to pass a `matrix` object
+from R to C++ and that Armadillo can read and then pass it back to R.
+
+The use of `const` and `&` are specific to the C++ language and allow to pass
+data from R to C++ without copying the data, and therefore saving time and
+memory.
+
+`cpp11armadillo` provides flexibility and in the case of the resulting vector
+of OLS coefficients, it can be returned as a matrix or a vector. The following
+code shows how to create three functions to compute the OLS estimator and return
+the result as a matrix or a vector avoiding repeated code:
+
+```cpp
+Mat<double> ols_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
+  Mat<double> Y = as_Mat(y);  // Col<double> Y = as_Col(y); also works
+  Mat<double> X = as_Mat(x);
+
+  Mat<double> XtX = X.t() * X;             // X'X
+  Mat<double> XtX_inv = inv(XtX);          // (X'X)^(-1)
+  Mat<double> beta = XtX_inv * X.t() * Y;  // (X'X)^(-1)(X'Y)
+
+  return beta;
+}
+
+[[cpp11::register]] doubles_matrix<> ols_mat_(const doubles_matrix<>& y,
+                                              const doubles_matrix<>& x) {
+  Mat<double> beta = ols_(y, x);
+  return as_doubles_matrix(beta);
+}
+
+[[cpp11::register]] doubles ols_dbl_(const doubles_matrix<>& y,
+                                     const doubles_matrix<>& x) {
+  Mat<double> beta = ols_(y, x);
+  return as_doubles(beta);
+}
+```
+
+In the previous code, the `ols_mat_()` function receives inputs from R and calls
+`ols_()` to do the computation on C++ side, and `ols_dbl_()` does the same but
+it returns a vector instead of a matrix.
+
+# Eigenvalues benchmark
+
+A proper benchmark is to compute eigenvalues for large matrices. Both
+`cpp11armadillo` and `RcppArmadillo` use Armadillo as a backend, and the
+marginal observed differences are because of how cpp11 and Rcpp pass data from
+R to C++ and viceversa. The computation times are identical.
+
+|Input     | Median time cpp11armadillo | Median time RcppArmadillo |
+|:---------|---------------------------:|--------------------------:|
+|500x500   |                     35.07ms|                     36.4ms|
+|1000x1000 |                    260.28ms|                   263.21ms|
+|1500x1500 |                    874.62ms|                   857.31ms|
+|2000x2000 |                       2.21s|                      2.21s|
+
+|Input     | Memory allocation cpp11armadillo | Memory allocation RcppArmadillo |
+|:---------|---------------------------------:|--------------------------------:|
+|500x500   |                            17.1KB|                           4.62MB|
+|1000x1000 |                              21KB|                           4.62MB|
+|1500x1500 |                            24.9KB|                           4.63MB|
+|2000x2000 |                            28.8KB|                           4.63MB|
+
+The `cpp11armadillo` computation was obtained with the following function:
+
+```cpp
+[[cpp11::register]] doubles_matrix<> eigen_sym_mat(const doubles_matrix<>& x) {
+  Mat<double> X = as_Mat(x);
+  Mat<double> y = eig_sym(X);
+  return as_doubles_matrix(y);
+}
+```
+
+The `RcppArmadillo` computation was obtained with the following function:
+
+```cpp
+#include <RcppArmadillo.h>
+// [[Rcpp::depends(RcppArmadillo)]]
+
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+arma::mat eigen_sym_mat(const arma::mat& x) {
+  arma::mat y = eig_sym(x);
+  return y;
+}
+```
+
+In order to get the `RcppArmadillo` function to work, we had to dedicate time
+to search online about the error `function 'enterRNGScope' not provided by
+package 'Rcpp'`, which required to include `// [[Rcpp::depends(RcppArmadillo)]]`
+for the function to work.
+
+# Additional Examples
+
+The package repository includes the directory `cpp11armadillotest`, which
+contains an R package that uses Armadillo, and that provides additional examples
+for eigenvalues, Cholesky and QR decomposition, and linear models.
+
+# References
