@@ -17,7 +17,12 @@ Authors@R: c(
     person(
         given = "Jonathan",
         family = "Schneider Malamud",
-        role = c("ctb"))
+        role = c("ctb")),
+    person(
+        given = "Conrad",
+        family = "Sanderson",
+        role = c("aut"),
+        comment = "Armadillo library (C++)")
     )
 Suggests: 
     cpp11,

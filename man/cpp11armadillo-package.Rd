@@ -20,6 +20,11 @@ Useful links:
 \author{
 \strong{Maintainer}: Mauricio Vargas Sepulveda \email{m.sepulveda@mail.utoronto.ca} (\href{https://orcid.org/0000-0003-1017-7574}{ORCID})
 
+Authors:
+\itemize{
+  \item Conrad Sanderson (Armadillo library (C++))
+}
+
 Other contributors:
 \itemize{
   \item Jonathan Schneider Malamud [contributor]
