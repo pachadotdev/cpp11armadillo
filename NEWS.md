@@ -1,8 +1,11 @@
+# cpp11armadillo 0.3.3
+
+* Rewritten vignettes.
+
 # cpp11armadillo 0.3.2
 
 * Includes `armadillo.hpp` only once in the headers.
 * Improved package template.
-* Rewritten vignettes.
 
 # cpp11armadillo 0.3.1
 
