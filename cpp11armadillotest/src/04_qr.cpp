@@ -8,8 +8,6 @@ Mat<double> ols_qr_(const doubles_matrix<>& y, const doubles_matrix<>& x,
   Mat<double> Y = as_Mat(y);  // Col<double> Y = as_Col(y); also works
   Mat<double> X = as_Mat(x);
 
-  Mat<double> XtX = X.t() * X;
-
   // no need to define the dimensions of Q and R
   // qr() will automatically initialize them
   Mat<double> Q;
