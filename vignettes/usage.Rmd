@@ -3,7 +3,7 @@ title: "Basic 'cpp11armadillo' usage"
 output: rmarkdown::html_vignette
 bibliography: "references.bib"
 vignette: >
-  %\VignetteIndexEntry{Introduction to 'cpp11armadillo'}
+  %\VignetteIndexEntry{Basic 'cpp11armadillo' usage}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

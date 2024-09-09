@@ -22,7 +22,7 @@ inline Col<T> as_Col(const T& x) {
 
 template <typename T, typename U>
 inline Col<T> as_Col_(const U& x) {
-  const int n = x.size();
+  const size_t n = x.size();
 
   Col<T> y(n);
 
@@ -55,18 +55,19 @@ inline uvec as_uvec(const cpp11::integers& x) {
 
 template <typename T, typename U>
 inline U Col_to_dblint_(const Col<T>& x) {
-  const int n = x.n_rows;
+  const size_t n = x.n_rows;
 
   using dblint = typename std::conditional<std::is_same<U, doubles>::value,
                                            writable::doubles, writable::integers>::type;
 
   dblint y(n);
 
-#ifdef _OPENMP
-#pragma omp parallel for schedule(static)
-#endif
-  for (int i = 0; i < n; ++i) {
-    y[i] = x[i];
+  if (std::is_same<U, doubles>::value) {
+    double* y_data = REAL(y);
+    std::memcpy(y_data, x.memptr(), n * sizeof(double));
+  } else {
+    int* y_data = INTEGER(y);
+    std::memcpy(y_data, x.memptr(), n * sizeof(int));
   }
 
   return y;
@@ -81,15 +82,11 @@ inline doubles as_doubles(const Col<double>& x) {
 }
 
 inline integers as_integers(const uvec& x) {
-  const int n = x.n_elem;
+  const size_t n = x.n_elem;
+
   writable::integers y(n);
 
-#ifdef _OPENMP
-#pragma omp parallel for schedule(static)
-#endif
-  for (int i = 0; i < n; ++i) {
-    y[i] = x[i];
-  }
+  std::copy(x.begin(), x.end(), y.begin());
 
   return y;
 }
@@ -98,22 +95,21 @@ inline integers as_integers(const uvec& x) {
 
 template <typename T, typename U>
 inline U Col_to_dblint_matrix_(const Col<T>& x) {
-  const int n = x.n_rows;
-  const int m = 1;
+  const size_t n = x.n_rows;
+  const size_t m = 1;
 
   using dblint_matrix =
       typename std::conditional<std::is_same<U, doubles_matrix<>>::value,
                                 writable::doubles_matrix<>,
                                 writable::integers_matrix<>>::type;
 
+  using dblint =
+      typename std::conditional<std::is_same<U, cpp11::writable::doubles_matrix<>>::value,
+                                double, int>::type;
+
   dblint_matrix y(n, m);
 
-#ifdef _OPENMP
-#pragma omp parallel for schedule(static)
-#endif
-  for (int i = 0; i < n; ++i) {
-    y(i, 0) = x[i];
-  }
+  std::memcpy(y.data(), x.memptr(), n * m * sizeof(dblint));
 
   return y;
 }

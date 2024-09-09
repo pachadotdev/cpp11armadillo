@@ -1,3 +1,7 @@
+# cpp11armadillo 0.3.4
+
+* Uses `std::copy` and `std::memcpy` to convert between R and C++.
+
 # cpp11armadillo 0.3.3
 
 * Rewritten vignettes.

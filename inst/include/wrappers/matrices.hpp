@@ -77,13 +77,12 @@ inline U Mat_to_dblint_matrix_(const Mat<T>& A) {
 
   dblint_matrix B(n, m);
 
-#ifdef _OPENMP
-#pragma omp parallel for collapse(2) schedule(static)
-#endif
-  for (int i = 0; i < n; ++i) {
-    for (int j = 0; j < m; ++j) {
-      B(i, j) = A(i, j);
-    }
+  if (std::is_same<U, doubles_matrix<>>::value) {
+    double* B_data = REAL(B);
+    std::memcpy(B_data, A.memptr(), n * m * sizeof(double));
+  } else {
+    int* B_data = INTEGER(B);
+    std::memcpy(B_data, A.memptr(), n * m * sizeof(int));
   }
 
   return B;
