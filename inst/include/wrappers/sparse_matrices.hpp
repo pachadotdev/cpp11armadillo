@@ -18,18 +18,26 @@ inline SpMat<T> as_SpMat(const T& x) {
 
 template <typename T, typename U>
 inline SpMat<T> dblint_matrix_to_SpMat_(const U& x) {
-  const int n = x.nrow();
-  const int m = x.ncol();
+  const size_t n = x.nrow();
+  const size_t m = x.ncol();
 
   SpMat<T> y(n, m);
 
-#ifdef _OPENMP
-#pragma omp parallel for collapse(2) schedule(static)
-#endif
-  for (int i = 0; i < n; ++i) {
-    for (int j = 0; j < m; ++j) {
-      y(i, j) = x(i, j);
+  std::vector<std::pair<size_t, size_t>> non_zero_positions;
+
+  for (size_t i = 0; i < n; ++i) {
+    for (size_t j = 0; j < m; ++j) {
+      if (x(i, j) != 0) {
+        non_zero_positions.emplace_back(i, j);
+      }
     }
+  }
+
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static)
+#endif
+  for (const auto& pos : non_zero_positions) {
+    y(pos.first, pos.second) = x(pos.first, pos.second);
   }
 
   return y;
@@ -37,14 +45,14 @@ inline SpMat<T> dblint_matrix_to_SpMat_(const U& x) {
 
 template <typename T, typename U>
 inline SpMat<T> dblint_to_SpMat_(const U& x) {
-  const int n = x.size();
+  const size_t n = x.size();
 
   SpMat<T> y(n, 1);
 
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-  for (int i = 0; i < n; ++i) {
+  for (size_t i = 0; i < n; ++i) {
     y(i, 0) = x[i];
   }
 
@@ -75,8 +83,8 @@ inline SpMat<int> as_SpMat(const integers& x) {
 
 template <typename T, typename U>
 inline U SpMat_to_dblint_matrix_(const SpMat<T>& A) {
-  const int n = A.n_rows;
-  const int m = A.n_cols;
+  const size_t n = A.n_rows;
+  const size_t m = A.n_cols;
 
   using dblint_matrix =
       typename std::conditional<std::is_same<U, doubles_matrix<>>::value,
@@ -88,8 +96,8 @@ inline U SpMat_to_dblint_matrix_(const SpMat<T>& A) {
 #ifdef _OPENMP
 #pragma omp parallel for collapse(2) schedule(static)
 #endif
-  for (int i = 0; i < n; ++i) {
-    for (int j = 0; j < m; ++j) {
+  for (size_t i = 0; i < n; ++i) {
+    for (size_t j = 0; j < m; ++j) {
       B(i, j) = A(i, j);
     }
   }
