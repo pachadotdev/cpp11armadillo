@@ -17,3 +17,4 @@
 ^cran-comments\.md$
 inst/arxiv_preprint
 inst/rjournal_submission
+^_pkgdown\.yml$
