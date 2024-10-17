@@ -16,5 +16,5 @@
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
 inst/arxiv_preprint
-inst/rjournal_submission
+inst/plosone_submission
 ^_pkgdown\.yml$
