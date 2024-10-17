@@ -1,0 +1,29 @@
+Dear PLOS ONE Editorial Team,
+
+Please consider our article titled "cpp11armadillo: An R Package to Use the
+Armadillo C++ Library" for publication in PLOS ONE.
+
+The manuscript introduces the new package called `cpp11armadillo` which provides 
+a novel approach to use the Armadillo C++ library by using the header-only cpp11
+R package, and an extended documentation that covers the common challenges that
+R users might encounter when using C++.
+
+We believe your readers will find this article helpful for their work because it
+shows how, when and why using the C++ language to solve bottlenecks and when
+users should vectorize their operations in R. We hope that it will be a valuable
+addition to the journal.
+
+To prepare the manuscript, we used the Quarto system, which provides a PLOS ONE
+template (https://github.com/quarto-journals/plos). We hope that it is ok,
+because the manuscript includes plots that we are not sure how to put as
+separate files when rendering the document and not include them in the document.
+We have attached the figures as separate files in the submission.
+
+Regards,
+    
+Mauricio Vargas Sepúlveda
+Department of Political Science  
+Munk School of Global Affairs and Public Policy  
+University of Toronto  
+Toronto, Canada  
+m.sepulveda@mail.utoronto.ca

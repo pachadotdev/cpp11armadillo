@@ -1,7 +1,7 @@
 ---
 title: "'cpp11armadillo': An 'R' Package to Use the Armadillo C++ Library"
 date: "2024-10-14"
-abstract:
+abstract: |
   "This article introduces 'cpp11armadillo', an R package that integrates the
   highly efficient Armadillo C++ linear algebra library with R through the
   'cpp11' interface. Designed to offer significant performance improvements
@@ -10,24 +10,30 @@ abstract:
   users requiring efficient matrix operations, especially in cases where
   vectorization is not possible. Our benchmark demonstrate substantial speed
   gains over native R functions and Rcpp-based setups."
-draft: true
-author1: Mauricio Vargas Sepúlveda
-affiliation11: Department of Political Science
-affiliation12: Munk School of Global Affairs and Public Policy
-author2: Jonathan Schneider Malamud
-affiliation21: Department of Electrical and Computer Engineering, University of Toronto
-address: "1 Devonshire Pl"
-city: Toronto
-state: Ontario
-country: Canada
-postcode: M5S 3K7
+author:
+  - name: Mauricio Vargas Sepúlveda
+    affiliations:
+      - ref: dept-political-science
+      - ref: munk-school
+    notes: |
+      "1 Devonshire Pl, Toronto, ON M5S 3K7, Canada"
+    corresponding: true
+  - name: Jonathan Schneider Malamud
+    affiliations:
+      - ref: dept-electrical-engineering
+affiliations:
+  - id: dept-political-science
+    name: Department of Political Science, University of Toronto
+  - id: munk-school
+    name: Munk School of Global Affairs and Public Policy, University of Toronto
+  - id: dept-electrical-engineering
+    name: Department of Electrical and Computer Engineering, University of Toronto
 format:
-  pdf:
-    pdf-engine: xelatex
-    template: "elsarticle-template-harv.tex"
+  pdf: default
+  plos-pdf:
+    id: plosone
     keep-tex: true
     post-process: "move_pdf.sh"
-highlighting-macros: true
 bibliography: references.bib
 ---
 
