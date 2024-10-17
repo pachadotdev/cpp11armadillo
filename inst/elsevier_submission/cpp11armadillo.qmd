@@ -1,0 +1,343 @@
+---
+title: "'cpp11armadillo': An 'R' Package to Use the Armadillo C++ Library"
+date: "2024-10-14"
+abstract:
+  "This article introduces 'cpp11armadillo', an R package that integrates the
+  highly efficient Armadillo C++ linear algebra library with R through the
+  'cpp11' interface. Designed to offer significant performance improvements
+  for computationally intensive tasks, 'cpp11armadillo' simplifies the process
+  of integrating C++ code into R. This package is particularly suited for R
+  users requiring efficient matrix operations, especially in cases where
+  vectorization is not possible. Our benchmark demonstrate substantial speed
+  gains over native R functions and Rcpp-based setups."
+draft: true
+author1: Mauricio Vargas Sepúlveda
+affiliation11: Department of Political Science
+affiliation12: Munk School of Global Affairs and Public Policy
+author2: Jonathan Schneider Malamud
+affiliation21: Department of Electrical and Computer Engineering, University of Toronto
+address: "1 Devonshire Pl"
+city: Toronto
+state: Ontario
+country: Canada
+postcode: M5S 3K7
+format:
+  pdf:
+    pdf-engine: xelatex
+    template: "elsarticle-template-harv.tex"
+    keep-tex: true
+    post-process: "move_pdf.sh"
+highlighting-macros: true
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(ggplot2)
+```
+
+# Introduction
+
+As R continues to grow in popularity for statistical computing and data
+analysis, it can create bottlenecks when working with large datasets. The need
+to interface with lower-level languages like C++ to bypass these bottlenecks has
+led to the development of tools like 'Rcpp' [@eddelbuettel2011], and more
+recently, 'cpp11' [@cpp11].
+
+'cpp11armadillo' is a novel package that builds upon the existing Armadillo C++
+library [@sanderson2016] to provide high-level access to efficient linear
+algebra operations directly from R. The existing 'RcppArmadillo'
+[@eddelbuettel2014] already offers this, and 'cpp11armadillo' offers an
+alternative with modern C++ features, where we highlight vendoring, that can
+improve performance and simplify the its usage.
+
+# Features
+
+'cpp11armadillo' simplifies C++ integration by leveraging the 'cpp11' package
+[@cpp11], which is designed to reduce the complexity of including C++ code in R.
+Its core features include:
+
+- High-Performance Matrix Operations: By using Armadillo, cpp11armadillo allows
+  users to perform matrix multiplications, inversions, and decompositions with
+  minimal overhead. These operations are, for some cases, several times faster
+  than their R counterparts.
+  
+- Simplified Syntax: Armadillo offers a user-friendly syntax similar to that of
+  'MATLAB' [@sanderson2016], making it accessible to R users without requiring
+  an extensive background in C++.
+
+- Modern C++ Support: 'cpp11armadillo' supports C++11 and newer standards,
+  enabling efficient memory management, parallel computations, and advanced
+  templates, all integrated into an R workflow.
+
+- Integration with R: The package allows direct manipulation of R data
+  structures (e.g., vectors, matrices) in C++, providing a seamless workflow
+  between the two languages without requiring manual data conversion (e.g., 
+  such as exporting data to CSV files and continously reading them in R to
+  use the C++ output or vice versa).
+
+# Background
+
+The R programming language was not designed for high-performance computing, it
+was created to offer ready-made statistical functions for the end-user, and
+its interpreted nature can lead to slow execution times for computationally
+intensive tasks [@wickham2019; @r2024]. The same applies to Python and other
+high-level languages.
+
+Compiled languages like C++ offer significant performance improvements due to
+their direct access to hardware resources and efficient memory management. The
+counterpart is that C++ has a steep learning curve and it is less user-friendly
+than R. C++ goals are different, it is designed to be fast and efficient, and
+it is not focused on statistical computing but on general-purpose programming
+[@stroustrup2012].
+
+However, bottlenecks in R can be solved by using vectorized operations instead
+of writing loops, which treats data objects as a whole instead of element-wise
+[@burns2011]. There are cases where vectorization is not possible or challenging
+to implement [@burns2011], and this is where 'cpp11armadillo' comes in and it
+offers data structures and functions that are not available in R
+that facilitate the implementation of loops and other operations [@r2024;
+@sanderson2016].
+
+Even in spite of these difficulties to work with large datasets or
+computationally intensive tasks, R is a growing popularity language for
+statistical computing and data analysis, and its community has created tools
+to integrate it with SQL databases for memory-efficient data access
+[@rpostgres]. There are multiple ways to measure a language popularity, and
+one of them is the number of R questions in Stack Overflow, which has been
+increasing over the years as shown in the following plot [@stackoverflow2024].
+
+```{r stackoverflow, fig.width = 5, fig.height = 3, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "R Questions in Stack Overflow increase from 2,260 in 2010 to 28,385 in 2023 with a peak of 59,895 in 2020.", fig.pos = "H"}
+library(readr)
+library(janitor)
+library(dplyr)
+library(ggplot2)
+library(patchwork)
+# library(tintin)
+
+stackoverflow <- read_csv("data/stackoverflow.csv") %>%
+  clean_names() %>%
+  rename(same_yr_pct = r_percentage) %>%
+  mutate(
+    prev_yr_pct = r_questions / lag(r_questions) * 100,
+  ) %>%
+  filter(year > 2009, year < 2024)
+
+# clrs <- tintin::tintin_clrs(option = "tintin in the land of the soviets")
+clrs <- c("#165976", "#d04e66")
+
+g1 <- ggplot(stackoverflow, aes(x = year, y = r_questions)) +
+  geom_line(color = clrs[1]) +
+  geom_point(color = clrs[1]) +
+  labs(
+    title = "R Questions in Stack Overflow",
+    x = "Year",
+    y = "Number of Questions (N)"
+  ) +
+  theme_minimal(base_size = 10)
+
+g2 <- ggplot(stackoverflow, aes(x = year, y = prev_yr_pct)) +
+  geom_line(color = clrs[2]) +
+  geom_point(color = clrs[2]) +
+  labs(
+    x = "Year",
+    y = "Year-over-Year Growth (%)",
+    caption = "Data Source: Adapted from Stack Overflow"
+  ) +
+  theme_minimal(base_size = 10)
+
+g1 + g2
+
+# ggsave("stackoverflow.svg", width = 5, height = 3, dpi = 300)
+```
+
+# Modern C++ features
+
+'cpp11' is a modern rewrite of the C++ interface for R, designed to improve
+safety, performance, and ease of use. It enforces copy-on-write semantics to
+prevent unintended modifications to data, ensuring that changes to objects do
+not affect other references. Additionally, 'cpp11' provides safer access to R's
+C API, reducing runtime errors in C++ code. It also supports ALTREP objects for
+efficient memory management and deferred computations, making it ideal for
+handling large datasets. By using UTF-8 strings throughout, 'cpp11' ensures
+robust handling of datasets created in different countries where encodings
+vary [@cpp11].
+
+Built on C++11 features like smart pointers and lambdas, 'cpp11' offers a more
+straightforward and efficient implementation compared to previous bindings. Its
+header-only design eliminates ABI compatibility issues, making it easier to
+integrate and manage in projects. 'cpp11' also compiles faster, uses less memory,
+and grows vectors more efficiently, optimizing performance when dealing with
+large amounts of data. These improvements make 'cpp11' a powerful, streamlined
+tool for developers who need reliable, high-performance C++ bindings for R
+[@cpp11].
+
+Following from 'cpp11', 'cpp11armadillo' leverages these modern C++ features to
+provide a seamless interface between R and the Armadillo library, offering
+high-performance linear algebra operations with minimal overhead. Besides the
+technical aspects, 'cpp11armadillo' offers vendoring, something not available
+in 'RcppArmadillo', which can simplify the installation process and reduce
+dependency issues, especially when working in environments with restricted
+access to the Internet. For instance, the [Niagara Supercomputer](https://docs.scinet.utoronto.ca/index.php/Niagara_Quickstart)
+that we use at the University of Toronto has restricted access to the Internet,
+and vendoring can simplify the installation process.
+
+Vendoring is a well-known concept in the Go community, and it consists in
+copying the dependency code directly into a project's source tree. This approach
+ensures that dependencies remain fixed and stable, preventing any external
+changes from inadvertently breaking the project. While vendoring offers
+stability, it comes with trade-offs. The primary advantage is that updates to
+the 'cpp11armadillo' library will not disrupt existing code, and it also copies
+'cpp11' C++ headers. However, the drawbacks include an increase in package size
+and the loss of automatic updates, meaning that bug fixes and new features will
+only be available when manually updated.
+
+In other words, vendoring allows the package creator to provide a
+dependency-free package that can be installed in any environment without
+requiring the end user to install 'cpp11' nor 'cpp11armadillo'. This approach
+makes 'cpp11armadillo' a dependency for the developer but not for the end
+user.
+
+# Usage
+
+To use 'cpp11armadillo', users must first install the package from CRAN or
+GitHub. The package includes the Armadillo library, no additional
+installation is required. The following code shows how to install the package:
+
+```r
+install.packages("cpp11armadillo")
+
+# or
+remotes::install_github("pachadotdev/cpp11armadillo")
+```
+
+Once installed, users can use the provided package template function to create
+a new package that uses C++ code with Armadillo. The package template includes
+simple examples and all the necessary files to compile the code and install
+the new R package. The following code shows how to create a new package:
+
+```r
+cpp11armadillo::create_package("cpp11newpackage")
+```
+
+The package [vignettes](https://pacha.dev/cpp11armadillo/index.html) cover the
+directories organization and the necessary steps to build an R package with
+relatively low setup efforts.
+
+It is important to note that 'cpp11armadillo' only work within an R package, and
+it is not possible to compile individual C++ scripts on the fly. This design
+choice ensures that the R and C++ code is organized following the organization
+described in @wickham2023.
+
+# Benchmarks
+
+In order to evaluate the performance of 'cpp11armadillo', we compared it with
+native R functions and 'RcppArmadillo'. We focused on a single test consisting
+in computing the Balassa Index [@vargassepulveda2020].
+
+The R code for the Balassa Index computation is as follows:
+
+```r
+balassa_r <- function(X) {
+  B <- t(t(X / rowSums(X)) / (colSums(X) / sum(X)))
+  B[B < 1] <- 0
+  B[B >= 1] <- 1
+  B
+}
+```
+
+The C++ code for the Balassa Index computation from an R matrix is as
+follows:
+
+```cpp
+Mat<double> balassa_armadillo(const doubles_matrix<>& x) {
+  mat X = as_Mat(x);
+  mat B = X.each_col() / sum(X, 1);
+  B = B.each_row() / (sum(X, 0) / accu(X));
+  B.elem(find(B < 1)).zeros();
+  B.elem(find(B >= 1)).ones();
+  return B;
+}
+```
+
+After implementing the C++ computation in 'cpp11armadillo' and 'RcppArmadillo',
+we compared the execution time of obtaining the Balassa index year by year for
+the 2002-2020 period, which involves 19 matrices with an approximate dimension
+of $230 \times 5,100$. After a build time of 4.4s for 'cpp11armadillo' and 9.5s
+for 'RcppArmadillo'. The following plot reveals almost identical execution times
+for the Armadillo function called from 'cpp11armadillo' and 'RcppArmadillo' with
+a marginal advantage for 'cpp11armadillo', and both are significantly faster
+than the base R function.
+
+```{r benchmark, fig.width = 5, fig.height = 3, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Balassa Index execution time reveals speed gains of around 50% for Armadillo implementations compared to base R.", fig.pos = "H"}
+library(bench)
+
+# bench_setup <- readRDS("data/benchmark-setup.rds")
+bench_speed <- readRDS("data/benchmark-speed.rds")
+
+bench_speed <- bench_speed %>%
+  mutate(
+    library = c("Base R", "cpp11armadillo", "RcppArmadillo")
+  ) %>%
+  select(time)
+
+bench_speed <- tibble(
+  library = c(rep("Base R", 100), rep("cpp11armadillo", 100), rep("RcppArmadillo", 100)),
+  time = c(unlist(bench_speed$time[1]), unlist(bench_speed$time[2]), unlist(bench_speed$time[3]))
+)
+
+# g1 <- bench_setup %>%
+#   mutate(
+#     median = bench::as_bench_time(median)
+#   ) %>%
+#   mutate(
+#     library = c("cpp11armadillo", "RcppArmadillo")
+#   ) %>%
+#   ggplot(aes(x = library, y = median)) +
+#   geom_col(fill = clrs[1]) +
+#   labs(
+#     title = "Balassa Index",
+#     subtitle = "Build Time",
+#     x = "Library",
+#     y = "Time (ms)"
+#   ) +
+#   theme_minimal(base_size = 10)
+
+g2 <- ggplot(bench_speed, aes(x = library, y = time * 1000)) +
+  geom_violin(fill = clrs[1]) +
+  labs(
+    title = "Balassa Index Execution Time",
+    x = "Library",
+    y = "Time (ms)",
+    caption = "Data Source: Own elaboration"
+  ) +
+  theme_minimal(base_size = 10)
+
+# g1 / g2
+g2
+
+# ggsave("benchmark.svg", width = 5, height = 3, dpi = 300)
+```
+
+\newpage
+
+The benchmarks were conducted on a ThinkPad X1 Carbon Gen 9 with the
+following specifications:
+
+- Processor: Intel Core i7-1185G7 with eight cores
+- Memory: 16 GB LPDDR4Xx-4266
+- Operating System: Pop!_OS 22.04 based on Ubuntu 22.04
+- R Version: 4.4.1
+- BLAS Library: OpenBLAS 0.3.20
+
+## Conclusion
+
+'cpp11armadillo' provides a simple and efficient way to integrate C++ code with
+R, leveraging the 'cpp11' package and the Armadillo library. It simplifies
+the process of writing C++ code for R users, allowing them to focus on the
+logic of the algorithm rather than the technical details of the integration. It
+can help to solve performance bottlenecks in 'R' code by using the efficient
+linear algebra operations provided by Armadillo in cases where vectorization
+is challenging. 'RcppArmadillo' is a popular package for this purpose, it
+has existed for nearly a decade, 'cpp11armadillo' offers a different approach
+with similar performance.

@@ -1,0 +1,11 @@
+How to use cpp11armadillo?
+
+1. Start a new project with RStudio.
+2. Open `dev/01_load_or_install.R` and run it.
+3. Open `src/01_ols.cpp`, inspect the OLS functions.
+4. Create your own functions in `02_your_functions.cpp`.
+5. Run `devtools::load_all()` in `dev/01_load_or_install.R` to test your
+   functions.
+6. Run `dev/03_readme_and_license.R` to add a README and license.
+7. Run `devtools::install()` in `dev/01_load_or_install.R` to install the
+   package locally when you are ready.
