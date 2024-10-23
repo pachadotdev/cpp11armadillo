@@ -13,7 +13,7 @@ Authors@R: c(
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    tinytest
 Depends: R(>= 3.5.0)
 Description: Testing cpp11armadillo. I run this within a tiny package to test
     the compiled code.
@@ -25,7 +25,5 @@ Encoding: UTF-8
 NeedsCompilation: yes
 VignetteBuilder: knitr
 LinkingTo: cpp11, cpp11armadillo
-Config/testthat/edition: 3
 LazyData: true
-Remotes:
-    pachadotdev/cpp11armadillo
+Remotes: pachadotdev/cpp11armadillo

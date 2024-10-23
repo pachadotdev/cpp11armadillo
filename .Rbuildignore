@@ -18,3 +18,5 @@
 inst/arxiv_preprint
 inst/plosone_submission
 ^_pkgdown\.yml$
+^inst/balassacpp11armadillo$
+^inst/balassarcpparmadillo$

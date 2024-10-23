@@ -6,160 +6,160 @@
 #include <R_ext/Visibility.h>
 
 // 01_ols.cpp
-doubles_matrix<> ols_mat(const doubles_matrix<>& y, const doubles_matrix<>& x);
-extern "C" SEXP _cpp11armadillotest_ols_mat(SEXP y, SEXP x) {
+doubles_matrix<> ols_mat_(const doubles_matrix<>& y, const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_ols_mat_(SEXP y, SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(ols_mat(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+    return cpp11::as_sexp(ols_mat_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
 // 01_ols.cpp
-doubles ols_dbl(const doubles_matrix<>& y, const doubles_matrix<>& x);
-extern "C" SEXP _cpp11armadillotest_ols_dbl(SEXP y, SEXP x) {
+doubles ols_dbl_(const doubles_matrix<>& y, const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_ols_dbl_(SEXP y, SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(ols_dbl(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+    return cpp11::as_sexp(ols_dbl_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
 // 02_eigen.cpp
-doubles_matrix<> eigen_sym_mat(const doubles_matrix<>& x);
-extern "C" SEXP _cpp11armadillotest_eigen_sym_mat(SEXP x) {
+doubles_matrix<> eigen_sym_mat_(const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_eigen_sym_mat_(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(eigen_sym_mat(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+    return cpp11::as_sexp(eigen_sym_mat_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
 // 02_eigen.cpp
-doubles eigen_sym_dbl(const doubles_matrix<>& x);
-extern "C" SEXP _cpp11armadillotest_eigen_sym_dbl(SEXP x) {
+doubles eigen_sym_dbl_(const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_eigen_sym_dbl_(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(eigen_sym_dbl(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+    return cpp11::as_sexp(eigen_sym_dbl_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
 // 02_eigen.cpp
-list eigen_gen_mat(const doubles_matrix<>& x);
-extern "C" SEXP _cpp11armadillotest_eigen_gen_mat(SEXP x) {
+list eigen_gen_mat_(const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_eigen_gen_mat_(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(eigen_gen_mat(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+    return cpp11::as_sexp(eigen_gen_mat_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
 // 02_eigen.cpp
-list eigen_gen_mat_complex_wrapper(const doubles_matrix<>& x);
-extern "C" SEXP _cpp11armadillotest_eigen_gen_mat_complex_wrapper(SEXP x) {
+list eigen_gen_mat_complex_wrapper_(const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_eigen_gen_mat_complex_wrapper_(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(eigen_gen_mat_complex_wrapper(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+    return cpp11::as_sexp(eigen_gen_mat_complex_wrapper_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
 // 02_eigen.cpp
-list eigen_gen_dbl_complex_wrapper(const doubles_matrix<>& x);
-extern "C" SEXP _cpp11armadillotest_eigen_gen_dbl_complex_wrapper(SEXP x) {
+list eigen_gen_dbl_complex_wrapper_(const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_eigen_gen_dbl_complex_wrapper_(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(eigen_gen_dbl_complex_wrapper(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+    return cpp11::as_sexp(eigen_gen_dbl_complex_wrapper_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
 // 02_eigen.cpp
-list eigen_gen_no_wrapper(const doubles_matrix<>& x);
-extern "C" SEXP _cpp11armadillotest_eigen_gen_no_wrapper(SEXP x) {
+list eigen_gen_no_wrapper_(const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_eigen_gen_no_wrapper_(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(eigen_gen_no_wrapper(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+    return cpp11::as_sexp(eigen_gen_no_wrapper_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
 // 03_chol.cpp
-doubles_matrix<> chol_mat(const doubles_matrix<>& x, std::string type);
-extern "C" SEXP _cpp11armadillotest_chol_mat(SEXP x, SEXP type) {
+doubles_matrix<> chol_mat_(const doubles_matrix<>& x, std::string type);
+extern "C" SEXP _cpp11armadillotest_chol_mat_(SEXP x, SEXP type) {
   BEGIN_CPP11
-    return cpp11::as_sexp(chol_mat(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<std::string>>(type)));
+    return cpp11::as_sexp(chol_mat_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<std::string>>(type)));
   END_CPP11
 }
 // 04_qr.cpp
-doubles_matrix<> ols_qr_mat(const doubles_matrix<>& y, const doubles_matrix<>& x, const bool econ);
-extern "C" SEXP _cpp11armadillotest_ols_qr_mat(SEXP y, SEXP x, SEXP econ) {
+doubles_matrix<> ols_qr_mat_(const doubles_matrix<>& y, const doubles_matrix<>& x, const bool econ);
+extern "C" SEXP _cpp11armadillotest_ols_qr_mat_(SEXP y, SEXP x, SEXP econ) {
   BEGIN_CPP11
-    return cpp11::as_sexp(ols_qr_mat(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const bool>>(econ)));
+    return cpp11::as_sexp(ols_qr_mat_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const bool>>(econ)));
   END_CPP11
 }
 // 04_qr.cpp
-doubles ols_qr_dbl(const doubles_matrix<>& y, const doubles_matrix<>& x, const bool econ);
-extern "C" SEXP _cpp11armadillotest_ols_qr_dbl(SEXP y, SEXP x, SEXP econ) {
+doubles ols_qr_dbl_(const doubles_matrix<>& y, const doubles_matrix<>& x, const bool econ);
+extern "C" SEXP _cpp11armadillotest_ols_qr_dbl_(SEXP y, SEXP x, SEXP econ) {
   BEGIN_CPP11
-    return cpp11::as_sexp(ols_qr_dbl(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const bool>>(econ)));
+    return cpp11::as_sexp(ols_qr_dbl_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const bool>>(econ)));
   END_CPP11
 }
 // 05_capm.cpp
-doubles_matrix<> capm(const doubles_matrix<>& r, const doubles_matrix<>& m, double f);
-extern "C" SEXP _cpp11armadillotest_capm(SEXP r, SEXP m, SEXP f) {
+doubles_matrix<> capm_(const doubles_matrix<>& r, const doubles_matrix<>& m, double f);
+extern "C" SEXP _cpp11armadillotest_capm_(SEXP r, SEXP m, SEXP f) {
   BEGIN_CPP11
-    return cpp11::as_sexp(capm(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(r), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(m), cpp11::as_cpp<cpp11::decay_t<double>>(f)));
+    return cpp11::as_sexp(capm_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(r), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(m), cpp11::as_cpp<cpp11::decay_t<double>>(f)));
   END_CPP11
 }
 // 06_typedefs.cpp
-doubles typedef_Col_double(const doubles& x);
-extern "C" SEXP _cpp11armadillotest_typedef_Col_double(SEXP x) {
+doubles typedef_Col_double_(const doubles& x);
+extern "C" SEXP _cpp11armadillotest_typedef_Col_double_(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(typedef_Col_double(cpp11::as_cpp<cpp11::decay_t<const doubles&>>(x)));
+    return cpp11::as_sexp(typedef_Col_double_(cpp11::as_cpp<cpp11::decay_t<const doubles&>>(x)));
   END_CPP11
 }
 // 06_typedefs.cpp
-integers typedef_Col_int(const integers& x);
-extern "C" SEXP _cpp11armadillotest_typedef_Col_int(SEXP x) {
+integers typedef_Col_int_(const integers& x);
+extern "C" SEXP _cpp11armadillotest_typedef_Col_int_(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(typedef_Col_int(cpp11::as_cpp<cpp11::decay_t<const integers&>>(x)));
+    return cpp11::as_sexp(typedef_Col_int_(cpp11::as_cpp<cpp11::decay_t<const integers&>>(x)));
   END_CPP11
 }
 // 06_typedefs.cpp
-integers typedef_uvec(const integers& x);
-extern "C" SEXP _cpp11armadillotest_typedef_uvec(SEXP x) {
+integers typedef_uvec_(const integers& x);
+extern "C" SEXP _cpp11armadillotest_typedef_uvec_(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(typedef_uvec(cpp11::as_cpp<cpp11::decay_t<const integers&>>(x)));
+    return cpp11::as_sexp(typedef_uvec_(cpp11::as_cpp<cpp11::decay_t<const integers&>>(x)));
   END_CPP11
 }
 // 06_typedefs.cpp
-doubles_matrix<> typedef_Mat_double(const doubles_matrix<>& x);
-extern "C" SEXP _cpp11armadillotest_typedef_Mat_double(SEXP x) {
+doubles_matrix<> typedef_Mat_double_(const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_typedef_Mat_double_(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(typedef_Mat_double(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+    return cpp11::as_sexp(typedef_Mat_double_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
 // 06_typedefs.cpp
-integers_matrix<> typedef_Mat_int(const integers_matrix<>& x);
-extern "C" SEXP _cpp11armadillotest_typedef_Mat_int(SEXP x) {
+integers_matrix<> typedef_Mat_int_(const integers_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_typedef_Mat_int_(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(typedef_Mat_int(cpp11::as_cpp<cpp11::decay_t<const integers_matrix<>&>>(x)));
+    return cpp11::as_sexp(typedef_Mat_int_(cpp11::as_cpp<cpp11::decay_t<const integers_matrix<>&>>(x)));
   END_CPP11
 }
 // 06_typedefs.cpp
-doubles_matrix<> typedef_SpMat_double(const doubles_matrix<>& x);
-extern "C" SEXP _cpp11armadillotest_typedef_SpMat_double(SEXP x) {
+doubles_matrix<> typedef_SpMat_double_(const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_typedef_SpMat_double_(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(typedef_SpMat_double(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+    return cpp11::as_sexp(typedef_SpMat_double_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
 // 06_typedefs.cpp
-integers_matrix<> typedef_SpMat_int(const integers_matrix<>& x);
-extern "C" SEXP _cpp11armadillotest_typedef_SpMat_int(SEXP x) {
+integers_matrix<> typedef_SpMat_int_(const integers_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_typedef_SpMat_int_(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(typedef_SpMat_int(cpp11::as_cpp<cpp11::decay_t<const integers_matrix<>&>>(x)));
+    return cpp11::as_sexp(typedef_SpMat_int_(cpp11::as_cpp<cpp11::decay_t<const integers_matrix<>&>>(x)));
   END_CPP11
 }
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_cpp11armadillotest_capm",                          (DL_FUNC) &_cpp11armadillotest_capm,                          3},
-    {"_cpp11armadillotest_chol_mat",                      (DL_FUNC) &_cpp11armadillotest_chol_mat,                      2},
-    {"_cpp11armadillotest_eigen_gen_dbl_complex_wrapper", (DL_FUNC) &_cpp11armadillotest_eigen_gen_dbl_complex_wrapper, 1},
-    {"_cpp11armadillotest_eigen_gen_mat",                 (DL_FUNC) &_cpp11armadillotest_eigen_gen_mat,                 1},
-    {"_cpp11armadillotest_eigen_gen_mat_complex_wrapper", (DL_FUNC) &_cpp11armadillotest_eigen_gen_mat_complex_wrapper, 1},
-    {"_cpp11armadillotest_eigen_gen_no_wrapper",          (DL_FUNC) &_cpp11armadillotest_eigen_gen_no_wrapper,          1},
-    {"_cpp11armadillotest_eigen_sym_dbl",                 (DL_FUNC) &_cpp11armadillotest_eigen_sym_dbl,                 1},
-    {"_cpp11armadillotest_eigen_sym_mat",                 (DL_FUNC) &_cpp11armadillotest_eigen_sym_mat,                 1},
-    {"_cpp11armadillotest_ols_dbl",                       (DL_FUNC) &_cpp11armadillotest_ols_dbl,                       2},
-    {"_cpp11armadillotest_ols_mat",                       (DL_FUNC) &_cpp11armadillotest_ols_mat,                       2},
-    {"_cpp11armadillotest_ols_qr_dbl",                    (DL_FUNC) &_cpp11armadillotest_ols_qr_dbl,                    3},
-    {"_cpp11armadillotest_ols_qr_mat",                    (DL_FUNC) &_cpp11armadillotest_ols_qr_mat,                    3},
-    {"_cpp11armadillotest_typedef_Col_double",            (DL_FUNC) &_cpp11armadillotest_typedef_Col_double,            1},
-    {"_cpp11armadillotest_typedef_Col_int",               (DL_FUNC) &_cpp11armadillotest_typedef_Col_int,               1},
-    {"_cpp11armadillotest_typedef_Mat_double",            (DL_FUNC) &_cpp11armadillotest_typedef_Mat_double,            1},
-    {"_cpp11armadillotest_typedef_Mat_int",               (DL_FUNC) &_cpp11armadillotest_typedef_Mat_int,               1},
-    {"_cpp11armadillotest_typedef_SpMat_double",          (DL_FUNC) &_cpp11armadillotest_typedef_SpMat_double,          1},
-    {"_cpp11armadillotest_typedef_SpMat_int",             (DL_FUNC) &_cpp11armadillotest_typedef_SpMat_int,             1},
-    {"_cpp11armadillotest_typedef_uvec",                  (DL_FUNC) &_cpp11armadillotest_typedef_uvec,                  1},
+    {"_cpp11armadillotest_capm_",                          (DL_FUNC) &_cpp11armadillotest_capm_,                          3},
+    {"_cpp11armadillotest_chol_mat_",                      (DL_FUNC) &_cpp11armadillotest_chol_mat_,                      2},
+    {"_cpp11armadillotest_eigen_gen_dbl_complex_wrapper_", (DL_FUNC) &_cpp11armadillotest_eigen_gen_dbl_complex_wrapper_, 1},
+    {"_cpp11armadillotest_eigen_gen_mat_",                 (DL_FUNC) &_cpp11armadillotest_eigen_gen_mat_,                 1},
+    {"_cpp11armadillotest_eigen_gen_mat_complex_wrapper_", (DL_FUNC) &_cpp11armadillotest_eigen_gen_mat_complex_wrapper_, 1},
+    {"_cpp11armadillotest_eigen_gen_no_wrapper_",          (DL_FUNC) &_cpp11armadillotest_eigen_gen_no_wrapper_,          1},
+    {"_cpp11armadillotest_eigen_sym_dbl_",                 (DL_FUNC) &_cpp11armadillotest_eigen_sym_dbl_,                 1},
+    {"_cpp11armadillotest_eigen_sym_mat_",                 (DL_FUNC) &_cpp11armadillotest_eigen_sym_mat_,                 1},
+    {"_cpp11armadillotest_ols_dbl_",                       (DL_FUNC) &_cpp11armadillotest_ols_dbl_,                       2},
+    {"_cpp11armadillotest_ols_mat_",                       (DL_FUNC) &_cpp11armadillotest_ols_mat_,                       2},
+    {"_cpp11armadillotest_ols_qr_dbl_",                    (DL_FUNC) &_cpp11armadillotest_ols_qr_dbl_,                    3},
+    {"_cpp11armadillotest_ols_qr_mat_",                    (DL_FUNC) &_cpp11armadillotest_ols_qr_mat_,                    3},
+    {"_cpp11armadillotest_typedef_Col_double_",            (DL_FUNC) &_cpp11armadillotest_typedef_Col_double_,            1},
+    {"_cpp11armadillotest_typedef_Col_int_",               (DL_FUNC) &_cpp11armadillotest_typedef_Col_int_,               1},
+    {"_cpp11armadillotest_typedef_Mat_double_",            (DL_FUNC) &_cpp11armadillotest_typedef_Mat_double_,            1},
+    {"_cpp11armadillotest_typedef_Mat_int_",               (DL_FUNC) &_cpp11armadillotest_typedef_Mat_int_,               1},
+    {"_cpp11armadillotest_typedef_SpMat_double_",          (DL_FUNC) &_cpp11armadillotest_typedef_SpMat_double_,          1},
+    {"_cpp11armadillotest_typedef_SpMat_int_",             (DL_FUNC) &_cpp11armadillotest_typedef_SpMat_int_,             1},
+    {"_cpp11armadillotest_typedef_uvec_",                  (DL_FUNC) &_cpp11armadillotest_typedef_uvec_,                  1},
     {NULL, NULL, 0}
 };
 }
