@@ -18,10 +18,4 @@ inst/arxiv_preprint/paper.out
 inst/arxiv_preprint/paper.pdf
 inst/arxiv_preprint/paper.toc
 inst/arxiv_preprint/paper.tex
-inst/rjournal_submission/armadillo.html
-inst/rjournal_submission/armadillo.pdf
-inst/rjournal_submission/armadillo.tex
-inst/rjournal_submission/armadillo.R
-inst/rjournal_submission/motivation-letter/motivation-letter.md
-inst/rjournal_submission/armadillo.log
-inst/rjournal_submission/RJwrapper.log
+inst/paper
