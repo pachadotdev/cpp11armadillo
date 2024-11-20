@@ -290,7 +290,9 @@ class syrk {
         syrk_helper::inplace_copy_upper_tri_to_lower_tri(C);
       }
 #else
-      { syrk_emul<do_trans_A, use_alpha, use_beta>::apply(C, A, alpha, beta); }
+      {
+        syrk_emul<do_trans_A, use_alpha, use_beta>::apply(C, A, alpha, beta);
+      }
 #endif
     }
   }

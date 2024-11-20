@@ -200,7 +200,9 @@ arma_hot inline typename T1::elem_type accu_proxy_at_mp(const Proxy<T1>& P) {
     }
   }
 #else
-  { arma_ignore(P); }
+  {
+    arma_ignore(P);
+  }
 #endif
 
   return val;
@@ -746,7 +748,9 @@ arma_hot inline typename T1::elem_type accu_cube_proxy_at_mp(const ProxyCube<T1>
     val = arrayops::accumulate(slice_accs.memptr(), slice_accs.n_elem);
   }
 #else
-  { arma_ignore(P); }
+  {
+    arma_ignore(P);
+  }
 #endif
 
   return val;

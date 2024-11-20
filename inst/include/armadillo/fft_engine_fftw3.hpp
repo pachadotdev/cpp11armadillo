@@ -84,10 +84,11 @@ class fft_engine_fftw3 {
 #if defined(ARMA_USE_OPENMP)
     {
 #pragma omp critical(arma_fft_engine_fftw3)
-        {fftw3_plan = fftw3::plan_dft_1d<cx_type>(N, X_work.memptr(), Y_work.memptr(),
-                                                  fftw3_sign, fftw3_flags);
-  }
-}
+      {
+        fftw3_plan = fftw3::plan_dft_1d<cx_type>(N, X_work.memptr(), Y_work.memptr(),
+                                                 fftw3_sign, fftw3_flags);
+      }
+    }
 #elif defined(ARMA_USE_STD_MUTEX)
     {
       std::mutex& plan_mutex = fft_engine_fftw3_aux::get_plan_mutex();
@@ -104,29 +105,28 @@ class fft_engine_fftw3 {
     }
 #endif
 
-if (fftw3_plan == nullptr) {
-  arma_stop_runtime_error("fft_engine_fftw3::constructor: failed to create plan");
-}
-}
-
-inline void run(cx_type* Y, const cx_type* X) {
-  arma_debug_sigprint();
-
-  if (fftw3_plan == nullptr) {
-    return;
+    if (fftw3_plan == nullptr) {
+      arma_stop_runtime_error("fft_engine_fftw3::constructor: failed to create plan");
+    }
   }
 
-  arma_debug_print("fft_engine_fftw3::run(): copying input array");
-  arrayops::copy(X_work.memptr(), X, N);
+  inline void run(cx_type* Y, const cx_type* X) {
+    arma_debug_sigprint();
 
-  arma_debug_print("fft_engine_fftw3::run(): executing plan");
-  fftw3::execute<cx_type>(fftw3_plan);
+    if (fftw3_plan == nullptr) {
+      return;
+    }
 
-  arma_debug_print("fft_engine_fftw3::run(): copying output array");
-  arrayops::copy(Y, Y_work.memptr(), N);
-}
-}
-;
+    arma_debug_print("fft_engine_fftw3::run(): copying input array");
+    arrayops::copy(X_work.memptr(), X, N);
+
+    arma_debug_print("fft_engine_fftw3::run(): executing plan");
+    fftw3::execute<cx_type>(fftw3_plan);
+
+    arma_debug_print("fft_engine_fftw3::run(): copying output array");
+    arrayops::copy(Y, Y_work.memptr(), N);
+  }
+};
 
 #endif
 

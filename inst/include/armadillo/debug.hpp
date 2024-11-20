@@ -60,7 +60,9 @@ arma_frown(
 template <typename T1>
 arma_cold arma_noinline static void arma_stop_logic_error(const T1& x) {
 #if defined(ARMA_PRINT_EXCEPTIONS)
-  { get_cerr_stream() << "\nerror: " << x << std::endl; }
+  {
+    get_cerr_stream() << "\nerror: " << x << std::endl;
+  }
 #endif
 
   throw std::logic_error(std::string(x));
@@ -74,7 +76,9 @@ arma_cold arma_noinline static void arma_stop_logic_error(const char* x, const c
 template <typename T1>
 arma_cold arma_noinline static void arma_stop_bounds_error(const T1& x) {
 #if defined(ARMA_PRINT_EXCEPTIONS)
-  { get_cerr_stream() << "\nerror: " << x << std::endl; }
+  {
+    get_cerr_stream() << "\nerror: " << x << std::endl;
+  }
 #endif
 
   throw std::out_of_range(std::string(x));
@@ -84,9 +88,13 @@ arma_cold arma_noinline static void arma_stop_bounds_error(const T1& x) {
 template <typename T1>
 arma_cold arma_noinline static void arma_stop_bad_alloc(const T1& x) {
 #if defined(ARMA_PRINT_EXCEPTIONS)
-  { get_cerr_stream() << "\nerror: " << x << std::endl; }
+  {
+    get_cerr_stream() << "\nerror: " << x << std::endl;
+  }
 #else
-  { arma_ignore(x); }
+  {
+    arma_ignore(x);
+  }
 #endif
 
   throw std::bad_alloc();
@@ -96,7 +104,9 @@ arma_cold arma_noinline static void arma_stop_bad_alloc(const T1& x) {
 template <typename T1>
 arma_cold arma_noinline static void arma_stop_runtime_error(const T1& x) {
 #if defined(ARMA_PRINT_EXCEPTIONS)
-  { get_cerr_stream() << "\nerror: " << x << std::endl; }
+  {
+    get_cerr_stream() << "\nerror: " << x << std::endl;
+  }
 #endif
 
   throw std::runtime_error(std::string(x));

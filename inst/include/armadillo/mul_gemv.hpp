@@ -309,7 +309,9 @@ class gemv {
                        x, &inc, &local_beta, y, &inc);
       }
 #else
-      { gemv_emul<do_trans_A, use_alpha, use_beta>::apply(y, A, x, alpha, beta); }
+      {
+        gemv_emul<do_trans_A, use_alpha, use_beta>::apply(y, A, x, alpha, beta);
+      }
 #endif
     }
   }

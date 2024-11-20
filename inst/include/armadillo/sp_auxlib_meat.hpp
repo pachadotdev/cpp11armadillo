@@ -98,7 +98,9 @@ inline bool sp_auxlib::eigs_sym(Col<eT>& eigval, Mat<eT>& eigvec, const SpBase<e
   // sigma = 0)
 
 #if defined(ARMA_USE_NEWARP)
-  { return sp_auxlib::eigs_sym_newarp(eigval, eigvec, U.M, n_eigvals, form_val, opts); }
+  {
+    return sp_auxlib::eigs_sym_newarp(eigval, eigvec, U.M, n_eigvals, form_val, opts);
+  }
 #elif defined(ARMA_USE_ARPACK)
   {
     constexpr eT sigma = eT(0);
@@ -147,7 +149,9 @@ inline bool sp_auxlib::eigs_sym(Col<eT>& eigval, Mat<eT>& eigvec, const SpBase<e
   }
 
 #if (defined(ARMA_USE_NEWARP) && defined(ARMA_USE_SUPERLU))
-  { return sp_auxlib::eigs_sym_newarp(eigval, eigvec, U.M, n_eigvals, sigma, opts); }
+  {
+    return sp_auxlib::eigs_sym_newarp(eigval, eigvec, U.M, n_eigvals, sigma, opts);
+  }
 #elif (defined(ARMA_USE_ARPACK) && defined(ARMA_USE_SUPERLU))
   {
     constexpr form_type form_val = form_sigma;
@@ -595,7 +599,9 @@ inline bool sp_auxlib::eigs_gen(Col<std::complex<T>>& eigval,
   // sigma = 0)
 
 #if defined(ARMA_USE_NEWARP)
-  { return sp_auxlib::eigs_gen_newarp(eigval, eigvec, U.M, n_eigvals, form_val, opts); }
+  {
+    return sp_auxlib::eigs_gen_newarp(eigval, eigvec, U.M, n_eigvals, form_val, opts);
+  }
 #elif defined(ARMA_USE_ARPACK)
   {
     constexpr std::complex<T> sigma = T(0);

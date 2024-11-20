@@ -538,27 +538,31 @@ inline Mat<eT>* Cube<eT>::get_mat_ptr(const uword in_slice) const {
     mat_ptr = mat_ptrs[in_slice];
   }
 #elif defined(ARMA_USE_STD_MUTEX)
-  { mat_ptr = mat_ptrs[in_slice].load(); }
+  {
+    mat_ptr = mat_ptrs[in_slice].load();
+  }
 #else
-  { mat_ptr = mat_ptrs[in_slice]; }
+  {
+    mat_ptr = mat_ptrs[in_slice];
+  }
 #endif
 
   if (mat_ptr == nullptr) {
 #if defined(ARMA_USE_OPENMP)
     {
 #pragma omp critical(arma_Cube_mat_ptrs)
-        {
+      {
 #pragma omp atomic read
-            mat_ptr = mat_ptrs[in_slice];
+        mat_ptr = mat_ptrs[in_slice];
 
-    if (mat_ptr == nullptr) {
-      mat_ptr = create_mat_ptr(in_slice);
-    }
+        if (mat_ptr == nullptr) {
+          mat_ptr = create_mat_ptr(in_slice);
+        }
 
 #pragma omp atomic write
-    mat_ptrs[in_slice] = mat_ptr;
-  }
-}
+        mat_ptrs[in_slice] = mat_ptr;
+      }
+    }
 #elif defined(ARMA_USE_STD_MUTEX)
     {
       const std::lock_guard<std::mutex> lock(mat_mutex);
@@ -579,10 +583,10 @@ inline Mat<eT>* Cube<eT>::get_mat_ptr(const uword in_slice) const {
     }
 #endif
 
-arma_check_bad_alloc((mat_ptr == nullptr), "Cube::get_mat_ptr(): out of memory");
-}
+    arma_check_bad_alloc((mat_ptr == nullptr), "Cube::get_mat_ptr(): out of memory");
+  }
 
-return mat_ptr;
+  return mat_ptr;
 }
 
 //! Set the cube to be equal to the specified scalar.

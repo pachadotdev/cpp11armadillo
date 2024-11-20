@@ -210,7 +210,9 @@ inline eT op_norm::vec_norm_1_direct_std(const Mat<eT>& X) {
     }
   }
 #else
-  { out_val = op_norm::vec_norm_1_direct_mem(N, A); }
+  {
+    out_val = op_norm::vec_norm_1_direct_mem(N, A);
+  }
 #endif
 
   return (out_val <= eT(0)) ? eT(0) : out_val;
@@ -466,7 +468,9 @@ inline eT op_norm::vec_norm_2_direct_std(const Mat<eT>& X) {
     }
   }
 #else
-  { out_val = op_norm::vec_norm_2_direct_mem(N, A); }
+  {
+    out_val = op_norm::vec_norm_2_direct_mem(N, A);
+  }
 #endif
 
   if ((out_val != eT(0)) && arma_isfinite(out_val)) {

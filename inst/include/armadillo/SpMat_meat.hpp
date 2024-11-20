@@ -3552,11 +3552,12 @@ inline void SpMat<eT>::reset_cache() {
 #if defined(ARMA_USE_OPENMP)
   {
 #pragma omp critical(arma_SpMat_cache)
-      {cache.reset();
+    {
+      cache.reset();
 
-  sync_state = 0;
-}
-}
+      sync_state = 0;
+    }
+  }
 #elif defined(ARMA_USE_STD_MUTEX)
   {
     const std::lock_guard<std::mutex> lock(cache_mutex);
@@ -5438,7 +5439,9 @@ inline void SpMat<eT>::sync_cache() const {
   {
     if (sync_state == 0) {
 #pragma omp critical(arma_SpMat_cache)
-      { sync_cache_simple(); }
+      {
+        sync_cache_simple();
+      }
     }
   }
 #elif defined(ARMA_USE_STD_MUTEX)
@@ -5450,7 +5453,9 @@ inline void SpMat<eT>::sync_cache() const {
     }
   }
 #else
-  { sync_cache_simple(); }
+  {
+    sync_cache_simple();
+  }
 #endif
 }
 
@@ -5471,7 +5476,9 @@ inline void SpMat<eT>::sync_csc() const {
 #if defined(ARMA_USE_OPENMP)
   if (sync_state == 1) {
 #pragma omp critical(arma_SpMat_cache)
-    { sync_csc_simple(); }
+    {
+      sync_csc_simple();
+    }
   }
 #elif defined(ARMA_USE_STD_MUTEX)
   if (sync_state == 1) {
@@ -5480,7 +5487,9 @@ inline void SpMat<eT>::sync_csc() const {
     sync_csc_simple();
   }
 #else
-  { sync_csc_simple(); }
+  {
+    sync_csc_simple();
+  }
 #endif
 }
 

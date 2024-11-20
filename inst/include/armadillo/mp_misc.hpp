@@ -59,9 +59,13 @@ struct mp_thread_limit {
 
   arma_inline static bool in_parallel() {
 #if defined(ARMA_USE_OPENMP)
-    { return bool(omp_in_parallel()); }
+    {
+      return bool(omp_in_parallel());
+    }
 #else
-    { return false; }
+    {
+      return false;
+    }
 #endif
   }
 };

@@ -835,9 +835,10 @@ inline SpMat_MapMat_val<eT>& SpMat_MapMat_val<eT>::operator=(const eT in_val) {
 #if defined(ARMA_USE_OPENMP)
   {
 #pragma omp critical(arma_SpMat_cache)
-      {(*this).set(in_val);
-}
-}
+    {
+      (*this).set(in_val);
+    }
+  }
 #elif defined(ARMA_USE_STD_MUTEX)
   {
     const std::lock_guard<std::mutex> lock(s_parent.cache_mutex);
@@ -845,10 +846,12 @@ inline SpMat_MapMat_val<eT>& SpMat_MapMat_val<eT>::operator=(const eT in_val) {
     (*this).set(in_val);
   }
 #else
-  { (*this).set(in_val); }
+  {
+    (*this).set(in_val);
+  }
 #endif
 
-return *this;
+  return *this;
 }
 
 template <typename eT>
@@ -862,9 +865,10 @@ inline SpMat_MapMat_val<eT>& SpMat_MapMat_val<eT>::operator+=(const eT in_val) {
 #if defined(ARMA_USE_OPENMP)
   {
 #pragma omp critical(arma_SpMat_cache)
-      {(*this).add(in_val);
-}
-}
+    {
+      (*this).add(in_val);
+    }
+  }
 #elif defined(ARMA_USE_STD_MUTEX)
   {
     const std::lock_guard<std::mutex> lock(s_parent.cache_mutex);
@@ -872,10 +876,12 @@ inline SpMat_MapMat_val<eT>& SpMat_MapMat_val<eT>::operator+=(const eT in_val) {
     (*this).add(in_val);
   }
 #else
-  { (*this).add(in_val); }
+  {
+    (*this).add(in_val);
+  }
 #endif
 
-return *this;
+  return *this;
 }
 
 template <typename eT>
@@ -889,9 +895,10 @@ inline SpMat_MapMat_val<eT>& SpMat_MapMat_val<eT>::operator-=(const eT in_val) {
 #if defined(ARMA_USE_OPENMP)
   {
 #pragma omp critical(arma_SpMat_cache)
-      {(*this).sub(in_val);
-}
-}
+    {
+      (*this).sub(in_val);
+    }
+  }
 #elif defined(ARMA_USE_STD_MUTEX)
   {
     const std::lock_guard<std::mutex> lock(s_parent.cache_mutex);
@@ -899,10 +906,12 @@ inline SpMat_MapMat_val<eT>& SpMat_MapMat_val<eT>::operator-=(const eT in_val) {
     (*this).sub(in_val);
   }
 #else
-  { (*this).sub(in_val); }
+  {
+    (*this).sub(in_val);
+  }
 #endif
 
-return *this;
+  return *this;
 }
 
 template <typename eT>
@@ -912,9 +921,10 @@ inline SpMat_MapMat_val<eT>& SpMat_MapMat_val<eT>::operator*=(const eT in_val) {
 #if defined(ARMA_USE_OPENMP)
   {
 #pragma omp critical(arma_SpMat_cache)
-      {(*this).mul(in_val);
-}
-}
+    {
+      (*this).mul(in_val);
+    }
+  }
 #elif defined(ARMA_USE_STD_MUTEX)
   {
     const std::lock_guard<std::mutex> lock(s_parent.cache_mutex);
@@ -922,10 +932,12 @@ inline SpMat_MapMat_val<eT>& SpMat_MapMat_val<eT>::operator*=(const eT in_val) {
     (*this).mul(in_val);
   }
 #else
-  { (*this).mul(in_val); }
+  {
+    (*this).mul(in_val);
+  }
 #endif
 
-return *this;
+  return *this;
 }
 
 template <typename eT>
@@ -935,9 +947,10 @@ inline SpMat_MapMat_val<eT>& SpMat_MapMat_val<eT>::operator/=(const eT in_val) {
 #if defined(ARMA_USE_OPENMP)
   {
 #pragma omp critical(arma_SpMat_cache)
-      {(*this).div(in_val);
-}
-}
+    {
+      (*this).div(in_val);
+    }
+  }
 #elif defined(ARMA_USE_STD_MUTEX)
   {
     const std::lock_guard<std::mutex> lock(s_parent.cache_mutex);
@@ -945,10 +958,12 @@ inline SpMat_MapMat_val<eT>& SpMat_MapMat_val<eT>::operator/=(const eT in_val) {
     (*this).div(in_val);
   }
 #else
-  { (*this).div(in_val); }
+  {
+    (*this).div(in_val);
+  }
 #endif
 
-return *this;
+  return *this;
 }
 
 template <typename eT>

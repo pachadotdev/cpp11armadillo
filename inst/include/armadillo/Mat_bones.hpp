@@ -1080,7 +1080,7 @@ const uword Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::n_cols = fixed_n_cols;
 template <typename eT>
 template <uword fixed_n_rows, uword fixed_n_cols>
 const uword Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::n_elem =
-    fixed_n_rows* fixed_n_cols;
+    fixed_n_rows * fixed_n_cols;
 
 class Mat_aux {
  public:

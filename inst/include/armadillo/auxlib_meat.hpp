@@ -2478,7 +2478,9 @@ inline bool auxlib::chol_band(Mat<std::complex<T> >& X, const uword KD,
     return auxlib::chol(X, layout);
   }
 #else
-  { return auxlib::chol_band_common(X, KD, layout); }
+  {
+    return auxlib::chol_band_common(X, KD, layout);
+  }
 #endif
 }
 
@@ -4432,7 +4434,9 @@ inline bool auxlib::solve_sympd_fast(Mat<typename T1::elem_type>& out,
     return auxlib::solve_square_fast(out, A, B_expr);
   }
 #else
-  { return auxlib::solve_sympd_fast_common(out, A, B_expr); }
+  {
+    return auxlib::solve_sympd_fast_common(out, A, B_expr);
+  }
 #endif
 }
 
@@ -5499,7 +5503,9 @@ inline bool auxlib::solve_band_fast(
     return auxlib::solve_square_fast(out, A, B_expr);
   }
 #else
-  { return auxlib::solve_band_fast_common(out, A, KL, KU, B_expr); }
+  {
+    return auxlib::solve_band_fast_common(out, A, KL, KU, B_expr);
+  }
 #endif
 }
 
@@ -5601,7 +5607,9 @@ inline bool auxlib::solve_band_rcond(
     return auxlib::solve_square_rcond(out, out_rcond, A, B_expr);
   }
 #else
-  { return auxlib::solve_band_rcond_common(out, out_rcond, A, KL, KU, B_expr); }
+  {
+    return auxlib::solve_band_rcond_common(out, out_rcond, A, KL, KU, B_expr);
+  }
 #endif
 }
 
@@ -5909,7 +5917,9 @@ inline bool auxlib::solve_tridiag_fast(
     return auxlib::solve_square_fast(out, A, B_expr);
   }
 #else
-  { return auxlib::solve_tridiag_fast_common(out, A, B_expr); }
+  {
+    return auxlib::solve_tridiag_fast_common(out, A, B_expr);
+  }
 #endif
 }
 
@@ -6906,7 +6916,9 @@ inline bool auxlib::crippled_lapack(const Base<typename T1::elem_type, T1>&) {
     return (is_cx<typename T1::elem_type>::yes);
   }
 #else
-  { return false; }
+  {
+    return false;
+  }
 #endif
 }
 

@@ -108,7 +108,9 @@ inline typename arma_real_only<eT>::result op_dot::direct_dot(const uword n_elem
       return blas::dot(n_elem, A, B);
     }
 #else
-    { return op_dot::direct_dot_arma(n_elem, A, B); }
+    {
+      return op_dot::direct_dot_arma(n_elem, A, B);
+    }
 #endif
   }
 }
@@ -134,7 +136,9 @@ inline typename arma_cx_only<eT>::result op_dot::direct_dot(const uword n_elem,
       return blas::dot(n_elem, A, B);
     }
 #else
-    { return op_dot::direct_dot_arma(n_elem, A, B); }
+    {
+      return op_dot::direct_dot_arma(n_elem, A, B);
+    }
 #endif
   }
 }
@@ -421,7 +425,9 @@ inline eT op_cdot::direct_cdot(const uword n_elem, const eT* const A, const eT* 
       return result[0];
     }
 #else
-    { return op_cdot::direct_cdot_arma(n_elem, A, B); }
+    {
+      return op_cdot::direct_cdot_arma(n_elem, A, B);
+    }
 #endif
   }
 }

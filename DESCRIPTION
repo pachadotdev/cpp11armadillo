@@ -6,7 +6,7 @@ Description: Provides function declarations and inline function definitions that
     linear algebra and scientific computing. This implementation is detailed
     in Vargas Sepulveda and Schneider Malamud (2024)
     <doi:10.48550/arXiv.2408.11074>.
-Version: 0.3.4
+Version: 0.3.5
 Authors@R: c(
     person(
         given = "Mauricio",
@@ -38,7 +38,7 @@ BugReports: https://github.com/pachadotdev/cpp11armadillo/issues
 URL: https://pacha.dev/cpp11armadillo/,
     https://github.com/pachadotdev/cpp11armadillo
 LazyData: true
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Encoding: UTF-8
 VignetteBuilder: knitr
 Config/testthat/edition: 3

@@ -196,7 +196,9 @@ inline std::mutex& arma_rng::get_producer_mutex() {
 
 inline void arma_rng::set_seed(const arma_rng::seed_type val) {
 #if defined(ARMA_RNG_ALT)
-  { arma_rng_alt::set_seed(val); }
+  {
+    arma_rng_alt::set_seed(val);
+  }
 #elif defined(ARMA_USE_CXX11_RNG)
   {
     arma_rng::lock_producer();
@@ -204,7 +206,9 @@ inline void arma_rng::set_seed(const arma_rng::seed_type val) {
     arma_rng::unlock_producer();
   }
 #else
-  { arma_rng_cxx03::set_seed(val); }
+  {
+    arma_rng_cxx03::set_seed(val);
+  }
 #endif
 }
 
@@ -287,7 +291,9 @@ template <typename eT>
 struct arma_rng::randi {
   inline operator eT() {
 #if defined(ARMA_RNG_ALT)
-    { return eT(arma_rng_alt::randi_val()); }
+    {
+      return eT(arma_rng_alt::randi_val());
+    }
 #elif defined(ARMA_USE_CXX11_RNG)
     {
       constexpr double scale =
@@ -302,23 +308,33 @@ struct arma_rng::randi {
       return out;
     }
 #else
-    { return eT(arma_rng_cxx03::randi_val()); }
+    {
+      return eT(arma_rng_cxx03::randi_val());
+    }
 #endif
   }
 
   inline static int max_val() {
 #if defined(ARMA_RNG_ALT)
-    { return arma_rng_alt::randi_max_val(); }
+    {
+      return arma_rng_alt::randi_max_val();
+    }
 #elif defined(ARMA_USE_CXX11_RNG)
-    { return std::numeric_limits<int>::max(); }
+    {
+      return std::numeric_limits<int>::max();
+    }
 #else
-    { return arma_rng_cxx03::randi_max_val(); }
+    {
+      return arma_rng_cxx03::randi_max_val();
+    }
 #endif
   }
 
   inline static void fill(eT* mem, const uword N, const int a, const int b) {
 #if defined(ARMA_RNG_ALT)
-    { arma_rng_alt::randi_fill(mem, N, a, b); }
+    {
+      arma_rng_alt::randi_fill(mem, N, a, b);
+    }
 #elif defined(ARMA_USE_CXX11_RNG)
     {
       std::uniform_int_distribution<int> local_i_distr(a, b);
@@ -361,7 +377,9 @@ template <typename eT>
 struct arma_rng::randu {
   inline operator eT() {
 #if defined(ARMA_RNG_ALT)
-    { return eT(arma_rng_alt::randu_val()); }
+    {
+      return eT(arma_rng_alt::randu_val());
+    }
 #elif defined(ARMA_USE_CXX11_RNG)
     {
       constexpr double scale = double(1.0) / double(std::mt19937_64::max());
@@ -375,7 +393,9 @@ struct arma_rng::randu {
       return out;
     }
 #else
-    { return eT(arma_rng_cxx03::randu_val()); }
+    {
+      return eT(arma_rng_cxx03::randu_val());
+    }
 #endif
   }
 
@@ -623,7 +643,9 @@ template <typename eT>
 struct arma_rng::randn {
   inline operator eT() const {
 #if defined(ARMA_RNG_ALT)
-    { return eT(arma_rng_alt::randn_val()); }
+    {
+      return eT(arma_rng_alt::randn_val());
+    }
 #elif defined(ARMA_USE_CXX11_RNG)
     {
       std::normal_distribution<double> local_n_distr;
@@ -637,13 +659,17 @@ struct arma_rng::randn {
       return out;
     }
 #else
-    { return eT(arma_rng_cxx03::randn_val()); }
+    {
+      return eT(arma_rng_cxx03::randn_val());
+    }
 #endif
   }
 
   inline static void dual_val(eT& out1, eT& out2) {
 #if defined(ARMA_RNG_ALT)
-    { arma_rng_alt::randn_dual_val(out1, out2); }
+    {
+      arma_rng_alt::randn_dual_val(out1, out2);
+    }
 #elif defined(ARMA_USE_CXX11_RNG)
     {
       std::normal_distribution<double> local_n_distr;
@@ -658,7 +684,9 @@ struct arma_rng::randn {
       arma_rng::unlock_producer();
     }
 #else
-    { arma_rng_cxx03::randn_dual_val(out1, out2); }
+    {
+      arma_rng_cxx03::randn_dual_val(out1, out2);
+    }
 #endif
   }
 

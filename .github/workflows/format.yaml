@@ -9,15 +9,15 @@ name: format_check
 
 jobs:
   format_check:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
       - name: Install ClangFormat
-        run: sudo apt-get install -y clang-format-14
+        run: sudo apt-get install -y clang-format-19
 
       - name: Run ClangFormat
-        run: make format clang_format=clang-format-14
+        run: make format clang_format=clang-format-19
 
       - name: Check for a non-empty diff
         run: git diff-files -U --exit-code

@@ -13,12 +13,6 @@ check:
 	@echo "Local"
 	@Rscript -e 'devtools::document()'
 	@Rscript -e 'devtools::check(); devtools::check("cpp11armadillotest")'
-	# this says "SSL certificate problem: self-signed certificate"
-	# @echo "RHub"
-	# @Rscript -e 'devtools::check_rhub()'
-	# @echo "Win Builder"
-	# @Rscript -e 'devtools::check_win_release()'
-	# @Rscript -e 'devtools::check_win_devel()'
 
 site:
 	@Rscript -e 'devtools::document()'
@@ -27,7 +21,7 @@ site:
 install:
 	@Rscript -e 'devtools::install()'
 
-clang_format=`which clang-format-14`
+clang_format=`which clang-format-19`
 
 format: $(shell find . -name '*.h') $(shell find . -name '*.hpp') $(shell find . -name '*.cpp')
 	@${clang_format} -i $?

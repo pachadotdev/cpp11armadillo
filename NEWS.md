@@ -1,3 +1,8 @@
+# cpp11armadillo 0.3.5
+
+* The example package now includes a configure file to set the number of cores
+  when compiling the package.
+
 # cpp11armadillo 0.3.4
 
 * Uses `std::copy` and `std::memcpy` to convert between R and C++.

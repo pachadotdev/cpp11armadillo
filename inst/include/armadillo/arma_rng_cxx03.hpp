@@ -55,7 +55,9 @@ arma_inline int arma_rng_cxx03::randi_val() {
     return (val1 | val2);
   }
 #else
-  { return std::rand(); }
+  {
+    return std::rand();
+  }
 #endif
 }
 

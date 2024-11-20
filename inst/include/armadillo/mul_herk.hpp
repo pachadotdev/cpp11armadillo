@@ -336,7 +336,9 @@ class herk {
         herk_helper::inplace_conj_copy_upper_tri_to_lower_tri(C);
       }
 #else
-      { herk_emul<do_trans_A, use_alpha, use_beta>::apply(C, A, alpha, beta); }
+      {
+        herk_emul<do_trans_A, use_alpha, use_beta>::apply(C, A, alpha, beta);
+      }
 #endif
     }
   }

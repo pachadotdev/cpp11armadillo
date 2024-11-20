@@ -46,11 +46,17 @@ arma_malloc inline eT* memory::acquire(const uword n_elem) {
   eT* out_memptr;
 
 #if defined(ARMA_ALIEN_MEM_ALLOC_FUNCTION)
-  { out_memptr = (eT*)ARMA_ALIEN_MEM_ALLOC_FUNCTION(sizeof(eT) * n_elem); }
+  {
+    out_memptr = (eT*)ARMA_ALIEN_MEM_ALLOC_FUNCTION(sizeof(eT) * n_elem);
+  }
 #elif defined(ARMA_USE_TBB_ALLOC)
-  { out_memptr = (eT*)scalable_malloc(sizeof(eT) * n_elem); }
+  {
+    out_memptr = (eT*)scalable_malloc(sizeof(eT) * n_elem);
+  }
 #elif defined(ARMA_USE_MKL_ALLOC)
-  { out_memptr = (eT*)mkl_malloc(sizeof(eT) * n_elem, 32); }
+  {
+    out_memptr = (eT*)mkl_malloc(sizeof(eT) * n_elem, 32);
+  }
 #elif defined(ARMA_HAVE_POSIX_MEMALIGN)
   {
     eT* memptr = nullptr;
@@ -99,13 +105,21 @@ arma_inline void memory::release(eT* mem) {
   }
 
 #if defined(ARMA_ALIEN_MEM_FREE_FUNCTION)
-  { ARMA_ALIEN_MEM_FREE_FUNCTION((void*)(mem)); }
+  {
+    ARMA_ALIEN_MEM_FREE_FUNCTION((void*)(mem));
+  }
 #elif defined(ARMA_USE_TBB_ALLOC)
-  { scalable_free((void*)(mem)); }
+  {
+    scalable_free((void*)(mem));
+  }
 #elif defined(ARMA_USE_MKL_ALLOC)
-  { mkl_free((void*)(mem)); }
+  {
+    mkl_free((void*)(mem));
+  }
 #elif defined(ARMA_HAVE_POSIX_MEMALIGN)
-  { free((void*)(mem)); }
+  {
+    free((void*)(mem));
+  }
 #elif defined(_MSC_VER)
   {
     // free( (void *)(mem) );
@@ -141,22 +155,34 @@ arma_inline bool memory::is_aligned(const eT* mem) {
 template <typename eT>
 arma_inline void memory::mark_as_aligned(eT*& mem) {
 #if defined(ARMA_HAVE_GCC_ASSUME_ALIGNED)
-  { mem = (eT*)__builtin_assume_aligned(mem, 16); }
+  {
+    mem = (eT*)__builtin_assume_aligned(mem, 16);
+  }
 #elif defined(__cpp_lib_assume_aligned)
-  { mem = (eT*)std::assume_aligned<16>(mem); }
+  {
+    mem = (eT*)std::assume_aligned<16>(mem);
+  }
 #else
-  { arma_ignore(mem); }
+  {
+    arma_ignore(mem);
+  }
 #endif
 }
 
 template <typename eT>
 arma_inline void memory::mark_as_aligned(const eT*& mem) {
 #if defined(ARMA_HAVE_GCC_ASSUME_ALIGNED)
-  { mem = (const eT*)__builtin_assume_aligned(mem, 16); }
+  {
+    mem = (const eT*)__builtin_assume_aligned(mem, 16);
+  }
 #elif defined(__cpp_lib_assume_aligned)
-  { mem = (const eT*)std::assume_aligned<16>(mem); }
+  {
+    mem = (const eT*)std::assume_aligned<16>(mem);
+  }
 #else
-  { arma_ignore(mem); }
+  {
+    arma_ignore(mem);
+  }
 #endif
 }
 
