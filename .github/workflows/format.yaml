@@ -13,6 +13,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up LLVM repository
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget gnupg
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo sh -c 'echo "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main" >> /etc/apt/sources.list'
+          sudo sh -c 'echo "deb-src http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main" >> /etc/apt/sources.list'
+          sudo apt-get update
+
       - name: Install ClangFormat
         run: sudo apt-get install -y clang-format-19
 
