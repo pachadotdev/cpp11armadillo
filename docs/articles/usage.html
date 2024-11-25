@@ -70,7 +70,7 @@
     
     
 <div class="section level2">
-<h2 id="ordinary-least-squares-examples">Ordinary Least Squares Examples<a class="anchor" aria-label="anchor" href="#ordinary-least-squares-examples"></a>
+<h2 id="ordinary-least-squares">Ordinary Least Squares<a class="anchor" aria-label="anchor" href="#ordinary-least-squares"></a>
 </h2>
 <p>The Ordinary Least Squares (OLS) estimator is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>β</mi><mo accent="true">̂</mo></mover><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msup><mi>X</mi><mi>t</mi></msup><mi>X</mi><msup><mo stretchy="false" form="postfix">)</mo><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo stretchy="false" form="prefix">(</mo><msup><mi>X</mi><mi>t</mi></msup><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\hat{\beta} = (X^tX)^{-1}(X^tY)</annotation></semantics></math> for a design matrix <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math> and an outcome vector <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math><span class="citation">(Hansen 2022)</span>.</p>
 <p>The following code shows how to compute the OLS estimator using Armadillo and sending data from R to C++ and viceversa using <code>cpp11</code> and <code>cpp11armadillo</code> <span class="citation">(Sanderson and Curtin 2016)</span>:</p>
@@ -111,87 +111,6 @@
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(beta);</span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a>}</span></code></pre></div>
 <p>In the previous code, the <code>ols_mat_()</code> function receives inputs from R and calls <code>ols_()</code> to do the computation on C++ side, and <code>ols_dbl_()</code> does the same but it returns a vector instead of a matrix.</p>
-</div>
-<div class="section level2">
-<h2 id="eigenvalues-benchmark">Eigenvalues benchmark<a class="anchor" aria-label="anchor" href="#eigenvalues-benchmark"></a>
-</h2>
-<p>A proper benchmark is to compute eigenvalues for large matrices. Both <code>cpp11armadillo</code> and <code>RcppArmadillo</code> use Armadillo as a backend, and the marginal observed differences are because of how cpp11 and Rcpp pass data from R to C++ and viceversa. The computation times are identical.</p>
-<table class="table">
-<thead><tr class="header">
-<th align="left">Input</th>
-<th align="right">Median time cpp11armadillo</th>
-<th align="right">Median time RcppArmadillo</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">500x500</td>
-<td align="right">35.07ms</td>
-<td align="right">36.4ms</td>
-</tr>
-<tr class="even">
-<td align="left">1000x1000</td>
-<td align="right">260.28ms</td>
-<td align="right">263.21ms</td>
-</tr>
-<tr class="odd">
-<td align="left">1500x1500</td>
-<td align="right">874.62ms</td>
-<td align="right">857.31ms</td>
-</tr>
-<tr class="even">
-<td align="left">2000x2000</td>
-<td align="right">2.21s</td>
-<td align="right">2.21s</td>
-</tr>
-</tbody>
-</table>
-<table class="table">
-<thead><tr class="header">
-<th align="left">Input</th>
-<th align="right">Memory allocation cpp11armadillo</th>
-<th align="right">Memory allocation RcppArmadillo</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">500x500</td>
-<td align="right">17.1KB</td>
-<td align="right">4.62MB</td>
-</tr>
-<tr class="even">
-<td align="left">1000x1000</td>
-<td align="right">21KB</td>
-<td align="right">4.62MB</td>
-</tr>
-<tr class="odd">
-<td align="left">1500x1500</td>
-<td align="right">24.9KB</td>
-<td align="right">4.63MB</td>
-</tr>
-<tr class="even">
-<td align="left">2000x2000</td>
-<td align="right">28.8KB</td>
-<td align="right">4.63MB</td>
-</tr>
-</tbody>
-</table>
-<p>The <code>cpp11armadillo</code> computation was obtained with the following function:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; eigen_sym_mat(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; y = eig_sym(X);</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(y);</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>}</span></code></pre></div>
-<p>The <code>RcppArmadillo</code> computation was obtained with the following function:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;RcppArmadillo.h&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="co">// [[Rcpp::depends(RcppArmadillo)]]</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> Rcpp;</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>arma::mat eigen_sym_mat(<span class="at">const</span> arma::mat&amp; x) {</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>  arma::mat y = eig_sym(x);</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>  <span class="cf">return</span> y;</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>}</span></code></pre></div>
-<p>In order to get the <code>RcppArmadillo</code> function to work, we had to dedicate time to search online about the error <code>function 'enterRNGScope' not provided by package 'Rcpp'</code>, which required to include <code>// [[Rcpp::depends(RcppArmadillo)]]</code> for the function to work.</p>
 </div>
 <div class="section level2">
 <h2 id="additional-examples">Additional Examples<a class="anchor" aria-label="anchor" href="#additional-examples"></a>

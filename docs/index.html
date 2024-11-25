@@ -66,6 +66,7 @@
 </div>
 <!-- badges: start -->
 <p>The goal of cpp11armadillo is to provide a novel approach to use the <a href="https://arma.sourceforge.net/docs.html" class="external-link">Armadillo C++ library</a> by using the header-only cpp11 R package and to simplify things for the end-user.</p>
+<p>⚠️Important⚠️: cpp11armadillo was created to ease writing functions in your own package and it does not offer on-the-fly compilation for code snippets.</p>
 <p>The idea is to pass matrices/vectors from R to C++, write pure C++/Armadillo code for the computation, and then export the result back to R with the proper data structures.</p>
 <p>This follows from the same goals as cpp11:</p>
 <ul>
@@ -92,18 +93,19 @@
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <p>I have provided a package template for RStudio that also works with VS Code.</p>
-<p>The idea of this package is to be naive and simple (like me).</p>
-<p>From RStudio/VSCode create a new project and run:</p>
+<p>The idea of this package is to be as simple as possible, with the least amount of setup to get you started.</p>
+<p>From RStudio/VSCode, go to an empty directory of your choice and run:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">cpp11armadillo</span><span class="fu">::</span><span class="fu"><a href="reference/pkg_template.html">pkg_template</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Then follow the instructions from the README.</p>
-<p>The vignettes contains detailed examples that I use to test <code>cpp11armadillo</code>, these include Ordinary Least Squares, eigenvalues, and the Capital Asset Pricing Model (CAPM).</p>
+<code class="sourceCode R"><span><span class="fu">cpp11armadillo</span><span class="fu">::</span><span class="fu"><a href="reference/pkg_template.html">pkg_template</a></span><span class="op">(</span><span class="st">"."</span>, <span class="st">"packagename"</span><span class="op">)</span></span></code></pre></div>
+<p>Then follow the instructions from the README. The template contains a simple Ordinary Least Squares (OLS) example that you can run to test the package.</p>
+<p>The <code>cpp11armadillotest</code> directory contains a package that I use to test <code>cpp11armadillo</code>. It includes tests for OLS, eigenvalues, matrix decompositions (Cholesky and QR), the Capital Asset Pricing Model (CAPM), and data consistency between R and C++.</p>
+<p>The vignette expand on the OLS estimator, and the <code>econometrics</code> directory contains additional examples for the OLS estimator and other statistical models implemented in C++.</p>
 </div>
-</div>
-<div class="section level1">
-<h1 id="linear-algebra-libraries">Linear Algebra Libraries<a class="anchor" aria-label="anchor" href="#linear-algebra-libraries"></a>
-</h1>
-<p>Armadillo supports OpenBLAS, Intel MKL, and the Accelerate framework (Mac). You can install OpenBLAS on Debian-based systems with:</p>
+<div class="section level2">
+<h2 id="linear-algebra-libraries">Linear Algebra Libraries<a class="anchor" aria-label="anchor" href="#linear-algebra-libraries"></a>
+</h2>
+<p>Armadillo supports OpenBLAS, Intel MKL, and the Accelerate framework (Mac).</p>
+<p>You can install OpenBLAS on Debian-based systems with:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">sudo</span> apt-get install libopenblas-dev</span></code></pre></div>
 <p>You can also use other commands for your specific operating system.</p>
 <p>To verify that R is using OpenBLAS, you can run <code><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo()</a></code> after restarting R to check the BLAS/LAPACK libraries in use:</p>
@@ -111,7 +113,7 @@
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>BLAS<span class="op">:</span><span class="st">   </span><span class="er">/</span>usr<span class="op">/</span>lib<span class="op">/</span>x86_<span class="dv">64</span><span class="op">-</span>linux<span class="op">-</span>gnu<span class="op">/</span>openblas<span class="op">-</span>pthread<span class="op">/</span>libblas.so<span class="fl">.3</span> </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>LAPACK<span class="op">:</span><span class="st"> </span><span class="er">/</span>usr<span class="op">/</span>lib<span class="op">/</span>x86_<span class="dv">64</span><span class="op">-</span>linux<span class="op">-</span>gnu<span class="op">/</span>openblas<span class="op">-</span>pthread<span class="op">/</span>libopenblasp<span class="op">-</span>r0.<span class="dv">3</span>.<span class="fl">20.</span>so; LAPACK version <span class="dv">3</span>.<span class="fl">10.0</span></span></code></pre></div>
 </div>
-
+</div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">

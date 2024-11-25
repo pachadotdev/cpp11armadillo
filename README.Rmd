@@ -26,6 +26,9 @@ The goal of cpp11armadillo is to provide a novel approach to use the [Armadillo
 C++ library](https://arma.sourceforge.net/docs.html) by using the header-only
 cpp11 R package and to simplify things for the end-user.
 
+⚠️Important⚠️: cpp11armadillo was created to ease writing functions in your own
+package and it does not offer on-the-fly compilation for code snippets.
+
 The idea is to pass matrices/vectors from R to C++, write pure C++/Armadillo
 code for the computation, and then export the result back to R with the proper
 data structures.
@@ -62,24 +65,32 @@ remotes::install_github("pachadotdev/cpp11armadillo")
 
 I have provided a package template for RStudio that also works with VS Code.
 
-The idea of this package is to be naive and simple (like me).
+The idea of this package is to be as simple as possible, with the least amount
+of setup to get you started.
 
-From RStudio/VSCode create a new project and run:
+From RStudio/VSCode, go to an empty directory of your choice and run:
 
 ```r
-cpp11armadillo::pkg_template()
+cpp11armadillo::pkg_template(".", "packagename")
 ```
 
-Then follow the instructions from the README.
+Then follow the instructions from the README. The template contains a simple
+Ordinary Least Squares (OLS) example that you can run to test the package.
 
-The vignettes contains detailed examples that I use to test `cpp11armadillo`,
-these include Ordinary Least Squares, eigenvalues, and the Capital Asset Pricing
-Model (CAPM).
+The `cpp11armadillotest` directory contains a package that I use to test
+`cpp11armadillo`. It includes tests for OLS, eigenvalues, matrix decompositions
+(Cholesky and QR), the Capital Asset Pricing Model (CAPM), and data consistency
+between R and C++.
 
-# Linear Algebra Libraries
+The vignette expand on the OLS estimator, and the `econometrics` directory
+contains additional examples for the OLS estimator and other statistical models
+implemented in C++.
 
-Armadillo supports OpenBLAS, Intel MKL, and the Accelerate framework (Mac). You
-can install OpenBLAS on Debian-based systems with:
+## Linear Algebra Libraries
+
+Armadillo supports OpenBLAS, Intel MKL, and the Accelerate framework (Mac).
+
+You can install OpenBLAS on Debian-based systems with:
 
 ```sh
 sudo apt-get install libopenblas-dev

@@ -2,6 +2,8 @@
 
 * The example package now includes a configure file to set the number of cores
   when compiling the package.
+* The package template includes instructions to alter the default number of
+  cores (50% of the available cores).
 
 # cpp11armadillo 0.3.4
 
