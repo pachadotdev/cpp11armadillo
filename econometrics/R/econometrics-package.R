@@ -7,6 +7,16 @@
 #' @source Hansen (2022)
 "ch3"
 
+#' Chapter 4 data
+#' @format Data frame
+#' @source Hansen (2022)
+"ch4"
+
+#' Chapter 4 data
+#' @format Data frame
+#' @source Hansen (2022)
+"ch4_2"
+
 #' OLS Estimator
 #' @param y numeric vector of dependent variable
 #' @param X numeric matrix of independent variables

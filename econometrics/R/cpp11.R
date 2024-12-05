@@ -7,3 +7,15 @@ ols_mat_ <- function(y, x) {
 influence_dbl_ <- function(y, x) {
   .Call(`_econometrics_influence_dbl_`, y, x)
 }
+
+stderr_dbl_ <- function(y, x) {
+  .Call(`_econometrics_stderr_dbl_`, y, x)
+}
+
+beta_stderr_dbl_ <- function(y, x, z) {
+  .Call(`_econometrics_beta_stderr_dbl_`, y, x, z)
+}
+
+ddk_dbl_ <- function(y, x, z) {
+  .Call(`_econometrics_ddk_dbl_`, y, x, z)
+}
