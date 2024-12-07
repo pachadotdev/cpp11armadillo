@@ -74,9 +74,12 @@ jobs:
         if: matrix.config.custom != 'no-cpp11armadillotest' && matrix.config.r != 'gcc15'
         run: |
           Sys.setenv(CXXFLAGS = "-std=c++15")
+          install.packages(".", repos = NULL, type = "source")
+          install.packages("cpp11armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
           setwd("cpp11armadillotest/tests")
           library(testthat)
           library(cpp11armadillotest)
           test_check("cpp11armadillotest", reporter = "progress")
         shell: Rscript {0}
 
+        
