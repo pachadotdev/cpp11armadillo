@@ -23,5 +23,5 @@ armadillo_version <- function() {
 
   # paste(name, paste(number, collapse = "."))
 
-  return("Stochastic Parrot 14.0.2")
+  return("Stochastic Parrot 14.2.2")
 }

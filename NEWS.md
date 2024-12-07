@@ -1,3 +1,10 @@
+# cpp11armadillo 0.4.0
+
+* Uses Armadillo 14.2.2 for C++15 compatibility.
+* Adds a configure file to check the compatibility between the C++ compiler and
+  Armadillo.
+* Provides additional Econometrics examples.
+
 # cpp11armadillo 0.3.5
 
 * The example package now includes a configure file to set the number of cores
