@@ -9,7 +9,7 @@ Mat<double> stderr_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   Mat<double> XXi = inv(X.t() * X);
   Mat<double> leverage = sum(X % (X * XXi), 1);
 
-  double n = Y.n_rows; // using int then returns the wrong "a" value
+  double n = Y.n_rows;  // using int then returns the wrong "a" value
   double k = X.n_cols;
   double sig2 = as_scalar((e.t() * e) / (n - k));
 
@@ -42,12 +42,12 @@ Mat<double> stderr_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
 
   // Bind the results
   Mat<double> result = join_rows(s0, s1, s1a, s2);
-  result = join_rows(result, s3); // join_rows admits max 4 arguments
+  result = join_rows(result, s3);  // join_rows admits max 4 arguments
   return result.t();
 }
 
 [[cpp11::register]] doubles_matrix<> stderr_dbl_(const doubles_matrix<>& y,
-                                       const doubles_matrix<>& x) {
+                                                 const doubles_matrix<>& x) {
   return as_doubles_matrix(stderr_(y, x));
 }
 
@@ -81,9 +81,8 @@ Mat<double> beta_stderr_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   return as_doubles_matrix(beta_stderr_(y, x));
 }
 
-Mat<double> ddk_(const doubles_matrix<>& y,
-                      const doubles_matrix<>& x,
-                      const doubles_matrix<>& z) {
+Mat<double> ddk_(const doubles_matrix<>& y, const doubles_matrix<>& x,
+                 const doubles_matrix<>& z) {
   Mat<double> Y = as_Mat(y);
   Mat<double> X = as_Mat(x);
   Mat<double> Z = as_Mat(z);
@@ -94,7 +93,7 @@ Mat<double> ddk_(const doubles_matrix<>& y,
   Mat<double> xx = X.t() * X;
   Mat<double> xx_inv = inv(xx);
   Mat<double> beta = ols_(Y, X);
-  
+
   Mat<double> xe(n, k);
   for (int j = 0; j < k; j++) {
     xe.col(j) = X.col(j) % (Y - X * beta);
