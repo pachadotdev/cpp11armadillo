@@ -10,6 +10,7 @@
 ^README\.Rmd$
 ^README\.html$
 ^cpp11armadillotest$
+^econometrics$
 ^pkgdown$
 ^Makefile$
 ^\.clang-format$

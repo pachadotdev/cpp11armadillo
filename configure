@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# We make sure that the R and Armadillo bindings are compatible (i.e., messages)
+# this is why we add the R and cpp11 path
+CXX=`${R_HOME}/bin/R CMD config CXX`
+R_INCLUDE_PATH=`${R_HOME}/bin/R CMD config --cppflags`
+CPP11_INCLUDE_PATH=`${R_HOME}/bin/Rscript -e "cat(system.file('include', package = 'cpp11'))"`
+PKG_CFLAGS="-I./inst/include ${R_INCLUDE_PATH} -I${CPP11_INCLUDE_PATH}"
+
+# Create a temporary C++ file to test the compatibility with Armadillo
+cat <<EOF> conftest.cpp
+#include <armadillo.hpp>
+using namespace arma;
+int main() {
+  Mat<int> A(2, 2, fill::ones);
+  return 0;
+}
+EOF
+
+# Test Armadillo
+if ! ${CXX} -c conftest.cpp -o conftest.o ${PKG_CFLAGS}
+then
+  echo "Armadillo is not compatible with the C++ compiler used by R."
+  rm -rf conftest.cpp conftest.o
+  exit 1
+else
+  echo "Armadillo is compatible with the C++ compiler used by R."
+  rm -rf conftest.cpp conftest.o
+fi
