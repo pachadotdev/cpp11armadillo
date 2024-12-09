@@ -138,6 +138,13 @@ extern "C" SEXP _cpp11armadillotest_typedef_SpMat_int(SEXP x) {
     return cpp11::as_sexp(typedef_SpMat_int(cpp11::as_cpp<cpp11::decay_t<const integers_matrix<>&>>(x)));
   END_CPP11
 }
+// 07_reproducibility.cpp
+integers_matrix<> random_matrix_nxn(const int& n);
+extern "C" SEXP _cpp11armadillotest_random_matrix_nxn(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(random_matrix_nxn(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
@@ -153,6 +160,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_ols_mat",                       (DL_FUNC) &_cpp11armadillotest_ols_mat,                       2},
     {"_cpp11armadillotest_ols_qr_dbl",                    (DL_FUNC) &_cpp11armadillotest_ols_qr_dbl,                    3},
     {"_cpp11armadillotest_ols_qr_mat",                    (DL_FUNC) &_cpp11armadillotest_ols_qr_mat,                    3},
+    {"_cpp11armadillotest_random_matrix_nxn",             (DL_FUNC) &_cpp11armadillotest_random_matrix_nxn,             1},
     {"_cpp11armadillotest_typedef_Col_double",            (DL_FUNC) &_cpp11armadillotest_typedef_Col_double,            1},
     {"_cpp11armadillotest_typedef_Col_int",               (DL_FUNC) &_cpp11armadillotest_typedef_Col_int,               1},
     {"_cpp11armadillotest_typedef_Mat_double",            (DL_FUNC) &_cpp11armadillotest_typedef_Mat_double,            1},

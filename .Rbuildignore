@@ -19,3 +19,4 @@
 inst/arxiv_preprint
 inst/paper
 ^_pkgdown\.yml$
+^inst/include/update_instructions\.md$

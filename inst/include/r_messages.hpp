@@ -1,8 +1,9 @@
+// Custom stream buffer that calls cpp11::stop() when it receives output
+
 #include <cpp11.hpp>
 #include <ostream>
 #include <streambuf>
 
-// Custom stream buffer that calls cpp11::stop() when it receives output
 class StopStreambuf : public std::streambuf {
  public:
   virtual std::streamsize xsputn(const char* s, std::streamsize n) {

@@ -75,3 +75,7 @@ typedef_SpMat_double <- function(x) {
 typedef_SpMat_int <- function(x) {
   .Call(`_cpp11armadillotest_typedef_SpMat_int`, x)
 }
+
+random_matrix_nxn <- function(n) {
+  .Call(`_cpp11armadillotest_random_matrix_nxn`, n)
+}

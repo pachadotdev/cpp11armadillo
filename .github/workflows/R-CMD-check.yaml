@@ -62,7 +62,7 @@ jobs:
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
 
       - name: Run cpp11armadillotest tests
-        if: matrix.config.custom != 'no-cpp11armadillotest' && matrix.config.r != 'gcc15'
+        if: matrix.config.custom != 'no-cpp11armadillotest' && matrix.config.custom != 'cpp15'
         run: |
           setwd("cpp11armadillotest/tests")
           library(testthat)
@@ -71,7 +71,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Run cpp11armadillotest tests (C++15)
-        if: matrix.config.custom != 'no-cpp11armadillotest' && matrix.config.r != 'gcc15'
+        if: matrix.config.custom == 'cpp15'
         run: |
           Sys.setenv(CXXFLAGS = "-std=c++15")
           install.packages(".", repos = NULL, type = "source")
@@ -81,5 +81,4 @@ jobs:
           library(cpp11armadillotest)
           test_check("cpp11armadillotest", reporter = "progress")
         shell: Rscript {0}
-
         
