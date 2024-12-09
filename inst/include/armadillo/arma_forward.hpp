@@ -15,7 +15,7 @@
 // limitations under the License.
 // ------------------------------------------------------------------------
 
-using std::cerr;
+// using std::cerr; // hack: comment this line to avoid CRAN checks
 using std::cout;
 using std::endl;
 using std::ios;

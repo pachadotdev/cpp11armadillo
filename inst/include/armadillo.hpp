@@ -25,7 +25,7 @@
 
 // clang-format off
 // workaround to avoid R check() notes about std::cerr
-#include "armadillo/r_messages.hpp"
+#include "r_messages.hpp"
 
 #include "armadillo/config.hpp"
 #include "armadillo/compiler_check.hpp"
