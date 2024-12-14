@@ -17,14 +17,17 @@ The goal of cpp11armadillo is to provide a novel approach to use the
 the header-only cpp11 R package and to simplify things for the end-user.
 
 ⚠️Important⚠️: cpp11armadillo was created to ease writing functions in
-your own package and it does not offer on-the-fly compilation for code
+your own packages and it does not offer on-the-fly compilation for code
 snippets.
 
 The idea is to pass matrices/vectors from R to C++, write pure
 C++/Armadillo code for the computation, and then export the result back
 to R with the proper data structures.
 
-This follows from the same goals as cpp11:
+[RcppArmadillo](https://cran.r-project.org/web/packages/RcppArmadillo/)
+is a popular R package used by over 40 CRAN packages as of 2024-12-13.
+cpp11armadillo has different internals, even when the goal is the same,
+and it aims to:
 
   - Enforcing copy-on-write semantics.
   - Improving the safety of using the R API from C++ code.
@@ -34,9 +37,31 @@ This follows from the same goals as cpp11:
   - Faster compilation time with lower memory requirements.
   - Growing vectors more efficiently.
 
+The design differences result in marginally higher speed for
+cpp11armadillo, and the real difference for the end user is that
+cpp11armadillo:
+
+  - Has a smaller memory footprint.
+  - Uses a permisive license (Apache).
+  - Can be vendored to be used in restricted environments (i.e., servers
+    with no internet access or where IT restricts the installation of
+    packages).
+
+This is expanded in the current
+[preprint](https://arxiv.org/abs/2408.11074).
+
 If this software is useful to you, please consider donating on [Buy Me A
 Coffee](https://buymeacoffee.com/pacha). All donations will be used to
 continue improving `cpp11armadillo`.
+
+## Who uses cpp11armadillo?
+
+cpp11armadillo is used by the following packages:
+
+  - [lotri](https://github.com/nlmixr2/lotri), created by Dr. Matt
+    Fidler.
+  - [economiccomplexity](https://github.com/pachadotdev/economiccomplexity),
+    created by me.
 
 ## Installation
 
