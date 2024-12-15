@@ -12,8 +12,8 @@ stderr_dbl_ <- function(y, x) {
   .Call(`_econometrics_stderr_dbl_`, y, x)
 }
 
-beta_stderr_dbl_ <- function(y, x, z) {
-  .Call(`_econometrics_beta_stderr_dbl_`, y, x, z)
+beta_stderr_dbl_ <- function(y, x) {
+  .Call(`_econometrics_beta_stderr_dbl_`, y, x)
 }
 
 ddk_dbl_ <- function(y, x, z) {

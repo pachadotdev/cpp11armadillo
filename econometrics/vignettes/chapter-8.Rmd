@@ -1,0 +1,53 @@
+---
+title: "Chapter 4. Restricted Estimation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{chapter-3}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Load the data and create variables
+
+We process the data with the following code:
+
+```{r}
+library(econometrics)
+
+xx <- as.matrix(cbind(
+  1,
+  log(ch8$Y60),
+  log(ch8$invest / 100),
+  log(ch8$pop_growth / 100 + 0.05),
+  log(ch8$school / 100)
+))
+
+lndY <- log(ch8$Y85) - log(ch8$Y60)
+
+y <- as.matrix(lndY[ch8$N == 1])
+x <- xx[ch8$N == 1, ]
+```
+
+# Unrestriced regression
+
+Using the OLS functions from Chapter 4 (see `src/chapter-4.cpp`), we can
+compute the standard errors with the following R code:
+
+```{r}
+table81 <- beta_stderr_dbl_(y,x)
+
+rownames(table81) <- c("Intercept", "log(GDP 1960)", "log(1/GDP)",
+  "log(n+g+delta)", "log(School)")
+colnames(table81) <- c("Estimate", "Std. Error")
+
+round(table81, 3)
+```
+
+# Constrained regression

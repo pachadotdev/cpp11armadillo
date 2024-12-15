@@ -34,8 +34,7 @@ dim(dat2)
 # Table 4.1
 
 Using the OLS functions from Chapter 3 (see `src/chapter-3.cpp`), we can
-compute the standard errors with the following C++ code
-(see `src/chapter-4.cpp`):
+compute the standard errors with the following C++ code:
 
 ```cpp
 Mat<double> stderr_(const doubles_matrix<>& y, const doubles_matrix<>& x) {

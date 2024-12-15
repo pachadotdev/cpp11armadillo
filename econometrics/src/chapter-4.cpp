@@ -76,8 +76,7 @@ Mat<double> beta_stderr_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
 }
 
 [[cpp11::register]] doubles_matrix<> beta_stderr_dbl_(const doubles_matrix<>& y,
-                                                      const doubles_matrix<>& x,
-                                                      const doubles_matrix<>& z) {
+                                                      const doubles_matrix<>& x) {
   return as_doubles_matrix(beta_stderr_(y, x));
 }
 
