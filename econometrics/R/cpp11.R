@@ -8,14 +8,26 @@ influence_dbl_ <- function(y, x) {
   .Call(`_econometrics_influence_dbl_`, y, x)
 }
 
-stderr_dbl_ <- function(y, x) {
-  .Call(`_econometrics_stderr_dbl_`, y, x)
+ols2_mat_ <- function(y, x) {
+  .Call(`_econometrics_ols2_mat_`, y, x)
 }
 
-beta_stderr_dbl_ <- function(y, x) {
-  .Call(`_econometrics_beta_stderr_dbl_`, y, x)
+cls_mat_ <- function(y, x) {
+  .Call(`_econometrics_cls_mat_`, y, x)
 }
 
-ddk_dbl_ <- function(y, x, z) {
-  .Call(`_econometrics_ddk_dbl_`, y, x, z)
+ddk_mat_ <- function(y, x, z) {
+  .Call(`_econometrics_ddk_mat_`, y, x, z)
+}
+
+ols3_mat_ <- function(y, x) {
+  .Call(`_econometrics_ols3_mat_`, y, x)
+}
+
+cns_mat_ <- function(y, x, r) {
+  .Call(`_econometrics_cns_mat_`, y, x, r)
+}
+
+emd_mat_ <- function(y, x, r) {
+  .Call(`_econometrics_emd_mat_`, y, x, r)
 }

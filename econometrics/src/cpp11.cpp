@@ -20,34 +20,58 @@ extern "C" SEXP _econometrics_influence_dbl_(SEXP y, SEXP x) {
   END_CPP11
 }
 // chapter-4.cpp
-doubles_matrix<> stderr_dbl_(const doubles_matrix<>& y, const doubles_matrix<>& x);
-extern "C" SEXP _econometrics_stderr_dbl_(SEXP y, SEXP x) {
+doubles_matrix<> ols2_mat_(const doubles_matrix<>& y, const doubles_matrix<>& x);
+extern "C" SEXP _econometrics_ols2_mat_(SEXP y, SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(stderr_dbl_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+    return cpp11::as_sexp(ols2_mat_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
 // chapter-4.cpp
-doubles_matrix<> beta_stderr_dbl_(const doubles_matrix<>& y, const doubles_matrix<>& x);
-extern "C" SEXP _econometrics_beta_stderr_dbl_(SEXP y, SEXP x) {
+doubles_matrix<> cls_mat_(const doubles_matrix<>& y, const doubles_matrix<>& x);
+extern "C" SEXP _econometrics_cls_mat_(SEXP y, SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(beta_stderr_dbl_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+    return cpp11::as_sexp(cls_mat_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
   END_CPP11
 }
 // chapter-4.cpp
-doubles_matrix<> ddk_dbl_(const doubles_matrix<>& y, const doubles_matrix<>& x, const doubles_matrix<>& z);
-extern "C" SEXP _econometrics_ddk_dbl_(SEXP y, SEXP x, SEXP z) {
+doubles_matrix<> ddk_mat_(const doubles_matrix<>& y, const doubles_matrix<>& x, const doubles_matrix<>& z);
+extern "C" SEXP _econometrics_ddk_mat_(SEXP y, SEXP x, SEXP z) {
   BEGIN_CPP11
-    return cpp11::as_sexp(ddk_dbl_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(z)));
+    return cpp11::as_sexp(ddk_mat_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(z)));
+  END_CPP11
+}
+// chapter-8.cpp
+doubles_matrix<> ols3_mat_(const doubles_matrix<>& y, const doubles_matrix<>& x);
+extern "C" SEXP _econometrics_ols3_mat_(SEXP y, SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(ols3_mat_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+  END_CPP11
+}
+// chapter-8.cpp
+doubles_matrix<> cns_mat_(const doubles_matrix<>& y, const doubles_matrix<>& x, const doubles_matrix<>& r);
+extern "C" SEXP _econometrics_cns_mat_(SEXP y, SEXP x, SEXP r) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(cns_mat_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(r)));
+  END_CPP11
+}
+// chapter-8.cpp
+doubles_matrix<> emd_mat_(const doubles_matrix<>& y, const doubles_matrix<>& x, const doubles_matrix<>& r);
+extern "C" SEXP _econometrics_emd_mat_(SEXP y, SEXP x, SEXP r) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(emd_mat_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(r)));
   END_CPP11
 }
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_econometrics_beta_stderr_dbl_", (DL_FUNC) &_econometrics_beta_stderr_dbl_, 2},
-    {"_econometrics_ddk_dbl_",         (DL_FUNC) &_econometrics_ddk_dbl_,         3},
-    {"_econometrics_influence_dbl_",   (DL_FUNC) &_econometrics_influence_dbl_,   2},
-    {"_econometrics_ols_mat_",         (DL_FUNC) &_econometrics_ols_mat_,         2},
-    {"_econometrics_stderr_dbl_",      (DL_FUNC) &_econometrics_stderr_dbl_,      2},
+    {"_econometrics_cls_mat_",       (DL_FUNC) &_econometrics_cls_mat_,       2},
+    {"_econometrics_cns_mat_",       (DL_FUNC) &_econometrics_cns_mat_,       3},
+    {"_econometrics_ddk_mat_",       (DL_FUNC) &_econometrics_ddk_mat_,       3},
+    {"_econometrics_emd_mat_",       (DL_FUNC) &_econometrics_emd_mat_,       3},
+    {"_econometrics_influence_dbl_", (DL_FUNC) &_econometrics_influence_dbl_, 2},
+    {"_econometrics_ols2_mat_",      (DL_FUNC) &_econometrics_ols2_mat_,      2},
+    {"_econometrics_ols3_mat_",      (DL_FUNC) &_econometrics_ols3_mat_,      2},
+    {"_econometrics_ols_mat_",       (DL_FUNC) &_econometrics_ols_mat_,       2},
     {NULL, NULL, 0}
 };
 }

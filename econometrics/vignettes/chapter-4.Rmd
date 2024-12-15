@@ -14,21 +14,22 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Load the data and create subsamples
+# Load the ch4a and create subsamples
 
-We process the data with the following code:
+We process the ch4a with the following code:
 
 ```{r}
 library(econometrics)
 
 experience <- ch4[, 1] - ch4[, 4] - 6
-mbf <- (dat[, 11] == 2) & (dat[, 12] <= 2) & (dat[, 2] == 1) & (experience == 12)
-sam <- (dat[, 11] == 4) & (dat[, 12] == 7) & (dat[, 2] == 0)
-dat1 <- dat[mbf, ]
-dat2 <- dat[sam, ]
+mbf <- (ch4[, 11] == 2) & (ch4[, 12] <= 2) & (ch4[, 2] == 1) &
+  (experience == 12)
+sam <- (ch4[, 11] == 4) & (ch4[, 12] == 7) & (ch4[, 2] == 0)
+ch41 <- ch4[mbf, ]
+ch42 <- ch4[sam, ]
 
-dim(dat1)
-dim(dat2)
+dim(ch41)
+dim(ch42)
 ```
 
 # Table 4.1
@@ -37,7 +38,7 @@ Using the OLS functions from Chapter 3 (see `src/chapter-3.cpp`), we can
 compute the standard errors with the following C++ code:
 
 ```cpp
-Mat<double> stderr_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
+Mat<double> ols2_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   Mat<double> Y = as_Mat(y);
   Mat<double> X = as_Mat(x);
 
@@ -84,9 +85,9 @@ Mat<double> stderr_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
 }
 
 [[cpp11::register]]
-doubles_matrix<> stderr_dbl_(const doubles_matrix<>& y,
+doubles_matrix<> ols2_dbl_(const doubles_matrix<>& y,
                              const doubles_matrix<>& x) {
-  return as_doubles_matrix(stderr_(y, x));
+  return as_doubles_matrix(ols2_(y, x));
 }
 ```
 
@@ -100,10 +101,11 @@ Mat<double> ols_(const Mat<double>& Y, const Mat<double>& X);
 Now the function can be used in R:
 
 ```{r}
-y <- as.matrix(log(dat1[, 5] / (dat1[, 6] * dat1[, 7])))
-x <- cbind(1, dat1[, 4])
+y <- as.matrix(log(ch41[, 5] / (ch41[, 6] * ch41[, 7])))
+x <- cbind(1, ch41[, 4])
 
-table41 <- stderr_dbl_(y, x)
+table41 <- ols2_mat_(y, x)
+
 rownames(table41) <- c("Heteroskedastic", "White", "HC1", "HC2", "HC3")
 colnames(table41) <- c("Intercept", "Education")
 
@@ -116,24 +118,24 @@ Similar to the first section, we need to create subtables:
 
 ```{r}
 edu12 <- (ch4[, 4] > 11)
-dat3 <- ch4[edu12, ]
+ch43 <- ch4[edu12, ]
 
-marriedF <- (dat3[, 12] <= 3) & (dat3[, 2] == 1)
-marriedM <- (dat3[, 12] <= 3) & (dat3[, 2] == 0)
-unionF <- (dat3[, 8] == 1) & (dat3[, 2] == 1)
-unionM <- (dat3[, 8] == 1) & (dat3[, 2] == 0)
-fmarriedF <- (dat3[, 12] <= 6) & (dat3[, 12] > 3) & (dat3[, 2] == 1)
-fmarriedM <- (dat3[, 12] <= 6) & (dat3[, 12] > 3) & (dat3[, 2] == 0)
-black <- (dat3[, 11] == 2)
-american_indian <- (dat3[, 11] == 3)
-asian <- (dat3[, 11] == 4)
-mixed <- (dat3[, 11] >= 6)
+marriedF <- (ch43[, 12] <= 3) & (ch43[, 2] == 1)
+marriedM <- (ch43[, 12] <= 3) & (ch43[, 2] == 0)
+unionF <- (ch43[, 8] == 1) & (ch43[, 2] == 1)
+unionM <- (ch43[, 8] == 1) & (ch43[, 2] == 0)
+fmarriedF <- (ch43[, 12] <= 6) & (ch43[, 12] > 3) & (ch43[, 2] == 1)
+fmarriedM <- (ch43[, 12] <= 6) & (ch43[, 12] > 3) & (ch43[, 2] == 0)
+black <- (ch43[, 11] == 2)
+american_indian <- (ch43[, 11] == 3)
+asian <- (ch43[, 11] == 4)
+mixed <- (ch43[, 11] >= 6)
 ```
 
 The C++ function for Table 4.2 is similar to the previous one:
 
 ```cpp
-Mat<double> beta_stderr_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
+Mat<double> cls_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   Mat<double> Y = as_Mat(y);
   Mat<double> X = as_Mat(x);
 
@@ -159,25 +161,26 @@ Mat<double> beta_stderr_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
 }
 
 [[cpp11::register]]
-doubles_matrix<> beta_stderr_dbl_(const doubles_matrix<>& y,
-                                  const doubles_matrix<>& x) {
-  return as_doubles_matrix(beta_stderr_(y, x));
+doubles_matrix<> cls_mat_(const doubles_matrix<>& y,
+                          const doubles_matrix<>& x) {
+  return as_doubles_matrix(cls_(y, x));
 }
 ```
 
 Now we can replicate the results in R:
 
 ```{r}
-y <- as.matrix(log(dat3[, 5] / (dat3[, 6] * dat3[, 7])))
-experience <- dat3[, 1] - dat3[, 4] - 6
+y <- as.matrix(log(ch43[, 5] / (ch43[, 6] * ch43[, 7])))
+experience <- ch43[, 1] - ch43[, 4] - 6
 exp2 <- (experience^2) / 100
 x <- cbind(
-  1, dat3[, 4], experience, exp2, dat3[, 2],
+  1, ch43[, 4], experience, exp2, ch43[, 2],
   unionF, unionM, marriedF, marriedM, fmarriedF, fmarriedM,
-  dat3[, 3], black, american_indian, asian, mixed
+  ch43[, 3], black, american_indian, asian, mixed
 )
 
-table42 <- beta_stderr_dbl_(y, x)
+table42 <- cls_mat_(y, x)
+
 rownames(table42) <- c("Intercept", "Education", "Experience",
   "Experience^2 / 100", "Female", "Female union member", "Male union member",
   "Married female", "Married male", "Formerly married female",
@@ -250,7 +253,7 @@ y <- scale(as.matrix(ch4_2$totalscore))
 x <- cbind(1, as.matrix(ch4_2$tracking))
 z <- as.matrix(ch4_2$schoolid)
 
-ddk <- ddk_dbl_(y, x, z)
+ddk <- ddk_mat_(y, x, z)
 rownames(ddk) <- c("Intercept", "Tracking")
 colnames(ddk) <- c("Estimate", "Std. Error")
 

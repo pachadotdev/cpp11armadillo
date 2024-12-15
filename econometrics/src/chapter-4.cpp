@@ -1,6 +1,6 @@
 #include "00_main.h"
 
-Mat<double> stderr_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
+Mat<double> ols2_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   Mat<double> Y = as_Mat(y);
   Mat<double> X = as_Mat(x);
 
@@ -46,12 +46,12 @@ Mat<double> stderr_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   return result.t();
 }
 
-[[cpp11::register]] doubles_matrix<> stderr_dbl_(const doubles_matrix<>& y,
+[[cpp11::register]] doubles_matrix<> ols2_mat_(const doubles_matrix<>& y,
                                                  const doubles_matrix<>& x) {
-  return as_doubles_matrix(stderr_(y, x));
+  return as_doubles_matrix(ols2_(y, x));
 }
 
-Mat<double> beta_stderr_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
+Mat<double> cls_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   Mat<double> Y = as_Mat(y);
   Mat<double> X = as_Mat(x);
 
@@ -75,9 +75,9 @@ Mat<double> beta_stderr_(const doubles_matrix<>& y, const doubles_matrix<>& x) {
   return result;
 }
 
-[[cpp11::register]] doubles_matrix<> beta_stderr_dbl_(const doubles_matrix<>& y,
+[[cpp11::register]] doubles_matrix<> cls_mat_(const doubles_matrix<>& y,
                                                       const doubles_matrix<>& x) {
-  return as_doubles_matrix(beta_stderr_(y, x));
+  return as_doubles_matrix(cls_(y, x));
 }
 
 Mat<double> ddk_(const doubles_matrix<>& y, const doubles_matrix<>& x,
@@ -121,7 +121,7 @@ Mat<double> ddk_(const doubles_matrix<>& y, const doubles_matrix<>& x,
   return join_rows(beta, se_clustered);
 }
 
-[[cpp11::register]] doubles_matrix<> ddk_dbl_(const doubles_matrix<>& y,
+[[cpp11::register]] doubles_matrix<> ddk_mat_(const doubles_matrix<>& y,
                                               const doubles_matrix<>& x,
                                               const doubles_matrix<>& z) {
   return as_doubles_matrix(ddk_(y, x, z));
