@@ -3,7 +3,8 @@
 # We make sure that the R and Armadillo bindings are compatible (i.e., messages)
 # this is why we add the R and cpp11 path
 CXX=`${R_HOME}/bin/R CMD config CXX`
-R_INCLUDE_PATH=`${R_HOME}/bin/R CMD config --cflags`
+R_INCLUDE_PATH=`${R_HOME}/bin/R CMD config --cppflags`
+R_LDFLAGS=`${R_HOME}/bin/R CMD config --ldflags`
 CPP11_INCLUDE_PATH=`${R_HOME}/bin/Rscript -e "cat(system.file('include', package = 'cpp11'))"`
 
 # Check if CPP11_INCLUDE_PATH is empty
@@ -12,18 +13,23 @@ if [ -z "$CPP11_INCLUDE_PATH" ]; then
   exit 1
 fi
 
-# Manually specify the R include path if --cflags does not provide it
-if [ "$R_INCLUDE_PATH" = "ERROR: no information for variable '--cflags'" ]; then
-  R_INCLUDE_PATH="-I/usr/share/R/include"
-fi
+# Get the absolute path to the inst/include directory
+INST_INCLUDE_PATH=$(cd "$(dirname "$0")/inst/include" && pwd)
 
-PKG_CFLAGS="-I./inst/include ${R_INCLUDE_PATH} -I${CPP11_INCLUDE_PATH}"
+PKG_CFLAGS="${R_INCLUDE_PATH} -I${CPP11_INCLUDE_PATH} -I${INST_INCLUDE_PATH}"
+PKG_LDFLAGS="${R_LDFLAGS}"
 
 # Debugging: Print the values of the variables
+echo "=================================="
+echo " Compiler Configuration Variables "
+echo " "
 echo "CXX: ${CXX}"
 echo "R_INCLUDE_PATH: ${R_INCLUDE_PATH}"
+echo "R_LDFLAGS: ${R_LDFLAGS}"
 echo "CPP11_INCLUDE_PATH: ${CPP11_INCLUDE_PATH}"
+echo "INST_INCLUDE_PATH: ${INST_INCLUDE_PATH}"
 echo "PKG_CFLAGS: ${PKG_CFLAGS}"
+echo "PKG_LDFLAGS: ${PKG_LDFLAGS}"
 
 # Create a temporary C++ file to test the compatibility with Armadillo
 cat <<EOF> conftest.cpp
@@ -35,13 +41,16 @@ int main() {
 }
 EOF
 
-# Test Armadillo using R CMD SHLIB
-if ! ${R_HOME}/bin/R CMD SHLIB conftest.cpp ${PKG_CFLAGS}
+# Test Armadillo using g++
+echo "==================================="
+echo " Testing minimal Armadillo example "
+echo " "
+if ! ${CXX} ${PKG_CFLAGS} conftest.cpp ${PKG_LDFLAGS} -o conftest
 then
   echo "Armadillo is not compatible with the C++ compiler used by R."
-  rm -f conftest.cpp conftest.o conftest.so
+  rm -f conftest.cpp conftest.o conftest
   exit 1
 else
   echo "Armadillo is compatible with the C++ compiler used by R."
-  rm -f conftest.cpp conftest.o conftest.so
+  rm -f conftest.cpp conftest.o conftest
 fi

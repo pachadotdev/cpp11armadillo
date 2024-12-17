@@ -48,6 +48,13 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - name: Install cpp11armadillo
+        run: |
+          options(warn = 2)
+          pak::local_install_dev_deps("cpp11armadillo", dependencies = TRUE)
+          install.packages(".", repos = NULL, type = "source")
+        shell: Rscript {0}
+        
       - name: Install cpp11armadillotest
         if: matrix.config.custom != 'no-cpp11armadillotest'
         run: |
