@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="index.html">cpp11armadillo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,8 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/usage.html">Basic 'cpp11armadillo' usage</a></li>
+<li><a class="dropdown-item" href="articles/data-types.html">Armadillo data types</a></li>
+    <li><a class="dropdown-item" href="articles/usage.html">Basic 'cpp11armadillo' usage</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -65,10 +66,14 @@
 </h1>
 </div>
 <!-- badges: start -->
+<div class="section level2">
+<h2 id="about">About<a class="anchor" aria-label="anchor" href="#about"></a>
+</h2>
 <p>The goal of cpp11armadillo is to provide a novel approach to use the <a href="https://arma.sourceforge.net/docs.html" class="external-link">Armadillo C++ library</a> by using the header-only cpp11 R package and to simplify things for the end-user.</p>
-<p>⚠️Important⚠️: cpp11armadillo was created to ease writing functions in your own package and it does not offer on-the-fly compilation for code snippets.</p>
+<p>⚠️Important⚠️: cpp11armadillo was created to ease writing functions in your own packages and does not offer on-the-fly compilation for code snippets.</p>
 <p>The idea is to pass matrices/vectors from R to C++, write pure C++/Armadillo code for the computation, and then export the result back to R with the proper data structures.</p>
-<p>This follows from the same goals as cpp11:</p>
+<p><a href="https://cran.r-project.org/web/packages/RcppArmadillo/" class="external-link">RcppArmadillo</a> is a popular R package used by over 1200 CRAN packages as of 2024-12-13. RcppArmadillo uses the GPL-3 license.</p>
+<p>cpp11armadillo has different internals, even when the goal is the same, and it aims to:</p>
 <ul>
 <li>Enforcing copy-on-write semantics.</li>
 <li>Improving the safety of using the R API from C++ code.</li>
@@ -78,16 +83,35 @@
 <li>Faster compilation time with lower memory requirements.</li>
 <li>Growing vectors more efficiently.</li>
 </ul>
-<p>If this software is useful to you, please consider donating on <a href="https://buymeacoffee.com/pacha" class="external-link">Buy Me A Coffee</a>. All donations will be used to continue improving <code>cpp11armadillo</code>.</p>
+<p>The design differences result in marginally higher speed for cpp11armadillo, and the real difference for the end user is that cpp11armadillo:</p>
+<ul>
+<li>Has a smaller memory footprint.</li>
+<li>Uses the Apache license (i.e., The Apache license is permissive and allows commercial use with attribution, unlike the GPL-3, which requires open-source redistribution.)</li>
+<li>Can be vendored to be used in restricted environments (i.e., servers with no internet access or where IT restricts the installation of packages).</li>
+</ul>
+<p>This is expanded in the current <a href="https://arxiv.org/abs/2408.11074" class="external-link">preprint</a>.</p>
+<p>If this software is useful to you, please consider donating on <a href="https://buymeacoffee.com/pacha" class="external-link">Buy Me A Coffee</a>. All donations will be used to continue improving cpp11armadillo.</p>
+</div>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h2>
-<p>You can install the released version of cpp11armadillo from CRAN:</p>
+<p>Install the released version of cpp11armadillo from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"cpp11armadillo"</span><span class="op">)</span></span></code></pre></div>
-<p>You can install the development version of cpp11armadillo from GitHub:</p>
+<p>Or, alternatively, install the development version of cpp11armadillo from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"pachadotdev/cpp11armadillo"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="who-uses-cpp11armadillo">Who uses cpp11armadillo?<a class="anchor" aria-label="anchor" href="#who-uses-cpp11armadillo"></a>
+</h2>
+<p>cpp11armadillo is used by the following packages:</p>
+<ul>
+<li>
+<a href="https://github.com/nlmixr2/lotri" class="external-link">lotri</a>, created by Dr. Matt Fidler.</li>
+<li>
+<a href="https://github.com/pachadotdev/economiccomplexity" class="external-link">economiccomplexity</a>, created by me.</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
@@ -98,20 +122,22 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">cpp11armadillo</span><span class="fu">::</span><span class="fu"><a href="reference/pkg_template.html">pkg_template</a></span><span class="op">(</span><span class="st">"."</span>, <span class="st">"packagename"</span><span class="op">)</span></span></code></pre></div>
 <p>Then follow the instructions from the README. The template contains a simple Ordinary Least Squares (OLS) example that you can run to test the package.</p>
-<p>The <code>cpp11armadillotest</code> directory contains a package that I use to test <code>cpp11armadillo</code>. It includes tests for OLS, eigenvalues, matrix decompositions (Cholesky and QR), the Capital Asset Pricing Model (CAPM), and data consistency between R and C++.</p>
-<p>The vignette expand on the OLS estimator, and the <code>econometrics</code> directory contains additional examples for the OLS estimator and other statistical models implemented in C++.</p>
+<p>The <a href="https://github.com/pachadotdev/cpp11armadillo/tree/main/cpp11armadillotest" class="external-link">cpp11armadillotest</a> directory contains a package that I use to test cpp11armadillo. It includes tests for OLS, eigenvalues, matrix decompositions (Cholesky and QR), the Capital Asset Pricing Model (CAPM), and data consistency between R and C++.</p>
+<p>The vignette expands on the OLS estimator, and the <a href="https://pacha.dev/hansen/" class="external-link">hansen package</a> expands on how to use cpp11armadillo for Econometric models.</p>
 </div>
 <div class="section level2">
 <h2 id="linear-algebra-libraries">Linear Algebra Libraries<a class="anchor" aria-label="anchor" href="#linear-algebra-libraries"></a>
 </h2>
 <p>Armadillo supports OpenBLAS, Intel MKL, and the Accelerate framework (Mac).</p>
-<p>You can install OpenBLAS on Debian-based systems with:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">sudo</span> apt-get install libopenblas-dev</span></code></pre></div>
-<p>You can also use other commands for your specific operating system.</p>
-<p>To verify that R is using OpenBLAS, you can run <code><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo()</a></code> after restarting R to check the BLAS/LAPACK libraries in use:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>Matrix products<span class="op">:</span><span class="st"> </span>default</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>BLAS<span class="op">:</span><span class="st">   </span><span class="er">/</span>usr<span class="op">/</span>lib<span class="op">/</span>x86_<span class="dv">64</span><span class="op">-</span>linux<span class="op">-</span>gnu<span class="op">/</span>openblas<span class="op">-</span>pthread<span class="op">/</span>libblas.so<span class="fl">.3</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>LAPACK<span class="op">:</span><span class="st"> </span><span class="er">/</span>usr<span class="op">/</span>lib<span class="op">/</span>x86_<span class="dv">64</span><span class="op">-</span>linux<span class="op">-</span>gnu<span class="op">/</span>openblas<span class="op">-</span>pthread<span class="op">/</span>libopenblasp<span class="op">-</span>r0.<span class="dv">3</span>.<span class="fl">20.</span>so; LAPACK version <span class="dv">3</span>.<span class="fl">10.0</span></span></code></pre></div>
+<p>Install OpenBLAS on Debian-based systems with:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">sudo</span> apt-get install libopenblas-dev</span></code></pre></div>
+<p>Restart R and run the following command to verify:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>R should display something like:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>Matrix products<span class="op">:</span><span class="st"> </span>default</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>BLAS<span class="op">:</span><span class="st">   </span><span class="er">/</span>usr<span class="op">/</span>lib<span class="op">/</span>x86_<span class="dv">64</span><span class="op">-</span>linux<span class="op">-</span>gnu<span class="op">/</span>openblas<span class="op">-</span>pthread<span class="op">/</span>libblas.so<span class="fl">.3</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>LAPACK<span class="op">:</span><span class="st"> </span><span class="er">/</span>usr<span class="op">/</span>lib<span class="op">/</span>x86_<span class="dv">64</span><span class="op">-</span>linux<span class="op">-</span>gnu<span class="op">/</span>openblas<span class="op">-</span>pthread<span class="op">/</span>libopenblasp<span class="op">-</span>r0.<span class="dv">3</span>.<span class="fl">20.</span>so; LAPACK version <span class="dv">3</span>.<span class="fl">10.0</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

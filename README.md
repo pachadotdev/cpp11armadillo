@@ -109,9 +109,9 @@ includes tests for OLS, eigenvalues, matrix decompositions (Cholesky and
 QR), the Capital Asset Pricing Model (CAPM), and data consistency
 between R and C++.
 
-The vignette expands on the OLS estimator, and the `econometrics`
-directory contains additional examples for the OLS estimator and other
-statistical models implemented in C++.
+The vignette expands on the OLS estimator, and the [hansen
+package](https://pacha.dev/hansen/) expands on how to use cpp11armadillo
+for Econometric models.
 
 ## Linear Algebra Libraries
 

@@ -47,46 +47,11 @@ inline uvec as_uvec(const cpp11::integers& x) {
   return res;
 }
 
-// vector or doubles/integers to Row<double/int>
-
-template <typename T>
-inline Row<T> as_Row(const T& x) {
-  // Generic implementation
-  throw std::runtime_error("Cannot convert to Row");
-}
-
-template <typename T, typename U>
-inline Row<T> as_Row_(const U& x) {
-  const size_t n = x.size();
-
-  Row<T> y(n);
-
-  if (std::is_same<U, doubles>::value) {
-    y = Row<T>(reinterpret_cast<T*>(REAL(x.data())), n, false);
-  } else {
-    y = Row<T>(reinterpret_cast<T*>(INTEGER(x.data())), n, false);
-  }
-
-  return y;
-}
-
-inline Row<double> as_Row(const doubles& x) { return as_Row_<double, doubles>(x); }
-
-inline Row<int> as_Row(const integers& x) { return as_Row_<int, integers>(x); }
-
-inline urowvec as_urowvec(const cpp11::integers& x) {
-  urowvec res(x.size());
-  // the binary representation of int and uword are not the same
-  // reinterpret_cast fails
-  std::copy(x.begin(), x.end(), res.begin());
-  return res;
-}
-
 ////////////////////////////////////////////////////////////////
 // Armadillo to R
 ////////////////////////////////////////////////////////////////
 
-// Col<double/int> to vector
+// Double/Integer to vector
 
 template <typename T, typename U>
 inline U Col_to_dblint_(const Col<T>& x) {
@@ -126,7 +91,7 @@ inline integers as_integers(const uvec& x) {
   return y;
 }
 
-// Col<double/int> to matrix
+// same as above, but for matrices
 
 template <typename T, typename U>
 inline U Col_to_dblint_matrix_(const Col<T>& x) {
@@ -157,7 +122,7 @@ inline integers_matrix<> as_integers_matrix(const Col<int>& x) {
   return Col_to_dblint_matrix_<int, integers_matrix<>>(x);
 }
 
-// Col<cx_double> to list
+// Complex
 
 inline list as_complex_doubles(const Col<std::complex<double>>& x) {
   Col<double> x_real = real(x);
@@ -169,94 +134,6 @@ inline list as_complex_doubles(const Col<std::complex<double>>& x) {
 inline list as_complex_matrix(const Col<std::complex<double>>& x) {
   Col<double> x_real = real(x);
   Col<double> x_imag = imag(x);
-
-  return writable::list(
-      {"real"_nm = as_doubles_matrix(x_real), "imag"_nm = as_doubles_matrix(x_imag)});
-}
-
-// Row<double/int> to vector
-
-template <typename T, typename U>
-inline U Row_to_dblint_(const Row<T>& x) {
-  const size_t n = x.n_cols;
-
-  using dblint = typename std::conditional<std::is_same<U, doubles>::value,
-                                           writable::doubles, writable::integers>::type;
-
-  dblint y(n);
-
-  if (std::is_same<U, doubles>::value) {
-    double* y_data = REAL(y);
-    std::memcpy(y_data, x.memptr(), n * sizeof(double));
-  } else {
-    int* y_data = INTEGER(y);
-    std::memcpy(y_data, x.memptr(), n * sizeof(int));
-  }
-
-  return y;
-}
-
-inline integers as_integers(const Row<int>& x) {
-  return Row_to_dblint_<int, integers>(x);
-}
-
-inline doubles as_doubles(const Row<double>& x) {
-  return Row_to_dblint_<double, doubles>(x);
-}
-
-inline integers as_integers(const urowvec& x) {
-  const size_t n = x.n_elem;
-
-  writable::integers y(n);
-
-  std::copy(x.begin(), x.end(), y.begin());
-
-  return y;
-}
-
-// Row<double/int> to matrix
-
-template <typename T, typename U>
-inline U Row_to_dblint_matrix_(const Row<T>& x) {
-  const size_t n = 1;
-  const size_t m = x.n_cols;
-
-  using dblint_matrix =
-      typename std::conditional<std::is_same<U, doubles_matrix<>>::value,
-                                writable::doubles_matrix<>,
-                                writable::integers_matrix<>>::type;
-
-  using dblint =
-      typename std::conditional<std::is_same<U, cpp11::writable::doubles_matrix<>>::value,
-                                double, int>::type;
-
-  dblint_matrix y(n, m);
-
-  std::memcpy(y.data(), x.memptr(), n * m * sizeof(dblint));
-
-  return y;
-}
-
-inline doubles_matrix<> as_doubles_matrix(const Row<double>& x) {
-  return Row_to_dblint_matrix_<double, doubles_matrix<>>(x);
-}
-
-inline integers_matrix<> as_integers_matrix(const Row<int>& x) {
-  return Row_to_dblint_matrix_<int, integers_matrix<>>(x);
-}
-
-// Row<cx_double> to list
-
-inline list as_complex_doubles(const Row<std::complex<double>>& x) {
-  Row<double> x_real = real(x);
-  Row<double> x_imag = imag(x);
-
-  return writable::list({"real"_nm = as_doubles(x_real), "imag"_nm = as_doubles(x_imag)});
-}
-
-inline list as_complex_matrix(const Row<std::complex<double>>& x) {
-  Row<double> x_real = real(x);
-  Row<double> x_imag = imag(x);
 
   return writable::list(
       {"real"_nm = as_doubles_matrix(x_real), "imag"_nm = as_doubles_matrix(x_imag)});

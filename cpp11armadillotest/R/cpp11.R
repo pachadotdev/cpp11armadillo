@@ -79,3 +79,19 @@ typedef_SpMat_int <- function(x) {
 random_matrix_nxn <- function(n) {
   .Call(`_cpp11armadillotest_random_matrix_nxn`, n)
 }
+
+matrix_fun1_ <- function(a) {
+  .Call(`_cpp11armadillotest_matrix_fun1_`, a)
+}
+
+matrix_fun2_ <- function(a) {
+  .Call(`_cpp11armadillotest_matrix_fun2_`, a)
+}
+
+column_fun1_ <- function(x, y) {
+  .Call(`_cpp11armadillotest_column_fun1_`, x, y)
+}
+
+row_fun1_ <- function(x, y) {
+  .Call(`_cpp11armadillotest_row_fun1_`, x, y)
+}

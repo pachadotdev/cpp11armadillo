@@ -1,0 +1,496 @@
+---
+title: "Armadillo data types"
+output: rmarkdown::html_vignette
+bibliography: "references.bib"
+vignette: >
+  %\VignetteIndexEntry{Armadillo data types}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette is adapted from the official Armadillo
+[documentation](https://arma.sourceforge.net/docs.html).
+
+# Matrix, Vector, Cube and Field Classes
+
+| Class                          | Description                                                             |
+|--------------------------------|-------------------------------------------------------------------------|
+| `Mat<type>`                    | dense matrix class                                                      |
+| `mat, cx_mat`                  | dense matrix class                                                      |
+| `cx_mat`                       | dense matrix class                                                      |
+| `Col<type>`                    | dense column vector class                                               |
+| `colvec`                       | dense column vector class                                               |
+| `vec`                          | dense column vector class                                               |
+| `Row<type>`                    | dense row vector class                                                  |
+| `rowvec`                       | dense row vector class                                                  |
+| `Cube<type>`                   | dense cube class ("3D matrix")                                          |
+| `cube`                         | dense cube class ("3D matrix")                                          |
+| `cx_cube`                      | dense cube class ("3D matrix")                                          |
+| `field<object type>`           | class for storing arbitrary objects in matrix-like or cube-like layouts |
+| `SpMat<type>`                  | sparse matrix class                                                     |
+| `sp_mat`                       | sparse matrix class                                                     |
+| `sp_cx_mat`                    | sparse matrix class                                                     |
+| `+ - * % / == != <= >= < > &&` | operators                                                               |
+
+## Matrix class
+
+`Mat<type>`, `mat` and `cx_mat` are classes for dense matrices, with elements
+stored in [column-major ordering](https://en.wikipedia.org/wiki/Column_major)
+(e.g., column by column).
+  
+The root matrix class is `Mat<type>`, where `type` is one of:
+
+  * `float`
+  * `double`
+  * `std::complex<float>`
+  * `std::complex<double>`
+  * `short`
+  * `int`
+  * `long`
+  * `unsigned short`
+  * `unsigned int`
+  * `unsigned long`
+
+For convenience the following typedefs have been defined:
+    
+* `mat = Mat<double>`
+* `dmat = Mat<double>`
+* `fmat = Mat<float>`
+* `cx_mat = Mat<cx_double>` (`cx_double` is a shortcut for `std::complex<double>`)
+* `cx_dmat = Mat<cx_double>`
+* `cx_fmat = Mat<cx_float>` (`cx_float` is a shortcut for `std::complex<float>`)
+* `umat = Mat<uword>` (`uword` is a shortcut for `unsigned int`)
+* `imat = Mat<sword>` (`sword` is a shortcut for `signed int`)
+    
+The `mat` type is used for convenience, and it is possible to use other matrix
+types (e.g, `fmat`, `cx_mat`) instead.
+  
+Matrix types with integer elements (such as `umat` and `imat`) cannot hold
+special values such as NaN and Inf.
+  
+Functions which use LAPACK (generally matrix decompositions) are only valid for
+the following matrix types: `mat`, `dmat`, `fmat`, `cx_mat`, `cx_dmat`,
+`cx_fmat`.
+  
+### Constructors
+  
+  * `mat()`
+  * `mat(n_rows, n_cols)`
+  * `mat(n_rows, n_cols, fill_form)` (elements are initialised according to `fill_form`)
+  * `mat(size(X))`
+  * `mat(size(X), fill_form)` (elements are initialised according to `fill_form`)
+  * `mat(mat)`
+  * `mat(vec)`
+  * `mat(rowvec)`
+  * `mat(initializer_list)`
+  * `mat(string)`
+  * `mat(std::vector)` (treated as a column vector)
+  * `mat(sp_mat)` (for converting a sparse matrix to a dense matrix)
+  * `cx_mat(mat,mat)` (for constructing a complex matrix out of two real matrices)
+    
+The elements can be explicitly initialised during construction by specifying `fill_form`, which is one of:
+    
+  * `fill::zeros` set all elements to 0 (default in cpp11armadillo)
+  * `fill::ones` set all elements to 1
+  * `fill::eye` set the elements on the main diagonal to 1 and off-diagonal elements to 0
+  * `fill::randu` set all elements to random values from a uniform distribution in the [0,1] interval
+  * `fill::randn` set all elements to random values from a normal distribution with zero mean and unit variance
+  * `fill::value(scalar)` set all elements to specified scalar
+  * `fill::none` do not initialise the elements (matrix may have garbage values)
+      
+For the `mat(string)` constructor, the format is elements separated by spaces,
+and rows denoted by semicolons; for example, the 2x2 identity matrix can be
+created using `"1 0; 0 1"`. Note that string based initialisation is slower than
+directly setting the elements or using element initialisation.
+  
+Each instance of `mat` automatically allocates and releases internal memory. All
+internally allocated memory used by an instance of mat is automatically released
+as soon as the instance goes out of scope. For example, if an instance of mat is
+declared inside a function, it will be automatically destroyed at the end of the
+function. To forcefully release memory at any point, use `.reset()`. Note that
+in normal use this is not required.
+  
+### Advanced constructors
+      
+* `mat(ptr_aux_mem, n_rows, n_cols, copy_aux_mem = true, strict = false)`
+  * Create a matrix using data from writable auxiliary (external) memory, where
+    `ptr_aux_mem` is a pointer to the memory. By default the matrix allocates
+    its own memory and copies data from the auxiliary memory (for safety).
+    However, if `copy_aux_mem` is set to `false`, the matrix will instead
+    directly use the auxiliary memory (e.g., no copying); this is faster, but
+    can be dangerous unless you know what you are doing.    
+  * The `strict` parameter comes into effect only when copy_aux_mem is set to
+    `false` (ie. the matrix is directly using auxiliary memory).
+    * When `strict` is set to `false`, the matrix will use the auxiliary memory
+      until a size change or an aliasing event.
+    * When `strict` is set to `true`, the matrix will be bound to the auxiliary
+      memory for its lifetime; the number of elements in the matrix cannot be
+      changed.
+* `mat(const ptr_aux_mem, n_rows, n_cols)`  
+  * Create a matrix by copying data from read-only auxiliary memory, where
+    `ptr_aux_mem` is a pointer to the memory
+* `mat::fixed<n_rows, n_cols>`
+  * Create a fixed size matrix, with the size specified via template arguments.
+    Memory for the matrix is reserved at compile time. This is generally faster
+    than dynamic memory allocation, but the size of the matrix cannot be changed
+    afterwards (directly or indirectly).  
+  * For convenience, there are several pre-defined typedefs for each matrix type
+    (where the types are: `umat`, `imat`, `fmat`, `mat`, `cx_fmat`, `cx_mat`).
+    The typedefs specify a square matrix size, ranging from 2x2 to 9x9. The
+    typedefs were defined by appending a two digit form of the size to the
+    matrix type. Examples: `mat33` is equivalent to `mat::fixed<3,3>`, and
+    `cx_mat44` is equivalent to `cx_mat::fixed<4,4>`.
+* `mat::fixed<n_rows, n_cols>(fill_form)`  
+  * Create a fixed size matrix, with the elements explicitly initialised
+    according to `fill_form`.
+* `mat::fixed<n_rows, n_cols>(const ptr_aux_mem)`
+  * Create a fixed size matrix, with the size specified via template arguments;
+    data is copied from auxiliary memory, where ptr_aux_mem is a pointer to the
+    memory.
+    
+### Examples
+
+```r
+set.seed(123)
+a <- matrix(runif(25), nrow = 5, ncol = 5)
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> matrix_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a); // convert from R to C++
+
+  double x = A(1,2); // access an element
+  A = A + x; // scalar addition
+      
+  mat B = A + A; // matrix addition
+  mat C = A * B; // matrix multiplication
+  mat D = A % B; // element-wise matrix multiplication
+
+  mat res = B + C + D;
+
+  return as_doubles_matrix(res);  // convert from C++ to R
+}
+      
+[[cpp11::register]] list matrix_fun2_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);
+  mat B = A + A;
+
+  cx_mat X(A,B); // construct a complex matrix out of two real matrices
+
+  B.zeros(); // set all elements to zero
+  B.set_size(10,10); // resize the matrix
+  B.ones(5,6); // same as mat B(5, 6, fill::ones)
+        
+  mat::fixed<5,6> F; // fixed size matrix
+      
+  double aux_mem[24]; // auxiliary memory
+  mat H(&aux_mem[0], 4, 6, false);  // use auxiliary memory
+
+  X = X + F.submat(0, 0, 4, 4) + H(1, 2)
+
+  Mat<double> res_real = real(X);
+  Mat<double> res_imag = imag(X);
+
+  writable::list res;
+  res.push_back({"real"_nm = as_doubles_matrix(res_real)});
+  res.push_back({"imag"_nm = as_doubles_matrix(res_imag)});
+
+  return res;
+}
+```
+
+## Column vector class
+
+`Col<type>`, `vec` and `cx_vec` are classes for column vectors (dense matrices
+with one column).
+  
+The `Col<type>` class is derived from the `Mat<type>` class and inherits most of
+the member functions.
+  
+For convenience the following typedefs have been defined:
+    
+* `vec = colvec = Col<double>`
+* `dvec = dcolvec = Col<double>`
+* `fvec = fcolvec = Col<float>`
+* `cx_vec = cx_colvec = Col<[cx_double](#cx_double)>`
+* `cx_dvec = cx_dcolvec = Col<[cx_double](#cx_double)>`
+* `cx_fvec = cx_fcolvec = Col<[cx_float](#cx_double)>`
+* `uvec = ucolvec = Col<[uword](#uword)>`
+* `ivec = icolvec = Col<[sword](#uword)>`
+    
+  
+The `vec` and `colvec` types have the same meaning and are used interchangeably.
+  
+The types `vec` or `colvec` are used for convenience. It is possible to use
+other column vector types instead (e.g., `fvec` or `fcolvec`).
+  
+Functions which take `mat` as input can generally also take `Col` as input.
+Main exceptions are functions that require square matrices.
+  
+### Constructors:
+    
+* `vec()`
+* `vec(_n_elem_)`
+* `vec(_n_elem_, fill_form)` (elements are initialised according to `fill_form`)
+* `vec(size(X))`
+* `vec(size(X), fill_form)` (elements are initialised according to `fill_form`)
+* `vec(vec)`
+* `vec(mat)` (`std::logic_error` exception is thrown if the given matrix has more than one column)
+* `vec(initializer_list)`
+* `vec(string)` (elements separated by spaces)
+* `vec(std::vector)`
+* `cx_vec(vec,vec)` (for constructing a complex vector out of two real vectors)
+      
+### Advanced constructors
+      
+* `vec(ptr_aux_mem, number_of_elements, copy_aux_mem = true, strict = false)`  
+  * Create a column vector using data from writable auxiliary (external) memory,
+    where ptr_aux_mem is a pointer to the memory. By default the vector
+    allocates its own memory and copies data from the auxiliary memory (for
+    safety). However, if copy_aux_mem is set to `false`, the vector will instead
+    directly use the auxiliary memory (ie. no copying). This is faster, but can
+    be dangerous unless you know what you are doing.
+  * The `strict` parameter comes into effect only when copy_aux_mem is set to
+    `false` (ie. the vector is directly using auxiliary memory)
+    * When `strict` is set to `false`, the vector will use the auxiliary memory
+      until a size change or an aliasing event.
+    * When `strict` is set to `true`, the vector will be bound to the auxiliary
+      memory for its lifetime; the number of elements in the vector cannot be
+      changed.
+* `vec(const ptr_aux_mem, number_of_elements)`  
+  * Create a column vector by copying data from read-only auxiliary memory,
+    where ptr_aux_mem is a pointer to the memory
+* `vec::fixed<number_of_elements>`  
+  * Create a fixed size column vector, with the size specified via the template
+    argument. Memory for the vector is reserved at compile time. This is
+    generally faster than dynamic memory allocation, but the size of the vector
+    cannot be changed afterwards (directly or indirectly).  
+  * For convenience, there are several pre-defined typedefs for each vector type
+    (where the types are: `uvec`, `ivec`, `fvec`, `vec`, `cx_fvec`, `cx_vec` as
+    well as the corresponding `colvec` versions). The pre-defined typedefs
+    specify vector sizes ranging from 2 to 9. The typedefs were defined by
+    appending a single digit form of the size to the vector type.
+    Examples: `vec3` is equivalent to `vec::fixed<3>`, and `cx_vec4` is
+    equivalent to `cx_vec::fixed<4>`.
+* `vec::fixed<number_of_elements>(fill_form)`  
+  * Create a fixed size column vector, with the elements explicitly initialised
+    according to `fill_form`.
+* `vec::fixed<number_of_elements>(const ptr_aux_mem)`  
+  * Create a fixed size column vector, with the size specified via the template
+    argument; data is copied from auxiliary memory, where ptr_aux_mem is a
+    pointer to the memory.
+      
+### Examples
+  
+```r
+set.seed(123)
+x <- runif(10)
+y <- rep(1, 10)
+```
+
+```cpp
+[[cpp11::register]] doubles column_fun1_(const doubles& x, const doubles& y) {
+  vec X = as_Col(x); // convert from R to C++
+  vec Y = as_Col(y);
+
+  mat A(10, 10, fill::randu);
+  vec Z = A.col(5); // extract a column vector
+
+  Z = Z + Y + X;
+
+  return as_doubles(Z); // convert from C++ to R
+}
+```
+
+## Row vector class
+
+`Row<type>`, `rowvec` and `cx_rowvec` are classes for row vectors (dense
+matrices with one row).
+  
+The template `Row<type>` class is derived from the `Mat<type>` class and
+inherits most of the member functions.
+  
+For convenience the following typedefs have been defined:
+    
+* `rowvec = Row<double>`
+* `drowvec = Row<double>`
+* `frowvec = Row<float>`
+* `cx_rowvec = Row<cx_double>`
+* `cx_drowvec = Row<cx_double>`
+* `cx_frowvec = Row<cx_float>`
+* `urowvec = Row<uword>`
+* `irowvec = Row<sword>`
+    
+The `rowvec` type is used for convenience. It is possible to use other row
+vector types instead (e.g., `frowvec`).
+  
+Functions which take `mat` as input can generally also take `Row` as input. Main
+exceptions are functions which require square matrices.
+  
+### Constructors
+    
+* `rowvec()`
+* `rowvec(n_elem)`
+* `rowvec(n_elem, fill_form)` (elements are initialised according to `fill_form`)
+* `rowvec(size(X))`
+* `rowvec(size(X), fill_form)` (elements are initialised according to `fill_form`)
+* `rowvec(rowvec)`
+* `rowvec(mat)` (`std::logic_error` exception is thrown if the given matrix has more than one row)
+* `rowvec(initializer_list)`
+* `rowvec(string)` (elements separated by spaces)
+* `rowvec(std::vector)`
+* `cx_rowvec(rowvec,rowvec)` (for constructing a complex row vector out of two real row vectors)
+    
+### Advanced constructors
+      
+* `rowvec(ptr_aux_mem, number_of_elements, copy_aux_mem = true, strict = false)`  
+  * Create a row vector using data from writable auxiliary (external) memory,
+    where ptr_aux_mem is a pointer to the memory. By default the vector
+    allocates its own memory and copies data from the auxiliary memory (for
+    safety). However, if copy_aux_mem is set to `false`, the vector will instead
+    directly use the auxiliary memory (ie. no copying); this is faster, but can
+    be dangerous unless you know what you are doing. 
+  * The `strict` parameter comes into effect only when copy_aux_mem is set to
+    `false` (e.g., the vector is directly using auxiliary memory).
+    * When `strict` is set to `false`, the vector will use the auxiliary memory
+      until a size change or an aliasing event.
+    * When `strict` is set to `true`, the vector will be bound to the auxiliary
+      memory for its lifetime; the number of elements in the vector cannot be
+      changed.
+* `rowvec(const ptr_aux_mem, number_of_elements)`  
+  * Create a row vector by copying data from read-only auxiliary memory, where
+    `ptr_aux_mem` is a pointer to the memory.
+* `rowvec::fixed<number_of_elements>`
+  * Create a fixed size row vector, with the size specified via the template
+    argument. Memory for the vector is reserved at compile time. This is
+    generally faster than dynamic memory allocation, but the size of the vector
+    cannot be changed afterwards (directly or indirectly).
+  * For convenience, there are several pre-defined typedefs for each vector type
+    (where the types are: `urowvec`, `irowvec`, `frowvec`, `rowvec`,
+    `cx_frowvec`, `cx_rowvec`). The pre-defined typedefs specify vector sizes
+    ranging from 2 to 9. The typedefs were defined by appending a single digit
+    form of the size to the vector type. Examples: `rowvec3` is equivalent to
+    `rowvec::fixed<3>`, and `cx_rowvec4` is equivalent to `cx_rowvec::fixed<4>`.
+* `rowvec::fixed<number_of_elements>(fill_form)`
+  * Create a fixed size row vector, with the elements explicitly initialised
+    according to `fill_form`.
+* `rowvec::fixed<number_of_elements>(const ptr_aux_mem)`  
+  * Create a fixed size row vector, with the size specified via the template
+    argument; data is copied from auxiliary memory, where ptr_aux_mem is a
+    pointer to the memory.
+    
+### Examples
+    
+⚠️Important⚠️: 'cpp11armadillo' is an opinionated package and it follows the
+notation from Econometrics by Bruce E. Hansen. It intentionally exports/imports
+matrices and column vectors. You can use row vectors in the functions, but
+the communication between R and C++ does not accept row vectors unless you
+transpose or convert those to matrices.
+
+```r
+set.seed(123)
+x <- runif(10)
+y <- rep(1, 10)
+```
+
+```cpp
+[[cpp11::register]] doubles row_fun1_(const doubles& x, const doubles& y) {
+  vec X = as_Col(x);  // convert from R to C++
+  vec Y = as_Col(y);
+
+  mat A(10, 10, fill::randu);
+  
+  rowvec Z = A.row(5);  // extract a row vector
+  Z = Z + Y.t() + X.t(); // transpose Y and X to be able to sum
+
+  vec res = Z.t();
+  
+  return as_doubles(res);  // convert from C++ to R
+}
+```
+
+# Member Functions & Variables
+
+| Function/Variable | Description                                                                 |
+|-------------------|-----------------------------------------------------------------------------|
+| `.n_rows`         | number of rows                                                              |
+| `.n_cols`         | number of columns                                                           |
+| `.n_elem`         | number of elements                                                          |
+| `.n_slices`       | number of slices                                                            |
+| `()`              | element access                                                              |
+| `[]`              | element access                                                              |
+| `.at()`           | element access                                                              |
+| `.zeros`          | set all elements to zero                                                    |
+| `.ones`           | set all elements to one                                                     |
+| `.eye`            | set elements along main diagonal to one and off-diagonal elements to zero   |
+| `.randu`          | set all elements to random values from a uniform distribution               |
+| `.randn`          | set all elements to random values from a normal distribution                |
+| `.fill`           | set all elements to specified value                                         |
+| `.imbue`          | imbue (fill) with values provided by functor or lambda function             |
+| `.clean`          | replace elements below a threshold with zeros                               |
+| `.replace`        | replace specific elements with a new value                                  |
+| `.clamp`          | clamp values to lower and upper limits                                      |
+| `.transform`      | transform each element via functor or lambda function                       |
+| `.for_each`       | apply a functor or lambda function to each element                          |
+| `.set_size`       | change size without keeping elements (fast)                                 |
+| `.reshape`        | change size while keeping elements                                          |
+| `.resize`         | change size while keeping elements and preserving layout                    |
+| `.copy_size`      | change size to be same as given object                                      |
+| `.reset`          | change size to empty                                                        |
+| `.diag`           | read/write access to matrix diagonals                                       |
+| `.each_col`       | vector operations applied to each column of matrix (aka "broadcasting")     |
+| `.each_row`       | vector operations applied to each row of matrix (aka "broadcasting")        |
+| `.each_slice`     | matrix operations applied to each slice of cube (aka "broadcasting")        |
+| `.set_imag`       | set imaginary part                                                          |
+| `.set_real`       | set real part                                                               |
+| `.insert_rows`    | insert vector/matrix/cube at specified row                                  |
+| `.insert_cols`    | insert vector/matrix/cube at specified column                               |
+| `.insert_slices`  | insert vector/matrix/cube at specified slice                                |
+| `.shed_rows`      | remove specified rows                                                       |
+| `.shed_cols`      | remove specified columns                                                    |
+| `.shed_slices`    | remove specified slices                                                     |
+| `.swap_rows`      | swap specified rows                                                         |
+| `.swap_cols`      | swap specified columns                                                      |
+| `.swap`           | swap contents with given object                                             |
+| `.memptr`         | raw pointer to memory                                                       |
+| `.colptr`         | raw pointer to memory used by specified column                              |
+| `.as_col`         | return flattened matrix column as column vector                             |
+| `.as_row`         | return flattened matrix row as row vector                                   |
+| `.col_as_mat`     | return matrix representation of cube column                                 |
+| `.row_as_mat`     | return matrix representation of cube row                                    |
+| `.as_dense`       | return dense vector/matrix representation of sparse matrix expression       |
+| `.t`              | return matrix transpose                                                     |
+| `.st`             | return matrix conjugate transpose                                           |
+| `.i`              | return inverse of square matrix                                             |
+| `.min`            | return minimum value                                                        |
+| `.max`            | return maximum value                                                        |
+| `.index_min`      | return index of minimum value                                               |
+| `.index_max`      | return index of maximum value                                               |
+| `.eval`           | force evaluation of delayed expression                                      |
+| `.in_range`       | check whether given location or span is valid                               |
+| `.is_empty`       | check whether object is empty                                               |
+| `.is_vec`         | check whether matrix is a vector                                            |
+| `.is_sorted`      | check whether vector or matrix is sorted                                    |
+| `.is_trimatu`     | check whether matrix is upper triangular                                    |
+| `.is_trimatl`     | check whether matrix is lower triangular                                    |
+| `.is_diagmat`     | check whether matrix is diagonal                                            |
+| `.is_square`      | check whether matrix is square sized                                        |
+| `.is_symmetric`   | check whether matrix is symmetric                                           |
+| `.is_hermitian`   | check whether matrix is hermitian                                           |
+| `.is_sympd`       | check whether matrix is symmetric/hermitian positive definite               |
+| `.is_zero`        | check whether all elements are zero                                         |
+| `.is_finite`      | check whether all elements are finite                                       |
+| `.has_inf`        | check whether any element is +/- infinity                                   |
+| `.has_nan`        | check whether any element is NaN                                            |
+| `.print`          | print object to `_std::cout_` or user specified stream (cpp11armadillo redirects to R messages) |
+| `.raw_print`      | print object without formatting                                             |
+| `.brief_print`    | print object in shortened/abridged form                                     |
+| `.save`           | save matrix or cube (cpp11armadillo reads from R and sends data back to R)  |
+| `.load`           | load matrix or cube (cpp11armadillo reads from R and sends data back to R)  |
