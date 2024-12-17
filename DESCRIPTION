@@ -24,8 +24,9 @@ Authors@R: c(
         role = c("aut"),
         comment = "Armadillo library (C++)")
     )
+Imports: 
+    cpp11
 Suggests: 
-    cpp11,
     desc,
     knitr,
     mockery,
