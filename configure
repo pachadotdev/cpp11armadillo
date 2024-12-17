@@ -27,7 +27,7 @@ echo "PKG_CFLAGS: ${PKG_CFLAGS}"
 
 # Create a temporary C++ file to test the compatibility with Armadillo
 cat <<EOF> conftest.cpp
-#include <armadillo>
+#include <armadillo.hpp>
 using namespace arma;
 int main() {
   Mat<int> A(2, 2, fill::ones);
