@@ -20,12 +20,13 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-latest,   r: 'release'}
-          - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'release', custom: 'no-cpp11armadillotest'}
-          - {os: ubuntu-latest,   r: 'release', custom: 'cpp15'} # CRAN email Dec 7, 2024
+          - {os: macos-14, r: 'release', name: "macOS 14"}
+          - {os: macos-13, r: 'release', name: "macOS 13"}
+          - {os: windows-latest, r: 'release', name: "Windows latest"}
+          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release', name: "Ubuntu latest (R devel)"}
+          - {os: ubuntu-latest,   r: 'release', custom: 'no-cpp11armadillotest', name: "Ubuntu latest"}
+          - {os: ubuntu-latest,   r: 'release', custom: 'no-cpp11armadillotest', name: "Ubuntu latest (no cpp11armadillotest)"}
+          - {os: ubuntu-latest,   r: 'release', custom: 'cpp15', name: "Ubuntu latest (GCC15)"} # CRAN email Dec 7, 2024
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
