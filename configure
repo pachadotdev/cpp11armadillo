@@ -5,7 +5,20 @@
 CXX=`${R_HOME}/bin/R CMD config CXX`
 R_INCLUDE_PATH=`${R_HOME}/bin/R CMD config --cppflags`
 CPP11_INCLUDE_PATH=`${R_HOME}/bin/Rscript -e "cat(system.file('include', package = 'cpp11'))"`
+
+# Check if CPP11_INCLUDE_PATH is empty
+if [ -z "$CPP11_INCLUDE_PATH" ]; then
+  echo "Error: cpp11 include path is empty. Please ensure the cpp11 package is installed."
+  exit 1
+fi
+
 PKG_CFLAGS="-I./inst/include ${R_INCLUDE_PATH} -I${CPP11_INCLUDE_PATH}"
+
+# Debugging: Print the values of the variables
+echo "CXX: ${CXX}"
+echo "R_INCLUDE_PATH: ${R_INCLUDE_PATH}"
+echo "CPP11_INCLUDE_PATH: ${CPP11_INCLUDE_PATH}"
+echo "PKG_CFLAGS: ${PKG_CFLAGS}"
 
 # Create a temporary C++ file to test the compatibility with Armadillo
 cat <<EOF> conftest.cpp
