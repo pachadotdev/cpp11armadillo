@@ -1,9 +1,17 @@
+# cpp11armadillo 0.4.1
+
+* Modified configure file. It used `--cppflags` for compiling against `libR`,
+  which not everyone has. Now it uses `--cflags` to solve build issues with
+  MacPorts and Fedora.
+* Includes parts of the official Armadillo documentation in the vignettes but
+  adapted to working with R.
+* Thanks a lot to @barracuda156 and @bastistician for reporting the issue.
+
 # cpp11armadillo 0.4.0
 
 * Uses Armadillo 14.2.2 for C++15 compatibility.
 * Adds a configure file to check the compatibility between the C++ compiler and
   Armadillo.
-* Provides additional Econometrics examples.
 
 # cpp11armadillo 0.3.5
 

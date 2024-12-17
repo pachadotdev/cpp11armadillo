@@ -3,7 +3,8 @@
 # We make sure that the R and Armadillo bindings are compatible (i.e., messages)
 # this is why we add the R and cpp11 path
 CXX=`${R_HOME}/bin/R CMD config CXX`
-R_INCLUDE_PATH=`${R_HOME}/bin/R CMD config --cppflags`
+R_INCLUDE_PATH=`${R_HOME}/bin/R CMD config --cflags`
+R_INCLUDE_DIR=`${R_HOME}/bin/R CMD config --ldflags | sed 's/-L[^ ]*//g' | sed 's/-lR//g'`
 CPP11_INCLUDE_PATH=`${R_HOME}/bin/Rscript -e "cat(system.file('include', package = 'cpp11'))"`
 
 # Check if CPP11_INCLUDE_PATH is empty
@@ -12,11 +13,17 @@ if [ -z "$CPP11_INCLUDE_PATH" ]; then
   exit 1
 fi
 
-PKG_CFLAGS="-I./inst/include ${R_INCLUDE_PATH} -I${CPP11_INCLUDE_PATH}"
+# Manually specify the R include path if --cflags does not provide it
+if [ "$R_INCLUDE_PATH" = "ERROR: no information for variable '--cflags'" ]; then
+  R_INCLUDE_PATH="-I/usr/share/R/include"
+fi
+
+PKG_CFLAGS="-I./inst/include ${R_INCLUDE_PATH} -I${R_INCLUDE_DIR} -I${CPP11_INCLUDE_PATH}"
 
 # Debugging: Print the values of the variables
 echo "CXX: ${CXX}"
 echo "R_INCLUDE_PATH: ${R_INCLUDE_PATH}"
+echo "R_INCLUDE_DIR: ${R_INCLUDE_DIR}"
 echo "CPP11_INCLUDE_PATH: ${CPP11_INCLUDE_PATH}"
 echo "PKG_CFLAGS: ${PKG_CFLAGS}"
 
