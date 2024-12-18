@@ -238,7 +238,7 @@ Main exceptions are functions that require square matrices.
     
 * `vec()`
 * `vec(_n_elem_)`
-* `vec(_n_elem_, fill_form)` (elements are initialised according to `fill_form`)
+* `vec(_n_elem, fill_form)` (elements are initialised according to `fill_form`)
 * `vec(size(X))`
 * `vec(size(X), fill_form)` (elements are initialised according to `fill_form`)
 * `vec(vec)`
@@ -415,6 +415,174 @@ y <- rep(1, 10)
   return as_doubles(res);  // convert from C++ to R
 }
 ```
+
+## Cube class
+
+`Cube<type>`, `cube` and `cx_cube` are classes for cubes, also known as quasi
+3rd order tensors or "3D matrices".
+  
+The data is stored as a set of slices (matrices) stored contiguously within
+memory. Within each slice, elements are stored with column-major ordering (e.g.,
+column by column)
+  
+The root cube class is `Cube<type>`, where `type` is one of: `float`, `double`,
+`std::complex<float>`, `std::complex<double>`, `short`, `int`, `long` and
+unsigned versions of `short`, `int`, `long`.
+  
+For convenience the following typedefs have been defined:
+    
+* `cube = Cube<double>`
+* `dcube = Cube<double>`
+* `fcube = Cube<float>`
+* `cx_cube = Cube<cx_double>`
+* `cx_dcube = Cube<cx_double>`
+* `cx_fcube = Cube<cx_float>`
+* `ucube = Cube<uword>`
+* `icube = Cube<sword>`
+    
+The `cube` type is used for convenience; it is possible to use other types
+instead (e.g., `fcube`)
+  
+### Constructors
+
+* `cube()`
+* `cube(n_rows, n_cols, n_slices_)`
+* `cube(n_rows, n_cols, n_slices, fill_form)` (elements are initialised according to `fill_form`)
+* `cube(size(X))`
+* `cube(size(X), fill_form)` (elements are initialised according to `fill_form`)
+* `cube(cube)`
+* `cx_cube(cube, cube)` (for constructing a complex cube out of two real cubes)
+      
+The elements can be explicitly initialised during construction by specifying `fill_form`, which is one of:
+    
+* `fill::zeros`: set all elements to 0 (default in cpp11armadillo)
+* `fill::ones`: set all elements to 1
+* `fill::randu`: set all elements to random values from a uniform distribution in the [0,1] interval
+* `fill::randn`: set all elements to random values from a normal  distribution with zero mean and unit variance
+* `fill::value(scalar)`: set all elements to specified scalar
+* `fill::none`: do not initialise the elements (cube may have garbage values)
+    
+Each instance of `cube` automatically allocates and releases internal memory.
+All internally allocated memory used by an instance of `cube` is automatically
+released as soon as the instance goes out of scope. For example, if an instance
+of `cube` is declared inside a function, it will be automatically destroyed at
+the end of the function. To forcefully release memory at any point, use
+`.reset()` note that in normal use this is not required.
+  
+### Advanced constructors
+      
+* `cube::fixed<n_rows, n_cols, n_slices>`
+  * Create a fixed size cube, with the size specified via template arguments.
+    Memory for the cube is reserved at compile time. This is generally faster
+    than dynamic memory allocation, but the size of the cube can't be changed
+    afterwards (directly or indirectly).
+* `cube(ptr_aux_mem, n_rows, n_cols, n_slices, copy_aux_mem = true, strict = false)`  
+  * Create a cube using data from writable auxiliary (external) memory, where
+    `ptr_aux_mem` is a pointer to the memory. By default the cube allocates its
+    own memory and copies data from the auxiliary memory (for safety). However,
+    if `copy_aux_mem` is set to `false`, the cube will instead directly use the
+    auxiliary memory (e.g., no copying). This is faster, but can be dangerous
+    unless you know what you are doing.
+  * The `strict` parameter comes into effect only when `copy_aux_mem` is set to
+    `false` (e.g., the cube is directly using auxiliary memory)
+      * When `strict` is set to `false`, the cube will use the auxiliary memory
+        until a size change or an aliasing event
+      * When `strict` is set to `true`, the cube will be bound to the auxiliary
+        memory for its lifetime; the number of elements in the cube can't be
+        changed
+* `cube(const ptr_aux_mem, n_rows, n_cols, n_slices)`  
+  * Create a cube by copying data from read-only auxiliary memory, where
+    `ptr_aux_mem` is a pointer to the memory.
+    
+### Examples
+
+```r
+set.seed(123)
+a <- matrix(runif(4), nrow = 2, ncol = 2)
+b <- matrix(rnorm(4), nrow = 2, ncol = 2)
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> cube_fun1_(const doubles_matrix<>& a,
+                                                const doubles_matrix<>& b) {
+  mat A = as_Mat(a);  // convert from R to C++
+  mat B = as_Mat(b);
+
+  cube X(A.n_rows, A.n_cols, 2);  // create a cube with 2 slices
+  X.slice(0) = A;                 // copy A into first slice
+  X.slice(1) = B;                 // copy B into second slice
+
+  cube Y = X + X;  // cube addition
+  cube Z = X % X;  // element-wise cube multiplication
+
+  mat res = Y.slice(0) + Z.slice(1);
+
+  return as_doubles_matrix(res);  // convert from C++ to R
+}
+```
+  
+### Notes
+      
+* Each cube slice can be interpreted as a matrix, hence functions which take `Mat` as input can generally also take cube slices as input
+* The size of individual slices can't be changed. For example, the following will not work:
+        
+```cpp
+cube c(5,6,7);
+c.slice(0) = randu<mat>(10,20); // wrong size
+```
+
+## Field class
+
+`field<object_type>` is a class for storing arbitrary objects in matrix-like or
+cube-like layouts.
+  
+It is similar to a matrix or cube, but instead of each element being a scalar,
+each element can be a vector, or matrix, or cube. This is similar to a list in
+R.
+  
+Each element can have an arbitrary size (e.g., in a field of matrices, each
+matrix can have a unique size).
+  
+### Constructors
+
+`object_type` is another class (e.g., `vec`, `mat`, `std::string`, etc)
+    
+* `field<object_type>()`
+* `field<object_type>(n_elem)`
+* `field<object_type>(n_rows, n_cols)`  
+* `field<object_type>(n_rows, n_cols, n_slices)`
+* `field<object_type>(size(X))`
+* `field<object_type>(field<object_type>)`
+  
+*   Examples:
+
+```r
+set.seed(123)
+a <- matrix(runif(4), nrow = 2, ncol = 2)
+b <- matrix(rnorm(4), nrow = 2, ncol = 2)
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> field_fun1_(const doubles_matrix<>& a,
+                                                 const doubles_matrix<>& b) {
+  mat A = as_Mat(a);  // convert from R to C++
+  mat B = as_Mat(b);
+
+  field<mat> F(A.n_rows, A.n_cols, 3);  // create a field with 2 matrices
+  F(0) = A;                             // copy A into first location
+  F(1) = B;                             // copy B into second location
+  F(2) = F(0) + F(1);                   // matrix addition
+
+  mat res = F(0) + F(1) + F(2).t();
+
+  return as_doubles_matrix(res);  // convert from C++ to R
+}
+```
+
+### Note
+
+To store a set of matrices of the same size, the [Cube](#Cube) class is more
+efficient.
 
 # Member Functions & Variables
 

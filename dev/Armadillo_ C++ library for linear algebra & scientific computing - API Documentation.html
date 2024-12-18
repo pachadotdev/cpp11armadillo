@@ -1371,356 +1371,270 @@ rowvec z = A.row(5); // extract a row vector
 <br>
 </ul>
 
-<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
-<a name="Cube"></a>
-<b>Cube&lt;</b><i>type</i><b>&gt;</b>
-<br><b>cube</b>
-<br><b>cx_cube</b>
-<ul>
-<li>
-Classes for cubes (quasi 3rd order tensors), also known as "3D matrices"
-</li>
-<br>
-<li>
-Data is stored as a set of slices (matrices) stored contiguously within memory;
-within each slice, elements are stored with column-major ordering (ie. column by column)
-</li>
-<br>
-<li>
-The root cube class is <b>Cube&lt;</b><i>type</i><b>&gt;</b>, where <i>type</i> is one of:
-<ul>
-<li>
-<i>float</i>, <i>double</i>, <i>std::complex&lt;float&gt;</i>, <i>std::complex&lt;double&gt;</i>,
-<i>short</i>, <i>int</i>, <i>long</i> and unsigned versions of <i>short</i>, <i>int</i>, <i>long</i>
-</li>
-</ul>
-</li>
-<br>
-<li>
-For convenience the following typedefs have been defined:
-<ul>
-<table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
-  <tbody>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>cube</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Cube&lt;double&gt;</code>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>dcube</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Cube&lt;double&gt;</code>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>fcube</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Cube&lt;float&gt;</code>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>cx_cube</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Cube&lt;<a href="#cx_double">cx_double</a>&gt;</code>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>cx_dcube</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Cube&lt;<a href="#cx_double">cx_double</a>&gt;</code>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>cx_fcube</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Cube&lt;<a href="#cx_double">cx_float</a>&gt;</code>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>ucube</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Cube&lt;<a href="#uword">uword</a>&gt;</code>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>icube</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Cube&lt;<a href="#uword">sword</a>&gt;</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
-</ul>
-</li>
-<br>
-<li>
-In this documentation the <i>cube</i> type is used for convenience;
-it is possible to use other types instead, eg. <i>fcube</i>
-</li>
-<br>
-<a name="constructors_cube"></a>
-<li>
-Constructors:
-<ul>
-<code>cube()</code><table>
-<tbody>
+* * *
 
-<tr><td><code>cube(<i>n_rows</i>, <i>n_cols</i>, <i>n_slices</i>)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
-<tr><td><code>cube(<i>n_rows</i>, <i>n_cols</i>, <i>n_slices</i>, <i>fill_form</i>)</code></td><td>&nbsp;</td><td>(elements are initialised according to <i>fill_form</i>)</td></tr>
-<tr><td><code>cube(size(<i>X</i>))</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
-<tr><td><code>cube(size(<i>X</i>), <i>fill_form</i>)</code></td><td>&nbsp;</td><td>(elements are initialised according to <i>fill_form</i>)</td></tr>
-<tr><td><code>cube(cube)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
-<tr><td><code>cx_cube(cube, cube)</code></td><td>&nbsp;</td><td>(for constructing a complex cube out of two real cubes)</td></tr>
-</tbody>
-</table>
-</ul>
-</li>
-<br>
-<li>
-The elements can be explicitly initialised during construction by specifying <i>fill_form</i>,
-which is one of:
-<ul>
-<table>
-<tbody>
-<tr><td><code>fill::zeros</code></td><td>&nbsp;&#8614;&nbsp;</td><td>set all elements to 0 &nbsp; (default in Armadillo &gt;= 10.5)</td></tr>
-<tr><td><code>fill::ones</code></td><td>&nbsp;&#8614;&nbsp;</td><td>set all elements to 1</td></tr>
-<tr><td><code>fill::randu</code></td><td>&nbsp;&#8614;&nbsp;</td><td>set all elements to random values from a uniform distribution in the [0,1] interval</td></tr>
-<tr><td><code>fill::randn</code></td><td>&nbsp;&#8614;&nbsp;</td><td>set all elements to random values from a normal/Gaussian distribution with zero mean and unit variance</td></tr>
-<tr><td><code>fill::value(scalar)</code></td><td>&nbsp;&#8614;&nbsp;</td><td>set all elements to specified scalar</td></tr>
-<tr><td><code>fill::none</code></td><td>&nbsp;&#8614;&nbsp;</td><td>do not initialise the elements &nbsp; (cube may have garbage values)</td></tr>
-</tbody>
-</table>
-</ul>
-</li>
-<br>
-<li>
-<b>Caveat:</b>
-<ul>
-<li>in Armadillo &gt;= 10.5, the default initialisation is <code>fill::zeros</code></li>
-<li>in Armadillo &lt;= 10.4, the default initialisation is <code>fill::none</code></li>
-</ul>
-</li>
-<br>
-<li>
-Each instance of <i>cube</i> automatically allocates and releases internal memory.
-All internally allocated memory used by an instance of <i>cube</i> is automatically released as soon as the instance goes out of scope.
-For example, if an instance of <i>cube</i> is declared inside a function, it will be automatically destroyed at the end of the function.
-To forcefully release memory at any point, use <a href="#reset">.reset()</a>; note that in normal use this is not required.
-</li>
-<br>
-<a name="adv_constructors_cube"></a>
-<li>
-Advanced constructors:
-<br>
-<br>
-<ul>
-<code>cube::fixed&lt;n_rows, n_cols, n_slices&gt;</code>
-<br>
-<br>
-<ul>
-Create a fixed size cube, with the size specified via template 
-arguments.
-Memory for the cube is reserved at compile time.
-This is generally faster than dynamic memory allocation, but the size of
- the cube can't be changed afterwards (directly or indirectly).
-</ul>
-<br>
-<code>cube(ptr_aux_mem, n_rows, n_cols, n_slices, copy_aux_mem = true, strict = false)</code>
-<br>
-<br>
-<ul>
-Create a cube using data from writable auxiliary (external) memory, where <i>ptr_aux_mem</i> is a pointer to the memory.
-By default the cube allocates its own memory and copies data from the auxiliary memory (for safety).
-However, if <i>copy_aux_mem</i> is set to <i>false</i>,
-the cube will instead directly use the auxiliary memory (ie. no copying);
-this is faster, but can be dangerous unless you know what you are doing!
-<br>
-<br>
-The <i>strict</i> parameter comes into effect only when <i>copy_aux_mem</i> is set to <i>false</i>
-(ie. the cube is directly using auxiliary memory)
-<ul>
-<li>
-when <i>strict</i> is set to <i>false</i>, the cube will use the auxiliary memory until a size change or an aliasing event
-</li>
-<li>
-when <i>strict</i> is set to <i>true</i>, the cube will be bound to the auxiliary memory for its lifetime;
-the number of elements in the cube can't be changed
-</li>
-</ul>
-</ul>
-<br>
-<code>cube(const ptr_aux_mem, n_rows, n_cols, n_slices)</code>
-<br>
-<br>
-<ul>
-Create a cube by copying data from read-only auxiliary memory,
-where <i>ptr_aux_mem</i> is a pointer to the memory
-</ul>
-</ul>
-</li>
-<br>
-<br>
-<li>
-Examples:
-<ul>
-<pre>cube x(1, 2, 3);
-cube y(4, 5, 6, fill::randu);
+  
 
-mat A = y.slice(1);  // extract a slice from the cube
-                     // (each slice is a matrix)
+**Cube<**_type_**\>**  
+**cube**  
+**cx\_cube**
 
-mat B(4, 5, fill::randu);
-y.slice(2) = B;     // set a slice in the cube
+*   Classes for cubes (quasi 3rd order tensors), also known as "3D matrices"
+  
+*   Data is stored as a set of slices (matrices) stored contiguously within memory; within each slice, elements are stored with column-major ordering (ie. column by column)
+  
+*   The root cube class is **Cube<**_type_**\>**, where _type_ is one of:
+    *   _float_, _double_, _std::complex<float>_, _std::complex<double>_, _short_, _int_, _long_ and unsigned versions of _short_, _int_, _long_
+  
+*   For convenience the following typedefs have been defined:
+    
+    `cube`
+    
+     = 
+    
+    `Cube<double>`
+    
+    `dcube`
+    
+     = 
+    
+    `Cube<double>`
+    
+    `fcube`
+    
+     = 
+    
+    `Cube<float>`
+    
+    `cx_cube`
+    
+     = 
+    
+    `Cube<[cx_double](#cx_double)>`
+    
+    `cx_dcube`
+    
+     = 
+    
+    `Cube<[cx_double](#cx_double)>`
+    
+    `cx_fcube`
+    
+     = 
+    
+    `Cube<[cx_float](#cx_double)>`
+    
+    `ucube`
+    
+     = 
+    
+    `Cube<[uword](#uword)>`
+    
+    `icube`
+    
+     = 
+    
+    `Cube<[sword](#uword)>`
+    
+  
+*   In this documentation the _cube_ type is used for convenience; it is possible to use other types instead, eg. _fcube_
+  
+*   Constructors:
+    `cube()`
+    
+    `cube(_n_rows_, _n_cols_, _n_slices_)`
+    
+     
+    
+     
+    
+    `cube(_n_rows_, _n_cols_, _n_slices_, _fill_form_)`
+    
+     
+    
+    (elements are initialised according to _fill\_form_)
+    
+    `cube(size(_X_))`
+    
+     
+    
+     
+    
+    `cube(size(_X_), _fill_form_)`
+    
+     
+    
+    (elements are initialised according to _fill\_form_)
+    
+    `cube(cube)`
+    
+     
+    
+     
+    
+    `cx_cube(cube, cube)`
+    
+     
+    
+    (for constructing a complex cube out of two real cubes)
+    
+  
+*   The elements can be explicitly initialised during construction by specifying _fill\_form_, which is one of:
+    
+    `fill::zeros`
+    
+     ↦ 
+    
+    set all elements to 0   (default in Armadillo >= 10.5)
+    
+    `fill::ones`
+    
+     ↦ 
+    
+    set all elements to 1
+    
+    `fill::randu`
+    
+     ↦ 
+    
+    set all elements to random values from a uniform distribution in the \[0,1\] interval
+    
+    `fill::randn`
+    
+     ↦ 
+    
+    set all elements to random values from a normal/Gaussian distribution with zero mean and unit variance
+    
+    `fill::value(scalar)`
+    
+     ↦ 
+    
+    set all elements to specified scalar
+    
+    `fill::none`
+    
+     ↦ 
+    
+    do not initialise the elements   (cube may have garbage values)
+    
+  
+*   **Caveat:**
+    *   in Armadillo >= 10.5, the default initialisation is `fill::zeros`
+    *   in Armadillo <= 10.4, the default initialisation is `fill::none`
+  
+*   Each instance of _cube_ automatically allocates and releases internal memory. All internally allocated memory used by an instance of _cube_ is automatically released as soon as the instance goes out of scope. For example, if an instance of _cube_ is declared inside a function, it will be automatically destroyed at the end of the function. To forcefully release memory at any point, use [.reset()](#reset); note that in normal use this is not required.
+  
+*   Advanced constructors:  
+      
+    `cube::fixed<n_rows, n_cols, n_slices>`  
+      
+    
+    Create a fixed size cube, with the size specified via template arguments. Memory for the cube is reserved at compile time. This is generally faster than dynamic memory allocation, but the size of the cube can't be changed afterwards (directly or indirectly).
+    
+      
+    `cube(ptr_aux_mem, n_rows, n_cols, n_slices, copy_aux_mem = true, strict = false)`  
+      
+    
+    Create a cube using data from writable auxiliary (external) memory, where _ptr\_aux\_mem_ is a pointer to the memory. By default the cube allocates its own memory and copies data from the auxiliary memory (for safety). However, if _copy\_aux\_mem_ is set to _false_, the cube will instead directly use the auxiliary memory (ie. no copying); this is faster, but can be dangerous unless you know what you are doing!  
+      
+    The _strict_ parameter comes into effect only when _copy\_aux\_mem_ is set to _false_ (ie. the cube is directly using auxiliary memory)
+    
+    *   when _strict_ is set to _false_, the cube will use the auxiliary memory until a size change or an aliasing event
+    *   when _strict_ is set to _true_, the cube will be bound to the auxiliary memory for its lifetime; the number of elements in the cube can't be changed
+    
+      
+    `cube(const ptr_aux_mem, n_rows, n_cols, n_slices)`  
+      
+    
+    Create a cube by copying data from read-only auxiliary memory, where _ptr\_aux\_mem_ is a pointer to the memory
+    
+  
+  
+*   Examples:
+    
+    cube x(1, 2, 3);
+    cube y(4, 5, 6, fill::randu);
+    
+    mat A = y.slice(1);  // extract a slice from the cube
+                         // (each slice is a matrix)
+    
+    mat B(4, 5, fill::randu);
+    y.slice(2) = B;     // set a slice in the cube
+    
+    cube q = y + y;     // cube addition
+    cube r = y % y;     // element-wise cube multiplication
+    
+    cube::fixed<4,5,6> f;
+    f.ones();
+    
+  
+*   **Notes:**  
+      
+    *   Each cube slice can be interpreted as a matrix, hence functions which take _Mat_ as input can generally also take cube slices as input
+      
+    *   The size of individual slices can't be changed. For example, the following **will not** work:
+        
+        cube c(5,6,7);
+        c.slice(0) = randu<mat>(10,20); // wrong size
+        
+*   See also:
+    *   [cube attributes](#attributes)
+    *   [accessing elements](#element_access)
+    *   [math & relational operators](#operators)
+    *   [subcube views and slices](#subcube)
+    *   [saving & loading cubes](#save_load_mat)
+    *   [element iterators](#iterators_cube)
+    *   [field class](#field)
+    *   [Mat class](#Mat)
 
-cube q = y + y;     // cube addition
-cube r = y % y;     // element-wise cube multiplication
+* * *
 
-cube::fixed&lt;4,5,6&gt; f;
-f.ones();
-</pre>
-</ul>
-</li>
-<br>
-<li>
-<b>Notes:</b>
-<br>
-<br>
-<ul>
-<li>
-Each cube slice can be interpreted as a matrix, hence functions which take <i>Mat</i> as input can generally also take cube slices as input
-</li>
-<br>
-<li>
-The size of individual slices can't be changed.
-For example, the following <b>will not</b> work:
-<ul>
-<pre>cube c(5,6,7);
-c.slice(0) = randu&lt;mat&gt;(10,20); // wrong size
-</pre>
-</ul>
-</li>
-</ul>
-</li><li>
-See also:
-<ul>
-<li><a href="#attributes">cube attributes</a></li>
-<li><a href="#element_access">accessing elements</a></li>
-<li><a href="#operators">math &amp; relational operators</a></li>
-<li><a href="#subcube">subcube views and slices</a></li>
-<li><a href="#save_load_mat">saving &amp; loading cubes</a></li>
-<li><a href="#iterators_cube">element iterators</a></li>
-<li><a href="#field">field class</a></li>
-<li><a href="#Mat">Mat class</a></li>
-</ul>
-</li>
-<br>
-</ul>
+  
 
-<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
-<a name="field"></a>
-<b>field&lt;</b><i>object_type</i><b>&gt;</b>
-<ul>
-<li>
-Class for storing arbitrary objects in matrix-like or cube-like layouts
-</li>
-<br>
-<li>
-Somewhat similar to a matrix or cube, but instead of each element being a scalar,
-each element can be a vector, or matrix, or cube
-</li>
-<br>
-<li>
-Each element can have an arbitrary size (eg. in a field of matrices, each matrix can have a unique size)
-</li>
-<br>
-<li>
-Constructors, where <i>object_type</i> is another class, eg. <i>vec</i>, <i>mat</i>, <i>std::string</i>, etc:
-<ul>
-<table>
-<tbody>
-<tr><td><code>field&lt;<i>object_type</i>&gt;()</code></td></tr>
-<tr><td><code>field&lt;<i>object_type</i>&gt;(<i>n_elem</i>)</code></td></tr>
-<tr><td><code>field&lt;<i>object_type</i>&gt;(<i>n_rows</i>, <i>n_cols</i>)</code></td></tr>
-<tr><td><code>field&lt;<i>object_type</i>&gt;(<i>n_rows</i>, <i>n_cols</i>, <i>n_slices</i>)</code></td></tr>
-<tr><td><code>field&lt;<i>object_type</i>&gt;(size(<i>X</i>))</code></td></tr>
-<tr><td><code>field&lt;<i>object_type</i>&gt;(field&lt;<i>object_type</i>&gt;)</code></td></tr>
-</tbody>
-</table>
-</ul>
-</li>
-<br>
-<li>
-<b>Caveat:</b> to store a set of matrices of the same size, the <a href="#Cube">Cube</a> class is more efficient
-</li>
-<br>
-<li>
-Examples:
-<ul>
-<pre>mat A = randn(2,3);
-mat B = randn(4,5);
+**field<**_object\_type_**\>**
 
-field&lt;mat&gt; F(2,1);
-F(0,0) = A;
-F(1,0) = B; 
-
-F.print("F:");
-
-F.save("mat_field");
-</pre>
-</ul>
-</li>
-<br>
-<li>See also:
-<ul>
-<li><a href="#attributes">field attributes</a></li>
-<li><a href="#subfield">subfield views</a></li>
-<li><a href="#save_load_field">saving&#8201;/&#8201;loading fields</a></li>
-<li><a href="#Cube">Cube class</a></li>
-</ul>
-</li>
-<br>
-</ul>
+*   Class for storing arbitrary objects in matrix-like or cube-like layouts
+  
+*   Somewhat similar to a matrix or cube, but instead of each element being a scalar, each element can be a vector, or matrix, or cube
+  
+*   Each element can have an arbitrary size (eg. in a field of matrices, each matrix can have a unique size)
+  
+*   Constructors, where _object\_type_ is another class, eg. _vec_, _mat_, _std::string_, etc:
+    
+    `field<_object_type_>()`
+    
+    `field<_object_type_>(_n_elem_)`
+    
+    `field<_object_type_>(_n_rows_, _n_cols_)`
+    
+    `field<_object_type_>(_n_rows_, _n_cols_, _n_slices_)`
+    
+    `field<_object_type_>(size(_X_))`
+    
+    `field<_object_type_>(field<_object_type_>)`
+    
+  
+*   **Caveat:** to store a set of matrices of the same size, the [Cube](#Cube) class is more efficient
+  
+*   Examples:
+    
+    mat A = randn(2,3);
+    mat B = randn(4,5);
+    
+    field<mat> F(2,1);
+    F(0,0) = A;
+    F(1,0) = B; 
+    
+    F.print("F:");
+    
+    F.save("mat\_field");
+    
+  
+*   See also:
+    *   [field attributes](#attributes)
+    *   [subfield views](#subfield)
+    *   [saving / loading fields](#save_load_field)
+    *   [Cube class](#Cube)
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="SpMat"></a><b>SpMat&lt;</b><i>type</i><b>&gt;</b>

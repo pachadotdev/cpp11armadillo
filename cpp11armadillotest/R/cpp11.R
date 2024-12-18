@@ -95,3 +95,11 @@ column_fun1_ <- function(x, y) {
 row_fun1_ <- function(x, y) {
   .Call(`_cpp11armadillotest_row_fun1_`, x, y)
 }
+
+cube_fun1_ <- function(a, b) {
+  .Call(`_cpp11armadillotest_cube_fun1_`, a, b)
+}
+
+field_fun1_ <- function(a, b) {
+  .Call(`_cpp11armadillotest_field_fun1_`, a, b)
+}

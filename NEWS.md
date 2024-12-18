@@ -1,8 +1,6 @@
 # cpp11armadillo 0.4.1
 
-* Modified configure file. It used `--cppflags` for compiling against `libR`,
-  which not everyone has. Now it uses `--cflags` to solve build issues with
-  MacPorts and Fedora.
+* Modified configure file to fix Fedora errors.
 * Includes parts of the official Armadillo documentation in the vignettes but
   adapted to working with R.
 * Thanks a lot to @barracuda156 and @bastistician for reporting the issue.

@@ -67,3 +67,35 @@
 
   return as_doubles(res);  // convert from C++ to R
 }
+
+[[cpp11::register]] doubles_matrix<> cube_fun1_(const doubles_matrix<>& a,
+                                                const doubles_matrix<>& b) {
+  mat A = as_Mat(a);  // convert from R to C++
+  mat B = as_Mat(b);
+
+  cube X(A.n_rows, A.n_cols, 2);  // create a cube with 2 slices
+  X.slice(0) = A;                 // copy A into first slice
+  X.slice(1) = B;                 // copy B into second slice
+
+  cube Y = X + X;  // cube addition
+  cube Z = X % X;  // element-wise cube multiplication
+
+  mat res = Y.slice(0) + Z.slice(1);
+
+  return as_doubles_matrix(res);  // convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> field_fun1_(const doubles_matrix<>& a,
+                                                 const doubles_matrix<>& b) {
+  mat A = as_Mat(a);  // convert from R to C++
+  mat B = as_Mat(b);
+
+  field<mat> F(A.n_rows, A.n_cols, 3);  // create a field with 2 matrices
+  F(0) = A;                             // copy A into first location
+  F(1) = B;                             // copy B into second location
+  F(2) = F(0) + F(1);                   // matrix addition
+
+  mat res = F(0) + F(1) + F(2).t();
+
+  return as_doubles_matrix(res);  // convert from C++ to R
+}
