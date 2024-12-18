@@ -23,7 +23,7 @@ test_that("examples derived from official documentation", {
   expect_equal(length(res3), 10)
 
   res4 <- row_fun1_(x, y)
-  expect_type(res5, "double")
+  expect_type(res4, "double")
 
   res5 <- cube_fun1_(a, b)
   expect_type(res5, "double")
