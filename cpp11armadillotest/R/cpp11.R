@@ -147,3 +147,27 @@ randn_fun2_ <- function(n) {
 fill_fun1_ <- function(a) {
   .Call(`_cpp11armadillotest_fill_fun1_`, a)
 }
+
+imbue_fun1_ <- function(a) {
+  .Call(`_cpp11armadillotest_imbue_fun1_`, a)
+}
+
+imbue_fun2_ <- function(a) {
+  .Call(`_cpp11armadillotest_imbue_fun2_`, a)
+}
+
+clean_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_clean_fun1_`, n)
+}
+
+replace_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_replace_fun1_`, n)
+}
+
+clamp_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_clamp_fun1_`, n)
+}
+
+transform_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_transform_fun1_`, n)
+}

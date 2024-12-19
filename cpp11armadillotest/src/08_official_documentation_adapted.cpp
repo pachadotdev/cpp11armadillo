@@ -254,3 +254,67 @@
 
   return as_doubles_matrix(F);  // convert from C++ to R
 }
+
+[[cpp11::register]] doubles_matrix<> imbue_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+
+  std::mt19937 engine;  // Mersenne twister random number engine
+  std::uniform_real_distribution<double> distr(0.0, 1.0);
+
+  mat B(size(A), fill::none);                // create an empty matrix
+  B.imbue([&]() { return distr(engine); });  // fill with random values
+
+  mat C = A + B;
+
+  return as_doubles_matrix(C);  // convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> imbue_fun2_(const doubles_matrix<>& a) {
+  GetRNGstate();  // Ensure R's RNG state is synchronized
+
+  mat A = as_Mat(a);  // Convert from R to C++
+
+  mat B(size(A), fill::none);             // Create an empty matrix
+  B.imbue([]() { return unif_rand(); });  // Fill with random values
+
+  mat C = A + B;
+
+  PutRNGstate();
+
+  return as_doubles_matrix(C);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> clean_fun1_(const int& n) {
+  mat A(n, n, fill::randu); // create a random matrix
+
+  A(0, 0) = datum::eps;  // set the diagonal with small values (+/- epsilon)
+  A(1, 1) = -datum::eps;
+
+  A.clean(datum::eps);  // set elements with small values to zero
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> replace_fun1_(const int& n) {
+  mat A(n, n, fill::randu);  // create a random matrix
+
+  A.diag().fill(datum::nan);  // set the diagonal with NaN values
+  A.replace(datum::nan, 0);   // replace each NaN with 0
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> clamp_fun1_(const int& n) {
+  mat A(n, n, fill::ones);  // create a random matrix
+  A.diag().fill(0.1);       // set the diagonal with 0.1 values
+
+  A.clamp(0.2, 0.8);  // clamp values to the [0.2, 0.8] interval
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> transform_fun1_(const int& n) {
+  mat A(n, n, fill::ones);  // create a matrix filled with ones
+  A.transform([](double val) { return (val + 122.0); });
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}

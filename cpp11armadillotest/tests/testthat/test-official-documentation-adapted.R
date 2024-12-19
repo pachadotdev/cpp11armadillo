@@ -94,4 +94,38 @@ test_that("examples derived from official documentation", {
   res17 <- fill_fun1_(a)
   expect_type(res17, "double")
   expect_equal(dim(res17), c(2, 2))
+
+  res18 <- imbue_fun1_(a)
+  expect_type(res18, "double")
+  expect_equal(dim(res18), c(2, 2))
+
+  set.seed(123)
+  res19 <- imbue_fun2_(a)
+
+  set.seed(123)
+  res19_2 <- imbue_fun2_(a)
+
+  set.seed(321)
+  res19_3 <- imbue_fun2_(a)
+
+  expect_type(res19, "double")
+  expect_equal(res19, res19_2)
+  res19_4 <- all.equal(res19, res19_3)
+  expect_match(res19_4, "Mean relative difference")
+
+  res20 <- clean_fun1_(2L)
+  expect_type(res20, "double")
+  expect_equal(diag(res20), rep(0, 2))
+
+  res21 <- replace_fun1_(2L)
+  expect_type(res21, "double")
+  expect_equal(diag(res21), rep(0, 2))
+
+  res22 <- clamp_fun1_(2L)
+  expect_type(res22, "double")
+  expect_equal(diag(res22), rep(0.2, 2))
+
+  res23 <- transform_fun1_(2L)
+  expect_type(res23, "double")
+  expect_equal(diag(res23), rep(123, 2))
 })
