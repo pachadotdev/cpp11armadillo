@@ -203,3 +203,11 @@ subview_fun1_ <- function(n) {
 subview_fun2_ <- function(n) {
   .Call(`_cpp11armadillotest_subview_fun2_`, n)
 }
+
+diagonal_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_diagonal_fun1_`, n)
+}
+
+each_col_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_each_col_fun1_`, n)
+}

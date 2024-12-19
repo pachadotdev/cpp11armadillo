@@ -160,4 +160,12 @@ test_that("examples derived from official documentation", {
   res31 <- subview_fun2_(5L)
   expect_type(res31, "double")
   expect_equal(dim(res31), c(5, 3))
+
+  res32 <- diagonal_fun1_(2L)
+  expect_type(res32, "double")
+  expect_equal(length(res32), 2)
+
+  res33 <- each_col_fun1_(2L)
+  expect_type(res33, "double")
+  expect_equal(dim(res33), c(2, 3))
 })

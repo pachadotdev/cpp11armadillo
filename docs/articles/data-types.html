@@ -151,7 +151,7 @@
 </tbody>
 </table>
 <div class="section level3">
-<h3 id="matrix-class">Matrix class<a class="anchor" aria-label="anchor" href="#matrix-class"></a>
+<h3 id="dense-matrix-class">Dense matrix class<a class="anchor" aria-label="anchor" href="#dense-matrix-class"></a>
 </h3>
 <p><code>Mat&lt;type&gt;</code>, <code>mat</code> and <code>cx_mat</code> are classes for dense matrices, with elements stored in <a href="https://en.wikipedia.org/wiki/Column_major" class="external-link">column-major ordering</a> (e.g., column by column).</p>
 <p>The root matrix class is <code>Mat&lt;type&gt;</code>, where <code>type</code> is one of:</p>
@@ -225,7 +225,7 @@
 <li>
 <code>fill::none</code> do not initialise the elements (matrix may have garbage values)</li>
 </ul>
-<p>For the <code>mat(string)</code> constructor, the format is elements separated by spaces, and rows denoted by semicolons; for example, the 2x2 identity matrix can be created using <code>"1 0; 0 1"</code>. Note that string based initialisation is slower than directly setting the elements or using element initialisation.</p>
+<p>For the <code>mat(string)</code> constructor, the format is elements separated by spaces, and rows denoted by semicolons. For example, the 2x2 identity matrix can be created using <code>"1 0; 0 1"</code>. Note that string based initialisation is slower than directly setting the elements or using element initialisation.</p>
 <p>Each instance of <code>mat</code> automatically allocates and releases internal memory. All internally allocated memory used by an instance of mat is automatically released as soon as the instance goes out of scope. For example, if an instance of mat is declared inside a function, it will be automatically destroyed at the end of the function. To forcefully release memory at any point, use <code>.reset()</code>. Note that in normal use this is not required.</p>
 </div>
 <div class="section level4">
@@ -235,12 +235,12 @@
 <li>
 <code>mat(ptr_aux_mem, n_rows, n_cols, copy_aux_mem = true, strict = false)</code>
 <ul>
-<li>Create a matrix using data from writable auxiliary (external) memory, where <code>ptr_aux_mem</code> is a pointer to the memory. By default the matrix allocates its own memory and copies data from the auxiliary memory (for safety). However, if <code>copy_aux_mem</code> is set to <code>false</code>, the matrix will instead directly use the auxiliary memory (e.g., no copying); this is faster, but can be dangerous unless you know what you are doing.<br>
+<li>Create a matrix using data from writable auxiliary (external) memory, where <code>ptr_aux_mem</code> is a pointer to the memory. By default the matrix allocates its own memory and copies data from the auxiliary memory (for safety). However, if <code>copy_aux_mem</code> is set to <code>false</code>, the matrix will instead directly use the auxiliary memory (e.g., no copying). This is faster, but can be dangerous unless you know what you are doing.<br>
 </li>
 <li>The <code>strict</code> parameter comes into effect only when copy_aux_mem is set to <code>false</code> (e.g., the matrix is directly using auxiliary memory).
 <ul>
 <li>When <code>strict</code> is set to <code>false</code>, the matrix will use the auxiliary memory until a size change or an aliasing event.</li>
-<li>When <code>strict</code> is set to <code>true</code>, the matrix will be bound to the auxiliary memory for its lifetime; the number of elements in the matrix cannot be changed.</li>
+<li>When <code>strict</code> is set to <code>true</code>, the matrix will be bound to the auxiliary memory for its lifetime. The number of elements in the matrix cannot be changed.</li>
 </ul>
 </li>
 </ul>
@@ -368,25 +368,18 @@
 </h4>
 <ul>
 <li>
-<code>vec(ptr_aux_mem, number_of_elements, copy_aux_mem = true, strict = false)</code>
+<code>vec(ptr_aux_mem, number_of_elements, copy_aux_mem = true, strict = false)</code>:
 <ul>
 <li>Create a column vector using data from writable auxiliary (external) memory, where ptr_aux_mem is a pointer to the memory. By default the vector allocates its own memory and copies data from the auxiliary memory (for safety). However, if copy_aux_mem is set to <code>false</code>, the vector will instead directly use the auxiliary memory (e.g., no copying). This is faster, but can be dangerous unless you know what you are doing.</li>
-<li>The <code>strict</code> parameter comes into effect only when copy_aux_mem is set to <code>false</code> (e.g., the vector is directly using auxiliary memory)
-<ul>
+<li>The <code>strict</code> parameter comes into effect only when <code>copy_aux_mem</code> is set to <code>false</code> (e.g., the vector is directly using auxiliary memory).</li>
 <li>When <code>strict</code> is set to <code>false</code>, the vector will use the auxiliary memory until a size change or an aliasing event.</li>
-<li>When <code>strict</code> is set to <code>true</code>, the vector will be bound to the auxiliary memory for its lifetime; the number of elements in the vector cannot be changed.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<code>vec(const ptr_aux_mem, number_of_elements)</code>
-<ul>
-<li>Create a column vector by copying data from read-only auxiliary memory, where ptr_aux_mem is a pointer to the memory</li>
+<li>When <code>strict</code> is set to <code>true</code>, the vector will be bound to the auxiliary memory for its lifetime. The number of elements in the vector cannot be changed.</li>
 </ul>
 </li>
 <li>
-<code>vec::fixed&lt;number_of_elements&gt;</code>
+<code>vec(const ptr_aux_mem, number_of_elements)</code>: Create a column vector by copying data from read-only auxiliary memory, where ptr_aux_mem is a pointer to the memory.</li>
+<li>
+<code>vec::fixed&lt;number_of_elements&gt;</code>:
 <ul>
 <li>Create a fixed size column vector, with the size specified via the template argument. Memory for the vector is reserved at compile time. This is generally faster than dynamic memory allocation, but the size of the vector cannot be changed afterwards (directly or indirectly).<br>
 </li>
@@ -394,17 +387,9 @@
 </ul>
 </li>
 <li>
-<code>vec::fixed&lt;number_of_elements&gt;(fill_form)</code>
-<ul>
-<li>Create a fixed size column vector, with the elements explicitly initialised according to <code>fill_form</code>.</li>
-</ul>
-</li>
+<code>vec::fixed&lt;number_of_elements&gt;(fill_form)</code>: Create a fixed size column vector, with the elements explicitly initialised according to <code>fill_form</code>.</li>
 <li>
-<code>vec::fixed&lt;number_of_elements&gt;(const ptr_aux_mem)</code>
-<ul>
-<li>Create a fixed size column vector, with the size specified via the template argument; data is copied from auxiliary memory, where ptr_aux_mem is a pointer to the memory.</li>
-</ul>
-</li>
+<code>vec::fixed&lt;number_of_elements&gt;(const ptr_aux_mem)</code>: Create a fixed size column vector, with the size specified via the template argument. The data is copied from auxiliary memory, where <code>ptr_aux_mem</code> is a pointer to the memory.</li>
 </ul>
 </div>
 <div class="section level4">
@@ -478,7 +463,7 @@
 <li>The <code>strict</code> parameter comes into effect only when copy_aux_mem is set to <code>false</code> (e.g., the vector is directly using auxiliary memory).
 <ul>
 <li>When <code>strict</code> is set to <code>false</code>, the vector will use the auxiliary memory until a size change or an aliasing event.</li>
-<li>When <code>strict</code> is set to <code>true</code>, the vector will be bound to the auxiliary memory for its lifetime; the number of elements in the vector cannot be changed.</li>
+<li>When <code>strict</code> is set to <code>true</code>, the vector will be bound to the auxiliary memory for its lifetime. The number of elements in the vector cannot be changed.</li>
 </ul>
 </li>
 </ul>
@@ -505,7 +490,7 @@
 <li>
 <code>rowvec::fixed&lt;number_of_elements&gt;(const ptr_aux_mem)</code>
 <ul>
-<li>Create a fixed size row vector, with the size specified via the template argument; data is copied from auxiliary memory, where ptr_aux_mem is a pointer to the memory.</li>
+<li>Create a fixed size row vector, with the size specified via the template argument. The data is copied from auxiliary memory, where <code>ptr_aux_mem</code> is a pointer to the memory.</li>
 </ul>
 </li>
 </ul>
@@ -550,7 +535,8 @@
 <li><code>ucube = Cube&lt;uword&gt;</code></li>
 <li><code>icube = Cube&lt;sword&gt;</code></li>
 </ul>
-<p>The <code>cube</code> type is used for convenience; it is possible to use other types instead (e.g., <code>fcube</code>)</p>
+<p>The <code>cube</code> type is used for convenience. It is possible to use other types instead (e.g., <code>fcube</code>).</p>
+<p>Each cube slice can be interpreted as a matrix, hence functions which take <code>Mat</code> as input can generally also take cube slices as input.</p>
 <div class="section level4">
 <h4 id="constructors-3">Constructors<a class="anchor" aria-label="anchor" href="#constructors-3"></a>
 </h4>
@@ -588,29 +574,18 @@
 </h4>
 <ul>
 <li>
-<code>cube::fixed&lt;n_rows, n_cols, n_slices&gt;</code>
-<ul>
-<li>Create a fixed size cube, with the size specified via template arguments. Memory for the cube is reserved at compile time. This is generally faster than dynamic memory allocation, but the size of the cube can’t be changed afterwards (directly or indirectly).</li>
-</ul>
-</li>
+<code>cube::fixed&lt;n_rows, n_cols, n_slices&gt;</code>: Create a fixed size cube, with the size specified via template arguments. Memory for the cube is reserved at compile time. This is generally faster than dynamic memory allocation, but the size of the cube cannot be changed afterwards (directly or indirectly).</li>
 <li>
-<code>cube(ptr_aux_mem, n_rows, n_cols, n_slices, copy_aux_mem = true, strict = false)</code>
+<code>cube(ptr_aux_mem, n_rows, n_cols, n_slices, copy_aux_mem = true, strict = false)</code>:
 <ul>
 <li>Create a cube using data from writable auxiliary (external) memory, where <code>ptr_aux_mem</code> is a pointer to the memory. By default the cube allocates its own memory and copies data from the auxiliary memory (for safety). However, if <code>copy_aux_mem</code> is set to <code>false</code>, the cube will instead directly use the auxiliary memory (e.g., no copying). This is faster, but can be dangerous unless you know what you are doing.</li>
-<li>The <code>strict</code> parameter comes into effect only when <code>copy_aux_mem</code> is set to <code>false</code> (e.g., the cube is directly using auxiliary memory)
-<ul>
-<li>When <code>strict</code> is set to <code>false</code>, the cube will use the auxiliary memory until a size change or an aliasing event</li>
-<li>When <code>strict</code> is set to <code>true</code>, the cube will be bound to the auxiliary memory for its lifetime; the number of elements in the cube can’t be changed</li>
-</ul>
-</li>
+<li>The <code>strict</code> parameter comes into effect only when <code>copy_aux_mem</code> is set to <code>false</code> (e.g., the cube is directly using auxiliary memory).</li>
+<li>When <code>strict</code> is set to <code>false</code>, the cube will use the auxiliary memory until a size change or an aliasing event.</li>
+<li>When <code>strict</code> is set to <code>true</code>, the cube will be bound to the auxiliary memory for its lifetime. The number of elements in the cube cannot be changed.</li>
 </ul>
 </li>
 <li>
-<code>cube(const ptr_aux_mem, n_rows, n_cols, n_slices)</code>
-<ul>
-<li>Create a cube by copying data from read-only auxiliary memory, where <code>ptr_aux_mem</code> is a pointer to the memory.</li>
-</ul>
-</li>
+<code>cube(const ptr_aux_mem, n_rows, n_cols, n_slices)</code>: Create a cube by copying data from read-only auxiliary memory, where <code>ptr_aux_mem</code> is a pointer to the memory.</li>
 </ul>
 </div>
 <div class="section level4">
@@ -636,14 +611,7 @@
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a></span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);  <span class="co">// convert from C++ to R</span></span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true"></a>}</span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
-</h4>
-<ul>
-<li>Each cube slice can be interpreted as a matrix, hence functions which take <code>Mat</code> as input can generally also take cube slices as input</li>
-<li>The size of individual slices can’t be changed. For example, the following will not work:</li>
-</ul>
+<p>The size of individual slices cannot be changed. The following will not work:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>cube c(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>);</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>c.slice(<span class="dv">0</span>) = randu&lt;mat&gt;(<span class="dv">10</span>,<span class="dv">20</span>); <span class="co">// wrong size</span></span></code></pre></div>
 </div>
@@ -659,14 +627,24 @@
 </h4>
 <p><code>object_type</code> is another class (e.g., <code>vec</code>, <code>mat</code>, <code>std::string</code>, etc)</p>
 <ul>
-<li><p><code>field&lt;object_type&gt;()</code></p></li>
-<li><p><code>field&lt;object_type&gt;(n_elem)</code></p></li>
-<li><p><code>field&lt;object_type&gt;(n_rows, n_cols)</code><br></p></li>
-<li><p><code>field&lt;object_type&gt;(n_rows, n_cols, n_slices)</code></p></li>
-<li><p><code>field&lt;object_type&gt;(size(X))</code></p></li>
-<li><p><code>field&lt;object_type&gt;(field&lt;object_type&gt;)</code></p></li>
-<li><p>Examples:</p></li>
+<li><code>field&lt;object_type&gt;()</code></li>
+<li><code>field&lt;object_type&gt;(n_elem)</code></li>
+<li>
+<code>field&lt;object_type&gt;(n_rows, n_cols)</code><br>
+</li>
+<li><code>field&lt;object_type&gt;(n_rows, n_cols, n_slices)</code></li>
+<li><code>field&lt;object_type&gt;(size(X))</code></li>
+<li><code>field&lt;object_type&gt;(field&lt;object_type&gt;)</code></li>
 </ul>
+</div>
+<div class="section level4">
+<h4 id="caveat">Caveat<a class="anchor" aria-label="anchor" href="#caveat"></a>
+</h4>
+<p>To store a set of matrices of the same size, the <code>Cube</code> class is more efficient.</p>
+</div>
+<div class="section level4">
+<h4 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a>
+</h4>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -686,15 +664,10 @@
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);  <span class="co">// convert from C++ to R</span></span>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a>
-</h4>
-<p>To store a set of matrices of the same size, the <a href="#Cube">Cube</a> class is more efficient.</p>
-</div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="member-functions-variables">Member Functions &amp; Variables<a class="anchor" aria-label="anchor" href="#member-functions-variables"></a>
+<h2 id="member-functions-and-variables">Member Functions and Variables<a class="anchor" aria-label="anchor" href="#member-functions-and-variables"></a>
 </h2>
 <table class="table">
 <colgroup>
@@ -994,25 +967,29 @@
 <td><code>.brief_print</code></td>
 <td>print object in shortened/abridged form</td>
 </tr>
-<tr class="odd">
-<td><code>.save</code></td>
-<td>save matrix or cube (cpp11armadillo reads from R and sends data back to R)</td>
-</tr>
-<tr class="even">
-<td><code>.load</code></td>
-<td>load matrix or cube (cpp11armadillo reads from R and sends data back to R)</td>
-</tr>
 </tbody>
 </table>
 <div class="section level3">
 <h3 id="attributes">Attributes<a class="anchor" aria-label="anchor" href="#attributes"></a>
 </h3>
-<p><code>.n_rows</code> number of rows; present in <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>field</code> and <code>SpMat</code> <code>.n_cols</code> number of columns; present in <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>field</code> and <code>SpMat</code> <code>.n_elem</code> total number of elements; present in <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>field</code> and <code>SpMat</code> <code>.n_slices</code> number of slices; present in <code>Cube</code> and <code>field</code> <code>.n_nonzero</code> number of non-zero elements; present in <code>SpMat</code></p>
-<p>The variables are of type <code>uword</code></p>
-<p>The variables are read-only; to change the size, use <code>set_size</code>, <code>copy_size</code>, <code>zeros_member</code>, <code>ones_member</code>, or <code>reset</code>.</p>
-<p>For the <code>Col</code> and <code>Row</code> classes, <em>n_elem</em> also indicates vector length</p>
+<p><code>n_*</code> provides information for different objects:</p>
+<ul>
+<li>
+<code>.n_rows</code> number of rows for <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>field</code>, and <code>SpMat</code>.</li>
+<li>
+<code>.n_cols</code> number of columns for <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>field</code>, and <code>SpMat</code>.</li>
+<li>
+<code>.n_elem</code> total number of elements for <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>field</code>, and <code>SpMat</code>.</li>
+<li>
+<code>.n_slices</code> number of slices for <code>Cube</code> and <code>field</code>.</li>
+<li>
+<code>.n_nonzero</code> number of non-zero elements for <code>SpMat</code>.</li>
+</ul>
+<p>For the <code>Col</code> and <code>Row</code> classes, <code>n_elem</code> also indicates vector length.</p>
+<p>The variables are read-only and of type <code>uword</code>. To change the size, use <code>set_size</code>, <code>copy_size</code>, <code>zeros_member</code>, <code>ones_member</code>, or <code>reset</code>.</p>
+<p>To avoid compiler warnings about implicit conversion when operating <code>uword</code> with <code>integers</code>/<code>doubles</code> to pass data to R, converte <code>uword</code> to <code>int</code> with <code>static_cast&lt;int&gt;</code> or declare these as <code>int</code>.</p>
 <div class="section level4">
-<h4 id="examples-4">Examples:<a class="anchor" aria-label="anchor" href="#examples-4"></a>
+<h4 id="examples-5">Examples<a class="anchor" aria-label="anchor" href="#examples-5"></a>
 </h4>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -1034,35 +1011,35 @@
 <div class="section level3">
 <h3 id="elementobject-access">Element/object access<a class="anchor" aria-label="anchor" href="#elementobject-access"></a>
 </h3>
-<p>Provide access to individual elements or objects stored in a container object (e.g., <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>field</code>)</p>
+<p>Provide access to individual elements or objects stored in a container object (e.g., <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>field</code>).</p>
 <ul>
 <li>
 <code>(i)</code> For <code>vec</code> and <code>rowvec</code>, access the element stored at index <code>i</code>. For <code>Mat</code>, <code>Cube</code> and <code>field</code>, access the element/object stored at index <code>i</code> under the assumption of a flat layout, with column-major ordering of data (e.g., column by column). An exception is thrown if the requested element is out of bounds.</li>
 <li>
-<code>.at(i)</code> or <code>[i]</code> As for <code>(i)</code>, but without a bounds check; not recommended.</li>
+<code>.at(i)</code> or <code>[i]</code> As for <code>(i)</code>, but without a bounds check. Not recommended.</li>
 <li>
 <code>(r,c)</code> For <code>Mat</code> and 2D field classes, access the element/object stored at row <code>r</code> and column <code>c</code>. An exception is thrown if the requested element is out of bounds.</li>
 <li>
-<code>.at(r,c)</code> As for <code>(r,c)</code>, but without a bounds check; not recommended.</li>
+<code>.at(r,c)</code> As for <code>(r,c)</code>, but without a bounds check. Not recommended.</li>
 <li>
-<code>(r,c,s)</code> For <code>Cube</code> and 3D field classes, access the element/object stored at row <code>r</code>, column <code>c</code>, and slice <em>s</em>. An exception is thrown if the requested element is out of bounds.</li>
+<code>(r,c,s)</code> For <code>Cube</code> and 3D field classes, access the element/object stored at row <code>r</code>, column <code>c</code>, and slice <code>s</code>. An exception is thrown if the requested element is out of bounds.</li>
 <li>
-<code>.at(r,c,s)</code> As for <code>(r,c,s)</code>, but without a bounds check; not recommended.</li>
+<code>.at(r,c,s)</code> As for <code>(r,c,s)</code>, but without a bounds check. Not recommended.</li>
 </ul>
 <div class="section level4">
 <h4 id="caveats">Caveats<a class="anchor" aria-label="anchor" href="#caveats"></a>
 </h4>
-<p>For <code>.at()</code> or <code>[i]</code>, <code>.at(r,c)</code>, and <code>.at(r,c,s)</code>:</p>
+<p>For <code>.at()</code> or <code>[i]</code>, <code>.at(r,c)</code> and <code>.at(r,c,s)</code>:</p>
 <ul>
 <li>Indexing in C++ starts at 0</li>
 <li>Accessing elements without bounds checks is slightly faster, but is not recommended until your code has been thoroughly debugged first</li>
 <li>Accessing elements via <code>[r,c]</code> and <code>[r,c,s]</code> does not work correctly in C++; instead use <code>(r,c)</code> and <code>(r,c,s)</code>
 </li>
 </ul>
-<p>The indices of elements are specified via the <code>uword</code> type, which is a <code>typedef</code> for an unsigned integer type. When using loops to access elements, it is best to use <code>uword</code> instead of <code>int</code>. For example: <code>for(uword i=0; i&lt;X.n_elem; ++i) { X(i) = ... }</code></p>
+<p>The indices of elements are specified via the <code>uword</code> type, which is a <code>typedef</code> for an unsigned integer type. When using loops to access elements, it more efficient to use <code>uword</code> instead of <code>int</code>.</p>
 </div>
 <div class="section level4">
-<h4 id="examples-5">Examples<a class="anchor" aria-label="anchor" href="#examples-5"></a>
+<h4 id="examples-6">Examples<a class="anchor" aria-label="anchor" href="#examples-6"></a>
 </h4>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -1092,9 +1069,9 @@
 <div class="section level3">
 <h3 id="element-initialisation">Element initialisation<a class="anchor" aria-label="anchor" href="#element-initialisation"></a>
 </h3>
-<p>Set elements in <code>Mat</code>, <code>Col</code>, <code>Row</code> via braced initialiser lists</p>
+<p>Set elements in <code>Mat</code>, <code>Col</code> and <code>Row</code> via braced initialiser lists.</p>
 <div class="section level4">
-<h4 id="examples-6">Examples<a class="anchor" aria-label="anchor" href="#examples-6"></a>
+<h4 id="examples-7">Examples<a class="anchor" aria-label="anchor" href="#examples-7"></a>
 </h4>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -1116,10 +1093,10 @@
 <div class="section level3">
 <h3 id="zeros">Zeros<a class="anchor" aria-label="anchor" href="#zeros"></a>
 </h3>
-<p>Set the elements of an object to zero, optionally first changing the size to specified dimensions</p>
+<p>Set the elements of an object to zero, optionally first changing the size to specified dimensions.</p>
 <p><code>.zeros()</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>SpMat</code>, <code>Cube</code>) <code>.zeros(n_elem)</code> (member function of <code>Col</code> and <code>Row</code>) <code>.zeros(n_rows, n_cols)</code> (member function of <code>Mat</code> and <code>SpMat</code>) <code>.zeros(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code>) <code>.zeros(size(X))</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>SpMat</code>)</p>
 <div class="section level4">
-<h4 id="examples-7">Examples<a class="anchor" aria-label="anchor" href="#examples-7"></a>
+<h4 id="examples-8">Examples<a class="anchor" aria-label="anchor" href="#examples-8"></a>
 </h4>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -1141,10 +1118,10 @@
 <div class="section level3">
 <h3 id="ones">Ones<a class="anchor" aria-label="anchor" href="#ones"></a>
 </h3>
-<p>Set all the elements of an object to one, optionally first changing the size to specified dimensions</p>
-<p><code>ones()</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>) <code>ones(n_elem)</code> (member function of <code>Col</code> and <code>Row</code>) <code>ones(n_rows, n_cols)</code> (member function of <code>Mat</code>) <code>ones(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code>) <code>ones(size(X))</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>)</p>
+<p>Set all the elements of an object to one, optionally first changing the size to specified dimensions.</p>
+<p><code>.ones()</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>) <code>.ones(n_elem)</code> (member function of <code>Col</code> and <code>Row</code>) <code>.ones(n_rows, n_cols)</code> (member function of <code>Mat</code>) <code>.ones(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code>) <code>.ones(size(X))</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>)</p>
 <div class="section level4">
-<h4 id="examples-8">Examples<a class="anchor" aria-label="anchor" href="#examples-8"></a>
+<h4 id="examples-9">Examples<a class="anchor" aria-label="anchor" href="#examples-9"></a>
 </h4>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -1168,16 +1145,14 @@
 </h3>
 <ul>
 <li>
-<code>eye()</code> Member functions of <code>Mat</code> and <code>SpMat</code>
-</li>
+<code>.eye()</code> Member functions of <code>Mat</code> and <code>SpMat</code>.</li>
 <li>
-<code>eye(n_rows, n_cols)</code> Set the elements along the main diagonal to one and off-diagonal elements to zero, optionally first changing the size to specified dimensions</li>
+<code>.eye(n_rows, n_cols)</code> Set the elements along the main diagonal to one and off-diagonal elements to zero, optionally first changing the size to specified dimensions.</li>
 <li>
-<code>eye(size(X))</code> An identity matrix is generated when <code>n_rows = n_cols</code>
-</li>
+<code>.eye(size(X))</code> An identity matrix is generated when <code>n_rows = n_cols</code>.</li>
 </ul>
 <div class="section level4">
-<h4 id="examples-9">Examples<a class="anchor" aria-label="anchor" href="#examples-9"></a>
+<h4 id="examples-10">Examples<a class="anchor" aria-label="anchor" href="#examples-10"></a>
 </h4>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -1206,15 +1181,15 @@
 <p>For complex elements, the real and imaginary parts are treated separately.</p>
 <ul>
 <li>
-<code>randu()</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>)</li>
+<code>.randu()</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>)</li>
 <li>
-<code>randu(n_elem)</code> (member function of <code>Col</code> and <code>Row</code>)</li>
+<code>.randu(n_elem)</code> (member function of <code>Col</code> and <code>Row</code>)</li>
 <li>
-<code>randu(n_rows, n_cols)</code> (member function of <code>Mat</code>)</li>
+<code>.randu(n_rows, n_cols)</code> (member function of <code>Mat</code>)</li>
 <li>
-<code>randu(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code>)</li>
+<code>.randu(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code>)</li>
 <li>
-<code>randu(size(X))</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>)</li>
+<code>.randu(size(X))</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>)</li>
 </ul>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -1247,18 +1222,18 @@
 <p>For complex elements, the real and imaginary parts are treated separately.</p>
 <ul>
 <li>
-<code>randn()</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>)</li>
+<code>.randn()</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>)</li>
 <li>
-<code>randn(n_elem)</code> (member function of <code>Col</code> and <code>Row</code>)</li>
+<code>.randn(n_elem)</code> (member function of <code>Col</code> and <code>Row</code>)</li>
 <li>
-<code>randn(n_rows, n_cols)</code> (member function of <code>Mat</code>)</li>
+<code>.randn(n_rows, n_cols)</code> (member function of <code>Mat</code>)</li>
 <li>
-<code>randn(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code>)</li>
+<code>.randn(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code>)</li>
 <li>
-<code>randn(size(X))</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>)</li>
+<code>.randn(size(X))</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>)</li>
 </ul>
 <div class="section level4">
-<h4 id="examples-10">Examples<a class="anchor" aria-label="anchor" href="#examples-10"></a>
+<h4 id="examples-11">Examples<a class="anchor" aria-label="anchor" href="#examples-11"></a>
 </h4>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -1289,10 +1264,10 @@
 <h3 id="fill">Fill<a class="anchor" aria-label="anchor" href="#fill"></a>
 </h3>
 <p>Sets the elements to a specified value</p>
-<p><code>fill( value )</code> Member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>field</code></p>
+<p><code>.fill( value )</code> Member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>field</code></p>
 <p>The type of value must match the type of elements used by the container object (e.g., for <code>Mat</code> the type is <code>double</code>)</p>
 <div class="section level4">
-<h4 id="examples-11">Examples<a class="anchor" aria-label="anchor" href="#examples-11"></a>
+<h4 id="examples-12">Examples<a class="anchor" aria-label="anchor" href="#examples-12"></a>
 </h4>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -1319,15 +1294,15 @@
 <p>Imbue (fill) with values provided by a functor or lambda function</p>
 <ul>
 <li>
-<code>imbue(functor)</code> Member functions of <code>Mat</code>, <code>Col</code>, <code>Row</code> and <code>Cube</code>
+<code>.imbue(functor)</code> Member functions of <code>Mat</code>, <code>Col</code>, <code>Row</code> and <code>Cube</code>
 </li>
 <li>
-<code>imbue(lambda_function)</code> Imbue (fill) with values provided by a functor or lambda function</li>
+<code>.imbue(lambda_function)</code> Imbue (fill) with values provided by a functor or lambda function</li>
 </ul>
 <p>For matrices, filling is done column-by-column (e.g., column 0 is filled, then column 1, etc.)</p>
 <p>For cubes, filling is done slice-by-slice, with each slice treated as a matrix</p>
 <div class="section level4">
-<h4 id="examples-12">Examples<a class="anchor" aria-label="anchor" href="#examples-12"></a>
+<h4 id="examples-13">Examples<a class="anchor" aria-label="anchor" href="#examples-13"></a>
 </h4>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -1364,17 +1339,18 @@
 <div class="section level3">
 <h3 id="clean">Clean<a class="anchor" aria-label="anchor" href="#clean"></a>
 </h3>
-<p><code>clean(threshold)</code> Member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code> and <code>SpMat</code></p>
-<p>For objects with non-complex elements: each element with an absolute value less or equal to the threshold is replaced by zero.</p>
-<p>For objects with complex elements: for each element, each component (real and imaginary) with an absolute value less or equal to the threshold is replaced by zero.</p>
-<p>Can be used to sparsify a matrix, in the sense of zeroing values with small magnitudes.</p>
+<p><code>.clean(threshold)</code> is a member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, and <code>SpMat</code>. It can be used to sparsify a matrix, in the sense of zeroing values with small magnitudes.</p>
+<ul>
+<li>For objects with non-complex elements: each element with an absolute value less or equal to the threshold is replaced by zero.</li>
+<li>For objects with complex elements: for each element, each component (real and imaginary) with an absolute value less or equal to the threshold is replaced by zero.</li>
+</ul>
 <div class="section level4">
-<h4 id="caveat">Caveat<a class="anchor" aria-label="anchor" href="#caveat"></a>
+<h4 id="caveat-1">Caveat<a class="anchor" aria-label="anchor" href="#caveat-1"></a>
 </h4>
 <p>To explicitly convert from dense storage to sparse storage, use the <code>SpMat</code>.</p>
 </div>
 <div class="section level4">
-<h4 id="examples-13">Examples<a class="anchor" aria-label="anchor" href="#examples-13"></a>
+<h4 id="examples-14">Examples<a class="anchor" aria-label="anchor" href="#examples-14"></a>
 </h4>
 <div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">clean_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true"></a>  mat A(n, n, fill::randu); <span class="co">// create a random matrix</span></span>
@@ -1389,21 +1365,21 @@
 </div>
 </div>
 <div class="section level3">
-<h3 id="fill-1">Fill<a class="anchor" aria-label="anchor" href="#fill-1"></a>
+<h3 id="replace">Replace<a class="anchor" aria-label="anchor" href="#replace"></a>
 </h3>
-<p><code>replace( old_value, new_value )</code> Member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code> and <code>SpMat</code></p>
+<p><code>.replace( old_value, new_value )</code> is a member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, and <code>SpMat</code>.</p>
 <p>For all elements equal to <code>old_value</code>, set them to <code>new_value</code>.</p>
-<p>The type of <code>old_value</code> and <code>new_value</code> must match the type of elements used by the container object (e.g., for <code>Mat</code> the type is <code>double</code>).</p>
 <div class="section level4">
 <h4 id="caveats-1">Caveats<a class="anchor" aria-label="anchor" href="#caveats-1"></a>
 </h4>
 <ul>
+<li>The type of <code>old_value</code> and <code>new_value</code> must match the type of elements used by the container object (e.g., for <code>Mat</code> the type is <code>double</code>).</li>
 <li>Floating point numbers (<code>float</code> and <code>double</code>) are approximations due to their <a href="https://en.wikipedia.org/wiki/Floating-point_arithmetic" class="external-link">limited precision</a>.</li>
 <li>For sparse matrices (<code>SpMat</code>), replacement is not done when <code>old_value = 0</code>.</li>
 </ul>
 </div>
 <div class="section level4">
-<h4 id="examples-14">Examples<a class="anchor" aria-label="anchor" href="#examples-14"></a>
+<h4 id="examples-15">Examples<a class="anchor" aria-label="anchor" href="#examples-15"></a>
 </h4>
 <div class="sourceCode" id="cb33"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">replace_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a>  mat A(n, n, fill::randu); <span class="co">// create a random matrix</span></span>
@@ -1418,12 +1394,13 @@
 <div class="section level3">
 <h3 id="clamp">Clamp<a class="anchor" aria-label="anchor" href="#clamp"></a>
 </h3>
-<p>Clamp each element to the <code>[min_val, max_val]</code> interval; any value lower than <code>min_val</code> will be set to <code>min_val</code>, and any value higher than <code>max_val</code> will be set to <code>max_val</code>.</p>
-<p><code>clamp(min_value, max_value)</code> Member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code> and <code>SpMat</code>.</p>
-<p>For complex elements, the real and imaginary components are clamped separately.</p>
-<p>For sparse matrices, clamping is applied only to the non-zero elements.</p>
+<p><code>.clamp(min_value, max_value)</code> is a member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code> and <code>SpMat</code> that transforms all values lower than <code>min_val</code> to <code>min_val</code>, and all values higher than <code>max_val</code> to <code>max_val</code>.</p>
+<ul>
+<li>For complex elements, the real and imaginary components are clamped separately.</li>
+<li>For sparse matrices, clamping is applied only to the non-zero elements.</li>
+</ul>
 <div class="section level4">
-<h4 id="examples-15">Examples<a class="anchor" aria-label="anchor" href="#examples-15"></a>
+<h4 id="examples-16">Examples<a class="anchor" aria-label="anchor" href="#examples-16"></a>
 </h4>
 <div class="sourceCode" id="cb34"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">clamp_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true"></a>  mat A(n, n, fill::randu); <span class="co">// create a random matrix</span></span>
@@ -1438,17 +1415,14 @@
 <div class="section level3">
 <h3 id="transform">Transform<a class="anchor" aria-label="anchor" href="#transform"></a>
 </h3>
+<p><code>.transform(functor)</code> and <code>.transform(lambda_function)</code> are member functions of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, and <code>SpMat</code>.</p>
 <ul>
-<li>
-<code>transform(functor)</code> Member functions of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code> and <code>SpMat</code>.</li>
-<li>
-<code>transform(lambda_function)</code> Transform each element using a functor or lambda function.</li>
+<li>For dense matrices, transformation is done column-by-column for all elements.</li>
+<li>For sparse matrices, transformation is done column-by-column for non-zero elements.</li>
+<li>For cubes, transformation is done slice-by-slice, with each slice treated as a matrix.</li>
 </ul>
-<p>For dense matrices, transformation is done column-by-column for all elements.</p>
-<p>For sparse matrices, transformation is done column-by-column for non-zero elements.</p>
-<p>For cubes, transformation is done slice-by-slice, with each slice treated as a matrix.</p>
 <div class="section level4">
-<h4 id="examples-16">Examples<a class="anchor" aria-label="anchor" href="#examples-16"></a>
+<h4 id="examples-17">Examples<a class="anchor" aria-label="anchor" href="#examples-17"></a>
 </h4>
 <div class="sourceCode" id="cb35"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">transform_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true"></a>  mat A(n, n, fill::ones);  <span class="co">// create a matrix filled with ones</span></span>
@@ -1460,12 +1434,14 @@
 <div class="section level3">
 <h3 id="for-each">For each<a class="anchor" aria-label="anchor" href="#for-each"></a>
 </h3>
-<p>For dense matrices and fields, the processing is done column-by-column for all elements.</p>
-<p>For sparse matrices, the processing is done column-by-column for non-zero elements.</p>
-<p>For cubes, processing is done slice-by-slice, with each slice treated as a matrix.</p>
-<p><code>for_each(functor)</code> Member functions of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>SpMat</code> and <code>field</code> <code>for_each(lambda_function)</code> For each element, pass its reference to a functor or lambda function</p>
+<p><code>.for_each(functor)</code> and <code>.for_each(lambda_function)</code> are member functions of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>SpMat</code>, and <code>field</code>.</p>
+<ul>
+<li>For dense matrices and fields, the processing is done column-by-column for all elements.</li>
+<li>For sparse matrices, the processing is done column-by-column for non-zero elements.</li>
+<li>For cubes, processing is done slice-by-slice, with each slice treated as a matrix.</li>
+</ul>
 <div class="section level4">
-<h4 id="examples-17">Examples<a class="anchor" aria-label="anchor" href="#examples-17"></a>
+<h4 id="examples-18">Examples<a class="anchor" aria-label="anchor" href="#examples-18"></a>
 </h4>
 <div class="sourceCode" id="cb36"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">for_each_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true"></a>  <span class="co">// add 122 to each element in a dense matrix, the '&amp;' is important</span></span>
@@ -1490,21 +1466,20 @@
 <div class="section level3">
 <h3 id="set-size">Set size<a class="anchor" aria-label="anchor" href="#set-size"></a>
 </h3>
-<p>Change the size of an object, without explicitly preserving data and without initialising the elements (e.g., elements may contain garbage values, including <code>NaN</code>)</p>
+<p>Change the size of an object, without explicitly preserving data and without initialising the elements (e.g., elements may contain garbage values, including <code>NaN</code>).</p>
 <ul>
 <li>
-<code>set_size(n_elem)</code> (member function of <code>Col</code>, <code>Row</code>, <code>field</code>)</li>
+<code>.set_size(n_elem)</code> (member function of <code>Col</code>, <code>Row</code>, <code>field</code>)</li>
 <li>
-<code>set_size(n_rows, n_cols)</code> (member function of <code>Mat</code>, <code>SpMat</code>, <code>field</code>)</li>
+<code>.set_size(n_rows, n_cols)</code> (member function of <code>Mat</code>, <code>SpMat</code>, <code>field</code>)</li>
 <li>
-<code>set_size(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code> and <code>field</code>)</li>
+<code>.set_size(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code> and <code>field</code>)</li>
 <li>
-<code>set_size(size(X))</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>SpMat</code>, <code>field</code>)</li>
+<code>.set_size(size(X))</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>SpMat</code>, <code>field</code>)</li>
 </ul>
-<p>To initialise the elements to zero while changing the size, use <code>.zeros()</code> instead.</p>
-<p>To explicitly preserve data while changing the size, use <code>.reshape()</code> or <code>.resize()</code> instead.</p>
+<p>To initialise the elements to zero while changing the size, use <code>.zeros()</code> instead. To explicitly preserve data while changing the size, use <code>.reshape()</code> or <code>.resize()</code> instead.</p>
 <div class="section level4">
-<h4 id="examples-18">Examples<a class="anchor" aria-label="anchor" href="#examples-18"></a>
+<h4 id="examples-19">Examples<a class="anchor" aria-label="anchor" href="#examples-19"></a>
 </h4>
 <div class="sourceCode" id="cb37"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">set_size_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true"></a>  mat A;</span>
@@ -1529,14 +1504,14 @@
 <div class="section level3">
 <h3 id="reshape">Reshape<a class="anchor" aria-label="anchor" href="#reshape"></a>
 </h3>
-<p>Recreate an object according to given size specifications, with the elements taken from the previous version of the object in a column-wise manner; the elements in the generated object are placed column-wise (e.g., the first column is filled up before filling the second column)</p>
+<p>Recreate an object according to given size specifications, with the elements taken from the previous version of the object in a column-wise manner. The elements in the generated object are placed column-wise (e.g., the first column is filled up before filling the second column)</p>
 <ul>
 <li>
-<code>reshape(n_rows, n_cols)</code> (member function of <code>Mat</code> and <code>SpMat</code>)</li>
+<code>.reshape(n_rows, n_cols)</code> (member function of <code>Mat</code> and <code>SpMat</code>)</li>
 <li>
-<code>reshape(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code>)</li>
+<code>.reshape(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code>)</li>
 <li>
-<code>reshape(size(X))</code> (member function of <code>Mat</code>, <code>Cube</code>, <code>SpMat</code>)</li>
+<code>.reshape(size(X))</code> (member function of <code>Mat</code>, <code>Cube</code>, <code>SpMat</code>)</li>
 </ul>
 <p>The layout of the elements in the recreated object will be different to the layout in the previous version of the object</p>
 <p>If the total number of elements in the previous version of the object is less than the specified size, the extra elements in the recreated object are set to zero</p>
@@ -1547,14 +1522,14 @@
 <ul>
 <li>
 <code>.reshape()</code> is considerably slower than <code>.set_size()</code>.</li>
-<li>to change the size without preserving data, use <code>.set_size()</code>.</li>
-<li>to grow/shrink the object while preserving the elements and the layout of the elements, use <code>.resize()</code>
+<li>To change the size without preserving data, use <code>.set_size()</code>.</li>
+<li>To grow/shrink the object while preserving the elements and the layout of the elements, use <code>.resize()</code>
 </li>
-<li>to flatten a matrix into a vector, use <code>vectorise()</code> or <code>.as_col()</code>/<code>.as_row()</code>.</li>
+<li>To flatten a matrix into a vector, use <code>vectorise()</code> or <code>.as_col()</code>/<code>.as_row()</code>.</li>
 </ul>
 </div>
 <div class="section level4">
-<h4 id="examples-19">Examples<a class="anchor" aria-label="anchor" href="#examples-19"></a>
+<h4 id="examples-20">Examples<a class="anchor" aria-label="anchor" href="#examples-20"></a>
 </h4>
 <div class="sourceCode" id="cb38"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">reshape_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true"></a>  mat A(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::randu);</span>
@@ -1566,18 +1541,17 @@
 <div class="section level3">
 <h3 id="resize">Resize<a class="anchor" aria-label="anchor" href="#resize"></a>
 </h3>
-<p>Recreate the object according to given size specifications, while preserving the elements as well as the layout of the elements</p>
+<p>Resize an object according to given size specifications, while preserving the elements and the layout of the elements. It can be used for growing or shrinking an object (e.g., adding/removing rows, and/or columns, and/or slices).</p>
 <ul>
 <li>
-<code>resize(n_elem)</code> (member function of <code>Col</code>, <code>Row</code>)</li>
+<code>.resize(n_elem)</code> (member function of <code>Col</code>, <code>Row</code>)</li>
 <li>
-<code>resize(n_rows, n_cols)</code> (member function of <code>Mat</code> and <code>SpMat</code>)</li>
+<code>.resize(n_rows, n_cols)</code> (member function of <code>Mat</code> and <code>SpMat</code>)</li>
 <li>
-<code>resize(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code>)</li>
+<code>.resize(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code>)</li>
 <li>
-<code>resize(size(X))</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>SpMat</code>)</li>
+<code>.resize(size(X))</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>SpMat</code>)</li>
 </ul>
-<p>Can be used for growing or shrinking an object (e.g., adding/removing rows, and/or columns, and/or slices)</p>
 <div class="section level4">
 <h4 id="caveats-3">Caveats<a class="anchor" aria-label="anchor" href="#caveats-3"></a>
 </h4>
@@ -1588,7 +1562,7 @@
 </ul>
 </div>
 <div class="section level4">
-<h4 id="examples-20">Examples<a class="anchor" aria-label="anchor" href="#examples-20"></a>
+<h4 id="examples-21">Examples<a class="anchor" aria-label="anchor" href="#examples-21"></a>
 </h4>
 <div class="sourceCode" id="cb39"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">resize_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true"></a>  mat A(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::randu);</span>
@@ -1600,10 +1574,14 @@
 <div class="section level3">
 <h3 id="copy-size">Copy size<a class="anchor" aria-label="anchor" href="#copy-size"></a>
 </h3>
-<p><code>copy_size(A)</code> Set the size to be the same as object <code>A</code></p>
-<p>Object <code>A</code> must be of the same root type as the object being modified (e.g., the size of a matrix can’t be set by providing a cube)</p>
+<p><code>.copy_size(A)</code> sets the size of a matrix/vector/cube to be the same as matrix/vector/cube <code>A</code>.</p>
 <div class="section level4">
-<h4 id="examples-21">Examples<a class="anchor" aria-label="anchor" href="#examples-21"></a>
+<h4 id="caveat-2">Caveat<a class="anchor" aria-label="anchor" href="#caveat-2"></a>
+</h4>
+<p>To set the size of an object <code>B</code>, <code>A</code> must be of the same type as <code>B</code>. For example, the size of a matrix cannot be set by providing a cube.</p>
+</div>
+<div class="section level4">
+<h4 id="examples-22">Examples<a class="anchor" aria-label="anchor" href="#examples-22"></a>
 </h4>
 <div class="sourceCode" id="cb40"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] integers <span class="va">copy_size_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
@@ -1624,9 +1602,9 @@
 <div class="section level3">
 <h3 id="reset">Reset<a class="anchor" aria-label="anchor" href="#reset"></a>
 </h3>
-<p><code>reset()</code> Reset the size to zero (the object will have no elements)</p>
+<p><code>.reset()</code> sets a matrix/vector size to zero (the object will have no elements).</p>
 <div class="section level4">
-<h4 id="examples-22">Examples<a class="anchor" aria-label="anchor" href="#examples-22"></a>
+<h4 id="examples-23">Examples<a class="anchor" aria-label="anchor" href="#examples-23"></a>
 </h4>
 <div class="sourceCode" id="cb41"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] integers <span class="va">reset_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
@@ -1701,7 +1679,7 @@
 <p>The function <code>.unsafe_col()</code> is provided for speed reasons and should be used only if you know what you are doing. It creates a seemingly independent <code>Col</code> vector object (e.g., <code>vec</code>), but uses memory from the existing matrix object. As such, the created vector is not alias safe, and does not take into account that the underlying matrix memory could be freed (e.g., due to any operation involving a size change of the matrix).</p>
 </div>
 <div class="section level4">
-<h4 id="examples-23">Examples<a class="anchor" aria-label="anchor" href="#examples-23"></a>
+<h4 id="examples-24">Examples<a class="anchor" aria-label="anchor" href="#examples-24"></a>
 </h4>
 <div class="sourceCode" id="cb42"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">subview_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true"></a>  mat A(n, n, fill::zeros);</span>
@@ -1772,26 +1750,20 @@
 <div class="section level4">
 <h4 id="non-contiguous-views-for-cube">Non-contiguous views for cube<a class="anchor" aria-label="anchor" href="#non-contiguous-views-for-cube"></a>
 </h4>
-<ul>
-<li><code>Q.elem(vector_of_indices)</code></li>
-<li><code>Q(vector_of_indices)</code></li>
-<li><code>Q.slices( vector_of_slice_indices)</code></li>
-</ul>
-<p>Instances of <code>span(a,b)</code> can be replaced by:</p>
+<p><code>Q.elem(vector_of_indices)</code>, <code>Q(vector_of_indices)</code>, and <code>Q.slices( vector_of_slice_indices)</code> are instances of <code>span(a,b)</code> that can be replaced by:</p>
 <ul>
 <li>
-<code>span()</code> or <code>span::all</code>, to indicate the entire range</li>
+<code>span()</code> or <code>span::all</code>, to indicate the entire range.</li>
 <li>
-<code>span(a)</code>, to indicate a particular row, column or slice</li>
+<code>span(a)</code>, to indicate a particular row, column or slice.</li>
 </ul>
-<p>An individual slice, accessed via <code>.slice()</code>, is an instance of the <code>Mat</code> class (a reference to a matrix is provided)</p>
-<p>All <code>.tube()</code> forms are variants of <code>.subcube()</code>, using <code>first_slice = 0</code> and <code>last_slice = Q.n_slices-1</code></p>
-<p>The <code>.tube(row,col)</code> form uses <code>row = first_row = last_row</code>, and <code>col = first_col = last_col</code></p>
+<p>An individual slice, accessed via <code>.slice()</code>, is an instance of the <code>Mat</code> class (a reference to a matrix is provided).</p>
+<p>All <code>.tube()</code> forms are variants of <code>.subcube()</code>, using <code>first_slice = 0</code> and <code>last_slice = Q.n_slices-1</code>. The <code>.tube(row,col)</code> form uses <code>row = first_row = last_row</code>, and <code>col = first_col = last_col</code>.</p>
 <p>In the function <code>Q.elem(vector_of_indices)</code>, elements specified in <code>vector_of_indices</code> are accessed. <code>Q</code> is interpreted as one long vector, with slice-by-slice and column-by-column ordering of the elements of <code>Q</code>. The <code>vector_of_indices</code> must evaluate to a vector of type <code>uvec</code> (e.g., generated by the <code><a href="https://rdrr.io/r/utils/apropos.html" class="external-link">find()</a></code> function). The aggregate set of the specified elements is treated as a column vector (e.g., the output of <code>Q.elem()</code> is always a column vector).</p>
 <p>In the function <code>Q.slices(vector_of_slice_indices)</code>, slices specified in <code>vector_of_slice_indices</code> are accessed. The <code>vector_of_slice_indices</code> must evaluate to a vector of type <code>uvec</code>.</p>
 </div>
 <div class="section level4">
-<h4 id="examples-24">Examples<a class="anchor" aria-label="anchor" href="#examples-24"></a>
+<h4 id="examples-25">Examples<a class="anchor" aria-label="anchor" href="#examples-25"></a>
 </h4>
 <div class="sourceCode" id="cb43"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">subview_fun2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true"></a>  cube A(n, <span class="dv">3</span>, <span class="dv">4</span>, fill::randu);</span>
@@ -1834,7 +1806,7 @@
 <code>F(first_row, first_col, size(G))</code> (<code>G</code> is a 2D field)</li>
 <li><code>F(first_row, first_col, size(n_rows, n_cols))</code></li>
 </ul>
-<p>For a 3D field <em>F</em>, the subfields are accessed as:</p>
+<p>For a 3D field <code>F</code>, the subfields are accessed as:</p>
 <ul>
 <li><code>F.slice(slice_number)</code></li>
 <li><code>F.slices(first_slice, last_slice)</code></li>
@@ -1847,10 +1819,206 @@
 <p>Instances of <code>span(a,b)</code> can be replaced by:</p>
 <ul>
 <li>
-<code>span()</code> or <code>span::all</code>, to indicate the entire range</li>
+<code>span()</code> or <code>span::all</code>, to indicate the entire range.</li>
 <li>
-<code>span(a)</code>, to indicate a particular row or column</li>
+<code>span(a)</code>, to indicate a particular row or column.</li>
 </ul>
+</div>
+<div class="section level3">
+<h3 id="diagonal">Diagonal<a class="anchor" aria-label="anchor" href="#diagonal"></a>
+</h3>
+<p><code>.diag()</code> and <code>.diag(k)</code> are member functions of <code>Mat</code> and <code>SpMat</code> with read/write access to the diagonal in a matrix. The argument k specifies the diagonal to use and it is an optional argument that is zero by default. The diagonal is interpreted as a column vector within expressions.</p>
+<ul>
+<li>
+<code>k = 0</code> indicates the main diagonal (default setting)</li>
+<li>
+<code>k &lt; 0</code> indicates the <code>k</code>-th sub-diagonal (below main diagonal, towards bottom-left corner)</li>
+<li>
+<code>k &gt; 0</code> indicates the <code>k</code>-th super-diagonal (above main diagonal, towards top-right corner)</li>
+</ul>
+<div class="section level4">
+<h4 id="caveat-3">Caveat<a class="anchor" aria-label="anchor" href="#caveat-3"></a>
+</h4>
+<p>To calculate only the diagonal elements of a compound expression, use <code>diagvec()</code> or <code>diagmat()</code>.</p>
+</div>
+<div class="section level4">
+<h4 id="examples-26">Examples<a class="anchor" aria-label="anchor" href="#examples-26"></a>
+</h4>
+<div class="sourceCode" id="cb44"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">diagonal_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true"></a>  mat X(n, n, fill::randu);</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true"></a>  vec A = X.diag(); <span class="co">// extract the main diagonal</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true"></a>  <span class="dt">double</span> B = accu(X.diag(<span class="dv">1</span>)); <span class="co">// sum of elements on the first upper diagonal</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true"></a>  <span class="dt">double</span> C = accu(X.diag(-<span class="dv">1</span>)); <span class="co">// sum of elements on the first lower diagonal</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true"></a></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true"></a>  X.diag() = randu&lt;vec&gt;(n);</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true"></a>  X.diag() += A;</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true"></a>  X.diag() /= B;</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true"></a>  X.diag() *= C;</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true"></a></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true"></a>  sp_mat S = sprandu&lt;sp_mat&gt;(n, n, <span class="fl">0.0</span>);</span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true"></a>  S.diag().ones();</span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true"></a></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true"></a>  vec v(S.diag());  <span class="co">// copy sparse diagonal to dense vector</span></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true"></a>  v += X.diag();</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true"></a></span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(v);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="each-col">Each col<a class="anchor" aria-label="anchor" href="#each-col"></a>
+</h3>
+<p><code>.each_col()</code>, <code>.each_col(vector_of_indices)</code> and <code>.each_col(lambda_function)</code> are member functions of <code>Mat</code>. These apply a vector operation to each column of a matrix, and are similar to “broadcasting” in Matlab/Octave.</p>
+<div class="section level4">
+<h4 id="form-1">Form 1<a class="anchor" aria-label="anchor" href="#form-1"></a>
+</h4>
+<p><code>.each_col()</code> supports the following operations:</p>
+<ul>
+<li>
+<code>+</code> addition</li>
+<li>
+<code>+=</code> in-place addition</li>
+<li>
+<code>-</code> subtraction</li>
+<li>
+<code>-=</code> in-place subtraction</li>
+<li>
+<code>%</code> element-wise multiplication</li>
+<li>
+<code>%=</code> in-place element-wise multiplication</li>
+<li>
+<code>/</code> element-wise division</li>
+<li>
+<code>/=</code> in-place element-wise division</li>
+<li>
+<code>=</code> assignment (copy)</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="form-2">Form 2<a class="anchor" aria-label="anchor" href="#form-2"></a>
+</h4>
+<p><code>.each_col(vector_of_indices)</code> supports the same operations as form 1. The argument <code>vector_of_indices</code> contains a list of indices of the columns to be used, and it must evaluate to a vector of type <code>uvec</code>.</p>
+</div>
+<div class="section level4">
+<h4 id="form-3">Form 3<a class="anchor" aria-label="anchor" href="#form-3"></a>
+</h4>
+<p><code>.each_col(lambda_function)</code> applies the given <code>lambda_function</code> to each column vector. The function must accept a reference to a <code>Col</code> object with the same element type as the underlying matrix.</p>
+</div>
+<div class="section level4">
+<h4 id="examples-27">Examples<a class="anchor" aria-label="anchor" href="#examples-27"></a>
+</h4>
+<div class="sourceCode" id="cb45"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">each_col_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true"></a>  mat X(n, n + <span class="dv">1</span>, fill::ones);</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true"></a>  <span class="co">// create a vector with n elements ranging from 5 to 10</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true"></a>  vec v = linspace&lt;vec&gt;(<span class="dv">5</span>, <span class="dv">10</span>, n);</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true"></a></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true"></a>  <span class="co">// in-place addition of v to each column vector of X</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true"></a>  X.each_col() += v;</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true"></a></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true"></a>  <span class="co">// generate Y by adding v to each column vector of X</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true"></a>  mat Y = X.each_col() + v;</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true"></a></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true"></a>  <span class="co">// subtract v from columns 1 and 2 of X</span></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true"></a>  X.cols(<span class="dv">0</span>, <span class="dv">1</span>).each_col() -= v;</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true"></a></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true"></a>  uvec indices(<span class="dv">2</span>);</span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true"></a>  indices(<span class="dv">0</span>) = <span class="dv">1</span>;</span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true"></a>  indices(<span class="dv">1</span>) = <span class="dv">2</span>;</span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true"></a></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true"></a>  X.each_col(indices) = v;  <span class="co">// copy v to columns 1 and 2 of X</span></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true"></a></span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true"></a>  <span class="co">// lambda function with non-const vector</span></span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true"></a>  X.each_col([](vec&amp; a) { <span class="dv">2</span> * a; });</span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true"></a></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true"></a>  <span class="at">const</span> mat&amp; XX = X;</span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true"></a></span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true"></a>  <span class="co">// lambda function with const vector</span></span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true"></a>  XX.each_col([](<span class="at">const</span> vec&amp; b) { <span class="dv">3</span> * b; });</span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true"></a></span>
+<span id="cb45-30"><a href="#cb45-30" aria-hidden="true"></a>  mat res = X + Y + XX;</span>
+<span id="cb45-31"><a href="#cb45-31" aria-hidden="true"></a></span>
+<span id="cb45-32"><a href="#cb45-32" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb45-33"><a href="#cb45-33" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="each-row">Each row<a class="anchor" aria-label="anchor" href="#each-row"></a>
+</h3>
+<p><code>.each_row()</code>, <code>.each_row(vector_of_indices)</code>, <code>.each_row(lambda_function)</code> are member functions of <code>Mat</code>. These apply a vector operation to each row of a matrix, and are similar to “broadcasting” in Matlab/Octave.</p>
+<div class="section level4">
+<h4 id="form-1-1">Form 1<a class="anchor" aria-label="anchor" href="#form-1-1"></a>
+</h4>
+<p><code>.each_row()</code> supports the following operations:</p>
+<ul>
+<li>
+<code>+</code> addition</li>
+<li>
+<code>+=</code> in-place addition</li>
+<li>
+<code>-</code> subtraction</li>
+<li>
+<code>-=</code> in-place subtraction</li>
+<li>
+<code>%</code> element-wise multiplication</li>
+<li>
+<code>%=</code> in-place element-wise multiplication</li>
+<li>
+<code>/</code> element-wise division</li>
+<li>
+<code>/=</code> in-place element-wise division</li>
+<li>
+<code>=</code> assignment (copy)</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="form-2-1">Form 2<a class="anchor" aria-label="anchor" href="#form-2-1"></a>
+</h4>
+<p><code>.each_row(vector_of_indices)</code> supports the same operations as form 1. The argument <code>vector_of_indices</code> contains a list of indices of the rows to be used, and it must evaluate to a vector of type <code>uvec</code>.</p>
+</div>
+<div class="section level4">
+<h4 id="form-3-1">Form 3<a class="anchor" aria-label="anchor" href="#form-3-1"></a>
+</h4>
+<p><code>.each_col(lambda_function)</code> applies the given <code>lambda_function</code> to each column vector. The function must accept a reference to a <code>Row</code> object with the same element type as the underlying matrix.</p>
+</div>
+<div class="section level4">
+<h4 id="examples-28">Examples<a class="anchor" aria-label="anchor" href="#examples-28"></a>
+</h4>
+<div class="sourceCode" id="cb46"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">each_row_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true"></a>  mat X(n, n + <span class="dv">1</span>, fill::ones);</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true"></a>  <span class="co">// create a vector with n elements ranging from 5 to 10</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true"></a>  vec v = linspace&lt;vec&gt;(<span class="dv">5</span>, <span class="dv">10</span>, n);</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true"></a></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true"></a>  <span class="co">// in-place addition of v to each rows vector of X</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true"></a>  X.each_row() += v;</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true"></a></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true"></a>  <span class="co">// generate Y by adding v to each rows vector of X</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true"></a>  mat Y = X.each_row() + v;</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true"></a></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true"></a>  <span class="co">// subtract v from rows 1 and 2 of X</span></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true"></a>  X.rows(<span class="dv">0</span>, <span class="dv">1</span>).each_row() -= v;</span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true"></a></span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true"></a>  uvec indices(<span class="dv">2</span>);</span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true"></a>  indices(<span class="dv">0</span>) = <span class="dv">1</span>;</span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true"></a>  indices(<span class="dv">1</span>) = <span class="dv">2</span>;</span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true"></a></span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true"></a>  X.each_col(indices) = v;  <span class="co">// copy v to rows 1 and 2 of X</span></span>
+<span id="cb46-21"><a href="#cb46-21" aria-hidden="true"></a></span>
+<span id="cb46-22"><a href="#cb46-22" aria-hidden="true"></a>  <span class="co">// lambda function with non-const vector</span></span>
+<span id="cb46-23"><a href="#cb46-23" aria-hidden="true"></a>  X.each_row([](vec&amp; a) { <span class="dv">2</span> * a; });</span>
+<span id="cb46-24"><a href="#cb46-24" aria-hidden="true"></a></span>
+<span id="cb46-25"><a href="#cb46-25" aria-hidden="true"></a>  <span class="at">const</span> mat&amp; XX = X;</span>
+<span id="cb46-26"><a href="#cb46-26" aria-hidden="true"></a></span>
+<span id="cb46-27"><a href="#cb46-27" aria-hidden="true"></a>  <span class="co">// lambda function with const vector</span></span>
+<span id="cb46-28"><a href="#cb46-28" aria-hidden="true"></a>  XX.each_row([](<span class="at">const</span> vec&amp; b) { <span class="dv">3</span> * b; });</span>
+<span id="cb46-29"><a href="#cb46-29" aria-hidden="true"></a></span>
+<span id="cb46-30"><a href="#cb46-30" aria-hidden="true"></a>  mat res = X + Y + XX;</span>
+<span id="cb46-31"><a href="#cb46-31" aria-hidden="true"></a></span>
+<span id="cb46-32"><a href="#cb46-32" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb46-33"><a href="#cb46-33" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -39,7 +39,7 @@ This vignette is adapted from the official Armadillo
 | `sp_cx_mat`                    | sparse matrix class                                                     |
 | `+ - * % / == != <= >= < > &&` | operators                                                               |
 
-## Matrix class
+## Dense matrix class
 
 `Mat<type>`, `mat` and `cx_mat` are classes for dense matrices, with elements
 stored in [column-major ordering](https://en.wikipedia.org/wiki/Column_major)
@@ -63,7 +63,8 @@ For convenience the following typedefs have been defined:
 * `mat = Mat<double>`
 * `dmat = Mat<double>`
 * `fmat = Mat<float>`
-* `cx_mat = Mat<cx_double>` (`cx_double` is a shortcut for `std::complex<double>`)
+* `cx_mat = Mat<cx_double>` (`cx_double` is a shortcut for
+  `std::complex<double>`)
 * `cx_dmat = Mat<cx_double>`
 * `cx_fmat = Mat<cx_float>` (`cx_float` is a shortcut for `std::complex<float>`)
 * `umat = Mat<uword>` (`uword` is a shortcut for `unsigned int`)
@@ -83,9 +84,11 @@ the following matrix types: `mat`, `dmat`, `fmat`, `cx_mat`, `cx_dmat`,
   
   * `mat()`
   * `mat(n_rows, n_cols)`
-  * `mat(n_rows, n_cols, fill_form)` (elements are initialised according to `fill_form`)
+  * `mat(n_rows, n_cols, fill_form)` (elements are initialised according to
+    `fill_form`)
   * `mat(size(X))`
-  * `mat(size(X), fill_form)` (elements are initialised according to `fill_form`)
+  * `mat(size(X), fill_form)` (elements are initialised according to
+    `fill_form`)
   * `mat(mat)`
   * `mat(vec)`
   * `mat(rowvec)`
@@ -93,20 +96,25 @@ the following matrix types: `mat`, `dmat`, `fmat`, `cx_mat`, `cx_dmat`,
   * `mat(string)`
   * `mat(std::vector)` (treated as a column vector)
   * `mat(sp_mat)` (for converting a sparse matrix to a dense matrix)
-  * `cx_mat(mat,mat)` (for constructing a complex matrix out of two real matrices)
+  * `cx_mat(mat,mat)` (for constructing a complex matrix out of two real
+    matrices)
     
-The elements can be explicitly initialised during construction by specifying `fill_form`, which is one of:
+The elements can be explicitly initialised during construction by specifying
+`fill_form`, which is one of:
     
   * `fill::zeros` set all elements to 0 (default in cpp11armadillo)
   * `fill::ones` set all elements to 1
-  * `fill::eye` set the elements on the main diagonal to 1 and off-diagonal elements to 0
-  * `fill::randu` set all elements to random values from a uniform distribution in the [0,1] interval
-  * `fill::randn` set all elements to random values from a normal distribution with zero mean and unit variance
+  * `fill::eye` set the elements on the main diagonal to 1 and off-diagonal
+    elements to 0
+  * `fill::randu` set all elements to random values from a uniform distribution
+    in the [0,1] interval
+  * `fill::randn` set all elements to random values from a normal distribution
+    with zero mean and unit variance
   * `fill::value(scalar)` set all elements to specified scalar
   * `fill::none` do not initialise the elements (matrix may have garbage values)
       
 For the `mat(string)` constructor, the format is elements separated by spaces,
-and rows denoted by semicolons; for example, the 2x2 identity matrix can be
+and rows denoted by semicolons. For example, the 2x2 identity matrix can be
 created using `"1 0; 0 1"`. Note that string based initialisation is slower than
 directly setting the elements or using element initialisation.
   
@@ -124,14 +132,14 @@ in normal use this is not required.
     `ptr_aux_mem` is a pointer to the memory. By default the matrix allocates
     its own memory and copies data from the auxiliary memory (for safety).
     However, if `copy_aux_mem` is set to `false`, the matrix will instead
-    directly use the auxiliary memory (e.g., no copying); this is faster, but
+    directly use the auxiliary memory (e.g., no copying). This is faster, but
     can be dangerous unless you know what you are doing.    
   * The `strict` parameter comes into effect only when copy_aux_mem is set to
     `false` (e.g., the matrix is directly using auxiliary memory).
     * When `strict` is set to `false`, the matrix will use the auxiliary memory
       until a size change or an aliasing event.
     * When `strict` is set to `true`, the matrix will be bound to the auxiliary
-      memory for its lifetime; the number of elements in the matrix cannot be
+      memory for its lifetime. The number of elements in the matrix cannot be
       changed.
 * `mat(const ptr_aux_mem, n_rows, n_cols)`  
   * Create a matrix by copying data from read-only auxiliary memory, where
@@ -224,8 +232,7 @@ For convenience the following typedefs have been defined:
 * `cx_fvec = cx_fcolvec = Col<[cx_float](#cx_double)>`
 * `uvec = ucolvec = Col<[uword](#uword)>`
 * `ivec = icolvec = Col<[sword](#uword)>`
-    
-  
+
 The `vec` and `colvec` types have the same meaning and are used interchangeably.
   
 The types `vec` or `colvec` are used for convenience. It is possible to use
@@ -250,24 +257,24 @@ Main exceptions are functions that require square matrices.
       
 ### Advanced constructors
       
-* `vec(ptr_aux_mem, number_of_elements, copy_aux_mem = true, strict = false)`  
+* `vec(ptr_aux_mem, number_of_elements, copy_aux_mem = true, strict = false)`:
   * Create a column vector using data from writable auxiliary (external) memory,
     where ptr_aux_mem is a pointer to the memory. By default the vector
     allocates its own memory and copies data from the auxiliary memory (for
     safety). However, if copy_aux_mem is set to `false`, the vector will instead
     directly use the auxiliary memory (e.g., no copying). This is faster, but can
     be dangerous unless you know what you are doing.
-  * The `strict` parameter comes into effect only when copy_aux_mem is set to
-    `false` (e.g., the vector is directly using auxiliary memory)
-    * When `strict` is set to `false`, the vector will use the auxiliary memory
-      until a size change or an aliasing event.
-    * When `strict` is set to `true`, the vector will be bound to the auxiliary
-      memory for its lifetime; the number of elements in the vector cannot be
-      changed.
-* `vec(const ptr_aux_mem, number_of_elements)`  
-  * Create a column vector by copying data from read-only auxiliary memory,
-    where ptr_aux_mem is a pointer to the memory
-* `vec::fixed<number_of_elements>`  
+  * The `strict` parameter comes into effect only when `copy_aux_mem` is set to
+    `false` (e.g., the vector is directly using auxiliary memory).
+  * When `strict` is set to `false`, the vector will use the auxiliary memory
+    until a size change or an aliasing event.
+  * When `strict` is set to `true`, the vector will be bound to the auxiliary
+    memory for its lifetime. The number of elements in the vector cannot be
+    changed.
+* `vec(const ptr_aux_mem, number_of_elements)`: Create a column vector by
+    copying data from read-only auxiliary memory, where ptr_aux_mem is a pointer
+    to the memory.
+* `vec::fixed<number_of_elements>`:
   * Create a fixed size column vector, with the size specified via the template
     argument. Memory for the vector is reserved at compile time. This is
     generally faster than dynamic memory allocation, but the size of the vector
@@ -279,13 +286,12 @@ Main exceptions are functions that require square matrices.
     appending a single digit form of the size to the vector type.
     Examples: `vec3` is equivalent to `vec::fixed<3>`, and `cx_vec4` is
     equivalent to `cx_vec::fixed<4>`.
-* `vec::fixed<number_of_elements>(fill_form)`  
-  * Create a fixed size column vector, with the elements explicitly initialised
-    according to `fill_form`.
-* `vec::fixed<number_of_elements>(const ptr_aux_mem)`  
-  * Create a fixed size column vector, with the size specified via the template
-    argument; data is copied from auxiliary memory, where ptr_aux_mem is a
-    pointer to the memory.
+* `vec::fixed<number_of_elements>(fill_form)`: Create a fixed size column
+    vector, with the elements explicitly initialised according to `fill_form`.
+* `vec::fixed<number_of_elements>(const ptr_aux_mem)`: Create a fixed size
+    column vector, with the size specified via the template argument. The data
+    is copied from auxiliary memory, where `ptr_aux_mem` is a pointer to the
+    memory.
       
 ### Examples
   
@@ -318,7 +324,7 @@ The template `Row<type>` class is derived from the `Mat<type>` class and
 inherits most of the member functions.
   
 For convenience the following typedefs have been defined:
-    
+
 * `rowvec = Row<double>`
 * `drowvec = Row<double>`
 * `frowvec = Row<float>`
@@ -362,7 +368,7 @@ exceptions are functions which require square matrices.
     * When `strict` is set to `false`, the vector will use the auxiliary memory
       until a size change or an aliasing event.
     * When `strict` is set to `true`, the vector will be bound to the auxiliary
-      memory for its lifetime; the number of elements in the vector cannot be
+      memory for its lifetime. The number of elements in the vector cannot be
       changed.
 * `rowvec(const ptr_aux_mem, number_of_elements)`  
   * Create a row vector by copying data from read-only auxiliary memory, where
@@ -383,7 +389,7 @@ exceptions are functions which require square matrices.
     according to `fill_form`.
 * `rowvec::fixed<number_of_elements>(const ptr_aux_mem)`  
   * Create a fixed size row vector, with the size specified via the template
-    argument; data is copied from auxiliary memory, where ptr_aux_mem is a
+    argument. The data is copied from auxiliary memory, where `ptr_aux_mem` is a
     pointer to the memory.
     
 ### Examples
@@ -440,8 +446,11 @@ For convenience the following typedefs have been defined:
 * `ucube = Cube<uword>`
 * `icube = Cube<sword>`
     
-The `cube` type is used for convenience; it is possible to use other types
-instead (e.g., `fcube`)
+The `cube` type is used for convenience. It is possible to use other types
+instead (e.g., `fcube`).
+
+Each cube slice can be interpreted as a matrix, hence functions which take
+`Mat` as input can generally also take cube slices as input.
   
 ### Constructors
 
@@ -471,12 +480,11 @@ the end of the function. To forcefully release memory at any point, use
   
 ### Advanced constructors
       
-* `cube::fixed<n_rows, n_cols, n_slices>`
-  * Create a fixed size cube, with the size specified via template arguments.
-    Memory for the cube is reserved at compile time. This is generally faster
-    than dynamic memory allocation, but the size of the cube can't be changed
-    afterwards (directly or indirectly).
-* `cube(ptr_aux_mem, n_rows, n_cols, n_slices, copy_aux_mem = true, strict = false)`  
+* `cube::fixed<n_rows, n_cols, n_slices>`: Create a fixed size cube, with the
+    size specified via template arguments. Memory for the cube is reserved at
+    compile time. This is generally faster than dynamic memory allocation, but
+    the size of the cube cannot be changed afterwards (directly or indirectly).
+* `cube(ptr_aux_mem, n_rows, n_cols, n_slices, copy_aux_mem = true, strict = false)`: 
   * Create a cube using data from writable auxiliary (external) memory, where
     `ptr_aux_mem` is a pointer to the memory. By default the cube allocates its
     own memory and copies data from the auxiliary memory (for safety). However,
@@ -484,15 +492,15 @@ the end of the function. To forcefully release memory at any point, use
     auxiliary memory (e.g., no copying). This is faster, but can be dangerous
     unless you know what you are doing.
   * The `strict` parameter comes into effect only when `copy_aux_mem` is set to
-    `false` (e.g., the cube is directly using auxiliary memory)
-      * When `strict` is set to `false`, the cube will use the auxiliary memory
-        until a size change or an aliasing event
-      * When `strict` is set to `true`, the cube will be bound to the auxiliary
-        memory for its lifetime; the number of elements in the cube can't be
-        changed
-* `cube(const ptr_aux_mem, n_rows, n_cols, n_slices)`  
-  * Create a cube by copying data from read-only auxiliary memory, where
-    `ptr_aux_mem` is a pointer to the memory.
+    `false` (e.g., the cube is directly using auxiliary memory).
+  * When `strict` is set to `false`, the cube will use the auxiliary memory
+    until a size change or an aliasing event.
+  * When `strict` is set to `true`, the cube will be bound to the auxiliary
+    memory for its lifetime. The number of elements in the cube cannot be
+    changed.
+* `cube(const ptr_aux_mem, n_rows, n_cols, n_slices)`: Create a cube by copying
+    data from read-only auxiliary memory, where `ptr_aux_mem` is a pointer to
+    the memory.
     
 ### Examples
 
@@ -521,10 +529,7 @@ b <- matrix(rnorm(4), nrow = 2, ncol = 2)
 }
 ```
   
-### Notes
-      
-* Each cube slice can be interpreted as a matrix, hence functions which take `Mat` as input can generally also take cube slices as input
-* The size of individual slices can't be changed. For example, the following will not work:
+The size of individual slices cannot be changed. The following will not work:
         
 ```cpp
 cube c(5,6,7);
@@ -554,7 +559,11 @@ matrix can have a unique size).
 * `field<object_type>(size(X))`
 * `field<object_type>(field<object_type>)`
   
-*   Examples:
+### Caveat
+
+To store a set of matrices of the same size, the `Cube` class is more efficient.
+
+### Examples
 
 ```r
 set.seed(123)
@@ -579,12 +588,7 @@ b <- matrix(rnorm(4), nrow = 2, ncol = 2)
 }
 ```
 
-### Note
-
-To store a set of matrices of the same size, the [Cube](#Cube) class is more
-efficient.
-
-# Member Functions & Variables
+# Member Functions and Variables
 
 | Function/Variable | Description                                                                 |
 |-------------------|-----------------------------------------------------------------------------|
@@ -660,25 +664,30 @@ efficient.
 | `.print`          | print object to `_std::cout_` or user specified stream (cpp11armadillo redirects to R messages) |
 | `.raw_print`      | print object without formatting                                             |
 | `.brief_print`    | print object in shortened/abridged form                                     |
-| `.save`           | save matrix or cube (cpp11armadillo reads from R and sends data back to R)  |
-| `.load`           | load matrix or cube (cpp11armadillo reads from R and sends data back to R)  |
 
 ## Attributes
 
-`.n_rows` number of rows; present in `Mat`, `Col`, `Row`, `Cube`, `field` and `SpMat`
-`.n_cols` number of columns; present in `Mat`, `Col`, `Row`, `Cube`, `field` and `SpMat`
-`.n_elem` total number of elements; present in `Mat`, `Col`, `Row`, `Cube`, `field` and `SpMat`
-`.n_slices` number of slices; present in `Cube` and `field`
-`.n_nonzero` number of non-zero elements; present in `SpMat`
+`n_*` provides information for different objects:
 
-The variables are of type `uword`
+* `.n_rows` number of rows for `Mat`, `Col`, `Row`, `Cube`, `field`, and
+  `SpMat`.
+* `.n_cols` number of columns for `Mat`, `Col`, `Row`, `Cube`, `field`, and
+  `SpMat`.
+* `.n_elem` total number of elements for `Mat`, `Col`, `Row`, `Cube`, `field`,
+  and `SpMat`.
+* `.n_slices` number of slices for `Cube` and `field`.
+* `.n_nonzero` number of non-zero elements for `SpMat`.
   
-The variables are read-only; to change the size, use `set_size`, `copy_size`,
-`zeros_member`, `ones_member`, or `reset`.
-  
-For the `Col` and `Row` classes, _n_elem_ also indicates vector length
-  
-### Examples:
+For the `Col` and `Row` classes, `n_elem` also indicates vector length.
+
+The variables are read-only and of type `uword`. To change the size, use
+`set_size`, `copy_size`, `zeros_member`, `ones_member`, or `reset`.
+
+To avoid compiler warnings about implicit conversion when operating `uword` with
+`integers`/`doubles` to pass data to R, converte `uword` to `int` with
+`static_cast<int>` or declare these as `int`.
+
+### Examples
 
 ```r
 a <- matrix(runif(4), nrow = 2, ncol = 2)
@@ -703,26 +712,26 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 ## Element/object access
 
 Provide access to individual elements or objects stored in a container object
-(e.g., `Mat`, `Col`, `Row`, `Cube`, `field`)  
+(e.g., `Mat`, `Col`, `Row`, `Cube`, `field`).
       
 * `(i)` For `vec` and `rowvec`, access the element stored at index `i`. For
   `Mat`, `Cube` and `field`, access the element/object stored at index `i` under
   the assumption of a flat layout, with column-major ordering of data (e.g.,
   column by column). An exception is thrown if the requested element is out of
   bounds.
-* `.at(i)` or `[i]` As for `(i)`, but without a bounds check; not recommended.
+* `.at(i)` or `[i]` As for `(i)`, but without a bounds check. Not recommended.
 * `(r,c)` For `Mat` and 2D field classes, access the element/object stored at 
   row `r` and column `c`. An exception is thrown if the requested element is out
   of bounds.
-* `.at(r,c)` As for `(r,c)`, but without a bounds check; not recommended.
+* `.at(r,c)` As for `(r,c)`, but without a bounds check. Not recommended.
 * `(r,c,s)` For `Cube` and 3D field classes, access the element/object stored at
-  row `r`, column `c`, and slice _s_. An exception is thrown if the requested
+  row `r`, column `c`, and slice `s`. An exception is thrown if the requested
   element is out of bounds.
-* `.at(r,c,s)` As for `(r,c,s)`, but without a bounds check; not recommended.
+* `.at(r,c,s)` As for `(r,c,s)`, but without a bounds check. Not recommended.
     
 ### Caveats
 
-For `.at()` or `[i]`, `.at(r,c)`, and `.at(r,c,s)`:
+For `.at()` or `[i]`, `.at(r,c)` and `.at(r,c,s)`:
 
   * Indexing in C++ starts at 0
   * Accessing elements without bounds checks is slightly faster, but is not
@@ -731,8 +740,8 @@ For `.at()` or `[i]`, `.at(r,c)`, and `.at(r,c,s)`:
     instead use `(r,c)` and `(r,c,s)`
 
 The indices of elements are specified via the `uword` type, which is a `typedef`
-for an unsigned integer type. When using loops to access elements, it is best to
-use `uword` instead of `int`. For example: `for(uword i=0; i<X.n_elem; ++i) { X(i) = ... }`
+for an unsigned integer type. When using loops to access elements, it more
+efficient to use `uword` instead of `int`.
   
 ### Examples
 
@@ -766,7 +775,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 
 ## Element initialisation
 
-Set elements in `Mat`, `Col`, `Row` via braced initialiser lists
+Set elements in `Mat`, `Col` and `Row` via braced initialiser lists.
   
 ### Examples
     
@@ -793,7 +802,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 ## Zeros
 
 Set the elements of an object to zero, optionally first changing the size to
-specified dimensions
+specified dimensions.
 
 `.zeros()` (member function of `Mat`, `Col`, `Row`, `SpMat`, `Cube`)
 `.zeros(n_elem)` (member function of `Col` and `Row`)
@@ -826,13 +835,13 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 ## Ones
 
 Set all the elements of an object to one, optionally first changing the size to
-specified dimensions
+specified dimensions.
 
-`ones()` (member function of `Mat`, `Col`, `Row`, `Cube`)
-`ones(n_elem)` (member function of `Col` and `Row`)
-`ones(n_rows, n_cols)` (member function of `Mat`)
-`ones(n_rows, n_cols, n_slices)` (member function of `Cube`)
-`ones(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`)
+`.ones()` (member function of `Mat`, `Col`, `Row`, `Cube`)
+`.ones(n_elem)` (member function of `Col` and `Row`)
+`.ones(n_rows, n_cols)` (member function of `Mat`)
+`.ones(n_rows, n_cols, n_slices)` (member function of `Cube`)
+`.ones(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`)
   
 ### Examples
     
@@ -858,11 +867,11 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 
 ## Eye
 
-* `eye()` Member functions of `Mat` and `SpMat`
-* `eye(n_rows, n_cols)` Set the elements along the main diagonal to one and
+* `.eye()` Member functions of `Mat` and `SpMat`.
+* `.eye(n_rows, n_cols)` Set the elements along the main diagonal to one and
   off-diagonal elements to zero, optionally first changing the size to specified
-  dimensions
-* `eye(size(X))` An identity matrix is generated when `n_rows = n_cols`
+  dimensions.
+* `.eye(size(X))` An identity matrix is generated when `n_rows = n_cols`.
   
 ### Examples
     
@@ -896,11 +905,11 @@ interval, optionally first changing the size to specified dimensions.
 
 For complex elements, the real and imaginary parts are treated separately.
 
-* `randu()` (member function of `Mat`, `Col`, `Row`, `Cube`)
-* `randu(n_elem)` (member function of `Col` and `Row`)
-* `randu(n_rows, n_cols)` (member function of `Mat`)
-* `randu(n_rows, n_cols, n_slices)` (member function of `Cube`)
-* `randu(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`)
+* `.randu()` (member function of `Mat`, `Col`, `Row`, `Cube`)
+* `.randu(n_elem)` (member function of `Col` and `Row`)
+* `.randu(n_rows, n_cols)` (member function of `Mat`)
+* `.randu(n_rows, n_cols, n_slices)` (member function of `Cube`)
+* `.randu(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`)
 
 ```r
 a <- matrix(runif(4), nrow = 2, ncol = 2)
@@ -937,11 +946,11 @@ and unit variance, optionally first changing the size to specified dimensions.
 
 For complex elements, the real and imaginary parts are treated separately.
 
-* `randn()` (member function of `Mat`, `Col`, `Row`, `Cube`)
-* `randn(n_elem)` (member function of `Col` and `Row`)
-* `randn(n_rows, n_cols)` (member function of `Mat`)
-* `randn(n_rows, n_cols, n_slices)` (member function of `Cube`)
-* `randn(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`)
+* `.randn()` (member function of `Mat`, `Col`, `Row`, `Cube`)
+* `.randn(n_elem)` (member function of `Col` and `Row`)
+* `.randn(n_rows, n_cols)` (member function of `Mat`)
+* `.randn(n_rows, n_cols, n_slices)` (member function of `Cube`)
+* `.randn(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`)
 
 ### Examples
 
@@ -977,7 +986,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 
 Sets the elements to a specified value
 
-`fill( value )` Member function of `Mat`, `Col`, `Row`, `Cube`, `field`
+`.fill( value )` Member function of `Mat`, `Col`, `Row`, `Cube`, `field`
   
 The type of value must match the type of elements used by the container object
 (e.g., for `Mat` the type is `double`)
@@ -1010,8 +1019,8 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 
 Imbue (fill) with values provided by a functor or lambda function
 
-* `imbue(functor)` Member functions of `Mat`, `Col`, `Row` and `Cube`
-* `imbue(lambda_function)` Imbue (fill) with values provided by a functor or
+* `.imbue(functor)` Member functions of `Mat`, `Col`, `Row` and `Cube`
+* `.imbue(lambda_function)` Imbue (fill) with values provided by a functor or
   lambda function
 
 For matrices, filling is done column-by-column (e.g., column 0 is filled, then
@@ -1058,17 +1067,15 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 
 ## Clean
 
-`clean(threshold)` Member function of `Mat`, `Col`, `Row`, `Cube` and `SpMat` 
- 
-For objects with non-complex elements: each element with an absolute value less
+`.clean(threshold)` is a member function of `Mat`, `Col`, `Row`, `Cube`, and
+`SpMat`. It can be used to sparsify a matrix, in the sense of zeroing values
+with small magnitudes.
+
+* For objects with non-complex elements: each element with an absolute value less
 or equal to the threshold is replaced by zero.
-  
-For objects with complex elements: for each element, each component (real and
+* For objects with complex elements: for each element, each component (real and
 imaginary) with an absolute value less or equal to the threshold is replaced by
 zero.
-  
-Can be used to sparsify a matrix, in the sense of zeroing values with small
-magnitudes.
   
 ### Caveat
 
@@ -1089,18 +1096,17 @@ To explicitly convert from dense storage to sparse storage, use the `SpMat`.
 }
 ```
 
-## Fill
+## Replace
 
-`replace( old_value, new_value )` Member function of `Mat`, `Col`, `Row`, `Cube`
-and `SpMat`
+`.replace( old_value, new_value )` is a member function of `Mat`, `Col`, `Row`,
+`Cube`, and `SpMat`.
   
 For all elements equal to `old_value`, set them to `new_value`.
   
-The type of `old_value` and `new_value` must match the type of elements used by
-the container object (e.g., for `Mat` the type is `double`).
-  
 ### Caveats
 
+* The type of `old_value` and `new_value` must match the type of elements used
+  by the container object (e.g., for `Mat` the type is `double`).
 * Floating point numbers (`float` and `double`) are approximations due to their
   [limited precision](https://en.wikipedia.org/wiki/Floating-point_arithmetic).
 * For sparse matrices (`SpMat`), replacement is not done when `old_value = 0`.
@@ -1120,16 +1126,13 @@ the container object (e.g., for `Mat` the type is `double`).
 
 ## Clamp
 
-Clamp each element to the `[min_val, max_val]` interval; any value lower than
-`min_val` will be set to `min_val`, and any value higher than `max_val` will be
-set to `max_val`.
-
-`clamp(min_value, max_value)` Member function of `Mat`, `Col`, `Row`, `Cube`
-and `SpMat`.
+`.clamp(min_value, max_value)` is a member function of `Mat`, `Col`, `Row`,
+`Cube` and `SpMat` that transforms all values lower than `min_val` to `min_val`,
+and all values higher than `max_val` to `max_val`.
   
-For complex elements, the real and imaginary components are clamped separately.
-  
-For sparse matrices, clamping is applied only to the non-zero elements.
+* For complex elements, the real and imaginary components are clamped
+  separately.
+* For sparse matrices, clamping is applied only to the non-zero elements.
   
 ### Examples
 
@@ -1146,18 +1149,14 @@ For sparse matrices, clamping is applied only to the non-zero elements.
 
 ## Transform
 
-* `transform(functor)` Member functions of `Mat`, `Col`, `Row`, `Cube` and
-  `SpMat`.
-* `transform(lambda_function)`  Transform each element using a functor or lambda
-  function.
+`.transform(functor)` and `.transform(lambda_function)` are member functions of
+`Mat`, `Col`, `Row`, `Cube`, and `SpMat`.
 
-For dense matrices, transformation is done column-by-column for all elements.
-  
-For sparse matrices, transformation is done column-by-column for non-zero
-elements.
-  
-For cubes, transformation is done slice-by-slice, with each slice treated as a
-matrix.
+* For dense matrices, transformation is done column-by-column for all elements.
+* For sparse matrices, transformation is done column-by-column for non-zero
+  elements.
+* For cubes, transformation is done slice-by-slice, with each slice treated as a
+  matrix.
   
 ### Examples
     
@@ -1171,17 +1170,15 @@ matrix.
 
 ## For each
 
-For dense matrices and fields, the processing is done column-by-column for all
-elements.
-  
-For sparse matrices, the processing is done column-by-column for non-zero
-elements.
+`.for_each(functor)` and `.for_each(lambda_function)` are member functions of
+`Mat`, `Col`, `Row`, `Cube`, `SpMat`, and `field`.
 
-For cubes, processing is done slice-by-slice, with each slice treated as a
-matrix.
-
-`for_each(functor)` Member functions of `Mat`, `Col`, `Row`, `Cube`, `SpMat` and `field`
-`for_each(lambda_function)` For each element, pass its reference to a functor or lambda function
+* For dense matrices and fields, the processing is done column-by-column for all
+  elements.
+* For sparse matrices, the processing is done column-by-column for non-zero
+  elements.
+* For cubes, processing is done slice-by-slice, with each slice treated as a
+  matrix.
 
 ### Examples
 
@@ -1210,18 +1207,16 @@ matrix.
 
 Change the size of an object, without explicitly preserving data and without
 initialising the elements (e.g., elements may contain garbage values, including
-`NaN`)
+`NaN`).
 
-* `set_size(n_elem)` (member function of `Col`, `Row`, `field`)
-* `set_size(n_rows, n_cols)` (member function of `Mat`, `SpMat`, `field`)
-* `set_size(n_rows, n_cols, n_slices)` (member function of `Cube` and `field`)
-* `set_size(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`,
+* `.set_size(n_elem)` (member function of `Col`, `Row`, `field`)
+* `.set_size(n_rows, n_cols)` (member function of `Mat`, `SpMat`, `field`)
+* `.set_size(n_rows, n_cols, n_slices)` (member function of `Cube` and `field`)
+* `.set_size(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`,
   `field`)
- 
-To initialise the elements to zero while changing the size, use `.zeros()`
-instead.
 
-To explicitly preserve data while changing the size, use `.reshape()`
+To initialise the elements to zero while changing the size, use `.zeros()`
+instead. To explicitly preserve data while changing the size, use `.reshape()`
 or `.resize()` instead.
   
 ### Examples
@@ -1250,13 +1245,13 @@ or `.resize()` instead.
 ## Reshape
 
 Recreate an object according to given size specifications, with the elements
-taken from the previous version of the object in a column-wise manner; the
+taken from the previous version of the object in a column-wise manner. The
 elements in the generated object are placed column-wise (e.g., the first column
 is filled up before filling the second column)
 
-* `reshape(n_rows, n_cols)` (member function of `Mat` and `SpMat`)
-* `reshape(n_rows, n_cols, n_slices)` (member function of `Cube`)
-* `reshape(size(X))` (member function of `Mat`, `Cube`, `SpMat`)
+* `.reshape(n_rows, n_cols)` (member function of `Mat` and `SpMat`)
+* `.reshape(n_rows, n_cols, n_slices)` (member function of `Cube`)
+* `.reshape(size(X))` (member function of `Mat`, `Cube`, `SpMat`)
 
 The layout of the elements in the recreated object will be different to the
 layout in the previous version of the object
@@ -1271,10 +1266,10 @@ than the specified size, only a subset of the elements is taken
 ### Caveats
 
 * `.reshape()` is considerably slower than `.set_size()`.
-* to change the size without preserving data, use `.set_size()`.
-* to grow/shrink the object while preserving the elements and the layout of the
+* To change the size without preserving data, use `.set_size()`.
+* To grow/shrink the object while preserving the elements and the layout of the
   elements, use `.resize()`
-* to flatten a matrix into a vector, use `vectorise()` or
+* To flatten a matrix into a vector, use `vectorise()` or
   `.as_col()`/`.as_row()`.
   
 ### Examples
@@ -1289,16 +1284,14 @@ than the specified size, only a subset of the elements is taken
 
 ## Resize
 
-Recreate the object according to given size specifications, while preserving the
-elements as well as the layout of the elements
+Resize an object according to given size specifications, while preserving the
+elements and the layout of the elements. It can be used for growing or shrinking
+an object (e.g., adding/removing rows, and/or columns, and/or slices).
 
-* `resize(n_elem)` (member function of `Col`, `Row`)
-* `resize(n_rows, n_cols)` (member function of `Mat` and `SpMat`)
-* `resize(n_rows, n_cols, n_slices)` (member function of `Cube`)
-* `resize(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`)
-  
-Can be used for growing or shrinking an object (e.g., adding/removing rows,
-and/or columns, and/or slices)
+* `.resize(n_elem)` (member function of `Col`, `Row`)
+* `.resize(n_rows, n_cols)` (member function of `Mat` and `SpMat`)
+* `.resize(n_rows, n_cols, n_slices)` (member function of `Cube`)
+* `.resize(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`)
   
 ### Caveats
 
@@ -1317,10 +1310,13 @@ and/or columns, and/or slices)
 
 ## Copy size
 
-`copy_size(A)` Set the size to be the same as object `A`
-  
-Object `A` must be of the same root type as the object being modified (e.g., the
-size of a matrix can't be set by providing a cube)
+`.copy_size(A)` sets the size of a matrix/vector/cube to be the same as
+matrix/vector/cube `A`.
+
+### Caveat
+
+To set the size of an object `B`, `A` must be of the same type as `B`. For
+example, the size of a matrix cannot be set by providing a cube.
 
 ### Examples
 
@@ -1343,7 +1339,7 @@ size of a matrix can't be set by providing a cube)
 
 ## Reset
 
-`reset()` Reset the size to zero (the object will have no elements)
+`.reset()` sets a matrix/vector size to zero (the object will have no elements).
   
 ### Examples
 
@@ -1489,23 +1485,19 @@ A collection of member functions of the `Cube` class that provide subcube views.
 
 ### Non-contiguous views for cube
       
-* `Q.elem(vector_of_indices)`
-* `Q(vector_of_indices)`
-* `Q.slices( vector_of_slice_indices)`    
+`Q.elem(vector_of_indices)`, `Q(vector_of_indices)`, and
+`Q.slices( vector_of_slice_indices)` are instances of `span(a,b)` that can be
+replaced by:
 
-Instances of `span(a,b)` can be replaced by:
-
-* `span()` or `span::all`, to indicate the entire range
-* `span(a)`, to indicate a particular row, column or slice
+* `span()` or `span::all`, to indicate the entire range.
+* `span(a)`, to indicate a particular row, column or slice.
   
 An individual slice, accessed via `.slice()`, is an instance of the `Mat` class
-(a reference to a matrix is provided)
+(a reference to a matrix is provided).
 
 All `.tube()` forms are variants of `.subcube()`, using `first_slice = 0` and
-`last_slice = Q.n_slices-1`
-
-The `.tube(row,col)` form uses `row = first_row = last_row`, and
-`col = first_col = last_col`
+`last_slice = Q.n_slices-1`. The `.tube(row,col)` form uses
+`row = first_row = last_row`, and `col = first_col = last_col`.
 
 In the function `Q.elem(vector_of_indices)`, elements specified in
 `vector_of_indices` are accessed. `Q` is interpreted as one long vector, with
@@ -1562,7 +1554,7 @@ For a 2D field `F`, the subfields are accessed as:
 * `F(first_row, first_col, size(G))` (`G` is a 2D field)
 * `F(first_row, first_col, size(n_rows, n_cols))`
 
-For a 3D field _F_, the subfields are accessed as:
+For a 3D field `F`, the subfields are accessed as:
   
 * `F.slice(slice_number)`
 * `F.slices(first_slice, last_slice)`
@@ -1573,5 +1565,188 @@ For a 3D field _F_, the subfields are accessed as:
 
 Instances of `span(a,b)` can be replaced by:
 
-* `span()` or `span::all`, to indicate the entire range
-* `span(a)`, to indicate a particular row or column
+* `span()` or `span::all`, to indicate the entire range.
+* `span(a)`, to indicate a particular row or column.
+
+## Diagonal
+
+`.diag()` and `.diag(k)` are member functions of `Mat` and `SpMat` with
+read/write access to the diagonal in a matrix. The argument k specifies the
+diagonal to use and it is an optional argument that is zero by default. The
+diagonal is interpreted as a column vector within expressions.
+
+* `k = 0` indicates the main diagonal (default setting)
+* `k < 0` indicates the `k`-th sub-diagonal (below main diagonal, towards
+  bottom-left corner)
+* `k > 0` indicates the `k`-th super-diagonal (above main diagonal, towards
+  top-right corner)
+
+### Caveat
+
+To calculate only the diagonal elements of a compound expression, use
+`diagvec()` or `diagmat()`.
+      
+### Examples
+
+```cpp
+[[cpp11::register]] doubles diagonal_fun1_(const int& n) {
+  mat X(n, n, fill::randu);
+
+  vec A = X.diag(); // extract the main diagonal
+  double B = accu(X.diag(1)); // sum of elements on the first upper diagonal
+  double C = accu(X.diag(-1)); // sum of elements on the first lower diagonal
+
+  X.diag() = randu<vec>(n);
+  X.diag() += A;
+  X.diag() /= B;
+  X.diag() *= C;
+
+  sp_mat S = sprandu<sp_mat>(n, n, 0.0);
+  S.diag().ones();
+
+  vec v(S.diag());  // copy sparse diagonal to dense vector
+  v += X.diag();
+
+  return as_doubles(v);  // Convert from C++ to R
+}
+```
+
+## Each col
+
+`.each_col()`, `.each_col(vector_of_indices)` and `.each_col(lambda_function)`
+are member functions of `Mat`. These apply a vector operation to each column of
+a matrix, and are similar to "broadcasting" in Matlab/Octave.
+  
+### Form 1
+
+`.each_col()` supports the following operations:
+      
+* `+` addition
+* `+=` in-place addition
+* `-` subtraction
+* `-=` in-place subtraction
+* `%` element-wise multiplication
+* `%=` in-place element-wise multiplication
+* `/` element-wise division
+* `/=` in-place element-wise division
+* `=` assignment (copy)
+    
+### Form 2
+
+`.each_col(vector_of_indices)` supports the same operations as form 1. The
+argument `vector_of_indices` contains a list of indices of the columns to be
+used, and it must evaluate to a vector of type `uvec`.
+  
+### Form 3
+
+`.each_col(lambda_function)` applies the given `lambda_function` to each column
+vector. The function must accept a reference to a `Col` object with the same
+element type as the underlying matrix.
+  
+### Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> each_col_fun1_(const int& n) {
+  mat X(n, n + 1, fill::ones);
+
+  // create a vector with n elements ranging from 5 to 10
+  vec v = linspace<vec>(5, 10, n);
+
+  // in-place addition of v to each column vector of X
+  X.each_col() += v;
+
+  // generate Y by adding v to each column vector of X
+  mat Y = X.each_col() + v;
+
+  // subtract v from columns 1 and 2 of X
+  X.cols(0, 1).each_col() -= v;
+
+  uvec indices(2);
+  indices(0) = 1;
+  indices(1) = 2;
+
+  X.each_col(indices) = v;  // copy v to columns 1 and 2 of X
+
+  // lambda function with non-const vector
+  X.each_col([](vec& a) { 2 * a; });
+
+  const mat& XX = X;
+
+  // lambda function with const vector
+  XX.each_col([](const vec& b) { 3 * b; });
+
+  mat res = X + Y + XX;
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+```
+
+## Each row
+
+`.each_row()`, `.each_row(vector_of_indices)`, `.each_row(lambda_function)` are
+member functions of `Mat`. These apply a vector operation to each row of
+a matrix, and are similar to "broadcasting" in Matlab/Octave.
+
+### Form 1
+
+`.each_row()` supports the following operations:
+      
+* `+` addition
+* `+=` in-place addition
+* `-` subtraction
+* `-=` in-place subtraction
+* `%` element-wise multiplication
+* `%=` in-place element-wise multiplication
+* `/` element-wise division
+* `/=` in-place element-wise division
+* `=` assignment (copy)
+    
+### Form 2
+
+`.each_row(vector_of_indices)` supports the same operations as form 1. The
+argument `vector_of_indices` contains a list of indices of the rows to be used,
+and it must evaluate to a vector of type `uvec`.
+  
+### Form 3
+
+`.each_col(lambda_function)` applies the given `lambda_function` to each column
+vector. The function must accept a reference to a `Row` object with the same
+element type as the underlying matrix.
+  
+### Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> each_row_fun1_(const int& n) {
+  mat X(n, n + 1, fill::ones);
+
+  // create a vector with n elements ranging from 5 to 10
+  vec v = linspace<vec>(5, 10, n);
+
+  // in-place addition of v to each rows vector of X
+  X.each_row() += v;
+
+  // generate Y by adding v to each rows vector of X
+  mat Y = X.each_row() + v;
+
+  // subtract v from rows 1 and 2 of X
+  X.rows(0, 1).each_row() -= v;
+
+  uvec indices(2);
+  indices(0) = 1;
+  indices(1) = 2;
+
+  X.each_col(indices) = v;  // copy v to rows 1 and 2 of X
+
+  // lambda function with non-const vector
+  X.each_row([](vec& a) { 2 * a; });
+
+  const mat& XX = X;
+
+  // lambda function with const vector
+  XX.each_row([](const vec& b) { 3 * b; });
+
+  mat res = X + Y + XX;
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+```

@@ -456,3 +456,58 @@
 
   return as_doubles_matrix(res);  // Convert from C++ to R
 }
+
+[[cpp11::register]] doubles diagonal_fun1_(const int& n) {
+  mat X(n, n, fill::randu);
+
+  vec A = X.diag(); // extract the main diagonal
+  double B = accu(X.diag(1)); // sum of elements on the first upper diagonal
+  double C = accu(X.diag(-1)); // sum of elements on the first lower diagonal
+
+  X.diag() = randu<vec>(n);
+  X.diag() += A;
+  X.diag() /= B;
+  X.diag() *= C;
+
+  sp_mat S = sprandu<sp_mat>(n, n, 0.0);
+  S.diag().ones();
+
+  vec v(S.diag());  // copy sparse diagonal to dense vector
+  v += X.diag();
+
+  return as_doubles(v);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> each_col_fun1_(const int& n) {
+  mat X(n, n + 1, fill::ones);
+
+  // create a vector with n elements ranging from 5 to 10
+  vec v = linspace<vec>(5, 10, n);
+
+  // in-place addition of v to each column vector of X
+  X.each_col() += v;
+
+  // generate Y by adding v to each column vector of X
+  mat Y = X.each_col() + v;
+
+  // subtract v from columns 1 and 2 of X
+  X.cols(0, 1).each_col() -= v;
+
+  uvec indices(2);
+  indices(0) = 1;
+  indices(1) = 2;
+
+  X.each_col(indices) = v;  // copy v to columns 1 and 2 of X
+
+  // lambda function with non-const vector
+  X.each_col([](vec& a) { 2 * a; });
+
+  const mat& XX = X;
+
+  // lambda function with const vector
+  XX.each_col([](const vec& b) { 3 * b; });
+
+  mat res = X + Y + XX;
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}

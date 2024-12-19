@@ -362,6 +362,20 @@ extern "C" SEXP _cpp11armadillotest_subview_fun2_(SEXP n) {
     return cpp11::as_sexp(subview_fun2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
+// 08_official_documentation_adapted.cpp
+doubles diagonal_fun1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_diagonal_fun1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(diagonal_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> each_col_fun1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_each_col_fun1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(each_col_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
@@ -374,6 +388,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_column_fun1_",                  (DL_FUNC) &_cpp11armadillotest_column_fun1_,                  2},
     {"_cpp11armadillotest_copy_size_fun1_",               (DL_FUNC) &_cpp11armadillotest_copy_size_fun1_,               1},
     {"_cpp11armadillotest_cube_fun1_",                    (DL_FUNC) &_cpp11armadillotest_cube_fun1_,                    2},
+    {"_cpp11armadillotest_diagonal_fun1_",                (DL_FUNC) &_cpp11armadillotest_diagonal_fun1_,                1},
+    {"_cpp11armadillotest_each_col_fun1_",                (DL_FUNC) &_cpp11armadillotest_each_col_fun1_,                1},
     {"_cpp11armadillotest_eigen_gen_dbl_complex_wrapper", (DL_FUNC) &_cpp11armadillotest_eigen_gen_dbl_complex_wrapper, 1},
     {"_cpp11armadillotest_eigen_gen_mat",                 (DL_FUNC) &_cpp11armadillotest_eigen_gen_mat,                 1},
     {"_cpp11armadillotest_eigen_gen_mat_complex_wrapper", (DL_FUNC) &_cpp11armadillotest_eigen_gen_mat_complex_wrapper, 1},
