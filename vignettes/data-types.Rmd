@@ -886,3 +886,120 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
   return as_doubles_matrix(D);  // convert from C++ to R
 }
 ```
+
+## Random uniform
+
+Set all the elements to random values from a uniform distribution in the [0,1]
+interval, optionally first changing the size to specified dimensions.
+
+For complex elements, the real and imaginary parts are treated separately.
+
+* `randu()` (member function of `Mat`, `Col`, `Row`, `Cube`)
+* `randu(n_elem)` (member function of `Col` and `Row`)
+* `randu(n_rows, n_cols)` (member function of `Mat`)
+* `randu(n_rows, n_cols, n_slices)` (member function of `Cube`)
+* `randu(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`)
+
+```r
+a <- matrix(runif(4), nrow = 2, ncol = 2)
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> randu_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+
+  mat B;
+  B.randu(size(A)); // random uniform matrix with the same size as A
+
+  mat C(A.n_rows, A.n_cols, fill::randu);
+
+  mat D = A + B + C;
+
+  return as_doubles_matrix(D);  // convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> randu_fun2_(const int& n) {
+  GetRNGstate();  // Ensure R's RNG state is synchronized
+  mat y(n, n);
+  ::arma_rng::randu<double>::fill(y.memptr(), y.n_elem);
+  PutRNGstate();
+
+  return as_doubles_matrix(y);
+}
+```
+
+## Normal distribution
+
+Set all the elements to random values from a normal distribution with zero mean
+and unit variance, optionally first changing the size to specified dimensions.
+
+For complex elements, the real and imaginary parts are treated separately.
+
+* `randn()` (member function of `Mat`, `Col`, `Row`, `Cube`)
+* `randn(n_elem)` (member function of `Col` and `Row`)
+* `randn(n_rows, n_cols)` (member function of `Mat`)
+* `randn(n_rows, n_cols, n_slices)` (member function of `Cube`)
+* `randn(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`)
+
+### Examples
+
+```r
+a <- matrix(runif(4), nrow = 2, ncol = 2)
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> randn_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+
+  mat B;
+  B.randn(size(A)); // random normal matrix with the same size as A
+
+  mat C(A.n_rows, A.n_cols, fill::randn);
+
+  mat D = A + B + C;
+
+  return as_doubles_matrix(D);  // convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> randn_fun2_(const int& n) {
+  GetRNGstate();  // Ensure R's RNG state is synchronized
+  mat y(n, n);
+  ::arma_rng::randn<double>::fill(y.memptr(), y.n_elem);
+  PutRNGstate();
+  
+  return as_doubles_matrix(y);
+}
+```
+
+## Fill
+
+Sets the elements to a specified value
+
+`fill( value )` Member function of `Mat`, `Col`, `Row`, `Cube`, `field`
+  
+The type of value must match the type of elements used by the container object
+(e.g., for `Mat` the type is `double`)
+  
+### Examples
+
+```r
+a <- matrix(runif(4), nrow = 2, ncol = 2)
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> fill_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+
+  uword N = A.n_rows;
+  uword M = A.n_cols;
+
+  mat B(size(A), fill::value(200.0));  // create a matrix filled with 200.0
+  mat C(N, M, fill::value(100.0));     // matrix filled with 100.0
+  mat D(N, M, fill::zeros);            // matrix filled with zeros
+  mat E(N, M, fill::ones);             // matrix filled with ones
+
+  mat F = A + B + C + D + E;
+
+  return as_doubles_matrix(F);  // convert from C++ to R
+}
+```

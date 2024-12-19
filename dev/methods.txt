@@ -1,0 +1,3325 @@
+## Uniform distribution
+
+  
+
+`randu()`
+
+  
+
+ 
+
+(member function of `Mat`, `Col`, `Row`, `Cube`)
+
+`randu( n_elem )`
+
+  
+
+ 
+
+(member function of `Col` and `Row`)
+
+`randu( n_rows, n_cols )`
+
+  
+
+ 
+
+(member function of `Mat`)
+
+`randu( n_rows, n_cols, n_slices )`
+
+  
+
+ 
+
+(member function of `Cube`)
+
+`randu( size(X) )`
+
+  
+
+ 
+
+(member function of `Mat`, `Col`, `Row`, `Cube`)
+
+  
+
+`randn()`
+
+  
+
+ 
+
+(member function of `Mat`, `Col`, `Row`, `Cube`)
+
+`randn( n_elem )`
+
+  
+
+ 
+
+(member function of `Col` and `Row`)
+
+`randn( n_rows, n_cols )`
+
+  
+
+ 
+
+(member function of `Mat`)
+
+`randn( n_rows, n_cols, n_slices )`
+
+  
+
+ 
+
+(member function of `Cube`)
+
+`randn( size(X) )`
+
+  
+
+ 
+
+(member function of `Mat`, `Col`, `Row`, `Cube`)
+
+*   Set all the elements to random values, optionally first changing the size to specified dimensions
+  
+*   _.randu()_ uses a uniform distribution in the \[0,1\] interval
+  
+*   _.randn()_ uses a normal/Gaussian distribution with zero mean and unit variance
+  
+*   For complex elements, the real and imaginary parts are treated separately
+  
+*   Examples:
+    
+    mat A;
+    A.randu(5, 10);   // or:  mat A(5, 10, fill::randu);
+    
+    mat B;
+    B.randu( size(A) );
+    
+    mat C(5, 10, fill::zeros);
+    C.randu();
+    
+  
+*   See also:
+    *   [randu()](#randu) (standalone function with extended functionality)
+    *   [randn()](#randn) (standalone function with extended functionality)
+    *   [.fill()](#fill)
+    *   [.imbue()](#imbue)
+    *   [.ones()](#ones_member)
+    *   [.zeros()](#zeros_member)
+    *   [size()](#size)
+    *   [RNG seed setting](#rng_seed)
+    *   [uniform distribution in Wikipedia](https://en.wikipedia.org/wiki/Uniform_distribution_(continuous))
+    *   [normal distribution in Wikipedia](https://en.wikipedia.org/wiki/Normal_distribution)
+  
+
+* * *
+
+  
+
+`fill( value )`
+
+*   Member function of `Mat`, `Col`, `Row`, `Cube`, `field`
+  
+*   Sets the elements to a specified value
+  
+*   The type of value must match the type of elements used by the container object (eg. for `Mat` the type is _double_)
+  
+*   Examples:
+    
+    mat A(5, 6);
+    
+    A.fill(123.0);   // or:  mat A(5, 6, fill::value(123.0));
+    
+  
+*   **Note:** to set all elements to zero during matrix construction, use the following more compact form:
+    
+    mat A(5, 6, fill::zeros);
+    
+  
+*   See also:
+    *   [.imbue()](#imbue)
+    *   [.ones()](#ones_member)
+    *   [.zeros()](#zeros_member)
+    *   [.randu() & .randn()](#randu_randn_member)
+    *   [.replace()](#replace)
+    *   [constants (pi, nan, inf, ...)](#constants)
+  
+
+* * *
+
+  
+
+`imbue(** functor **)`  
+`imbue(** lambda_function **)`  
+
+*   Member functions of `Mat`, `Col`, `Row` and `Cube`
+  
+*   Imbue (fill) with values provided by a functor or lambda function
+  
+*   For matrices, filling is done column-by-column (e.g., column 0 is filled, then column 1, ...)
+  
+*   For cubes, filling is done slice-by-slice, with each slice treated as a matrix
+  
+*   Examples:
+    
+    std::mt19937 engine;  // Mersenne twister random number engine
+    
+    std::uniform_real_distribution<double> distr(0.0, 1.0);
+      
+    mat A(4, 5, fill::none);
+      
+    A.imbue( \[&\]() { return distr(engine); } );
+    
+  
+*   See also:
+    *   [.fill()](#fill)
+    *   [.transform()](#transform)
+    *   [element access](#element_access)
+    *   [function object](https://en.wikipedia.org/wiki/Function_object) at Wikipedia
+    *   [C++11 lambda functions](https://en.wikipedia.org/wiki/C%2B%2B11#Lambda_functions_and_expressions) at Wikipedia
+    *   [lambda function](https://www.cprogramming.com/c++11/c++11-lambda-closures.html) at cprogramming.com
+  
+
+* * *
+
+  
+
+`clean(** threshold **)`  
+
+*   Member function of `Mat`, `Col`, `Row`, `Cube` and `SpMat`
+  
+*   For objects with non-complex elements: each element with an absolute value ≤ _threshold_ is replaced by zero
+  
+*   For objects with complex elements: for each element, each component (real and imaginary) with an absolute value ≤ _threshold_ is replaced by zero
+  
+*   Can be used to sparsify a matrix, in the sense of zeroing values with small magnitudes
+  
+*   **Caveat:** to explicitly convert from dense storage to sparse storage, use the [SpMat class](#SpMat)
+  
+*   Examples:
+    
+    sp_mat A;
+    
+    A.sprandu(1000, 1000, 0.01);
+    
+    A(12,34) =  datum::eps;
+    A(56,78) = -datum::eps;
+    
+    A.clean(datum::eps);
+    
+  
+*   See also:
+    *   [.replace()](#replace)
+    *   [.clamp()](#clamp_member)
+    *   [.transform()](#transform)
+    *   [.is_zero()](#is_zero)
+    *   [.zeros()](#zeros_member)
+    *   [nonzeros()](#nonzeros)
+    *   [datum::eps](#constants)
+  
+
+* * *
+
+  
+
+`replace( old_value, new_value )`
+
+*   Member function of `Mat`, `Col`, `Row`, `Cube` and `SpMat`
+  
+*   For all elements equal to _old_value_, set them to _new_value_
+  
+*   The type of _old_value_ and _new_value_ must match the type of elements used by the container object (eg. for `Mat` the type is _double_)
+  
+*   **Caveats:**
+    *   floating point numbers (_float_ and _double_) are approximations due to their [necessarily limited precision](https://en.wikipedia.org/wiki/Floating-point_arithmetic)
+    *   for sparse matrices (`SpMat`), replacement is not done when _old_value = 0_
+  
+*   Examples:
+    
+    mat A(5, 6, fill::randu);
+    
+    A.diag().fill(datum::nan);
+    
+    A.replace(datum::nan, 0);  // replace each NaN with 0
+    
+  
+*   See also:
+    *   [.transform()](#transform)
+    *   [.for_each()](#for_each)
+    *   [.clean()](#clean)
+    *   [.clamp()](#clamp_member)
+    *   [.fill()](#fill)
+    *   [.has_nan()](#has_nan)
+    *   [.has_inf()](#has_inf)
+    *   [find()](#find)
+    *   [relational operators](#operators)
+    *   [constants (pi, nan, inf, ...)](#constants)
+  
+
+* * *
+
+  
+
+`clamp( min_value, max_value )`
+
+*   Member function of `Mat`, `Col`, `Row`, `Cube` and `SpMat`
+  
+*   Clamp each element to the \[_min_val_, _max_val_\] interval;  
+    any value lower than _min_val_ will be set to _min_val_, and any value higher than _max_val_ will be set to _max_val_
+  
+*   For complex elements, the real and imaginary components are clamped separately
+  
+*   For sparse matrices, clamping is applied only to the non-zero elements
+  
+*   Examples:
+    
+    mat A(5, 6, fill::randu);
+    
+    A.clamp(0.2, 0.8);
+    
+  
+*   See also:
+    *   [.replace()](#replace)
+    *   [.clean()](#clean)
+    *   [.transform()](#transform)
+    *   [.for_each()](#for_each)
+    *   [clamp()](#clamp) (standalone function)
+    *   [relational operators](#operators)
+  
+
+* * *
+
+  
+
+`transform(** functor **)`  
+`transform(** lambda_function **)`  
+
+*   Member functions of `Mat`, `Col`, `Row`, `Cube` and `SpMat`
+  
+*   Transform each element using a functor or lambda function
+  
+*   For dense matrices, transformation is done column-by-column for all elements
+  
+*   For sparse matrices, transformation is done column-by-column for non-zero elements
+  
+*   For cubes, transformation is done slice-by-slice, with each slice treated as a matrix
+  
+*   Examples:
+    
+    mat A(4, 5, fill::ones);
+    
+    // add 123 to every element
+    A.transform( \[\](double val) { return (val + 123.0); } );
+    
+  
+*   See also:
+    *   [.for_each()](#for_each)
+    *   [.replace()](#replace)
+    *   [.imbue()](#imbue)
+    *   [.clean()](#clean)
+    *   [.clamp()](#clamp_member)
+    *   [element access](#element_access)
+    *   [overloaded operators](#operators)
+    *   [miscellaneous element-wise functions](#misc_fns)   (exp, log, sqrt, square, round, ...)
+    *   [function object](https://en.wikipedia.org/wiki/Function_object) at Wikipedia
+    *   [C++11 lambda functions](https://en.wikipedia.org/wiki/C%2B%2B11#Lambda_functions_and_expressions) at Wikipedia
+    *   [lambda function](https://www.cprogramming.com/c++11/c++11-lambda-closures.html) at cprogramming.com
+  
+
+* * *
+
+  
+
+`for_each(** functor **)`  
+`for_each(** lambda_function **)`  
+
+*   Member functions of `Mat`, `Col`, `Row`, `Cube`, `SpMat` and `field`
+  
+*   For each element, pass its reference to a functor or lambda function
+  
+*   For dense matrices and fields, the processing is done column-by-column for all elements
+  
+*   For sparse matrices, the processing is done column-by-column for non-zero elements
+  
+*   For cubes, processing is done slice-by-slice, with each slice treated as a matrix
+  
+*   Examples:
+    
+    // add 123 to each element in a dense matrix
+    
+    mat A(4, 5, fill::ones);
+    
+    A.for_each( \[\](mat::elem_type& val) { val += 123.0; } );  // NOTE: the '&' is crucial!
+    
+    
+    // add 123 to each non-zero element in a sparse matrix
+    
+    sp_mat S; S.sprandu(1000, 2000, 0.1);
+    
+    S.for_each( \[\](sp_mat::elem_type& val) { val += 123.0; } );  // NOTE: the '&' is crucial!
+    
+    
+    // set the size of all matrices in field F
+    
+    field<mat> F(2,3);
+    
+    F.for_each( \[\](mat& X) { X.zeros(4,5); } );  // NOTE: the '&' is crucial!
+    
+  
+*   See also:
+    *   [.transform()](#transform)
+    *   [.replace()](#replace)
+    *   [.each_col() & .each_row()](#each_colrow)
+    *   [.each_slice()](#each_slice)
+    *   [element access](#element_access)
+    *   [miscellaneous element-wise functions](#misc_fns)   (exp, log, sqrt, square, round, ...)
+    *   [function object](https://en.wikipedia.org/wiki/Function_object) at Wikipedia
+    *   [C++11 lambda functions](https://en.wikipedia.org/wiki/C%2B%2B11#Lambda_functions_and_expressions) at Wikipedia
+    *   [lambda function](https://www.cprogramming.com/c++11/c++11-lambda-closures.html) at cprogramming.com
+  
+
+* * *
+
+  
+
+`set_size( n_elem )`
+
+  
+
+ 
+
+(member function of `Col`, `Row`, `field`)
+
+`set_size( n_rows, n_cols )`
+
+  
+
+ 
+
+(member function of `Mat`, `SpMat`, `field`)
+
+`set_size( n_rows, n_cols, n_slices )`
+
+  
+
+ 
+
+(member function of `Cube` and `field`)
+
+`set_size( size(X) )`
+
+  
+
+ 
+
+(member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`, `field`)
+
+*   Change the size of an object, without explicitly preserving data and without initialising the elements (e.g., elements may contain garbage values, including NaN)
+  
+*   To initialise the elements to zero while changing the size, use [.zeros()](#zeros_member) instead
+  
+*   To explicitly preserve data while changing the size, use [.reshape()](#reshape_member) or [.resize()](#resize_member) instead;  
+    **NOTE**: _.reshape()_ and _.resize()_ are considerably slower than _.set_size()_
+  
+*   Examples:
+    
+    mat A;
+    A.set_size(5, 10);      // or:  mat A(5, 10, fill::none);
+    
+    mat B;
+    B.set_size( size(A) );  // or:  mat B(size(A), fill::none);
+    
+    vec v;
+    v.set_size(100);        // or:  vec v(100, fill::none);
+    
+  
+*   See also:
+    *   [.reset()](#reset)
+    *   [.copy_size()](#copy_size)
+    *   [.reshape()](#reshape_member)
+    *   [.resize()](#resize_member)
+    *   [.zeros()](#zeros_member)
+    *   [size()](#size)
+  
+
+* * *
+
+  
+
+`reshape( n_rows, n_cols )`
+
+  
+
+ 
+
+(member function of `Mat` and `SpMat`)
+
+`reshape( n_rows, n_cols, n_slices )`
+
+  
+
+ 
+
+(member function of `Cube`)
+
+`reshape( size(X) )`
+
+  
+
+ 
+
+(member function of `Mat`, `Cube`, `SpMat`)
+
+*   Recreate the object according to given size specifications, with the elements taken from the previous version of the object in a column-wise manner; the elements in the generated object are placed column-wise (e.g., the first column is filled up before filling the second column)
+  
+*   The layout of the elements in the recreated object will be different to the layout in the previous version of the object
+  
+*   If the total number of elements in the previous version of the object is less than the specified size, the extra elements in the recreated object are set to zero
+  
+*   If the total number of elements in the previous version of the object is greater than the specified size, only a subset of the elements is taken
+  
+*   **Caveats:**
+    *   to change the size without preserving data, use [.set_size()](#set_size) instead, which is much faster
+    *   to grow/shrink the object while preserving the elements **as well as** the layout of the elements, use [.resize()](#resize_member) instead
+    *   to flatten a matrix into a vector, use [vectorise()](#vectorise) or [.as_col() / .as_row()](#as`Col`row) instead
+  
+*   Examples:
+    
+    mat A(4, 5, fill::randu);
+    
+    A.reshape(5,4);
+    
+  
+*   See also:
+    *   [.resize()](#resize_member)
+    *   [.set_size()](#set_size)
+    *   [.copy_size()](#copy_size)
+    *   [.zeros()](#zeros_member)
+    *   [.reset()](#reset)
+    *   [.as_col() / .as_row()](#as`Col`row)
+    *   [reshape()](#reshape) (standalone function)
+    *   [vectorise()](#vectorise)
+    *   [size()](#size)
+  
+
+* * *
+
+  
+
+`resize( n_elem )`
+
+  
+
+ 
+
+(member function of `Col`, `Row`)
+
+`resize( n_rows, n_cols )`
+
+  
+
+ 
+
+(member function of `Mat` and `SpMat`)
+
+`resize( n_rows, n_cols, n_slices )`
+
+  
+
+ 
+
+(member function of `Cube`)
+
+`resize( size(X) )`
+
+  
+
+ 
+
+(member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`)
+
+*   Recreate the object according to given size specifications, while preserving the elements as well as the layout of the elements
+  
+*   Can be used for growing or shrinking an object (e.g., adding/removing rows, and/or columns, and/or slices)
+  
+*   **Caveat:** to change the size without preserving data, use [.set_size()](#set_size) instead, which is much faster
+  
+*   Examples:
+    
+    mat A(4, 5, fill::randu);
+    
+    A.resize(7,6);
+    
+  
+*   See also:
+    *   [.reshape()](#reshape_member)
+    *   [.set_size()](#set_size)
+    *   [.copy_size()](#copy_size)
+    *   [.zeros()](#zeros_member)
+    *   [.reset()](#reset)
+    *   [.insert_rows / cols / slices](#insert)
+    *   [.shed_rows / cols / slices](#shed)
+    *   [resize()](#resize) (standalone function)
+    *   [vectorise()](#vectorise)
+    *   [size()](#size)
+  
+
+* * *
+
+  
+
+`copy_size( A )`
+
+*   Set the size to be the same as object _A_
+  
+*   Object _A_ must be of the same root type as the object being modified (eg. the size of a matrix can't be set by providing a cube)
+  
+*   Examples:
+    
+    mat A(5, 6, fill::randu);
+    
+    mat B;
+    B.copy_size(A);
+    
+    cout << B.n_rows << endl;
+    cout << B.n_cols << endl;
+    
+  
+*   See also:
+    *   [.reset()](#reset)
+    *   [.set_size()](#set_size)
+    *   [.reshape()](#reshape_member)
+    *   [.resize()](#resize_member)
+    *   [.zeros()](#zeros_member)
+    *   [size()](#size)
+  
+
+* * *
+
+  
+
+`reset()`
+
+*   Reset the size to zero (the object will have no elements)
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    A.reset();
+    
+  
+*   See also:
+    *   [.set_size()](#set_size)
+    *   [.is_empty()](#is_empty)
+    *   [.zeros()](#zeros_member)
+  
+
+* * *
+
+  
+
+**submatrix views**
+
+*   A collection of member functions of `Mat`, `Col` and `Row` classes that provide read/write access to submatrix views  
+      
+    
+    *   contiguous views for matrix X:  
+          
+        X.**col(** col_number **)`  
+        X.**row(** row_number **)`  
+          
+        X.**cols(** first_col**,** last_col **)`  
+        X.**rows(** first_row**,** last_row **)`  
+          
+        X.**submat(** first_row**,** first_col**,** last_row**,** last_col **)`  
+          
+        X**( span(**first_row**,** last_row**), span(**first_col**,** last_col**) )`  
+          
+        X**(** first_row**,** first_col**, size(**n_rows**,** n_cols**) )`  
+        X**(** first_row**,** first_col**, size(**Y**) )`    _\[ Y is a matrix \]_  
+          
+        X**(** **span(**first_row**,** last_row**),** col_number **)`  
+        X**(** row_number**,** **span(**first_col**,** last_col**) )`  
+          
+        X.**head_cols(** number_of_cols **)`  
+        X.**head_rows(** number_of_rows **)`  
+          
+        X.**tail_cols(** number_of_cols **)`  
+        X.**tail_rows(** number_of_rows **)`  
+          
+        X.**unsafe_col(** col_number **)`    _\[ use with caution \]_  
+        
+      
+    *   contiguous views for vector V:  
+          
+        V**( span(**first_index**,** last_index**) )`  
+        V.**subvec(** first_index**,** last_index **)`  
+          
+        V.**subvec(** first_index**, size(**W**) )`    _\[ W is a vector \]_  
+          
+        V.**head(** number_of_elements **)`  
+        V.**tail(** number_of_elements **)`
+    
+       
+    
+     
+    
+        
+    
+    *   non-contiguous views for matrix or vector X:
+          
+        X.**elem(** vector_of_indices **)`  
+        X**(** vector_of_indices **)`  
+          
+        X.**cols(** vector_of_column_indices **)`  
+        X.**rows(** vector_of`Row`indices **)`  
+          
+        X.**submat(** vector_of`Row`indices**,** vector_of_column_indices **)`  
+        X**(** vector_of`Row`indices**,** vector_of_column_indices **)`  
+        
+      
+      
+    *   related matrix views (documented separately)
+          
+        X.[diag()](#diag)  
+        X.[each_row()](#each_colrow)  
+        X.[each_col()](#each_colrow)  
+        
+    
+      
+    
+*   Instances of _span(start,end)_ can be replaced by _span::all_ to indicate the entire range
+  
+*   For functions requiring one or more vector of indices, eg. _X.submat(vector_of`Row`indices, vector_of_column_indices)_, each vector of indices must be of type _[uvec](#Col)_
+  
+*   In the function _X.elem(vector_of_indices)_, elements specified in _vector_of_indices_ are accessed. _X_ is interpreted as one long vector, with column-by-column ordering of the elements of _X_. The _vector_of_indices_ must evaluate to a vector of type [uvec](#Col) (eg. generated by the [find()](#find) function). The aggregate set of the specified elements is treated as a column vector (e.g., the output of _X.elem()_ is always a column vector).
+  
+*   The function _.unsafe_col()_ is provided for speed reasons and should be used only if you know what you are doing. It creates a seemingly independent `Col` vector object (eg. `vec`), but uses memory from the existing matrix object. As such, the created vector is not alias safe, and does not take into account that the underlying matrix memory could be freed (eg. due to any operation involving a size change of the matrix).
+  
+*   Examples:
+    
+    mat A(5, 10, fill::zeros);
+    
+    A.submat( 0,1, 2,3 )      = randu<mat>(3,3);
+    A( span(0,2), span(1,3) ) = randu<mat>(3,3);
+    A( 0,1, size(3,3) )       = randu<mat>(3,3);
+    
+    mat B = A.submat( 0,1, 2,3 );
+    mat C = A( span(0,2), span(1,3) );
+    mat D = A( 0,1, size(3,3) );
+    
+    A.col(1)        = randu<mat>(5,1);
+    A(span::all, 1) = randu<mat>(5,1);
+    
+    mat X(5, 5, fill::randu);
+    
+    // get all elements of X that are greater than 0.5
+    vec q = X.elem( find(X > 0.5) );
+    
+    // add 123 to all elements of X greater than 0.5
+    X.elem( find(X > 0.5) ) += 123.0;
+    
+    // set four specific elements of X to 1
+    uvec indices = { 2, 3, 6, 8 };
+    
+    X.elem(indices) = ones<vec>(4);
+    
+    // add 123 to the last 5 elements of vector a
+    vec a(10, fill::randu);
+    a.tail(5) += 123.0;
+    
+    // add 123 to the first 3 elements of column 2 of X
+    X.col(2).head(3) += 123;
+    
+  
+*   See also:
+    *   [diagonal views](#diag)
+    *   [.each_col() & .each_row()](#each_colrow)    (vector operations applied to each column or row)
+    *   [.colptr()](#colptr)
+    *   [.in_range()](#in_range)
+    *   [find()](#find)
+    *   [join_rows / cols / slices](#join)
+    *   [.shed_rows / cols / slices](#shed)
+    *   [.insert_rows / cols / slices](#insert)
+    *   [size()](#size)
+    *   [subcube views](#subcube)
+  
+
+* * *
+
+  
+
+**subcube views and slices**
+
+*   A collection of member functions of the `Cube` class that provide subcube views
+  
+
+*   contiguous views for cube Q:  
+      
+    Q.**slice(** slice_number **)`  
+    Q.**slices(** first_slice**,** last_slice **)`  
+      
+    Q.**row(** row_number **)`  
+    Q.**rows(** first_row**,** last_row **)`  
+      
+    Q.**col(** col_number **)`  
+    Q.**cols(** first_col**,** last_col **)`  
+      
+    Q.**subcube(** first_row**,** first_col**,** first_slice**,** last_row**,** last_col**,** last_slice **)`  
+      
+    Q**( span(**first_row**,** last_row**), span(**first_col**,** last_col**), span(**first_slice**,** last_slice**) )`  
+      
+    Q**(** first_row**,** first_col**,** first_slice**, size(**n_rows**,** n_cols**,** n_slices**) )`  
+    Q**(** first_row**,** first_col**,** first_slice**, size(**R**) )`      _\[ R is a cube \]_  
+      
+    Q.**head_slices(** number_of_slices **)`  
+    Q.**tail_slices(** number_of_slices **)`  
+      
+    Q.**tube(** row**,** col **)`  
+    Q.**tube(** first_row**,** first_col**,** last_row**,** last_col **)`  
+    Q.**tube( span(**first_row**,** last_row**), span(**first_col**,** last_col**) )`  
+    Q.**tube(** first_row**,** first_col**, size(**n_rows**,** n_cols**) )`  
+    
+
+   
+
+ 
+
+    
+
+*   non-contiguous views for cube Q:
+      
+    Q.**elem(** vector_of_indices **)`  
+    Q**(** vector_of_indices **)`  
+      
+    Q.**slices(** vector_of_slice_indices **)`  
+    
+  
+*   related cube views (documented separately)
+      
+    Q.[each_slice()](#each_slice)  
+    Q.[col_as_mat()](#col`Row`as_mat)  
+    Q.[row_as_mat()](#col`Row`as_mat)  
+      
+    
+
+  
+*   Instances of _span(a,b)_ can be replaced by:
+    *   _span()_ or _span::all_, to indicate the entire range
+    *   _span(a)_, to indicate a particular row, column or slice
+  
+*   An individual slice, accessed via _.slice()_, is an instance of the `Mat` class (a reference to a matrix is provided)
+  
+*   All _.tube()_ forms are variants of _.subcube()_, using _first_slice = 0_ and _last_slice = Q.n_slices-1_
+  
+*   The _.tube(row,col)_ form uses _row = first_row = last`Row`, and _col = first_col = last`Col`
+  
+*   In the function _Q.elem(vector_of_indices)_, elements specified in _vector_of_indices_ are accessed. _Q_ is interpreted as one long vector, with slice-by-slice and column-by-column ordering of the elements of _Q_. The _vector_of_indices_ must evaluate to a vector of type [uvec](#Col) (eg. generated by the [find()](#find) function). The aggregate set of the specified elements is treated as a column vector (e.g., the output of _Q.elem()_ is always a column vector).
+  
+*   In the function _Q.slices(vector_of_slice_indices)_, slices specified in _vector_of_slice_indices_ are accessed. The _vector_of_slice_indices_ must evaluate to a vector of type [uvec](#Col).
+  
+*   Examples:
+    
+    cube A(2, 3, 4, fill::randu);
+    
+    mat  B = A.slice(1); // each slice is a matrix
+    
+    A.slice(0) = randu<mat>(2,3);
+    A.slice(0)(1,2) = 99.0;
+    
+    A.subcube(0,0,1,  1,1,2)             = randu<cube>(2,2,2);
+    A( span(0,1), span(0,1), span(1,2) ) = randu<cube>(2,2,2);
+    A( 0,0,1, size(2,2,2) )              = randu<cube>(2,2,2);
+    
+    // add 123 to all elements of A greater than 0.5
+    A.elem( find(A > 0.5) ) += 123.0;
+    
+    cube C = A.head_slices(2);  // get first two slices
+    
+    A.head_slices(2) += 123.0;
+    
+  
+*   See also:
+    *   [.in_range()](#in_range)
+    *   [.each_slice()](#each_slice)
+    *   [.col_as_mat() / .row_as_mat()](#col`Row`as_mat)
+    *   [join_slices()](#join_slices)
+    *   [shed_slices()](#shed)
+    *   [insert_slices()](#insert)
+    *   [size()](#size)
+    *   [submatrix views](#submat)
+  
+
+* * *
+
+  
+
+**subfield views**
+
+*   A collection of member functions of the `field` class that provide subfield views  
+      
+    
+*   For a 2D field _F_, the subfields are accessed as:
+  
+
+F.**row(** row_number **)`  
+F.**col(** col_number **)`  
+  
+F.**rows(** first_row**,** last_row **)`  
+F.**cols(** first_col**,** last_col **)`  
+  
+F.**subfield(** first_row**,** first_col**,** last_row**,** last_col **)`  
+  
+F**( span(**first_row**,** last_row**), span(**first_col**,** last_col**) )`  
+  
+F**(** first_row**,** first_col**, size(**G**) )`    _\[ G is a 2D field \]_  
+F**(** first_row**,** first_col**, size(**n_rows**,** n_cols**) )`  
+
+  
+*   For a 3D field _F_, the subfields are accessed as:
+  
+
+F.**slice(** slice_number **)`  
+  
+F.**slices(** first_slice**,** last_slice **)`  
+  
+F.**subfield(** first_row**,** first_col**,** first_slice**,** last_row**,** last_col**,** last_slice **)`  
+  
+F**( span(**first_row**,** last_row**), span(**first_col**,** last_col**), span(**first_slice**,** last_slice**) )`  
+  
+F**(** first_row**,** first_col**,** first_slice**, size(**G**) )`    _\[ G is a 3D field \]_  
+F**(** first_row**,** first_col**,** first_slice**, size(**n_rows**,** n_cols**,** n_slices**) )`  
+
+  
+*   Instances of _span(a,b)_ can be replaced by:
+    *   _span()_ or _span::all_, to indicate the entire range
+    *   _span(a)_, to indicate a particular row or column
+  
+*   See also:
+    *   [.in_range()](#in_range)
+    *   [size()](#size)
+    *   [submatrix views](#submat)
+    *   [subcube views](#subcube)
+  
+
+* * *
+
+  
+
+`diag()`  
+`diag(** k **)`
+
+*   Member function of `Mat` and `SpMat`
+  
+*   Read/write access to a diagonal in a matrix
+  
+*   The argument _k_ is optional; by default _k = 0_
+  
+*   The argument _k_ specifies the diagonal to use:
+    *   _k = 0_ indicates the main diagonal (default setting)
+    *   _k < 0_ indicates the _k_\-th sub-diagonal (below main diagonal, towards bottom-left corner)
+    *   _k > 0_ indicates the _k_\-th super-diagonal (above main diagonal, towards top-right corner)
+  
+*   The diagonal is interpreted as a column vector within expressions
+  
+*   **Note**: to calculate only the diagonal elements of a compound expression, use [diagvec()](#diagvec) or [diagmat()](#diagmat)
+  
+*   Examples:
+    
+    mat X(5, 5, fill::randu);
+    
+    vec a = X.diag();
+    vec b = X.diag(1);
+    vec c = X.diag(-2);
+    
+    X.diag() = randu<vec>(5);
+    X.diag() += 6;
+    X.diag().ones();
+    
+    sp_mat S = sprandu<sp_mat>(10,10,0.1);
+    
+    vec v(S.diag());  // copy sparse diagonal to dense vector
+    
+  
+*   See also:
+    *   [.eye()](#eye_member)
+    *   [diagvec()](#diagvec)
+    *   [diagmat()](#diagmat)
+    *   [diags() / spdiags()](#diags_spdiags)
+    *   [submatrix views](#submat)
+    *   [.each_col() & .each_row()](#each_colrow)
+    *   [trace()](#trace)
+  
+
+* * *
+
+  
+
+`each_col()`
+
+   
+
+`each_row()`
+
+   
+
+(form 1)
+
+`each_col(** vector_of_indices **)`
+
+   
+
+`each_row(** vector_of_indices **)`
+
+   
+
+(form 2)
+
+`each_col(** lambda_function **)`
+
+   
+
+`each_row(** lambda_function **)`
+
+   
+
+(form 3)
+
+*   Member functions of `Mat`
+  
+*   Apply a vector operation to each column or row of a matrix
+  
+*   Similar to "broadcasting" in Matlab / Octave
+  
+*   Supported operations for forms 1 and 2:  
+      
+    
+    `+`
+    
+     
+    
+    addition
+    
+          
+    
+    `+=`
+    
+     
+    
+    in-place addition
+    
+    `−`
+    
+     
+    
+    subtraction
+    
+          
+    
+    `−=`
+    
+     
+    
+    in-place subtraction
+    
+    `%`
+    
+     
+    
+    element-wise multiplication
+    
+          
+    
+    `%=`
+    
+     
+    
+    in-place element-wise multiplication
+    
+    `/`
+    
+     
+    
+    element-wise division
+    
+          
+    
+    `/=`
+    
+     
+    
+    in-place element-wise division
+    
+    `=`
+    
+     
+    
+    assignment (copy)
+    
+          
+    
+     
+    
+     
+    
+     
+    
+  
+*   For form 2:
+    *   the argument _vector_of_indices_ contains a list of indices of the columns/rows to be used; it must evaluate to a vector of type _[uvec](#Col)_
+    *   arithmetic operations as per form 1 are supported
+  
+*   For form 3:
+    *   apply the given _lambda_function_ to each column vector or row vector
+    *   the function must accept a reference to a [Col](#Col) or [Row](#Row) object with the same element type as the underlying matrix
+  
+*   Examples:
+    
+    mat X(6, 5, fill::ones);
+    vec v = linspace<vec>(10,15,6);
+    
+    X.each_col() += v;         // in-place addition of v to each column vector of X
+    
+    mat Y = X.each_col() + v;  // generate Y by adding v to each column vector of X
+    
+    // subtract v from columns 0 through to 3 in X
+    X.cols(0,3).each_col() -= v;
+    
+    
+    uvec indices(2);
+    indices(0) = 2;
+    indices(1) = 4;
+    
+    X.each_col(indices) = v;   // copy v to columns 2 and 4 in X
+    
+    
+    X.each_col( \[\](vec& a){ a.print(); } );     // lambda function with non-const vector
+    
+    const mat& XX = X;
+    XX.each_col( \[\](const vec& b){ b.print(); } );  // lambda function with const vector
+    
+  
+*   See also:
+    *   [math & relational operators](#operators)
+    *   [submatrix views](#submat)
+    *   [diagonal views](#diag)
+    *   [repmat()](#repmat)
+    *   [.for_each()](#for_each)
+    *   [.each_slice()](#each_slice)
+  
+
+* * *
+
+  
+
+`each_slice()`
+
+   
+
+(form 1)
+
+`each_slice(** vector_of_indices **)`
+
+   
+
+(form 2)
+
+`each_slice(** lambda_function **)`
+
+   
+
+(form 3)
+
+`each_slice(** lambda_function, use_mp **)`
+
+   
+
+(form 4)
+
+*   Member function of `Cube`
+  
+*   Apply a matrix operation to each slice of a cube, with each slice treated as a matrix
+  
+*   Similar to "broadcasting" in Matlab / Octave
+  
+*   Supported operations for form 1:  
+      
+    
+    `+`
+    
+     
+    
+    addition
+    
+          
+    
+    `+=`
+    
+     
+    
+    in-place addition
+    
+    `−`
+    
+     
+    
+    subtraction
+    
+          
+    
+    `−=`
+    
+     
+    
+    in-place subtraction
+    
+    `%`
+    
+     
+    
+    element-wise multiplication
+    
+          
+    
+    `%=`
+    
+     
+    
+    in-place element-wise multiplication
+    
+    `/`
+    
+     
+    
+    element-wise division
+    
+          
+    
+    `/=`
+    
+     
+    
+    in-place element-wise division
+    
+    `*`
+    
+     
+    
+    matrix multiplication
+    
+          
+    
+    `*=`
+    
+     
+    
+    in-place matrix multiplication
+    
+    `=`
+    
+     
+    
+    assignment (copy)
+    
+          
+    
+     
+    
+     
+    
+     
+    
+  
+*   For form 2:
+    *   the argument _vector_of_indices_ contains a list of indices of the slices to be used; it must evaluate to a vector of type _[uvec](#Col)_
+    *   arithmetic operations as per form 1 are supported, except for `*` and `*=` (e.g., matrix multiplication)
+  
+*   For form 3:
+    *   apply the given _lambda_function_ to each slice
+    *   the function must accept a reference to a [Mat](#Mat) object with the same element type as the underlying cube
+  
+*   For form 4:
+    *   apply the given _lambda_function_ to each slice, as per form 3
+    *   the argument _use_mp_ is a bool to enable the use of OpenMP for multi-threaded execution of _lambda_function_ on multiple slices at the same time
+    *   the order of processing the slices is not deterministic (eg. slice 2 can be processed before slice 1)
+    *   _lambda_function_ must be thread-safe, e.g., it must not write to variables outside of its scope
+  
+*   Examples:
+    
+    cube C(4, 5, 6, fill::randu);
+    
+    mat M = repmat(linspace<vec>(1,4,4), 1, 5);
+    
+    C.each_slice() += M;          // in-place addition of M to each slice of C
+    
+    cube D = C.each_slice() + M;  // generate D by adding M to each slice of C
+    
+    
+    uvec indices(2);
+    indices(0) = 2;
+    indices(1) = 4;
+    
+    C.each_slice(indices) = M;    // copy M to slices 2 and 4 in C
+    
+    
+    C.each_slice( \[\](mat& X){ X.print(); } );     // lambda function with non-const matrix
+    
+    const cube& CC = C;
+    CC.each_slice( \[\](const mat& X){ X.print(); } );  // lambda function with const matrix
+    
+  
+*   See also:
+    *   [math & relational operators](#operators)
+    *   [subcube views](#subcube)
+    *   [.for_each()](#for_each)
+    *   [.each_col() & .each_row()](#each_colrow)  
+    *   [lambda function](https://www.cprogramming.com/c++11/c++11-lambda-closures.html) at cprogramming.com
+  
+
+* * *
+
+  
+
+`set_imag( X )`  
+`set_real( X )`  
+
+*   Set the imaginary/real part of an object
+  
+*   _X_ must have the same size as the recipient object
+  
+*   Examples:
+    
+       mat A(4, 5, fill::randu);
+       mat B(4, 5, fill::randu);
+    
+    cx_mat C(4, 5, fill::zeros);
+    
+    C.set_real(A);
+    C.set_imag(B);
+    
+  
+*   **Caveat:** to directly construct a complex matrix out of two real matrices, the following code is faster:
+    
+       mat A(4, 5, fill::randu);
+       mat B(4, 5, fill::randu);
+    
+    cx_mat C = cx_mat(A,B);
+    
+  
+*   See also:
+    *   [matrix constructors](#constructors_mat)
+    *   [cube constructors](#constructors_cube)
+    *   [imag() / real()](#imag_real)
+  
+
+* * *
+
+  
+
+`insert_rows(** row_number, X **)`  
+`insert_rows(** row_number, number_of_rows **)`
+
+ 
+
+(member functions of `Mat`, `Col` and `Cube`)
+
+ 
+
+`insert_cols(** col_number**,** X **)`  
+`insert_cols(** col_number**,** number_of_cols **)`
+
+ 
+
+(member functions of `Mat`, `Row` and `Cube`)
+
+ 
+
+`insert_slices(** slice_number**,** X **)`  
+`insert_slices(** slice_number**,** number_of_slices **)`
+
+ 
+
+(member functions of `Cube`)
+
+*   Functions with the _X_ argument: insert a copy of _X_ at the specified row/column/slice
+    *   if inserting rows, _X_ must have the same number of columns (and slices) as the recipient object
+    *   if inserting columns, _X_ must have the same number of rows (and slices) as the recipient object
+    *   if inserting slices, _X_ must have the same number of rows and columns as the recipient object (e.g., all slices must have the same size)
+  
+*   Functions with the _number_of_..._ argument:
+    *   expand the object by creating new rows/columns/slices
+    *   the elements in the new rows/columns/slices are set to zero
+  
+*   Examples:
+    
+    mat A(5, 10, fill::randu);
+    mat B(5,  2, fill::ones );
+    
+    // at column 2, insert a copy of B;
+    // A will now have 12 columns
+    A.insert_cols(2, B);
+    
+    // at column 1, insert 5 zeroed columns;
+    // B will now have 7 columns
+    B.insert_cols(1, 5);
+    
+  
+*   See also:
+    *   [.shed_rows / cols / slices](#shed)
+    *   [join_rows / cols / slices](#join)
+    *   [.resize()](#resize_member)
+    *   [submatrix views](#submat)
+    *   [subcube views](#subcube)
+  
+
+* * *
+
+  
+
+`shed_row(** row_number **)`  
+`shed_rows(** first_row, last_row **)`  
+`shed_rows(** vector_of_indices **)`
+
+ 
+
+(member function of `Mat`, `Col`, `SpMat`, `Cube`)  
+(member function of `Mat`, `Col`, `SpMat`, `Cube`)  
+(member function of `Mat`, `Col`)
+
+ 
+
+`shed_col(** column_number **)`  
+`shed_cols(** first_column, last_column **)`  
+`shed_cols(** vector_of_indices **)`
+
+ 
+
+(member function of `Mat`, `Row`, `SpMat`, `Cube`)  
+(member function of `Mat`, `Row`, `SpMat`, `Cube`)  
+(member function of `Mat`, `Row`)
+
+ 
+
+`shed_slice(** slice_number **)`  
+`shed_slices(** first_slice, last_slice **)`  
+`shed_slices(** vector_of_indices **)`
+
+ 
+
+(member functions of `Cube`)
+
+*   Functions with single scalar argument: remove the specified row/column/slice
+  
+*   Functions with two scalar arguments: remove the specified range of rows/columns/slices
+  
+*   The _vector_of_indices_ must evaluate to a vector of type [uvec](#Col); it contains the indices of rows/columns/slices to remove
+  
+*   Examples:
+    
+    mat A(5, 10, fill::randu);
+    mat B(5, 10, fill::randu);
+    
+    A.shed_row(2);
+    A.shed_cols(2,4);
+    
+    uvec indices = {4, 6, 8};
+    B.shed_cols(indices);
+    
+  
+*   See also:
+    *   [.insert_rows / cols / slices](#insert)
+    *   [join_rows / cols / slices](#join)
+    *   [.resize()](#resize_member)
+    *   [submatrix views](#submat)
+    *   [subcube views](#subcube)
+  
+
+* * *
+
+  
+
+`swap_rows( row1, row2 )  
+.swap_cols( col1, col2 )`
+
+*   Member functions of `Mat`, `Col`, `Row` and `SpMat`
+  
+*   Swap the contents of specified rows or columns
+  
+*   Examples:
+    
+    mat X(5, 5, fill::randu);
+    X.swap_rows(0,4);
+    
+  
+*   See also:
+    *   [reverse()](#reverse)
+    *   [fliplr() & flipud()](#flip)
+    *   [.swap()](#swap)
+  
+
+* * *
+
+  
+
+`swap( X )`
+
+*   Member function of `Mat`, `Col`, `Row` and `Cube`
+  
+*   Swap contents with object _X_
+  
+*   Examples:
+    
+    mat A(4, 5, fill::zeros);
+    mat B(6, 7, fill::ones );
+    
+    A.swap(B);
+    
+  
+*   See also:
+    *   [.swap_rows() & .swap_cols()](#swap_rows)
+  
+
+* * *
+
+  
+
+`memptr()`
+
+*   Member function of `Mat`, `Col`, `Row` and `Cube`
+  
+*   Obtain a raw pointer to the memory used for storing elements
+  
+*   Data for matrices is stored in a column-by-column order
+  
+*   Data for cubes is stored in a slice-by-slice (matrix-by-matrix) order
+  
+*   **Caveat:** the pointer becomes invalid after any operation involving a size change or aliasing
+  
+*   **Caveat:** this function is not recommended for use unless you know what you are doing!
+  
+*   Examples:
+    
+          mat A(5, 5, fill::randu);
+    const mat B(5, 5, fill::randu);
+    
+          double\* A_mem = A.memptr();
+    const double\* B_mem = B.memptr();
+    
+  
+*   See also:
+    *   [.colptr()](#colptr)
+    *   [submatrix views](#submat)
+    *   [element access](#element_access)
+    *   [iterators (dense matrices)](#iterators_mat)
+    *   [iterators (cubes)](#iterators_cube)
+    *   [advanced constructors (matrices)](#adv_constructors_mat)
+    *   [advanced constructors (cubes)](#adv_constructors_cube)
+  
+
+* * *
+
+  
+
+`colptr( col_number )`
+
+*   Member function of `Mat`
+  
+*   Obtain a raw pointer to the memory used by elements in the specified column
+  
+*   **Caveat:** the pointer becomes invalid after any operation involving a size change or aliasing
+  
+*   **Caveat:** this function is not recommended for use unless you know what you are doing -- it is safer to use [submatrix views](#submat) instead
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    
+    double\* mem = A.colptr(2);
+    
+  
+*   See also:
+    *   [.memptr()](#memptr)
+    *   [submatrix views](#submat)
+    *   [element access](#element_access)
+    *   [iterators (dense matrices)](#iterators_mat)
+    *   [advanced constructors (matrices)](#adv_constructors_mat)
+  
+
+* * *
+
+  
+
+**iterators (dense matrices & vectors)`
+
+*   Iterators and associated member functions of `Mat`, `Col`, `Row`
+  
+*   Iterators for dense matrices and vectors traverse over all elements within the specified range
+  
+*   Member functions:  
+      
+    
+    `begin()`
+    
+       
+    
+    iterator referring to the first element
+    
+    `end()`
+    
+       
+    
+    iterator referring to the _past-the-end_ element
+    
+     
+    
+    `begin_col( col_number )`
+    
+       
+    
+    iterator referring to the first element of the specified column
+    
+    `end_col( col_number )`
+    
+       
+    
+    iterator referring to the _past-the-end_ element of the specified column
+    
+     
+    
+    `begin_row( row_number )`
+    
+       
+    
+    iterator referring to the first element of the specified row
+    
+    `end_row( row_number )`
+    
+       
+    
+    iterator referring to the _past-the-end_ element of the specified row
+    
+  
+*   Iterator types:  
+      
+    
+    **mat::iterator**  
+    **vec::iterator**  
+    **rowvec::iterator**
+    
+       
+    
+    random access iterators, for read/write access to elements (which are stored column by column)
+    
+     
+    
+       
+    
+     
+    
+    **mat::const_iterator**  
+    **vec::const_iterator**  
+    **rowvec::const_iterator**
+    
+       
+    
+    random access iterators, for read-only access to elements (which are stored column by column)
+    
+     
+    
+       
+    
+     
+    
+    **mat::col_iterator**  
+    **vec::col_iterator**  
+    **rowvec::col_iterator**
+    
+       
+    
+    random access iterators, for read/write access to the elements of specified columns
+    
+     
+    
+       
+    
+     
+    
+    **mat::const`Col`iterator**  
+    **vec::const`Col`iterator**  
+    **rowvec::const`Col`iterator**
+    
+       
+    
+    random access iterators, for read-only access to the elements of specified columns
+    
+     
+    
+       
+    
+     
+    
+    **mat::row_iterator**
+    
+       
+    
+    bidirectional iterator, for read/write access to the elements of specified rows
+    
+     
+    
+       
+    
+     
+    
+    **mat::const`Row`iterator**
+    
+       
+    
+    bidirectional iterator, for read-only access to the elements of specified rows
+    
+     
+    
+       
+    
+     
+    
+    **vec::row_iterator**  
+    **rowvec::row_iterator**
+    
+       
+    
+    random access iterators, for read/write access to the elements of specified rows
+    
+     
+    
+       
+    
+     
+    
+    **vec::const`Row`iterator**  
+    **rowvec::const`Row`iterator**
+    
+       
+    
+    random access iterators, for read-only access to the elements of specified rows
+    
+  
+*   Examples:
+    
+    mat X(5, 6, fill::randu);
+    
+    mat::iterator it     = X.begin();
+    mat::iterator it_end = X.end();
+    
+    for(; it != it_end; ++it)
+      {
+      cout << (\*it) << endl;
+      }
+    
+    mat::col_iterator col_it     = X.begin_col(1);  // start of column 1
+    mat::col_iterator col_it_end = X.end_col(3);    //   end of column 3
+    
+    for(; col_it != col_it_end; ++col_it)
+      {
+      cout << (\*col_it) << endl;
+      (\*col_it) = 123.0;
+      }
+    
+  
+*   See also:
+    *   [Mat class](#Mat)
+    *   [element access](#element_access)
+    *   [.for_each()](#for_each)
+    *   [.memptr()](#memptr)
+    *   [.colptr()](#colptr)
+    *   [submatrix views](#submat)
+    *   [iterators (submatrices)](#iterators_submat)
+    *   [iterators (cubes)](#iterators_cube)
+    *   [iterators (sparse matrices)](#iterators_spmat)
+    *   [iterator at cplusplus.com](https://cplusplus.com/reference/iterator/)
+  
+
+* * *
+
+  
+
+**iterators (cubes)`
+
+*   Iterators and associated member functions of `Cube`
+  
+*   Iterators for cubes traverse over all elements within the specified range
+  
+*   Member functions:  
+      
+    
+    `begin()`
+    
+       
+    
+    iterator referring to the first element
+    
+    `end()`
+    
+       
+    
+    iterator referring to the _past-the-end_ element
+    
+     
+    
+    `begin_slice( slice_number )`
+    
+       
+    
+    iterator referring to the first element of the specified slice
+    
+    `end_slice( slice_number )`
+    
+       
+    
+    iterator referring to the _past-the-end_ element of the specified slice
+    
+  
+*   Iterator types:  
+      
+    
+    **cube::iterator**
+    
+       
+    
+    random access iterator, for read/write access to elements; the elements are ordered slice by slice; the elements within each slice are ordered column by column
+    
+     
+    
+       
+    
+     
+    
+    **cube::const_iterator**
+    
+       
+    
+    random access iterator, for read-only access to elements
+    
+     
+    
+       
+    
+     
+    
+    **cube::slice_iterator**
+    
+       
+    
+    random access iterator, for read/write access to the elements of a particular slice; the elements are ordered column by column
+    
+     
+    
+       
+    
+     
+    
+    **cube::const_slice_iterator**
+    
+       
+    
+    random access iterator, for read-only access to the elements of a particular slice
+    
+  
+*   Examples:
+    
+    cube X(2, 3, 4, fill::randu);
+    
+    cube::iterator it     = X.begin();
+    cube::iterator it_end = X.end();
+    
+    for(; it != it_end; ++it)
+      {
+      cout << (\*it) << endl;
+      }
+    
+    cube::slice_iterator s_it     = X.begin_slice(1);  // start of slice 1
+    cube::slice_iterator s_it_end = X.end_slice(2);    // end of slice 2
+    
+    for(; s_it != s_it_end; ++s_it)
+      {
+      cout << (\*s_it) << endl;
+      (\*s_it) = 123.0;
+      }
+    
+  
+*   See also:
+    *   [Cube class](#Cube)
+    *   [element access](#element_access)
+    *   [.for_each()](#for_each)
+    *   [.memptr()](#memptr)
+    *   [subcube views](#subcube)
+    *   [iterators (subcubes)](#iterators_submat)
+    *   [iterators (dense matrices)](#iterators_mat)
+    *   [iterator at cplusplus.com](https://cplusplus.com/reference/iterator/)
+  
+
+* * *
+
+  
+
+**iterators (sparse matrices)`
+
+*   Iterators and associated member functions of `SpMat`
+  
+*   Iterators for sparse matrices traverse over non-zero elements within the specified range
+  
+*   **Caveats:**
+    *   writing a zero value into a sparse matrix through an iterator will invalidate all current iterators associated with the sparse matrix
+    *   to modify the non-zero elements in a safer manner, use [.transform()](#transform) or [.for_each()](#for_each) instead of iterators
+  
+*   Member functions:  
+      
+    
+    `begin()`
+    
+       
+    
+    iterator referring to the first element
+    
+    `end()`
+    
+       
+    
+    iterator referring to the _past-the-end_ element
+    
+     
+    
+    `begin_col( col_number )`
+    
+       
+    
+    iterator referring to the first element of the specified column
+    
+    `end_col( col_number )`
+    
+       
+    
+    iterator referring to the _past-the-end_ element of the specified column
+    
+     
+    
+    `begin_row( row_number )`
+    
+       
+    
+    iterator referring to the first element of the specified row
+    
+    `end_row( row_number )`
+    
+       
+    
+    iterator referring to the _past-the-end_ element of the specified row
+    
+  
+*   Iterator types:  
+      
+    
+    **sp_mat::iterator**
+    
+       
+    
+    bidirectional iterator, for read/write access to elements (which are stored column by column)
+    
+    **sp_mat::const_iterator**
+    
+       
+    
+    bidirectional iterator, for read-only access to elements (which are stored column by column)
+    
+     
+    
+       
+    
+     
+    
+    **sp_mat::col_iterator**
+    
+       
+    
+    bidirectional iterator, for read/write access to the elements of a specific column
+    
+    **sp_mat::const`Col`iterator**
+    
+       
+    
+    bidirectional iterator, for read-only access to the elements of a specific column
+    
+     
+    
+       
+    
+     
+    
+    **sp_mat::row_iterator**
+    
+       
+    
+    bidirectional iterator, for read/write access to the elements of a specific row
+    
+    **sp_mat::const`Row`iterator**
+    
+       
+    
+    bidirectional iterator, for read-only access to the elements of a specific row
+    
+     
+    
+       
+    
+     
+    
+  
+*   The iterators have _.row()_ and _.col()_ functions which return the row and column of the current element; the returned values are of type [uword](#uword)
+  
+*   Examples:
+    
+    sp_mat X = sprandu<sp_mat>(1000, 2000, 0.1);
+    
+    sp_mat::const_iterator it     = X.begin();
+    sp_mat::const_iterator it_end = X.end();
+    
+    for(; it != it_end; ++it)
+      {
+      cout << "val: " << (\*it)    << endl;
+      cout << "row: " << it.row() << endl;
+      cout << "col: " << it.col() << endl;
+      }
+    
+  
+*   See also:
+    *   [SpMat class](#SpMat)
+    *   [element access](#element_access)
+    *   [.transform()](#transform)
+    *   [.for_each()](#for_each)
+    *   [.replace()](#replace)
+    *   [submatrix views](#submat)
+    *   [iterators (dense matrices)](#iterators_mat)
+    *   [iterator at cplusplus.com](https://cplusplus.com/reference/iterator/)
+  
+
+* * *
+
+  
+
+**iterators (dense submatrices & subcubes)`
+
+*   iterators for dense [submatrix](#submat) and [subcube](#subcube) views, allowing range-based for loops
+  
+*   **Caveat:** These iterators are intended **only** to be used with range-based for loops. Any other use is not supported. For example, the direct use of the _begin()_ and _end()_ functions, as well as the underlying iterators types is not supported. The implementation of submatrices and subcubes uses short-lived temporary objects that are subject to automatic deletion, and as such are error-prone to handle manually.
+  
+*   Examples:
+    
+    mat X(100, 200, fill::randu);
+    
+    for( double& val : X(span(40,60), span(50,100)) )
+      {
+      cout << val << endl;
+      val = 123.0;
+      }
+    
+  
+*   See also:
+    *   [submatrix views](#submat)
+    *   [.for_each()](#for_each)
+    *   [iterators (dense matrices)](#iterators_mat)
+    *   [iterators (cubes)](#iterators_cube)
+    *   [range-based for](https://en.cppreference.com/w/cpp/language/range-for) (cppreference.com)
+  
+
+* * *
+
+  
+
+**compatibility container functions**
+
+*   Member functions to mimic the functionality of containers in the C++ standard library:  
+      
+    
+    `front()`
+    
+       
+    
+    access the first element in a vector
+    
+    `back()`
+    
+       
+    
+    access the last element in a vector
+    
+    `clear()`
+    
+       
+    
+    causes an object to have no elements
+    
+    `empty()`
+    
+       
+    
+    returns _true_ if the object has no elements; returns _false_ if the object has one or more elements
+    
+    `size()`
+    
+       
+    
+    returns the total number of elements
+    
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    cout << A.size() << endl;
+    
+    A.clear();
+    cout << A.empty() << endl;
+    
+  
+*   See also:
+    *   [iterators (dense matrices)](#iterators_mat)
+    *   [iterators (cubes)](#iterators_cube)
+    *   [iterators (sparse matrices)](#iterators_spmat)
+    *   [matrix and vector attributes](#attributes)
+    *   [.is_empty()](#is_empty)
+    *   [.reset()](#reset)
+  
+
+* * *
+
+  
+
+`as_col()  
+.as_row()`
+
+*   Member functions of any matrix expression
+  
+*   _.as_col()_: return a flattened version of the matrix as a column vector; flattening is done by concatenating all columns
+  
+*   _.as_row()_: return a flattened version of the matrix as a row vector; flattening is done by concatenating all rows
+  
+*   **Caveat:** concatenating columns is faster than concatenating rows
+  
+*   Examples:
+    
+    mat X(4, 5, fill::randu);
+    vec v = X.as_col();
+    
+  
+*   See also:
+    *   [.reshape()](#reshape_member)
+    *   [.t() / .st()](#t_st_members)
+    *   [.as_dense()](#as_dense)
+    *   [as_scalar()](#as_scalar)
+    *   [vectorise()](#vectorise)
+  
+
+* * *
+
+  
+
+`col_as_mat(** col_number **)`  
+`row_as_mat(** row_number **)`
+
+*   Member functions of any cube expression
+  
+*   _.col_as_mat( col_number )_:
+    *   return a matrix representation of the specified cube column
+    *   the number of rows is preserved
+    *   given a cube with size _R x C x S_, the resultant matrix size is _R x S_
+  
+*   _.row_as_mat( row_number )_:
+    *   return a matrix representation of the specified cube row
+    *   the number of columns is preserved
+    *   given a cube with size _R x C x S_, the resultant matrix size is _S x C_
+  
+*   Examples:
+    
+    cube Q(5, 4, 3, fill::randu);
+    
+    mat A = Q.col_as_mat(2);  // size of A: 5x3
+    
+    mat B = Q.row_as_mat(2);  // size of B: 3x4
+    
+  
+*   See also:
+    *   [.slice()](#subcube)
+    *   [vectorise()](#vectorise)
+  
+
+* * *
+
+  
+
+`as_dense()`
+
+*   Member function of any sparse matrix expression
+  
+*   Returns a dense vector/matrix representation of the sparse matrix expression
+  
+*   This function aims to avoid construction of the intermediate sparse matrix representation of the expression  
+    (applicable to some expressions)
+  
+*   Examples:
+    
+    sp_mat A; A.sprandu(1000, 1000, 0.1);
+    
+    // store the sum of each column of A directly in dense row vector 
+    rowvec r = sum(A).as_dense();      
+    
+    // extract column 123 of A directly into dense column vector
+    colvec c = A.col(123).as_dense();  
+    
+  
+*   See also:
+    *   [as_scalar()](#as_scalar)
+    *   [.as_col() / .as_row()](#as`Col`row)
+  
+
+* * *
+
+  
+
+`t()  
+.st()`
+
+*   Member functions of any matrix or vector expression
+  
+*   For real (non-complex) matrix:
+    *   _.t()_ provides a transposed copy of the matrix
+    *   _.st()_ is not applicable
+  
+*   For complex matrix:
+    *   _.t()_ provides a Hermitian (conjugate) transposed copy (e.g., signs of imaginary components are flipped)
+    *   _.st()_ provides a simple transposed copy (e.g., signs of imaginary components are not flipped)
+  
+*   Examples:
+    
+    mat A(4, 5, fill::randu);
+    mat B = A.t();
+    
+  
+*   See also:
+    *   [trans()](#trans)
+    *   [reverse()](#reverse)
+    *   [.as_col() / .as_row()](#as`Col`row)
+    *   [transpose in Wikipedia](https://en.wikipedia.org/wiki/Transpose)
+    *   [transpose in MathWorld](https://mathworld.wolfram.com/Transpose.html)
+    *   [conjugate transpose in Wikipedia](https://en.wikipedia.org/wiki/Conjugate_transpose)
+    *   [conjugate transpose in MathWorld](https://mathworld.wolfram.com/ConjugateTranspose.html)
+  
+
+* * *
+
+  
+
+`i()`
+
+*   Member function of any matrix expression
+  
+*   Provides an inverse of the matrix expression
+  
+*   If the matrix expression is not square sized, a _std::logic_error_ exception is thrown
+  
+*   If the matrix expression appears to be singular, the output matrix is reset and a _std::runtime_error_ exception is thrown
+  
+*   **Caveats:**
+    *   if matrix _A_ is know to be symmetric positive definite, [inv_sympd()](#inv_sympd) is faster
+    *   to solve a system of linear equations, such as _Z = inv(X)\*Y_, [solve()](#solve) can be faster and/or more accurate
+  
+*   Examples:
+    
+    mat A(4, 4, fill::randu);
+    
+    mat X = A.i();
+    
+    mat Y = (A+A).i();
+    
+*   See also:
+    *   [inv()](#inv)
+    *   [rcond()](#rcond)
+    *   [pinv()](#pinv)
+    *   [solve()](#solve)
+  
+
+* * *
+
+  
+
+`min()`  
+`max()`
+
+*   Return the extremum value of any matrix or cube expression
+  
+*   For objects with complex numbers, absolute values are used for comparison
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    
+    double max_val = A.max();
+    
+  
+*   See also:
+    *   [.index_min() & .index_max()](#index_min_and_index_max_member)
+    *   [min() & max()](#min_and_max) (standalone functions with extended functionality)
+    *   [clamp()](#clamp)
+    *   [running_stat](#running_stat)
+    *   [running_stat_vec](#running_stat_vec)
+  
+
+* * *
+
+  
+
+`index_min()`  
+`index_max()`
+
+*   Return the linear index of the extremum value of any matrix or cube expression
+  
+*   For objects with complex numbers, absolute values are used for comparison
+  
+*   The returned index is of type [uword](#uword)
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    
+    uword i = A.index_max();
+    
+    double max_val = A(i);
+    
+  
+*   See also:
+    *   [.min() & .max()](#min_and_max_member)
+    *   [index_min() & index_max()](#index_min_and_index_max_standalone) (standalone functions with extended functionality)
+    *   [ind2sub()](#ind2sub)
+    *   [sort_index()](#sort_index)
+    *   [find()](#find)
+    *   [element access](#element_access)
+  
+
+* * *
+
+  
+
+`eval()`  
+
+*   Member function of any matrix or vector expression
+  
+*   Explicitly forces the evaluation of a delayed expression and outputs a matrix
+  
+*   This function should be used sparingly and only in cases where it is absolutely necessary; indiscriminate use can degrade performance
+  
+*   Examples:
+    
+    cx_mat A( randu<mat>(4,4), randu<mat>(4,4) );
+    
+    real(A).eval().save("A_real.dat", raw_ascii);
+    imag(A).eval().save("A_imag.dat", raw_ascii);
+    
+  
+*   See also:
+    *   [as_scalar()](#as_scalar)
+    *   [Mat class](#Mat)
+  
+
+* * *
+
+  
+
+`in_range(** i **)`
+
+  
+
+ 
+
+(member of `Mat`, `Col`, `Row`, `Cube`, `SpMat`, `field`)
+
+`in_range( span(**start**,** end**) )`
+
+  
+
+ 
+
+(member of `Mat`, `Col`, `Row`, `Cube`, `SpMat`, `field`)
+
+ 
+
+`in_range(** row**,** col **)`
+
+  
+
+ 
+
+(member of `Mat`, `Col`, `Row`, `SpMat`, `field`)
+
+`in_range(** **span(**start_row**,** end_row**), span(**start_col**,** end_col**)` **)`
+
+  
+
+ 
+
+(member of `Mat`, `Col`, `Row`, `SpMat`, `field`)
+
+ 
+
+`in_range(** row**,** col**,** slice **)`
+
+  
+
+ 
+
+(member of `Cube` and `field`)
+
+`in_range(** **span(**start_row**,** end_row**), span(**start_col**,** end_col**), span(**start_slice**,** end_slice**)` **)`
+
+  
+
+ 
+
+(member of `Cube` and `field`)
+
+ 
+
+`in_range(** first_row**,** first_col**, size(**X**) )`   _(X is a matrix or field)_
+
+  
+
+ 
+
+(member of `Mat`, `Col`, `Row`, `SpMat`, `field`)
+
+`in_range(** first_row**,** first_col**, size(**n_rows**,** n_cols**) )`
+
+  
+
+ 
+
+(member of `Mat`, `Col`, `Row`, `SpMat`, `field`)
+
+ 
+
+`in_range(** first_row**,** first_col**,** first_slice**, size(**Q**) )`   _(Q is a cube or field)_
+
+  
+
+ 
+
+(member of `Cube` and `field`)
+
+`in_range(** first_row**,** first_col**,** first_slice**, size(**n_rows**,** n_cols n_slices**) )`
+
+  
+
+ 
+
+(member of `Cube` and `field`)
+
+*   Returns _true_ if the given location or span is currently valid
+  
+*   Returns _false_ if the object is empty, the location is out of bounds, or the span is out of bounds
+  
+*   Instances of _span(a,b)_ can be replaced by:
+    *   _span()_ or _span::all_, to indicate the entire range
+    *   _span(a)_, to indicate a particular row, column or slice
+  
+*   Examples:
+    
+    mat A(4, 5, fill::randu);
+    
+    cout << A.in_range(0,0) << endl;  // true
+    cout << A.in_range(3,4) << endl;  // true
+    cout << A.in_range(4,5) << endl;  // false
+    
+  
+*   See also:
+    *   [element access](#element_access)
+    *   [submatrix views](#submat)
+    *   [subcube views](#subcube)
+    *   [subfield views](#subfield)
+    *   [.set_size()](#set_size)
+  
+
+* * *
+
+  
+
+`is_empty()`
+
+*   Returns _true_ if the object has no elements
+  
+*   Returns _false_ if the object has one or more elements
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    cout << A.is_empty() << endl;
+    
+    A.reset();
+    cout << A.is_empty() << endl;
+    
+  
+*   See also:
+    *   [.is_square()](#is_square)
+    *   [.is_vec()](#is_vec)
+    *   [.is_finite()](#is_finite)
+    *   [.reset()](#reset)
+  
+
+* * *
+
+  
+
+`is_vec()`  
+`is_colvec()`  
+`is_rowvec()`
+
+*   Member functions of `Mat` and `SpMat`
+  
+*   .is_vec():
+    *   returns _true_ if the matrix can be interpreted as a vector (either column or row vector)
+    *   returns _false_ if the matrix does not have exactly one column or one row
+  
+*   .is_colvec():
+    *   returns _true_ if the matrix can be interpreted as a column vector
+    *   returns _false_ if the matrix does not have exactly one column
+  
+*   .is_rowvec():
+    *   returns _true_ if the matrix can be interpreted as a row vector
+    *   returns _false_ if the matrix does not have exactly one row
+  
+*   **Caveat:** do not assume that the vector has elements if these functions return _true_; it is possible to have an empty vector (eg. 0x1)
+  
+*   Examples:
+    
+    mat A(1, 5, fill::randu);
+    mat B(5, 1, fill::randu);
+    mat C(5, 5, fill::randu);
+    
+    cout << A.is_vec() << endl;
+    cout << B.is_vec() << endl;
+    cout << C.is_vec() << endl;
+    
+  
+*   See also:
+    *   [.is_empty()](#is_empty)
+    *   [.is_square()](#is_square)
+    *   [.is_finite()](#is_finite)
+  
+
+* * *
+
+  
+
+`is_sorted()`  
+`is_sorted( sort_direction )`  
+`is_sorted( sort_direction, dim )`
+
+*   Member function of `Mat`, `Row` and `Col`
+  
+*   If the object is a vector, return a _bool_ indicating whether the elements are sorted
+  
+*   If the object is a matrix, return a _bool_ indicating whether the elements are sorted in each column (_dim = 0_), or each row (_dim = 1_)
+  
+*   The _sort_direction_ argument is optional; _sort_direction_ is one of:
+    
+    `"ascend"`
+    
+     ↦ 
+    
+    elements are ascending; consecutive elements can be equal; this is the **default operation**
+    
+    `"descend"`
+    
+     ↦ 
+    
+    elements are descending; consecutive elements can be equal
+    
+    `"strictascend"`
+    
+     ↦ 
+    
+    elements are strictly ascending; consecutive elements cannot be equal
+    
+    `"strictdescend"`
+    
+     ↦ 
+    
+    elements are strictly descending; consecutive elements cannot be equal
+    
+  
+*   The _dim_ argument is optional; by default _dim = 0_ is used
+  
+*   For matrices and vectors with complex numbers, order is checked via absolute values
+  
+*   Examples:
+    
+    vec a(10, fill::randu);
+    vec b = sort(a);
+    
+    bool check1 = a.is_sorted();
+    bool check2 = b.is_sorted();
+    
+    
+    mat A(10, 10, fill::randu);
+    
+    // check whether each column is sorted in descending manner
+    cout << A.is_sorted("descend") << endl;
+    
+    // check whether each row is sorted in ascending manner
+    cout << A.is_sorted("ascend", 1) << endl;
+    
+  
+*   See also:
+    *   [sort()](#sort)
+    *   [sort_index()](#sort_index)
+  
+
+* * *
+
+  
+
+`is_trimatu()`  
+`is_trimatl()`
+
+*   Member functions of `Mat` and `SpMat`
+  
+*   _.is_trimatu()_:
+    *   return _true_ if the matrix is upper triangular, e.g., the matrix is square sized and all elements below the main diagonal are zero; return _false_ otherwise
+    *   **caveat:** if this function returns _true_, do not assume that the matrix contains non-zero elements on or above the main diagonal
+  
+*   _.is_trimatl()_:
+    *   return _true_ if the matrix is lower triangular, e.g., the matrix is square sized and all elements above the main diagonal are zero; return _false_ otherwise
+    *   **caveat:** if this function returns _true_, do not assume that the matrix contains non-zero elements on or below the main diagonal
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    mat B = trimatl(A);
+    
+    cout << A.is_trimatu() << endl;
+    cout << B.is_trimatl() << endl;
+    
+  
+*   See also:
+    *   [trimatu() / trimatl()](#trimat)
+    *   [.is_symmetric()](#is_symmetric)
+    *   [.is_diagmat()](#is_diagmat)
+    *   [Triangular matrix in MathWorld](https://mathworld.wolfram.com/TriangularMatrix.html)
+    *   [Triangular matrix in Wikipedia](https://en.wikipedia.org/wiki/Triangular_matrix)
+  
+
+* * *
+
+  
+
+`is_diagmat()`
+
+*   Member function of `Mat` and `SpMat`
+  
+*   Return _true_ if the matrix is diagonal, e.g., all elements outside of the main diagonal are zero
+  
+*   Return _false_ otherwise
+  
+*   **Caveat:** if this function returns _true_, do not assume that the matrix contains non-zero elements on the main diagonal
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    mat B = diagmat(A);
+    
+    cout << A.is_diagmat() << endl;
+    cout << B.is_diagmat() << endl;
+    
+  
+*   See also:
+    *   [diagmat()](#diagmat)
+    *   [.is_trimatu() / .is_trimatl()](#is_trimat)
+    *   [.is_symmetric()](#is_symmetric)
+    *   [Diagonal matrix in MathWorld](https://mathworld.wolfram.com/DiagonalMatrix.html)
+    *   [Diagonal matrix in Wikipedia](https://en.wikipedia.org/wiki/Diagonal_matrix)
+  
+
+* * *
+
+  
+
+`is_square()`
+
+*   Member function of `Mat` and `SpMat`
+  
+*   Returns _true_ if the matrix is square, e.g., number of rows is equal to the number of columns
+  
+*   Returns _false_ if the matrix is not square
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    mat B(6, 7, fill::randu);
+    
+    cout << A.is_square() << endl;
+    cout << B.is_square() << endl;
+    
+  
+*   See also:
+    *   [.is_symmetric()](#is_symmetric)
+    *   [.is_hermitian()](#is_hermitian)
+    *   [.is_empty()](#is_empty)
+    *   [.is_vec()](#is_vec)
+    *   [.is_finite()](#is_finite)
+  
+
+* * *
+
+  
+
+`is_symmetric()`  
+`is_symmetric( tol )`
+
+*   Member function of `Mat` and `SpMat`
+  
+*   Returns _true_ if the matrix is symmetric
+  
+*   Returns _false_ if the matrix is not symmetric
+  
+*   The _tol_ argument is optional; if _tol_ is specified, the given matrix _X_ is considered symmetric if _norm(X - X.st(), "inf") / norm (X, "inf") ≤ tol_
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    mat B = A.t() \* A;
+    
+    cout << A.is_symmetric() << endl;
+    cout << B.is_symmetric() << endl;
+    
+  
+*   See also:
+    *   [.is_hermitian()](#is_hermitian)
+    *   [.is_sympd()](#is_sympd)
+    *   [.is_square()](#is_square)
+    *   [.is_trimatu() / .is_trimatl()](#is_trimat)
+    *   [Symmetric matrix in Wikipedia](https://en.wikipedia.org/wiki/Symmetric_matrix)
+    *   [Symmetric matrix in MathWorld](https://mathworld.wolfram.com/SymmetricMatrix.html)
+  
+
+* * *
+
+  
+
+`is_hermitian()`  
+`is_hermitian( tol )`
+
+*   Member function of `Mat` and `SpMat`
+  
+*   Returns _true_ if the matrix is hermitian (self-adjoint)
+  
+*   Returns _false_ if the matrix is not hermitian
+  
+*   The _tol_ argument is optional; if _tol_ is specified, the given matrix _X_ is considered hermitian if _norm(X - X.t(), "inf") / norm (X, "inf") ≤ tol_
+  
+*   Examples:
+    
+    cx_mat A(5, 5, fill::randu);
+    cx_mat B = A.t() \* A;
+    
+    cout << A.is_hermitian() << endl;
+    cout << B.is_hermitian() << endl;
+    
+  
+*   See also:
+    *   [.is_symmetric()](#is_symmetric)
+    *   [.is_sympd()](#is_sympd)
+    *   [.is_square()](#is_square)
+    *   [Hermitian matrix in Wikipedia](https://en.wikipedia.org/wiki/Hermitian_matrix)
+    *   [Hermitian matrix in MathWorld](https://mathworld.wolfram.com/HermitianMatrix.html)
+  
+
+* * *
+
+  
+
+`is_sympd()`  
+`is_sympd( tol )`
+
+*   Member function of `Mat` and any dense matrix expression
+  
+*   Returns _true_ if the matrix is symmetric/hermitian positive definite within the tolerance given by _tol_
+  
+*   Returns _false_ otherwise
+  
+*   The _tol_ argument is optional; if _tol_ is not specified, by default _tol = 100 \* datum::eps \* norm(X, "fro")_
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    
+    mat B = A.t() \* A;
+    
+    cout << A.is_sympd() << endl;
+    cout << B.is_sympd() << endl;
+    
+  
+*   See also:
+    *   [.is_symmetric()](#is_symmetric)
+    *   [.is_hermitian()](#is_hermitian)
+    *   [datum::eps](#constants)
+  
+
+* * *
+
+  
+
+`is_zero()`  
+`is_zero(** tolerance **)`
+
+*   For objects with non-complex elements: return _true_ if each element has an absolute value ≤ _tolerance_; return _false_ otherwise
+  
+*   For objects with complex elements: return _true_ if for each element, each component (real and imaginary) has an absolute value ≤ _tolerance_; return _false_ otherwise
+  
+*   The argument _tolerance_ is optional; by default _tolerance = 0_
+  
+*   Examples:
+    
+    mat A(5, 5, fill::zeros);
+    
+    A(0,0) = datum::eps;
+    
+    cout << A.is_zero()           << endl;
+    cout << A.is_zero(datum::eps) << endl;
+    
+  
+*   See also:
+    *   [.clean()](#clean)
+    *   [all()](#all)
+    *   [datum::eps](#constants)
+    *   [approx_equal()](#approx_equal)
+  
+
+* * *
+
+  
+
+`is_finite()`
+
+*   Member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`
+  
+*   Returns _true_ if all elements of the object are finite
+  
+*   Returns _false_ if at least one of the elements of the object is non-finite (�infinity or NaN)
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    mat B(5, 5, fill::randu);
+    
+    B(1,1) = datum::inf;
+    
+    cout << A.is_finite() << endl;
+    cout << B.is_finite() << endl;
+    
+  
+*   See also:
+    *   [.has_inf()](#has_inf)
+    *   [.has_nan()](#has_nan)
+    *   [find_finite()](#find_finite)
+    *   [find_nonfinite()](#find_nonfinite)
+    *   [constants (pi, nan, inf, ...)](#constants)
+  
+
+* * *
+
+  
+
+`has_inf()`
+
+*   Member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`
+  
+*   Returns _true_ if at least one of the elements of the object is �infinity
+  
+*   Returns _false_ otherwise
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    mat B(5, 5, fill::randu);
+    
+    B(1,1) = datum::inf;
+    
+    cout << A.has_inf() << endl;
+    cout << B.has_inf() << endl;
+    
+  
+*   See also:
+    *   [.has_nan()](#has_nan)
+    *   [.replace()](#replace)
+    *   [.is_finite()](#is_finite)
+    *   [find_nonfinite()](#find_nonfinite)
+    *   [constants (pi, nan, inf, ...)](#constants)
+  
+
+* * *
+
+  
+
+`has_nan()`
+
+*   Member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`
+  
+*   Returns _true_ if at least one of the elements of the object is NaN (not-a-number)
+  
+*   Returns _false_ otherwise
+  
+*   **Caveat:** `NaN` is not equal to anything, even itself
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    mat B(5, 5, fill::randu);
+    
+    B(1,1) = datum::nan;
+    
+    cout << A.has_nan() << endl;
+    cout << B.has_nan() << endl;
+    
+  
+*   See also:
+    *   [.has_inf()](#has_inf)
+    *   [.replace()](#replace)
+    *   [.is_finite()](#is_finite)
+    *   [find_nonfinite()](#find_nonfinite)
+    *   [constants (pi, nan, inf, ...)](#constants)
+  
+
+* * *
+
+  
+
+`print()`  
+`print( header )`  
+  
+`print( stream )`  
+`print( stream, header )`
+
+*   Member functions of `Mat`, `Col`, `Row`, `SpMat`, `Cube` and `field`
+  
+*   Print the contents of an object to the _std::cout_ stream (default), or a user specified stream, with an optional header string
+  
+*   Objects can also be printed using the << stream operator
+  
+*   Elements of a field can only be printed if there is an associated _operator<<_ function defined
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    mat B(6, 6, fill::randu);
+    
+    A.print();
+    
+    // print a transposed version of A
+    A.t().print();
+    
+    // "B:" is the optional header line
+    B.print("B:");
+    
+    cout << A << endl;
+    
+    cout << "B:" << endl;
+    cout << B << endl;
+    
+  
+*   See also:
+    *   [.raw_print()](#raw_print)
+    *   [.brief_print()](#brief_print)
+    *   [saving & loading matrices](#save_load_mat)
+    *   [initialising elements](#element_initialisation)
+    *   [output streams](#output_streams)
+  
+
+* * *
+
+  
+
+`raw_print()`  
+`raw_print( header )`  
+  
+`raw_print( stream )`  
+`raw_print( stream, header )`
+
+*   Member functions of `Mat`, `Col`, `Row`, `SpMat` and `Cube`
+  
+*   Similar to the [.print()](#print) member function, with the difference that no formatting of the output is done; the stream's parameters such as precision, cell width, etc. can be set manually
+  
+*   If the cell width is set to zero, a space is printed between the elements
+  
+*   Examples:
+    
+    mat A(5, 5, fill::randu);
+    
+    cout.precision(11);
+    cout.setf(ios::fixed);
+    
+    A.raw_print(cout, "A:");
+    
+  
+*   See also:
+    *   [.print()](#print)
+    *   [.brief_print()](#brief_print)
+    *   [std::ios_base::fmtflags](https://en.cppreference.com/w/cpp/io/ios_base/fmtflags) (cppreference.com)
+    *   [std::ios_base::fmtflags](https://cplusplus.com/reference/ios/ios_base/fmtflags/) (cplusplus.com)
+  
+
+* * *
+
+  
+
+`brief_print()`  
+`brief_print( header )`  
+  
+`brief_print( stream )`  
+`brief_print( stream, header )`
+
+*   Member functions of `Mat`, `Col`, `Row`, `SpMat` and `Cube`
+  
+*   Print a shortened/abridged version of an object and its size to the _std::cout_ stream (default), or a user specified stream, with an optional header string
+  
+*   Can be useful for gaining a glimpse of large matrices
+  
+*   Examples:
+    
+    mat A(123, 456, fill::randu);
+    
+    A.brief_print("A:");
+    
+    // possible output:
+    // 
+    // A:
+    // \[matrix size: 123x456\]
+    //    0.8402   0.7605   0.6218      ...   0.9744
+    //    0.3944   0.9848   0.0409      ...   0.7799
+    //    0.7831   0.9350   0.4140      ...   0.8835
+    //         :        :        :        :        :        
+    //    0.4954   0.1826   0.9848      ...   0.1918
+    
+  
+*   See also:
+    *   [.print()](#print)
+    *   [.raw_print()](#raw_print)
+  
+
+* * *
+
+  
+
+**saving / loading matrices & cubes**  
+  
+
+`save(** filename **)`  
+`save(** filename**,** file_type **)`  
+  
+`save(** stream **)`  
+`save(** stream**,** file_type **)`  
+  
+`save( hdf5_name(**filename**,** dataset**) )`  
+`save( hdf5_name(**filename**,** dataset**,** settings**) )`  
+  
+`save( csv_name(**filename**,** header**) )`  
+`save( csv_name(**filename**,** header**,** settings**) )`
+
+      
+
+`load(** filename **)`  
+`load(** filename**,** file_type **)`  
+  
+`load(** stream **)`  
+`load(** stream**,** file_type **)`  
+  
+`load( hdf5_name(**filename**,** dataset**) )`  
+`load( hdf5_name(**filename**,** dataset**,** settings**) )`  
+  
+`load( csv_name(**filename**,** header**) )`  
+`load( csv_name(**filename**,** header**,** settings**) )`
+
+  
+
+*   Member functions of `Mat`, `Col`, `Row`, `Cube` and `SpMat`
+  
+*   Store/retrieve data in a file or stream (**caveat:** the stream must be opened in binary mode)
+  
+*   On success, _.save()_ and _.load()_ return a _bool_ set to _true_
+  
+*   On failure, _.save()_ and _.load()_ return a _bool_ set to _false_; additionally, _.load()_ resets the object so that it has no elements
+  
+*   _file_type_ can be one of the following:  
+      
+    
+    **auto_detect**
+    
+      
+    
+    Used only by _.load()_ only: attempt to automatically detect the file type as one of the formats described below;  
+    \[ default operation for _.load()_ \]  
+      
+    
+    **arma_binary**  
+    
+      
+    
+    Numerical data stored in machine dependent binary format, with a simple header to speed up loading. The header indicates the type and size of matrix/cube.  
+    \[ default operation for _.save()_ \]  
+      
+    
+    **arma_ascii**
+    
+      
+    
+    Numerical data stored in human readable text format, with a simple header to speed up loading. The header indicates the type and size of matrix/cube.  
+      
+    
+    **raw_binary**
+    
+      
+    
+    Numerical data stored in machine dependent raw binary format, without a header. Matrices are loaded to have one column, while cubes are loaded to have one slice with one column. The [.reshape()](#reshape_member) function can be used to alter the size of the loaded matrix/cube without losing data.  
+      
+    
+    **raw_ascii**
+    
+      
+    
+    Numerical data stored in raw ASCII format, without a header. The numbers are separated by whitespace. The number of columns must be the same in each row. Cubes are loaded as one slice. Data which was saved in Matlab/Octave using the _\-ascii_ option can be read in Armadillo, except for complex numbers. Complex numbers are stored in standard C++ notation, which is a tuple surrounded by brackets: eg. (1.23,4.56) indicates 1.24 + 4.56i.  
+      
+    
+    **csv_ascii**
+    
+      
+    
+    Numerical data stored in comma separated value (CSV) text format, **without** a header. To save/load **with** a header, use the **csv_name(**filename,header**)` specification instead (more details below). Handles complex numbers stored in the compound form of 1.24+4.56i. Applicable to `Mat` and `SpMat`.  
+      
+    
+    **coord_ascii**
+    
+      
+    
+    Numerical data stored as a text file in coordinate list format, without a header. Only non-zero values are stored.  
+    For real matrices, each line contains information in the following format:  `row column value`  
+    For complex matrices, each line contains information in the following format:  `row column real_value imag_value`  
+    The rows and columns start at zero.  
+    Armadillo ≥ 10.3: applicable to `Mat` and `SpMat`; Armadillo ≤ 10.2: applicable to `SpMat` only.  
+    **Caveat:** not supported by _auto_detect_.  
+      
+    
+    **pgm_binary**
+    
+      
+    
+    Image data stored in Portable Gray Map (PGM) format. Applicable to `Mat` only. Saving _int_, _float_ or _double_ matrices is a lossy operation, as each element is copied and converted to an 8 bit representation. As such the matrix should have values in the \[0,255\] interval, otherwise the resulting image may not display correctly.  
+      
+    
+    **ppm_binary**
+    
+      
+    
+    Image data stored in Portable Pixel Map (PPM) format. Applicable to `Cube` only. Saving _int_, _float_ or _double_ matrices is a lossy operation, as each element is copied and converted to an 8 bit representation. As such the cube/field should have values in the \[0,255\] interval, otherwise the resulting image may not display correctly.  
+      
+    
+    **hdf5_binary**
+    
+      
+    
+    Numerical data stored in portable [HDF5](https://en.wikipedia.org/wiki/Hierarchical_Data_Format) binary format.
+    
+    *   for saving, the default dataset name within the HDF5 file is "dataset"
+    *   for loading, the order of operations is: (1) try loading a dataset named "dataset", (2) try loading a dataset named "value", (3) try loading the first available dataset
+    *   to explicitly control the dataset name, specify it via the **hdf5_name()` argument (more details below)
+    
+  
+*   **Caveat:** for saving / loading HDF5 files, support for HDF5 must be enabled within Armadillo's [configuration](#config_hpp); the _hdf5.h_ header file must be available on your system and you will need to link with the HDF5 library (eg. `_-lhdf5_`). HDF5 support can be enabled by defining [ARMA_USE_HDF5](#config_hpp) before including the armadillo header:  
+    `#define ARMA_USE_HDF5   #include <armadillo>`
+  
+*   By providing either **hdf5_name(**filename**,** dataset**)` or **hdf5_name(**filename**,** dataset**,** settings**)`, the _file_type_ type is assumed to be _hdf5_binary_  
+      
+    *   the _dataset_ argument specifies an HDF5 dataset name (eg. "my_dataset") that can include a full path (eg. "/group_name/my_dataset"); if a blank dataset name is specified (e.g., ""), it is assumed to be "dataset"  
+          
+        
+    *   the _settings_ argument is optional; it is one of the following, or a combination thereof:  
+          
+        
+        `hdf5_opts::trans`
+        
+           
+        
+        save/load the data with columns transposed to rows (and vice versa)
+        
+        `hdf5_opts::append`
+        
+           
+        
+        instead of overwriting the file, append the specified dataset to the file;  
+        the specified dataset must not already exist in the file
+        
+        `hdf5_opts::replace`
+        
+           
+        
+        instead of overwriting the file, replace the specified dataset in the file  
+        **caveat:** HDF5 may not automatically reclaim deleted space; use [h5repack](https://support.hdfgroup.org/HDF5/Tutor/cmdtooledit.html) to clean HDF5 files
+        
+          
+        the above settings can be combined using the `+` operator; for example: `hdf5_opts::trans + hdf5_opts::append`
+  
+*   By providing either **csv_name(**filename**,** header**)` or **csv_name(**filename**,** header**,** settings**)`, the file is assumed to have data in comma separated value (CSV) text format  
+      
+    *   the _header_ argument specifies the object which stores the separate elements of the header line; it must have the type `[field<std::string>](#field)`  
+          
+        
+    *   the optional _settings_ argument is one of the following, or a combination thereof:  
+          
+        
+        `csv_opts::trans`
+        
+           
+        
+        save/load the data with columns transposed to rows (and vice versa)
+        
+        `csv_opts::no_header`
+        
+           
+        
+        assume there is no header line; the _header_ argument is not referenced
+        
+        `csv_opts::semicolon`
+        
+           
+        
+        use semicolon (;) instead of comma (,) as the separator character
+        
+        `csv_opts::strict`
+        
+           
+        
+        interpret missing values as NaN (not applicable to sparse matrices)
+        
+          
+        the above settings can be combined using the `+` operator; for example: `csv_opts::trans + csv_opts::no_header`
+  
+*   Examples:
+    
+    mat A(5, 6, fill::randu);
+    
+    // default save format is arma_binary
+    A.save("A.bin");
+    
+    // save in raw_ascii format
+    A.save("A.txt", raw_ascii);
+    
+    // save in CSV format without a header
+    A.save("A.csv", csv_ascii);
+    
+    // save in CSV format with a header
+    field<std::string> header(A.n_cols);
+    header(0) = "foo";
+    header(1) = "bar";  // etc
+    A.save( csv_name("A.csv", header) );
+    
+    // save in HDF5 format with internal dataset named as "my_data"
+    A.save(hdf5_name("A.h5", "my_data"));
+    
+    // automatically detect format type while loading
+    mat B;
+    B.load("A.bin");
+    
+    // force loading in arma_ascii format
+    mat C;
+    C.load("A.txt", arma_ascii);
+    
+    
+    // example of testing for success
+    mat D;
+    bool ok = D.load("A.bin");
+    
+    if(ok == false)
+      {
+      cout << "problem with loading" << endl;
+      }
+    
+  
+*   See also:
+    *   [HDF](https://en.wikipedia.org/wiki/Hierarchical_Data_Format) in Wikipedia
+    *   [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) in Wikipedia
+    *   [saving / loading fields](#save_load_field)
+  
+
+* * *
+
+  
+
+**saving / loading fields**  
+  
+
+`save( name )`  
+`save( name, file_type )`  
+  
+`save( stream )`  
+`save( stream, file_type )`
+
+      
+
+`load( name )`  
+`load( name, file_type )`  
+  
+`load( stream )`  
+`load( stream, file_type )`
+
+  
+
+*   Store/retrieve data in a file or stream (**caveat:** the stream must be opened in binary mode)
+  
+*   On success, _.save()_ and _.load()_ return a _bool_ set to _true_
+  
+*   On failure, _.save()_ and _.load()_ return a _bool_ set to _false_; additionally, _.load()_ resets the object so that it has no elements
+  
+*   Fields with objects of type _std::string_ are saved and loaded as raw text files. The text files do not have a header. Each string is separated by a whitespace. _load()_ will only accept text files that have the same number of strings on each line. The strings can have variable lengths.
+  
+*   Other than storing string fields as text files, the following file formats are supported:  
+      
+    
+    **auto_detect**
+    
+      
+    
+      
+    *   _.load()_: attempt to automatically detect the field format type as one of the formats described below; this is the default operation
+      
+    
+    **arma_binary**
+    
+      
+    
+      
+    *   objects are stored in machine dependent binary format
+    *   default type for fields of type `Mat`, `Col`, `Row` or `Cube`
+    *   only applicable to fields of type `Mat`, `Col`, `Row` or `Cube`
+      
+    
+    **ppm_binary**
+    
+      
+    
+      
+    *   image data stored in Portable Pixmap Map (PPM) format
+    *   only applicable to fields of type `Mat`, `Col` or `Row`
+    *   _.load()_: loads the specified image and stores the red, green and blue components as three separate matrices; the resulting field is comprised of the three matrices, with the red, green and blue components in the first, second and third matrix, respectively
+    *   _.save()_: saves a field with exactly three matrices of equal size as an image; it is assumed that the red, green and blue components are stored in the first, second and third matrix, respectively; saving _int_, _float_ or _double_ matrices is a lossy operation, as each matrix element is copied and converted to an 8 bit representation
+    
+  
+*   See also:
+    *   [saving / loading matrices and cubes](#save_load_mat)

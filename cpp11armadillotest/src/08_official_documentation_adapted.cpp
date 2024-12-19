@@ -194,3 +194,63 @@
 
   return as_doubles_matrix(D);  // convert from C++ to R
 }
+
+[[cpp11::register]] doubles_matrix<> randu_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+
+  mat B;
+  B.randu(size(A));  // random uniform matrix with the same size as A
+
+  mat C(A.n_rows, A.n_cols, fill::randu);
+
+  mat D = A + B + C;
+
+  return as_doubles_matrix(D);  // convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> randn_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+
+  mat B;
+  B.randn(size(A));  // random normal matrix with the same size as A
+
+  mat C(A.n_rows, A.n_cols, fill::randn);
+
+  mat D = A + B + C;
+
+  return as_doubles_matrix(D);  // convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> randu_fun2_(const int& n) {
+  GetRNGstate();  // Ensure R's RNG state is synchronized
+  mat y(n, n);
+  ::arma_rng::randu<double>::fill(y.memptr(), y.n_elem);
+  PutRNGstate();
+
+  return as_doubles_matrix(y);
+}
+
+[[cpp11::register]] doubles_matrix<> randn_fun2_(const int& n) {
+  GetRNGstate();  // Ensure R's RNG state is synchronized
+  mat y(n, n);
+  ::arma_rng::randn<double>::fill(y.memptr(), y.n_elem);
+  PutRNGstate();
+
+  return as_doubles_matrix(y);
+}
+
+[[cpp11::register]] doubles_matrix<> fill_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+
+  uword N = A.n_rows;
+  uword M = A.n_cols;
+
+  mat B(size(A), fill::value(200.0));  // create a matrix filled with 200.0
+  mat C(N, M, fill::value(100.0));     // matrix filled with 100.0
+  mat D(N, M, fill::zeros);            // matrix filled with zeros
+  mat E(N, M, fill::ones);             // matrix filled with ones
+
+  mat F = A + B + C + D + E;
+
+  return as_doubles_matrix(F);  // convert from C++ to R
+}

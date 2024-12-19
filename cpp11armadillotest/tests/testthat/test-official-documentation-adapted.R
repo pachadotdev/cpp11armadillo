@@ -56,4 +56,42 @@ test_that("examples derived from official documentation", {
   res12 <- eye_fun1_(a)
   expect_type(res12, "double")
   expect_equal(res12, 3 * diag(2))
+
+  res13 <- randu_fun1_(a)
+  expect_type(res13, "double")
+  expect_equal(dim(res13), c(2, 2))
+
+  res14 <- randn_fun1_(a)
+  expect_type(res14, "double")
+  expect_equal(dim(res14), c(2, 2))
+
+  set.seed(123)
+  res15 <- randu_fun2_(2L)
+
+  set.seed(123)
+  res15_2 <- randu_fun2_(2L)
+
+  set.seed(321)
+  res15_3 <- randu_fun2_(2L)
+
+  expect_equal(res15, res15_2)
+  res15_4 <- all.equal(res15, res15_3)
+  expect_match(res15_4, "Mean relative difference")
+
+  set.seed(123)
+  res16 <- randn_fun2_(2L)
+
+  set.seed(123)
+  res16_2 <- randn_fun2_(2L)
+
+  set.seed(321)
+  res16_3 <- randn_fun2_(2L)
+
+  expect_equal(res16, res16_2)
+  res16_4 <- all.equal(res16, res16_3)
+  expect_match(res16_4, "Mean relative difference")
+
+  res17 <- fill_fun1_(a)
+  expect_type(res17, "double")
+  expect_equal(dim(res17), c(2, 2))
 })

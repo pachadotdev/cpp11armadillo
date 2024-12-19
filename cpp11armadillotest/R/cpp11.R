@@ -127,3 +127,23 @@ ones_fun1_ <- function(a) {
 eye_fun1_ <- function(a) {
   .Call(`_cpp11armadillotest_eye_fun1_`, a)
 }
+
+randu_fun1_ <- function(a) {
+  .Call(`_cpp11armadillotest_randu_fun1_`, a)
+}
+
+randn_fun1_ <- function(a) {
+  .Call(`_cpp11armadillotest_randn_fun1_`, a)
+}
+
+randu_fun2_ <- function(n) {
+  .Call(`_cpp11armadillotest_randu_fun2_`, n)
+}
+
+randn_fun2_ <- function(n) {
+  .Call(`_cpp11armadillotest_randn_fun2_`, n)
+}
+
+fill_fun1_ <- function(a) {
+  .Call(`_cpp11armadillotest_fill_fun1_`, a)
+}
