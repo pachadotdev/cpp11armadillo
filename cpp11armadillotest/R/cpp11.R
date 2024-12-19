@@ -103,3 +103,27 @@ cube_fun1_ <- function(a, b) {
 field_fun1_ <- function(a, b) {
   .Call(`_cpp11armadillotest_field_fun1_`, a, b)
 }
+
+attr_fun1_ <- function(a) {
+  .Call(`_cpp11armadillotest_attr_fun1_`, a)
+}
+
+access_fun1_ <- function(a) {
+  .Call(`_cpp11armadillotest_access_fun1_`, a)
+}
+
+initialization_fun1_ <- function(a) {
+  .Call(`_cpp11armadillotest_initialization_fun1_`, a)
+}
+
+zeros_fun1_ <- function(a) {
+  .Call(`_cpp11armadillotest_zeros_fun1_`, a)
+}
+
+ones_fun1_ <- function(a) {
+  .Call(`_cpp11armadillotest_ones_fun1_`, a)
+}
+
+eye_fun1_ <- function(a) {
+  .Call(`_cpp11armadillotest_eye_fun1_`, a)
+}

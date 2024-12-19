@@ -26,8 +26,8 @@ The idea is to pass matrices/vectors from R to C++, write pure
 C++/Armadillo code for the computation, and then export the result back
 to R with the proper data structures.
 
-[RcppArmadillo](https://cran.r-project.org/web/packages/RcppArmadillo/)
-is a popular R package used by over 1200 CRAN packages as of 2024-12-13.
+[RcppArmadillo](https://cran.r-project.org/package=RcppArmadillo) is a
+popular R package used by over 1200 CRAN packages as of 2024-12-13.
 RcppArmadillo uses the GPL-3 license.
 
 cpp11armadillo has different internals, even when the goal is the same,

@@ -33,7 +33,7 @@ This vignette is adapted from the official Armadillo
 | `Cube<type>`                   | dense cube class ("3D matrix")                                          |
 | `cube`                         | dense cube class ("3D matrix")                                          |
 | `cx_cube`                      | dense cube class ("3D matrix")                                          |
-| `field<object type>`           | class for storing arbitrary objects in matrix-like or cube-like layouts |
+| `field<object type>`           | class for storing arbitrary objects in matrix-like or cube-like layouts |
 | `SpMat<type>`                  | sparse matrix class                                                     |
 | `sp_mat`                       | sparse matrix class                                                     |
 | `sp_cx_mat`                    | sparse matrix class                                                     |
@@ -127,7 +127,7 @@ in normal use this is not required.
     directly use the auxiliary memory (e.g., no copying); this is faster, but
     can be dangerous unless you know what you are doing.    
   * The `strict` parameter comes into effect only when copy_aux_mem is set to
-    `false` (ie. the matrix is directly using auxiliary memory).
+    `false` (e.g., the matrix is directly using auxiliary memory).
     * When `strict` is set to `false`, the matrix will use the auxiliary memory
       until a size change or an aliasing event.
     * When `strict` is set to `true`, the matrix will be bound to the auxiliary
@@ -166,7 +166,7 @@ a <- matrix(runif(25), nrow = 5, ncol = 5)
 [[cpp11::register]] doubles_matrix<> matrix_fun1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a); // convert from R to C++
 
-  double x = A(1,2); // access an element
+  double x = A(0, 0);  // access an element on row 1, column 1
   A = A + x; // scalar addition
       
   mat B = A + A; // matrix addition
@@ -184,9 +184,9 @@ a <- matrix(runif(25), nrow = 5, ncol = 5)
 
   cx_mat X(A,B); // construct a complex matrix out of two real matrices
 
-  B.zeros(); // set all elements to zero
-  B.set_size(10,10); // resize the matrix
-  B.ones(5,6); // same as mat B(5, 6, fill::ones)
+  B.zeros();                       // set all elements to zero
+  B.set_size(A.n_rows, A.n_cols);  // resize the matrix
+  B.ones(5, 6);                    // same as mat B(5, 6, fill::ones)
         
   mat::fixed<5,6> F; // fixed size matrix
       
@@ -255,10 +255,10 @@ Main exceptions are functions that require square matrices.
     where ptr_aux_mem is a pointer to the memory. By default the vector
     allocates its own memory and copies data from the auxiliary memory (for
     safety). However, if copy_aux_mem is set to `false`, the vector will instead
-    directly use the auxiliary memory (ie. no copying). This is faster, but can
+    directly use the auxiliary memory (e.g., no copying). This is faster, but can
     be dangerous unless you know what you are doing.
   * The `strict` parameter comes into effect only when copy_aux_mem is set to
-    `false` (ie. the vector is directly using auxiliary memory)
+    `false` (e.g., the vector is directly using auxiliary memory)
     * When `strict` is set to `false`, the vector will use the auxiliary memory
       until a size change or an aliasing event.
     * When `strict` is set to `true`, the vector will be bound to the auxiliary
@@ -355,7 +355,7 @@ exceptions are functions which require square matrices.
     where ptr_aux_mem is a pointer to the memory. By default the vector
     allocates its own memory and copies data from the auxiliary memory (for
     safety). However, if copy_aux_mem is set to `false`, the vector will instead
-    directly use the auxiliary memory (ie. no copying); this is faster, but can
+    directly use the auxiliary memory (e.g., no copying); this is faster, but can
     be dangerous unless you know what you are doing. 
   * The `strict` parameter comes into effect only when copy_aux_mem is set to
     `false` (e.g., the vector is directly using auxiliary memory).
@@ -662,3 +662,227 @@ efficient.
 | `.brief_print`    | print object in shortened/abridged form                                     |
 | `.save`           | save matrix or cube (cpp11armadillo reads from R and sends data back to R)  |
 | `.load`           | load matrix or cube (cpp11armadillo reads from R and sends data back to R)  |
+
+## Attributes
+
+`.n_rows` number of rows; present in `Mat`, `Col`, `Row`, `Cube`, `field` and `SpMat`
+`.n_cols` number of columns; present in `Mat`, `Col`, `Row`, `Cube`, `field` and `SpMat`
+`.n_elem` total number of elements; present in `Mat`, `Col`, `Row`, `Cube`, `field` and `SpMat`
+`.n_slices` number of slices; present in `Cube` and `field`
+`.n_nonzero` number of non-zero elements; present in `SpMat`
+
+The variables are of type `uword`
+  
+The variables are read-only; to change the size, use `set_size`, `copy_size`,
+`zeros_member`, `ones_member`, or `reset`.
+  
+For the `Col` and `Row` classes, _n_elem_ also indicates vector length
+  
+### Examples:
+
+```r
+a <- matrix(runif(4), nrow = 2, ncol = 2)
+```
+
+```cpp
+[[cpp11::register]] integers attr_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+
+  // uword or int can be used
+  int n_rows = A.n_rows;  // number of rows
+  int n_cols = A.n_cols;  // number of columns
+  int n_elem = A.n_elem;  // number of elements
+
+  writable::integers res({n_rows, n_cols, n_elem});
+  res.attr("names") = strings({"n_rows", "n_cols", "n_elem"});
+
+  return res;
+}
+```
+
+## Element/object access
+
+Provide access to individual elements or objects stored in a container object
+(e.g., `Mat`, `Col`, `Row`, `Cube`, `field`)  
+      
+* `(i)` For `vec` and `rowvec`, access the element stored at index `i`. For
+  `Mat`, `Cube` and `field`, access the element/object stored at index `i` under
+  the assumption of a flat layout, with column-major ordering of data (e.g.,
+  column by column). An exception is thrown if the requested element is out of
+  bounds.
+* `.at(i)` or `[i]` As for `(i)`, but without a bounds check; not recommended.
+* `(r,c)` For `Mat` and 2D field classes, access the element/object stored at 
+  row `r` and column `c`. An exception is thrown if the requested element is out
+  of bounds.
+* `.at(r,c)` As for `(r,c)`, but without a bounds check; not recommended.
+* `(r,c,s)` For `Cube` and 3D field classes, access the element/object stored at
+  row `r`, column `c`, and slice _s_. An exception is thrown if the requested
+  element is out of bounds.
+* `.at(r,c,s)` As for `(r,c,s)`, but without a bounds check; not recommended.
+    
+Caveats for `.at()` or `[i]`, `.at(r,c)`, and `.at(r,c,s)`:
+
+  * Accessing elements without bounds checks is slightly faster, but is not
+    recommended until your code has been thoroughly debugged first
+  * Indexing in C++ starts at 0
+  * Accessing elements via `[r,c]` and `[r,c,s]` does not work correctly in C++;
+    instead use `(r,c)` and `(r,c,s)`
+
+The indices of elements are specified via the `uword` type, which is a `typedef`
+for an unsigned integer type. When using loops to access elements, it is best to
+use `uword` instead of `int`. For example: `for(uword i=0; i<X.n_elem; ++i) { X(i) = ... }`
+  
+### Examples
+
+```r
+a <- matrix(runif(4), nrow = 2, ncol = 2)
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> access_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+  A(1,1) = 123.0;     // set element at row 2, column 2
+
+  vec B(2, fill::randu);
+
+  double x = A(0,1);  // copy element at row 1, column 2 to a double
+  double y = B(1);    // copy element at coordinate 2 to a double
+
+  uword i, j; // int also works
+  uword N = A.n_rows;
+  uword M = A.n_cols;
+
+  for(i = 0; i < N; ++i) {
+    for(j = 0; j < M; ++j) {
+      A(i,j) = A(i,j) + x + y;
+    }
+  }
+
+  return as_doubles_matrix(A);  // convert from C++ to R
+}
+```
+
+## Element initialisation
+
+Set elements in `Mat`, `Col`, `Row` via braced initialiser lists
+  
+### Examples
+    
+```r
+a <- matrix(runif(4), nrow = 2, ncol = 2)
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> initialization_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+  mat B = {{1, 2}, {3, 4}}; // create new matrix
+  vec C = {1, 2}; // create new column vector
+
+  // sum C to the diagonal of A
+  A(0,0) = A(0,0) + C(0);
+  A(1,1) = A(1,1) + C(1);
+
+  mat D = A + B;
+  
+  return as_doubles_matrix(D);  // convert from C++ to R
+}
+```
+
+## Zeros
+
+Set the elements of an object to zero, optionally first changing the size to
+specified dimensions
+
+`.zeros()` (member function of `Mat`, `Col`, `Row`, `SpMat`, `Cube`)
+`.zeros(n_elem)` (member function of `Col` and `Row`)
+`.zeros(n_rows, n_cols)` (member function of `Mat` and `SpMat`)
+`.zeros(n_rows, n_cols, n_slices)` (member function of `Cube`)
+`.zeros(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`)
+  
+### Examples
+    
+```r
+a <- matrix(runif(4), nrow = 2, ncol = 2)
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> zeros_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+  A.zeros();          // set all elements to zero
+
+  mat B;
+  B.zeros(size(A)); // set size to be the same as A and set all elements to zero
+
+  mat C(A.n_rows, A.n_cols, fill::zeros);
+
+  mat D = A + B + C;
+
+  return as_doubles_matrix(D);  // convert from C++ to R
+}
+```
+
+## Ones
+
+Set all the elements of an object to one, optionally first changing the size to
+specified dimensions
+
+`ones()` (member function of `Mat`, `Col`, `Row`, `Cube`)
+`ones(n_elem)` (member function of `Col` and `Row`)
+`ones(n_rows, n_cols)` (member function of `Mat`)
+`ones(n_rows, n_cols, n_slices)` (member function of `Cube`)
+`ones(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`)
+  
+### Examples
+    
+```r
+a <- matrix(runif(4), nrow = 2, ncol = 2)
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> ones_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+  A.ones();          // set all elements to zero
+
+  mat B;
+  B.ones(size(A)); // set size to be the same as A and set all elements to zero
+
+  mat C(A.n_rows, A.n_cols, fill::ones);
+
+  mat D = A + B + C;
+
+  return as_doubles_matrix(D);  // convert from C++ to R
+}
+```
+
+## Eye
+
+* `eye()` Member functions of `Mat` and `SpMat`
+* `eye(n_rows, n_cols)` Set the elements along the main diagonal to one and
+  off-diagonal elements to zero, optionally first changing the size to specified
+  dimensions
+* `eye(size(X))` An identity matrix is generated when `n_rows = n_cols`
+  
+### Examples
+    
+```r
+a <- matrix(runif(4), nrow = 2, ncol = 2)
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> eye_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+  A.eye();            // create an identity matrix
+
+  mat B;
+  B.eye(size(A)); // another identity matrix
+
+  uword N = A.n_rows;
+  uword M = A.n_cols;
+  mat C(N, M, fill::randu);
+  C.eye(N, M); // yet another identity matrix
+
+  mat D = A + B + C;
+
+  return as_doubles_matrix(D);  // convert from C++ to R
+}
+```

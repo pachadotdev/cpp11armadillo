@@ -3,7 +3,7 @@
 [[cpp11::register]] doubles_matrix<> matrix_fun1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
 
-  double x = A(1, 2);  // access an element
+  double x = A(0, 0);  // access an element on row 1, column 1
   A = A + x;           // scalar addition
 
   mat B = A + A;  // matrix addition
@@ -21,16 +21,16 @@
 
   cx_mat X(A, B);  // construct a complex matrix out of two real matrices
 
-  B.zeros();           // set all elements to zero
-  B.set_size(10, 10);  // resize the matrix
-  B.ones(5, 6);        // same as mat B(5, 6, fill::ones)
+  B.zeros();                       // set all elements to zero
+  B.set_size(A.n_rows, A.n_cols);  // resize the matrix
+  B.ones(5, 6);                    // same as mat B(5, 6, fill::ones)
 
   mat::fixed<5, 6> F;  // fixed size matrix
 
   double aux_mem[24];               // auxiliary memory
   mat H(&aux_mem[0], 4, 6, false);  // use auxiliary memory
 
-  X = X + F.submat(0, 0, 4, 4) + H(1, 2);
+  X = X + F.submat(0, 0, 1, 1) + H(1, 2);
 
   Mat<double> res_real = real(X);
   Mat<double> res_imag = imag(X);
@@ -98,4 +98,99 @@
   mat res = F(0) + F(1) + F(2).t();
 
   return as_doubles_matrix(res);  // convert from C++ to R
+}
+
+[[cpp11::register]] integers attr_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+
+  // uword or int can be used
+  int n_rows = A.n_rows;  // number of rows
+  int n_cols = A.n_cols;  // number of columns
+  int n_elem = A.n_elem;  // number of elements
+
+  writable::integers res({n_rows, n_cols, n_elem});
+  res.attr("names") = strings({"n_rows", "n_cols", "n_elem"});
+
+  return res;
+}
+
+[[cpp11::register]] doubles_matrix<> access_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+  A(1, 1) = 123.0;    // set element at row 2, column 2
+
+  vec B(2, fill::randu);
+
+  double x = A(0, 1);  // copy element at row 1, column 2 to a double
+  double y = B(1);     // copy element at coordinate 2 to a double
+
+  uword i, j;  // int also works
+  uword N = A.n_rows;
+  uword M = A.n_cols;
+
+  for (i = 0; i < N; ++i) {
+    for (j = 0; j < M; ++j) {
+      A(i, j) = A(i, j) + x + y;
+    }
+  }
+
+  return as_doubles_matrix(A);  // convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> initialization_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);         // convert from R to C++
+  mat B = {{1, 2}, {3, 4}};  // create new matrix
+  vec C = {1, 2};            // create new column vector
+
+  // sum C to the diagonal of A
+  A(0, 0) = A(0, 0) + C(0);
+  A(1, 1) = A(1, 1) + C(1);
+
+  mat D = A + B;
+
+  return as_doubles_matrix(D);  // convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> zeros_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+  A.zeros();          // set all elements to zero
+
+  mat B;
+  B.zeros(size(A));  // set size to be the same as A and set all elements to zero
+
+  mat C(A.n_rows, A.n_cols, fill::zeros);
+
+  mat D = A + B + C;
+
+  return as_doubles_matrix(D);  // convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> ones_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+  A.ones();           // set all elements to zero
+
+  mat B;
+  B.ones(size(A));  // set size to be the same as A and set all elements to zero
+
+  mat C(A.n_rows, A.n_cols, fill::ones);
+
+  mat D = A + B + C;
+
+  return as_doubles_matrix(D);  // convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> eye_fun1_(const doubles_matrix<>& a) {
+  mat A = as_Mat(a);  // convert from R to C++
+  A.eye();            // create an identity matrix
+
+  mat B;
+  B.eye(size(A));  // another identity matrix
+
+  uword N = A.n_rows;
+  uword M = A.n_cols;
+  mat C(N, M, fill::randu);
+  C.eye(N, M);  // yet another identity matrix
+
+  mat D = A + B + C;
+
+  return as_doubles_matrix(D);  // convert from C++ to R
 }

@@ -187,9 +187,53 @@ extern "C" SEXP _cpp11armadillotest_field_fun1_(SEXP a, SEXP b) {
     return cpp11::as_sexp(field_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(b)));
   END_CPP11
 }
+// 08_official_documentation_adapted.cpp
+integers attr_fun1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_attr_fun1_(SEXP a) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(attr_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> access_fun1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_access_fun1_(SEXP a) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(access_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> initialization_fun1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_initialization_fun1_(SEXP a) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(initialization_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> zeros_fun1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_zeros_fun1_(SEXP a) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(zeros_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> ones_fun1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_ones_fun1_(SEXP a) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(ones_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> eye_fun1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_eye_fun1_(SEXP a) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(eye_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
+    {"_cpp11armadillotest_access_fun1_",                  (DL_FUNC) &_cpp11armadillotest_access_fun1_,                  1},
+    {"_cpp11armadillotest_attr_fun1_",                    (DL_FUNC) &_cpp11armadillotest_attr_fun1_,                    1},
     {"_cpp11armadillotest_capm",                          (DL_FUNC) &_cpp11armadillotest_capm,                          3},
     {"_cpp11armadillotest_chol_mat",                      (DL_FUNC) &_cpp11armadillotest_chol_mat,                      2},
     {"_cpp11armadillotest_column_fun1_",                  (DL_FUNC) &_cpp11armadillotest_column_fun1_,                  2},
@@ -200,13 +244,16 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_eigen_gen_no_wrapper",          (DL_FUNC) &_cpp11armadillotest_eigen_gen_no_wrapper,          1},
     {"_cpp11armadillotest_eigen_sym_dbl",                 (DL_FUNC) &_cpp11armadillotest_eigen_sym_dbl,                 1},
     {"_cpp11armadillotest_eigen_sym_mat",                 (DL_FUNC) &_cpp11armadillotest_eigen_sym_mat,                 1},
+    {"_cpp11armadillotest_eye_fun1_",                     (DL_FUNC) &_cpp11armadillotest_eye_fun1_,                     1},
     {"_cpp11armadillotest_field_fun1_",                   (DL_FUNC) &_cpp11armadillotest_field_fun1_,                   2},
+    {"_cpp11armadillotest_initialization_fun1_",          (DL_FUNC) &_cpp11armadillotest_initialization_fun1_,          1},
     {"_cpp11armadillotest_matrix_fun1_",                  (DL_FUNC) &_cpp11armadillotest_matrix_fun1_,                  1},
     {"_cpp11armadillotest_matrix_fun2_",                  (DL_FUNC) &_cpp11armadillotest_matrix_fun2_,                  1},
     {"_cpp11armadillotest_ols_dbl",                       (DL_FUNC) &_cpp11armadillotest_ols_dbl,                       2},
     {"_cpp11armadillotest_ols_mat",                       (DL_FUNC) &_cpp11armadillotest_ols_mat,                       2},
     {"_cpp11armadillotest_ols_qr_dbl",                    (DL_FUNC) &_cpp11armadillotest_ols_qr_dbl,                    3},
     {"_cpp11armadillotest_ols_qr_mat",                    (DL_FUNC) &_cpp11armadillotest_ols_qr_mat,                    3},
+    {"_cpp11armadillotest_ones_fun1_",                    (DL_FUNC) &_cpp11armadillotest_ones_fun1_,                    1},
     {"_cpp11armadillotest_random_matrix_nxn",             (DL_FUNC) &_cpp11armadillotest_random_matrix_nxn,             1},
     {"_cpp11armadillotest_row_fun1_",                     (DL_FUNC) &_cpp11armadillotest_row_fun1_,                     2},
     {"_cpp11armadillotest_typedef_Col_double",            (DL_FUNC) &_cpp11armadillotest_typedef_Col_double,            1},
@@ -216,6 +263,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_typedef_SpMat_double",          (DL_FUNC) &_cpp11armadillotest_typedef_SpMat_double,          1},
     {"_cpp11armadillotest_typedef_SpMat_int",             (DL_FUNC) &_cpp11armadillotest_typedef_SpMat_int,             1},
     {"_cpp11armadillotest_typedef_uvec",                  (DL_FUNC) &_cpp11armadillotest_typedef_uvec,                  1},
+    {"_cpp11armadillotest_zeros_fun1_",                   (DL_FUNC) &_cpp11armadillotest_zeros_fun1_,                   1},
     {NULL, NULL, 0}
 };
 }
