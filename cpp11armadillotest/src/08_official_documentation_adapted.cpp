@@ -396,3 +396,63 @@
 
   return as_integers(res);  // Convert from C++ to R
 }
+
+[[cpp11::register]] doubles_matrix<> subview_fun1_(const int& n) {
+  mat A(n, n, fill::zeros);
+
+  A.submat(0, 1, 2, 3) = randu<mat>(3, 3);
+  A(span(0, 2), span(1, 3)) = randu<mat>(3, 3);
+  A(0, 1, size(3, 3)) = randu<mat>(3, 3);
+
+  mat B = A.submat(0, 1, 2, 3);
+  mat C = A(span(0, 2), span(1, 3));
+  mat D = A(0, 1, size(3, 3));
+
+  A.col(1) = randu<mat>(5, 1);
+  A(span::all, 1) = randu<mat>(5, 1);
+
+  mat X(5, 5, fill::randu);
+
+  // get all elements of X that are greater than 0.5
+  vec q = X.elem(find(X > 0.5));
+
+  // add 123 to all elements of X greater than 0.5
+  X.elem(find(X > 0.5)) += 123.0;
+
+  // set four specific elements of X to 1
+  uvec indices = {2, 3, 6, 8};
+
+  X.elem(indices) = ones<vec>(4);
+
+  // add 123 to the last 5 elements of vector a
+  vec a(10, fill::randu);
+  a.tail(5) += 123.0;
+
+  // add 123 to the first 3 elements of column 2 of X
+  X.col(2).head(3) += 123;
+
+  return as_doubles_matrix(X);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> subview_fun2_(const int& n) {
+  cube A(n, 3, 4, fill::randu);
+
+  mat B = A.slice(1);  // each slice is a matrix
+
+  A.slice(0)(1, 2) = 99.0;
+
+  A.subcube(0, 0, 1, 1, 1, 2) = randu<cube>(2, 2, 2);
+  A(span(0, 1), span(0, 1), span(1, 2)) = randu<cube>(2, 2, 2);
+  A(0, 0, 1, size(2, 2, 2)) = randu<cube>(2, 2, 2);
+
+  // add 123 to all elements of A greater than 0.5
+  A.elem(find(A > 0.5)) += 123.0;
+
+  cube C = A.head_slices(2);  // get first two slices
+
+  A.head_slices(2) += 123.0;
+
+  mat res = A.slice(0) + B + C.slice(1);
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}

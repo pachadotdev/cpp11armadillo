@@ -152,4 +152,12 @@ test_that("examples derived from official documentation", {
   res29 <- reset_fun1_(2L)
   expect_type(res29, "integer")
   expect_equal(length(res29), 2)
+
+  res30 <- subview_fun1_(5L)
+  expect_type(res30, "double")
+  expect_equal(dim(res30), c(5, 5))
+
+  res31 <- subview_fun2_(5L)
+  expect_type(res31, "double")
+  expect_equal(dim(res31), c(5, 3))
 })

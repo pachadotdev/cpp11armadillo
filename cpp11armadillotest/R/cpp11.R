@@ -195,3 +195,11 @@ copy_size_fun1_ <- function(n) {
 reset_fun1_ <- function(n) {
   .Call(`_cpp11armadillotest_reset_fun1_`, n)
 }
+
+subview_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_subview_fun1_`, n)
+}
+
+subview_fun2_ <- function(n) {
+  .Call(`_cpp11armadillotest_subview_fun2_`, n)
+}

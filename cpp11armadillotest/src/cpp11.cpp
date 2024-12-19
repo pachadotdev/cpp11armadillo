@@ -348,6 +348,20 @@ extern "C" SEXP _cpp11armadillotest_reset_fun1_(SEXP n) {
     return cpp11::as_sexp(reset_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> subview_fun1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_subview_fun1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(subview_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> subview_fun2_(const int& n);
+extern "C" SEXP _cpp11armadillotest_subview_fun2_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(subview_fun2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
@@ -391,6 +405,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_resize_fun1_",                  (DL_FUNC) &_cpp11armadillotest_resize_fun1_,                  1},
     {"_cpp11armadillotest_row_fun1_",                     (DL_FUNC) &_cpp11armadillotest_row_fun1_,                     2},
     {"_cpp11armadillotest_set_size_fun1_",                (DL_FUNC) &_cpp11armadillotest_set_size_fun1_,                1},
+    {"_cpp11armadillotest_subview_fun1_",                 (DL_FUNC) &_cpp11armadillotest_subview_fun1_,                 1},
+    {"_cpp11armadillotest_subview_fun2_",                 (DL_FUNC) &_cpp11armadillotest_subview_fun2_,                 1},
     {"_cpp11armadillotest_transform_fun1_",               (DL_FUNC) &_cpp11armadillotest_transform_fun1_,               1},
     {"_cpp11armadillotest_typedef_Col_double",            (DL_FUNC) &_cpp11armadillotest_typedef_Col_double,            1},
     {"_cpp11armadillotest_typedef_Col_int",               (DL_FUNC) &_cpp11armadillotest_typedef_Col_int,               1},
