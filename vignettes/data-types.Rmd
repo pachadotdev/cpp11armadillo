@@ -1168,3 +1168,196 @@ matrix.
   return as_doubles_matrix(A); // Convert from C++ to R
 }
 ```
+
+## For each
+
+For dense matrices and fields, the processing is done column-by-column for all
+elements.
+  
+For sparse matrices, the processing is done column-by-column for non-zero
+elements.
+
+For cubes, processing is done slice-by-slice, with each slice treated as a
+matrix.
+
+`for_each(** functor **)` Member functions of `Mat`, `Col`, `Row`, `Cube`, `SpMat` and `field`
+`for_each(** lambda_function **)` For each element, pass its reference to a functor or lambda function
+
+### Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> for_each_fun1_(const int& n) {
+  // add 122 to each element in a dense matrix, the '&' is important
+  mat D(n, n, fill::ones);
+  D.for_each([](mat::elem_type& val) { val += 122.0; });
+
+  // add 122 to each non-zero element in a sparse matrix
+  sp_mat S;
+  S.sprandu(n, n, 1.0);
+  S.for_each([](sp_mat::elem_type& val) { val += 123.0; });
+
+  // set the size of all matrices in a field
+  field<mat> F(2, 2);
+  F.for_each([n](mat& X) { X.zeros(n, n); });  // capture n for the lambda
+
+  mat res = D + S + F(0) + F(1);
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+```
+
+## Set size
+
+Change the size of an object, without explicitly preserving data and without
+initialising the elements (e.g., elements may contain garbage values, including
+`NaN`)
+
+* `set_size(n_elem)` (member function of `Col`, `Row`, `field`)
+* `set_size(n_rows, n_cols)` (member function of `Mat`, `SpMat`, `field`)
+* `set_size(n_rows, n_cols, n_slices)` (member function of `Cube` and `field`)
+* `set_size(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`,
+  `field`)
+ 
+To initialise the elements to zero while changing the size, use `.zeros()`
+instead.
+
+To explicitly preserve data while changing the size, use `.reshape()`
+or `.resize()` instead.
+  
+### Examples
+
+```cpp
+[[cpp11::register]] doubles set_size_fun1_(const int& n) {
+  mat A;
+  A.set_size(n, n);  // or:  mat A(n, n, fill::none);
+
+  mat B;
+  B.set_size(size(A));  // or:  mat B(size(A), fill::none);
+
+  vec C;
+  C.set_size(n);  // or:  vec v(n, fill::none);
+
+  A.fill(1.0);  // set all elements to 1.0
+  B.fill(2.0);  // set all elements to 2.0
+  C.fill(3.0);  // set all elements to 3.0
+
+  vec res = A.col(0) + B.col(1) + C;
+
+  return as_doubles(res);  // Convert from C++ to R
+}
+```
+
+## Reshape
+
+Recreate an object according to given size specifications, with the elements
+taken from the previous version of the object in a column-wise manner; the
+elements in the generated object are placed column-wise (e.g., the first column
+is filled up before filling the second column)
+
+* `reshape(n_rows, n_cols)` (member function of `Mat` and `SpMat`)
+* `reshape(n_rows, n_cols, n_slices)` (member function of `Cube`)
+* `reshape(size(X))` (member function of `Mat`, `Cube`, `SpMat`)
+
+The layout of the elements in the recreated object will be different to the
+layout in the previous version of the object
+  
+If the total number of elements in the previous version of the object is less
+than the specified size, the extra elements in the recreated object are set to
+zero
+  
+If the total number of elements in the previous version of the object is greater
+than the specified size, only a subset of the elements is taken
+
+### Caveats
+
+* `.reshape()` is considerably slower than `.set_size()`.
+* to change the size without preserving data, use `.set_size()`.
+* to grow/shrink the object while preserving the elements and the layout of the
+  elements, use `.resize()`
+* to flatten a matrix into a vector, use `vectorise()` or
+  `.as_col()`/`.as_row()`.
+  
+### Examples
+    
+```cpp
+[[cpp11::register]] doubles_matrix<> reshape_fun1_(const int& n) {
+  mat A(n + 1, n - 1, fill::randu);
+  A.reshape(n - 1, n + 1);
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+```
+
+## Resize
+
+Recreate the object according to given size specifications, while preserving the
+elements as well as the layout of the elements
+
+* `resize(n_elem)` (member function of `Col`, `Row`)
+* `resize(n_rows, n_cols)` (member function of `Mat` and `SpMat`)
+* `resize(n_rows, n_cols, n_slices)` (member function of `Cube`)
+* `resize(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`)
+  
+Can be used for growing or shrinking an object (e.g., adding/removing rows,
+and/or columns, and/or slices)
+  
+### Caveats
+
+* `.resize()` is considerably slower than `.set_size()`.
+* to change the size without preserving data, `.set_size()` instead
+
+### Examples
+    
+```cpp
+[[cpp11::register]] doubles_matrix<> resize_fun1_(const int& n) {
+  mat A(n + 1, n - 1, fill::randu);
+  A.resize(n - 1, n + 1);
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+```
+
+## Copy size
+
+`copy_size(A)` Set the size to be the same as object `A`
+  
+Object `A` must be of the same root type as the object being modified (e.g., the
+size of a matrix can't be set by providing a cube)
+
+### Examples
+
+```cpp
+[[cpp11::register]] integers copy_size_fun1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  mat B;
+  B.copy_size(A);
+
+  int N = B.n_rows;
+  int M = B.n_cols;
+  
+  writable::integers res({N, M});
+  res.attr("names") = strings({"n_rows", "n_cols"});
+
+  return as_integers(res);  // Convert from C++ to R
+}
+```
+
+## Reset
+
+`reset()` Reset the size to zero (the object will have no elements)
+  
+### Examples
+
+```cpp
+[[cpp11::register]] integers reset_fun1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A.reset();
+
+  int N = A.n_rows;
+  int M = A.n_cols;
+  
+  writable::integers res({N, M});
+  res.attr("names") = strings({"n_rows", "n_cols"});
+
+  return as_integers(res);  // Convert from C++ to R
+}
+```

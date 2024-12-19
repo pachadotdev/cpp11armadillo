@@ -318,3 +318,81 @@
   A.transform([](double val) { return (val + 122.0); });
   return as_doubles_matrix(A);  // Convert from C++ to R
 }
+
+[[cpp11::register]] doubles_matrix<> for_each_fun1_(const int& n) {
+  // add 122 to each element in a dense matrix, the '&' is important
+  mat D(n, n, fill::ones);
+  D.for_each([](mat::elem_type& val) { val += 122.0; });
+
+  // add 122 to each non-zero element in a sparse matrix
+  sp_mat S;
+  S.sprandu(n, n, 1.0);
+  S.for_each([](sp_mat::elem_type& val) { val += 123.0; });
+
+  // set the size of all matrices in a field
+  field<mat> F(2, 2);
+  F.for_each([n](mat& X) { X.zeros(n, n); });  // capture n for the lambda
+
+  mat res = D + S + F(0) + F(1);
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles set_size_fun1_(const int& n) {
+  mat A;
+  A.set_size(n, n);  // or:  mat A(n, n, fill::none);
+
+  mat B;
+  B.set_size(size(A));  // or:  mat B(size(A), fill::none);
+
+  vec C;
+  C.set_size(n);  // or:  vec v(n, fill::none);
+
+  A.fill(1.0);  // set all elements to 1.0
+  B.fill(2.0);  // set all elements to 2.0
+  C.fill(3.0);  // set all elements to 3.0
+
+  vec res = A.col(0) + B.col(1) + C;
+
+  return as_doubles(res);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> reshape_fun1_(const int& n) {
+  mat A(n + 1, n - 1, fill::randu);
+  A.reshape(n - 1, n + 1);
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> resize_fun1_(const int& n) {
+  mat A(n + 1, n - 1, fill::randu);
+  A.resize(n - 1, n + 1);
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+
+[[cpp11::register]] integers copy_size_fun1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  mat B;
+  B.copy_size(A);
+
+  int N = B.n_rows;
+  int M = B.n_cols;
+  
+  writable::integers res({N, M});
+  res.attr("names") = strings({"n_rows", "n_cols"});
+
+  return as_integers(res);  // Convert from C++ to R
+}
+
+[[cpp11::register]] integers reset_fun1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A.reset();
+
+  int N = A.n_rows;
+  int M = A.n_cols;
+
+  writable::integers res({N, M});
+  res.attr("names") = strings({"n_rows", "n_cols"});
+
+  return as_integers(res);  // Convert from C++ to R
+}

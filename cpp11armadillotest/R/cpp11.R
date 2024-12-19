@@ -171,3 +171,27 @@ clamp_fun1_ <- function(n) {
 transform_fun1_ <- function(n) {
   .Call(`_cpp11armadillotest_transform_fun1_`, n)
 }
+
+for_each_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_for_each_fun1_`, n)
+}
+
+set_size_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_set_size_fun1_`, n)
+}
+
+reshape_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_reshape_fun1_`, n)
+}
+
+resize_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_resize_fun1_`, n)
+}
+
+copy_size_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_copy_size_fun1_`, n)
+}
+
+reset_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_reset_fun1_`, n)
+}

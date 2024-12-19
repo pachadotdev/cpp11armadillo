@@ -128,4 +128,28 @@ test_that("examples derived from official documentation", {
   res23 <- transform_fun1_(2L)
   expect_type(res23, "double")
   expect_equal(diag(res23), rep(123, 2))
+  
+  res24 <- for_each_fun1_(2L)
+  expect_type(res24, "double")
+  expect_equal(dim(res24), c(2, 2))
+
+  res25 <- set_size_fun1_(2L)
+  expect_type(res25, "double")
+  expect_equal(length(res25), 2)
+
+  res26 <- reshape_fun1_(2L)
+  expect_type(res26, "double")
+  expect_equal(dim(res26), c(2 - 1, 2 + 1))
+
+  res27 <- resize_fun1_(2L)
+  expect_type(res27, "double")
+  expect_equal(dim(res27), c(2 - 1, 2 + 1))
+
+  res28 <- copy_size_fun1_(2L)
+  expect_type(res28, "integer")
+  expect_equal(length(res28), 2)
+
+  res29 <- reset_fun1_(2L)
+  expect_type(res29, "integer")
+  expect_equal(length(res29), 2)
 })
