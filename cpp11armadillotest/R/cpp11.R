@@ -211,3 +211,23 @@ diagonal_fun1_ <- function(n) {
 each_col_fun1_ <- function(n) {
   .Call(`_cpp11armadillotest_each_col_fun1_`, n)
 }
+
+each_row_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_each_row_fun1_`, n)
+}
+
+each_slice_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_each_slice_fun1_`, n)
+}
+
+set_real_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_set_real_fun1_`, n)
+}
+
+set_real_fun2_ <- function(n) {
+  .Call(`_cpp11armadillotest_set_real_fun2_`, n)
+}
+
+set_imag_fun1_ <- function(n) {
+  .Call(`_cpp11armadillotest_set_imag_fun1_`, n)
+}

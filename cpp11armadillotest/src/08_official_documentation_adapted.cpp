@@ -511,3 +511,96 @@
 
   return as_doubles_matrix(res);  // Convert from C++ to R
 }
+
+[[cpp11::register]] doubles_matrix<> each_row_fun1_(const int& n) {
+  mat X(n + 1, n, fill::ones);
+
+  // create a vector with n elements ranging from 5 to 10
+  rowvec v = linspace<rowvec>(5, 10, n);
+
+  // in-place addition of v to each rows vector of X
+  X.each_row() += v;
+
+  // generate Y by adding v to each rows vector of X
+  mat Y = X.each_row() + v;
+
+  // subtract v from rows 1 and 2 of X
+  X.rows(0, 1).each_row() -= v;
+
+  uvec indices(2);
+  indices(0) = 1;
+  indices(1) = 2;
+
+  X.each_row(indices) = v;       // copy v to columns 1 and 2 of X
+
+  // lambda function with non-const vector
+  X.each_row([](rowvec& a) { a / 2; });
+
+  const mat& XX = X;
+
+  // lambda function with const vector
+  XX.each_row([](const rowvec& b) { b / 3; });
+
+  mat res = X + Y + XX;
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> each_slice_fun1_(const int& n) {
+  cube C(n, n + 1, 6, fill::randu);
+
+  mat M = repmat(linspace<vec>(1, n, n), 1, n + 1);
+
+  C.each_slice() += M;  // in-place addition of M to each slice of C
+
+  cube D = C.each_slice() + M;  // generate D by adding M to each slice of C
+
+  // sum all slices of D into a single matrix
+  mat D_flat = sum(D, 2);
+
+  uvec indices(2);
+  indices(0) = 2;
+  indices(1) = 4;
+
+  C.each_slice(indices) = M;  // copy M to slices 2 and 4 in C
+  C.each_slice([](mat& X) { X * 2.0; });  // lambda function with non-const matrix
+  mat C_flat = sum(C, 2);
+
+  const cube& CC = C;
+  CC.each_slice([](const mat& X) { X / 3.0; });  // lambda function with const matrix
+
+  mat CC_flat = sum(CC, 2);
+
+  mat res = C_flat + D_flat + CC_flat;
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+
+[[cpp11::register]] list set_real_fun1_(const int& n) {
+  mat A(n + 1, n - 1, fill::randu);
+
+  cx_mat C(n + 1, n - 1, fill::zeros);
+
+  C.set_real(A);
+
+  return as_complex_matrix(C);  // Convert from C++ to R
+}
+
+[[cpp11::register]] list set_real_fun2_(const int& n) {
+  mat A(n - 1, n + 1, fill::randu);
+  mat B(n - 1, n + 1, fill::randu);
+
+  cx_mat C = cx_mat(A, B);
+
+  return as_complex_matrix(C);  // Convert from C++ to R
+}
+
+[[cpp11::register]] list set_imag_fun1_(const int& n) {
+  mat B(n + 1, n - 1, fill::randu);
+
+  cx_mat C(n + 1, n - 1, fill::zeros);
+
+  C.set_imag(B);
+
+  return as_complex_matrix(C);  // Convert from C++ to R
+}

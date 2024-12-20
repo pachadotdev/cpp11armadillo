@@ -638,11 +638,6 @@
 </ul>
 </div>
 <div class="section level4">
-<h4 id="caveat">Caveat<a class="anchor" aria-label="anchor" href="#caveat"></a>
-</h4>
-<p>To store a set of matrices of the same size, the <code>Cube</code> class is more efficient.</p>
-</div>
-<div class="section level4">
 <h4 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a>
 </h4>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -663,6 +658,11 @@
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true"></a></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);  <span class="co">// convert from C++ to R</span></span>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveat">Caveat<a class="anchor" aria-label="anchor" href="#caveat"></a>
+</h4>
+<p>To store a set of matrices of the same size, the <code>Cube</code> class is more efficient.</p>
 </div>
 </div>
 </div>
@@ -1027,18 +1027,6 @@
 <code>.at(r,c,s)</code> As for <code>(r,c,s)</code>, but without a bounds check. Not recommended.</li>
 </ul>
 <div class="section level4">
-<h4 id="caveats">Caveats<a class="anchor" aria-label="anchor" href="#caveats"></a>
-</h4>
-<p>For <code>.at()</code> or <code>[i]</code>, <code>.at(r,c)</code> and <code>.at(r,c,s)</code>:</p>
-<ul>
-<li>Indexing in C++ starts at 0</li>
-<li>Accessing elements without bounds checks is slightly faster, but is not recommended until your code has been thoroughly debugged first</li>
-<li>Accessing elements via <code>[r,c]</code> and <code>[r,c,s]</code> does not work correctly in C++; instead use <code>(r,c)</code> and <code>(r,c,s)</code>
-</li>
-</ul>
-<p>The indices of elements are specified via the <code>uword</code> type, which is a <code>typedef</code> for an unsigned integer type. When using loops to access elements, it more efficient to use <code>uword</code> instead of <code>int</code>.</p>
-</div>
-<div class="section level4">
 <h4 id="examples-6">Examples<a class="anchor" aria-label="anchor" href="#examples-6"></a>
 </h4>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -1064,6 +1052,18 @@
 <span id="cb15-19"><a href="#cb15-19" aria-hidden="true"></a></span>
 <span id="cb15-20"><a href="#cb15-20" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// convert from C++ to R</span></span>
 <span id="cb15-21"><a href="#cb15-21" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveats">Caveats<a class="anchor" aria-label="anchor" href="#caveats"></a>
+</h4>
+<p>For <code>.at()</code> or <code>[i]</code>, <code>.at(r,c)</code> and <code>.at(r,c,s)</code>:</p>
+<ul>
+<li>Indexing in C++ starts at 0</li>
+<li>Accessing elements without bounds checks is slightly faster, but is not recommended until your code has been thoroughly debugged first</li>
+<li>Accessing elements via <code>[r,c]</code> and <code>[r,c,s]</code> does not work correctly in C++; instead use <code>(r,c)</code> and <code>(r,c,s)</code>
+</li>
+</ul>
+<p>The indices of elements are specified via the <code>uword</code> type, which is a <code>typedef</code> for an unsigned integer type. When using loops to access elements, it more efficient to use <code>uword</code> instead of <code>int</code>.</p>
 </div>
 </div>
 <div class="section level3">
@@ -1345,11 +1345,6 @@
 <li>For objects with complex elements: for each element, each component (real and imaginary) with an absolute value less or equal to the threshold is replaced by zero.</li>
 </ul>
 <div class="section level4">
-<h4 id="caveat-1">Caveat<a class="anchor" aria-label="anchor" href="#caveat-1"></a>
-</h4>
-<p>To explicitly convert from dense storage to sparse storage, use the <code>SpMat</code>.</p>
-</div>
-<div class="section level4">
 <h4 id="examples-14">Examples<a class="anchor" aria-label="anchor" href="#examples-14"></a>
 </h4>
 <div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">clean_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
@@ -1363,21 +1358,17 @@
 <span id="cb32-9"><a href="#cb32-9" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A); <span class="co">// Convert from C++ to R</span></span>
 <span id="cb32-10"><a href="#cb32-10" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
+<div class="section level4">
+<h4 id="caveat-1">Caveat<a class="anchor" aria-label="anchor" href="#caveat-1"></a>
+</h4>
+<p>To explicitly convert from dense storage to sparse storage, use the <code>SpMat</code>.</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="replace">Replace<a class="anchor" aria-label="anchor" href="#replace"></a>
 </h3>
 <p><code>.replace( old_value, new_value )</code> is a member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, and <code>SpMat</code>.</p>
 <p>For all elements equal to <code>old_value</code>, set them to <code>new_value</code>.</p>
-<div class="section level4">
-<h4 id="caveats-1">Caveats<a class="anchor" aria-label="anchor" href="#caveats-1"></a>
-</h4>
-<ul>
-<li>The type of <code>old_value</code> and <code>new_value</code> must match the type of elements used by the container object (e.g., for <code>Mat</code> the type is <code>double</code>).</li>
-<li>Floating point numbers (<code>float</code> and <code>double</code>) are approximations due to their <a href="https://en.wikipedia.org/wiki/Floating-point_arithmetic" class="external-link">limited precision</a>.</li>
-<li>For sparse matrices (<code>SpMat</code>), replacement is not done when <code>old_value = 0</code>.</li>
-</ul>
-</div>
 <div class="section level4">
 <h4 id="examples-15">Examples<a class="anchor" aria-label="anchor" href="#examples-15"></a>
 </h4>
@@ -1389,6 +1380,15 @@
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true"></a></span>
 <span id="cb33-7"><a href="#cb33-7" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A); <span class="co">// Convert from C++ to R</span></span>
 <span id="cb33-8"><a href="#cb33-8" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveats-1">Caveats<a class="anchor" aria-label="anchor" href="#caveats-1"></a>
+</h4>
+<ul>
+<li>The type of <code>old_value</code> and <code>new_value</code> must match the type of elements used by the container object (e.g., for <code>Mat</code> the type is <code>double</code>).</li>
+<li>Floating point numbers (<code>float</code> and <code>double</code>) are approximations due to their <a href="https://en.wikipedia.org/wiki/Floating-point_arithmetic" class="external-link">limited precision</a>.</li>
+<li>For sparse matrices (<code>SpMat</code>), replacement is not done when <code>old_value = 0</code>.</li>
+</ul>
 </div>
 </div>
 <div class="section level3">
@@ -1517,6 +1517,15 @@
 <p>If the total number of elements in the previous version of the object is less than the specified size, the extra elements in the recreated object are set to zero</p>
 <p>If the total number of elements in the previous version of the object is greater than the specified size, only a subset of the elements is taken</p>
 <div class="section level4">
+<h4 id="examples-20">Examples<a class="anchor" aria-label="anchor" href="#examples-20"></a>
+</h4>
+<div class="sourceCode" id="cb38"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">reshape_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true"></a>  mat A(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::randu);</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true"></a>  A.reshape(n - <span class="dv">1</span>, n + <span class="dv">1</span>);</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
 <h4 id="caveats-2">Caveats<a class="anchor" aria-label="anchor" href="#caveats-2"></a>
 </h4>
 <ul>
@@ -1528,15 +1537,6 @@
 <li>To flatten a matrix into a vector, use <code>vectorise()</code> or <code>.as_col()</code>/<code>.as_row()</code>.</li>
 </ul>
 </div>
-<div class="section level4">
-<h4 id="examples-20">Examples<a class="anchor" aria-label="anchor" href="#examples-20"></a>
-</h4>
-<div class="sourceCode" id="cb38"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">reshape_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true"></a>  mat A(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::randu);</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true"></a>  A.reshape(n - <span class="dv">1</span>, n + <span class="dv">1</span>);</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// Convert from C++ to R</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true"></a>}</span></code></pre></div>
-</div>
 </div>
 <div class="section level3">
 <h3 id="resize">Resize<a class="anchor" aria-label="anchor" href="#resize"></a>
@@ -1544,23 +1544,14 @@
 <p>Resize an object according to given size specifications, while preserving the elements and the layout of the elements. It can be used for growing or shrinking an object (e.g., adding/removing rows, and/or columns, and/or slices).</p>
 <ul>
 <li>
-<code>.resize(n_elem)</code> (member function of <code>Col</code>, <code>Row</code>)</li>
+<code>.resize(n_elem)</code>: member function of <code>Col</code>, <code>Row</code>.</li>
 <li>
-<code>.resize(n_rows, n_cols)</code> (member function of <code>Mat</code> and <code>SpMat</code>)</li>
+<code>.resize(n_rows, n_cols)</code>: member function of <code>Mat</code> and <code>SpMat</code>.</li>
 <li>
-<code>.resize(n_rows, n_cols, n_slices)</code> (member function of <code>Cube</code>)</li>
+<code>.resize(n_rows, n_cols, n_slices)</code>: member function of <code>Cube</code>.</li>
 <li>
-<code>.resize(size(X))</code> (member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>SpMat</code>)</li>
+<code>.resize(size(X))</code>: member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>SpMat</code>.</li>
 </ul>
-<div class="section level4">
-<h4 id="caveats-3">Caveats<a class="anchor" aria-label="anchor" href="#caveats-3"></a>
-</h4>
-<ul>
-<li>
-<code>.resize()</code> is considerably slower than <code>.set_size()</code>.</li>
-<li>to change the size without preserving data, <code>.set_size()</code> instead</li>
-</ul>
-</div>
 <div class="section level4">
 <h4 id="examples-21">Examples<a class="anchor" aria-label="anchor" href="#examples-21"></a>
 </h4>
@@ -1570,16 +1561,20 @@
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// Convert from C++ to R</span></span>
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
+<div class="section level4">
+<h4 id="caveats-3">Caveats<a class="anchor" aria-label="anchor" href="#caveats-3"></a>
+</h4>
+<ul>
+<li>
+<code>.resize()</code> is considerably slower than <code>.set_size()</code>.</li>
+<li>to change the size without preserving data, <code>.set_size()</code> instead.</li>
+</ul>
+</div>
 </div>
 <div class="section level3">
 <h3 id="copy-size">Copy size<a class="anchor" aria-label="anchor" href="#copy-size"></a>
 </h3>
 <p><code>.copy_size(A)</code> sets the size of a matrix/vector/cube to be the same as matrix/vector/cube <code>A</code>.</p>
-<div class="section level4">
-<h4 id="caveat-2">Caveat<a class="anchor" aria-label="anchor" href="#caveat-2"></a>
-</h4>
-<p>To set the size of an object <code>B</code>, <code>A</code> must be of the same type as <code>B</code>. For example, the size of a matrix cannot be set by providing a cube.</p>
-</div>
 <div class="section level4">
 <h4 id="examples-22">Examples<a class="anchor" aria-label="anchor" href="#examples-22"></a>
 </h4>
@@ -1597,6 +1592,11 @@
 <span id="cb40-12"><a href="#cb40-12" aria-hidden="true"></a></span>
 <span id="cb40-13"><a href="#cb40-13" aria-hidden="true"></a>  <span class="cf">return</span> as_integers(res);  <span class="co">// Convert from C++ to R</span></span>
 <span id="cb40-14"><a href="#cb40-14" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveat-2">Caveat<a class="anchor" aria-label="anchor" href="#caveat-2"></a>
+</h4>
+<p>To set the size of an object <code>B</code>, <code>A</code> must be of the same type as <code>B</code>. For example, the size of a matrix cannot be set by providing a cube.</p>
 </div>
 </div>
 <div class="section level3">
@@ -1837,11 +1837,6 @@
 <code>k &gt; 0</code> indicates the <code>k</code>-th super-diagonal (above main diagonal, towards top-right corner)</li>
 </ul>
 <div class="section level4">
-<h4 id="caveat-3">Caveat<a class="anchor" aria-label="anchor" href="#caveat-3"></a>
-</h4>
-<p>To calculate only the diagonal elements of a compound expression, use <code>diagvec()</code> or <code>diagmat()</code>.</p>
-</div>
-<div class="section level4">
 <h4 id="examples-26">Examples<a class="anchor" aria-label="anchor" href="#examples-26"></a>
 </h4>
 <div class="sourceCode" id="cb44"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">diagonal_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
@@ -1864,6 +1859,11 @@
 <span id="cb44-18"><a href="#cb44-18" aria-hidden="true"></a></span>
 <span id="cb44-19"><a href="#cb44-19" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(v);  <span class="co">// Convert from C++ to R</span></span>
 <span id="cb44-20"><a href="#cb44-20" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveat-3">Caveat<a class="anchor" aria-label="anchor" href="#caveat-3"></a>
+</h4>
+<p>To calculate only the diagonal elements of a compound expression, use <code>diagvec()</code> or <code>diagmat()</code>.</p>
 </div>
 </div>
 <div class="section level3">
@@ -1986,10 +1986,10 @@
 <h4 id="examples-28">Examples<a class="anchor" aria-label="anchor" href="#examples-28"></a>
 </h4>
 <div class="sourceCode" id="cb46"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">each_row_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true"></a>  mat X(n, n + <span class="dv">1</span>, fill::ones);</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true"></a>  mat X(n + <span class="dv">1</span>, n, fill::ones);</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true"></a></span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true"></a>  <span class="co">// create a vector with n elements ranging from 5 to 10</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true"></a>  vec v = linspace&lt;vec&gt;(<span class="dv">5</span>, <span class="dv">10</span>, n);</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true"></a>  rowvec v = linspace&lt;rowvec&gt;(<span class="dv">5</span>, <span class="dv">10</span>, n);</span>
 <span id="cb46-6"><a href="#cb46-6" aria-hidden="true"></a></span>
 <span id="cb46-7"><a href="#cb46-7" aria-hidden="true"></a>  <span class="co">// in-place addition of v to each rows vector of X</span></span>
 <span id="cb46-8"><a href="#cb46-8" aria-hidden="true"></a>  X.each_row() += v;</span>
@@ -2004,20 +2004,179 @@
 <span id="cb46-17"><a href="#cb46-17" aria-hidden="true"></a>  indices(<span class="dv">0</span>) = <span class="dv">1</span>;</span>
 <span id="cb46-18"><a href="#cb46-18" aria-hidden="true"></a>  indices(<span class="dv">1</span>) = <span class="dv">2</span>;</span>
 <span id="cb46-19"><a href="#cb46-19" aria-hidden="true"></a></span>
-<span id="cb46-20"><a href="#cb46-20" aria-hidden="true"></a>  X.each_col(indices) = v;  <span class="co">// copy v to rows 1 and 2 of X</span></span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true"></a>  X.each_row(indices) = v;       <span class="co">// copy v to columns 1 and 2 of X</span></span>
 <span id="cb46-21"><a href="#cb46-21" aria-hidden="true"></a></span>
 <span id="cb46-22"><a href="#cb46-22" aria-hidden="true"></a>  <span class="co">// lambda function with non-const vector</span></span>
-<span id="cb46-23"><a href="#cb46-23" aria-hidden="true"></a>  X.each_row([](vec&amp; a) { <span class="dv">2</span> * a; });</span>
+<span id="cb46-23"><a href="#cb46-23" aria-hidden="true"></a>  X.each_row([](rowvec&amp; a) { a / <span class="dv">2</span>; });</span>
 <span id="cb46-24"><a href="#cb46-24" aria-hidden="true"></a></span>
 <span id="cb46-25"><a href="#cb46-25" aria-hidden="true"></a>  <span class="at">const</span> mat&amp; XX = X;</span>
 <span id="cb46-26"><a href="#cb46-26" aria-hidden="true"></a></span>
 <span id="cb46-27"><a href="#cb46-27" aria-hidden="true"></a>  <span class="co">// lambda function with const vector</span></span>
-<span id="cb46-28"><a href="#cb46-28" aria-hidden="true"></a>  XX.each_row([](<span class="at">const</span> vec&amp; b) { <span class="dv">3</span> * b; });</span>
+<span id="cb46-28"><a href="#cb46-28" aria-hidden="true"></a>  XX.each_row([](<span class="at">const</span> rowvec&amp; b) { b / <span class="dv">3</span>; });</span>
 <span id="cb46-29"><a href="#cb46-29" aria-hidden="true"></a></span>
 <span id="cb46-30"><a href="#cb46-30" aria-hidden="true"></a>  mat res = X + Y + XX;</span>
 <span id="cb46-31"><a href="#cb46-31" aria-hidden="true"></a></span>
 <span id="cb46-32"><a href="#cb46-32" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);  <span class="co">// Convert from C++ to R</span></span>
 <span id="cb46-33"><a href="#cb46-33" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="each-slice">Each slice<a class="anchor" aria-label="anchor" href="#each-slice"></a>
+</h3>
+<p><code>each_slice()</code> is a member function of <code>Cube</code> that applies a matrix operation to each slice of a cube, with each slice treated as a matrix. It is similar to “broadcasting” in Matlab/Octave.</p>
+<div class="section level4">
+<h4 id="form-1-2">Form 1<a class="anchor" aria-label="anchor" href="#form-1-2"></a>
+</h4>
+<p><code>each_slice(vector_of_indices)</code></p>
+<p>Supported operations:</p>
+<ul>
+<li>
+<code>+</code> addition</li>
+<li>
+<code>+=</code> in-place addition</li>
+<li>
+<code>-</code> subtraction</li>
+<li>
+<code>-=</code> in-place subtraction</li>
+<li>
+<code>%</code> element-wise multiplication</li>
+<li>
+<code>%=</code> in-place element-wise multiplication</li>
+<li>
+<code>/</code> element-wise division</li>
+<li>
+<code>/=</code> in-place element-wise division</li>
+<li>
+<code>*</code> matrix multiplication</li>
+<li>
+<code>*=</code> in-place matrix multiplication</li>
+<li>
+<code>=</code> assignment (copy)</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="form-2-2">Form 2<a class="anchor" aria-label="anchor" href="#form-2-2"></a>
+</h4>
+<p><code>each_slice(lambda_function)</code></p>
+<ul>
+<li>The argument <em>vector_of_indices</em> contains a list of indices of the slices to be used; it must evaluate to a vector of type <code>uvec</code>.</li>
+<li>Arithmetic operations as per form 1 are supported, except for <code>*</code> and <code>*=</code> (e.g., matrix multiplication).</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="form-3-2">Form 3<a class="anchor" aria-label="anchor" href="#form-3-2"></a>
+</h4>
+<p><code>each_slice(lambda_function, use_mp)</code></p>
+<ul>
+<li>Apply the given <code>lambda_function</code> to each slice.</li>
+<li>The function must accept a reference to a <code>Mat</code> object with the same element type as the underlying cube.</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="form-4">Form 4<a class="anchor" aria-label="anchor" href="#form-4"></a>
+</h4>
+<ul>
+<li>Apply the given <code>lambda_function</code> to each slice, as per form 3.</li>
+<li>The argument <code>use_mp</code> is a bool to enable the use of OpenMP for multi-threaded execution of <code>lambda_function</code> on multiple slices at the same time.</li>
+<li>The order of processing the slices is not deterministic (e.g., slice 2 can be processed before slice 1).</li>
+<li>
+<code>lambda_function</code> must be thread-safe, e.g., it must not write to variables outside of its scope.</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="examples-29">Examples:<a class="anchor" aria-label="anchor" href="#examples-29"></a>
+</h4>
+<div class="sourceCode" id="cb47"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">each_slice_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true"></a>  cube C(n, n + <span class="dv">1</span>, <span class="dv">6</span>, fill::randu);</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true"></a>  mat M = repmat(linspace&lt;vec&gt;(<span class="dv">1</span>, n, n), <span class="dv">1</span>, n + <span class="dv">1</span>);</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true"></a></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true"></a>  C.each_slice() += M;  <span class="co">// in-place addition of M to each slice of C</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true"></a></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true"></a>  cube D = C.each_slice() + M;  <span class="co">// generate D by adding M to each slice of C</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true"></a></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true"></a>  <span class="co">// sum all slices of D into a single matrix</span></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true"></a>  mat D_flat = sum(D, <span class="dv">2</span>);</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true"></a></span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true"></a>  uvec indices(<span class="dv">2</span>);</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true"></a>  indices(<span class="dv">0</span>) = <span class="dv">2</span>;</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true"></a>  indices(<span class="dv">1</span>) = <span class="dv">4</span>;</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true"></a></span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true"></a>  C.each_slice(indices) = M;  <span class="co">// copy M to slices 2 and 4 in C</span></span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true"></a>  C.each_slice([](mat&amp; X) { X * <span class="fl">2.0</span>; });  <span class="co">// lambda function with non-const matrix</span></span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true"></a>  mat C_flat = sum(C, <span class="dv">2</span>);</span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true"></a></span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true"></a>  <span class="at">const</span> cube&amp; CC = C;</span>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true"></a>  CC.each_slice([](<span class="at">const</span> mat&amp; X) { X / <span class="fl">3.0</span>; });  <span class="co">// lambda function with const matrix</span></span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true"></a></span>
+<span id="cb47-24"><a href="#cb47-24" aria-hidden="true"></a>  mat CC_flat = sum(CC, <span class="dv">2</span>);</span>
+<span id="cb47-25"><a href="#cb47-25" aria-hidden="true"></a></span>
+<span id="cb47-26"><a href="#cb47-26" aria-hidden="true"></a>  mat res = C_flat + D_flat + CC_flat;</span>
+<span id="cb47-27"><a href="#cb47-27" aria-hidden="true"></a></span>
+<span id="cb47-28"><a href="#cb47-28" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb47-29"><a href="#cb47-29" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="set-real">Set real<a class="anchor" aria-label="anchor" href="#set-real"></a>
+</h3>
+<p><code>set_real(X)</code> sets the real part of an object. <code>X</code> must have the same size as the recipient object.</p>
+<div class="section level4">
+<h4 id="examples-30">Examples<a class="anchor" aria-label="anchor" href="#examples-30"></a>
+</h4>
+<div class="sourceCode" id="cb48"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">set_real_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true"></a>  mat A(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::randu);</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true"></a>  cx_mat C(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::zeros);</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true"></a>  C.set_real(A);</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true"></a></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true"></a>  <span class="cf">return</span> as_complex_matrix(C);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveat-4">Caveat<a class="anchor" aria-label="anchor" href="#caveat-4"></a>
+</h4>
+<p>To directly construct a complex matrix out of two real matrices, the following code is faster:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">set_real_fun2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {    </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true"></a>  mat A(n - <span class="dv">1</span>, n + <span class="dv">1</span>, fill::randu);</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true"></a>  mat B(n - <span class="dv">1</span>, n + <span class="dv">1</span>, fill::randu);</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true"></a>  </span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true"></a>  cx_mat C = cx_mat(A,B);</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true"></a></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true"></a>  <span class="cf">return</span> as_complex_matrix(C);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="set-imaginary">Set imaginary<a class="anchor" aria-label="anchor" href="#set-imaginary"></a>
+</h3>
+<p><code>set_imaginary(X)</code> sets the imaginary part of an object. <code>X</code> must have the same size as the recipient object.</p>
+<div class="section level4">
+<h4 id="examples-31">Examples<a class="anchor" aria-label="anchor" href="#examples-31"></a>
+</h4>
+<div class="sourceCode" id="cb50"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">set_imag_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true"></a>  mat B(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::randu);</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true"></a>  cx_mat C(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::zeros);</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true"></a></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true"></a>  C.set_imag(B);</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true"></a></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true"></a>  <span class="cf">return</span> as_complex_matrix(C);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveat-5">Caveat<a class="anchor" aria-label="anchor" href="#caveat-5"></a>
+</h4>
+<p>To directly construct a complex matrix out of two real matrices, the following code is faster:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">set_imag_fun2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {    </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true"></a>  mat A(n - <span class="dv">1</span>, n + <span class="dv">1</span>, fill::randu);</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true"></a>  mat B(n - <span class="dv">1</span>, n + <span class="dv">1</span>, fill::randu);</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true"></a>  </span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true"></a>  cx_mat C = cx_mat(A,B);</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true"></a></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true"></a>  <span class="cf">return</span> as_complex_matrix(C);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
 </div>
 </div>

@@ -558,10 +558,6 @@ matrix can have a unique size).
 * `field<object_type>(n_rows, n_cols, n_slices)`
 * `field<object_type>(size(X))`
 * `field<object_type>(field<object_type>)`
-  
-### Caveat
-
-To store a set of matrices of the same size, the `Cube` class is more efficient.
 
 ### Examples
 
@@ -587,6 +583,10 @@ b <- matrix(rnorm(4), nrow = 2, ncol = 2)
   return as_doubles_matrix(res);  // convert from C++ to R
 }
 ```
+
+### Caveat
+
+To store a set of matrices of the same size, the `Cube` class is more efficient.
 
 # Member Functions and Variables
 
@@ -728,21 +728,7 @@ Provide access to individual elements or objects stored in a container object
   row `r`, column `c`, and slice `s`. An exception is thrown if the requested
   element is out of bounds.
 * `.at(r,c,s)` As for `(r,c,s)`, but without a bounds check. Not recommended.
-    
-### Caveats
 
-For `.at()` or `[i]`, `.at(r,c)` and `.at(r,c,s)`:
-
-  * Indexing in C++ starts at 0
-  * Accessing elements without bounds checks is slightly faster, but is not
-    recommended until your code has been thoroughly debugged first
-  * Accessing elements via `[r,c]` and `[r,c,s]` does not work correctly in C++;
-    instead use `(r,c)` and `(r,c,s)`
-
-The indices of elements are specified via the `uword` type, which is a `typedef`
-for an unsigned integer type. When using loops to access elements, it more
-efficient to use `uword` instead of `int`.
-  
 ### Examples
 
 ```r
@@ -772,6 +758,20 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
   return as_doubles_matrix(A);  // convert from C++ to R
 }
 ```
+
+### Caveats
+
+For `.at()` or `[i]`, `.at(r,c)` and `.at(r,c,s)`:
+
+  * Indexing in C++ starts at 0
+  * Accessing elements without bounds checks is slightly faster, but is not
+    recommended until your code has been thoroughly debugged first
+  * Accessing elements via `[r,c]` and `[r,c,s]` does not work correctly in C++;
+    instead use `(r,c)` and `(r,c,s)`
+
+The indices of elements are specified via the `uword` type, which is a `typedef`
+for an unsigned integer type. When using loops to access elements, it more
+efficient to use `uword` instead of `int`.
 
 ## Element initialisation
 
@@ -1077,10 +1077,6 @@ or equal to the threshold is replaced by zero.
 imaginary) with an absolute value less or equal to the threshold is replaced by
 zero.
   
-### Caveat
-
-To explicitly convert from dense storage to sparse storage, use the `SpMat`.
-  
 ### Examples
 
 ```cpp
@@ -1096,20 +1092,16 @@ To explicitly convert from dense storage to sparse storage, use the `SpMat`.
 }
 ```
 
+### Caveat
+
+To explicitly convert from dense storage to sparse storage, use the `SpMat`.
+
 ## Replace
 
 `.replace( old_value, new_value )` is a member function of `Mat`, `Col`, `Row`,
 `Cube`, and `SpMat`.
   
 For all elements equal to `old_value`, set them to `new_value`.
-  
-### Caveats
-
-* The type of `old_value` and `new_value` must match the type of elements used
-  by the container object (e.g., for `Mat` the type is `double`).
-* Floating point numbers (`float` and `double`) are approximations due to their
-  [limited precision](https://en.wikipedia.org/wiki/Floating-point_arithmetic).
-* For sparse matrices (`SpMat`), replacement is not done when `old_value = 0`.
   
 ### Examples
 
@@ -1123,6 +1115,14 @@ For all elements equal to `old_value`, set them to `new_value`.
   return as_doubles_matrix(A); // Convert from C++ to R
 }
 ```
+
+### Caveats
+
+* The type of `old_value` and `new_value` must match the type of elements used
+  by the container object (e.g., for `Mat` the type is `double`).
+* Floating point numbers (`float` and `double`) are approximations due to their
+  [limited precision](https://en.wikipedia.org/wiki/Floating-point_arithmetic).
+* For sparse matrices (`SpMat`), replacement is not done when `old_value = 0`.
 
 ## Clamp
 
@@ -1262,15 +1262,6 @@ zero
   
 If the total number of elements in the previous version of the object is greater
 than the specified size, only a subset of the elements is taken
-
-### Caveats
-
-* `.reshape()` is considerably slower than `.set_size()`.
-* To change the size without preserving data, use `.set_size()`.
-* To grow/shrink the object while preserving the elements and the layout of the
-  elements, use `.resize()`
-* To flatten a matrix into a vector, use `vectorise()` or
-  `.as_col()`/`.as_row()`.
   
 ### Examples
     
@@ -1282,21 +1273,25 @@ than the specified size, only a subset of the elements is taken
 }
 ```
 
+### Caveats
+
+* `.reshape()` is considerably slower than `.set_size()`.
+* To change the size without preserving data, use `.set_size()`.
+* To grow/shrink the object while preserving the elements and the layout of the
+  elements, use `.resize()`
+* To flatten a matrix into a vector, use `vectorise()` or
+  `.as_col()`/`.as_row()`.
+
 ## Resize
 
 Resize an object according to given size specifications, while preserving the
 elements and the layout of the elements. It can be used for growing or shrinking
 an object (e.g., adding/removing rows, and/or columns, and/or slices).
 
-* `.resize(n_elem)` (member function of `Col`, `Row`)
-* `.resize(n_rows, n_cols)` (member function of `Mat` and `SpMat`)
-* `.resize(n_rows, n_cols, n_slices)` (member function of `Cube`)
-* `.resize(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`)
-  
-### Caveats
-
-* `.resize()` is considerably slower than `.set_size()`.
-* to change the size without preserving data, `.set_size()` instead
+* `.resize(n_elem)`: member function of `Col`, `Row`.
+* `.resize(n_rows, n_cols)`: member function of `Mat` and `SpMat`.
+* `.resize(n_rows, n_cols, n_slices)`: member function of `Cube`.
+* `.resize(size(X))`: member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`.
 
 ### Examples
     
@@ -1308,15 +1303,15 @@ an object (e.g., adding/removing rows, and/or columns, and/or slices).
 }
 ```
 
+### Caveats
+
+* `.resize()` is considerably slower than `.set_size()`.
+* to change the size without preserving data, `.set_size()` instead.
+
 ## Copy size
 
 `.copy_size(A)` sets the size of a matrix/vector/cube to be the same as
 matrix/vector/cube `A`.
-
-### Caveat
-
-To set the size of an object `B`, `A` must be of the same type as `B`. For
-example, the size of a matrix cannot be set by providing a cube.
 
 ### Examples
 
@@ -1336,6 +1331,11 @@ example, the size of a matrix cannot be set by providing a cube.
   return as_integers(res);  // Convert from C++ to R
 }
 ```
+
+### Caveat
+
+To set the size of an object `B`, `A` must be of the same type as `B`. For
+example, the size of a matrix cannot be set by providing a cube.
 
 ## Reset
 
@@ -1580,11 +1580,6 @@ diagonal is interpreted as a column vector within expressions.
   bottom-left corner)
 * `k > 0` indicates the `k`-th super-diagonal (above main diagonal, towards
   top-right corner)
-
-### Caveat
-
-To calculate only the diagonal elements of a compound expression, use
-`diagvec()` or `diagmat()`.
       
 ### Examples
 
@@ -1610,6 +1605,11 @@ To calculate only the diagonal elements of a compound expression, use
   return as_doubles(v);  // Convert from C++ to R
 }
 ```
+
+### Caveat
+
+To calculate only the diagonal elements of a compound expression, use
+`diagvec()` or `diagmat()`.
 
 ## Each col
 
@@ -1717,10 +1717,10 @@ element type as the underlying matrix.
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> each_row_fun1_(const int& n) {
-  mat X(n, n + 1, fill::ones);
+  mat X(n + 1, n, fill::ones);
 
   // create a vector with n elements ranging from 5 to 10
-  vec v = linspace<vec>(5, 10, n);
+  rowvec v = linspace<rowvec>(5, 10, n);
 
   // in-place addition of v to each rows vector of X
   X.each_row() += v;
@@ -1735,18 +1735,173 @@ element type as the underlying matrix.
   indices(0) = 1;
   indices(1) = 2;
 
-  X.each_col(indices) = v;  // copy v to rows 1 and 2 of X
+  X.each_row(indices) = v;       // copy v to columns 1 and 2 of X
 
   // lambda function with non-const vector
-  X.each_row([](vec& a) { 2 * a; });
+  X.each_row([](rowvec& a) { a / 2; });
 
   const mat& XX = X;
 
   // lambda function with const vector
-  XX.each_row([](const vec& b) { 3 * b; });
+  XX.each_row([](const rowvec& b) { b / 3; });
 
   mat res = X + Y + XX;
 
   return as_doubles_matrix(res);  // Convert from C++ to R
+}
+```
+
+## Each slice
+
+`each_slice()` is a member function of `Cube` that applies a matrix operation to
+each slice of a cube, with each slice treated as a matrix. It is similar to
+"broadcasting" in Matlab/Octave.
+
+### Form 1
+
+`each_slice(vector_of_indices)`
+
+Supported operations:  
+      
+* `+` addition
+* `+=` in-place addition
+* `-` subtraction
+* `-=` in-place subtraction 
+* `%` element-wise multiplication
+* `%=` in-place element-wise multiplication
+* `/` element-wise division
+* `/=` in-place element-wise division
+* `*` matrix multiplication
+* `*=` in-place matrix multiplication
+* `=` assignment (copy)
+   
+### Form 2
+
+`each_slice(lambda_function)`
+
+* The argument _vector_of_indices_ contains a list of indices of the slices to
+  be used; it must evaluate to a vector of type `uvec`.
+* Arithmetic operations as per form 1 are supported, except for `*` and `*=`
+  (e.g., matrix multiplication).
+
+### Form 3
+
+`each_slice(lambda_function, use_mp)`
+
+* Apply the given `lambda_function` to each slice.
+* The function must accept a reference to a `Mat` object with the same element
+  type as the underlying cube.
+
+### Form 4
+
+* Apply the given `lambda_function` to each slice, as per form 3.
+* The argument `use_mp` is a bool to enable the use of OpenMP for multi-threaded
+  execution of `lambda_function` on multiple slices at the same time.
+* The order of processing the slices is not deterministic (e.g., slice 2 can be
+  processed before slice 1).
+* `lambda_function` must be thread-safe, e.g., it must not write to variables
+  outside of its scope.
+  
+### Examples:
+
+```cpp
+[[cpp11::register]] doubles_matrix<> each_slice_fun1_(const int& n) {
+  cube C(n, n + 1, 6, fill::randu);
+
+  mat M = repmat(linspace<vec>(1, n, n), 1, n + 1);
+
+  C.each_slice() += M;  // in-place addition of M to each slice of C
+
+  cube D = C.each_slice() + M;  // generate D by adding M to each slice of C
+
+  // sum all slices of D into a single matrix
+  mat D_flat = sum(D, 2);
+
+  uvec indices(2);
+  indices(0) = 2;
+  indices(1) = 4;
+
+  C.each_slice(indices) = M;  // copy M to slices 2 and 4 in C
+  C.each_slice([](mat& X) { X * 2.0; });  // lambda function with non-const matrix
+  mat C_flat = sum(C, 2);
+
+  const cube& CC = C;
+  CC.each_slice([](const mat& X) { X / 3.0; });  // lambda function with const matrix
+
+  mat CC_flat = sum(CC, 2);
+
+  mat res = C_flat + D_flat + CC_flat;
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+```
+
+## Set real
+
+`set_real(X)` sets the real part of an object. `X` must have the same
+size as the recipient object.
+
+### Examples
+
+```cpp
+[[cpp11::register]] list set_real_fun1_(const int& n) {
+  mat A(n + 1, n - 1, fill::randu);
+
+  cx_mat C(n + 1, n - 1, fill::zeros);
+
+  C.set_real(A);
+
+  return as_complex_matrix(C);  // Convert from C++ to R
+}
+```
+  
+### Caveat
+
+To directly construct a complex matrix out of two real matrices, the following
+code is faster:
+
+```cpp
+[[cpp11::register]] list set_real_fun2_(const int& n) {    
+  mat A(n - 1, n + 1, fill::randu);
+  mat B(n - 1, n + 1, fill::randu);
+  
+  cx_mat C = cx_mat(A,B);
+
+  return as_complex_matrix(C);  // Convert from C++ to R
+}
+```
+
+## Set imaginary
+
+`set_imaginary(X)` sets the imaginary part of an object. `X` must have the same
+size as the recipient object.
+
+### Examples
+
+```cpp
+[[cpp11::register]] list set_imag_fun1_(const int& n) {
+  mat B(n + 1, n - 1, fill::randu);
+
+  cx_mat C(n + 1, n - 1, fill::zeros);
+
+  C.set_imag(B);
+
+  return as_complex_matrix(C);  // Convert from C++ to R
+}
+```
+  
+### Caveat
+
+To directly construct a complex matrix out of two real matrices, the following
+code is faster:
+
+```cpp
+[[cpp11::register]] list set_imag_fun2_(const int& n) {    
+  mat A(n - 1, n + 1, fill::randu);
+  mat B(n - 1, n + 1, fill::randu);
+  
+  cx_mat C = cx_mat(A,B);
+
+  return as_complex_matrix(C);  // Convert from C++ to R
 }
 ```

@@ -168,4 +168,27 @@ test_that("examples derived from official documentation", {
   res33 <- each_col_fun1_(2L)
   expect_type(res33, "double")
   expect_equal(dim(res33), c(2, 3))
+
+  res34 <- each_row_fun1_(2L)
+  expect_type(res34, "double")
+  expect_equal(dim(res34), c(3, 2))
+
+  res35 <- each_slice_fun1_(2L)
+  expect_type(res35, "double")
+  expect_equal(dim(res35), c(2, 3))
+
+  res36 <- set_real_fun1_(2L)
+  expect_type(res36, "list")
+  expect_type(res36[[1]], "double")
+  expect_equal(dim(res36[[1]]), c(3, 1))
+
+  res37 <- set_real_fun2_(2L)
+  expect_type(res37, "list")
+  expect_type(res37[[1]], "double")
+  expect_equal(dim(res37[[1]]), c(1, 3))
+
+  res38 <- set_imag_fun1_(2L)
+  expect_type(res38, "list")
+  expect_type(res38[[1]], "double")
+  expect_equal(dim(res38[[1]]), c(3, 1))
 })
