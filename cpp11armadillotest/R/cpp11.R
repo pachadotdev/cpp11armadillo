@@ -275,3 +275,43 @@ memptr1_ <- function(n) {
 colptr1_ <- function(n) {
   .Call(`_cpp11armadillotest_colptr1_`, n)
 }
+
+iterators1_ <- function(n) {
+  .Call(`_cpp11armadillotest_iterators1_`, n)
+}
+
+iterators2_ <- function(n) {
+  .Call(`_cpp11armadillotest_iterators2_`, n)
+}
+
+iterators3_ <- function(n) {
+  .Call(`_cpp11armadillotest_iterators3_`, n)
+}
+
+iterators4_ <- function(n) {
+  .Call(`_cpp11armadillotest_iterators4_`, n)
+}
+
+compatibility1_ <- function(n) {
+  .Call(`_cpp11armadillotest_compatibility1_`, n)
+}
+
+compatibility2_ <- function(n) {
+  .Call(`_cpp11armadillotest_compatibility2_`, n)
+}
+
+as_col1_ <- function(n) {
+  .Call(`_cpp11armadillotest_as_col1_`, n)
+}
+
+as_row1_ <- function(n) {
+  .Call(`_cpp11armadillotest_as_row1_`, n)
+}
+
+col_as_mat1_ <- function(n) {
+  .Call(`_cpp11armadillotest_col_as_mat1_`, n)
+}
+
+row_as_mat1_ <- function(n) {
+  .Call(`_cpp11armadillotest_row_as_mat1_`, n)
+}

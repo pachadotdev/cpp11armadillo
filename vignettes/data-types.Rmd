@@ -2222,3 +2222,325 @@ to the memory used by elements in the specified column.
   aliasing.
 * This function is not recommended for use unless you know what you are doing.
 * It is safer to use `submat()` instead.
+
+## Iterators
+
+Iterators for traverse over all elements within the specified range. These
+return the column/row/slice of an object as a `uword` type.
+
+### Member functions
+
+Dense matrices and vectors (`Mat`, `Col`, and `Row`):
+
+* `.begin()` is an iterator referring to the first element.
+* `.end()` is an iterator referring to the past the end element.
+* `.begin_col(col_number)` is an iterator referring to the first element of the
+  specified column.
+* `.end_col(col_number)` is an iterator referring to the past-the-end element of
+  the specified column.
+* `begin_row(row_number)` is an iterator referring to the first element of the
+  specified row.
+* `end_row(row_number)` is an iterator referring to the past-the-end element of
+  the specified row.
+
+Cubes (`Cube`): 
+      
+* `begin()` is an iterator referring to the first element.
+* `end()` is an iterator referring to the past-the-end element.
+* `begin_slice(slice_number)` iterator referring to the first element of the
+  specified slice.
+* `end_slice(slice_number)` iterator referring to the past-the-end element of
+  the specified slice.
+
+Sparse matrices (`SpMat`):
+    
+* `begin()` is an iterator referring to the first element.
+* `end()` is an iterator referring to the past-the-end element.
+* `begin_col(col_number)` is an iterator referring to the first element of the
+  specified column.
+* `end_col(col_number)` is an iterator referring to the past-the-end element of
+  the specified column.
+* `begin_row(row_number)` is an iterator referring to the first element of the
+  specified row.
+* `end_row(row_number)` is an iterator referring to the past-the-end element of
+  the specified row.
+
+Dense submatrices and subcubes (`submatrix` and `subcube`):
+
+* `span(row, col)` and `span(row, col, slice)` can be used to specify the range
+  of elements to iterate over.
+
+### Iterator types
+
+Dense matrices and vectors (`Mat`, `Col`, and `Row`):
+    
+* `mat::iterator`, `vec::iterator` and `rowvec::iterator` are random access
+  iterators, for read/write access to elements (which are stored column by
+  column).
+* `mat::const_iterator`, `vec::const_iterator` and `rowvec::const_iterator`
+  are random access iterators, for read-only access to elements (which are
+  stored column by column)
+* `mat::col_iterator`, `vec::col_iterator` and `rowvec::col_iterator` random
+  access iterators, for read/write access to the elements of specified columns.
+* `mat::const_col_iterator`, `vec::const_col_iterator` and
+  `rowvec::const_col_iterator` are random access iterators, for read-only access
+  to the elements of specified columns.
+* `mat::row_iterator` is a bidirectional iterator, for read/write access to the
+  elements of specified rows.
+* `mat::const_row_iterator` is a bidirectional iterator, for read-only access to
+  the elements of specified rows.
+* `vec::row_iterator` and `rowvec::row_iterator` are random access iterators,
+  for read/write access to the elements of specified rows.
+* `vec::const_row_iterator` and `rowvec::const_row_iterator` are random access
+  iterators, for read-only access to the elements of specified rows.
+
+Cubes (`Cube`):
+
+* `cube::iterator` is a random access iterator, for read/write access to
+  elements. The elements are ordered slice by slice; the elements within each
+  slice are ordered column by column.
+* `cube::const_iterator` is a random access iterator, for read-only access to
+  elements.
+* `cube::slice_iterator` is a random access iterator, for read/write access to
+  the elements of a particular slice. The elements are ordered column by column.
+* `cube::const_slice_iterator` is a random access iterator, for read-only access
+  to the elements of a particular slice.
+
+Sparse matrices (`SpMat`):
+
+* `sp_mat::iterator` is a bidirectional iterator, for read/write access to
+  elements (which are stored column by column).
+* `sp_mat::const_iterator` is a bidirectional iterator, for read-only access to
+  elements (which are stored column by column).
+* `sp_mat::col_iterator` is a bidirectional iterator, for read/write access to
+  the elements of a specific column.
+* `sp_mat::const_col_iterator` is a bidirectional iterator, for read-only access
+  to the elements of a specific column.
+* `sp_mat::row_iterator` is a bidirectional iterator, for read/write access to
+  the elements of a specific row.
+* `sp_mat::const_row_iterator` is a bidirectional iterator, for read-only access
+  to the elements of a specific row.
+
+### Examples
+    
+```cpp
+[[cpp11::register]] doubles_matrix<> iterators1_(const int& n) {
+  mat X(n, n + 1, fill::randu);
+
+  mat::iterator it = X.begin();
+  mat::iterator it_end = X.end();
+
+  for (; it != it_end; ++it) {
+    (*it) += 123.0;
+  }
+
+  mat::col_iterator col_it = X.begin_col(1);    // start of column 1
+  mat::col_iterator col_it_end = X.end_col(n);  //   end of column n
+
+  for (; col_it != col_it_end; ++col_it) {
+    (*col_it) = 321.0;
+  }
+
+  return as_doubles_matrix(X);  // Convert from C++ to R
+}
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> iterators2_(const int& n) {
+  cube X(n, n + 1, n + 2, fill::randu);
+
+  cube::iterator it = X.begin();
+  cube::iterator it_end = X.end();
+
+  for (; it != it_end; ++it) {
+    (*it) += 123.0;
+  }
+
+  cube::slice_iterator s_it = X.begin_slice(1);    // start of slice 1
+  cube::slice_iterator s_it_end = X.end_slice(n);  // end of slice n
+
+  for (; s_it != s_it_end; ++s_it) {
+    (*s_it) = 321.0;
+  }
+
+  mat res = sum(X, 2);
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> iterators3_(const int& n) {
+  sp_mat X = sprandu<sp_mat>(n, n * 2, 0.1);
+
+  sp_mat::iterator it = X.begin();
+  sp_mat::iterator it_end = X.end();
+
+  for (; it != it_end; ++it) {
+    (*it) += 123.0;
+  }
+
+  return as_doubles_matrix(X);  // Convert from C++ to R
+}
+```
+
+```cpp
+[[cpp11::register]] doubles_matrix<> iterators4_(const int& n) {
+  mat X(n, n, fill::randu);
+
+  for (double& val : X(span(0, 1), span(1, 1))) {
+    val = 123.0;
+  }
+
+  return as_doubles_matrix(X);  // Convert from C++ to R
+}
+```
+
+### Caveats
+
+* Writing a zero value into a sparse matrix through an iterator will
+  invalidate all current iterators associated with the sparse matrix.
+* To modify the non-zero elements in a safer manner, use `.transform()` or
+  `.for_each()` instead of iterators.
+* For `submatrix` and `subcube` the iterators are intended only to be used with
+  range-based for loops. Any other use is not supported. For example, the direct
+  use of the `begin()` and `end()` functions, as well as the underlying
+  iterators types is not supported. The implementation of submatrices and
+  subcubes uses short-lived temporary objects that are subject to automatic
+  deletion, and as such are error-prone to handle manually.
+
+## Compatibility container functions
+
+Member functions for the `Col` and `Row` classes to mimic the functionality of
+containers in the C++ standard library:  
+      
+* `front()` accesses the first element in a vector.
+* `back()` accesses the last element in a vector.
+
+Member functions for the `Col`, `Row`, `Mat`, `Cube` and `SpMat` classes to
+mimic the functionality of containers in the C++ standard library:
+
+* `clear()` removes the elements from an object.
+* `empty()` returns `true` if the object has no elements and `false` if the
+  object has one or more elements.    
+* `size()` returns the total number of elements in an object.
+
+### Examples
+
+```cpp
+[[cpp11::register]] doubles compatibility1_(const int& n) {
+  vec X(n, fill::randu);
+
+  writable::doubles res = {X.front(), X.back()};
+
+  res.attr("names") = strings({"front", "back"});
+
+  return res;
+}
+```
+
+```cpp
+[[cpp11::register]] integers compatibility2_(const int& n) {
+  mat X(n, n, fill::randu);
+
+  writable::integers res(2);
+  res[0] = X.n_rows;
+
+  X.clear();
+  res[1] = X.n_rows;
+
+  res.attr("names") = strings({"before", "after"});
+
+  return res;
+}
+```
+
+## Convert matrix to column
+
+`as_col()` is a member function of `Mat` class, it returns a flattened
+version of the matrix as a column vector. Flattening is done by concatenating
+all columns.
+  
+### Examples
+
+```cpp
+[[cpp11::register]] doubles as_col1_(const int& n) {
+  mat M(n, n + 1, fill::randu);
+  vec V = M.as_col();
+  return as_doubles(V);
+}
+```
+
+## Convert matrix to row
+
+`as_row()` is a member function of `Mat` class, it returns a flattened
+version of the matrix as a row vector. Flattening is done by concatenating
+all rows.
+  
+### Examples
+
+```cpp
+[[cpp11::register]] doubles as_row1_(const int& n) {
+  mat M(n, n + 1, fill::randu);
+  vec V = M.as_row();
+  return as_doubles(V);
+}
+```
+
+### Caveat
+
+Converting columns to rows is faster than converting rows to columns.
+
+## Convert column to matrix
+
+`col_as_mat(col_number)` is a member function of `Cube`, it returns a matrix
+of the specified cube column and the number of rows is preserved. Given a cube
+of size `R x C x S`, the resultant matrix size is `R x S`.
+
+### Examples
+
+```cpp
+[[cpp11::register]] list col_as_mat1_(const int& n) {
+  cube C(n, n + 1, n + 2, fill::randu);
+  mat M = C.col_as_mat(0);  // size n x (n + 1)
+  
+  writable::list res(5);
+  res[0] = as_doubles_matrix(C.slice(0));
+  res[1] = as_doubles_matrix(C.slice(1));
+  res[2] = as_doubles_matrix(C.slice(2));
+  res[3] = as_doubles_matrix(C.slice(3));
+  res[4] = as_doubles_matrix(M);
+
+  res.attr("names") = strings({"slice0", "slice1", "slice2", "slice3",
+    "col_as_mat"});
+
+  return res;
+}
+```
+
+## Convert column to matrix
+
+`row_as_mat(row_number)` is a member function of `Cube`, it returns a matrix
+of the specified cube row and the number of columns is preserved. Given a cube
+of size `R x C x S`, the resultant matrix size is `S x C`.
+
+### Examples
+
+```cpp
+[[cpp11::register]] list row_as_mat1_(const int& n) {
+  cube C(n, n + 1, n + 2, fill::randu);
+  mat M = C.row_as_mat(0);  // size (n + 2) x (n + 1)
+
+  writable::list res(5);
+  res[0] = as_doubles_matrix(C.slice(0));
+  res[1] = as_doubles_matrix(C.slice(1));
+  res[2] = as_doubles_matrix(C.slice(2));
+  res[3] = as_doubles_matrix(C.slice(3));
+  res[4] = as_doubles_matrix(M);
+
+  res.attr("names") = strings({"slice0", "slice1", "slice2", "slice3",
+    "row_as_mat"});
+
+  return res;
+}
+```

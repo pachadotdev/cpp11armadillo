@@ -774,3 +774,138 @@
 
   return as_doubles_matrix(A);  // Convert from C++ to R
 }
+
+[[cpp11::register]] doubles_matrix<> iterators1_(const int& n) {
+  mat X(n, n + 1, fill::randu);
+
+  mat::iterator it = X.begin();
+  mat::iterator it_end = X.end();
+
+  for (; it != it_end; ++it) {
+    (*it) += 123.0;
+  }
+
+  mat::col_iterator col_it = X.begin_col(1);    // start of column 1
+  mat::col_iterator col_it_end = X.end_col(n);  //   end of column n
+
+  for (; col_it != col_it_end; ++col_it) {
+    (*col_it) = 321.0;
+  }
+
+  return as_doubles_matrix(X);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> iterators2_(const int& n) {
+  cube X(n, n + 1, n + 2, fill::randu);
+
+  cube::iterator it = X.begin();
+  cube::iterator it_end = X.end();
+
+  for (; it != it_end; ++it) {
+    (*it) += 123.0;
+  }
+
+  cube::slice_iterator s_it = X.begin_slice(1);    // start of slice 1
+  cube::slice_iterator s_it_end = X.end_slice(n);  // end of slice n
+
+  for (; s_it != s_it_end; ++s_it) {
+    (*s_it) = 321.0;
+  }
+
+  mat res = sum(X, 2);
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> iterators3_(const int& n) {
+  sp_mat X = sprandu<sp_mat>(n, n * 2, 0.1);
+
+  sp_mat::iterator it = X.begin();
+  sp_mat::iterator it_end = X.end();
+
+  for (; it != it_end; ++it) {
+    (*it) += 123.0;
+  }
+
+  return as_doubles_matrix(X);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> iterators4_(const int& n) {
+  mat X(n, n, fill::randu);
+
+  for (double& val : X(span(0, 1), span(1, 1))) {
+    val = 123.0;
+  }
+
+  return as_doubles_matrix(X);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles compatibility1_(const int& n) {
+  vec X(n, fill::randu);
+
+  writable::doubles res = {X.front(), X.back()};
+
+  res.attr("names") = strings({"front", "back"});
+
+  return res;
+}
+
+[[cpp11::register]] integers compatibility2_(const int& n) {
+  mat X(n, n, fill::randu);
+
+  writable::integers res(2);
+  res[0] = X.n_rows;
+
+  X.clear();
+  res[1] = X.n_rows;
+
+  res.attr("names") = strings({"before", "after"});
+
+  return res;
+}
+
+[[cpp11::register]] doubles as_col1_(const int& n) {
+  mat M(n, n + 1, fill::randu);
+  vec V = M.as_col();
+  return as_doubles(V);
+}
+
+[[cpp11::register]] doubles as_row1_(const int& n) {
+  mat M(n, n + 1, fill::randu);
+  rowvec V = M.as_row();
+  return as_doubles(V.t());
+}
+
+[[cpp11::register]] list col_as_mat1_(const int& n) {
+  cube C(n, n + 1, n + 2, fill::randu);
+  mat M = C.col_as_mat(0);  // size n x (n + 1)
+  
+  writable::list res(5);
+  res[0] = as_doubles_matrix(C.slice(0));
+  res[1] = as_doubles_matrix(C.slice(1));
+  res[2] = as_doubles_matrix(C.slice(2));
+  res[3] = as_doubles_matrix(C.slice(3));
+  res[4] = as_doubles_matrix(M);
+
+  res.attr("names") = strings({"slice0", "slice1", "slice2", "slice3",
+    "col_as_mat"});
+
+  return res;
+}
+
+[[cpp11::register]] list row_as_mat1_(const int& n) {
+  cube C(n, n + 1, n + 2, fill::randu);
+  mat M = C.row_as_mat(0);  // size (n + 2) x (n + 1)
+
+  writable::list res(5);
+  res[0] = as_doubles_matrix(C.slice(0));
+  res[1] = as_doubles_matrix(C.slice(1));
+  res[2] = as_doubles_matrix(C.slice(2));
+  res[3] = as_doubles_matrix(C.slice(3));
+  res[4] = as_doubles_matrix(M);
+
+  res.attr("names") = strings({"slice0", "slice1", "slice2", "slice3",
+    "row_as_mat"});
+
+  return res;
+}
