@@ -2385,7 +2385,7 @@
 <div class="section level3">
 <h3 id="swap">Swap<a class="anchor" aria-label="anchor" href="#swap"></a>
 </h3>
-<p><code>swap( X )</code> is a member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, and <code>Cube</code>. It swaps the contents with object <code>X</code>.</p>
+<p><code>.swap( X )</code> is a member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, and <code>Cube</code>. It swaps the contents with object <code>X</code>.</p>
 <div class="section level4">
 <h4 id="examples-40">Examples<a class="anchor" aria-label="anchor" href="#examples-40"></a>
 </h4>
@@ -2397,6 +2397,69 @@
 <span id="cb60-6"><a href="#cb60-6" aria-hidden="true"></a></span>
 <span id="cb60-7"><a href="#cb60-7" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// Convert from C++ to R</span></span>
 <span id="cb60-8"><a href="#cb60-8" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="memory-pointer">Memory pointer<a class="anchor" aria-label="anchor" href="#memory-pointer"></a>
+</h3>
+<p><code>.memptr()</code> is a member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, and <code>Cube</code>. It obtains a raw pointer to the memory used for storing elements. Data for matrices is stored in a column-by-column order. Data for cubes is stored in a slice-by-slice (matrix-by-matrix) order.</p>
+<div class="section level4">
+<h4 id="examples-41">Examples<a class="anchor" aria-label="anchor" href="#examples-41"></a>
+</h4>
+<div class="sourceCode" id="cb61"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">memptr1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true"></a>  <span class="at">const</span> mat B(n, n, fill::randu);</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true"></a></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true"></a>  <span class="dt">double</span>* A_mem = A.memptr();</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true"></a>  <span class="at">const</span> <span class="dt">double</span>* B_mem = B.memptr();</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true"></a></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true"></a>  <span class="co">// alter A_mem</span></span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true"></a>  <span class="co">// B_mem is const, so it cannot be altered</span></span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n * n; ++i) {</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true"></a>    A_mem[i] += <span class="fl">123.0</span> + B_mem[i];</span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true"></a>  }</span>
+<span id="cb61-13"><a href="#cb61-13" aria-hidden="true"></a></span>
+<span id="cb61-14"><a href="#cb61-14" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb61-15"><a href="#cb61-15" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveats-4">Caveats<a class="anchor" aria-label="anchor" href="#caveats-4"></a>
+</h4>
+<ul>
+<li>The pointer becomes invalid after any operation involving a size change or aliasing.</li>
+<li>This function is not recommended for use unless you know what you are doing.</li>
+</ul>
+</div>
+</div>
+<div class="section level3">
+<h3 id="column-pointer">Column pointer<a class="anchor" aria-label="anchor" href="#column-pointer"></a>
+</h3>
+<p><code>.colptr( col_number )</code> is a member function of <code>Mat</code> that obtains a raw pointer to the memory used by elements in the specified column.</p>
+<div class="section level4">
+<h4 id="examples-42">Examples<a class="anchor" aria-label="anchor" href="#examples-42"></a>
+</h4>
+<div class="sourceCode" id="cb62"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">colptr1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true"></a></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true"></a>  <span class="co">// pointer to the memory of the first column of A</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true"></a>  <span class="dt">double</span>* Acol1_mem = A.colptr(<span class="dv">0</span>);</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true"></a></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true"></a>  <span class="co">// alter memory</span></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; ++i) {</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true"></a>    Acol1_mem[i] += <span class="fl">123.0</span>;</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true"></a>  }</span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true"></a></span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveats-5">Caveats<a class="anchor" aria-label="anchor" href="#caveats-5"></a>
+</h4>
+<ul>
+<li>The pointer becomes invalid after any operation involving a size change or aliasing.</li>
+<li>This function is not recommended for use unless you know what you are doing.</li>
+<li>It is safer to use <code>submat()</code> instead.</li>
+</ul>
 </div>
 </div>
 </div>

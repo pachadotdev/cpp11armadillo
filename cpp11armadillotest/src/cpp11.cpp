@@ -474,6 +474,20 @@ extern "C" SEXP _cpp11armadillotest_swap1_(SEXP n) {
     return cpp11::as_sexp(swap1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> memptr1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_memptr1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(memptr1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> colptr1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_colptr1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(colptr1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
@@ -483,6 +497,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_chol_mat",                      (DL_FUNC) &_cpp11armadillotest_chol_mat,                      2},
     {"_cpp11armadillotest_clamp1_",                       (DL_FUNC) &_cpp11armadillotest_clamp1_,                       1},
     {"_cpp11armadillotest_clean1_",                       (DL_FUNC) &_cpp11armadillotest_clean1_,                       1},
+    {"_cpp11armadillotest_colptr1_",                      (DL_FUNC) &_cpp11armadillotest_colptr1_,                      1},
     {"_cpp11armadillotest_column1_",                      (DL_FUNC) &_cpp11armadillotest_column1_,                      2},
     {"_cpp11armadillotest_copy_size1_",                   (DL_FUNC) &_cpp11armadillotest_copy_size1_,                   1},
     {"_cpp11armadillotest_cube1_",                        (DL_FUNC) &_cpp11armadillotest_cube1_,                        2},
@@ -508,6 +523,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_insert_slices1_",               (DL_FUNC) &_cpp11armadillotest_insert_slices1_,               1},
     {"_cpp11armadillotest_matrix1_",                      (DL_FUNC) &_cpp11armadillotest_matrix1_,                      1},
     {"_cpp11armadillotest_matrix2_",                      (DL_FUNC) &_cpp11armadillotest_matrix2_,                      1},
+    {"_cpp11armadillotest_memptr1_",                      (DL_FUNC) &_cpp11armadillotest_memptr1_,                      1},
     {"_cpp11armadillotest_ols_dbl",                       (DL_FUNC) &_cpp11armadillotest_ols_dbl,                       2},
     {"_cpp11armadillotest_ols_mat",                       (DL_FUNC) &_cpp11armadillotest_ols_mat,                       2},
     {"_cpp11armadillotest_ols_qr_dbl",                    (DL_FUNC) &_cpp11armadillotest_ols_qr_dbl,                    3},

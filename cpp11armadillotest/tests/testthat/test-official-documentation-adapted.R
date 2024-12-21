@@ -227,4 +227,12 @@ test_that("examples derived from official documentation", {
   res46 <- swap1_(2L)
   expect_type(res46, "double")
   expect_equal(dim(res46), c(4, 1))
+
+  res47 <- memptr1_(2L)
+  expect_type(res47, "double")
+  expect_equal(dim(res47), c(2, 2))
+
+  res48 <- colptr1_(2L)
+  expect_type(res48, "double")
+  expect_equal(dim(res48), c(2, 2))
 })

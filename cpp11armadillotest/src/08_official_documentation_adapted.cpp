@@ -69,7 +69,7 @@
 }
 
 [[cpp11::register]] doubles_matrix<> cube1_(const doubles_matrix<>& a,
-                                                const doubles_matrix<>& b) {
+                                            const doubles_matrix<>& b) {
   mat A = as_Mat(a);  // convert from R to C++
   mat B = as_Mat(b);
 
@@ -86,7 +86,7 @@
 }
 
 [[cpp11::register]] doubles_matrix<> field1_(const doubles_matrix<>& a,
-                                                 const doubles_matrix<>& b) {
+                                             const doubles_matrix<>& b) {
   mat A = as_Mat(a);  // convert from R to C++
   mat B = as_Mat(b);
 
@@ -285,7 +285,7 @@
 }
 
 [[cpp11::register]] doubles_matrix<> clean1_(const int& n) {
-  mat A(n, n, fill::randu); // create a random matrix
+  mat A(n, n, fill::randu);  // create a random matrix
 
   A(0, 0) = datum::eps;  // set the diagonal with small values (+/- epsilon)
   A(1, 1) = -datum::eps;
@@ -377,7 +377,7 @@
 
   int N = B.n_rows;
   int M = B.n_cols;
-  
+
   writable::integers res({N, M});
   res.attr("names") = strings({"n_rows", "n_cols"});
 
@@ -460,9 +460,9 @@
 [[cpp11::register]] doubles diagonal1_(const int& n) {
   mat X(n, n, fill::randu);
 
-  vec A = X.diag(); // extract the main diagonal
-  double B = accu(X.diag(1)); // sum of elements on the first upper diagonal
-  double C = accu(X.diag(-1)); // sum of elements on the first lower diagonal
+  vec A = X.diag();             // extract the main diagonal
+  double B = accu(X.diag(1));   // sum of elements on the first upper diagonal
+  double C = accu(X.diag(-1));  // sum of elements on the first lower diagonal
 
   X.diag() = randu<vec>(n);
   X.diag() += A;
@@ -531,7 +531,7 @@
   indices(0) = 1;
   indices(1) = 2;
 
-  X.each_row(indices) = v;       // copy v to columns 1 and 2 of X
+  X.each_row(indices) = v;  // copy v to columns 1 and 2 of X
 
   // lambda function with non-const vector
   X.each_row([](rowvec& a) { a / 2; });
@@ -562,7 +562,7 @@
   indices(0) = 2;
   indices(1) = 4;
 
-  C.each_slice(indices) = M;  // copy M to slices 2 and 4 in C
+  C.each_slice(indices) = M;              // copy M to slices 2 and 4 in C
   C.each_slice([](mat& X) { X * 2.0; });  // lambda function with non-const matrix
   mat C_flat = sum(C, 2);
 
@@ -741,6 +741,36 @@
   mat B(n * 2, n - 1, fill::ones);
 
   A.swap(B);
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> memptr1_(const int& n) {
+  mat A(n, n, fill::randu);
+  const mat B(n, n, fill::randu);
+
+  double* A_mem = A.memptr();
+  const double* B_mem = B.memptr();
+
+  // alter A_mem
+  // B_mem is const, so it cannot be altered
+  for (int i = 0; i < n * n; ++i) {
+    A_mem[i] += 123.0 + B_mem[i];
+  }
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> colptr1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  // pointer to the memory of the first column of A
+  double* Acol1_mem = A.colptr(0);
+
+  // alter memory
+  for (int i = 0; i < n; ++i) {
+    Acol1_mem[i] += 123.0;
+  }
 
   return as_doubles_matrix(A);  // Convert from C++ to R
 }

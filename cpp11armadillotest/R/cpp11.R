@@ -267,3 +267,11 @@ swap_rows1_ <- function(n) {
 swap1_ <- function(n) {
   .Call(`_cpp11armadillotest_swap1_`, n)
 }
+
+memptr1_ <- function(n) {
+  .Call(`_cpp11armadillotest_memptr1_`, n)
+}
+
+colptr1_ <- function(n) {
+  .Call(`_cpp11armadillotest_colptr1_`, n)
+}
