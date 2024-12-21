@@ -171,7 +171,7 @@ a <- matrix(runif(25), nrow = 5, ncol = 5)
 ```
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> matrix_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> matrix1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a); // convert from R to C++
 
   double x = A(0, 0);  // access an element on row 1, column 1
@@ -186,7 +186,7 @@ a <- matrix(runif(25), nrow = 5, ncol = 5)
   return as_doubles_matrix(res);  // convert from C++ to R
 }
       
-[[cpp11::register]] list matrix_fun2_(const doubles_matrix<>& a) {
+[[cpp11::register]] list matrix2_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);
   mat B = A + A;
 
@@ -302,7 +302,7 @@ y <- rep(1, 10)
 ```
 
 ```cpp
-[[cpp11::register]] doubles column_fun1_(const doubles& x, const doubles& y) {
+[[cpp11::register]] doubles column1_(const doubles& x, const doubles& y) {
   vec X = as_Col(x); // convert from R to C++
   vec Y = as_Col(y);
 
@@ -407,7 +407,7 @@ y <- rep(1, 10)
 ```
 
 ```cpp
-[[cpp11::register]] doubles row_fun1_(const doubles& x, const doubles& y) {
+[[cpp11::register]] doubles row1_(const doubles& x, const doubles& y) {
   vec X = as_Col(x);  // convert from R to C++
   vec Y = as_Col(y);
 
@@ -511,7 +511,7 @@ b <- matrix(rnorm(4), nrow = 2, ncol = 2)
 ```
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> cube_fun1_(const doubles_matrix<>& a,
+[[cpp11::register]] doubles_matrix<> cube1_(const doubles_matrix<>& a,
                                                 const doubles_matrix<>& b) {
   mat A = as_Mat(a);  // convert from R to C++
   mat B = as_Mat(b);
@@ -568,7 +568,7 @@ b <- matrix(rnorm(4), nrow = 2, ncol = 2)
 ```
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> field_fun1_(const doubles_matrix<>& a,
+[[cpp11::register]] doubles_matrix<> field1_(const doubles_matrix<>& a,
                                                  const doubles_matrix<>& b) {
   mat A = as_Mat(a);  // convert from R to C++
   mat B = as_Mat(b);
@@ -694,7 +694,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 ```
 
 ```cpp
-[[cpp11::register]] integers attr_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] integers attr1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
 
   // uword or int can be used
@@ -736,7 +736,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 ```
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> access_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> access1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
   A(1,1) = 123.0;     // set element at row 2, column 2
 
@@ -784,7 +784,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 ```
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> initialization_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> initialization1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
   mat B = {{1, 2}, {3, 4}}; // create new matrix
   vec C = {1, 2}; // create new column vector
@@ -817,7 +817,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 ```
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> zeros_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> zeros1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
   A.zeros();          // set all elements to zero
 
@@ -850,7 +850,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 ```
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> ones_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> ones1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
   A.ones();          // set all elements to zero
 
@@ -880,7 +880,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 ```
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> eye_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> eye1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
   A.eye();            // create an identity matrix
 
@@ -916,7 +916,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 ```
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> randu_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> randu1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
 
   mat B;
@@ -929,7 +929,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
   return as_doubles_matrix(D);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> randu_fun2_(const int& n) {
+[[cpp11::register]] doubles_matrix<> randu2_(const int& n) {
   GetRNGstate();  // Ensure R's RNG state is synchronized
   mat y(n, n);
   ::arma_rng::randu<double>::fill(y.memptr(), y.n_elem);
@@ -959,7 +959,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 ```
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> randn_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> randn1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
 
   mat B;
@@ -972,7 +972,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
   return as_doubles_matrix(D);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> randn_fun2_(const int& n) {
+[[cpp11::register]] doubles_matrix<> randn2_(const int& n) {
   GetRNGstate();  // Ensure R's RNG state is synchronized
   mat y(n, n);
   ::arma_rng::randn<double>::fill(y.memptr(), y.n_elem);
@@ -998,7 +998,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 ```
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> fill_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> fill1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
 
   uword N = A.n_rows;
@@ -1020,7 +1020,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 Imbue (fill) with values provided by a functor or lambda function
 
 * `.imbue(functor)` Member functions of `Mat`, `Col`, `Row` and `Cube`
-* `.imbue(lambda_function)` Imbue (fill) with values provided by a functor or
+* `.imbue(lambdaction)` Imbue (fill) with values provided by a functor or
   lambda function
 
 For matrices, filling is done column-by-column (e.g., column 0 is filled, then
@@ -1035,7 +1035,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 ```
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> imbue_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> imbue1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
 
   std::mt19937 engine;  // Mersenne twister random number engine
@@ -1049,7 +1049,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
   return as_doubles_matrix(C);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> imbue_fun2_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> imbue2_(const doubles_matrix<>& a) {
   GetRNGstate();  // Ensure R's RNG state is synchronized
 
   mat A = as_Mat(a);  // Convert from R to C++
@@ -1080,7 +1080,7 @@ zero.
 ### Examples
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> clean_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> clean1_(const int& n) {
   mat A(n, n, fill::randu); // create a random matrix
 
   A(0, 0) = datum::eps; // set the diagonal with small values (+/- epsilon)
@@ -1106,7 +1106,7 @@ For all elements equal to `old_value`, set them to `new_value`.
 ### Examples
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> replace_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> replace1_(const int& n) {
   mat A(n, n, fill::randu); // create a random matrix
 
   A.diag().fill(datum::nan); // set the diagonal with NaN values
@@ -1137,7 +1137,7 @@ and all values higher than `max_val` to `max_val`.
 ### Examples
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> clamp_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> clamp1_(const int& n) {
   mat A(n, n, fill::randu); // create a random matrix
   A.diag().fill(0.1);       // set the diagonal with 0.1 values
 
@@ -1149,7 +1149,7 @@ and all values higher than `max_val` to `max_val`.
 
 ## Transform
 
-`.transform(functor)` and `.transform(lambda_function)` are member functions of
+`.transform(functor)` and `.transform(lambdaction)` are member functions of
 `Mat`, `Col`, `Row`, `Cube`, and `SpMat`.
 
 * For dense matrices, transformation is done column-by-column for all elements.
@@ -1161,7 +1161,7 @@ and all values higher than `max_val` to `max_val`.
 ### Examples
     
 ```cpp
-[[cpp11::register]] doubles_matrix<> transform_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> transform1_(const int& n) {
   mat A(n, n, fill::ones);  // create a matrix filled with ones
   A.transform([](double val) { return (val + 122.0); });
   return as_doubles_matrix(A); // Convert from C++ to R
@@ -1170,7 +1170,7 @@ and all values higher than `max_val` to `max_val`.
 
 ## For each
 
-`.for_each(functor)` and `.for_each(lambda_function)` are member functions of
+`.for_each(functor)` and `.for_each(lambdaction)` are member functions of
 `Mat`, `Col`, `Row`, `Cube`, `SpMat`, and `field`.
 
 * For dense matrices and fields, the processing is done column-by-column for all
@@ -1183,7 +1183,7 @@ and all values higher than `max_val` to `max_val`.
 ### Examples
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> for_each_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> for_each1_(const int& n) {
   // add 122 to each element in a dense matrix, the '&' is important
   mat D(n, n, fill::ones);
   D.for_each([](mat::elem_type& val) { val += 122.0; });
@@ -1222,7 +1222,7 @@ or `.resize()` instead.
 ### Examples
 
 ```cpp
-[[cpp11::register]] doubles set_size_fun1_(const int& n) {
+[[cpp11::register]] doubles set_size1_(const int& n) {
   mat A;
   A.set_size(n, n);  // or:  mat A(n, n, fill::none);
 
@@ -1266,7 +1266,7 @@ than the specified size, only a subset of the elements is taken
 ### Examples
     
 ```cpp
-[[cpp11::register]] doubles_matrix<> reshape_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> reshape1_(const int& n) {
   mat A(n + 1, n - 1, fill::randu);
   A.reshape(n - 1, n + 1);
   return as_doubles_matrix(A);  // Convert from C++ to R
@@ -1296,7 +1296,7 @@ an object (e.g., adding/removing rows, and/or columns, and/or slices).
 ### Examples
     
 ```cpp
-[[cpp11::register]] doubles_matrix<> resize_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> resize1_(const int& n) {
   mat A(n + 1, n - 1, fill::randu);
   A.resize(n - 1, n + 1);
   return as_doubles_matrix(A);  // Convert from C++ to R
@@ -1316,7 +1316,7 @@ matrix/vector/cube `A`.
 ### Examples
 
 ```cpp
-[[cpp11::register]] integers copy_size_fun1_(const int& n) {
+[[cpp11::register]] integers copy_size1_(const int& n) {
   mat A(n, n, fill::randu);
 
   mat B;
@@ -1344,7 +1344,7 @@ example, the size of a matrix cannot be set by providing a cube.
 ### Examples
 
 ```cpp
-[[cpp11::register]] integers reset_fun1_(const int& n) {
+[[cpp11::register]] integers reset1_(const int& n) {
   mat A(n, n, fill::randu);
   A.reset();
 
@@ -1422,7 +1422,7 @@ involving a size change of the matrix).
 ### Examples
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> subview_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> subview1_(const int& n) {
   mat A(n, n, fill::zeros);
 
   A.submat(0,1,2,3) = randu<mat>(3,3);
@@ -1513,7 +1513,7 @@ evaluate to a vector of type `uvec`.
 ### Examples
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> subview_fun2_(const int& n) {
+[[cpp11::register]] doubles_matrix<> subview2_(const int& n) {
   cube A(n, 3, 4, fill::randu);
     
   mat B = A.slice(1); // each slice is a matrix
@@ -1584,7 +1584,7 @@ diagonal is interpreted as a column vector within expressions.
 ### Examples
 
 ```cpp
-[[cpp11::register]] doubles diagonal_fun1_(const int& n) {
+[[cpp11::register]] doubles diagonal1_(const int& n) {
   mat X(n, n, fill::randu);
 
   vec A = X.diag(); // extract the main diagonal
@@ -1613,7 +1613,7 @@ To calculate only the diagonal elements of a compound expression, use
 
 ## Each col
 
-`.each_col()`, `.each_col(vector_of_indices)` and `.each_col(lambda_function)`
+`.each_col()`, `.each_col(vector_of_indices)` and `.each_col(lambdaction)`
 are member functions of `Mat`. These apply a vector operation to each column of
 a matrix, and are similar to "broadcasting" in Matlab/Octave.
   
@@ -1639,14 +1639,14 @@ used, and it must evaluate to a vector of type `uvec`.
   
 ### Form 3
 
-`.each_col(lambda_function)` applies the given `lambda_function` to each column
+`.each_col(lambdaction)` applies the given `lambdaction` to each column
 vector. The function must accept a reference to a `Col` object with the same
 element type as the underlying matrix.
   
 ### Examples
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> each_col_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> each_col1_(const int& n) {
   mat X(n, n + 1, fill::ones);
 
   // create a vector with n elements ranging from 5 to 10
@@ -1683,7 +1683,7 @@ element type as the underlying matrix.
 
 ## Each row
 
-`.each_row()`, `.each_row(vector_of_indices)`, `.each_row(lambda_function)` are
+`.each_row()`, `.each_row(vector_of_indices)`, `.each_row(lambdaction)` are
 member functions of `Mat`. These apply a vector operation to each row of
 a matrix, and are similar to "broadcasting" in Matlab/Octave.
 
@@ -1709,14 +1709,14 @@ and it must evaluate to a vector of type `uvec`.
   
 ### Form 3
 
-`.each_col(lambda_function)` applies the given `lambda_function` to each column
+`.each_col(lambdaction)` applies the given `lambdaction` to each column
 vector. The function must accept a reference to a `Row` object with the same
 element type as the underlying matrix.
   
 ### Examples
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> each_row_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> each_row1_(const int& n) {
   mat X(n + 1, n, fill::ones);
 
   // create a vector with n elements ranging from 5 to 10
@@ -1753,13 +1753,13 @@ element type as the underlying matrix.
 
 ## Each slice
 
-`each_slice()` is a member function of `Cube` that applies a matrix operation to
+`.each_slice()` is a member function of `Cube` that applies a matrix operation to
 each slice of a cube, with each slice treated as a matrix. It is similar to
 "broadcasting" in Matlab/Octave.
 
 ### Form 1
 
-`each_slice(vector_of_indices)`
+`.each_slice(vector_of_indices)`
 
 Supported operations:  
       
@@ -1777,7 +1777,7 @@ Supported operations:
    
 ### Form 2
 
-`each_slice(lambda_function)`
+`.each_slice(lambdaction)`
 
 * The argument _vector_of_indices_ contains a list of indices of the slices to
   be used; it must evaluate to a vector of type `uvec`.
@@ -1786,26 +1786,26 @@ Supported operations:
 
 ### Form 3
 
-`each_slice(lambda_function, use_mp)`
+`.each_slice(lambdaction, use_mp)`
 
-* Apply the given `lambda_function` to each slice.
+* Apply the given `lambdaction` to each slice.
 * The function must accept a reference to a `Mat` object with the same element
   type as the underlying cube.
 
 ### Form 4
 
-* Apply the given `lambda_function` to each slice, as per form 3.
+* Apply the given `lambdaction` to each slice, as per form 3.
 * The argument `use_mp` is a bool to enable the use of OpenMP for multi-threaded
-  execution of `lambda_function` on multiple slices at the same time.
+  execution of `lambdaction` on multiple slices at the same time.
 * The order of processing the slices is not deterministic (e.g., slice 2 can be
   processed before slice 1).
-* `lambda_function` must be thread-safe, e.g., it must not write to variables
+* `lambdaction` must be thread-safe, e.g., it must not write to variables
   outside of its scope.
   
 ### Examples:
 
 ```cpp
-[[cpp11::register]] doubles_matrix<> each_slice_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> each_slice1_(const int& n) {
   cube C(n, n + 1, 6, fill::randu);
 
   mat M = repmat(linspace<vec>(1, n, n), 1, n + 1);
@@ -1814,7 +1814,7 @@ Supported operations:
 
   cube D = C.each_slice() + M;  // generate D by adding M to each slice of C
 
-  // sum all slices of D into a single matrix
+  // sum all slices of D into a single n x (n + 1) matrix
   mat D_flat = sum(D, 2);
 
   uvec indices(2);
@@ -1838,13 +1838,13 @@ Supported operations:
 
 ## Set real
 
-`set_real(X)` sets the real part of an object. `X` must have the same
+`.set_real(X)` sets the real part of an object. `X` must have the same
 size as the recipient object.
 
 ### Examples
 
 ```cpp
-[[cpp11::register]] list set_real_fun1_(const int& n) {
+[[cpp11::register]] list set_real1_(const int& n) {
   mat A(n + 1, n - 1, fill::randu);
 
   cx_mat C(n + 1, n - 1, fill::zeros);
@@ -1861,7 +1861,7 @@ To directly construct a complex matrix out of two real matrices, the following
 code is faster:
 
 ```cpp
-[[cpp11::register]] list set_real_fun2_(const int& n) {    
+[[cpp11::register]] list set_real2_(const int& n) {    
   mat A(n - 1, n + 1, fill::randu);
   mat B(n - 1, n + 1, fill::randu);
   
@@ -1873,13 +1873,13 @@ code is faster:
 
 ## Set imaginary
 
-`set_imaginary(X)` sets the imaginary part of an object. `X` must have the same
+`.set_imaginary(X)` sets the imaginary part of an object. `X` must have the same
 size as the recipient object.
 
 ### Examples
 
 ```cpp
-[[cpp11::register]] list set_imag_fun1_(const int& n) {
+[[cpp11::register]] list set_imag1_(const int& n) {
   mat B(n + 1, n - 1, fill::randu);
 
   cx_mat C(n + 1, n - 1, fill::zeros);
@@ -1896,12 +1896,266 @@ To directly construct a complex matrix out of two real matrices, the following
 code is faster:
 
 ```cpp
-[[cpp11::register]] list set_imag_fun2_(const int& n) {    
+[[cpp11::register]] list set_imag2_(const int& n) {    
   mat A(n - 1, n + 1, fill::randu);
   mat B(n - 1, n + 1, fill::randu);
   
   cx_mat C = cx_mat(A,B);
 
   return as_complex_matrix(C);  // Convert from C++ to R
+}
+```
+
+## Insert columns
+
+`.insert_cols(col_number, X)` and `.insert_cols(col_number, number_of_cols)`
+are member functions of `Mat`, `Row` and `Cube`.
+
+The `X` argument inserts a copy of `X` at the specified column. `X` must have
+the same number of rows (and slices) as the recipient object.
+  
+The `number_of_cols` argument expands the object by creating new columns that
+are set to zero.
+  
+### Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> insert_columns1_(const int& n) {
+  mat A(n, n * 2, fill::randu);
+  mat B(n, n - 1, fill::ones);
+
+  // at column n - 1, insert a copy of B
+  // A will now have 3n - 1 columns
+  A.insert_cols(n - 1, B);
+
+  // at column 1, insert 2n zeroed columns
+  // B will now have 3n - 1 columns
+  B.insert_cols(1, n * 2);
+
+  mat res = A + B;
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+```
+
+## Insert rows
+
+`.insert_rows(row_number, X)` and `.insert_rows(row_number, number_of_rows)`
+are member functions of `Mat`, `Row` and `Cube`.
+
+The `X` argument inserts a copy of `X` at the specified column. `X` must have
+the same number of columns (and slices) as the recipient object.
+  
+The `number_of_rows` argument expands the object by creating new rows that
+are set to zero.
+  
+### Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> insert_rows1_(const int& n) {
+  mat A(n * 2, n, fill::randu);
+  mat B(n - 1, n, fill::ones);
+
+  // at row n - 1, insert a copy of B
+  // A will now have 3n - 1 rows
+  A.insert_rows(n - 1, B);
+
+  // at row 1, insert 2n zeroed rows
+  // B will now have 3n - 1 columns
+  B.insert_rows(1, n * 2);
+
+  mat res = A + B;
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+```
+
+## Insert slice
+
+`.insert_slices(slice_number, X)` and `.insert_slices(slice_number, number_of_slices)`
+are member functions of `Cube`.
+
+The `X` argument inserts a copy of `X` at the specified slice. `X` must have
+the same number of columns and rows as the recipient object.
+  
+The `number_of_slices` argument expands the object by creating new slices that
+are set to zero.
+  
+### Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> insert_slices1_(const int& n) {
+  cube A(n, n, n * 2, fill::randu);
+  cube B(n, n, n - 1, fill::ones);
+
+  // At slice n - 1, insert a copy of B
+  // A will now have 3n - 1 slices
+  A.insert_slices(n - 1, B);
+
+  // At slice 1, insert 2n zeroed slices
+  // B will now have 3n - 1 slices
+  B.insert_slices(1, n * 2);
+
+  mat res = sum(A + B);
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+```
+
+## Shed columns
+
+`.shed_col(row_number)` and `.shed_cols(first_row, last_row)` are member
+functions of `Mat`, `Col`, `SpMat`, and `Cube`. With a single scalar argument it
+remove the specified column, and with two scalar arguments it removes the
+specified range of columns.
+
+`.shed_cols(vector_of_indices)` is a member function of `Mat` and `Col`. With a
+vector of indices it must evaluate to a vector of type `uvec` containing the
+indices of the columns to remove.
+  
+### Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> shed_columns1_(const int& n) {
+  mat A(n, n * 5, fill::randu);
+
+  // remove the first column
+  A.shed_col(0);
+
+  // remove columns 1 and 2
+  A.shed_cols(0, 1);
+
+  // remove columns 2 and 4
+  uvec indices(2);
+  indices(0) = 1;
+  indices(1) = 3;
+  A.shed_cols(indices);
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+```
+
+## Shed rows
+
+`.shed_row(row_number)` and `.shed_rows(first_row, last_row)` are member
+functions of `Mat`, `Col`, `SpMat`, and `Cube`. With a single scalar argument it
+remove the specified rows, and with two scalar arguments it removes the
+specified range of rows.
+
+`.shed_rows(vector_of_indices)` is a member function of `Mat` and `Row`. With a
+vector of indices it must evaluate to a vector of type `uvec` containing the
+indices of the rows to remove.
+  
+### Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> shed_rows1_(const int& n) {
+  mat A(n * 5, n, fill::randu);
+
+  // remove the first row
+  A.shed_row(0);
+
+  // remove rows 1 and 2
+  A.shed_rows(0, 1);
+
+  // remove rows 2 and 4
+  uvec indices(2);
+  indices(0) = 1;
+  indices(1) = 3;
+  A.shed_rows(indices);
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+```
+
+## Shed slices
+
+`.shed_slices(slice_number)`, `.shed_slices(first_slice, last_slice)` and
+`.shed_slices(vector_of_indices)` are member functions of `Cube`. With a single
+scalar argument it remove the specified slices, and with two scalar arguments it
+removes the specified range of slices. With a vector of indices it must evaluate
+to a vector of type `uvec` containing the indices of the rows to remove.
+  
+### Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> shed_slices1_(const int& n) {
+  cube A(n, n, n * 5, fill::randu);
+
+  // remove the first slice
+  A.shed_slice(0);
+
+  // remove slices 1 and 2
+  A.shed_slices(0, 1);
+
+  // remove slices 2 and 4
+  uvec indices(2);
+  indices(0) = 1;
+  indices(1) = 3;
+  A.shed_slices(indices);
+
+  mat res = sum(A, 2);
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+```
+
+## Swap columns
+
+`.swap_cols( col1, col2 )` is a member functions of `Mat`, `Col`, `Row`, and
+`SpMat`. It swaps the contents of the specified columns.
+
+### Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> swap_columns1_(const int& n) {
+  mat A(n, n * 5, fill::randu);
+
+  // swap columns 1 and 2
+  A.swap_cols(0, 1);
+
+  // swap columns 2 and 4
+  A.swap_cols(1, 3);
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+```
+
+## Swap rows
+
+`.swap_rows( col1, col2 )` is a member functions of `Mat`, `Col`, `Row`, and
+`SpMat`. It swaps the contents of the specified rows.
+
+### Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> swap_rows1_(const int& n) {
+  mat A(n * 5, n, fill::randu);
+
+  // swap rows 1 and 2
+  A.swap_rows(0, 1);
+
+  // swap rows 2 and 4
+  A.swap_rows(1, 3);
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+```
+
+## Swap
+
+`swap( X )` is a member function of `Mat`, `Col`, `Row`, and `Cube`. It swaps
+the contents with object `X`.
+
+### Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> swap1_(const int& n) {
+  mat A(n, n + 1, fill::zeros);
+  mat B(n * 2, n - 1, fill::ones);
+
+  A.swap(B);
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
 }
 ```

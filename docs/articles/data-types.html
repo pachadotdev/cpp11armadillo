@@ -279,7 +279,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">25</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span>, ncol <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">matrix_fun1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">matrix1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  mat A = as_Mat(a); <span class="co">// convert from R to C++</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>  <span class="dt">double</span> x = A(<span class="dv">0</span>, <span class="dv">0</span>);  <span class="co">// access an element on row 1, column 1</span></span>
@@ -294,7 +294,7 @@
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);  <span class="co">// convert from C++ to R</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>}</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>      </span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">matrix_fun2_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">matrix2_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a>  mat A = as_Mat(a);</span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a>  mat B = A + A;</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a></span>
@@ -399,7 +399,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">column_fun1_</span>(<span class="at">const</span> doubles&amp; x, <span class="at">const</span> doubles&amp; y) {</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">column1_</span>(<span class="at">const</span> doubles&amp; x, <span class="at">const</span> doubles&amp; y) {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  vec X = as_Col(x); <span class="co">// convert from R to C++</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>  vec Y = as_Col(y);</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
@@ -503,7 +503,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">row_fun1_</span>(<span class="at">const</span> doubles&amp; x, <span class="at">const</span> doubles&amp; y) {</span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">row1_</span>(<span class="at">const</span> doubles&amp; x, <span class="at">const</span> doubles&amp; y) {</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  vec X = as_Col(x);  <span class="co">// convert from R to C++</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  vec Y = as_Col(y);</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
@@ -595,7 +595,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">cube_fun1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a,</span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">cube1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a,</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>                                                <span class="at">const</span> doubles_matrix&lt;&gt;&amp; b) {</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>  mat A = as_Mat(a);  <span class="co">// convert from R to C++</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>  mat B = as_Mat(b);</span>
@@ -644,7 +644,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">field_fun1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a,</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">field1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a,</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>                                                 <span class="at">const</span> doubles_matrix&lt;&gt;&amp; b) {</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>  mat A = as_Mat(a);  <span class="co">// convert from R to C++</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>  mat B = as_Mat(b);</span>
@@ -993,7 +993,7 @@
 </h4>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] integers <span class="va">attr_fun1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] integers <span class="va">attr1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>  mat A = as_Mat(a);  <span class="co">// convert from R to C++</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>  <span class="co">// uword or int can be used</span></span>
@@ -1031,7 +1031,7 @@
 </h4>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">access_fun1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">access1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>  mat A = as_Mat(a);  <span class="co">// convert from R to C++</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a>  A(<span class="dv">1</span>,<span class="dv">1</span>) = <span class="fl">123.0</span>;     <span class="co">// set element at row 2, column 2</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a></span>
@@ -1075,7 +1075,7 @@
 </h4>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">initialization_fun1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">initialization1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a>  mat A = as_Mat(a);  <span class="co">// convert from R to C++</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a>  mat B = {{<span class="dv">1</span>, <span class="dv">2</span>}, {<span class="dv">3</span>, <span class="dv">4</span>}}; <span class="co">// create new matrix</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a>  vec C = {<span class="dv">1</span>, <span class="dv">2</span>}; <span class="co">// create new column vector</span></span>
@@ -1100,7 +1100,7 @@
 </h4>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">zeros_fun1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">zeros1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a>  mat A = as_Mat(a);  <span class="co">// convert from R to C++</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a>  A.zeros();          <span class="co">// set all elements to zero</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a></span>
@@ -1125,7 +1125,7 @@
 </h4>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">ones_fun1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
+<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">ones1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a>  mat A = as_Mat(a);  <span class="co">// convert from R to C++</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a>  A.ones();          <span class="co">// set all elements to zero</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true"></a></span>
@@ -1156,7 +1156,7 @@
 </h4>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">eye_fun1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
+<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">eye1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a>  mat A = as_Mat(a);  <span class="co">// convert from R to C++</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a>  A.eye();            <span class="co">// create an identity matrix</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a></span>
@@ -1193,7 +1193,7 @@
 </ul>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">randu_fun1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
+<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">randu1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a>  mat A = as_Mat(a);  <span class="co">// convert from R to C++</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true"></a></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true"></a>  mat B;</span>
@@ -1206,7 +1206,7 @@
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(D);  <span class="co">// convert from C++ to R</span></span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true"></a>}</span>
 <span id="cb25-13"><a href="#cb25-13" aria-hidden="true"></a></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">randu_fun2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">randu2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb25-15"><a href="#cb25-15" aria-hidden="true"></a>  GetRNGstate();  <span class="co">// Ensure R's RNG state is synchronized</span></span>
 <span id="cb25-16"><a href="#cb25-16" aria-hidden="true"></a>  mat y(n, n);</span>
 <span id="cb25-17"><a href="#cb25-17" aria-hidden="true"></a>  ::arma_rng::randu&lt;<span class="dt">double</span>&gt;::fill(y.memptr(), y.n_elem);</span>
@@ -1237,7 +1237,7 @@
 </h4>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">randn_fun1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
+<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">randn1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a>  mat A = as_Mat(a);  <span class="co">// convert from R to C++</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true"></a></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true"></a>  mat B;</span>
@@ -1250,7 +1250,7 @@
 <span id="cb27-11"><a href="#cb27-11" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(D);  <span class="co">// convert from C++ to R</span></span>
 <span id="cb27-12"><a href="#cb27-12" aria-hidden="true"></a>}</span>
 <span id="cb27-13"><a href="#cb27-13" aria-hidden="true"></a></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">randn_fun2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">randn2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb27-15"><a href="#cb27-15" aria-hidden="true"></a>  GetRNGstate();  <span class="co">// Ensure R's RNG state is synchronized</span></span>
 <span id="cb27-16"><a href="#cb27-16" aria-hidden="true"></a>  mat y(n, n);</span>
 <span id="cb27-17"><a href="#cb27-17" aria-hidden="true"></a>  ::arma_rng::randn&lt;<span class="dt">double</span>&gt;::fill(y.memptr(), y.n_elem);</span>
@@ -1271,7 +1271,7 @@
 </h4>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">fill_fun1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
+<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">fill1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a>  mat A = as_Mat(a);  <span class="co">// convert from R to C++</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true"></a></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true"></a>  uword N = A.n_rows;</span>
@@ -1297,7 +1297,7 @@
 <code>.imbue(functor)</code> Member functions of <code>Mat</code>, <code>Col</code>, <code>Row</code> and <code>Cube</code>
 </li>
 <li>
-<code>.imbue(lambda_function)</code> Imbue (fill) with values provided by a functor or lambda function</li>
+<code>.imbue(lambdaction)</code> Imbue (fill) with values provided by a functor or lambda function</li>
 </ul>
 <p>For matrices, filling is done column-by-column (e.g., column 0 is filled, then column 1, etc.)</p>
 <p>For cubes, filling is done slice-by-slice, with each slice treated as a matrix</p>
@@ -1306,7 +1306,7 @@
 </h4>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb31"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">imbue_fun1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
+<div class="sourceCode" id="cb31"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">imbue1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a>  mat A = as_Mat(a);  <span class="co">// convert from R to C++</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true"></a></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true"></a>  <span class="bu">std::</span>mt19937 engine;  <span class="co">// Mersenne twister random number engine</span></span>
@@ -1320,7 +1320,7 @@
 <span id="cb31-12"><a href="#cb31-12" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(C);  <span class="co">// convert from C++ to R</span></span>
 <span id="cb31-13"><a href="#cb31-13" aria-hidden="true"></a>}</span>
 <span id="cb31-14"><a href="#cb31-14" aria-hidden="true"></a></span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">imbue_fun2_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">imbue2_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
 <span id="cb31-16"><a href="#cb31-16" aria-hidden="true"></a>  GetRNGstate();  <span class="co">// Ensure R's RNG state is synchronized</span></span>
 <span id="cb31-17"><a href="#cb31-17" aria-hidden="true"></a></span>
 <span id="cb31-18"><a href="#cb31-18" aria-hidden="true"></a>  mat A = as_Mat(a);  <span class="co">// Convert from R to C++</span></span>
@@ -1347,7 +1347,7 @@
 <div class="section level4">
 <h4 id="examples-14">Examples<a class="anchor" aria-label="anchor" href="#examples-14"></a>
 </h4>
-<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">clean_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">clean1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true"></a>  mat A(n, n, fill::randu); <span class="co">// create a random matrix</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true"></a></span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true"></a>  A(<span class="dv">0</span>, <span class="dv">0</span>) = datum::eps; <span class="co">// set the diagonal with small values (+/- epsilon)</span></span>
@@ -1372,7 +1372,7 @@
 <div class="section level4">
 <h4 id="examples-15">Examples<a class="anchor" aria-label="anchor" href="#examples-15"></a>
 </h4>
-<div class="sourceCode" id="cb33"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">replace_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb33"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">replace1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a>  mat A(n, n, fill::randu); <span class="co">// create a random matrix</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true"></a></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true"></a>  A.diag().fill(datum::nan); <span class="co">// set the diagonal with NaN values</span></span>
@@ -1402,7 +1402,7 @@
 <div class="section level4">
 <h4 id="examples-16">Examples<a class="anchor" aria-label="anchor" href="#examples-16"></a>
 </h4>
-<div class="sourceCode" id="cb34"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">clamp_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb34"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">clamp1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true"></a>  mat A(n, n, fill::randu); <span class="co">// create a random matrix</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true"></a>  A.diag().fill(<span class="fl">0.1</span>);       <span class="co">// set the diagonal with 0.1 values</span></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true"></a></span>
@@ -1415,7 +1415,7 @@
 <div class="section level3">
 <h3 id="transform">Transform<a class="anchor" aria-label="anchor" href="#transform"></a>
 </h3>
-<p><code>.transform(functor)</code> and <code>.transform(lambda_function)</code> are member functions of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, and <code>SpMat</code>.</p>
+<p><code>.transform(functor)</code> and <code>.transform(lambdaction)</code> are member functions of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, and <code>SpMat</code>.</p>
 <ul>
 <li>For dense matrices, transformation is done column-by-column for all elements.</li>
 <li>For sparse matrices, transformation is done column-by-column for non-zero elements.</li>
@@ -1424,7 +1424,7 @@
 <div class="section level4">
 <h4 id="examples-17">Examples<a class="anchor" aria-label="anchor" href="#examples-17"></a>
 </h4>
-<div class="sourceCode" id="cb35"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">transform_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb35"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">transform1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true"></a>  mat A(n, n, fill::ones);  <span class="co">// create a matrix filled with ones</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true"></a>  A.transform([](<span class="dt">double</span> val) { <span class="cf">return</span> (val + <span class="fl">122.0</span>); });</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A); <span class="co">// Convert from C++ to R</span></span>
@@ -1434,7 +1434,7 @@
 <div class="section level3">
 <h3 id="for-each">For each<a class="anchor" aria-label="anchor" href="#for-each"></a>
 </h3>
-<p><code>.for_each(functor)</code> and <code>.for_each(lambda_function)</code> are member functions of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>SpMat</code>, and <code>field</code>.</p>
+<p><code>.for_each(functor)</code> and <code>.for_each(lambdaction)</code> are member functions of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>SpMat</code>, and <code>field</code>.</p>
 <ul>
 <li>For dense matrices and fields, the processing is done column-by-column for all elements.</li>
 <li>For sparse matrices, the processing is done column-by-column for non-zero elements.</li>
@@ -1443,7 +1443,7 @@
 <div class="section level4">
 <h4 id="examples-18">Examples<a class="anchor" aria-label="anchor" href="#examples-18"></a>
 </h4>
-<div class="sourceCode" id="cb36"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">for_each_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb36"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">for_each1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true"></a>  <span class="co">// add 122 to each element in a dense matrix, the '&amp;' is important</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true"></a>  mat D(n, n, fill::ones);</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true"></a>  D.for_each([](mat::<span class="dt">elem_type</span>&amp; val) { val += <span class="fl">122.0</span>; });</span>
@@ -1481,7 +1481,7 @@
 <div class="section level4">
 <h4 id="examples-19">Examples<a class="anchor" aria-label="anchor" href="#examples-19"></a>
 </h4>
-<div class="sourceCode" id="cb37"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">set_size_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb37"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">set_size1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true"></a>  mat A;</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true"></a>  A.set_size(n, n);  <span class="co">// or:  mat A(n, n, fill::none);</span></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true"></a></span>
@@ -1519,7 +1519,7 @@
 <div class="section level4">
 <h4 id="examples-20">Examples<a class="anchor" aria-label="anchor" href="#examples-20"></a>
 </h4>
-<div class="sourceCode" id="cb38"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">reshape_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb38"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">reshape1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true"></a>  mat A(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::randu);</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true"></a>  A.reshape(n - <span class="dv">1</span>, n + <span class="dv">1</span>);</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// Convert from C++ to R</span></span>
@@ -1555,7 +1555,7 @@
 <div class="section level4">
 <h4 id="examples-21">Examples<a class="anchor" aria-label="anchor" href="#examples-21"></a>
 </h4>
-<div class="sourceCode" id="cb39"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">resize_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb39"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">resize1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true"></a>  mat A(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::randu);</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true"></a>  A.resize(n - <span class="dv">1</span>, n + <span class="dv">1</span>);</span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// Convert from C++ to R</span></span>
@@ -1578,7 +1578,7 @@
 <div class="section level4">
 <h4 id="examples-22">Examples<a class="anchor" aria-label="anchor" href="#examples-22"></a>
 </h4>
-<div class="sourceCode" id="cb40"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] integers <span class="va">copy_size_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb40"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] integers <span class="va">copy_size1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true"></a></span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true"></a>  mat B;</span>
@@ -1606,7 +1606,7 @@
 <div class="section level4">
 <h4 id="examples-23">Examples<a class="anchor" aria-label="anchor" href="#examples-23"></a>
 </h4>
-<div class="sourceCode" id="cb41"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] integers <span class="va">reset_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb41"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] integers <span class="va">reset1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true"></a>  A.reset();</span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true"></a></span>
@@ -1681,7 +1681,7 @@
 <div class="section level4">
 <h4 id="examples-24">Examples<a class="anchor" aria-label="anchor" href="#examples-24"></a>
 </h4>
-<div class="sourceCode" id="cb42"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">subview_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb42"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">subview1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true"></a>  mat A(n, n, fill::zeros);</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true"></a></span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true"></a>  A.submat(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>) = randu&lt;mat&gt;(<span class="dv">3</span>,<span class="dv">3</span>);</span>
@@ -1765,7 +1765,7 @@
 <div class="section level4">
 <h4 id="examples-25">Examples<a class="anchor" aria-label="anchor" href="#examples-25"></a>
 </h4>
-<div class="sourceCode" id="cb43"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">subview_fun2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb43"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">subview2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true"></a>  cube A(n, <span class="dv">3</span>, <span class="dv">4</span>, fill::randu);</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true"></a>    </span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true"></a>  mat B = A.slice(<span class="dv">1</span>); <span class="co">// each slice is a matrix</span></span>
@@ -1839,7 +1839,7 @@
 <div class="section level4">
 <h4 id="examples-26">Examples<a class="anchor" aria-label="anchor" href="#examples-26"></a>
 </h4>
-<div class="sourceCode" id="cb44"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">diagonal_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb44"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">diagonal1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true"></a>  mat X(n, n, fill::randu);</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true"></a></span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true"></a>  vec A = X.diag(); <span class="co">// extract the main diagonal</span></span>
@@ -1869,7 +1869,7 @@
 <div class="section level3">
 <h3 id="each-col">Each col<a class="anchor" aria-label="anchor" href="#each-col"></a>
 </h3>
-<p><code>.each_col()</code>, <code>.each_col(vector_of_indices)</code> and <code>.each_col(lambda_function)</code> are member functions of <code>Mat</code>. These apply a vector operation to each column of a matrix, and are similar to “broadcasting” in Matlab/Octave.</p>
+<p><code>.each_col()</code>, <code>.each_col(vector_of_indices)</code> and <code>.each_col(lambdaction)</code> are member functions of <code>Mat</code>. These apply a vector operation to each column of a matrix, and are similar to “broadcasting” in Matlab/Octave.</p>
 <div class="section level4">
 <h4 id="form-1">Form 1<a class="anchor" aria-label="anchor" href="#form-1"></a>
 </h4>
@@ -1903,12 +1903,12 @@
 <div class="section level4">
 <h4 id="form-3">Form 3<a class="anchor" aria-label="anchor" href="#form-3"></a>
 </h4>
-<p><code>.each_col(lambda_function)</code> applies the given <code>lambda_function</code> to each column vector. The function must accept a reference to a <code>Col</code> object with the same element type as the underlying matrix.</p>
+<p><code>.each_col(lambdaction)</code> applies the given <code>lambdaction</code> to each column vector. The function must accept a reference to a <code>Col</code> object with the same element type as the underlying matrix.</p>
 </div>
 <div class="section level4">
 <h4 id="examples-27">Examples<a class="anchor" aria-label="anchor" href="#examples-27"></a>
 </h4>
-<div class="sourceCode" id="cb45"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">each_col_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb45"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">each_col1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true"></a>  mat X(n, n + <span class="dv">1</span>, fill::ones);</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true"></a></span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true"></a>  <span class="co">// create a vector with n elements ranging from 5 to 10</span></span>
@@ -1946,7 +1946,7 @@
 <div class="section level3">
 <h3 id="each-row">Each row<a class="anchor" aria-label="anchor" href="#each-row"></a>
 </h3>
-<p><code>.each_row()</code>, <code>.each_row(vector_of_indices)</code>, <code>.each_row(lambda_function)</code> are member functions of <code>Mat</code>. These apply a vector operation to each row of a matrix, and are similar to “broadcasting” in Matlab/Octave.</p>
+<p><code>.each_row()</code>, <code>.each_row(vector_of_indices)</code>, <code>.each_row(lambdaction)</code> are member functions of <code>Mat</code>. These apply a vector operation to each row of a matrix, and are similar to “broadcasting” in Matlab/Octave.</p>
 <div class="section level4">
 <h4 id="form-1-1">Form 1<a class="anchor" aria-label="anchor" href="#form-1-1"></a>
 </h4>
@@ -1980,12 +1980,12 @@
 <div class="section level4">
 <h4 id="form-3-1">Form 3<a class="anchor" aria-label="anchor" href="#form-3-1"></a>
 </h4>
-<p><code>.each_col(lambda_function)</code> applies the given <code>lambda_function</code> to each column vector. The function must accept a reference to a <code>Row</code> object with the same element type as the underlying matrix.</p>
+<p><code>.each_col(lambdaction)</code> applies the given <code>lambdaction</code> to each column vector. The function must accept a reference to a <code>Row</code> object with the same element type as the underlying matrix.</p>
 </div>
 <div class="section level4">
 <h4 id="examples-28">Examples<a class="anchor" aria-label="anchor" href="#examples-28"></a>
 </h4>
-<div class="sourceCode" id="cb46"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">each_row_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb46"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">each_row1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true"></a>  mat X(n + <span class="dv">1</span>, n, fill::ones);</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true"></a></span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true"></a>  <span class="co">// create a vector with n elements ranging from 5 to 10</span></span>
@@ -2023,11 +2023,11 @@
 <div class="section level3">
 <h3 id="each-slice">Each slice<a class="anchor" aria-label="anchor" href="#each-slice"></a>
 </h3>
-<p><code>each_slice()</code> is a member function of <code>Cube</code> that applies a matrix operation to each slice of a cube, with each slice treated as a matrix. It is similar to “broadcasting” in Matlab/Octave.</p>
+<p><code>.each_slice()</code> is a member function of <code>Cube</code> that applies a matrix operation to each slice of a cube, with each slice treated as a matrix. It is similar to “broadcasting” in Matlab/Octave.</p>
 <div class="section level4">
 <h4 id="form-1-2">Form 1<a class="anchor" aria-label="anchor" href="#form-1-2"></a>
 </h4>
-<p><code>each_slice(vector_of_indices)</code></p>
+<p><code>.each_slice(vector_of_indices)</code></p>
 <p>Supported operations:</p>
 <ul>
 <li>
@@ -2057,7 +2057,7 @@
 <div class="section level4">
 <h4 id="form-2-2">Form 2<a class="anchor" aria-label="anchor" href="#form-2-2"></a>
 </h4>
-<p><code>each_slice(lambda_function)</code></p>
+<p><code>.each_slice(lambdaction)</code></p>
 <ul>
 <li>The argument <em>vector_of_indices</em> contains a list of indices of the slices to be used; it must evaluate to a vector of type <code>uvec</code>.</li>
 <li>Arithmetic operations as per form 1 are supported, except for <code>*</code> and <code>*=</code> (e.g., matrix multiplication).</li>
@@ -2066,9 +2066,9 @@
 <div class="section level4">
 <h4 id="form-3-2">Form 3<a class="anchor" aria-label="anchor" href="#form-3-2"></a>
 </h4>
-<p><code>each_slice(lambda_function, use_mp)</code></p>
+<p><code>.each_slice(lambdaction, use_mp)</code></p>
 <ul>
-<li>Apply the given <code>lambda_function</code> to each slice.</li>
+<li>Apply the given <code>lambdaction</code> to each slice.</li>
 <li>The function must accept a reference to a <code>Mat</code> object with the same element type as the underlying cube.</li>
 </ul>
 </div>
@@ -2076,17 +2076,17 @@
 <h4 id="form-4">Form 4<a class="anchor" aria-label="anchor" href="#form-4"></a>
 </h4>
 <ul>
-<li>Apply the given <code>lambda_function</code> to each slice, as per form 3.</li>
-<li>The argument <code>use_mp</code> is a bool to enable the use of OpenMP for multi-threaded execution of <code>lambda_function</code> on multiple slices at the same time.</li>
+<li>Apply the given <code>lambdaction</code> to each slice, as per form 3.</li>
+<li>The argument <code>use_mp</code> is a bool to enable the use of OpenMP for multi-threaded execution of <code>lambdaction</code> on multiple slices at the same time.</li>
 <li>The order of processing the slices is not deterministic (e.g., slice 2 can be processed before slice 1).</li>
 <li>
-<code>lambda_function</code> must be thread-safe, e.g., it must not write to variables outside of its scope.</li>
+<code>lambdaction</code> must be thread-safe, e.g., it must not write to variables outside of its scope.</li>
 </ul>
 </div>
 <div class="section level4">
 <h4 id="examples-29">Examples:<a class="anchor" aria-label="anchor" href="#examples-29"></a>
 </h4>
-<div class="sourceCode" id="cb47"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">each_slice_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb47"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">each_slice1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true"></a>  cube C(n, n + <span class="dv">1</span>, <span class="dv">6</span>, fill::randu);</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true"></a></span>
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true"></a>  mat M = repmat(linspace&lt;vec&gt;(<span class="dv">1</span>, n, n), <span class="dv">1</span>, n + <span class="dv">1</span>);</span>
@@ -2095,7 +2095,7 @@
 <span id="cb47-7"><a href="#cb47-7" aria-hidden="true"></a></span>
 <span id="cb47-8"><a href="#cb47-8" aria-hidden="true"></a>  cube D = C.each_slice() + M;  <span class="co">// generate D by adding M to each slice of C</span></span>
 <span id="cb47-9"><a href="#cb47-9" aria-hidden="true"></a></span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true"></a>  <span class="co">// sum all slices of D into a single matrix</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true"></a>  <span class="co">// sum all slices of D into a single n x (n + 1) matrix</span></span>
 <span id="cb47-11"><a href="#cb47-11" aria-hidden="true"></a>  mat D_flat = sum(D, <span class="dv">2</span>);</span>
 <span id="cb47-12"><a href="#cb47-12" aria-hidden="true"></a></span>
 <span id="cb47-13"><a href="#cb47-13" aria-hidden="true"></a>  uvec indices(<span class="dv">2</span>);</span>
@@ -2120,11 +2120,11 @@
 <div class="section level3">
 <h3 id="set-real">Set real<a class="anchor" aria-label="anchor" href="#set-real"></a>
 </h3>
-<p><code>set_real(X)</code> sets the real part of an object. <code>X</code> must have the same size as the recipient object.</p>
+<p><code>.set_real(X)</code> sets the real part of an object. <code>X</code> must have the same size as the recipient object.</p>
 <div class="section level4">
 <h4 id="examples-30">Examples<a class="anchor" aria-label="anchor" href="#examples-30"></a>
 </h4>
-<div class="sourceCode" id="cb48"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">set_real_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb48"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">set_real1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true"></a>  mat A(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::randu);</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true"></a></span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true"></a>  cx_mat C(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::zeros);</span>
@@ -2138,7 +2138,7 @@
 <h4 id="caveat-4">Caveat<a class="anchor" aria-label="anchor" href="#caveat-4"></a>
 </h4>
 <p>To directly construct a complex matrix out of two real matrices, the following code is faster:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">set_real_fun2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {    </span>
+<div class="sourceCode" id="cb49"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">set_real2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {    </span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true"></a>  mat A(n - <span class="dv">1</span>, n + <span class="dv">1</span>, fill::randu);</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true"></a>  mat B(n - <span class="dv">1</span>, n + <span class="dv">1</span>, fill::randu);</span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true"></a>  </span>
@@ -2151,11 +2151,11 @@
 <div class="section level3">
 <h3 id="set-imaginary">Set imaginary<a class="anchor" aria-label="anchor" href="#set-imaginary"></a>
 </h3>
-<p><code>set_imaginary(X)</code> sets the imaginary part of an object. <code>X</code> must have the same size as the recipient object.</p>
+<p><code>.set_imaginary(X)</code> sets the imaginary part of an object. <code>X</code> must have the same size as the recipient object.</p>
 <div class="section level4">
 <h4 id="examples-31">Examples<a class="anchor" aria-label="anchor" href="#examples-31"></a>
 </h4>
-<div class="sourceCode" id="cb50"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">set_imag_fun1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<div class="sourceCode" id="cb50"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">set_imag1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true"></a>  mat B(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::randu);</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true"></a></span>
 <span id="cb50-4"><a href="#cb50-4" aria-hidden="true"></a>  cx_mat C(n + <span class="dv">1</span>, n - <span class="dv">1</span>, fill::zeros);</span>
@@ -2169,7 +2169,7 @@
 <h4 id="caveat-5">Caveat<a class="anchor" aria-label="anchor" href="#caveat-5"></a>
 </h4>
 <p>To directly construct a complex matrix out of two real matrices, the following code is faster:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">set_imag_fun2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {    </span>
+<div class="sourceCode" id="cb51"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">set_imag2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {    </span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true"></a>  mat A(n - <span class="dv">1</span>, n + <span class="dv">1</span>, fill::randu);</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true"></a>  mat B(n - <span class="dv">1</span>, n + <span class="dv">1</span>, fill::randu);</span>
 <span id="cb51-4"><a href="#cb51-4" aria-hidden="true"></a>  </span>
@@ -2177,6 +2177,226 @@
 <span id="cb51-6"><a href="#cb51-6" aria-hidden="true"></a></span>
 <span id="cb51-7"><a href="#cb51-7" aria-hidden="true"></a>  <span class="cf">return</span> as_complex_matrix(C);  <span class="co">// Convert from C++ to R</span></span>
 <span id="cb51-8"><a href="#cb51-8" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="insert-columns">Insert columns<a class="anchor" aria-label="anchor" href="#insert-columns"></a>
+</h3>
+<p><code>.insert_cols(col_number, X)</code> and <code>.insert_cols(col_number, number_of_cols)</code> are member functions of <code>Mat</code>, <code>Row</code> and <code>Cube</code>.</p>
+<p>The <code>X</code> argument inserts a copy of <code>X</code> at the specified column. <code>X</code> must have the same number of rows (and slices) as the recipient object.</p>
+<p>The <code>number_of_cols</code> argument expands the object by creating new columns that are set to zero.</p>
+<div class="section level4">
+<h4 id="examples-32">Examples<a class="anchor" aria-label="anchor" href="#examples-32"></a>
+</h4>
+<div class="sourceCode" id="cb52"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">insert_columns1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true"></a>  mat A(n, n * <span class="dv">2</span>, fill::randu);</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true"></a>  mat B(n, n - <span class="dv">1</span>, fill::ones);</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true"></a>  <span class="co">// at column n - 1, insert a copy of B</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true"></a>  <span class="co">// A will now have 3n - 1 columns</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true"></a>  A.insert_cols(n - <span class="dv">1</span>, B);</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true"></a></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true"></a>  <span class="co">// at column 1, insert 2n zeroed columns</span></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true"></a>  <span class="co">// B will now have 3n - 1 columns</span></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true"></a>  B.insert_cols(<span class="dv">1</span>, n * <span class="dv">2</span>);</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true"></a></span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true"></a>  mat res = A + B;</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true"></a></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="insert-rows">Insert rows<a class="anchor" aria-label="anchor" href="#insert-rows"></a>
+</h3>
+<p><code>.insert_rows(row_number, X)</code> and <code>.insert_rows(row_number, number_of_rows)</code> are member functions of <code>Mat</code>, <code>Row</code> and <code>Cube</code>.</p>
+<p>The <code>X</code> argument inserts a copy of <code>X</code> at the specified column. <code>X</code> must have the same number of columns (and slices) as the recipient object.</p>
+<p>The <code>number_of_rows</code> argument expands the object by creating new rows that are set to zero.</p>
+<div class="section level4">
+<h4 id="examples-33">Examples<a class="anchor" aria-label="anchor" href="#examples-33"></a>
+</h4>
+<div class="sourceCode" id="cb53"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">insert_rows1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true"></a>  mat A(n * <span class="dv">2</span>, n, fill::randu);</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true"></a>  mat B(n - <span class="dv">1</span>, n, fill::ones);</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true"></a></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true"></a>  <span class="co">// at row n - 1, insert a copy of B</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true"></a>  <span class="co">// A will now have 3n - 1 rows</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true"></a>  A.insert_rows(n - <span class="dv">1</span>, B);</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true"></a></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true"></a>  <span class="co">// at row 1, insert 2n zeroed rows</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true"></a>  <span class="co">// B will now have 3n - 1 columns</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true"></a>  B.insert_rows(<span class="dv">1</span>, n * <span class="dv">2</span>);</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true"></a></span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true"></a>  mat res = A + B;</span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true"></a></span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="insert-slice">Insert slice<a class="anchor" aria-label="anchor" href="#insert-slice"></a>
+</h3>
+<p><code>.insert_slices(slice_number, X)</code> and <code>.insert_slices(slice_number, number_of_slices)</code> are member functions of <code>Cube</code>.</p>
+<p>The <code>X</code> argument inserts a copy of <code>X</code> at the specified slice. <code>X</code> must have the same number of columns and rows as the recipient object.</p>
+<p>The <code>number_of_slices</code> argument expands the object by creating new slices that are set to zero.</p>
+<div class="section level4">
+<h4 id="examples-34">Examples<a class="anchor" aria-label="anchor" href="#examples-34"></a>
+</h4>
+<div class="sourceCode" id="cb54"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">insert_slices1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true"></a>  cube A(n, n, n * <span class="dv">2</span>, fill::randu);</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true"></a>  cube B(n, n, n - <span class="dv">1</span>, fill::ones);</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true"></a></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true"></a>  <span class="co">// At slice n - 1, insert a copy of B</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true"></a>  <span class="co">// A will now have 3n - 1 slices</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true"></a>  A.insert_slices(n - <span class="dv">1</span>, B);</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true"></a></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true"></a>  <span class="co">// At slice 1, insert 2n zeroed slices</span></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true"></a>  <span class="co">// B will now have 3n - 1 slices</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true"></a>  B.insert_slices(<span class="dv">1</span>, n * <span class="dv">2</span>);</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true"></a></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true"></a>  mat res = sum(A + B);</span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true"></a></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="shed-columns">Shed columns<a class="anchor" aria-label="anchor" href="#shed-columns"></a>
+</h3>
+<p><code>.shed_col(row_number)</code> and <code>.shed_cols(first_row, last_row)</code> are member functions of <code>Mat</code>, <code>Col</code>, <code>SpMat</code>, and <code>Cube</code>. With a single scalar argument it remove the specified column, and with two scalar arguments it removes the specified range of columns.</p>
+<p><code>.shed_cols(vector_of_indices)</code> is a member function of <code>Mat</code> and <code>Col</code>. With a vector of indices it must evaluate to a vector of type <code>uvec</code> containing the indices of the columns to remove.</p>
+<div class="section level4">
+<h4 id="examples-35">Examples<a class="anchor" aria-label="anchor" href="#examples-35"></a>
+</h4>
+<div class="sourceCode" id="cb55"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">shed_columns1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true"></a>  mat A(n, n * <span class="dv">5</span>, fill::randu);</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true"></a></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true"></a>  <span class="co">// remove the first column</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true"></a>  A.shed_col(<span class="dv">0</span>);</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true"></a></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true"></a>  <span class="co">// remove columns 1 and 2</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true"></a>  A.shed_cols(<span class="dv">0</span>, <span class="dv">1</span>);</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true"></a></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true"></a>  <span class="co">// remove columns 2 and 4</span></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true"></a>  uvec indices(<span class="dv">2</span>);</span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true"></a>  indices(<span class="dv">0</span>) = <span class="dv">1</span>;</span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true"></a>  indices(<span class="dv">1</span>) = <span class="dv">3</span>;</span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true"></a>  A.shed_cols(indices);</span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true"></a></span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="shed-rows">Shed rows<a class="anchor" aria-label="anchor" href="#shed-rows"></a>
+</h3>
+<p><code>.shed_row(row_number)</code> and <code>.shed_rows(first_row, last_row)</code> are member functions of <code>Mat</code>, <code>Col</code>, <code>SpMat</code>, and <code>Cube</code>. With a single scalar argument it remove the specified rows, and with two scalar arguments it removes the specified range of rows.</p>
+<p><code>.shed_rows(vector_of_indices)</code> is a member function of <code>Mat</code> and <code>Row</code>. With a vector of indices it must evaluate to a vector of type <code>uvec</code> containing the indices of the rows to remove.</p>
+<div class="section level4">
+<h4 id="examples-36">Examples<a class="anchor" aria-label="anchor" href="#examples-36"></a>
+</h4>
+<div class="sourceCode" id="cb56"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">shed_rows1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true"></a>  mat A(n * <span class="dv">5</span>, n, fill::randu);</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true"></a></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true"></a>  <span class="co">// remove the first row</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true"></a>  A.shed_row(<span class="dv">0</span>);</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true"></a></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true"></a>  <span class="co">// remove rows 1 and 2</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true"></a>  A.shed_rows(<span class="dv">0</span>, <span class="dv">1</span>);</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true"></a></span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true"></a>  <span class="co">// remove rows 2 and 4</span></span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true"></a>  uvec indices(<span class="dv">2</span>);</span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true"></a>  indices(<span class="dv">0</span>) = <span class="dv">1</span>;</span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true"></a>  indices(<span class="dv">1</span>) = <span class="dv">3</span>;</span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true"></a>  A.shed_rows(indices);</span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true"></a></span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb56-17"><a href="#cb56-17" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="shed-slices">Shed slices<a class="anchor" aria-label="anchor" href="#shed-slices"></a>
+</h3>
+<p><code>.shed_slices(slice_number)</code>, <code>.shed_slices(first_slice, last_slice)</code> and <code>.shed_slices(vector_of_indices)</code> are member functions of <code>Cube</code>. With a single scalar argument it remove the specified slices, and with two scalar arguments it removes the specified range of slices. With a vector of indices it must evaluate to a vector of type <code>uvec</code> containing the indices of the rows to remove.</p>
+<div class="section level4">
+<h4 id="examples-37">Examples<a class="anchor" aria-label="anchor" href="#examples-37"></a>
+</h4>
+<div class="sourceCode" id="cb57"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">shed_slices1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true"></a>  cube A(n, n, n * <span class="dv">5</span>, fill::randu);</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true"></a>  <span class="co">// remove the first slice</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true"></a>  A.shed_slice(<span class="dv">0</span>);</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true"></a></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true"></a>  <span class="co">// remove slices 1 and 2</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true"></a>  A.shed_slices(<span class="dv">0</span>, <span class="dv">1</span>);</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true"></a></span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true"></a>  <span class="co">// remove slices 2 and 4</span></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true"></a>  uvec indices(<span class="dv">2</span>);</span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true"></a>  indices(<span class="dv">0</span>) = <span class="dv">1</span>;</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true"></a>  indices(<span class="dv">1</span>) = <span class="dv">3</span>;</span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true"></a>  A.shed_slices(indices);</span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true"></a></span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true"></a>  mat res = sum(A, <span class="dv">2</span>);</span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true"></a></span>
+<span id="cb57-18"><a href="#cb57-18" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb57-19"><a href="#cb57-19" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="swap-columns">Swap columns<a class="anchor" aria-label="anchor" href="#swap-columns"></a>
+</h3>
+<p><code>.swap_cols( col1, col2 )</code> is a member functions of <code>Mat</code>, <code>Col</code>, <code>Row</code>, and <code>SpMat</code>. It swaps the contents of the specified columns.</p>
+<div class="section level4">
+<h4 id="examples-38">Examples<a class="anchor" aria-label="anchor" href="#examples-38"></a>
+</h4>
+<div class="sourceCode" id="cb58"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">swap_columns1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true"></a>  mat A(n, n * <span class="dv">5</span>, fill::randu);</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true"></a></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true"></a>  <span class="co">// swap columns 1 and 2</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true"></a>  A.swap_cols(<span class="dv">0</span>, <span class="dv">1</span>);</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true"></a></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true"></a>  <span class="co">// swap columns 2 and 4</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true"></a>  A.swap_cols(<span class="dv">1</span>, <span class="dv">3</span>);</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true"></a></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="swap-rows">Swap rows<a class="anchor" aria-label="anchor" href="#swap-rows"></a>
+</h3>
+<p><code>.swap_rows( col1, col2 )</code> is a member functions of <code>Mat</code>, <code>Col</code>, <code>Row</code>, and <code>SpMat</code>. It swaps the contents of the specified rows.</p>
+<div class="section level4">
+<h4 id="examples-39">Examples<a class="anchor" aria-label="anchor" href="#examples-39"></a>
+</h4>
+<div class="sourceCode" id="cb59"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">swap_rows1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true"></a>  mat A(n * <span class="dv">5</span>, n, fill::randu);</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true"></a></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true"></a>  <span class="co">// swap rows 1 and 2</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true"></a>  A.swap_rows(<span class="dv">0</span>, <span class="dv">1</span>);</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true"></a></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true"></a>  <span class="co">// swap rows 2 and 4</span></span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true"></a>  A.swap_rows(<span class="dv">1</span>, <span class="dv">3</span>);</span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true"></a></span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="swap">Swap<a class="anchor" aria-label="anchor" href="#swap"></a>
+</h3>
+<p><code>swap( X )</code> is a member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, and <code>Cube</code>. It swaps the contents with object <code>X</code>.</p>
+<div class="section level4">
+<h4 id="examples-40">Examples<a class="anchor" aria-label="anchor" href="#examples-40"></a>
+</h4>
+<div class="sourceCode" id="cb60"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">swap1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true"></a>  mat A(n, n + <span class="dv">1</span>, fill::zeros);</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true"></a>  mat B(n * <span class="dv">2</span>, n - <span class="dv">1</span>, fill::ones);</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true"></a></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true"></a>  A.swap(B);</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true"></a></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A);  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
 </div>
 </div>

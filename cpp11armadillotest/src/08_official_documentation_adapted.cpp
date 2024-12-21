@@ -1,6 +1,6 @@
 #include "00_main.h"
 
-[[cpp11::register]] doubles_matrix<> matrix_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> matrix1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
 
   double x = A(0, 0);  // access an element on row 1, column 1
@@ -15,7 +15,7 @@
   return as_doubles_matrix(res);  // convert from C++ to R
 }
 
-[[cpp11::register]] list matrix_fun2_(const doubles_matrix<>& a) {
+[[cpp11::register]] list matrix2_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);
   mat B = A + A;
 
@@ -42,7 +42,7 @@
   return res;
 }
 
-[[cpp11::register]] doubles column_fun1_(const doubles& x, const doubles& y) {
+[[cpp11::register]] doubles column1_(const doubles& x, const doubles& y) {
   vec X = as_Col(x);  // convert from R to C++
   vec Y = as_Col(y);
 
@@ -54,7 +54,7 @@
   return as_doubles(Z);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles row_fun1_(const doubles& x, const doubles& y) {
+[[cpp11::register]] doubles row1_(const doubles& x, const doubles& y) {
   vec X = as_Col(x);  // convert from R to C++
   vec Y = as_Col(y);
 
@@ -68,7 +68,7 @@
   return as_doubles(res);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> cube_fun1_(const doubles_matrix<>& a,
+[[cpp11::register]] doubles_matrix<> cube1_(const doubles_matrix<>& a,
                                                 const doubles_matrix<>& b) {
   mat A = as_Mat(a);  // convert from R to C++
   mat B = as_Mat(b);
@@ -85,7 +85,7 @@
   return as_doubles_matrix(res);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> field_fun1_(const doubles_matrix<>& a,
+[[cpp11::register]] doubles_matrix<> field1_(const doubles_matrix<>& a,
                                                  const doubles_matrix<>& b) {
   mat A = as_Mat(a);  // convert from R to C++
   mat B = as_Mat(b);
@@ -100,7 +100,7 @@
   return as_doubles_matrix(res);  // convert from C++ to R
 }
 
-[[cpp11::register]] integers attr_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] integers attr1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
 
   // uword or int can be used
@@ -114,7 +114,7 @@
   return res;
 }
 
-[[cpp11::register]] doubles_matrix<> access_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> access1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
   A(1, 1) = 123.0;    // set element at row 2, column 2
 
@@ -136,7 +136,7 @@
   return as_doubles_matrix(A);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> initialization_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> initialization1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);         // convert from R to C++
   mat B = {{1, 2}, {3, 4}};  // create new matrix
   vec C = {1, 2};            // create new column vector
@@ -150,7 +150,7 @@
   return as_doubles_matrix(D);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> zeros_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> zeros1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
   A.zeros();          // set all elements to zero
 
@@ -164,7 +164,7 @@
   return as_doubles_matrix(D);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> ones_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> ones1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
   A.ones();           // set all elements to zero
 
@@ -178,7 +178,7 @@
   return as_doubles_matrix(D);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> eye_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> eye1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
   A.eye();            // create an identity matrix
 
@@ -195,7 +195,7 @@
   return as_doubles_matrix(D);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> randu_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> randu1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
 
   mat B;
@@ -208,7 +208,7 @@
   return as_doubles_matrix(D);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> randn_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> randn1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
 
   mat B;
@@ -221,7 +221,7 @@
   return as_doubles_matrix(D);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> randu_fun2_(const int& n) {
+[[cpp11::register]] doubles_matrix<> randu2_(const int& n) {
   GetRNGstate();  // Ensure R's RNG state is synchronized
   mat y(n, n);
   ::arma_rng::randu<double>::fill(y.memptr(), y.n_elem);
@@ -230,7 +230,7 @@
   return as_doubles_matrix(y);
 }
 
-[[cpp11::register]] doubles_matrix<> randn_fun2_(const int& n) {
+[[cpp11::register]] doubles_matrix<> randn2_(const int& n) {
   GetRNGstate();  // Ensure R's RNG state is synchronized
   mat y(n, n);
   ::arma_rng::randn<double>::fill(y.memptr(), y.n_elem);
@@ -239,7 +239,7 @@
   return as_doubles_matrix(y);
 }
 
-[[cpp11::register]] doubles_matrix<> fill_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> fill1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
 
   uword N = A.n_rows;
@@ -255,7 +255,7 @@
   return as_doubles_matrix(F);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> imbue_fun1_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> imbue1_(const doubles_matrix<>& a) {
   mat A = as_Mat(a);  // convert from R to C++
 
   std::mt19937 engine;  // Mersenne twister random number engine
@@ -269,7 +269,7 @@
   return as_doubles_matrix(C);  // convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> imbue_fun2_(const doubles_matrix<>& a) {
+[[cpp11::register]] doubles_matrix<> imbue2_(const doubles_matrix<>& a) {
   GetRNGstate();  // Ensure R's RNG state is synchronized
 
   mat A = as_Mat(a);  // Convert from R to C++
@@ -284,7 +284,7 @@
   return as_doubles_matrix(C);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> clean_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> clean1_(const int& n) {
   mat A(n, n, fill::randu); // create a random matrix
 
   A(0, 0) = datum::eps;  // set the diagonal with small values (+/- epsilon)
@@ -295,7 +295,7 @@
   return as_doubles_matrix(A);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> replace_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> replace1_(const int& n) {
   mat A(n, n, fill::randu);  // create a random matrix
 
   A.diag().fill(datum::nan);  // set the diagonal with NaN values
@@ -304,7 +304,7 @@
   return as_doubles_matrix(A);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> clamp_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> clamp1_(const int& n) {
   mat A(n, n, fill::ones);  // create a random matrix
   A.diag().fill(0.1);       // set the diagonal with 0.1 values
 
@@ -313,13 +313,13 @@
   return as_doubles_matrix(A);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> transform_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> transform1_(const int& n) {
   mat A(n, n, fill::ones);  // create a matrix filled with ones
   A.transform([](double val) { return (val + 122.0); });
   return as_doubles_matrix(A);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> for_each_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> for_each1_(const int& n) {
   // add 122 to each element in a dense matrix, the '&' is important
   mat D(n, n, fill::ones);
   D.for_each([](mat::elem_type& val) { val += 122.0; });
@@ -338,7 +338,7 @@
   return as_doubles_matrix(res);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles set_size_fun1_(const int& n) {
+[[cpp11::register]] doubles set_size1_(const int& n) {
   mat A;
   A.set_size(n, n);  // or:  mat A(n, n, fill::none);
 
@@ -357,19 +357,19 @@
   return as_doubles(res);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> reshape_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> reshape1_(const int& n) {
   mat A(n + 1, n - 1, fill::randu);
   A.reshape(n - 1, n + 1);
   return as_doubles_matrix(A);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> resize_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> resize1_(const int& n) {
   mat A(n + 1, n - 1, fill::randu);
   A.resize(n - 1, n + 1);
   return as_doubles_matrix(A);  // Convert from C++ to R
 }
 
-[[cpp11::register]] integers copy_size_fun1_(const int& n) {
+[[cpp11::register]] integers copy_size1_(const int& n) {
   mat A(n, n, fill::randu);
 
   mat B;
@@ -384,7 +384,7 @@
   return as_integers(res);  // Convert from C++ to R
 }
 
-[[cpp11::register]] integers reset_fun1_(const int& n) {
+[[cpp11::register]] integers reset1_(const int& n) {
   mat A(n, n, fill::randu);
   A.reset();
 
@@ -397,7 +397,7 @@
   return as_integers(res);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> subview_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> subview1_(const int& n) {
   mat A(n, n, fill::zeros);
 
   A.submat(0, 1, 2, 3) = randu<mat>(3, 3);
@@ -434,7 +434,7 @@
   return as_doubles_matrix(X);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> subview_fun2_(const int& n) {
+[[cpp11::register]] doubles_matrix<> subview2_(const int& n) {
   cube A(n, 3, 4, fill::randu);
 
   mat B = A.slice(1);  // each slice is a matrix
@@ -457,7 +457,7 @@
   return as_doubles_matrix(res);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles diagonal_fun1_(const int& n) {
+[[cpp11::register]] doubles diagonal1_(const int& n) {
   mat X(n, n, fill::randu);
 
   vec A = X.diag(); // extract the main diagonal
@@ -478,7 +478,7 @@
   return as_doubles(v);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> each_col_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> each_col1_(const int& n) {
   mat X(n, n + 1, fill::ones);
 
   // create a vector with n elements ranging from 5 to 10
@@ -512,7 +512,7 @@
   return as_doubles_matrix(res);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> each_row_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> each_row1_(const int& n) {
   mat X(n + 1, n, fill::ones);
 
   // create a vector with n elements ranging from 5 to 10
@@ -546,7 +546,7 @@
   return as_doubles_matrix(res);  // Convert from C++ to R
 }
 
-[[cpp11::register]] doubles_matrix<> each_slice_fun1_(const int& n) {
+[[cpp11::register]] doubles_matrix<> each_slice1_(const int& n) {
   cube C(n, n + 1, 6, fill::randu);
 
   mat M = repmat(linspace<vec>(1, n, n), 1, n + 1);
@@ -555,7 +555,7 @@
 
   cube D = C.each_slice() + M;  // generate D by adding M to each slice of C
 
-  // sum all slices of D into a single matrix
+  // sum all slices of D into a single n x (n + 1) matrix
   mat D_flat = sum(D, 2);
 
   uvec indices(2);
@@ -576,7 +576,7 @@
   return as_doubles_matrix(res);  // Convert from C++ to R
 }
 
-[[cpp11::register]] list set_real_fun1_(const int& n) {
+[[cpp11::register]] list set_real1_(const int& n) {
   mat A(n + 1, n - 1, fill::randu);
 
   cx_mat C(n + 1, n - 1, fill::zeros);
@@ -586,7 +586,7 @@
   return as_complex_matrix(C);  // Convert from C++ to R
 }
 
-[[cpp11::register]] list set_real_fun2_(const int& n) {
+[[cpp11::register]] list set_real2_(const int& n) {
   mat A(n - 1, n + 1, fill::randu);
   mat B(n - 1, n + 1, fill::randu);
 
@@ -595,7 +595,7 @@
   return as_complex_matrix(C);  // Convert from C++ to R
 }
 
-[[cpp11::register]] list set_imag_fun1_(const int& n) {
+[[cpp11::register]] list set_imag1_(const int& n) {
   mat B(n + 1, n - 1, fill::randu);
 
   cx_mat C(n + 1, n - 1, fill::zeros);
@@ -603,4 +603,144 @@
   C.set_imag(B);
 
   return as_complex_matrix(C);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> insert_columns1_(const int& n) {
+  mat A(n, n * 2, fill::randu);
+  mat B(n, n - 1, fill::ones);
+
+  // at column n - 1, insert a copy of B
+  // A will now have 3n - 1 columns
+  A.insert_cols(n - 1, B);
+
+  // at column 1, insert 2n zeroed columns
+  // B will now have 3n - 1 columns
+  B.insert_cols(1, n * 2);
+
+  mat res = A + B;
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> insert_rows1_(const int& n) {
+  mat A(n * 2, n, fill::randu);
+  mat B(n - 1, n, fill::ones);
+
+  // at row n - 1, insert a copy of B
+  // A will now have 3n - 1 rows
+  A.insert_rows(n - 1, B);
+
+  // at row 1, insert 2n zeroed rows
+  // B will now have 3n - 1 columns
+  B.insert_rows(1, n * 2);
+
+  mat res = A + B;
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> insert_slices1_(const int& n) {
+  cube A(n, n, n * 2, fill::randu);
+  cube B(n, n, n - 1, fill::ones);
+
+  // At slice n - 1, insert a copy of B
+  // A will now have 3n - 1 slices
+  A.insert_slices(n - 1, B);
+
+  // At slice 1, insert 2n zeroed slices
+  // B will now have 3n - 1 slices
+  B.insert_slices(1, n * 2);
+
+  mat res = sum(A + B, 2);
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> shed_columns1_(const int& n) {
+  mat A(n, n * 5, fill::randu);
+
+  // remove the first column
+  A.shed_col(0);
+
+  // remove columns 1 and 2
+  A.shed_cols(0, 1);
+
+  // remove columns 2 and 4
+  uvec indices(2);
+  indices(0) = 1;
+  indices(1) = 3;
+  A.shed_cols(indices);
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> shed_rows1_(const int& n) {
+  mat A(n * 5, n, fill::randu);
+
+  // remove the first row
+  A.shed_row(0);
+
+  // remove rows 1 and 2
+  A.shed_rows(0, 1);
+
+  // remove rows 2 and 4
+  uvec indices(2);
+  indices(0) = 1;
+  indices(1) = 3;
+  A.shed_rows(indices);
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> shed_slices1_(const int& n) {
+  cube A(n, n, n * 5, fill::randu);
+
+  // remove the first slice
+  A.shed_slice(0);
+
+  // remove slices 1 and 2
+  A.shed_slices(0, 1);
+
+  // remove slices 2 and 4
+  uvec indices(2);
+  indices(0) = 1;
+  indices(1) = 3;
+  A.shed_slices(indices);
+
+  mat res = sum(A, 2);
+
+  return as_doubles_matrix(res);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> swap_columns1_(const int& n) {
+  mat A(n, n * 5, fill::randu);
+
+  // swap columns 1 and 2
+  A.swap_cols(0, 1);
+
+  // swap columns 2 and 4
+  A.swap_cols(1, 3);
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> swap_rows1_(const int& n) {
+  mat A(n * 5, n, fill::randu);
+
+  // swap rows 1 and 2
+  A.swap_rows(0, 1);
+
+  // swap rows 2 and 4
+  A.swap_rows(1, 3);
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
+}
+
+[[cpp11::register]] doubles_matrix<> swap1_(const int& n) {
+  mat A(n, n + 1, fill::zeros);
+  mat B(n * 2, n - 1, fill::ones);
+
+  A.swap(B);
+
+  return as_doubles_matrix(A);  // Convert from C++ to R
 }

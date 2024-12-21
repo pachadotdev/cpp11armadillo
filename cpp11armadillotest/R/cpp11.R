@@ -80,154 +80,190 @@ random_matrix_nxn <- function(n) {
   .Call(`_cpp11armadillotest_random_matrix_nxn`, n)
 }
 
-matrix_fun1_ <- function(a) {
-  .Call(`_cpp11armadillotest_matrix_fun1_`, a)
+matrix1_ <- function(a) {
+  .Call(`_cpp11armadillotest_matrix1_`, a)
 }
 
-matrix_fun2_ <- function(a) {
-  .Call(`_cpp11armadillotest_matrix_fun2_`, a)
+matrix2_ <- function(a) {
+  .Call(`_cpp11armadillotest_matrix2_`, a)
 }
 
-column_fun1_ <- function(x, y) {
-  .Call(`_cpp11armadillotest_column_fun1_`, x, y)
+column1_ <- function(x, y) {
+  .Call(`_cpp11armadillotest_column1_`, x, y)
 }
 
-row_fun1_ <- function(x, y) {
-  .Call(`_cpp11armadillotest_row_fun1_`, x, y)
+row1_ <- function(x, y) {
+  .Call(`_cpp11armadillotest_row1_`, x, y)
 }
 
-cube_fun1_ <- function(a, b) {
-  .Call(`_cpp11armadillotest_cube_fun1_`, a, b)
+cube1_ <- function(a, b) {
+  .Call(`_cpp11armadillotest_cube1_`, a, b)
 }
 
-field_fun1_ <- function(a, b) {
-  .Call(`_cpp11armadillotest_field_fun1_`, a, b)
+field1_ <- function(a, b) {
+  .Call(`_cpp11armadillotest_field1_`, a, b)
 }
 
-attr_fun1_ <- function(a) {
-  .Call(`_cpp11armadillotest_attr_fun1_`, a)
+attr1_ <- function(a) {
+  .Call(`_cpp11armadillotest_attr1_`, a)
 }
 
-access_fun1_ <- function(a) {
-  .Call(`_cpp11armadillotest_access_fun1_`, a)
+access1_ <- function(a) {
+  .Call(`_cpp11armadillotest_access1_`, a)
 }
 
-initialization_fun1_ <- function(a) {
-  .Call(`_cpp11armadillotest_initialization_fun1_`, a)
+initialization1_ <- function(a) {
+  .Call(`_cpp11armadillotest_initialization1_`, a)
 }
 
-zeros_fun1_ <- function(a) {
-  .Call(`_cpp11armadillotest_zeros_fun1_`, a)
+zeros1_ <- function(a) {
+  .Call(`_cpp11armadillotest_zeros1_`, a)
 }
 
-ones_fun1_ <- function(a) {
-  .Call(`_cpp11armadillotest_ones_fun1_`, a)
+ones1_ <- function(a) {
+  .Call(`_cpp11armadillotest_ones1_`, a)
 }
 
-eye_fun1_ <- function(a) {
-  .Call(`_cpp11armadillotest_eye_fun1_`, a)
+eye1_ <- function(a) {
+  .Call(`_cpp11armadillotest_eye1_`, a)
 }
 
-randu_fun1_ <- function(a) {
-  .Call(`_cpp11armadillotest_randu_fun1_`, a)
+randu1_ <- function(a) {
+  .Call(`_cpp11armadillotest_randu1_`, a)
 }
 
-randn_fun1_ <- function(a) {
-  .Call(`_cpp11armadillotest_randn_fun1_`, a)
+randn1_ <- function(a) {
+  .Call(`_cpp11armadillotest_randn1_`, a)
 }
 
-randu_fun2_ <- function(n) {
-  .Call(`_cpp11armadillotest_randu_fun2_`, n)
+randu2_ <- function(n) {
+  .Call(`_cpp11armadillotest_randu2_`, n)
 }
 
-randn_fun2_ <- function(n) {
-  .Call(`_cpp11armadillotest_randn_fun2_`, n)
+randn2_ <- function(n) {
+  .Call(`_cpp11armadillotest_randn2_`, n)
 }
 
-fill_fun1_ <- function(a) {
-  .Call(`_cpp11armadillotest_fill_fun1_`, a)
+fill1_ <- function(a) {
+  .Call(`_cpp11armadillotest_fill1_`, a)
 }
 
-imbue_fun1_ <- function(a) {
-  .Call(`_cpp11armadillotest_imbue_fun1_`, a)
+imbue1_ <- function(a) {
+  .Call(`_cpp11armadillotest_imbue1_`, a)
 }
 
-imbue_fun2_ <- function(a) {
-  .Call(`_cpp11armadillotest_imbue_fun2_`, a)
+imbue2_ <- function(a) {
+  .Call(`_cpp11armadillotest_imbue2_`, a)
 }
 
-clean_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_clean_fun1_`, n)
+clean1_ <- function(n) {
+  .Call(`_cpp11armadillotest_clean1_`, n)
 }
 
-replace_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_replace_fun1_`, n)
+replace1_ <- function(n) {
+  .Call(`_cpp11armadillotest_replace1_`, n)
 }
 
-clamp_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_clamp_fun1_`, n)
+clamp1_ <- function(n) {
+  .Call(`_cpp11armadillotest_clamp1_`, n)
 }
 
-transform_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_transform_fun1_`, n)
+transform1_ <- function(n) {
+  .Call(`_cpp11armadillotest_transform1_`, n)
 }
 
-for_each_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_for_each_fun1_`, n)
+for_each1_ <- function(n) {
+  .Call(`_cpp11armadillotest_for_each1_`, n)
 }
 
-set_size_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_set_size_fun1_`, n)
+set_size1_ <- function(n) {
+  .Call(`_cpp11armadillotest_set_size1_`, n)
 }
 
-reshape_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_reshape_fun1_`, n)
+reshape1_ <- function(n) {
+  .Call(`_cpp11armadillotest_reshape1_`, n)
 }
 
-resize_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_resize_fun1_`, n)
+resize1_ <- function(n) {
+  .Call(`_cpp11armadillotest_resize1_`, n)
 }
 
-copy_size_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_copy_size_fun1_`, n)
+copy_size1_ <- function(n) {
+  .Call(`_cpp11armadillotest_copy_size1_`, n)
 }
 
-reset_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_reset_fun1_`, n)
+reset1_ <- function(n) {
+  .Call(`_cpp11armadillotest_reset1_`, n)
 }
 
-subview_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_subview_fun1_`, n)
+subview1_ <- function(n) {
+  .Call(`_cpp11armadillotest_subview1_`, n)
 }
 
-subview_fun2_ <- function(n) {
-  .Call(`_cpp11armadillotest_subview_fun2_`, n)
+subview2_ <- function(n) {
+  .Call(`_cpp11armadillotest_subview2_`, n)
 }
 
-diagonal_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_diagonal_fun1_`, n)
+diagonal1_ <- function(n) {
+  .Call(`_cpp11armadillotest_diagonal1_`, n)
 }
 
-each_col_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_each_col_fun1_`, n)
+each_col1_ <- function(n) {
+  .Call(`_cpp11armadillotest_each_col1_`, n)
 }
 
-each_row_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_each_row_fun1_`, n)
+each_row1_ <- function(n) {
+  .Call(`_cpp11armadillotest_each_row1_`, n)
 }
 
-each_slice_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_each_slice_fun1_`, n)
+each_slice1_ <- function(n) {
+  .Call(`_cpp11armadillotest_each_slice1_`, n)
 }
 
-set_real_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_set_real_fun1_`, n)
+set_real1_ <- function(n) {
+  .Call(`_cpp11armadillotest_set_real1_`, n)
 }
 
-set_real_fun2_ <- function(n) {
-  .Call(`_cpp11armadillotest_set_real_fun2_`, n)
+set_real2_ <- function(n) {
+  .Call(`_cpp11armadillotest_set_real2_`, n)
 }
 
-set_imag_fun1_ <- function(n) {
-  .Call(`_cpp11armadillotest_set_imag_fun1_`, n)
+set_imag1_ <- function(n) {
+  .Call(`_cpp11armadillotest_set_imag1_`, n)
+}
+
+insert_columns1_ <- function(n) {
+  .Call(`_cpp11armadillotest_insert_columns1_`, n)
+}
+
+insert_rows1_ <- function(n) {
+  .Call(`_cpp11armadillotest_insert_rows1_`, n)
+}
+
+insert_slices1_ <- function(n) {
+  .Call(`_cpp11armadillotest_insert_slices1_`, n)
+}
+
+shed_columns1_ <- function(n) {
+  .Call(`_cpp11armadillotest_shed_columns1_`, n)
+}
+
+shed_rows1_ <- function(n) {
+  .Call(`_cpp11armadillotest_shed_rows1_`, n)
+}
+
+shed_slices1_ <- function(n) {
+  .Call(`_cpp11armadillotest_shed_slices1_`, n)
+}
+
+swap_columns1_ <- function(n) {
+  .Call(`_cpp11armadillotest_swap_columns1_`, n)
+}
+
+swap_rows1_ <- function(n) {
+  .Call(`_cpp11armadillotest_swap_rows1_`, n)
+}
+
+swap1_ <- function(n) {
+  .Call(`_cpp11armadillotest_swap1_`, n)
 }

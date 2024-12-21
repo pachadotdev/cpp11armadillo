@@ -146,324 +146,396 @@ extern "C" SEXP _cpp11armadillotest_random_matrix_nxn(SEXP n) {
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> matrix_fun1_(const doubles_matrix<>& a);
-extern "C" SEXP _cpp11armadillotest_matrix_fun1_(SEXP a) {
+doubles_matrix<> matrix1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_matrix1_(SEXP a) {
   BEGIN_CPP11
-    return cpp11::as_sexp(matrix_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+    return cpp11::as_sexp(matrix1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-list matrix_fun2_(const doubles_matrix<>& a);
-extern "C" SEXP _cpp11armadillotest_matrix_fun2_(SEXP a) {
+list matrix2_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_matrix2_(SEXP a) {
   BEGIN_CPP11
-    return cpp11::as_sexp(matrix_fun2_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+    return cpp11::as_sexp(matrix2_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles column_fun1_(const doubles& x, const doubles& y);
-extern "C" SEXP _cpp11armadillotest_column_fun1_(SEXP x, SEXP y) {
+doubles column1_(const doubles& x, const doubles& y);
+extern "C" SEXP _cpp11armadillotest_column1_(SEXP x, SEXP y) {
   BEGIN_CPP11
-    return cpp11::as_sexp(column_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles&>>(y)));
+    return cpp11::as_sexp(column1_(cpp11::as_cpp<cpp11::decay_t<const doubles&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles&>>(y)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles row_fun1_(const doubles& x, const doubles& y);
-extern "C" SEXP _cpp11armadillotest_row_fun1_(SEXP x, SEXP y) {
+doubles row1_(const doubles& x, const doubles& y);
+extern "C" SEXP _cpp11armadillotest_row1_(SEXP x, SEXP y) {
   BEGIN_CPP11
-    return cpp11::as_sexp(row_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles&>>(y)));
+    return cpp11::as_sexp(row1_(cpp11::as_cpp<cpp11::decay_t<const doubles&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles&>>(y)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> cube_fun1_(const doubles_matrix<>& a, const doubles_matrix<>& b);
-extern "C" SEXP _cpp11armadillotest_cube_fun1_(SEXP a, SEXP b) {
+doubles_matrix<> cube1_(const doubles_matrix<>& a, const doubles_matrix<>& b);
+extern "C" SEXP _cpp11armadillotest_cube1_(SEXP a, SEXP b) {
   BEGIN_CPP11
-    return cpp11::as_sexp(cube_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(b)));
+    return cpp11::as_sexp(cube1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(b)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> field_fun1_(const doubles_matrix<>& a, const doubles_matrix<>& b);
-extern "C" SEXP _cpp11armadillotest_field_fun1_(SEXP a, SEXP b) {
+doubles_matrix<> field1_(const doubles_matrix<>& a, const doubles_matrix<>& b);
+extern "C" SEXP _cpp11armadillotest_field1_(SEXP a, SEXP b) {
   BEGIN_CPP11
-    return cpp11::as_sexp(field_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(b)));
+    return cpp11::as_sexp(field1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(b)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-integers attr_fun1_(const doubles_matrix<>& a);
-extern "C" SEXP _cpp11armadillotest_attr_fun1_(SEXP a) {
+integers attr1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_attr1_(SEXP a) {
   BEGIN_CPP11
-    return cpp11::as_sexp(attr_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+    return cpp11::as_sexp(attr1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> access_fun1_(const doubles_matrix<>& a);
-extern "C" SEXP _cpp11armadillotest_access_fun1_(SEXP a) {
+doubles_matrix<> access1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_access1_(SEXP a) {
   BEGIN_CPP11
-    return cpp11::as_sexp(access_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+    return cpp11::as_sexp(access1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> initialization_fun1_(const doubles_matrix<>& a);
-extern "C" SEXP _cpp11armadillotest_initialization_fun1_(SEXP a) {
+doubles_matrix<> initialization1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_initialization1_(SEXP a) {
   BEGIN_CPP11
-    return cpp11::as_sexp(initialization_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+    return cpp11::as_sexp(initialization1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> zeros_fun1_(const doubles_matrix<>& a);
-extern "C" SEXP _cpp11armadillotest_zeros_fun1_(SEXP a) {
+doubles_matrix<> zeros1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_zeros1_(SEXP a) {
   BEGIN_CPP11
-    return cpp11::as_sexp(zeros_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+    return cpp11::as_sexp(zeros1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> ones_fun1_(const doubles_matrix<>& a);
-extern "C" SEXP _cpp11armadillotest_ones_fun1_(SEXP a) {
+doubles_matrix<> ones1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_ones1_(SEXP a) {
   BEGIN_CPP11
-    return cpp11::as_sexp(ones_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+    return cpp11::as_sexp(ones1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> eye_fun1_(const doubles_matrix<>& a);
-extern "C" SEXP _cpp11armadillotest_eye_fun1_(SEXP a) {
+doubles_matrix<> eye1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_eye1_(SEXP a) {
   BEGIN_CPP11
-    return cpp11::as_sexp(eye_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+    return cpp11::as_sexp(eye1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> randu_fun1_(const doubles_matrix<>& a);
-extern "C" SEXP _cpp11armadillotest_randu_fun1_(SEXP a) {
+doubles_matrix<> randu1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_randu1_(SEXP a) {
   BEGIN_CPP11
-    return cpp11::as_sexp(randu_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+    return cpp11::as_sexp(randu1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> randn_fun1_(const doubles_matrix<>& a);
-extern "C" SEXP _cpp11armadillotest_randn_fun1_(SEXP a) {
+doubles_matrix<> randn1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_randn1_(SEXP a) {
   BEGIN_CPP11
-    return cpp11::as_sexp(randn_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+    return cpp11::as_sexp(randn1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> randu_fun2_(const int& n);
-extern "C" SEXP _cpp11armadillotest_randu_fun2_(SEXP n) {
+doubles_matrix<> randu2_(const int& n);
+extern "C" SEXP _cpp11armadillotest_randu2_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(randu_fun2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(randu2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> randn_fun2_(const int& n);
-extern "C" SEXP _cpp11armadillotest_randn_fun2_(SEXP n) {
+doubles_matrix<> randn2_(const int& n);
+extern "C" SEXP _cpp11armadillotest_randn2_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(randn_fun2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(randn2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> fill_fun1_(const doubles_matrix<>& a);
-extern "C" SEXP _cpp11armadillotest_fill_fun1_(SEXP a) {
+doubles_matrix<> fill1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_fill1_(SEXP a) {
   BEGIN_CPP11
-    return cpp11::as_sexp(fill_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+    return cpp11::as_sexp(fill1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> imbue_fun1_(const doubles_matrix<>& a);
-extern "C" SEXP _cpp11armadillotest_imbue_fun1_(SEXP a) {
+doubles_matrix<> imbue1_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_imbue1_(SEXP a) {
   BEGIN_CPP11
-    return cpp11::as_sexp(imbue_fun1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+    return cpp11::as_sexp(imbue1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> imbue_fun2_(const doubles_matrix<>& a);
-extern "C" SEXP _cpp11armadillotest_imbue_fun2_(SEXP a) {
+doubles_matrix<> imbue2_(const doubles_matrix<>& a);
+extern "C" SEXP _cpp11armadillotest_imbue2_(SEXP a) {
   BEGIN_CPP11
-    return cpp11::as_sexp(imbue_fun2_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
+    return cpp11::as_sexp(imbue2_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> clean_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_clean_fun1_(SEXP n) {
+doubles_matrix<> clean1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_clean1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(clean_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(clean1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> replace_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_replace_fun1_(SEXP n) {
+doubles_matrix<> replace1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_replace1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(replace_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(replace1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> clamp_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_clamp_fun1_(SEXP n) {
+doubles_matrix<> clamp1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_clamp1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(clamp_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(clamp1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> transform_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_transform_fun1_(SEXP n) {
+doubles_matrix<> transform1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_transform1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(transform_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(transform1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> for_each_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_for_each_fun1_(SEXP n) {
+doubles_matrix<> for_each1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_for_each1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(for_each_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(for_each1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles set_size_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_set_size_fun1_(SEXP n) {
+doubles set_size1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_set_size1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(set_size_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(set_size1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> reshape_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_reshape_fun1_(SEXP n) {
+doubles_matrix<> reshape1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_reshape1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(reshape_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(reshape1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> resize_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_resize_fun1_(SEXP n) {
+doubles_matrix<> resize1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_resize1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(resize_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(resize1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-integers copy_size_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_copy_size_fun1_(SEXP n) {
+integers copy_size1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_copy_size1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(copy_size_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(copy_size1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-integers reset_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_reset_fun1_(SEXP n) {
+integers reset1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_reset1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(reset_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(reset1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> subview_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_subview_fun1_(SEXP n) {
+doubles_matrix<> subview1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_subview1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(subview_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(subview1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> subview_fun2_(const int& n);
-extern "C" SEXP _cpp11armadillotest_subview_fun2_(SEXP n) {
+doubles_matrix<> subview2_(const int& n);
+extern "C" SEXP _cpp11armadillotest_subview2_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(subview_fun2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(subview2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles diagonal_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_diagonal_fun1_(SEXP n) {
+doubles diagonal1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_diagonal1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(diagonal_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(diagonal1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> each_col_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_each_col_fun1_(SEXP n) {
+doubles_matrix<> each_col1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_each_col1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(each_col_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(each_col1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> each_row_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_each_row_fun1_(SEXP n) {
+doubles_matrix<> each_row1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_each_row1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(each_row_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(each_row1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-doubles_matrix<> each_slice_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_each_slice_fun1_(SEXP n) {
+doubles_matrix<> each_slice1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_each_slice1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(each_slice_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(each_slice1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-list set_real_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_set_real_fun1_(SEXP n) {
+list set_real1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_set_real1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(set_real_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(set_real1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-list set_real_fun2_(const int& n);
-extern "C" SEXP _cpp11armadillotest_set_real_fun2_(SEXP n) {
+list set_real2_(const int& n);
+extern "C" SEXP _cpp11armadillotest_set_real2_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(set_real_fun2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(set_real2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 // 08_official_documentation_adapted.cpp
-list set_imag_fun1_(const int& n);
-extern "C" SEXP _cpp11armadillotest_set_imag_fun1_(SEXP n) {
+list set_imag1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_set_imag1_(SEXP n) {
   BEGIN_CPP11
-    return cpp11::as_sexp(set_imag_fun1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+    return cpp11::as_sexp(set_imag1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> insert_columns1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_insert_columns1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(insert_columns1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> insert_rows1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_insert_rows1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(insert_rows1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> insert_slices1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_insert_slices1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(insert_slices1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> shed_columns1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_shed_columns1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(shed_columns1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> shed_rows1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_shed_rows1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(shed_rows1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> shed_slices1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_shed_slices1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(shed_slices1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> swap_columns1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_swap_columns1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(swap_columns1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> swap_rows1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_swap_rows1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(swap_rows1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> swap1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_swap1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(swap1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_cpp11armadillotest_access_fun1_",                  (DL_FUNC) &_cpp11armadillotest_access_fun1_,                  1},
-    {"_cpp11armadillotest_attr_fun1_",                    (DL_FUNC) &_cpp11armadillotest_attr_fun1_,                    1},
+    {"_cpp11armadillotest_access1_",                      (DL_FUNC) &_cpp11armadillotest_access1_,                      1},
+    {"_cpp11armadillotest_attr1_",                        (DL_FUNC) &_cpp11armadillotest_attr1_,                        1},
     {"_cpp11armadillotest_capm",                          (DL_FUNC) &_cpp11armadillotest_capm,                          3},
     {"_cpp11armadillotest_chol_mat",                      (DL_FUNC) &_cpp11armadillotest_chol_mat,                      2},
-    {"_cpp11armadillotest_clamp_fun1_",                   (DL_FUNC) &_cpp11armadillotest_clamp_fun1_,                   1},
-    {"_cpp11armadillotest_clean_fun1_",                   (DL_FUNC) &_cpp11armadillotest_clean_fun1_,                   1},
-    {"_cpp11armadillotest_column_fun1_",                  (DL_FUNC) &_cpp11armadillotest_column_fun1_,                  2},
-    {"_cpp11armadillotest_copy_size_fun1_",               (DL_FUNC) &_cpp11armadillotest_copy_size_fun1_,               1},
-    {"_cpp11armadillotest_cube_fun1_",                    (DL_FUNC) &_cpp11armadillotest_cube_fun1_,                    2},
-    {"_cpp11armadillotest_diagonal_fun1_",                (DL_FUNC) &_cpp11armadillotest_diagonal_fun1_,                1},
-    {"_cpp11armadillotest_each_col_fun1_",                (DL_FUNC) &_cpp11armadillotest_each_col_fun1_,                1},
-    {"_cpp11armadillotest_each_row_fun1_",                (DL_FUNC) &_cpp11armadillotest_each_row_fun1_,                1},
-    {"_cpp11armadillotest_each_slice_fun1_",              (DL_FUNC) &_cpp11armadillotest_each_slice_fun1_,              1},
+    {"_cpp11armadillotest_clamp1_",                       (DL_FUNC) &_cpp11armadillotest_clamp1_,                       1},
+    {"_cpp11armadillotest_clean1_",                       (DL_FUNC) &_cpp11armadillotest_clean1_,                       1},
+    {"_cpp11armadillotest_column1_",                      (DL_FUNC) &_cpp11armadillotest_column1_,                      2},
+    {"_cpp11armadillotest_copy_size1_",                   (DL_FUNC) &_cpp11armadillotest_copy_size1_,                   1},
+    {"_cpp11armadillotest_cube1_",                        (DL_FUNC) &_cpp11armadillotest_cube1_,                        2},
+    {"_cpp11armadillotest_diagonal1_",                    (DL_FUNC) &_cpp11armadillotest_diagonal1_,                    1},
+    {"_cpp11armadillotest_each_col1_",                    (DL_FUNC) &_cpp11armadillotest_each_col1_,                    1},
+    {"_cpp11armadillotest_each_row1_",                    (DL_FUNC) &_cpp11armadillotest_each_row1_,                    1},
+    {"_cpp11armadillotest_each_slice1_",                  (DL_FUNC) &_cpp11armadillotest_each_slice1_,                  1},
     {"_cpp11armadillotest_eigen_gen_dbl_complex_wrapper", (DL_FUNC) &_cpp11armadillotest_eigen_gen_dbl_complex_wrapper, 1},
     {"_cpp11armadillotest_eigen_gen_mat",                 (DL_FUNC) &_cpp11armadillotest_eigen_gen_mat,                 1},
     {"_cpp11armadillotest_eigen_gen_mat_complex_wrapper", (DL_FUNC) &_cpp11armadillotest_eigen_gen_mat_complex_wrapper, 1},
     {"_cpp11armadillotest_eigen_gen_no_wrapper",          (DL_FUNC) &_cpp11armadillotest_eigen_gen_no_wrapper,          1},
     {"_cpp11armadillotest_eigen_sym_dbl",                 (DL_FUNC) &_cpp11armadillotest_eigen_sym_dbl,                 1},
     {"_cpp11armadillotest_eigen_sym_mat",                 (DL_FUNC) &_cpp11armadillotest_eigen_sym_mat,                 1},
-    {"_cpp11armadillotest_eye_fun1_",                     (DL_FUNC) &_cpp11armadillotest_eye_fun1_,                     1},
-    {"_cpp11armadillotest_field_fun1_",                   (DL_FUNC) &_cpp11armadillotest_field_fun1_,                   2},
-    {"_cpp11armadillotest_fill_fun1_",                    (DL_FUNC) &_cpp11armadillotest_fill_fun1_,                    1},
-    {"_cpp11armadillotest_for_each_fun1_",                (DL_FUNC) &_cpp11armadillotest_for_each_fun1_,                1},
-    {"_cpp11armadillotest_imbue_fun1_",                   (DL_FUNC) &_cpp11armadillotest_imbue_fun1_,                   1},
-    {"_cpp11armadillotest_imbue_fun2_",                   (DL_FUNC) &_cpp11armadillotest_imbue_fun2_,                   1},
-    {"_cpp11armadillotest_initialization_fun1_",          (DL_FUNC) &_cpp11armadillotest_initialization_fun1_,          1},
-    {"_cpp11armadillotest_matrix_fun1_",                  (DL_FUNC) &_cpp11armadillotest_matrix_fun1_,                  1},
-    {"_cpp11armadillotest_matrix_fun2_",                  (DL_FUNC) &_cpp11armadillotest_matrix_fun2_,                  1},
+    {"_cpp11armadillotest_eye1_",                         (DL_FUNC) &_cpp11armadillotest_eye1_,                         1},
+    {"_cpp11armadillotest_field1_",                       (DL_FUNC) &_cpp11armadillotest_field1_,                       2},
+    {"_cpp11armadillotest_fill1_",                        (DL_FUNC) &_cpp11armadillotest_fill1_,                        1},
+    {"_cpp11armadillotest_for_each1_",                    (DL_FUNC) &_cpp11armadillotest_for_each1_,                    1},
+    {"_cpp11armadillotest_imbue1_",                       (DL_FUNC) &_cpp11armadillotest_imbue1_,                       1},
+    {"_cpp11armadillotest_imbue2_",                       (DL_FUNC) &_cpp11armadillotest_imbue2_,                       1},
+    {"_cpp11armadillotest_initialization1_",              (DL_FUNC) &_cpp11armadillotest_initialization1_,              1},
+    {"_cpp11armadillotest_insert_columns1_",              (DL_FUNC) &_cpp11armadillotest_insert_columns1_,              1},
+    {"_cpp11armadillotest_insert_rows1_",                 (DL_FUNC) &_cpp11armadillotest_insert_rows1_,                 1},
+    {"_cpp11armadillotest_insert_slices1_",               (DL_FUNC) &_cpp11armadillotest_insert_slices1_,               1},
+    {"_cpp11armadillotest_matrix1_",                      (DL_FUNC) &_cpp11armadillotest_matrix1_,                      1},
+    {"_cpp11armadillotest_matrix2_",                      (DL_FUNC) &_cpp11armadillotest_matrix2_,                      1},
     {"_cpp11armadillotest_ols_dbl",                       (DL_FUNC) &_cpp11armadillotest_ols_dbl,                       2},
     {"_cpp11armadillotest_ols_mat",                       (DL_FUNC) &_cpp11armadillotest_ols_mat,                       2},
     {"_cpp11armadillotest_ols_qr_dbl",                    (DL_FUNC) &_cpp11armadillotest_ols_qr_dbl,                    3},
     {"_cpp11armadillotest_ols_qr_mat",                    (DL_FUNC) &_cpp11armadillotest_ols_qr_mat,                    3},
-    {"_cpp11armadillotest_ones_fun1_",                    (DL_FUNC) &_cpp11armadillotest_ones_fun1_,                    1},
-    {"_cpp11armadillotest_randn_fun1_",                   (DL_FUNC) &_cpp11armadillotest_randn_fun1_,                   1},
-    {"_cpp11armadillotest_randn_fun2_",                   (DL_FUNC) &_cpp11armadillotest_randn_fun2_,                   1},
+    {"_cpp11armadillotest_ones1_",                        (DL_FUNC) &_cpp11armadillotest_ones1_,                        1},
+    {"_cpp11armadillotest_randn1_",                       (DL_FUNC) &_cpp11armadillotest_randn1_,                       1},
+    {"_cpp11armadillotest_randn2_",                       (DL_FUNC) &_cpp11armadillotest_randn2_,                       1},
     {"_cpp11armadillotest_random_matrix_nxn",             (DL_FUNC) &_cpp11armadillotest_random_matrix_nxn,             1},
-    {"_cpp11armadillotest_randu_fun1_",                   (DL_FUNC) &_cpp11armadillotest_randu_fun1_,                   1},
-    {"_cpp11armadillotest_randu_fun2_",                   (DL_FUNC) &_cpp11armadillotest_randu_fun2_,                   1},
-    {"_cpp11armadillotest_replace_fun1_",                 (DL_FUNC) &_cpp11armadillotest_replace_fun1_,                 1},
-    {"_cpp11armadillotest_reset_fun1_",                   (DL_FUNC) &_cpp11armadillotest_reset_fun1_,                   1},
-    {"_cpp11armadillotest_reshape_fun1_",                 (DL_FUNC) &_cpp11armadillotest_reshape_fun1_,                 1},
-    {"_cpp11armadillotest_resize_fun1_",                  (DL_FUNC) &_cpp11armadillotest_resize_fun1_,                  1},
-    {"_cpp11armadillotest_row_fun1_",                     (DL_FUNC) &_cpp11armadillotest_row_fun1_,                     2},
-    {"_cpp11armadillotest_set_imag_fun1_",                (DL_FUNC) &_cpp11armadillotest_set_imag_fun1_,                1},
-    {"_cpp11armadillotest_set_real_fun1_",                (DL_FUNC) &_cpp11armadillotest_set_real_fun1_,                1},
-    {"_cpp11armadillotest_set_real_fun2_",                (DL_FUNC) &_cpp11armadillotest_set_real_fun2_,                1},
-    {"_cpp11armadillotest_set_size_fun1_",                (DL_FUNC) &_cpp11armadillotest_set_size_fun1_,                1},
-    {"_cpp11armadillotest_subview_fun1_",                 (DL_FUNC) &_cpp11armadillotest_subview_fun1_,                 1},
-    {"_cpp11armadillotest_subview_fun2_",                 (DL_FUNC) &_cpp11armadillotest_subview_fun2_,                 1},
-    {"_cpp11armadillotest_transform_fun1_",               (DL_FUNC) &_cpp11armadillotest_transform_fun1_,               1},
+    {"_cpp11armadillotest_randu1_",                       (DL_FUNC) &_cpp11armadillotest_randu1_,                       1},
+    {"_cpp11armadillotest_randu2_",                       (DL_FUNC) &_cpp11armadillotest_randu2_,                       1},
+    {"_cpp11armadillotest_replace1_",                     (DL_FUNC) &_cpp11armadillotest_replace1_,                     1},
+    {"_cpp11armadillotest_reset1_",                       (DL_FUNC) &_cpp11armadillotest_reset1_,                       1},
+    {"_cpp11armadillotest_reshape1_",                     (DL_FUNC) &_cpp11armadillotest_reshape1_,                     1},
+    {"_cpp11armadillotest_resize1_",                      (DL_FUNC) &_cpp11armadillotest_resize1_,                      1},
+    {"_cpp11armadillotest_row1_",                         (DL_FUNC) &_cpp11armadillotest_row1_,                         2},
+    {"_cpp11armadillotest_set_imag1_",                    (DL_FUNC) &_cpp11armadillotest_set_imag1_,                    1},
+    {"_cpp11armadillotest_set_real1_",                    (DL_FUNC) &_cpp11armadillotest_set_real1_,                    1},
+    {"_cpp11armadillotest_set_real2_",                    (DL_FUNC) &_cpp11armadillotest_set_real2_,                    1},
+    {"_cpp11armadillotest_set_size1_",                    (DL_FUNC) &_cpp11armadillotest_set_size1_,                    1},
+    {"_cpp11armadillotest_shed_columns1_",                (DL_FUNC) &_cpp11armadillotest_shed_columns1_,                1},
+    {"_cpp11armadillotest_shed_rows1_",                   (DL_FUNC) &_cpp11armadillotest_shed_rows1_,                   1},
+    {"_cpp11armadillotest_shed_slices1_",                 (DL_FUNC) &_cpp11armadillotest_shed_slices1_,                 1},
+    {"_cpp11armadillotest_subview1_",                     (DL_FUNC) &_cpp11armadillotest_subview1_,                     1},
+    {"_cpp11armadillotest_subview2_",                     (DL_FUNC) &_cpp11armadillotest_subview2_,                     1},
+    {"_cpp11armadillotest_swap1_",                        (DL_FUNC) &_cpp11armadillotest_swap1_,                        1},
+    {"_cpp11armadillotest_swap_columns1_",                (DL_FUNC) &_cpp11armadillotest_swap_columns1_,                1},
+    {"_cpp11armadillotest_swap_rows1_",                   (DL_FUNC) &_cpp11armadillotest_swap_rows1_,                   1},
+    {"_cpp11armadillotest_transform1_",                   (DL_FUNC) &_cpp11armadillotest_transform1_,                   1},
     {"_cpp11armadillotest_typedef_Col_double",            (DL_FUNC) &_cpp11armadillotest_typedef_Col_double,            1},
     {"_cpp11armadillotest_typedef_Col_int",               (DL_FUNC) &_cpp11armadillotest_typedef_Col_int,               1},
     {"_cpp11armadillotest_typedef_Mat_double",            (DL_FUNC) &_cpp11armadillotest_typedef_Mat_double,            1},
@@ -471,7 +543,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_typedef_SpMat_double",          (DL_FUNC) &_cpp11armadillotest_typedef_SpMat_double,          1},
     {"_cpp11armadillotest_typedef_SpMat_int",             (DL_FUNC) &_cpp11armadillotest_typedef_SpMat_int,             1},
     {"_cpp11armadillotest_typedef_uvec",                  (DL_FUNC) &_cpp11armadillotest_typedef_uvec,                  1},
-    {"_cpp11armadillotest_zeros_fun1_",                   (DL_FUNC) &_cpp11armadillotest_zeros_fun1_,                   1},
+    {"_cpp11armadillotest_zeros1_",                       (DL_FUNC) &_cpp11armadillotest_zeros1_,                       1},
     {NULL, NULL, 0}
 };
 }
