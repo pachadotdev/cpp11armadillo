@@ -315,3 +315,83 @@ col_as_mat1_ <- function(n) {
 row_as_mat1_ <- function(n) {
   .Call(`_cpp11armadillotest_row_as_mat1_`, n)
 }
+
+as_dense1_ <- function(n) {
+  .Call(`_cpp11armadillotest_as_dense1_`, n)
+}
+
+transpose1_ <- function(n) {
+  .Call(`_cpp11armadillotest_transpose1_`, n)
+}
+
+transpose2_ <- function(n) {
+  .Call(`_cpp11armadillotest_transpose2_`, n)
+}
+
+inverse1_ <- function(a, b) {
+  .Call(`_cpp11armadillotest_inverse1_`, a, b)
+}
+
+maxmin1_ <- function(n) {
+  .Call(`_cpp11armadillotest_maxmin1_`, n)
+}
+
+index_maxmin1_ <- function(n) {
+  .Call(`_cpp11armadillotest_index_maxmin1_`, n)
+}
+
+in_range1_ <- function(n) {
+  .Call(`_cpp11armadillotest_in_range1_`, n)
+}
+
+is_empty1_ <- function(n) {
+  .Call(`_cpp11armadillotest_is_empty1_`, n)
+}
+
+is_vec1_ <- function(n) {
+  .Call(`_cpp11armadillotest_is_vec1_`, n)
+}
+
+is_sorted1_ <- function(n) {
+  .Call(`_cpp11armadillotest_is_sorted1_`, n)
+}
+
+is_triangular1_ <- function(n) {
+  .Call(`_cpp11armadillotest_is_triangular1_`, n)
+}
+
+is_diagonal1_ <- function(n) {
+  .Call(`_cpp11armadillotest_is_diagonal1_`, n)
+}
+
+is_square1_ <- function(n) {
+  .Call(`_cpp11armadillotest_is_square1_`, n)
+}
+
+is_symmetric1_ <- function(n) {
+  .Call(`_cpp11armadillotest_is_symmetric1_`, n)
+}
+
+is_hermitian1_ <- function(n) {
+  .Call(`_cpp11armadillotest_is_hermitian1_`, n)
+}
+
+is_sympd1_ <- function(n) {
+  .Call(`_cpp11armadillotest_is_sympd1_`, n)
+}
+
+is_zero1_ <- function(n) {
+  .Call(`_cpp11armadillotest_is_zero1_`, n)
+}
+
+is_finite1_ <- function(n) {
+  .Call(`_cpp11armadillotest_is_finite1_`, n)
+}
+
+has_inf1_ <- function(n) {
+  .Call(`_cpp11armadillotest_has_inf1_`, n)
+}
+
+has_nan1_ <- function(n) {
+  .Call(`_cpp11armadillotest_has_nan1_`, n)
+}

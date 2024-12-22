@@ -955,18 +955,6 @@
 <td><code>.has_nan</code></td>
 <td>check whether any element is NaN</td>
 </tr>
-<tr class="even">
-<td><code>.print</code></td>
-<td>print object to <code>std::cout</code> or user specified stream (cpp11armadillo redirects to R messages)</td>
-</tr>
-<tr class="odd">
-<td><code>.raw_print</code></td>
-<td>print object without formatting</td>
-</tr>
-<tr class="even">
-<td><code>.brief_print</code></td>
-<td>print object in shortened/abridged form</td>
-</tr>
 </tbody>
 </table>
 <div class="section level3">
@@ -1145,7 +1133,7 @@
 </h3>
 <ul>
 <li>
-<code>.eye()</code> Member functions of <code>Mat</code> and <code>SpMat</code>.</li>
+<code>.eye()</code> member function of <code>Mat</code> and <code>SpMat</code>.</li>
 <li>
 <code>.eye(n_rows, n_cols)</code> Set the elements along the main diagonal to one and off-diagonal elements to zero, optionally first changing the size to specified dimensions.</li>
 <li>
@@ -2434,7 +2422,7 @@
 <div class="section level3">
 <h3 id="column-pointer">Column pointer<a class="anchor" aria-label="anchor" href="#column-pointer"></a>
 </h3>
-<p><code>.colptr( col_number )</code> is a member function of <code>Mat</code> that obtains a raw pointer to the memory used by elements in the specified column.</p>
+<p><code>.colptr( col_number )</code> is a member function of the <code>Mat</code> class that obtains a raw pointer to the memory used by elements in the specified column.</p>
 <div class="section level4">
 <h4 id="examples-42">Examples<a class="anchor" aria-label="anchor" href="#examples-42"></a>
 </h4>
@@ -2636,7 +2624,7 @@
 <ul>
 <li>Writing a zero value into a sparse matrix through an iterator will invalidate all current iterators associated with the sparse matrix.</li>
 <li>To modify the non-zero elements in a safer manner, use <code>.transform()</code> or <code>.for_each()</code> instead of iterators.</li>
-<li>For <code>submatrix</code> and <code>subcube</code> the iterators are intended only to be used with range-based for loops. Any other use is not supported. For example, the direct use of the <code>begin()</code> and <code><a href="https://rdrr.io/r/stats/start.html" class="external-link">end()</a></code> functions, as well as the underlying iterators types is not supported. The implementation of submatrices and subcubes uses short-lived temporary objects that are subject to automatic deletion, and as such are error-prone to handle manually.</li>
+<li>For <code>submatrix</code> and <code>subcube</code> the iterators are intended only to be used with range-based for loops. Any other use is not supported. For example, the direct use of the <code>.begin()</code> and <code>.end()</code> functions, as well as the underlying iterators types is not supported. The implementation of submatrices and subcubes uses short-lived temporary objects that are subject to automatic deletion, and as such are error-prone to handle manually.</li>
 </ul>
 </div>
 </div>
@@ -2646,19 +2634,19 @@
 <p>Member functions for the <code>Col</code> and <code>Row</code> classes to mimic the functionality of containers in the C++ standard library:</p>
 <ul>
 <li>
-<code>front()</code> accesses the first element in a vector.</li>
+<code>.front()</code> accesses the first element in a vector.</li>
 <li>
-<code>back()</code> accesses the last element in a vector.</li>
+<code>.back()</code> accesses the last element in a vector.</li>
 </ul>
 <p>Member functions for the <code>Col</code>, <code>Row</code>, <code>Mat</code>, <code>Cube</code> and <code>SpMat</code> classes to mimic the functionality of containers in the C++ standard library:</p>
 <ul>
 <li>
-<code>clear()</code> removes the elements from an object.</li>
+<code>.clear()</code> removes the elements from an object.</li>
 <li>
-<code>empty()</code> returns <code>true</code> if the object has no elements and <code>false</code> if the object has one or more elements.<br>
+<code>.empty()</code> returns <code>true</code> if the object has no elements and <code>false</code> if the object has one or more elements.<br>
 </li>
 <li>
-<code>size()</code> returns the total number of elements in an object.</li>
+<code>.size()</code> returns the total number of elements in an object.</li>
 </ul>
 <div class="section level4">
 <h4 id="examples-44">Examples<a class="anchor" aria-label="anchor" href="#examples-44"></a>
@@ -2690,7 +2678,7 @@
 <div class="section level3">
 <h3 id="convert-matrix-to-column">Convert matrix to column<a class="anchor" aria-label="anchor" href="#convert-matrix-to-column"></a>
 </h3>
-<p><code>as_col()</code> is a member function of <code>Mat</code> class, it returns a flattened version of the matrix as a column vector. Flattening is done by concatenating all columns.</p>
+<p><code>.as_col()</code> is a member function of the <code>Mat</code> class, it returns a flattened version of the matrix as a column vector. Flattening is done by concatenating all columns.</p>
 <div class="section level4">
 <h4 id="examples-45">Examples<a class="anchor" aria-label="anchor" href="#examples-45"></a>
 </h4>
@@ -2704,7 +2692,7 @@
 <div class="section level3">
 <h3 id="convert-matrix-to-row">Convert matrix to row<a class="anchor" aria-label="anchor" href="#convert-matrix-to-row"></a>
 </h3>
-<p><code>as_row()</code> is a member function of <code>Mat</code> class, it returns a flattened version of the matrix as a row vector. Flattening is done by concatenating all rows.</p>
+<p><code>.as_row()</code> is a member function of the <code>Mat</code> class, it returns a flattened version of the matrix as a row vector. Flattening is done by concatenating all rows.</p>
 <div class="section level4">
 <h4 id="examples-46">Examples<a class="anchor" aria-label="anchor" href="#examples-46"></a>
 </h4>
@@ -2723,7 +2711,7 @@
 <div class="section level3">
 <h3 id="convert-column-to-matrix">Convert column to matrix<a class="anchor" aria-label="anchor" href="#convert-column-to-matrix"></a>
 </h3>
-<p><code>col_as_mat(col_number)</code> is a member function of <code>Cube</code>, it returns a matrix of the specified cube column and the number of rows is preserved. Given a cube of size <code>R x C x S</code>, the resultant matrix size is <code>R x S</code>.</p>
+<p><code>.col_as_mat(col_number)</code> is a member function of the <code>Cube</code> class, it returns a matrix of the specified cube column and the number of rows is preserved. Given a cube of size <code>R x C x S</code>, the resultant matrix size is <code>R x S</code>.</p>
 <div class="section level4">
 <h4 id="examples-47">Examples<a class="anchor" aria-label="anchor" href="#examples-47"></a>
 </h4>
@@ -2748,7 +2736,7 @@
 <div class="section level3">
 <h3 id="convert-column-to-matrix-1">Convert column to matrix<a class="anchor" aria-label="anchor" href="#convert-column-to-matrix-1"></a>
 </h3>
-<p><code>row_as_mat(row_number)</code> is a member function of <code>Cube</code>, it returns a matrix of the specified cube row and the number of columns is preserved. Given a cube of size <code>R x C x S</code>, the resultant matrix size is <code>S x C</code>.</p>
+<p><code>.row_as_mat(row_number)</code> is a member function of the <code>Cube</code> class, it returns a matrix of the specified cube row and the number of columns is preserved. Given a cube of size <code>R x C x S</code>, the resultant matrix size is <code>S x C</code>.</p>
 <div class="section level4">
 <h4 id="examples-48">Examples<a class="anchor" aria-label="anchor" href="#examples-48"></a>
 </h4>
@@ -2768,6 +2756,623 @@
 <span id="cb72-14"><a href="#cb72-14" aria-hidden="true"></a></span>
 <span id="cb72-15"><a href="#cb72-15" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
 <span id="cb72-16"><a href="#cb72-16" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="convert-sparse-matrix-to-dense-matrix">Convert sparse matrix to dense matrix<a class="anchor" aria-label="anchor" href="#convert-sparse-matrix-to-dense-matrix"></a>
+</h3>
+<p><code>.as_dense()</code> is a member function of the <code>SpMat</code> class, it avoids the construction of an intermediate sparse matrix representation of the expression.</p>
+<div class="section level4">
+<h4 id="examples-49">Examples<a class="anchor" aria-label="anchor" href="#examples-49"></a>
+</h4>
+<div class="sourceCode" id="cb73"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">as_dense1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true"></a>  sp_mat A;</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true"></a>  A.sprandu(n, n, <span class="fl">0.1</span>);</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true"></a></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true"></a>  <span class="co">// extract column 1 of A directly into dense column vector</span></span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true"></a>  colvec c = A.col(<span class="dv">0</span>).as_dense();</span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true"></a></span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true"></a>  <span class="co">// store the sum of each column of A directly in dense row vector</span></span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true"></a>  rowvec r = sum(A).as_dense();</span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true"></a></span>
+<span id="cb73-11"><a href="#cb73-11" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(c + r.t());</span>
+<span id="cb73-12"><a href="#cb73-12" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="dense-matrix-and-vector-transposition">Dense matrix and vector transposition<a class="anchor" aria-label="anchor" href="#dense-matrix-and-vector-transposition"></a>
+</h3>
+<p><code>.t()</code> is a member function of the <code>Mat</code>, <code>Col</code> and <code>Row</code> classes, it returns a transposed copy of the object. For real matrices, the transpose is a simple transposition of the elements. For complex matrices, the transpose is a Hermitian conjugate transposition of the elements (e.g., the signs of the imaginary components are flipped).</p>
+<div class="section level4">
+<h4 id="examples-50">Examples<a class="anchor" aria-label="anchor" href="#examples-50"></a>
+</h4>
+<div class="sourceCode" id="cb74"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">transpose1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true"></a>  mat A(n, n + <span class="dv">1</span>, fill::randu);</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true"></a>  mat B = A.t();</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(B);</span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="sparse-matrix-transposition">Sparse matrix transposition<a class="anchor" aria-label="anchor" href="#sparse-matrix-transposition"></a>
+</h3>
+<p><code>.st()</code> is a member function of the <code>SpMat</code> classe, it returns a transposed copy of the object. For real matrices, it is not applicable. For complex matrices, the transpose is a simple transposition of the elements (e.g., the signs of imaginary components are not flipped).</p>
+<div class="section level4">
+<h4 id="examples-51">Examples<a class="anchor" aria-label="anchor" href="#examples-51"></a>
+</h4>
+<div class="sourceCode" id="cb75"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">transpose2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true"></a>  sp_mat A;</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true"></a>  A.sprandu(n, n + <span class="dv">1</span>, <span class="fl">0.1</span>);</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true"></a>  sp_mat B = A.t();</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(B);</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="matrix-inversion">Matrix inversion<a class="anchor" aria-label="anchor" href="#matrix-inversion"></a>
+</h3>
+<p><code>.i()</code> is a member function of the <code>Mat</code> class, it provides an inverse of the matrix. If the matrix is not square sized, a <code>std::logic_error</code> exception is thrown. If the matrix appears to be singular, the output matrix is reset and a <code>std::runtime_error</code> exception is thrown.</p>
+<div class="section level4">
+<h4 id="examples-52">Examples<a class="anchor" aria-label="anchor" href="#examples-52"></a>
+</h4>
+<div class="sourceCode" id="cb76"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">inverse1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a,</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true"></a>                                      <span class="at">const</span> doubles b) {</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true"></a>  mat A = as_Mat(a);</span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true"></a>  vec B = as_Col(b);</span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true"></a></span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true"></a>  mat X = inv(A);</span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true"></a>  vec Y = X * B;</span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true"></a></span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(Y);</span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveats-7">Caveats<a class="anchor" aria-label="anchor" href="#caveats-7"></a>
+</h4>
+<ul>
+<li>If the matrix is known to be symmetric positive definite, <code>inv_sympd()</code>.</li>
+<li>To solve a system of linear equations, such as <code>Z = inv(X) * Y</code>, <code><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve()</a></code> can be faster and/or more accurate.</li>
+</ul>
+</div>
+</div>
+<div class="section level3">
+<h3 id="maximum-and-minimum">Maximum and minimum<a class="anchor" aria-label="anchor" href="#maximum-and-minimum"></a>
+</h3>
+<p><code>.min()</code> and <code>.max()</code> are member functions of the <code>Mat</code>, <code>Col</code>, <code>Row</code>, and <code>Cube</code> classes. They return the minimum and maximum values of the object, respectively. For objects with complex numbers, absolute values are used for comparison.</p>
+<div class="section level4">
+<h4 id="examples-53">Examples<a class="anchor" aria-label="anchor" href="#examples-53"></a>
+</h4>
+<div class="sourceCode" id="cb77"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">maxmin1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true"></a>  mat A = randu&lt;mat&gt;(n, n);</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true"></a></span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true"></a>  writable::doubles res(<span class="dv">2</span>);</span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true"></a>  res[<span class="dv">0</span>] = A.max();</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true"></a>  res[<span class="dv">1</span>] = A.min();</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true"></a></span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"max"</span>, <span class="st">"min"</span>});</span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true"></a></span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb77-11"><a href="#cb77-11" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="linear-index-of-maximum-and-minimum">Linear index of maximum and minimum<a class="anchor" aria-label="anchor" href="#linear-index-of-maximum-and-minimum"></a>
+</h3>
+<p><code>.index_min()</code> and <code>.index_max()</code> are member functions of the <code>Mat</code>, <code>Col</code>, <code>Row</code>, and <code>Cube</code> classes. They return the linear index of the minimum and maximum values of the object, respectively. For objects with complex numbers, absolute values are used for comparison. The returned index is of type <code>uword</code>.</p>
+<div class="section level4">
+<h4 id="examples-54">Examples<a class="anchor" aria-label="anchor" href="#examples-54"></a>
+</h4>
+<div class="sourceCode" id="cb78"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">index_maxmin1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true"></a>  mat A = randu&lt;mat&gt;(n, n);</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true"></a></span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true"></a>  writable::doubles res(<span class="dv">6</span>);</span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true"></a>  res[<span class="dv">0</span>] = <span class="kw">static_cast</span>&lt;<span class="dt">int</span>&gt;(A.index_max());</span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true"></a>  res[<span class="dv">1</span>] = <span class="kw">static_cast</span>&lt;<span class="dt">int</span>&gt;(A.index_min());</span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true"></a>  res[<span class="dv">2</span>] = A(<span class="dv">0</span>, <span class="dv">0</span>);</span>
+<span id="cb78-8"><a href="#cb78-8" aria-hidden="true"></a>  res[<span class="dv">3</span>] = A(<span class="dv">1</span>, <span class="dv">0</span>);</span>
+<span id="cb78-9"><a href="#cb78-9" aria-hidden="true"></a>  res[<span class="dv">4</span>] = A(<span class="dv">0</span>, <span class="dv">1</span>);</span>
+<span id="cb78-10"><a href="#cb78-10" aria-hidden="true"></a>  res[<span class="dv">5</span>] = A(<span class="dv">1</span>, <span class="dv">1</span>);</span>
+<span id="cb78-11"><a href="#cb78-11" aria-hidden="true"></a></span>
+<span id="cb78-12"><a href="#cb78-12" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"index_max"</span>, <span class="st">"index_min"</span>, <span class="st">"element0"</span>, <span class="st">"element1"</span>,</span>
+<span id="cb78-13"><a href="#cb78-13" aria-hidden="true"></a>    <span class="st">"element2"</span>, <span class="st">"element3"</span>});</span>
+<span id="cb78-14"><a href="#cb78-14" aria-hidden="true"></a></span>
+<span id="cb78-15"><a href="#cb78-15" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb78-16"><a href="#cb78-16" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="in-range">In-range<a class="anchor" aria-label="anchor" href="#in-range"></a>
+</h3>
+<p><code>.in_range(** i **)</code> is a member function of <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>SpMat</code> and <code>field</code>, it returns <code>true</code> if the given location or span is currently valid and <code>false</code> if the object is empty, the location is out of bounds, or the span is out of bounds.</p>
+<table class="table">
+<colgroup>
+<col width="73%">
+<col width="11%">
+<col width="4%">
+<col width="5%">
+<col width="5%">
+</colgroup>
+<thead><tr class="header">
+<th>Function/Method</th>
+<th>Mat, Col, Row</th>
+<th>Cube</th>
+<th>SpMat</th>
+<th>Field</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>.in_range(span(start, end))</code></td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="even">
+<td><code>.in_range(row, col)</code></td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="odd">
+<td><code>.in_range(span(start_row, end_row), span(start_col, end_col))</code></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="even">
+<td><code>.in_range(row, col, slice)</code></td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr class="odd">
+<td><code>.in_range(span(start_row, end_row), span(start_col, end_col), span(start_slice, end_slice))</code></td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr class="even">
+<td>
+<code>.in_range(first_row, first_col, size(X))</code> (<code>X</code> is a matrix or field)</td>
+<td>X</td>
+<td></td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="odd">
+<td><code>.in_range(first_row, first_col, size(n_rows, n_cols))</code></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="even">
+<td>
+<code>.in_range(first_row, first_col, first_slice, size(Q))</code> (<code>Q</code> is a cube or field)</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr class="odd">
+<td><code>.in_range(first_row, first_col, first_slice, size(n_rows, n_cols, n_slices))</code></td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+<p>Instances of <code>span(a,b)</code> can be replaced by:</p>
+<ul>
+<li>
+<code>span()</code> or <code>span::all</code> to indicate the entire range.</li>
+<li>
+<code>span(a)</code> to indicate a particular row, column, or slice.</li>
+</ul>
+<div class="section level4">
+<h4 id="examples-55">Examples<a class="anchor" aria-label="anchor" href="#examples-55"></a>
+</h4>
+<div class="sourceCode" id="cb79"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">in_range1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true"></a>  mat A(n, n + <span class="dv">1</span>, fill::randu);</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true"></a></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true"></a>  writable::logicals res(<span class="dv">3</span>);</span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true"></a>  res[<span class="dv">0</span>] = A.in_range(<span class="dv">0</span>, <span class="dv">0</span>);</span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true"></a>  res[<span class="dv">1</span>] = A.in_range(<span class="dv">3</span>, <span class="dv">4</span>);</span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true"></a>  res[<span class="dv">2</span>] = A.in_range(<span class="dv">4</span>, <span class="dv">5</span>);</span>
+<span id="cb79-8"><a href="#cb79-8" aria-hidden="true"></a></span>
+<span id="cb79-9"><a href="#cb79-9" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"in_range00"</span>, <span class="st">"in_range34"</span>, <span class="st">"in_range45"</span>});</span>
+<span id="cb79-10"><a href="#cb79-10" aria-hidden="true"></a></span>
+<span id="cb79-11"><a href="#cb79-11" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb79-12"><a href="#cb79-12" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="is-empty">Is empty<a class="anchor" aria-label="anchor" href="#is-empty"></a>
+</h3>
+<p><code>.is_empty()</code> is a member function of the <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, <code>SpMat</code>, and <code>field</code> classes. It returns <code>true</code> if the object has no elements and <code>false</code> if the object has one or more elements.</p>
+<div class="section level4">
+<h4 id="examples-56">Examples<a class="anchor" aria-label="anchor" href="#examples-56"></a>
+</h4>
+<div class="sourceCode" id="cb80"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">is_empty1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true"></a>  mat A(n, n + <span class="dv">1</span>, fill::randu);</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true"></a></span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true"></a>  writable::logicals res(<span class="dv">2</span>);</span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true"></a>  res[<span class="dv">0</span>] = A.is_empty();</span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true"></a></span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true"></a>  A.reset();</span>
+<span id="cb80-8"><a href="#cb80-8" aria-hidden="true"></a>  res[<span class="dv">1</span>] = A.is_empty();</span>
+<span id="cb80-9"><a href="#cb80-9" aria-hidden="true"></a></span>
+<span id="cb80-10"><a href="#cb80-10" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"before_reset"</span>, <span class="st">"after_reset"</span>});</span>
+<span id="cb80-11"><a href="#cb80-11" aria-hidden="true"></a></span>
+<span id="cb80-12"><a href="#cb80-12" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb80-13"><a href="#cb80-13" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="is-vectorcolumn-vectorrow-vector">Is vector/column vector/row vector<a class="anchor" aria-label="anchor" href="#is-vectorcolumn-vectorrow-vector"></a>
+</h3>
+<p><code>.is_vec()</code>, <code>.is_colvec()</code> and <code>.is_rowvec()</code> are member functions of <code>Mat</code> and <code>SpMat</code>.</p>
+<ul>
+<li>
+<code>.is_vec()</code> returns <code>true</code> if the matrix can be interpreted as a vector (either column or row vector) and <code>false</code> otherwise.</li>
+<li>
+<code>.is_colvec()</code> returns <code>true</code> if the matrix can be interpreted as a column vector and <code>false</code> otherwise.<br>
+</li>
+<li>
+<code>.is_rowvec()</code> returns <code>true</code> if the matrix can be interpreted as a row vector and <code>false</code> otherwise.</li>
+</ul>
+<div class="section level4">
+<h4 id="examples-57">Examples<a class="anchor" aria-label="anchor" href="#examples-57"></a>
+</h4>
+<div class="sourceCode" id="cb81"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">is_vec1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true"></a>  mat A(n, <span class="dv">1</span>, fill::randu);</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true"></a>  mat B(<span class="dv">1</span>, n, fill::randu);</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true"></a>  mat C(<span class="dv">0</span>, <span class="dv">1</span>, fill::randu);</span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true"></a>  mat D(<span class="dv">1</span>, <span class="dv">0</span>, fill::randu);</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true"></a></span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true"></a>  writable::logicals res(<span class="dv">5</span>);</span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true"></a>  res[<span class="dv">0</span>] = A.is_vec();</span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true"></a>  res[<span class="dv">1</span>] = A.is_colvec();</span>
+<span id="cb81-10"><a href="#cb81-10" aria-hidden="true"></a>  res[<span class="dv">2</span>] = B.is_rowvec();</span>
+<span id="cb81-11"><a href="#cb81-11" aria-hidden="true"></a>  res[<span class="dv">3</span>] = C.is_colvec();</span>
+<span id="cb81-12"><a href="#cb81-12" aria-hidden="true"></a>  res[<span class="dv">4</span>] = D.is_rowvec();</span>
+<span id="cb81-13"><a href="#cb81-13" aria-hidden="true"></a></span>
+<span id="cb81-14"><a href="#cb81-14" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"Nx1_is_vec"</span>, <span class="st">"Nx1_is_colvec"</span>, <span class="st">"1xN_is_rowvec"</span>,</span>
+<span id="cb81-15"><a href="#cb81-15" aria-hidden="true"></a>    <span class="st">"0x1_is_colvec"</span>, <span class="st">"1x0_is_rowvec"</span>});</span>
+<span id="cb81-16"><a href="#cb81-16" aria-hidden="true"></a></span>
+<span id="cb81-17"><a href="#cb81-17" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb81-18"><a href="#cb81-18" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveat-7">Caveat<a class="anchor" aria-label="anchor" href="#caveat-7"></a>
+</h4>
+<p>Do not assume that the vector has elements if these functions return <code>true</code>. It is possible to have an empty vector (e.g., 0x1 as in the examples).</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="is-sorted">Is sorted<a class="anchor" aria-label="anchor" href="#is-sorted"></a>
+</h3>
+<p><code>.is_sorted()</code>, <code>.is_sorted(sort_direction)</code> and <code>.is_sorted(sort_direction, dim)</code> are member function of <code>Mat</code>, <code>Row</code>, and <code>Col</code>. For matrices and vectors with complex numbers, order is checked via absolute values.</p>
+<p>If the object is a vector, these return a <code>bool</code> indicating whether the elements are sorted. If the object is a matrix, these return a <code>bool</code> indicating whether the elements are sorted in each column (<code>dim = 0</code>, default) or each row (<code>dim = 1</code>), and the <code>dim</code> argument is optional.</p>
+<p>The <code>sort_direction</code> argument is optional, <code>sort_direction</code> can be one of the following strings:</p>
+<ul>
+<li>
+<code>"ascend"</code>: the elements are ascending, consecutive elements can be equal, and this is the default operation.</li>
+<li>
+<code>"descend"</code>: the elements are descending, and consecutive elements can be equal.</li>
+<li>
+<code>"strictascend"</code>: the elements are strictly ascending, and consecutive elements cannot be equal.</li>
+<li>
+<code>"strictdescend"</code>: the elements are strictly descending, and consecutive elements cannot be equal.</li>
+</ul>
+<div class="section level4">
+<h4 id="examples-58">Examples<a class="anchor" aria-label="anchor" href="#examples-58"></a>
+</h4>
+<div class="sourceCode" id="cb82"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">is_sorted1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true"></a>  vec a(n, fill::randu);</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true"></a>  vec b = sort(a);</span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true"></a>  mat A(<span class="dv">10</span>, <span class="dv">10</span>, fill::randu);</span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true"></a></span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true"></a>  writable::logicals res(<span class="dv">4</span>);</span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true"></a>  res[<span class="dv">0</span>] = a.is_sorted();</span>
+<span id="cb82-8"><a href="#cb82-8" aria-hidden="true"></a>  res[<span class="dv">1</span>] = b.is_sorted();</span>
+<span id="cb82-9"><a href="#cb82-9" aria-hidden="true"></a>  res[<span class="dv">2</span>] = A.is_sorted(<span class="st">"descend"</span>, <span class="dv">1</span>);</span>
+<span id="cb82-10"><a href="#cb82-10" aria-hidden="true"></a>  res[<span class="dv">4</span>] = A.is_sorted(<span class="st">"ascend"</span>, <span class="dv">1</span>);</span>
+<span id="cb82-11"><a href="#cb82-11" aria-hidden="true"></a></span>
+<span id="cb82-12"><a href="#cb82-12" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"a_sorted"</span>, <span class="st">"b_sorted"</span>, <span class="st">"A_descend"</span>,</span>
+<span id="cb82-13"><a href="#cb82-13" aria-hidden="true"></a>    <span class="st">"A_ascend"</span>});</span>
+<span id="cb82-14"><a href="#cb82-14" aria-hidden="true"></a></span>
+<span id="cb82-15"><a href="#cb82-15" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb82-16"><a href="#cb82-16" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="is-upper-triangularlower-triangular">Is upper triangular/lower triangular<a class="anchor" aria-label="anchor" href="#is-upper-triangularlower-triangular"></a>
+</h3>
+<p><code>.is_trimatu()</code> and <code>.is_trimatl()</code> are member functions of <code>Mat</code> and <code>SpMat</code>. <code>.is_trimatu()</code> returns <code>true</code> if the matrix is upper triangular (e.g., the matrix is square sized and all elements below the main diagonal are zero) and <code>false</code> otherwise. <code>.is_trimatl()</code> returns <code>true</code> if the matrix is lower triangular (e.g., the matrix is square sized and all elements above the main diagonal are zero) and <code>false</code> otherwise.</p>
+<div class="section level4">
+<h4 id="examples-59">Examples<a class="anchor" aria-label="anchor" href="#examples-59"></a>
+</h4>
+<div class="sourceCode" id="cb83"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">is_triangular1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true"></a>  mat B = trimatl(A);</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true"></a></span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true"></a>  writable::logicals res(<span class="dv">3</span>);</span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true"></a>  res[<span class="dv">0</span>] = B.is_trimatu();</span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true"></a>  res[<span class="dv">1</span>] = B.is_trimatl();</span>
+<span id="cb83-8"><a href="#cb83-8" aria-hidden="true"></a></span>
+<span id="cb83-9"><a href="#cb83-9" aria-hidden="true"></a>  B.reset();</span>
+<span id="cb83-10"><a href="#cb83-10" aria-hidden="true"></a>  res[<span class="dv">2</span>] = B.is_trimatu();</span>
+<span id="cb83-11"><a href="#cb83-11" aria-hidden="true"></a></span>
+<span id="cb83-12"><a href="#cb83-12" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"is_trimatu"</span>, <span class="st">"is_trimatl"</span>,</span>
+<span id="cb83-13"><a href="#cb83-13" aria-hidden="true"></a>    <span class="st">"is_trimatu_after_reset"</span>});</span>
+<span id="cb83-14"><a href="#cb83-14" aria-hidden="true"></a></span>
+<span id="cb83-15"><a href="#cb83-15" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb83-16"><a href="#cb83-16" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveat-8">Caveat<a class="anchor" aria-label="anchor" href="#caveat-8"></a>
+</h4>
+<p>If these functions return <code>true</code>, do not assume that the matrix contains non-zero elements on or above/below the main diagonal. It is possible to have an empty matrix (e.g., 0x0 as in the examples).</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="is-diagonal">Is diagonal<a class="anchor" aria-label="anchor" href="#is-diagonal"></a>
+</h3>
+<p><code>is_diagmat()</code> is a member function of <code>Mat</code> and <code>SpMat</code>. It returns <code>true</code> if the matrix is diagonal (e.g., all elements outside of the main diagonal are zero). If the matrix is not square sized, a <code>std::logic_error</code> exception is thrown.</p>
+<div class="section level4">
+<h4 id="examples-60">Examples<a class="anchor" aria-label="anchor" href="#examples-60"></a>
+</h4>
+<div class="sourceCode" id="cb84"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">is_diagonal1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true"></a>  mat B = diagmat(A);</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true"></a></span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true"></a>  writable::logicals res(<span class="dv">3</span>);</span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true"></a>  res[<span class="dv">0</span>] = A.is_diagmat();</span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true"></a>  res[<span class="dv">1</span>] = B.is_diagmat();</span>
+<span id="cb84-8"><a href="#cb84-8" aria-hidden="true"></a></span>
+<span id="cb84-9"><a href="#cb84-9" aria-hidden="true"></a>  A.reset();</span>
+<span id="cb84-10"><a href="#cb84-10" aria-hidden="true"></a>  res[<span class="dv">2</span>] = A.is_diagmat();</span>
+<span id="cb84-11"><a href="#cb84-11" aria-hidden="true"></a></span>
+<span id="cb84-12"><a href="#cb84-12" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"A_diagmat"</span>, <span class="st">"B_diagmat"</span>,</span>
+<span id="cb84-13"><a href="#cb84-13" aria-hidden="true"></a>    <span class="st">"A_diagmat_after_reset"</span>});</span>
+<span id="cb84-14"><a href="#cb84-14" aria-hidden="true"></a></span>
+<span id="cb84-15"><a href="#cb84-15" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb84-16"><a href="#cb84-16" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveat-9">Caveat<a class="anchor" aria-label="anchor" href="#caveat-9"></a>
+</h4>
+<p>If this function returns <code>true</code>, do not assume that the matrix contains non-zero elements on the main diagonal only. It is possible to have an empty matrix (e.g., 0x0 as in the examples).</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="is-square">Is square<a class="anchor" aria-label="anchor" href="#is-square"></a>
+</h3>
+<p><code>.is_square()</code> is a member function of the <code>Mat</code> and <code>SpMat</code> classes. It returns <code>true</code> if the matrix is square sized (e.g., the number of rows is equal to the number of columns) and <code>false</code> otherwise.</p>
+<div class="section level4">
+<h4 id="examples-61">Examples<a class="anchor" aria-label="anchor" href="#examples-61"></a>
+</h4>
+<div class="sourceCode" id="cb85"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">is_square1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true"></a>  mat B = diagmat(A);</span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true"></a></span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true"></a>  writable::logicals res(<span class="dv">3</span>);</span>
+<span id="cb85-6"><a href="#cb85-6" aria-hidden="true"></a>  res[<span class="dv">0</span>] = A.is_square();</span>
+<span id="cb85-7"><a href="#cb85-7" aria-hidden="true"></a>  res[<span class="dv">1</span>] = B.is_square();</span>
+<span id="cb85-8"><a href="#cb85-8" aria-hidden="true"></a></span>
+<span id="cb85-9"><a href="#cb85-9" aria-hidden="true"></a>  A.reset();</span>
+<span id="cb85-10"><a href="#cb85-10" aria-hidden="true"></a>  res[<span class="dv">2</span>] = A.is_square();</span>
+<span id="cb85-11"><a href="#cb85-11" aria-hidden="true"></a></span>
+<span id="cb85-12"><a href="#cb85-12" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"A_square"</span>, <span class="st">"B_square"</span>,</span>
+<span id="cb85-13"><a href="#cb85-13" aria-hidden="true"></a>    <span class="st">"A_square_after_reset"</span>});</span>
+<span id="cb85-14"><a href="#cb85-14" aria-hidden="true"></a></span>
+<span id="cb85-15"><a href="#cb85-15" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb85-16"><a href="#cb85-16" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveats-8">Caveats<a class="anchor" aria-label="anchor" href="#caveats-8"></a>
+</h4>
+<p>If this function returns <code>true</code>, do not assume that the matrix is non-empty. It is possible to have an empty matrix (e.g., 0x0 as in the examples).</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="is-symmetric">Is symmetric<a class="anchor" aria-label="anchor" href="#is-symmetric"></a>
+</h3>
+<p><code>.is_symmetric()</code> is a member function of the <code>Mat</code> and <code>SpMat</code> classes. It returns <code>true</code> if the matrix is symmetric (e.g., the matrix is square sized and the transpose is equal to the original matrix) and <code>false</code> otherwise.</p>
+<div class="section level4">
+<h4 id="examples-62">Examples<a class="anchor" aria-label="anchor" href="#examples-62"></a>
+</h4>
+<div class="sourceCode" id="cb86"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">is_symmetric1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true"></a>  mat B = symmatu(A);</span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true"></a></span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true"></a>  writable::logicals res(<span class="dv">3</span>);</span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true"></a>  res[<span class="dv">0</span>] = A.is_symmetric();</span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true"></a>  res[<span class="dv">1</span>] = B.is_symmetric();</span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true"></a></span>
+<span id="cb86-9"><a href="#cb86-9" aria-hidden="true"></a>  A.reset();</span>
+<span id="cb86-10"><a href="#cb86-10" aria-hidden="true"></a>  res[<span class="dv">2</span>] = A.is_symmetric();</span>
+<span id="cb86-11"><a href="#cb86-11" aria-hidden="true"></a></span>
+<span id="cb86-12"><a href="#cb86-12" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"A_symmetric"</span>, <span class="st">"B_symmetric"</span>,</span>
+<span id="cb86-13"><a href="#cb86-13" aria-hidden="true"></a>    <span class="st">"A_symmetric_after_reset"</span>});</span>
+<span id="cb86-14"><a href="#cb86-14" aria-hidden="true"></a></span>
+<span id="cb86-15"><a href="#cb86-15" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb86-16"><a href="#cb86-16" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveats-9">Caveats<a class="anchor" aria-label="anchor" href="#caveats-9"></a>
+</h4>
+<p>If this function returns <code>true</code>, do not assume that the matrix is non-empty. It is possible to have an empty matrix (e.g., 0x0 as in the examples).</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="is-hermitian">Is hermitian<a class="anchor" aria-label="anchor" href="#is-hermitian"></a>
+</h3>
+<p><code>.is_hermitian()</code> is a member function of the <code>Mat</code> and <code>SpMat</code> classes. It returns <code>true</code> if the matrix is Hermitian or self-adjoint (e.g., the matrix is square sized and the conjugate transpose is equal to the original matrix) and <code>false</code> otherwise.</p>
+<div class="section level4">
+<h4 id="examples-63">Examples<a class="anchor" aria-label="anchor" href="#examples-63"></a>
+</h4>
+<div class="sourceCode" id="cb87"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">is_hermitian1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true"></a>  cx_mat A(n, n, fill::randu);</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true"></a>  cx_mat B = A.t() * A;</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true"></a></span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true"></a>  writable::logicals res(<span class="dv">3</span>);</span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true"></a>  res[<span class="dv">0</span>] = A.is_hermitian();</span>
+<span id="cb87-7"><a href="#cb87-7" aria-hidden="true"></a>  res[<span class="dv">1</span>] = B.is_hermitian();</span>
+<span id="cb87-8"><a href="#cb87-8" aria-hidden="true"></a></span>
+<span id="cb87-9"><a href="#cb87-9" aria-hidden="true"></a>  A.reset();</span>
+<span id="cb87-10"><a href="#cb87-10" aria-hidden="true"></a>  res[<span class="dv">2</span>] = A.is_hermitian();</span>
+<span id="cb87-11"><a href="#cb87-11" aria-hidden="true"></a></span>
+<span id="cb87-12"><a href="#cb87-12" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"A_hermitian"</span>, <span class="st">"B_hermitian"</span>,</span>
+<span id="cb87-13"><a href="#cb87-13" aria-hidden="true"></a>    <span class="st">"A_hermitian_after_reset"</span>});</span>
+<span id="cb87-14"><a href="#cb87-14" aria-hidden="true"></a></span>
+<span id="cb87-15"><a href="#cb87-15" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb87-16"><a href="#cb87-16" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveats-10">Caveats<a class="anchor" aria-label="anchor" href="#caveats-10"></a>
+</h4>
+<p>If this function returns <code>true</code>, do not assume that the matrix is non-empty. It is possible to have an empty matrix (e.g., 0x0 as in the examples).</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="is-symmetrichermitian-positive-definite">Is symmetric/hermitian positive definite<a class="anchor" aria-label="anchor" href="#is-symmetrichermitian-positive-definite"></a>
+</h3>
+<p><code>.is_sympd()</code> and <code>.is_sympd(tol)</code> are a member function of the <code>Mat</code> and <code>SpMat</code> classes. It returns <code>true</code> if the matrix is symmetric/hermitian positive definite within a tolerance (e.g., the matrix is square sized and all its eigenvalues are positive) and <code>false</code> otherwise. The <code>tol</code> argument is optional, the default is <code>tol = 100 * datum::eps * norm(X, "fro")</code>.</p>
+<div class="section level4">
+<h4 id="examples-64">Examples<a class="anchor" aria-label="anchor" href="#examples-64"></a>
+</h4>
+<div class="sourceCode" id="cb88"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">is_sympd1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true"></a>  mat B = A * A.t();</span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true"></a></span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true"></a>  writable::logicals res(<span class="dv">3</span>);</span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true"></a>  res[<span class="dv">0</span>] = A.is_sympd();</span>
+<span id="cb88-7"><a href="#cb88-7" aria-hidden="true"></a>  res[<span class="dv">1</span>] = B.is_sympd();</span>
+<span id="cb88-8"><a href="#cb88-8" aria-hidden="true"></a></span>
+<span id="cb88-9"><a href="#cb88-9" aria-hidden="true"></a>  A.reset();</span>
+<span id="cb88-10"><a href="#cb88-10" aria-hidden="true"></a>  res[<span class="dv">2</span>] = A.is_sympd();</span>
+<span id="cb88-11"><a href="#cb88-11" aria-hidden="true"></a></span>
+<span id="cb88-12"><a href="#cb88-12" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"A_sympd"</span>, <span class="st">"B_sympd"</span>,</span>
+<span id="cb88-13"><a href="#cb88-13" aria-hidden="true"></a>    <span class="st">"A_sympd_after_reset"</span>});</span>
+<span id="cb88-14"><a href="#cb88-14" aria-hidden="true"></a></span>
+<span id="cb88-15"><a href="#cb88-15" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb88-16"><a href="#cb88-16" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="is-zero">Is zero<a class="anchor" aria-label="anchor" href="#is-zero"></a>
+</h3>
+<p><code>.is_zero()</code> and <code>.is_zero(tol)</code> are a member function of the <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, and <code>SpMat</code> classes. It returns <code>true</code> if all elements are zero within a tolerance and <code>false</code> otherwise. For complex numbers, each component (real and imaginary) is checked separately. The <code>tol</code> argument is optional.</p>
+<div class="section level4">
+<h4 id="examples-65">Examples<a class="anchor" aria-label="anchor" href="#examples-65"></a>
+</h4>
+<div class="sourceCode" id="cb89"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">is_zero1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true"></a>  cube B(n, n, n, fill::zeros);</span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true"></a>  sp_mat C(n, n);</span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true"></a></span>
+<span id="cb89-6"><a href="#cb89-6" aria-hidden="true"></a>  writable::logicals res(<span class="dv">3</span>);</span>
+<span id="cb89-7"><a href="#cb89-7" aria-hidden="true"></a>  res[<span class="dv">0</span>] = A.is_zero(<span class="fl">0.005</span>);</span>
+<span id="cb89-8"><a href="#cb89-8" aria-hidden="true"></a>  res[<span class="dv">1</span>] = B.is_zero(<span class="fl">0.005</span>);</span>
+<span id="cb89-9"><a href="#cb89-9" aria-hidden="true"></a>  res[<span class="dv">2</span>] = C.is_zero(<span class="fl">0.005</span>);</span>
+<span id="cb89-10"><a href="#cb89-10" aria-hidden="true"></a></span>
+<span id="cb89-11"><a href="#cb89-11" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"A_is_zero"</span>, <span class="st">"B_is_zero"</span>, <span class="st">"C_is_zero"</span>});</span>
+<span id="cb89-12"><a href="#cb89-12" aria-hidden="true"></a></span>
+<span id="cb89-13"><a href="#cb89-13" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb89-14"><a href="#cb89-14" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="is-finite">Is finite<a class="anchor" aria-label="anchor" href="#is-finite"></a>
+</h3>
+<p><code>.is_finite()</code> is a member function of the <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, and <code>SpMat</code> classes. It returns <code>true</code> if all elements are finite and <code>false</code> otherwise.</p>
+<div class="section level4">
+<h4 id="examples-66">Examples<a class="anchor" aria-label="anchor" href="#examples-66"></a>
+</h4>
+<div class="sourceCode" id="cb90"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">is_finite1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true"></a>  cube B(n, n, n, fill::randu);</span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true"></a>  sp_mat C(n, n);</span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true"></a></span>
+<span id="cb90-6"><a href="#cb90-6" aria-hidden="true"></a>  <span class="co">// Insert infinite values</span></span>
+<span id="cb90-7"><a href="#cb90-7" aria-hidden="true"></a>  B(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>) = datum::inf;</span>
+<span id="cb90-8"><a href="#cb90-8" aria-hidden="true"></a>  C(<span class="dv">0</span>, <span class="dv">0</span>) = -<span class="fl">1.0</span> * datum::inf;</span>
+<span id="cb90-9"><a href="#cb90-9" aria-hidden="true"></a></span>
+<span id="cb90-10"><a href="#cb90-10" aria-hidden="true"></a>  writable::logicals res(<span class="dv">3</span>);</span>
+<span id="cb90-11"><a href="#cb90-11" aria-hidden="true"></a>  res[<span class="dv">0</span>] = A.is_finite();</span>
+<span id="cb90-12"><a href="#cb90-12" aria-hidden="true"></a>  res[<span class="dv">1</span>] = B.is_finite();</span>
+<span id="cb90-13"><a href="#cb90-13" aria-hidden="true"></a>  res[<span class="dv">2</span>] = C.is_finite();</span>
+<span id="cb90-14"><a href="#cb90-14" aria-hidden="true"></a></span>
+<span id="cb90-15"><a href="#cb90-15" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"A_is_finite"</span>, <span class="st">"B_is_finite"</span>, <span class="st">"C_is_finite"</span>});</span>
+<span id="cb90-16"><a href="#cb90-16" aria-hidden="true"></a></span>
+<span id="cb90-17"><a href="#cb90-17" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb90-18"><a href="#cb90-18" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="has-infinity">Has infinity<a class="anchor" aria-label="anchor" href="#has-infinity"></a>
+</h3>
+<p><code>.has_inf()</code> is a member function of the <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, and <code>SpMat</code> classes. It returns <code>true</code> if the object contains at least one infinite value and <code>false</code> otherwise.</p>
+<div class="section level4">
+<h4 id="examples-67">Examples<a class="anchor" aria-label="anchor" href="#examples-67"></a>
+</h4>
+<div class="sourceCode" id="cb91"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">has_inf1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true"></a>  cube B(n, n, n, fill::randu);</span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true"></a>  sp_mat C(n, n);</span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true"></a></span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true"></a>  <span class="co">// Insert infinite values</span></span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true"></a>  B(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>) = datum::inf;</span>
+<span id="cb91-8"><a href="#cb91-8" aria-hidden="true"></a>  C(<span class="dv">0</span>, <span class="dv">0</span>) = -<span class="fl">1.0</span> * datum::inf;</span>
+<span id="cb91-9"><a href="#cb91-9" aria-hidden="true"></a></span>
+<span id="cb91-10"><a href="#cb91-10" aria-hidden="true"></a>  writable::logicals res(<span class="dv">3</span>);</span>
+<span id="cb91-11"><a href="#cb91-11" aria-hidden="true"></a>  res[<span class="dv">0</span>] = A.has_inf();</span>
+<span id="cb91-12"><a href="#cb91-12" aria-hidden="true"></a>  res[<span class="dv">1</span>] = B.has_inf();</span>
+<span id="cb91-13"><a href="#cb91-13" aria-hidden="true"></a>  res[<span class="dv">2</span>] = C.has_inf();</span>
+<span id="cb91-14"><a href="#cb91-14" aria-hidden="true"></a></span>
+<span id="cb91-15"><a href="#cb91-15" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"A_has_inf"</span>, <span class="st">"B_has_inf"</span>, <span class="st">"C_has_inf"</span>});</span>
+<span id="cb91-16"><a href="#cb91-16" aria-hidden="true"></a></span>
+<span id="cb91-17"><a href="#cb91-17" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb91-18"><a href="#cb91-18" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="has-not-a-number">Has not-a-number<a class="anchor" aria-label="anchor" href="#has-not-a-number"></a>
+</h3>
+<p><code>.has_nan()</code> is a member function of the <code>Mat</code>, <code>Col</code>, <code>Row</code>, <code>Cube</code>, and <code>SpMat</code> classes. It returns <code>true</code> if the object contains at least one not-a-number (NaN) value and <code>false</code> otherwise.</p>
+<div class="section level4">
+<h4 id="examples-68">Examples<a class="anchor" aria-label="anchor" href="#examples-68"></a>
+</h4>
+<div class="sourceCode" id="cb92"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] logicals <span class="va">has_nan1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true"></a>  mat A(n, n, fill::randu);</span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true"></a>  cube B(n, n, n, fill::randu);</span>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true"></a>  sp_mat C(n, n);</span>
+<span id="cb92-5"><a href="#cb92-5" aria-hidden="true"></a></span>
+<span id="cb92-6"><a href="#cb92-6" aria-hidden="true"></a>  <span class="co">// Insert NaN values</span></span>
+<span id="cb92-7"><a href="#cb92-7" aria-hidden="true"></a>  B(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>) = datum::nan;</span>
+<span id="cb92-8"><a href="#cb92-8" aria-hidden="true"></a>  C(<span class="dv">0</span>, <span class="dv">0</span>) = -<span class="fl">1.0</span> * datum::nan;</span>
+<span id="cb92-9"><a href="#cb92-9" aria-hidden="true"></a></span>
+<span id="cb92-10"><a href="#cb92-10" aria-hidden="true"></a>  writable::logicals res(<span class="dv">3</span>);</span>
+<span id="cb92-11"><a href="#cb92-11" aria-hidden="true"></a>  res[<span class="dv">0</span>] = A.has_nan();</span>
+<span id="cb92-12"><a href="#cb92-12" aria-hidden="true"></a>  res[<span class="dv">1</span>] = B.has_nan();</span>
+<span id="cb92-13"><a href="#cb92-13" aria-hidden="true"></a>  res[<span class="dv">2</span>] = C.has_nan();</span>
+<span id="cb92-14"><a href="#cb92-14" aria-hidden="true"></a></span>
+<span id="cb92-15"><a href="#cb92-15" aria-hidden="true"></a>  res.attr(<span class="st">"names"</span>) = strings({<span class="st">"A_has_nan"</span>, <span class="st">"B_has_nan"</span>, <span class="st">"C_has_nan"</span>});</span>
+<span id="cb92-16"><a href="#cb92-16" aria-hidden="true"></a></span>
+<span id="cb92-17"><a href="#cb92-17" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb92-18"><a href="#cb92-18" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="caveat-10">Caveat<a class="anchor" aria-label="anchor" href="#caveat-10"></a>
+</h4>
+<p><code>NaN</code> is not equal to anything, even itself.</p>
 </div>
 </div>
 </div>

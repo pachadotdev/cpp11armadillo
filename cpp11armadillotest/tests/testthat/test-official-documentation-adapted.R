@@ -128,7 +128,7 @@ test_that("examples derived from official documentation", {
   res23 <- transform1_(2L)
   expect_type(res23, "double")
   expect_equal(diag(res23), rep(123, 2))
-  
+
   res24 <- for_each1_(2L)
   expect_type(res24, "double")
   expect_equal(dim(res24), c(2, 2))
@@ -277,4 +277,86 @@ test_that("examples derived from official documentation", {
   expect_type(res58, "list")
   expect_equal(rbind(res58[[1]][1, ], res58[[2]][1, ], res58[[3]][1, ],
     res58[[4]][1, ]), res58[[5]])
+
+  res59 <- as_dense1_(2L)
+  expect_type(res59, "double")
+  expect_equal(length(res59), 2)
+
+  res60 <- transpose1_(2L)
+  expect_type(res60, "double")
+  expect_equal(dim(res60), c(3, 2))
+
+  res61 <- transpose2_(2L)
+  expect_type(res61, "double")
+  expect_equal(dim(res61), c(3, 2))
+
+  A <- matrix(c(1, 0, 0, 1, 1, 0, 0, 1, 1), nrow = 3, ncol = 3, byrow = TRUE)
+  b <- c(6.50, 7.50, 8.50)
+  res62 <- inverse1_(A, b)
+  expect_type(res62, "double")
+  expect_equal(res62, solve(A, b))
+
+  res63 <- maxmin1_(2)
+  expect_type(res63, "double")
+  expect_equal(length(res63), 2)
+
+  res64 <- index_maxmin1_(2)
+  expect_type(res64, "double")
+  expect_equal(length(res64), 6)
+
+  res65 <- in_range1_(2)
+  expect_type(res65, "logical")
+  expect_equal(length(res65), 3)
+
+  res66 <- is_empty1_(2)
+  expect_type(res66, "logical")
+  expect_equal(length(res66), 2)
+
+  res67 <- is_vec1_(2)
+  expect_type(res67, "logical")
+  expect_equal(length(res67), 5)
+
+  res68 <- is_sorted1_(2)
+  expect_type(res68, "logical")
+  expect_equal(length(res68), 4)
+
+  res69 <- is_triangular1_(2)
+  expect_type(res69, "logical")
+  expect_equal(length(res69), 3)
+
+  res70 <- is_diagonal1_(2)
+  expect_type(res70, "logical")
+  expect_equal(length(res70), 3)
+
+  res71 <- is_square1_(2)
+  expect_type(res71, "logical")
+  expect_equal(length(res71), 3)
+
+  res72 <- is_symmetric1_(2)
+  expect_type(res72, "logical")
+  expect_equal(length(res72), 3)
+
+  res73 <- is_hermitian1_(2)
+  expect_type(res73, "logical")
+  expect_equal(length(res73), 3)
+
+  res74 <- is_sympd1_(2)
+  expect_type(res74, "logical")
+  expect_equal(length(res74), 3)
+
+  res75 <- is_zero1_(2)
+  expect_type(res75, "logical")
+  expect_equal(length(res75), 3)
+
+  res76 <- is_finite1_(2)
+  expect_type(res76, "logical")
+  expect_equal(length(res76), 3)
+
+  res77 <- has_inf1_(2)
+  expect_type(res77, "logical")
+  expect_equal(length(res77), 3)
+
+  res78 <- has_nan1_(2)
+  expect_type(res78, "logical")
+  expect_equal(length(res78), 3)
 })

@@ -661,9 +661,6 @@ To store a set of matrices of the same size, the `Cube` class is more efficient.
 | `.is_finite`      | check whether all elements are finite                                       |
 | `.has_inf`        | check whether any element is +/- infinity                                   |
 | `.has_nan`        | check whether any element is NaN                                            |
-| `.print`          | print object to `std::cout` or user specified stream (cpp11armadillo redirects to R messages) |
-| `.raw_print`      | print object without formatting                                             |
-| `.brief_print`    | print object in shortened/abridged form                                     |
 
 ## Attributes
 
@@ -867,7 +864,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 
 ## Eye
 
-* `.eye()` Member functions of `Mat` and `SpMat`.
+* `.eye()` member function of `Mat` and `SpMat`.
 * `.eye(n_rows, n_cols)` Set the elements along the main diagonal to one and
   off-diagonal elements to zero, optionally first changing the size to specified
   dimensions.
@@ -2195,8 +2192,8 @@ stored in a column-by-column order. Data for cubes is stored in a slice-by-slice
 
 ## Column pointer
 
-`.colptr( col_number )` is a member function of `Mat` that obtains a raw pointer
-to the memory used by elements in the specified column.
+`.colptr( col_number )` is a member function of the `Mat` class that obtains a
+raw pointer to the memory used by elements in the specified column.
 
 ### Examples
 
@@ -2404,7 +2401,7 @@ Sparse matrices (`SpMat`):
   `.for_each()` instead of iterators.
 * For `submatrix` and `subcube` the iterators are intended only to be used with
   range-based for loops. Any other use is not supported. For example, the direct
-  use of the `begin()` and `end()` functions, as well as the underlying
+  use of the `.begin()` and `.end()` functions, as well as the underlying
   iterators types is not supported. The implementation of submatrices and
   subcubes uses short-lived temporary objects that are subject to automatic
   deletion, and as such are error-prone to handle manually.
@@ -2414,16 +2411,16 @@ Sparse matrices (`SpMat`):
 Member functions for the `Col` and `Row` classes to mimic the functionality of
 containers in the C++ standard library:  
       
-* `front()` accesses the first element in a vector.
-* `back()` accesses the last element in a vector.
+* `.front()` accesses the first element in a vector.
+* `.back()` accesses the last element in a vector.
 
 Member functions for the `Col`, `Row`, `Mat`, `Cube` and `SpMat` classes to
 mimic the functionality of containers in the C++ standard library:
 
-* `clear()` removes the elements from an object.
-* `empty()` returns `true` if the object has no elements and `false` if the
+* `.clear()` removes the elements from an object.
+* `.empty()` returns `true` if the object has no elements and `false` if the
   object has one or more elements.    
-* `size()` returns the total number of elements in an object.
+* `.size()` returns the total number of elements in an object.
 
 ### Examples
 
@@ -2457,7 +2454,7 @@ mimic the functionality of containers in the C++ standard library:
 
 ## Convert matrix to column
 
-`as_col()` is a member function of `Mat` class, it returns a flattened
+`.as_col()` is a member function of the `Mat` class, it returns a flattened
 version of the matrix as a column vector. Flattening is done by concatenating
 all columns.
   
@@ -2473,7 +2470,7 @@ all columns.
 
 ## Convert matrix to row
 
-`as_row()` is a member function of `Mat` class, it returns a flattened
+`.as_row()` is a member function of the `Mat` class, it returns a flattened
 version of the matrix as a row vector. Flattening is done by concatenating
 all rows.
   
@@ -2493,9 +2490,9 @@ Converting columns to rows is faster than converting rows to columns.
 
 ## Convert column to matrix
 
-`col_as_mat(col_number)` is a member function of `Cube`, it returns a matrix
-of the specified cube column and the number of rows is preserved. Given a cube
-of size `R x C x S`, the resultant matrix size is `R x S`.
+`.col_as_mat(col_number)` is a member function of the `Cube` class, it returns a
+matrix of the specified cube column and the number of rows is preserved. Given
+a cube of size `R x C x S`, the resultant matrix size is `R x S`.
 
 ### Examples
 
@@ -2520,9 +2517,9 @@ of size `R x C x S`, the resultant matrix size is `R x S`.
 
 ## Convert column to matrix
 
-`row_as_mat(row_number)` is a member function of `Cube`, it returns a matrix
-of the specified cube row and the number of columns is preserved. Given a cube
-of size `R x C x S`, the resultant matrix size is `S x C`.
+`.row_as_mat(row_number)` is a member function of the `Cube` class, it returns a
+matrix of the specified cube row and the number of columns is preserved. Given
+a cube of size `R x C x S`, the resultant matrix size is `S x C`.
 
 ### Examples
 
@@ -2544,3 +2541,603 @@ of size `R x C x S`, the resultant matrix size is `S x C`.
   return res;
 }
 ```
+
+## Convert sparse matrix to dense matrix
+
+`.as_dense()` is a member function of the `SpMat` class, it avoids the
+construction of an intermediate sparse matrix representation of the expression.
+
+### Examples
+    
+```cpp
+[[cpp11::register]] doubles as_dense1_(const int& n) {
+  sp_mat A;
+  A.sprandu(n, n, 0.1);
+
+  // extract column 1 of A directly into dense column vector
+  colvec c = A.col(0).as_dense();
+
+  // store the sum of each column of A directly in dense row vector
+  rowvec r = sum(A).as_dense();
+
+  return as_doubles(c + r.t());
+}
+```
+
+## Dense matrix and vector transposition
+
+`.t()` is a member function of the `Mat`, `Col` and `Row` classes, it returns a
+transposed copy of the object. For real matrices, the transpose is a simple
+transposition of the elements. For complex matrices, the transpose is a
+Hermitian conjugate transposition of the elements (e.g., the signs of the
+imaginary components are flipped).
+  
+### Examples
+    
+```cpp
+[[cpp11::register]] doubles_matrix<> transpose1_(const int& n) {
+  mat A(n, n + 1, fill::randu);
+  mat B = A.t();
+  return as_doubles_matrix(B);
+}
+```
+
+## Sparse matrix transposition
+
+`.st()` is a member function of the `SpMat` classe, it returns a
+transposed copy of the object. For real matrices, it is not applicable. For
+complex matrices, the transpose is a simple transposition of the elements (e.g.,
+the signs of imaginary components are not flipped).
+  
+### Examples
+    
+```cpp
+[[cpp11::register]] doubles_matrix<> transpose2_(const int& n) {
+  sp_mat A;
+  A.sprandu(n, n + 1, 0.1);
+  sp_mat B = A.t();
+  return as_doubles_matrix(B);
+}
+```
+
+## Matrix inversion
+
+`.i()` is a member function of the `Mat` class, it provides an inverse of the
+matrix. If the matrix is not square sized, a `std::logic_error` exception is
+thrown. If the matrix appears to be singular, the output matrix is reset and a
+`std::runtime_error` exception is thrown.
+  
+###  Examples
+    
+```cpp
+[[cpp11::register]] doubles inverse1_(const doubles_matrix<>& a,
+                                      const doubles b) {
+  mat A = as_Mat(a);
+  vec B = as_Col(b);
+
+  mat X = inv(A);
+  vec Y = X * B;
+
+  return as_doubles(Y);
+}
+```
+
+### Caveats
+
+* If the matrix is known to be symmetric positive definite, `inv_sympd()`.
+* To solve a system of linear equations, such as `Z = inv(X) * Y`, `solve()` can
+  be faster and/or more accurate.
+
+## Maximum and minimum
+
+`.min()` and `.max()` are member functions of the `Mat`, `Col`, `Row`, and
+`Cube` classes. They return the minimum and maximum values of the object,
+respectively. For objects with complex numbers, absolute values are used for
+comparison.
+  
+### Examples
+    
+```cpp
+[[cpp11::register]] doubles maxmin1_(const int& n) {
+  mat A = randu<mat>(n, n);
+
+  writable::doubles res(2);
+  res[0] = A.max();
+  res[1] = A.min();
+
+  res.attr("names") = strings({"max", "min"});
+
+  return res;
+}
+```
+
+## Linear index of maximum and minimum
+
+`.index_min()` and `.index_max()` are member functions of the `Mat`, `Col`,
+`Row`, and `Cube` classes. They return the linear index of the minimum and
+maximum values of the object, respectively. For objects with complex numbers,
+absolute values are used for comparison. The returned index is of type `uword`.
+
+### Examples
+    
+```cpp
+[[cpp11::register]] doubles index_maxmin1_(const int& n) {
+  mat A = randu<mat>(n, n);
+
+  writable::doubles res(6);
+  res[0] = static_cast<int>(A.index_max());
+  res[1] = static_cast<int>(A.index_min());
+  res[2] = A(0, 0);
+  res[3] = A(1, 0);
+  res[4] = A(0, 1);
+  res[5] = A(1, 1);
+
+  res.attr("names") = strings({"index_max", "index_min", "element0", "element1",
+    "element2", "element3"});
+
+  return res;
+}
+```
+
+## In-range
+
+`.in_range(** i **)` is a member function of `Mat`, `Col`, `Row`, `Cube`,
+`SpMat` and `field`, it returns `true` if the given location or span is
+currently valid and `false` if the object is empty, the location is out of
+bounds, or the span is out of bounds.
+
+| Function/Method                                                                               | Mat, Col, Row | Cube | SpMat | Field |
+|-----------------------------------------------------------------------------------------------|---------------|------|-------|-------|
+| `.in_range(span(start, end))`                                                                 | X             | X    | X     | X     |
+| `.in_range(row, col)`                                                                         | X             | X    | X     | X     |
+| `.in_range(span(start_row, end_row), span(start_col, end_col))`                               | X             |      | X     | X     |
+| `.in_range(row, col, slice)`                                                                  |               | X    |       | X     |
+| `.in_range(span(start_row, end_row), span(start_col, end_col), span(start_slice, end_slice))` |               | X    |       | X     |
+| `.in_range(first_row, first_col, size(X))` (`X` is a matrix or field)                         | X             |      | X     | X     |
+| `.in_range(first_row, first_col, size(n_rows, n_cols))`                                       | X             |      | X     | X     |
+| `.in_range(first_row, first_col, first_slice, size(Q))` (`Q` is a cube or field)              |               | X    |       | X     |
+| `.in_range(first_row, first_col, first_slice, size(n_rows, n_cols, n_slices))`                |               | X    |       | X     |
+
+Instances of `span(a,b)` can be replaced by:
+
+* `span()` or `span::all` to indicate the entire range.
+* `span(a)` to indicate a particular row, column, or slice.
+  
+### Examples
+    
+```cpp
+[[cpp11::register]] logicals in_range1_(const int& n) {
+  mat A(n, n + 1, fill::randu);
+
+  writable::logicals res(3);
+  res[0] = A.in_range(0, 0);
+  res[1] = A.in_range(3, 4);
+  res[2] = A.in_range(4, 5);
+
+  res.attr("names") = strings({"in_range00", "in_range34", "in_range45"});
+
+  return res;
+}
+```
+
+## Is empty
+
+`.is_empty()` is a member function of the `Mat`, `Col`, `Row`, `Cube`, `SpMat`,
+and `field` classes. It returns `true` if the object has no elements and `false`
+if the object has one or more elements.
+
+### Examples
+
+```cpp
+[[cpp11::register]] logicals is_empty1_(const int& n) {
+  mat A(n, n + 1, fill::randu);
+
+  writable::logicals res(2);
+  res[0] = A.is_empty();
+
+  A.reset();
+  res[1] = A.is_empty();
+
+  res.attr("names") = strings({"before_reset", "after_reset"});
+
+  return res;
+}
+```
+
+## Is vector/column vector/row vector
+
+`.is_vec()`, `.is_colvec()` and `.is_rowvec()` are member functions of `Mat`
+and `SpMat`.
+
+* `.is_vec()` returns `true` if the matrix can be interpreted as a vector
+  (either column or row vector) and `false` otherwise.
+* `.is_colvec()` returns `true` if the matrix can be interpreted as a column
+  vector and `false` otherwise.  
+* `.is_rowvec()` returns `true` if the matrix can be interpreted as a row
+  vector and `false` otherwise.
+    
+### Examples
+
+```cpp
+[[cpp11::register]] logicals is_vec1_(const int& n) {
+  mat A(n, 1, fill::randu);
+  mat B(1, n, fill::randu);
+  mat C(0, 1, fill::randu);
+  mat D(1, 0, fill::randu);
+
+  writable::logicals res(5);
+  res[0] = A.is_vec();
+  res[1] = A.is_colvec();
+  res[2] = B.is_rowvec();
+  res[3] = C.is_colvec();
+  res[4] = D.is_rowvec();
+
+  res.attr("names") = strings({"Nx1_is_vec", "Nx1_is_colvec", "1xN_is_rowvec",
+    "0x1_is_colvec", "1x0_is_rowvec"});
+
+  return res;
+}
+```
+
+### Caveat
+
+Do not assume that the vector has elements if these functions return `true`. It
+is possible to have an empty vector (e.g., 0x1 as in the examples).
+
+## Is sorted
+
+`.is_sorted()`, `.is_sorted(sort_direction)` and
+`.is_sorted(sort_direction, dim)` are member function of `Mat`, `Row`, and
+`Col`. For matrices and vectors with complex numbers, order is checked via
+absolute values.
+
+If the object is a vector, these return a `bool` indicating whether the elements
+are sorted. If the object is a matrix, these return a `bool` indicating whether
+the elements are sorted in each column (`dim = 0`, default) or each row
+(`dim = 1`), and the `dim` argument is optional.
+
+The `sort_direction` argument is optional, `sort_direction` can be one of the
+following strings:
+    
+* `"ascend"`: the elements are ascending, consecutive elements can be equal, and
+  this is the default operation.
+* `"descend"`: the elements are descending, and consecutive elements can be
+  equal.
+* `"strictascend"`: the elements are strictly ascending, and consecutive
+  elements cannot be equal.
+* `"strictdescend"`: the elements are strictly descending, and consecutive
+  elements cannot be equal.
+
+### Examples
+
+```cpp
+[[cpp11::register]] logicals is_sorted1_(const int& n) {
+  vec a(n, fill::randu);
+  vec b = sort(a);
+  mat A(10, 10, fill::randu);
+
+  writable::logicals res(4);
+  res[0] = a.is_sorted();
+  res[1] = b.is_sorted();
+  res[2] = A.is_sorted("descend", 1);
+  res[4] = A.is_sorted("ascend", 1);
+
+  res.attr("names") = strings({"a_sorted", "b_sorted", "A_descend",
+    "A_ascend"});
+
+  return res;
+}
+```
+
+## Is upper triangular/lower triangular
+
+`.is_trimatu()` and `.is_trimatl()` are member functions of `Mat` and `SpMat`.
+`.is_trimatu()` returns `true` if the matrix is upper triangular (e.g., the
+matrix is square sized and all elements below the main diagonal are zero) and
+`false` otherwise. `.is_trimatl()` returns `true` if the matrix is lower
+triangular (e.g., the matrix is square sized and all elements above the main
+diagonal are zero) and `false` otherwise.
+  
+### Examples
+
+```cpp
+[[cpp11::register]] logicals is_triangular1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = trimatl(A);
+
+  writable::logicals res(3);
+  res[0] = B.is_trimatu();
+  res[1] = B.is_trimatl();
+
+  B.reset();
+  res[2] = B.is_trimatu();
+
+  res.attr("names") = strings({"is_trimatu", "is_trimatl",
+    "is_trimatu_after_reset"});
+
+  return res;
+}
+```
+
+### Caveat
+
+If these functions return `true`, do not assume that the matrix contains
+non-zero elements on or above/below the main diagonal. It is possible to have an
+empty matrix (e.g., 0x0 as in the examples).
+
+## Is diagonal
+
+`is_diagmat()` is a member function of `Mat` and `SpMat`. It returns `true` if
+the matrix is diagonal (e.g., all elements outside of the main diagonal are
+zero). If the matrix is not square sized, a `std::logic_error` exception is
+thrown.
+
+### Examples
+
+```cpp
+[[cpp11::register]] logicals is_diagonal1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = diagmat(A);
+
+  writable::logicals res(3);
+  res[0] = A.is_diagmat();
+  res[1] = B.is_diagmat();
+
+  A.reset();
+  res[2] = A.is_diagmat();
+
+  res.attr("names") = strings({"A_diagmat", "B_diagmat",
+    "A_diagmat_after_reset"});
+
+  return res;
+}
+```
+
+### Caveat
+
+If this function returns `true`, do not assume that the matrix contains non-zero
+elements on the main diagonal only. It is possible to have an empty matrix
+(e.g., 0x0 as in the examples).
+
+## Is square
+
+`.is_square()` is a member function of the `Mat` and `SpMat` classes. It returns
+`true` if the matrix is square sized (e.g., the number of rows is equal to the
+number of columns) and `false` otherwise.
+
+### Examples
+
+```cpp
+[[cpp11::register]] logicals is_square1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = diagmat(A);
+
+  writable::logicals res(3);
+  res[0] = A.is_square();
+  res[1] = B.is_square();
+
+  A.reset();
+  res[2] = A.is_square();
+
+  res.attr("names") = strings({"A_square", "B_square",
+    "A_square_after_reset"});
+
+  return res;
+}
+```
+
+### Caveats
+
+If this function returns `true`, do not assume that the matrix is non-empty. It
+is possible to have an empty matrix (e.g., 0x0 as in the examples).
+
+## Is symmetric
+
+`.is_symmetric()` is a member function of the `Mat` and `SpMat` classes. It
+returns `true` if the matrix is symmetric (e.g., the matrix is square sized and
+the transpose is equal to the original matrix) and `false` otherwise.
+
+### Examples
+
+```cpp
+[[cpp11::register]] logicals is_symmetric1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = symmatu(A);
+
+  writable::logicals res(3);
+  res[0] = A.is_symmetric();
+  res[1] = B.is_symmetric();
+
+  A.reset();
+  res[2] = A.is_symmetric();
+
+  res.attr("names") = strings({"A_symmetric", "B_symmetric",
+    "A_symmetric_after_reset"});
+
+  return res;
+}
+```
+
+### Caveats
+
+If this function returns `true`, do not assume that the matrix is non-empty. It
+is possible to have an empty matrix (e.g., 0x0 as in the examples).
+
+## Is hermitian
+
+`.is_hermitian()` is a member function of the `Mat` and `SpMat` classes. It
+returns `true` if the matrix is Hermitian or self-adjoint (e.g., the matrix is
+square sized and the conjugate transpose is equal to the original matrix) and
+`false` otherwise.
+
+### Examples
+
+```cpp
+[[cpp11::register]] logicals is_hermitian1_(const int& n) {
+  cx_mat A(n, n, fill::randu);
+  cx_mat B = A.t() * A;
+
+  writable::logicals res(3);
+  res[0] = A.is_hermitian();
+  res[1] = B.is_hermitian();
+
+  A.reset();
+  res[2] = A.is_hermitian();
+
+  res.attr("names") = strings({"A_hermitian", "B_hermitian",
+    "A_hermitian_after_reset"});
+
+  return res;
+}
+```
+
+### Caveats
+
+If this function returns `true`, do not assume that the matrix is non-empty. It
+is possible to have an empty matrix (e.g., 0x0 as in the examples).
+
+## Is symmetric/hermitian positive definite
+
+`.is_sympd()` and `.is_sympd(tol)` are a member function of the `Mat` and
+`SpMat` classes. It returns `true` if the matrix is symmetric/hermitian
+positive definite within a tolerance (e.g., the matrix is square sized and all
+its eigenvalues are positive) and `false` otherwise. The `tol` argument is
+optional, the default is `tol = 100 * datum::eps * norm(X, "fro")`.
+
+### Examples
+
+```cpp
+[[cpp11::register]] logicals is_sympd1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = A * A.t();
+
+  writable::logicals res(3);
+  res[0] = A.is_sympd();
+  res[1] = B.is_sympd();
+
+  A.reset();
+  res[2] = A.is_sympd();
+
+  res.attr("names") = strings({"A_sympd", "B_sympd",
+    "A_sympd_after_reset"});
+
+  return res;
+}
+```
+
+## Is zero
+
+`.is_zero()` and `.is_zero(tol)` are a member function of the `Mat`, `Col`,
+`Row`, `Cube`, and `SpMat` classes. It returns `true` if all elements are zero
+within a tolerance and `false` otherwise. For complex numbers, each component
+(real and imaginary) is checked separately. The `tol` argument is optional.
+
+### Examples
+
+```cpp
+[[cpp11::register]] logicals is_zero1_(const int& n) {
+  mat A(n, n, fill::randu);
+  cube B(n, n, n, fill::zeros);
+  sp_mat C(n, n);
+
+  writable::logicals res(3);
+  res[0] = A.is_zero(0.005);
+  res[1] = B.is_zero(0.005);
+  res[2] = C.is_zero(0.005);
+
+  res.attr("names") = strings({"A_is_zero", "B_is_zero", "C_is_zero"});
+
+  return res;
+}
+```
+
+## Is finite
+
+`.is_finite()` is a member function of the `Mat`, `Col`, `Row`, `Cube`, and
+`SpMat` classes. It returns `true` if all elements are finite and `false`
+otherwise.
+
+### Examples
+
+```cpp
+[[cpp11::register]] logicals is_finite1_(const int& n) {
+  mat A(n, n, fill::randu);
+  cube B(n, n, n, fill::randu);
+  sp_mat C(n, n);
+
+  // Insert infinite values
+  B(0, 0, 0) = datum::inf;
+  C(0, 0) = -1.0 * datum::inf;
+
+  writable::logicals res(3);
+  res[0] = A.is_finite();
+  res[1] = B.is_finite();
+  res[2] = C.is_finite();
+
+  res.attr("names") = strings({"A_is_finite", "B_is_finite", "C_is_finite"});
+
+  return res;
+}
+```
+
+## Has infinity
+
+`.has_inf()` is a member function of the `Mat`, `Col`, `Row`, `Cube`, and
+`SpMat` classes. It returns `true` if the object contains at least one infinite
+value and `false` otherwise.
+
+### Examples
+
+```cpp
+[[cpp11::register]] logicals has_inf1_(const int& n) {
+  mat A(n, n, fill::randu);
+  cube B(n, n, n, fill::randu);
+  sp_mat C(n, n);
+
+  // Insert infinite values
+  B(0, 0, 0) = datum::inf;
+  C(0, 0) = -1.0 * datum::inf;
+
+  writable::logicals res(3);
+  res[0] = A.has_inf();
+  res[1] = B.has_inf();
+  res[2] = C.has_inf();
+
+  res.attr("names") = strings({"A_has_inf", "B_has_inf", "C_has_inf"});
+
+  return res;
+}
+```
+
+## Has not-a-number
+
+`.has_nan()` is a member function of the `Mat`, `Col`, `Row`, `Cube`, and
+`SpMat` classes. It returns `true` if the object contains at least one
+not-a-number (NaN) value and `false` otherwise.
+
+### Examples
+
+```cpp
+[[cpp11::register]] logicals has_nan1_(const int& n) {
+  mat A(n, n, fill::randu);
+  cube B(n, n, n, fill::randu);
+  sp_mat C(n, n);
+
+  // Insert NaN values
+  B(0, 0, 0) = datum::nan;
+  C(0, 0) = -1.0 * datum::nan;
+
+  writable::logicals res(3);
+  res[0] = A.has_nan();
+  res[1] = B.has_nan();
+  res[2] = C.has_nan();
+
+  res.attr("names") = strings({"A_has_nan", "B_has_nan", "C_has_nan"});
+
+  return res;
+}
+```
+
+### Caveat
+
+`NaN` is not equal to anything, even itself.
