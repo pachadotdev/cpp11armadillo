@@ -395,3 +395,63 @@ has_inf1_ <- function(n) {
 has_nan1_ <- function(n) {
   .Call(`_cpp11armadillotest_has_nan1_`, n)
 }
+
+linspace1_ <- function(n) {
+  .Call(`_cpp11armadillotest_linspace1_`, n)
+}
+
+logspace1_ <- function(n) {
+  .Call(`_cpp11armadillotest_logspace1_`, n)
+}
+
+regspace1_ <- function(delta) {
+  .Call(`_cpp11armadillotest_regspace1_`, delta)
+}
+
+randperm1_ <- function(n, m) {
+  .Call(`_cpp11armadillotest_randperm1_`, n, m)
+}
+
+eye2_ <- function(n) {
+  .Call(`_cpp11armadillotest_eye2_`, n)
+}
+
+ones2_ <- function(n) {
+  .Call(`_cpp11armadillotest_ones2_`, n)
+}
+
+zeros2_ <- function(n) {
+  .Call(`_cpp11armadillotest_zeros2_`, n)
+}
+
+randu3_ <- function(n) {
+  .Call(`_cpp11armadillotest_randu3_`, n)
+}
+
+randn3_ <- function(n) {
+  .Call(`_cpp11armadillotest_randn3_`, n)
+}
+
+randg3_ <- function(n) {
+  .Call(`_cpp11armadillotest_randg3_`, n)
+}
+
+speye1_ <- function(n) {
+  .Call(`_cpp11armadillotest_speye1_`, n)
+}
+
+spones1_ <- function(n) {
+  .Call(`_cpp11armadillotest_spones1_`, n)
+}
+
+sprandu1_ <- function(n) {
+  .Call(`_cpp11armadillotest_sprandu1_`, n)
+}
+
+sprandn1_ <- function(n) {
+  .Call(`_cpp11armadillotest_sprandn1_`, n)
+}
+
+toeplitz1_ <- function(n) {
+  .Call(`_cpp11armadillotest_toeplitz1_`, n)
+}

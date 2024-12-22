@@ -1211,3 +1211,182 @@
 
   return res;
 }
+
+[[cpp11::register]] doubles linspace1_(const int& n) {
+  vec a = linspace(1, 2, n);
+  rowvec b = linspace<rowvec>(3, 4, n);
+
+  vec res = a + b.t();
+
+  return as_doubles(res);
+}
+
+[[cpp11::register]] doubles logspace1_(const int& n) {
+  vec a = logspace(1, 2, n);
+  rowvec b = logspace<rowvec>(3, 4, n);
+
+  vec res = a + b.t();
+
+  return as_doubles(res);
+}
+
+[[cpp11::register]] doubles regspace1_(const double& delta) {
+  vec a = regspace(1, delta, 2);
+  rowvec b = regspace<rowvec>(3, delta, 4);
+
+  vec res = a + b.t();
+
+  return as_doubles(res);
+}
+
+[[cpp11::register]] integers randperm1_(const int& n, const int& m) {
+  uvec a = randperm(n);
+  uvec b = randperm(n, m);
+
+  // concatenate a and b
+  uvec c = join_cols(a, b);
+
+  return as_integers(c);
+}
+
+[[cpp11::register]] doubles_matrix<> eye2_(const int& n) {
+  mat A = eye(n, n);  // or:  mat A(n, n, fill::eye);
+
+  fmat B = 123.0 * eye<fmat>(n, n);
+
+  cx_mat C = eye<cx_mat>(size(A));
+  mat C_real = real(C);
+
+  mat res = A + B + C_real;
+
+  return as_doubles_matrix(res);
+}
+
+[[cpp11::register]] doubles_matrix<> ones2_(const int& n) {
+  vec v = ones(n);  // or: vec v(10, fill::ones);
+  uvec u = ones<uvec>(n);
+  rowvec r = ones<rowvec>(n);
+
+  mat A = ones(n, n);  // or: mat A(n, n, fill::ones);
+  fmat B = ones<fmat>(n, n);
+
+  cube Q = ones(n, n, n + 1);  // or: cube Q(n, n, n + 1, fill::ones);
+
+  mat res = diagmat(v) + diagmat(conv_to<vec>::from(u)) + diagmat(r) + A + B +
+    Q.slice(0);
+
+  return as_doubles_matrix(res);
+}
+
+[[cpp11::register]] doubles_matrix<> zeros2_(const int& n) {
+  vec v = zeros(n);  // or: vec v(10, fill::zeros);
+  uvec u = zeros<uvec>(n);
+  rowvec r = zeros<rowvec>(n);
+
+  mat A = zeros(n, n);  // or: mat A(n, n, fill::zeros);
+  fmat B = zeros<fmat>(n, n);
+
+  cube Q = zeros(n, n, n + 1);  // or: cube Q(n, n, n + 1, fill::zeros);
+
+  mat res = diagmat(v) + diagmat(conv_to<vec>::from(u)) + diagmat(r) + A + B + Q.slice(0);
+
+  return as_doubles_matrix(res);
+}
+
+[[cpp11::register]] doubles_matrix<> randu3_(const int& n) {
+  double a = randu();
+  double b = randu(distr_param(10, 20));
+
+  vec v1 = randu(n);  // or vec v1(n, fill::randu);
+  vec v2 = randu(n, distr_param(10, 20));
+
+  rowvec r1 = randu<rowvec>(n);
+  rowvec r2 = randu<rowvec>(n, distr_param(10, 20));
+
+  mat A1 = randu(n, n);  // or mat A1(n, n, fill::randu);
+  mat A2 = randu(n, n, distr_param(10, 20));
+
+  fmat B1 = randu<fmat>(n, n);
+  fmat B2 = randu<fmat>(n, n, distr_param(10, 20));
+
+  mat res = diagmat(v1) + diagmat(v2) + diagmat(r1) + diagmat(r2) + A1 + A2 +
+    B1 + B2;
+
+  res.each_col([a](vec& x) { x += a; });
+  res.each_row([b](rowvec& y) { y /= b; });
+
+  return as_doubles_matrix(res);
+}
+
+[[cpp11::register]] doubles_matrix<> randn3_(const int& n) {
+  vec v1 = randn(n);  // or vec v1(n, fill::randn);
+  vec v2 = randn(n, distr_param(10, 20));
+
+  rowvec r1 = randn<rowvec>(n);
+  rowvec r2 = randn<rowvec>(n, distr_param(10, 20));
+
+  mat A1 = randn(n, n);  // or mat A1(n, n, fill::randn);
+  mat A2 = randn(n, n, distr_param(10, 20));
+
+  fmat B1 = randn<fmat>(n, n);
+  fmat B2 = randn<fmat>(n, n, distr_param(10, 20));
+
+  mat res = diagmat(v1) + diagmat(v2) + diagmat(r1) + diagmat(r2) + A1 + A2 + B1 + B2;
+
+  return as_doubles_matrix(res);
+}
+
+[[cpp11::register]] doubles_matrix<> randg3_(const int& n) {
+  int a = randi();
+  int b = randi(distr_param(-10, +20));
+
+  imat A1 = randi(n, n);
+  imat A2 = randi(n, n, distr_param(-10, +20));
+
+  mat B1 = randi<mat>(n, n);
+  mat B2 = randi<mat>(n, n, distr_param(-10, +20));
+
+  mat res = A1 + A2 + B1 + B2;
+
+  res.each_col([a](vec& x) { x *= a; });
+  res.each_row([b](rowvec& y) { y -= b; });
+
+  return as_doubles_matrix(res);
+}
+
+[[cpp11::register]] doubles_matrix<> speye1_(const int& n) {
+  sp_mat A = speye<sp_mat>(n, n);
+  mat B = mat(A);
+  return as_doubles_matrix(B);
+}
+
+[[cpp11::register]] doubles_matrix<> spones1_(const int& n) {
+  sp_mat A = sprandu<sp_mat>(n, n, 0.1);
+  sp_mat B = spones(A);
+  mat C = mat(B);
+  return as_doubles_matrix(C);
+}
+
+[[cpp11::register]] doubles_matrix<> sprandu1_(const int& n) {
+  sp_mat A = sprandu<sp_mat>(n, n, 0.05);
+  mat B = mat(A);
+  return as_doubles_matrix(B);
+}
+
+[[cpp11::register]] doubles_matrix<> sprandn1_(const int& n) {
+  sp_mat A = sprandn<sp_mat>(n, n, 0.05);
+  mat B = mat(A);
+  return as_doubles_matrix(B);
+}
+
+[[cpp11::register]] doubles_matrix<> toeplitz1_(const int& n) {
+  vec a(n, fill::randu);
+  vec b(n, fill::randn);
+
+  mat X = toeplitz(a, b);
+  mat Y = circ_toeplitz(a);
+
+  mat res = X + Y;
+
+  return as_doubles_matrix(res);
+}

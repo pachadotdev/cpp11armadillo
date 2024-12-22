@@ -1,0 +1,645 @@
+---
+title: "Generated vectors, matrices, and cubes"
+output: rmarkdown::html_vignette
+bibliography: "references.bib"
+vignette: >
+  %\VignetteIndexEntry{Generated vectors, matrices, and cubes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette is adapted from the official Armadillo
+[documentation](https://arma.sourceforge.net/docs.html).
+
+# Linspace
+
+The `linspace()` function generates a vector of linearly spaced values from
+`start` to `end` (it includes `end`). The arguments can be `start, end` or
+`start, end, N`, where `N` is optional and indicates the number of elements in
+the vector (`N` is 100 by default).
+
+The usage is:
+
+```cpp
+vec v = linspace(start, end, N)
+vector_type v = linspace<vector_type>(start, end, N)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles linspace1_(const int& n) {
+  vec a = linspace(1, 2, n);
+  rowvec b = linspace<rowvec>(3, 4, n);
+
+  vec res = a + b.t();
+
+  return as_doubles(res);
+}
+```
+
+## Caveat
+
+For `N = 1`, the generated vector will have a single element equal to end.
+
+# Logspace
+
+The `logspace()` function generates a vector of logarithmically spaced values
+from `10^start` to `10^end` (it includes `10^end`). The arguments can be
+`start, end` or `start, end, N`, where `N` is optional and
+indicates the number of elements in the vector (`N` is 50 by default).
+
+The usage is:
+
+```cpp
+vec v = logspace(start, end, N)
+vector_type v = logspace<vector_type>(start, end, N)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles logspace1_(const int& n) {
+  vec a = logspace(1, 2, n);
+  rowvec b = logspace<rowvec>(3, 4, n);
+
+  vec res = a + b.t();
+
+  return as_doubles(res);
+}
+```
+
+# Regspace
+
+The `regspace()` function generates a vector of regularly spaced values
+`start, start + delta, start + 2*delta, ..., start + M * delta` where `M` is
+`M = floor((end - start) / delta)`. The arguments can be `start, end` or
+`start, delta, end`, where `delta` is optional (`delta = 1` if `start <= end`
+and `delta = -1` if `start > end` by default).
+
+The usage is:
+
+```cpp
+vec v = regspace(start, end)
+vec v = regspace(start, delta, end)
+vector_type v = regspace<vector_type>(start, end)
+vector_type v = regspace<vector_type>(start, delta, end)
+```
+
+The output vector will be empty if any of the following conditions are met:
+
+* `start < end` and `delta < 0`
+* `start > end` and `delta > 0`
+* `delta = 0`
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles regspace1_(const double& delta) {
+  vec a = regspace(1, delta, 2);
+  rowvec b = regspace<rowvec>(3, delta, 4);
+
+  vec res = a + b.t();
+
+  return as_doubles(res);
+}
+```
+
+## Caveats
+
+* This is different from Matlab/Octave.
+* Do not use `regspace()` to specify ranges for contiguous submatrix views,
+  use `span()` instead.
+
+## Randperm
+
+The `randperm()` function generates a vector of permutation of integers from
+`0` to `N-1`. The argument can be empty, `N`, or `N, M`,
+where `N` (`N = 10` by default) is the range of integers and `M` (`M = N` by
+default) is the length of the output.
+
+The usage is:
+
+```cpp
+uvec v = randperm(N)
+uvec v = randperm(N, M)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] integers randperm1_(const int& n, const int& m) {
+  uvec a = randperm(n);
+  uvec b = randperm(n, m);
+
+  uvec res = a + b;
+
+  return as_integers(res);
+}
+```
+
+# Eye
+
+The `eye()` function generates a matrix of size `n x m`. The argument
+can be `n_rows, n_cols` or `size(X)`. When `n_rows = n_cols`, the output is
+an identity matrix.
+
+The usage is:
+
+```cpp
+mat X = eye(n_rows, n_cols)
+matrix_type X = eye<matrix_type>(n_rows, n_cols) 
+matrix_type X = eye<matrix_type>(size(X))
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> eye1_(const int& n) {
+  mat A = eye(5,5);  // or:  mat A(5,5,fill::eye);
+
+  fmat B = 123.0 * eye<fmat>(5,5);
+
+cx_mat C = eye<cx_mat>( size(B) );
+
+  return as_doubles(res);
+}
+```
+
+# Ones
+
+The `ones()` function generates a vector, matrix or cube. The arguments can be
+`n_elem`, `n_rows, n_cols`, `n_rows, n_cols, n_slices`, or `size(X)`. The
+
+The usage is:
+
+```cpp
+vector_type v = ones<vector_type>(n_elem)
+matrix_type X = ones<matrix_type>(n_rows, n_cols)
+matrix_type Y = ones<matrix_type>(size(X))
+cube_type Q = ones<cube_type>(n_rows, n_cols, n_slices)
+cube_type R = ones<cube_type>(size(Q))
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> ones2_(const int& n) {
+  vec v = ones(n);  // or: vec v(10, fill::ones);
+  uvec u = ones<uvec>(n);
+  rowvec r = ones<rowvec>(n);
+
+  mat A = ones(n, n);  // or: mat A(n, n, fill::ones);
+  fmat B = ones<fmat>(n, n);
+
+  cube Q = ones(n, n, n + 1);  // or: cube Q(n, n, n + 1, fill::ones);
+
+  mat res = diagmat(v) + diagmat(conv_to<vec>::from(u)) + diagmat(r) + A + B +
+    Q.slice(0);
+
+  return as_doubles_matrix(res);
+}
+```
+
+## Caveat
+
+Specifying `fill::ones` during object construction is more compact. For example,
+`mat A(5, 6, fill::ones)`.
+
+# Zeros
+
+The `zeros()` function generates a vector, matrix or cube. The arguments can be
+`n_elem`, `n_rows, n_cols`, `n_rows, n_cols, n_slices`, or `size(X)`.
+
+The usage is:
+
+```cpp
+vector_type v = zeros<vector_type>(n_elem)
+matrix_type X = zeros<matrix_type>(n_rows, n_cols)
+matrix_type Y = zeros<matrix_type>(size(X))
+cube_type Q = zeros<cube_type>(n_rows, n_cols, n_slices)
+cube_type R = zeros<cube_type>(size(Q))
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> zeros2_(const int& n) {
+  vec v = zeros(n);  // or: vec v(10, fill::zeros);
+  uvec u = zeros<uvec>(n);
+  rowvec r = zeros<rowvec>(n);
+
+  mat A = zeros(n, n);  // or: mat A(n, n, fill::zeros);
+  fmat B = zeros<fmat>(n, n);
+
+  cube Q = zeros(n, n, n + 1);  // or: cube Q(n, n, n + 1, fill::zeros);
+
+  mat res = diagmat(v) + diagmat(conv_to<vec>::from(u)) + diagmat(r) + A + B +
+    Q.slice(0);
+
+  return as_doubles_matrix(res);
+}
+```
+
+## Caveat
+
+Specifying `fill::zeros` during object construction is more compact. For
+example, `mat A(5, 6, fill::zeros)`.
+
+# Randu
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="randu"></a>
+<b>randu( )</b> 
+<br><b>randu( distr_param(a,b) )</b>
+<br>
+<br><b>randu( n_elem )</b>
+<br><b>randu( n_elem, distr_param(a,b) )</b> 
+<br>
+<br><b>randu( n_rows, n_cols )</b>
+<br><b>randu( n_rows, n_cols, distr_param(a,b) )</b>
+<br>
+<br><b>randu( n_rows, n_cols, n_slices )</b>
+<br><b>randu( n_rows, n_cols, n_slices, distr_param(a,b) )</b>
+<br>
+<br><b>randu( size(X) )</b>
+<br><b>randu( size(X), distr_param(a,b) )</b>
+<ul>
+<li>
+Generate a scalar, vector, matrix or cube with the elements set to random <b>floating point</b> values uniformly distributed in the [a,b] interval
+</li>
+<br>
+<li>The default distribution parameters are <i>a&thinsp;=&thinsp;0</i> and <i>b&thinsp;=&thinsp;1</i>
+</li>
+<br>
+<li>For complex elements, the real and imaginary parts are treated separately
+</li>
+<br>
+<li>
+Usage:
+<ul>
+<li><i>scalar_type</i> s = randu&lt;<i>scalar_type</i>&gt;( ), where <i>scalar_type</i> &in; { float, double, <a href="#cx_double">cx_float</a>, <a href="#cx_double">cx_double</a> }</li>
+<li><i>scalar_type</i> s = randu&lt;<i>scalar_type</i>&gt;( distr_param(a,b) ), where <i>scalar_type</i>  &in; { float, double, <a href="#cx_double">cx_float</a>, <a href="#cx_double">cx_double</a> }</li>
+<br>
+<li><i>vector_type</i> v = randu&lt;<i>vector_type</i>&gt;( n_elem )</li>
+<li><i>vector_type</i> v = randu&lt;<i>vector_type</i>&gt;( n_elem, distr_param(a,b) )</li>
+<br>
+<li><i>matrix_type</i> X = randu&lt;<i>matrix_type</i>&gt;( n_rows, n_cols )</li>
+<li><i>matrix_type</i> X = randu&lt;<i>matrix_type</i>&gt;( n_rows, n_cols, distr_param(a,b) )</li>
+<br>
+<li><i>cube_type</i> Q = randu&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices )</li>
+<li><i>cube_type</i> Q = randu&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices, distr_param(a,b) )</li>
+</ul>
+</li>
+<br>
+<li>
+<b>Caveat:</b> to generate a matrix with random integer values instead of floating point values, use <a href="#randi">randi()</a> instead 
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+double a = randu();
+double b = randu(distr_param(10,20));
+
+vec v1 = randu(5);    // or: vec v1(5, fill::randu);
+vec v2 = randu(5, distr_param(10,20));
+
+rowvec r1 = randu&lt;rowvec&gt;(5);
+rowvec r2 = randu&lt;rowvec&gt;(5, distr_param(10,20));
+
+mat A1 = randu(5, 6);  // or: mat A1(5, 6, fill::randu);
+mat A2 = randu(5, 6, distr_param(10,20));
+
+fmat B1 = randu&lt;fmat&gt;(5, 6);
+fmat B2 = randu&lt;fmat&gt;(5, 6, distr_param(10,20));
+</pre>
+</ul>
+</li>
+
+The `randu()` function generates a vector, matrix or cube with the elements set
+to random floating point values uniformly distributed in the `[a,b]` interval.
+The arguments can be `distr_param(a,b)`, `n_elem`, `n_elem, distr_param(a,b)`,
+`n_rows, n_cols`, `n_rows, n_cols, distr_param(a,b)`,
+`n_rows, n_cols, n_slices`, `n_rows, n_cols, n_slices, distr_param(a,b)`,
+`size(X)`, or `size(X), distr_param(a,b)`.
+
+The usage is:
+
+```cpp
+// the scalar type can be: float, double, cx_float, or cx_double
+
+scalar_type s = randu<scalar_type>()
+scalar_type s = randu<scalar_type>(distr_param(a,b))
+
+vector_type v = randu<vector_type>(n_elem)
+vector_type v = randu<vector_type>(n_elem, distr_param(a,b))
+
+matrix_type X = randu<matrix_type>(n_rows, n_cols)
+matrix_type X = randu<matrix_type>(n_rows, n_cols, distr_param(a,b))
+
+cube_type Q = randu<cube_type>(n_rows, n_cols, n_slices)
+cube_type Q = randu<cube_type>(n_rows, n_cols, n_slices, distr_param(a,b))
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> randu3_(const int& n) {
+  double a = randu();
+  double b = randu(distr_param(10, 20));
+
+  vec v1 = randu(n);  // or vec v1(n, fill::randu);
+  vec v2 = randu(n, distr_param(10, 20));
+
+  rowvec r1 = randu<rowvec>(n);
+  rowvec r2 = randu<rowvec>(n, distr_param(10, 20));
+
+  mat A1 = randu(n, n);  // or mat A1(n, n, fill::randu);
+  mat A2 = randu(n, n, distr_param(10, 20));
+
+  fmat B1 = randu<fmat>(n, n);
+  fmat B2 = randu<fmat>(n, n, distr_param(10, 20));
+
+  mat res = diagmat(v1) + diagmat(v2) + diagmat(r1) + diagmat(r2) + A1 + A2 +
+    B1 + B2;
+
+  res.each_col([a](vec& x) { x += a; });
+  res.each_row([b](rowvec& y) { y /= b; });
+
+  return as_doubles_matrix(res);
+}
+```
+
+## Caveat
+
+To generate a matrix with random integer values instead of floating point
+values, use `randi()` instead.
+
+# Randn
+
+The `randn()` function generates a vector, matrix or cube with the elements set
+to random floating point values normally distributed with mean `0` and standard
+deviation `1`. The arguments can be `n_elem, distr_param(mean, stddev)`,
+`n_elem`, `n_elem, distr_param(mean, stddev)`, `n_rows, n_cols`,
+`n_rows, n_cols, distr_param(mean, stddev)`, `n_rows, n_cols, n_slices`,
+`n_rows, n_cols, n_slices, distr_param(mean, stddev)`, `size(X)`, or
+`size(X), distr_param(mean, stddev)`.
+
+The usage is:
+
+```cpp
+// the scalar type can be: float, double, cx_float, or cx_double
+
+scalar_type s = randn<scalar_type>()
+scalar_type s = randn<scalar_type>(distr_param(mean, stddev))
+
+vector_type v = randn<vector_type>(n_elem)
+vector_type v = randn<vector_type>(n_elem, distr_param(mean, stddev))
+
+matrix_type X = randn<matrix_type>(n_rows, n_cols)
+matrix_type X = randn<matrix_type>(n_rows, n_cols, distr_param(mean, stddev))
+
+cube_type Q = randn<cube_type>(n_rows, n_cols, n_slices)
+cube_type Q = randn<cube_type>(n_rows, n_cols, n_slices, distr_param(mean, stddev))
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> randn3_(const int& n) {
+  vec v1 = randn(n);  // or vec v1(n, fill::randn);
+  vec v2 = randn(n, distr_param(10, 20));
+
+  rowvec r1 = randn<rowvec>(n);
+  rowvec r2 = randn<rowvec>(n, distr_param(10, 20));
+
+  mat A1 = randn(n, n);  // or mat A1(n, n, fill::randn);
+  mat A2 = randn(n, n, distr_param(10, 20));
+
+  fmat B1 = randn<fmat>(n, n);
+  fmat B2 = randn<fmat>(n, n, distr_param(10, 20));
+
+  mat res = diagmat(v1) + diagmat(v2) + diagmat(r1) + diagmat(r2) + A1 + A2 +
+    B1 + B2;
+
+  return as_doubles_matrix(res);
+}
+```
+
+# Randg
+
+The `randg()` function generates a vector, matrix or cube with the elements set
+to random floating point values gamma distributed with shape `a` and scale `b`.
+The arguments can be `distr_param(a, b)`, `n_elem`, `n_elem, distr_param(a, b)`,
+`n_rows, n_cols`, `n_rows, n_cols, distr_param(a, b)`,
+`n_rows, n_cols, n_slices`, `n_rows, n_cols, n_slices, distr_param(a, b)`,
+`size(X)`, or `size(X), distr_param(a, b)`.
+
+The usage is:
+
+```cpp
+// the scalar type can be: float, double, cx_float, or cx_double
+
+scalar_type s = randg<scalar_type>()
+scalar_type s = randg<scalar_type>(distr_param(a, b))
+
+vector_type v = randg<vector_type>(n_elem)
+vector_type v = randg<vector_type>(n_elem, distr_param(a, b))
+
+matrix_type X = randg<matrix_type>(n_rows, n_cols)
+matrix_type X = randg<matrix_type>(n_rows, n_cols, distr_param(a, b))
+
+cube_type Q = randg<cube_type>(n_rows, n_cols, n_slices)
+cube_type Q = randg<cube_type>(n_rows, n_cols, n_slices, distr_param(a, b))
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> randg3_(const int& n) {
+  int a = randi();
+  int b = randi(distr_param(-10, +20));
+
+  imat A1 = randi(n, n);
+  imat A2 = randi(n, n, distr_param(-10, +20));
+
+  mat B1 = randi<mat>(n, n);
+  mat B2 = randi<mat>(n, n, distr_param(-10, +20));
+
+  mat res = A1 + A2 + B1 + B2;
+
+  res.each_col([a](vec& x) { x *= a; });
+  res.each_row([b](rowvec& y) { y -= b; });
+
+  return as_doubles_matrix(res);
+}
+```
+
+# Randi
+
+The `randi()` function generates a vector, matrix or cube with the elements set
+to random integer values uniformly distributed in the `[a,b]` interval. The
+arguments can be `distr_param(a, b)`, `n_elem`, `n_elem, distr_param(a, b)`,
+`n_rows, n_cols`, `n_rows, n_cols, distr_param(a, b)`,
+`n_rows, n_cols, n_slices`, `n_rows, n_cols, n_slices, distr_param(a, b)`,
+`size(X)`, or `size(X), distr_param(a, b)`. The default values are `a = 0` and
+`b = maximum_int`.
+
+The usage is:
+
+```cpp
+scalar_type s = randi<scalar_type>()
+scalar_type s = randi<scalar_type>(distr_param(a, b))
+
+vector_type v = randi<vector_type>(n_elem)
+vector_type v = randi<vector_type>(n_elem, distr_param(a, b))
+
+matrix_type X = randi<matrix_type>(n_rows, n_cols)
+matrix_type X = randi<matrix_type>(n_rows, n_cols, distr_param(a, b))
+
+cube_type Q = randi<cube_type>(n_rows, n_cols, n_slices)
+cube_type Q = randi<cube_type>(n_rows, n_cols, n_slices, distr_param(a, b))
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] integers_matrix<> randi3_(const int& n) {
+  uvec v1 = randi(n);  // or uvec v1(n, fill::randi);
+  uvec v2 = randi(n, distr_param(10, 20));
+
+  umat A1 = randi(n, n);  // or umat A1(n, n, fill::randi);
+  umat A2 = randi(n, n, distr_param(10, 20));
+
+  icube Q1 = randi(icube(n, n, n + 1));  // or icube Q1(n, n, n + 1, fill::randi);
+  icube Q2 = randi(icube(n, n, n + 1), distr_param(10, 20));
+
+  mat res = diagmat(conv_to<vec>::from(v1)) + diagmat(conv_to<vec>::from(v2)) +
+    A1 + A2 + Q1.slice(0) + Q2.slice(0);
+
+  return as_integers_matrix(res);
+}
+```
+
+## Caveat
+
+To generate a matrix with random floating point values (e.g., float or double)
+instead of integers, use `randu()` instead.
+
+# Speye
+
+The `speye()` function generates a sparse matrix of size `n x n` with the
+elements on the diagonal set to `1` and the remaining elements set to `0`. The
+argument can be `n_rows, n_cols` or `size(X)`. An identity matrix is generated
+when `n_rows = n_cols`.
+
+The usage is:
+
+```cpp
+sparse_matrix_type X = speye(n_rows, n_cols)
+sparse_matrix_type X = speye<sparse_matrix_type>(size(X))
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> speye1_(const int& n) {
+  sp_mat A = speye<sp_mat>(n, n);
+  mat B = mat(A);
+  return as_doubles_matrix(B);
+}
+```
+
+# Spones
+
+The `spones(X)` function generates a sparse matrix with the same size as `X` and
+all the non-zero elements set to `1`.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> spones1_(const int& n) {
+  sp_mat A = sprandu<sp_mat>(n, n, 0.1);
+  sp_mat B = spones(A);
+  mat C = mat(B);
+  return as_doubles_matrix(C);
+}
+```
+
+# Sprandu
+
+The `sprandu()` function generates a sparse matrix of size `n_rows x n_cols`
+with random floating point values uniformly distributed in the `[0,1]` interval.
+The arguments can be `n_rows, n_cols, density` or `size(X), density`.
+
+The usage is:
+
+```cpp
+sparse_matrix_type X = sprandu<sparse_matrix_type>(n_rows, n_cols, density)
+sparse_matrix_type X = sprandu<sparse_matrix_type>(size(X), density)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> sprandu1_(const int& n) {
+  sp_mat A = sprandu<sp_mat>(n, n, 0.05);
+  mat B = mat(A);
+  return as_doubles_matrix(B);
+}
+```
+
+# Sprandn
+
+The `sprandn()` function generates a sparse matrix of size `n_rows x n_cols`
+with random floating point values normally distributed with mean `0` and
+standard deviation `1`. The arguments can be `n_rows, n_cols, density` or
+`size(X), density`.
+
+The usage is:
+
+```cpp
+sparse_matrix_type X = sprandn<sparse_matrix_type>(n_rows, n_cols, density)
+sparse_matrix_type X = sprandn<sparse_matrix_type>(size(X), density)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> sprandn1_(const int& n) {
+  sp_mat A = sprandn<sp_mat>(n, n, 0.05);
+  mat B = mat(A);
+  return as_doubles_matrix(B);
+}
+```
+
+# Toeplitz
+
+The `toeplitz()` function generates a toeplitz matrix. The arguments can be
+`a` or `a, b`, where `a` is a vector that determines the first column and `b`
+is an optional vector that determines the first row.
+
+Alternatively, `circ_toeplitz()` generates a circulant toeplitz matrix.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> toeplitz1_() {
+  vec a = linspace(1, 5, 5);
+  vec b = linspace(1, 5, 5);
+
+  mat A = toeplitz(a, b);
+  mat B = circ_toeplitz(a);
+
+  return as_doubles_matrix(A + B);
+}
+```

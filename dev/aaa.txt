@@ -1,0 +1,881 @@
+<div class="pagebreak"></div>
+<hr class="greyline">
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Generated Vectors&thinsp;/&thinsp;Matrices&thinsp;/&thinsp;Cubes</b></font>
+<br>
+<br>
+
+
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="linspace"></a>
+<b>linspace( start, end )</b>
+<br><b>linspace( start, end, N )</b>
+<ul>
+<li>
+Generate a vector with <i>N</i> elements;
+the values of the elements are linearly spaced from <i>start</i> to (and including) <i>end</i>
+</li>
+<br>
+<li>
+The argument <i>N</i> is optional; by default <i>N = 100</i>
+</li>
+<br>
+<li>
+Usage:
+<ul>
+<li>vec v = linspace(start, end, N)</li>
+<li><i>vector_type</i> v = linspace&lt;<i>vector_type</i>&gt;(start, end, N)</li>
+</ul>
+</li>
+<br>
+<li>
+<b>Caveat:</b> for <i>N&nbsp;=&nbsp;1</i>, the generated vector will have a single element equal to <i>end</i>
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+   vec a = linspace(0, 5, 6);
+
+rowvec b = linspace&lt;rowvec&gt;(5, 0, 6);
+</pre>
+</ul>
+</li>
+<br>
+<li>
+See also:
+<ul>
+<li><a href="#regspace">regspace()</a></li>
+<li><a href="#logspace">logspace()</a></li>
+<li><a href="#randperm">randperm()</a></li>
+<li><a href="#ones_standalone">ones()</a></li>
+<li><a href="#interp1">interp1()</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="logspace"></a>
+<b>logspace( A, B )</b>
+<br><b>logspace( A, B, N )</b>
+<ul>
+<li>
+Generate a vector with <i>N</i> elements;
+the values of the elements are logarithmically spaced from <i>10<sup><font size=-1>A</font></sup></i> to (and including) <i>10<sup><font size=-1>B</font></sup></i>
+</li>
+<br>
+<li>
+The argument <i>N</i> is optional; by default <i>N&thinsp;=&thinsp;50</i>
+</li>
+<br>
+<li>
+Usage:
+<ul>
+<li>vec v = logspace(A, B, N)</li>
+<li><i>vector_type</i> v = logspace&lt;<i>vector_type</i>&gt;(A, B, N)</li>
+</ul>
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+   vec a = logspace(0, 5, 6);
+
+rowvec b = logspace&lt;rowvec&gt;(5, 0, 6);
+</pre>
+</ul>
+</li>
+<br>
+<li>
+See also:
+<ul>
+<li><a href="#linspace">linspace()</a></li>
+<li><a href="#regspace">regspace()</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="regspace"></a>
+<b>regspace( start, end )</b>
+<br><b>regspace( start, delta, end )</b>
+<ul>
+<li>
+Generate a vector with regularly spaced elements:
+<br>[&nbsp;<i>(start&thinsp;+&thinsp;0*delta)</i>,&nbsp;<i>(start&thinsp;+&thinsp;1*delta)</i>,&nbsp;<i>(start&thinsp;+&thinsp;2*delta)</i>,&nbsp;<i>&#8943;</i>,&nbsp;<i>(start&thinsp;+&thinsp;M*delta)</i>&nbsp;]
+<br>where <i>M&thinsp;=&thinsp;floor((end-start)&thinsp;/&thinsp;delta)</i>, so that <i>(start&thinsp;+&thinsp;M*delta)&thinsp;&le;&thinsp;end</i>
+</li>
+<br>
+<li>
+Similar in operation to the Matlab/Octave colon operator, ie. <i>start:end</i>&nbsp;and&nbsp;<i>start:delta:end</i>
+</li>
+<br>
+<li>
+If <i>delta</i> is not specified:
+<ul>
+<li><i>delta</i>&thinsp;=&thinsp;+1,       if <i>start&thinsp;&le;&thinsp;end</i></li>
+<li><i>delta</i>&thinsp;=&thinsp;&minus;1, if <i>start&thinsp;&gt;&thinsp;end</i> &nbsp; (<b>caveat:</b> this is different to Matlab/Octave)</li>
+</ul>
+</li>
+<br>
+<li>
+An empty vector is generated when one of the following conditions is true:
+<ul>
+<li><i>start&thinsp;&lt;&thinsp;end</i>, and <i>delta&thinsp;&lt;&thinsp;0</i></li>
+<li><i>start&thinsp;&gt;&thinsp;end</i>, and <i>delta&thinsp;&gt;&thinsp;0</i></li>
+<li><i>delta&thinsp;=&thinsp;0</i></li>
+</ul>
+</li>
+<br>
+<li>
+Usage:
+<ul>
+<li>vec v = regspace(start, end)</li>
+<li>vec v = regspace(start, delta, end)</li>
+<li><i>vector_type</i> v = regspace&lt;<i>vector_type</i>&gt;(start, end)</li>
+<li><i>vector_type</i> v = regspace&lt;<i>vector_type</i>&gt;(start, delta, end)</li>
+</ul>
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+ vec a = regspace(0,  9);             // 0,  1, ...,   9
+
+uvec b = regspace&lt;uvec&gt;(2,  2,  10);  // 2,  4, ...,  10
+
+ivec c = regspace&lt;ivec&gt;(0, -1, -10);  // 0, -1, ..., -10
+</pre>
+</ul>
+</li>
+<br>
+<li>
+<b>Caveat:</b> do not use <i>regspace()</i> to specify ranges for contiguous submatrix views; use <a href="#submat">span()</a> instead
+</li>
+<br>
+<li>
+See also:
+<ul>
+<li><a href="#linspace">linspace()</a></li>
+<li><a href="#logspace">logspace()</a></li>
+<li><a href="#randperm">randperm()</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="randperm"></a>
+<b>randperm( N )</b>
+<br><b>randperm( N, M )</b>
+<ul>
+<li>
+Generate a vector with a random permutation of integers from <i>0</i> to <i>N-1</i>
+</li>
+<br>
+<li>
+The optional argument <i>M</i> indicates the number of elements to return,
+sampled without replacement from <i>0</i> to <i>N-1</i>
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+uvec X = randperm(10);
+uvec Y = randperm(10,2);
+</pre>
+</ul>
+</li>
+<br>
+<li>
+See also:
+<ul>
+<li><a href="#randi">randi()</a></li>
+<li><a href="#shuffle">shuffle()</a></li>
+<li><a href="#linspace">linspace()</a></li>
+<li><a href="#regspace">regspace()</a></li>
+<li><a href="#rng_seed">RNG seed setting</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="eye_standalone"></a>
+<b>eye( n_rows, n_cols )</b>
+<br>
+<b>eye( size(X) )</b>
+<ul>
+<li>
+Generate a matrix with the elements along the main diagonal set to one
+and off-diagonal elements set to zero
+</li>
+<br>
+<li>
+An identity matrix is generated when <i>n_rows</i> = <i>n_cols</i>
+</li>
+<br>
+<li>
+Usage:
+<ul>
+<li>mat X = eye( n_rows, n_cols )</li>
+<li><i>matrix_type</i> X = eye&lt;<i>matrix_type</i>&gt;( n_rows, n_cols )</li>
+<li><i>matrix_type</i> Y = eye&lt;<i>matrix_type</i>&gt;( size(X) )</li>
+</ul>
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+   mat A = eye(5,5);  // or:  mat A(5,5,fill::eye);
+
+  fmat B = 123.0 * eye&lt;fmat&gt;(5,5);
+
+cx_mat C = eye&lt;cx_mat&gt;( size(B) );
+</pre>
+</ul>
+</li>
+<br>
+<li>See also:
+<ul>
+<li><a href="#eye_member">.eye()</a> (member function of Mat)</li>
+<li><a href="#diag">.diag()</a></li>
+<li><a href="#ones_standalone">ones()</a></li>
+<li><a href="#diagmat">diagmat()</a></li>
+<li><a href="#diagvec">diagvec()</a></li>
+<li><a href="#speye">speye()</a></li>
+<li><a href="#size">size()</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="ones_standalone"></a>
+<b>
+ones( n_elem )
+<br>ones( n_rows, n_cols )
+<br>ones( n_rows, n_cols, n_slices )
+<br>ones( size(X) )
+</b>
+<ul>
+<li>
+Generate a vector, matrix or cube with all elements set to one
+</li>
+<br>
+<li>
+Usage:
+<ul>
+<li><i>vector_type</i> v = ones&lt;<i>vector_type</i>&gt;( n_elem )</li>
+<li><i>matrix_type</i> X = ones&lt;<i>matrix_type</i>&gt;( n_rows, n_cols )</li>
+<li><i>matrix_type</i> Y = ones&lt;<i>matrix_type</i>&gt;( size(X) )</li>
+<li><i>cube_type</i> Q = ones&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices )</li>
+<li><i>cube_type</i> R = ones&lt;<i>cube_type</i>&gt;( size(Q) )</li>
+</ul>
+</li>
+<br>
+<li>
+<b>Caveat:</b> specifying <i>fill::ones</i> during object construction is more compact, eg. <code>mat A(5, 6, fill::ones)</code>
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+   vec v = ones(10);    // or: vec v(10, fill::ones);
+  uvec u = ones&lt;uvec&gt;(10);
+rowvec r = ones&lt;rowvec&gt;(10);
+
+ mat A = ones(5,6);     // or: mat A(5, 6, fill::ones);
+fmat B = ones&lt;fmat&gt;(5,6);
+umat C = ones&lt;umat&gt;(5,6);
+
+ cube Q = ones(5,6,7);  // or: cube Q(5, 6, 7, fill::ones);
+fcube R = ones&lt;fcube&gt;(5,6,7);
+</pre>
+</ul>
+</li>
+<br>
+<li>
+See also:
+<ul>
+<li><a href="#ones_member">.ones()</a> (member function of <i>Mat</i>, <i>Col</i>, <i>Row</i> and <i>Cube</i>)</li>
+<li><a href="#fill">.fill()</a></li>
+<li><a href="#eye_standalone">eye()</a></li>
+<li><a href="#linspace">linspace()</a></li>
+<li><a href="#regspace">regspace()</a></li>
+<li><a href="#zeros_standalone">zeros()</a></li>
+<li><a href="#randu">randu()</a></li>
+<li><a href="#spones">spones()</a></li>
+<li><a href="#size">size()</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="zeros_standalone"></a>
+<b>zeros( n_elem )</b>
+<br><b>zeros( n_rows, n_cols )</b>
+<br><b>zeros( n_rows, n_cols, n_slices )</b>
+<br><b>zeros( size(X) )</b>
+<ul>
+<li>
+Generate a vector, matrix or cube with the elements set to zero
+</li>
+<br>
+<li>
+Usage:
+<ul>
+<li><i>vector_type</i> v = zeros&lt;<i>vector_type</i>&gt;( n_elem )</li>
+<li><i>matrix_type</i> X = zeros&lt;<i>matrix_type</i>&gt;( n_rows, n_cols )</li>
+<li><i>matrix_type</i> Y = zeros&lt;<i>matrix_type</i>&gt;( size(X) )</li>
+<li><i>cube_type</i> Q = zeros&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices )</li>
+<li><i>cube_type</i> R = zeros&lt;<i>cube_type</i>&gt;( size(Q) )</li>
+</ul>
+</li>
+<br>
+<li>
+<b>Caveat:</b> specifying <i>fill::zeros</i> during object construction is more compact, eg. <code>mat A(5, 6, fill::zeros)</code>
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+   vec v = zeros(10);    // or: vec v(10, fill::zeros);
+  uvec u = zeros&lt;uvec&gt;(10);
+rowvec r = zeros&lt;rowvec&gt;(10);
+
+ mat A = zeros(5,6);     // or: mat A(5, 6, fill::zeros);
+fmat B = zeros&lt;fmat&gt;(5,6);
+umat C = zeros&lt;umat&gt;(5,6);
+
+ cube Q = zeros(5,6,7);  // or: cube Q(5, 6, 7, fill::zeros);
+fcube R = zeros&lt;fcube&gt;(5,6,7);
+</pre>
+</ul>
+</li>
+<br>
+<li>
+See also:
+<ul>
+<li><a href="#zeros_member">.zeros()</a> (member function of <i>Mat</i>, <i>Col</i>, <i>Row</i>, <i>SpMat</i> and <i>Cube</i>)</li>
+<li><a href="#fill">.fill()</a></li>
+<li><a href="#ones_standalone">ones()</a></li>
+<li><a href="#randu">randu()</a></li>
+<li><a href="#size">size()</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="randu"></a>
+<b>randu( )</b> 
+<br><b>randu( distr_param(a,b) )</b>
+<br>
+<br><b>randu( n_elem )</b>
+<br><b>randu( n_elem, distr_param(a,b) )</b> 
+<br>
+<br><b>randu( n_rows, n_cols )</b>
+<br><b>randu( n_rows, n_cols, distr_param(a,b) )</b>
+<br>
+<br><b>randu( n_rows, n_cols, n_slices )</b>
+<br><b>randu( n_rows, n_cols, n_slices, distr_param(a,b) )</b>
+<br>
+<br><b>randu( size(X) )</b>
+<br><b>randu( size(X), distr_param(a,b) )</b>
+<ul>
+<li>
+Generate a scalar, vector, matrix or cube with the elements set to random <b>floating point</b> values uniformly distributed in the [a,b] interval
+</li>
+<br>
+<li>The default distribution parameters are <i>a&thinsp;=&thinsp;0</i> and <i>b&thinsp;=&thinsp;1</i>
+</li>
+<br>
+<li>For complex elements, the real and imaginary parts are treated separately
+</li>
+<br>
+<li>
+Usage:
+<ul>
+<li><i>scalar_type</i> s = randu&lt;<i>scalar_type</i>&gt;( ), where <i>scalar_type</i> &in; { float, double, <a href="#cx_double">cx_float</a>, <a href="#cx_double">cx_double</a> }</li>
+<li><i>scalar_type</i> s = randu&lt;<i>scalar_type</i>&gt;( distr_param(a,b) ), where <i>scalar_type</i>  &in; { float, double, <a href="#cx_double">cx_float</a>, <a href="#cx_double">cx_double</a> }</li>
+<br>
+<li><i>vector_type</i> v = randu&lt;<i>vector_type</i>&gt;( n_elem )</li>
+<li><i>vector_type</i> v = randu&lt;<i>vector_type</i>&gt;( n_elem, distr_param(a,b) )</li>
+<br>
+<li><i>matrix_type</i> X = randu&lt;<i>matrix_type</i>&gt;( n_rows, n_cols )</li>
+<li><i>matrix_type</i> X = randu&lt;<i>matrix_type</i>&gt;( n_rows, n_cols, distr_param(a,b) )</li>
+<br>
+<li><i>cube_type</i> Q = randu&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices )</li>
+<li><i>cube_type</i> Q = randu&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices, distr_param(a,b) )</li>
+</ul>
+</li>
+<br>
+<li>
+<b>Caveat:</b> to generate a matrix with random integer values instead of floating point values, use <a href="#randi">randi()</a> instead 
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+double a = randu();
+double b = randu(distr_param(10,20));
+
+vec v1 = randu(5);    // or: vec v1(5, fill::randu);
+vec v2 = randu(5, distr_param(10,20));
+
+rowvec r1 = randu&lt;rowvec&gt;(5);
+rowvec r2 = randu&lt;rowvec&gt;(5, distr_param(10,20));
+
+mat A1 = randu(5, 6);  // or: mat A1(5, 6, fill::randu);
+mat A2 = randu(5, 6, distr_param(10,20));
+
+fmat B1 = randu&lt;fmat&gt;(5, 6);
+fmat B2 = randu&lt;fmat&gt;(5, 6, distr_param(10,20));
+</pre>
+</ul>
+</li>
+<li>See also:
+<ul>
+<li><a href="#randu_randn_member">.randu()</a> (member function)</li>
+<li><a href="#randn">randn()</a></li>
+<li><a href="#randg">randg()</a></li>
+<li><a href="#randi">randi()</a></li>
+<li><a href="#imbue">.imbue()</a></li>
+<li><a href="#ones_standalone">ones()</a></li>
+<li><a href="#zeros_standalone">zeros()</a></li>
+<li><a href="#shuffle">shuffle()</a></li>
+<li><a href="#sprandu_sprandn">sprandu()</a></li>
+<li><a href="#size">size()</a></li>
+<li><a href="#rng_seed">RNG seed setting</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)">uniform distribution in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="randn"></a>
+<b>randn( )</b> 
+<br><b>randn( distr_param(mu,sd) )</b>
+<br>
+<br><b>randn( n_elem )</b>
+<br><b>randn( n_elem, distr_param(mu,sd) )</b>
+<br>
+<br><b>randn( n_rows, n_cols )</b>
+<br><b>randn( n_rows, n_cols, distr_param(mu,sd) )</b>
+<br>
+<br><b>randn( n_rows, n_cols, n_slices )</b>
+<br><b>randn( n_rows, n_cols, n_slices, distr_param(mu,sd) )</b>
+<br>
+<br><b>randn( size(X) )</b>
+<br><b>randn( size(X), distr_param(mu,sd) )</b>
+<ul>
+<li>
+Generate a scalar, vector, matrix or cube with the elements set to random values with normal&thinsp;/&thinsp;Gaussian distribution, parameterised by mean <i>mu</i> and standard deviation <i>sd</i>
+</li>
+<br>
+<li>The default distribution parameters are <i>mu&thinsp;=&thinsp;0</i> and <i>sd&thinsp;=&thinsp;1</i>
+</li>
+<br>
+<li>For complex elements, the real and imaginary parts are treated separately
+</li>
+<br>
+<li>
+Usage:
+<ul>
+<li><i>scalar_type</i> s = randn&lt;<i>scalar_type</i>&gt;( ), where <i>scalar_type</i> &in; { float, double, <a href="#cx_double">cx_float</a>, <a href="#cx_double">cx_double</a> }</li>
+<li><i>scalar_type</i> s = randn&lt;<i>scalar_type</i>&gt;( distr_param(mu,sd) ), where <i>scalar_type</i>  &in; { float, double, <a href="#cx_double">cx_float</a>, <a href="#cx_double">cx_double</a> }</li>
+<br>
+<li><i>vector_type</i> v = randn&lt;<i>vector_type</i>&gt;( n_elem )</li>
+<li><i>vector_type</i> v = randn&lt;<i>vector_type</i>&gt;( n_elem, distr_param(mu,sd) )</li>
+<br>
+<li><i>matrix_type</i> X = randn&lt;<i>matrix_type</i>&gt;( n_rows, n_cols )</li>
+<li><i>matrix_type</i> X = randn&lt;<i>matrix_type</i>&gt;( n_rows, n_cols, distr_param(mu,sd) )</li>
+<br>
+<li><i>cube_type</i> Q = randn&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices )</li>
+<li><i>cube_type</i> Q = randn&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices, distr_param(mu,sd) )</li>
+</ul>
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+double a = randn();
+double b = randn(distr_param(10,5));
+
+vec v1 = randn(5);    // or: vec v1(5, fill::randn);
+vec v2 = randn(5, distr_param(10,5));
+
+rowvec r1 = randn&lt;rowvec&gt;(5);
+rowvec r2 = randn&lt;rowvec&gt;(5, distr_param(10,5));
+
+mat A1 = randn(5, 6);  // or: mat A1(5, 6, fill::randn);
+mat A2 = randn(5, 6, distr_param(10,5));
+
+fmat B1 = randn&lt;fmat&gt;(5, 6);
+fmat B2 = randn&lt;fmat&gt;(5, 6, distr_param(10,5));
+</pre>
+</ul>
+</li>
+<li>See also:
+<ul>
+<li><a href="#randu_randn_member">.randn()</a> (member function)</li>
+<li><a href="#randu">randu()</a></li>
+<li><a href="#randg">randg()</a></li>
+<li><a href="#randi">randi()</a></li>
+<li><a href="#mvnrnd">mvnrnd()</a></li>
+<li><a href="#normpdf">normpdf()</a></li>
+<li><a href="#imbue">.imbue()</a></li>
+<li><a href="#sprandu_sprandn">sprandn()</a></li>
+<li><a href="#size">size()</a></li>
+<li><a href="#rng_seed">RNG seed setting</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="randg"></a>
+<b>randg( )</b> 
+<br><b>randg( distr_param(a,b) )</b>
+<br>
+<br><b>randg( n_elem )</b>
+<br><b>randg( n_elem, distr_param(a,b) )</b>
+<br>
+<br><b>randg( n_rows, n_cols )</b>
+<br><b>randg( n_rows, n_cols, distr_param(a,b) )</b>
+<br>
+<br><b>randg( n_rows, n_cols, n_slices )</b>
+<br><b>randg( n_rows, n_cols, n_slices, distr_param(a,b) )</b>
+<br>
+<br><b>randg( size(X) )</b>
+<br><b>randg( size(X), distr_param(a,b) )</b>
+<ul>
+<li>
+Generate a scalar, vector, matrix or cube with the elements set to random values from a gamma distribution:
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top;"><i>x<sup>&thinsp;a-1</sup> exp(&thinsp;-x&thinsp;/&thinsp;b&thinsp;)</i></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><i>p<font size=+1>(</font>x&thinsp;|&thinsp;a,b<font size=+1>)</font></i></td><td style="vertical-align: top;">&nbsp;<font size=+1>=</font>&nbsp;</td><td style="vertical-align: top;"><font size=+1><b><hr></b></font></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top; text-align: center;"><i>b<sup>&thinsp;a</sup> &Gamma;(a)</i></td>
+    </tr>
+  </tbody>
+</table>
+</ul>
+where <i>a</i> is the shape parameter and <i>b</i> is the scale parameter, with constraints <i>a&thinsp;&gt;&thinsp;0</i> and <i>b&thinsp;&gt;&thinsp;0</i>
+</li>
+<br>
+<li>The default distribution parameters are <i>a&thinsp;=&thinsp;1</i> and <i>b&thinsp;=&thinsp;1</i>
+</li>
+<br>
+<li>
+Usage:
+<ul>
+<li><i>scalar_type</i> s = randg&lt;<i>scalar_type</i>&gt;( ), where <i>scalar_type</i> is either <i>float</i> or <i>double</i></li>
+<li><i>scalar_type</i> s = randg&lt;<i>scalar_type</i>&gt;( distr_param(a,b) ), where <i>scalar_type</i> is either <i>float</i> or <i>double</i></li>
+<br>
+<li><i>vector_type</i> v = randg&lt;<i>vector_type</i>&gt;( n_elem )</li>
+<li><i>vector_type</i> v = randg&lt;<i>vector_type</i>&gt;( n_elem, distr_param(a,b) )</li>
+<br>
+<li><i>matrix_type</i> X = randg&lt;<i>matrix_type</i>&gt;( n_rows, n_cols )</li>
+<li><i>matrix_type</i> X = randg&lt;<i>matrix_type</i>&gt;( n_rows, n_cols, distr_param(a,b) )</li>
+<br>
+<li><i>cube_type</i> Q = randg&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices )</li>
+<li><i>cube_type</i> Q = randg&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices, distr_param(a,b) )</li>
+</ul>
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+vec v1 = randg(100);
+vec v2 = randg(100, distr_param(2,1));
+
+rowvec r1 = randg&lt;rowvec&gt;(100);
+rowvec r2 = randg&lt;rowvec&gt;(100, distr_param(2,1));
+
+mat A1 = randg(10, 10);
+mat A2 = randg(10, 10, distr_param(2,1));
+
+fmat B1 = randg&lt;fmat&gt;(10, 10);
+fmat B2 = randg&lt;fmat&gt;(10, 10, distr_param(2,1));
+</pre>
+</ul>
+</li>
+<li>See also:
+<ul>
+<li><a href="#randu">randu()</a></li>
+<li><a href="#randn">randn()</a></li>
+<li><a href="#randi">randi()</a></li>
+<li><a href="#chi2rnd">chi2rnd()</a></li>
+<li><a href="#imbue">.imbue()</a></li>
+<li><a href="#size">size()</a></li>
+<li><a href="#rng_seed">RNG seed setting</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Gamma_distribution">gamma distribution in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="randi"></a>
+<b>randi( )</b> 
+<br><b>randi( distr_param(a,b) )</b> 
+<br>
+<br><b>randi( n_elem )</b> 
+<br><b>randi( n_elem, distr_param(a,b) )</b> 
+<br>
+<br><b>randi( n_rows, n_cols )</b>
+<br><b>randi( n_rows, n_cols, distr_param(a,b) )</b>
+<br>
+<br><b>randi( n_rows, n_cols, n_slices )</b>
+<br><b>randi( n_rows, n_cols, n_slices, distr_param(a,b) )</b>
+<br>
+<br><b>randi( size(X) )</b>
+<br><b>randi( size(X), distr_param(a,b) )</b>
+<ul>
+<li>
+Generate a scalar, vector, matrix or cube with the elements set to random <b>integer</b> values uniformly distributed in the [a,b] interval
+</li>
+<br>
+<li>The default distribution parameters are <i>a&thinsp;=&thinsp;0</i> and <i>b&thinsp;=&thinsp;maximum_int</i>
+</li>
+<br>
+<li>
+Usage:
+<ul>
+<li><i>scalar_type</i> v = randi&lt;<i>scalar_type</i>&gt;( )</li>
+<li><i>scalar_type</i> v = randi&lt;<i>scalar_type</i>&gt;( distr_param(a,b) )</li>
+<br>
+<li><i>vector_type</i> v = randi&lt;<i>vector_type</i>&gt;( n_elem )</li>
+<li><i>vector_type</i> v = randi&lt;<i>vector_type</i>&gt;( n_elem, distr_param(a,b) )</li>
+<br>
+<li><i>matrix_type</i> X = randi&lt;<i>matrix_type</i>&gt;( n_rows, n_cols )</li>
+<li><i>matrix_type</i> X = randi&lt;<i>matrix_type</i>&gt;( n_rows, n_cols, distr_param(a,b) )</li>
+<br>
+<li><i>cube_type</i> Q = randi&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices )</li>
+<li><i>cube_type</i> Q = randi&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices, distr_param(a,b) )</li>
+</ul>
+</li>
+<br>
+<li>
+<b>Caveat:</b> to generate a matrix with random floating point values (ie. <i>float</i> or <i>double</i>) instead of integers, use <a href="#randu">randu()</a> instead 
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+int a = randi();
+int b = randi(distr_param(-10, +20));
+
+imat A1 = randi(5, 6);
+imat A2 = randi(5, 6, distr_param(-10, +20));
+
+mat B1 = randi&lt;mat&gt;(5, 6);
+mat B2 = randi&lt;mat&gt;(5, 6, distr_param(-10, +20));
+</pre>
+</ul>
+</li>
+<li>See also:
+<ul>
+<li><a href="#randu">randu()</a></li>
+<li><a href="#randperm">randperm()</a></li>
+<li><a href="#imbue">.imbue()</a></li>
+<li><a href="#ones_standalone">ones()</a></li>
+<li><a href="#zeros_standalone">zeros()</a></li>
+<li><a href="#shuffle">shuffle()</a></li>
+<li><a href="#size">size()</a></li>
+<li><a href="#rng_seed">RNG seed setting</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="speye"></a>
+<b>speye( n_rows, n_cols )</b>
+<br>
+<b>speye( size(X) )</b>
+<ul>
+<li>
+Generate a sparse matrix with the elements along the main diagonal set to one
+and off-diagonal elements set to zero
+</li>
+<br>
+<li>
+An identity matrix is generated when <i>n_rows</i> = <i>n_cols</i>
+</li>
+<br>
+<li>
+Usage:
+<ul>
+<li><i>sparse_matrix_type</i> X = speye&lt;<i>sparse_matrix_type</i>&gt;( n_rows, n_cols )</li>
+<li><i>sparse_matrix_type</i> Y = speye&lt;<i>sparse_matrix_type</i>&gt;( size(X) )</li>
+</ul>
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+sp_mat A = speye&lt;sp_mat&gt;(5,5);
+</pre>
+</ul>
+</li>
+<br>
+<li>See also:
+<ul>
+<li><a href="#spones">spones()</a></li>
+<li><a href="#sprandu_sprandn">sprandu() &amp; sprandn()</a></li>
+<li><a href="#eye_standalone">eye()</a></li>
+<li><a href="#size">size()</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="spones"></a>
+<b>spones( A )</b>
+<ul>
+<li>
+Generate a sparse matrix with the same structure as sparse matrix <i>A</i>,
+but with the non-zero elements set to one
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+sp_mat A = sprandu&lt;sp_mat&gt;(100, 200, 0.1);
+
+sp_mat B = spones(A);
+</pre>
+</ul>
+</li>
+<li>See also:
+<ul>
+<li><a href="#speye">speye()</a></li>
+<li><a href="#sprandu_sprandn">sprandu() &amp; sprandn()</a></li>
+<li><a href="#ones_standalone">ones()</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="sprandu_sprandn"></a>
+<b>sprandu( n_rows, n_cols, density )</b>
+<br><b>sprandn( n_rows, n_cols, density )</b>
+<br>
+<br><b>sprandu( size(X), density )</b>
+<br><b>sprandn( size(X), density )</b>
+<ul>
+<li>
+Generate a sparse matrix with the non-zero elements set to random values
+</li>
+<br>
+<li>
+The <i>density</i> argument specifies the percentage of non-zero elements; it must be in the [0,1] interval
+</li>
+<br>
+<li><i>sprandu()</i> uses a uniform distribution in the [0,1] interval
+</li>
+<br>
+<li><i>sprandn()</i> uses a normal/Gaussian distribution with zero mean and unit variance
+</li>
+<br>
+<li>
+Usage:
+<ul>
+<li><i>sparse_matrix_type</i> X = sprandu&lt;<i>sparse_matrix_type</i>&gt;( n_rows, n_cols, density )</li>
+<li><i>sparse_matrix_type</i> Y = sprandu&lt;<i>sparse_matrix_type</i>&gt;( size(X), density )</li>
+</ul>
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+sp_mat A = sprandu&lt;sp_mat&gt;(100, 200, 0.1);
+</pre>
+</ul>
+</li>
+<li>See also:
+<ul>
+<li><a href="#speye">speye()</a></li>
+<li><a href="#spones">spones()</a></li>
+<li><a href="#randu">randu()</a></li>
+<li><a href="#randn">randn()</a></li>
+<li><a href="#size">size()</a></li>
+<li><a href="#rng_seed">RNG seed setting</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)">uniform distribution in Wikipedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="toeplitz"></a>
+<b>toeplitz( A )</b>
+<br><b>toeplitz( A, B )</b>
+<br><b>circ_toeplitz( A )</b>
+<ul>
+<li>
+toeplitz(): generate a Toeplitz matrix, with the first column specified by <i>A</i>, and (optionally) the first row specified by <i>B</i>
+</li>
+<br>
+<li>
+circ_toeplitz(): generate a circulant Toeplitz matrix
+</li>
+<br>
+<li>
+A and B must be vectors
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+vec A(5, fill::randu);
+mat X = toeplitz(A);
+mat Y = circ_toeplitz(A);
+</pre>
+</ul>
+</li>
+<br>
+<li>See also:
+<ul>
+<li><a href="https://mathworld.wolfram.com/ToeplitzMatrix.html">Toeplitz matrix in MathWorld</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Toeplitz_matrix">Toeplitz matrix in Wikipedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Circulant_matrix">Circulant matrix in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>

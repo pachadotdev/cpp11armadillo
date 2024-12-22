@@ -1,9 +1,9 @@
 ---
-title: "Armadillo data types"
+title: "Matrix, vector, cube and field classes"
 output: rmarkdown::html_vignette
 bibliography: "references.bib"
 vignette: >
-  %\VignetteIndexEntry{Armadillo data types}
+  %\VignetteIndexEntry{Matrix, vector, cube and field classes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,28 +18,17 @@ knitr::opts_chunk$set(
 This vignette is adapted from the official Armadillo
 [documentation](https://arma.sourceforge.net/docs.html).
 
-# Matrix, Vector, Cube and Field Classes
+| Class                            | Description                                                             |
+|----------------------------------|-------------------------------------------------------------------------|
+| `Mat<type>, mat, cx_mat`         | dense matrix class                                                      |
+| `Col<type>, colvec, vec`         | dense column vector class                                               |
+| `Row<type>, rowvec`              | dense row vector class                                                  |
+| `Cube<type>, cube, cx_cube`      | dense cube class ("3D matrix")                                          |
+| `field<object type>`             | class for storing arbitrary objects in matrix-like or cube-like layouts |
+| `SpMat<type>, sp_mat, sp_cx_mat` | sparse matrix class                                                     |
+| `+ - * % / == != <= >= < > &&`   | operators                                                               |
 
-| Class                          | Description                                                             |
-|--------------------------------|-------------------------------------------------------------------------|
-| `Mat<type>`                    | dense matrix class                                                      |
-| `mat, cx_mat`                  | dense matrix class                                                      |
-| `cx_mat`                       | dense matrix class                                                      |
-| `Col<type>`                    | dense column vector class                                               |
-| `colvec`                       | dense column vector class                                               |
-| `vec`                          | dense column vector class                                               |
-| `Row<type>`                    | dense row vector class                                                  |
-| `rowvec`                       | dense row vector class                                                  |
-| `Cube<type>`                   | dense cube class ("3D matrix")                                          |
-| `cube`                         | dense cube class ("3D matrix")                                          |
-| `cx_cube`                      | dense cube class ("3D matrix")                                          |
-| `field<object type>`           | class for storing arbitrary objects in matrix-like or cube-like layouts |
-| `SpMat<type>`                  | sparse matrix class                                                     |
-| `sp_mat`                       | sparse matrix class                                                     |
-| `sp_cx_mat`                    | sparse matrix class                                                     |
-| `+ - * % / == != <= >= < > &&` | operators                                                               |
-
-## Dense matrix class
+# Dense matrix class
 
 `Mat<type>`, `mat` and `cx_mat` are classes for dense matrices, with elements
 stored in [column-major ordering](https://en.wikipedia.org/wiki/Column_major)
@@ -80,7 +69,7 @@ Functions which use LAPACK (generally matrix decompositions) are only valid for
 the following matrix types: `mat`, `dmat`, `fmat`, `cx_mat`, `cx_dmat`,
 `cx_fmat`.
   
-### Constructors
+## Constructors
   
   * `mat()`
   * `mat(n_rows, n_cols)`
@@ -125,7 +114,7 @@ declared inside a function, it will be automatically destroyed at the end of the
 function. To forcefully release memory at any point, use `.reset()`. Note that
 in normal use this is not required.
   
-### Advanced constructors
+## Advanced constructors
       
 * `mat(ptr_aux_mem, n_rows, n_cols, copy_aux_mem = true, strict = false)`
   * Create a matrix using data from writable auxiliary (external) memory, where
@@ -163,7 +152,7 @@ in normal use this is not required.
     data is copied from auxiliary memory, where ptr_aux_mem is a pointer to the
     memory.
     
-### Examples
+## Examples
 
 ```r
 set.seed(123)
@@ -214,7 +203,7 @@ a <- matrix(runif(25), nrow = 5, ncol = 5)
 }
 ```
 
-## Column vector class
+# Column vector class
 
 `Col<type>`, `vec` and `cx_vec` are classes for column vectors (dense matrices
 with one column).
@@ -241,7 +230,7 @@ other column vector types instead (e.g., `fvec` or `fcolvec`).
 Functions which take `mat` as input can generally also take `Col` as input.
 Main exceptions are functions that require square matrices.
   
-### Constructors:
+## Constructors
     
 * `vec()`
 * `vec(_n_elem_)`
@@ -255,7 +244,7 @@ Main exceptions are functions that require square matrices.
 * `vec(std::vector)`
 * `cx_vec(vec,vec)` (for constructing a complex vector out of two real vectors)
       
-### Advanced constructors
+## Advanced constructors
       
 * `vec(ptr_aux_mem, number_of_elements, copy_aux_mem = true, strict = false)`:
   * Create a column vector using data from writable auxiliary (external) memory,
@@ -293,7 +282,7 @@ Main exceptions are functions that require square matrices.
     is copied from auxiliary memory, where `ptr_aux_mem` is a pointer to the
     memory.
       
-### Examples
+## Examples
   
 ```r
 set.seed(123)
@@ -315,7 +304,7 @@ y <- rep(1, 10)
 }
 ```
 
-## Row vector class
+# Row vector class
 
 `Row<type>`, `rowvec` and `cx_rowvec` are classes for row vectors (dense
 matrices with one row).
@@ -340,7 +329,7 @@ vector types instead (e.g., `frowvec`).
 Functions which take `mat` as input can generally also take `Row` as input. Main
 exceptions are functions which require square matrices.
   
-### Constructors
+## Constructors
     
 * `rowvec()`
 * `rowvec(n_elem)`
@@ -354,7 +343,7 @@ exceptions are functions which require square matrices.
 * `rowvec(std::vector)`
 * `cx_rowvec(rowvec,rowvec)` (for constructing a complex row vector out of two real row vectors)
     
-### Advanced constructors
+## Advanced constructors
       
 * `rowvec(ptr_aux_mem, number_of_elements, copy_aux_mem = true, strict = false)`  
   * Create a row vector using data from writable auxiliary (external) memory,
@@ -392,7 +381,7 @@ exceptions are functions which require square matrices.
     argument. The data is copied from auxiliary memory, where `ptr_aux_mem` is a
     pointer to the memory.
     
-### Examples
+## Examples
     
 ⚠️Important⚠️: 'cpp11armadillo' is an opinionated package and it follows the
 notation from Econometrics by Bruce E. Hansen. It intentionally exports/imports
@@ -422,7 +411,7 @@ y <- rep(1, 10)
 }
 ```
 
-## Cube class
+# Cube class
 
 `Cube<type>`, `cube` and `cx_cube` are classes for cubes, also known as quasi
 3rd order tensors or "3D matrices".
@@ -452,7 +441,7 @@ instead (e.g., `fcube`).
 Each cube slice can be interpreted as a matrix, hence functions which take
 `Mat` as input can generally also take cube slices as input.
   
-### Constructors
+## Constructors
 
 * `cube()`
 * `cube(n_rows, n_cols, n_slices_)`
@@ -478,7 +467,7 @@ of `cube` is declared inside a function, it will be automatically destroyed at
 the end of the function. To forcefully release memory at any point, use
 `.reset()` note that in normal use this is not required.
   
-### Advanced constructors
+## Advanced constructors
       
 * `cube::fixed<n_rows, n_cols, n_slices>`: Create a fixed size cube, with the
     size specified via template arguments. Memory for the cube is reserved at
@@ -502,7 +491,7 @@ the end of the function. To forcefully release memory at any point, use
     data from read-only auxiliary memory, where `ptr_aux_mem` is a pointer to
     the memory.
     
-### Examples
+## Examples
 
 ```r
 set.seed(123)
@@ -536,7 +525,7 @@ cube c(5,6,7);
 c.slice(0) = randu<mat>(10,20); // wrong size
 ```
 
-## Field class
+# Field class
 
 `field<object_type>` is a class for storing arbitrary objects in matrix-like or
 cube-like layouts.
@@ -548,7 +537,7 @@ R.
 Each element can have an arbitrary size (e.g., in a field of matrices, each
 matrix can have a unique size).
   
-### Constructors
+## Constructors
 
 `object_type` is another class (e.g., `vec`, `mat`, `std::string`, etc)
     
@@ -559,7 +548,7 @@ matrix can have a unique size).
 * `field<object_type>(size(X))`
 * `field<object_type>(field<object_type>)`
 
-### Examples
+## Examples
 
 ```r
 set.seed(123)
@@ -584,7 +573,7 @@ b <- matrix(rnorm(4), nrow = 2, ncol = 2)
 }
 ```
 
-### Caveat
+## Caveat
 
 To store a set of matrices of the same size, the `Cube` class is more efficient.
 
@@ -662,7 +651,7 @@ To store a set of matrices of the same size, the `Cube` class is more efficient.
 | `.has_inf`        | check whether any element is +/- infinity                                   |
 | `.has_nan`        | check whether any element is NaN                                            |
 
-## Attributes
+# Attributes
 
 `n_*` provides information for different objects:
 
@@ -684,7 +673,7 @@ To avoid compiler warnings about implicit conversion when operating `uword` with
 `integers`/`doubles` to pass data to R, converte `uword` to `int` with
 `static_cast<int>` or declare these as `int`.
 
-### Examples
+## Examples
 
 ```r
 a <- matrix(runif(4), nrow = 2, ncol = 2)
@@ -706,7 +695,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 }
 ```
 
-## Element/object access
+# Element/object access
 
 Provide access to individual elements or objects stored in a container object
 (e.g., `Mat`, `Col`, `Row`, `Cube`, `field`).
@@ -726,7 +715,7 @@ Provide access to individual elements or objects stored in a container object
   element is out of bounds.
 * `.at(r,c,s)` As for `(r,c,s)`, but without a bounds check. Not recommended.
 
-### Examples
+## Examples
 
 ```r
 a <- matrix(runif(4), nrow = 2, ncol = 2)
@@ -756,7 +745,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 }
 ```
 
-### Caveats
+## Caveats
 
 For `.at()` or `[i]`, `.at(r,c)` and `.at(r,c,s)`:
 
@@ -770,11 +759,11 @@ The indices of elements are specified via the `uword` type, which is a `typedef`
 for an unsigned integer type. When using loops to access elements, it more
 efficient to use `uword` instead of `int`.
 
-## Element initialisation
+# Element initialisation
 
 Set elements in `Mat`, `Col` and `Row` via braced initialiser lists.
   
-### Examples
+## Examples
     
 ```r
 a <- matrix(runif(4), nrow = 2, ncol = 2)
@@ -796,7 +785,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 }
 ```
 
-## Zeros
+# Zeros
 
 Set the elements of an object to zero, optionally first changing the size to
 specified dimensions.
@@ -807,7 +796,7 @@ specified dimensions.
 `.zeros(n_rows, n_cols, n_slices)` (member function of `Cube`)
 `.zeros(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`)
   
-### Examples
+## Examples
     
 ```r
 a <- matrix(runif(4), nrow = 2, ncol = 2)
@@ -829,18 +818,20 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 }
 ```
 
-## Ones
+# Ones
 
 Set all the elements of an object to one, optionally first changing the size to
 specified dimensions.
 
-`.ones()` (member function of `Mat`, `Col`, `Row`, `Cube`)
-`.ones(n_elem)` (member function of `Col` and `Row`)
-`.ones(n_rows, n_cols)` (member function of `Mat`)
-`.ones(n_rows, n_cols, n_slices)` (member function of `Cube`)
-`.ones(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`)
+| Function                                 | Mat | Col | Row | Cube |
+|------------------------------------------|-----|-----|-----|------|
+| `.ones()`                                | ✓   | ✓   | ✓   | ✓    |
+| `.ones(n_elem)`                          |     | ✓   | ✓   |      |
+| `.ones(n_rows, n_cols)`                  | ✓   |     |     |      |
+| `.ones(n_rows, n_cols, n_slices)`        |     |     |     | ✓    |
+| `.ones(size(X))`                         | ✓   | ✓   | ✓   | ✓    |
   
-### Examples
+## Examples
     
 ```r
 a <- matrix(runif(4), nrow = 2, ncol = 2)
@@ -862,15 +853,14 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 }
 ```
 
-## Eye
+# Eye
 
-* `.eye()` member function of `Mat` and `SpMat`.
-* `.eye(n_rows, n_cols)` Set the elements along the main diagonal to one and
-  off-diagonal elements to zero, optionally first changing the size to specified
-  dimensions.
-* `.eye(size(X))` An identity matrix is generated when `n_rows = n_cols`.
+`.eye()` is member function of `Mat` and `SpMat`. `.eye(n_rows, n_cols)` sets
+the elements along the main diagonal to one and off-diagonal elements to zero,
+optionally first changing the size to specified dimensions. `.eye(size(X))`
+creates an identity matrix is generated when `n_rows = n_cols`.
   
-### Examples
+## Examples
     
 ```r
 a <- matrix(runif(4), nrow = 2, ncol = 2)
@@ -895,18 +885,20 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 }
 ```
 
-## Random uniform
+# Random uniform
 
 Set all the elements to random values from a uniform distribution in the [0,1]
 interval, optionally first changing the size to specified dimensions.
 
 For complex elements, the real and imaginary parts are treated separately.
 
-* `.randu()` (member function of `Mat`, `Col`, `Row`, `Cube`)
-* `.randu(n_elem)` (member function of `Col` and `Row`)
-* `.randu(n_rows, n_cols)` (member function of `Mat`)
-* `.randu(n_rows, n_cols, n_slices)` (member function of `Cube`)
-* `.randu(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`)
+| Function/Method                          | Mat | Col | Row | Cube |
+|------------------------------------------|-----|-----|-----|------|
+| `.randu()`                               | ✓   | ✓   | ✓   | ✓    |
+| `.randu(n_elem)`                         |     | ✓   | ✓   |      |
+| `.randu(n_rows, n_cols)`                 | ✓   |     |     |      |
+| `.randu(n_rows, n_cols, n_slices)`       |     |     |     | ✓    |
+| `.randu(size(X))`                        | ✓   | ✓   | ✓   | ✓    |
 
 ```r
 a <- matrix(runif(4), nrow = 2, ncol = 2)
@@ -936,20 +928,22 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 }
 ```
 
-## Normal distribution
+# Normal distribution
 
 Set all the elements to random values from a normal distribution with zero mean
 and unit variance, optionally first changing the size to specified dimensions.
 
 For complex elements, the real and imaginary parts are treated separately.
 
-* `.randn()` (member function of `Mat`, `Col`, `Row`, `Cube`)
-* `.randn(n_elem)` (member function of `Col` and `Row`)
-* `.randn(n_rows, n_cols)` (member function of `Mat`)
-* `.randn(n_rows, n_cols, n_slices)` (member function of `Cube`)
-* `.randn(size(X))` (member function of `Mat`, `Col`, `Row`, `Cube`)
+| Function/Method                          | Mat | Col | Row | Cube |
+|------------------------------------------|-----|-----|-----|------|
+| `.randn()`                               | ✓   | ✓   | ✓   | ✓    |
+| `.randn(n_elem)`                         |     | ✓   | ✓   |      |
+| `.randn(n_rows, n_cols)`                 | ✓   |     |     |      |
+| `.randn(n_rows, n_cols, n_slices)`       |     |     |     | ✓    |
+| `.randn(size(X))`                        | ✓   | ✓   | ✓   | ✓    |
 
-### Examples
+## Examples
 
 ```r
 a <- matrix(runif(4), nrow = 2, ncol = 2)
@@ -979,16 +973,16 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 }
 ```
 
-## Fill
+# Fill
 
 Sets the elements to a specified value
 
-`.fill( value )` Member function of `Mat`, `Col`, `Row`, `Cube`, `field`
+`.fill(value)` is a member function of `Mat`, `Col`, `Row`, `Cube`, `field`.
   
 The type of value must match the type of elements used by the container object
 (e.g., for `Mat` the type is `double`)
   
-### Examples
+## Examples
 
 ```r
 a <- matrix(runif(4), nrow = 2, ncol = 2)
@@ -1012,20 +1006,18 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 }
 ```
 
-## Imbue
+# Imbue
 
-Imbue (fill) with values provided by a functor or lambda function
-
-* `.imbue(functor)` Member functions of `Mat`, `Col`, `Row` and `Cube`
-* `.imbue(lambdaction)` Imbue (fill) with values provided by a functor or
-  lambda function
+`.imbue(functor)` is a member function of `Mat`, `Col`, `Row` and `Cube`, it
+fills the elements with values provided by a functor. The argument can be a
+functor or lambda function.
 
 For matrices, filling is done column-by-column (e.g., column 0 is filled, then
 column 1, etc.)
   
 For cubes, filling is done slice-by-slice, with each slice treated as a matrix
   
-### Examples
+## Examples
 
 ```r
 a <- matrix(runif(4), nrow = 2, ncol = 2)
@@ -1062,7 +1054,7 @@ a <- matrix(runif(4), nrow = 2, ncol = 2)
 }
 ```
 
-## Clean
+# Clean
 
 `.clean(threshold)` is a member function of `Mat`, `Col`, `Row`, `Cube`, and
 `SpMat`. It can be used to sparsify a matrix, in the sense of zeroing values
@@ -1074,7 +1066,7 @@ or equal to the threshold is replaced by zero.
 imaginary) with an absolute value less or equal to the threshold is replaced by
 zero.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> clean1_(const int& n) {
@@ -1089,18 +1081,18 @@ zero.
 }
 ```
 
-### Caveat
+## Caveat
 
 To explicitly convert from dense storage to sparse storage, use the `SpMat`.
 
-## Replace
+# Replace
 
 `.replace( old_value, new_value )` is a member function of `Mat`, `Col`, `Row`,
 `Cube`, and `SpMat`.
   
 For all elements equal to `old_value`, set them to `new_value`.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> replace1_(const int& n) {
@@ -1113,7 +1105,7 @@ For all elements equal to `old_value`, set them to `new_value`.
 }
 ```
 
-### Caveats
+## Caveats
 
 * The type of `old_value` and `new_value` must match the type of elements used
   by the container object (e.g., for `Mat` the type is `double`).
@@ -1121,7 +1113,7 @@ For all elements equal to `old_value`, set them to `new_value`.
   [limited precision](https://en.wikipedia.org/wiki/Floating-point_arithmetic).
 * For sparse matrices (`SpMat`), replacement is not done when `old_value = 0`.
 
-## Clamp
+# Clamp
 
 `.clamp(min_value, max_value)` is a member function of `Mat`, `Col`, `Row`,
 `Cube` and `SpMat` that transforms all values lower than `min_val` to `min_val`,
@@ -1131,7 +1123,7 @@ and all values higher than `max_val` to `max_val`.
   separately.
 * For sparse matrices, clamping is applied only to the non-zero elements.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> clamp1_(const int& n) {
@@ -1144,10 +1136,10 @@ and all values higher than `max_val` to `max_val`.
 }
 ```
 
-## Transform
+# Transform
 
-`.transform(functor)` and `.transform(lambdaction)` are member functions of
-`Mat`, `Col`, `Row`, `Cube`, and `SpMat`.
+`.transform(functor)` is a member function of `Mat`, `Col`, `Row`, `Cube`, and
+`SpMat`. The argument can be a functor or lambda function.
 
 * For dense matrices, transformation is done column-by-column for all elements.
 * For sparse matrices, transformation is done column-by-column for non-zero
@@ -1155,7 +1147,7 @@ and all values higher than `max_val` to `max_val`.
 * For cubes, transformation is done slice-by-slice, with each slice treated as a
   matrix.
   
-### Examples
+## Examples
     
 ```cpp
 [[cpp11::register]] doubles_matrix<> transform1_(const int& n) {
@@ -1165,10 +1157,10 @@ and all values higher than `max_val` to `max_val`.
 }
 ```
 
-## For each
+# For each
 
-`.for_each(functor)` and `.for_each(lambdaction)` are member functions of
-`Mat`, `Col`, `Row`, `Cube`, `SpMat`, and `field`.
+`.for_each(functor)` is a member function of `Mat`, `Col`, `Row`, `Cube`,
+`SpMat`, and `field`. The argument can be a functor or lambda function.
 
 * For dense matrices and fields, the processing is done column-by-column for all
   elements.
@@ -1177,7 +1169,7 @@ and all values higher than `max_val` to `max_val`.
 * For cubes, processing is done slice-by-slice, with each slice treated as a
   matrix.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> for_each1_(const int& n) {
@@ -1200,7 +1192,7 @@ and all values higher than `max_val` to `max_val`.
 }
 ```
 
-## Set size
+# Set size
 
 Change the size of an object, without explicitly preserving data and without
 initialising the elements (e.g., elements may contain garbage values, including
@@ -1216,7 +1208,7 @@ To initialise the elements to zero while changing the size, use `.zeros()`
 instead. To explicitly preserve data while changing the size, use `.reshape()`
 or `.resize()` instead.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles set_size1_(const int& n) {
@@ -1239,7 +1231,7 @@ or `.resize()` instead.
 }
 ```
 
-## Reshape
+# Reshape
 
 Recreate an object according to given size specifications, with the elements
 taken from the previous version of the object in a column-wise manner. The
@@ -1260,7 +1252,7 @@ zero
 If the total number of elements in the previous version of the object is greater
 than the specified size, only a subset of the elements is taken
   
-### Examples
+## Examples
     
 ```cpp
 [[cpp11::register]] doubles_matrix<> reshape1_(const int& n) {
@@ -1270,7 +1262,7 @@ than the specified size, only a subset of the elements is taken
 }
 ```
 
-### Caveats
+## Caveats
 
 * `.reshape()` is considerably slower than `.set_size()`.
 * To change the size without preserving data, use `.set_size()`.
@@ -1279,7 +1271,7 @@ than the specified size, only a subset of the elements is taken
 * To flatten a matrix into a vector, use `vectorise()` or
   `.as_col()`/`.as_row()`.
 
-## Resize
+# Resize
 
 Resize an object according to given size specifications, while preserving the
 elements and the layout of the elements. It can be used for growing or shrinking
@@ -1290,7 +1282,7 @@ an object (e.g., adding/removing rows, and/or columns, and/or slices).
 * `.resize(n_rows, n_cols, n_slices)`: member function of `Cube`.
 * `.resize(size(X))`: member function of `Mat`, `Col`, `Row`, `Cube`, `SpMat`.
 
-### Examples
+## Examples
     
 ```cpp
 [[cpp11::register]] doubles_matrix<> resize1_(const int& n) {
@@ -1300,17 +1292,17 @@ an object (e.g., adding/removing rows, and/or columns, and/or slices).
 }
 ```
 
-### Caveats
+## Caveats
 
 * `.resize()` is considerably slower than `.set_size()`.
 * to change the size without preserving data, `.set_size()` instead.
 
-## Copy size
+# Copy size
 
 `.copy_size(A)` sets the size of a matrix/vector/cube to be the same as
 matrix/vector/cube `A`.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] integers copy_size1_(const int& n) {
@@ -1329,16 +1321,16 @@ matrix/vector/cube `A`.
 }
 ```
 
-### Caveat
+## Caveat
 
 To set the size of an object `B`, `A` must be of the same type as `B`. For
 example, the size of a matrix cannot be set by providing a cube.
 
-## Reset
+# Reset
 
 `.reset()` sets a matrix/vector size to zero (the object will have no elements).
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] integers reset1_(const int& n) {
@@ -1355,12 +1347,12 @@ example, the size of a matrix cannot be set by providing a cube.
 }
 ```
 
-## Submatrix views
+# Submatrix views
 
 A collection of member functions of `Mat`, `Col` and `Row` classes that provide
 read/write access to submatrix views.
       
-### Contiguous views for matrix
+## Contiguous views for matrix
 
 * `X.col(col_number)`
 * `X.row(row_number)`
@@ -1378,7 +1370,7 @@ read/write access to submatrix views.
 * `X.tail_rows(number_of_rows)`
 * `X.unsafe_col(col_number)` (use with caution)
 
-### Contiguous views for vector
+## Contiguous views for vector
 
 * `Y(span(first_index, last_index))`
 * `Y.subvec(first_index, last_index)`
@@ -1386,7 +1378,7 @@ read/write access to submatrix views.
 * `Y.head(number_of_elements)`
 * `Y.tail(number_of_elements)`
     
-### Non-contiguous views for matrix or vector:
+## Non-contiguous views for matrix or vector:
           
 * `X.elem(vector_of_indices)`
 * `X(vector_of_indices)`
@@ -1416,7 +1408,7 @@ As such, the created vector is not alias safe, and does not take into account
 that the underlying matrix memory could be freed (e.g., due to any operation
 involving a size change of the matrix).
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> subview1_(const int& n) {
@@ -1457,11 +1449,11 @@ involving a size change of the matrix).
 }
 ```
 
-## Subcube views and slices
+# Subcube views and slices
 
 A collection of member functions of the `Cube` class that provide subcube views.
 
-### Contiguous views for cube  
+## Contiguous views for cube  
       
 * `Q.slice(slice_number)`
 * `Q.slices(first_slice, last_slice)`
@@ -1480,7 +1472,7 @@ A collection of member functions of the `Cube` class that provide subcube views.
 * `Q.tube(span(first_row, last_row), span(first_col, last_col))`
 * `Q.tube(first_row, first_col, size(n_rows, n_cols))`
 
-### Non-contiguous views for cube
+## Non-contiguous views for cube
       
 `Q.elem(vector_of_indices)`, `Q(vector_of_indices)`, and
 `Q.slices( vector_of_slice_indices)` are instances of `span(a,b)` that can be
@@ -1507,7 +1499,7 @@ In the function `Q.slices(vector_of_slice_indices)`, slices specified in
 `vector_of_slice_indices` are accessed. The `vector_of_slice_indices` must
 evaluate to a vector of type `uvec`.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> subview2_(const int& n) {
@@ -1535,7 +1527,7 @@ evaluate to a vector of type `uvec`.
 }
 ```
 
-## Subfield views
+# Subfield views
 
 A collection of member functions of the `field` class that provide subfield
 views.      
@@ -1565,12 +1557,12 @@ Instances of `span(a,b)` can be replaced by:
 * `span()` or `span::all`, to indicate the entire range.
 * `span(a)`, to indicate a particular row or column.
 
-## Diagonal
+# Diagonal
 
-`.diag()` and `.diag(k)` are member functions of `Mat` and `SpMat` with
-read/write access to the diagonal in a matrix. The argument k specifies the
-diagonal to use and it is an optional argument that is zero by default. The
-diagonal is interpreted as a column vector within expressions.
+`.diag()` is a member functions of `Mat` and `SpMat` with
+read/write access to the diagonal in a matrix. The argument can be empty or a
+value `k` to specify the diagonal to (`k = 0` by default). The diagonal is
+interpreted as a column vector within expressions.
 
 * `k = 0` indicates the main diagonal (default setting)
 * `k < 0` indicates the `k`-th sub-diagonal (below main diagonal, towards
@@ -1578,7 +1570,7 @@ diagonal is interpreted as a column vector within expressions.
 * `k > 0` indicates the `k`-th super-diagonal (above main diagonal, towards
   top-right corner)
       
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles diagonal1_(const int& n) {
@@ -1603,44 +1595,31 @@ diagonal is interpreted as a column vector within expressions.
 }
 ```
 
-### Caveat
+## Caveat
 
 To calculate only the diagonal elements of a compound expression, use
 `diagvec()` or `diagmat()`.
 
-## Each col
+# Each col
 
-`.each_col()`, `.each_col(vector_of_indices)` and `.each_col(lambdaction)`
-are member functions of `Mat`. These apply a vector operation to each column of
-a matrix, and are similar to "broadcasting" in Matlab/Octave.
+`.each_col()` is a member function of `Mat`. It applies a vector operation to
+each column of a matrix, and are similar to "broadcasting" in Matlab/Octave.
+The argument can be empty, a vector of indices, or a lambda function.
   
-### Form 1
-
-`.each_col()` supports the following operations:
-      
-* `+` addition
-* `+=` in-place addition
-* `-` subtraction
-* `-=` in-place subtraction
-* `%` element-wise multiplication
-* `%=` in-place element-wise multiplication
-* `/` element-wise division
-* `/=` in-place element-wise division
-* `=` assignment (copy)
-    
-### Form 2
-
-`.each_col(vector_of_indices)` supports the same operations as form 1. The
-argument `vector_of_indices` contains a list of indices of the columns to be
-used, and it must evaluate to a vector of type `uvec`.
+| Operation                                | `.each_col()` | `.each_col(vector_of_indices)` | `.each_col(lambda)` |
+|------------------------------------------|---------------|--------------------------------|---------------------|
+| `+` addition                             | ✓             | ✓                              |                     |
+| `+=` in-place addition                   | ✓             | ✓                              |                     |
+| `-` subtraction                          | ✓             | ✓                              |                     |
+| `-=` in-place subtraction                | ✓             | ✓                              |                     |
+| `%` element-wise multiplication          | ✓             | ✓                              |                     |
+| `%=` in-place element-wise multiplication| ✓             | ✓                              |                     |
+| `/` element-wise division                | ✓             | ✓                              |                     |
+| `/=` in-place element-wise division      | ✓             | ✓                              |                     |
+| `=` assignment (copy)                    | ✓             | ✓                              |                     |
+| `lambda` (lambda function)               |               |                                | ✓                   |
   
-### Form 3
-
-`.each_col(lambdaction)` applies the given `lambdaction` to each column
-vector. The function must accept a reference to a `Col` object with the same
-element type as the underlying matrix.
-  
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> each_col1_(const int& n) {
@@ -1678,13 +1657,13 @@ element type as the underlying matrix.
 }
 ```
 
-## Each row
+# Each row
 
 `.each_row()`, `.each_row(vector_of_indices)`, `.each_row(lambdaction)` are
 member functions of `Mat`. These apply a vector operation to each row of
 a matrix, and are similar to "broadcasting" in Matlab/Octave.
 
-### Form 1
+## Form 1
 
 `.each_row()` supports the following operations:
       
@@ -1698,19 +1677,19 @@ a matrix, and are similar to "broadcasting" in Matlab/Octave.
 * `/=` in-place element-wise division
 * `=` assignment (copy)
     
-### Form 2
+## Form 2
 
 `.each_row(vector_of_indices)` supports the same operations as form 1. The
 argument `vector_of_indices` contains a list of indices of the rows to be used,
 and it must evaluate to a vector of type `uvec`.
   
-### Form 3
+## Form 3
 
 `.each_col(lambdaction)` applies the given `lambdaction` to each column
 vector. The function must accept a reference to a `Row` object with the same
 element type as the underlying matrix.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> each_row1_(const int& n) {
@@ -1748,13 +1727,13 @@ element type as the underlying matrix.
 }
 ```
 
-## Each slice
+# Each slice
 
 `.each_slice()` is a member function of `Cube` that applies a matrix operation to
 each slice of a cube, with each slice treated as a matrix. It is similar to
 "broadcasting" in Matlab/Octave.
 
-### Form 1
+## Form 1
 
 `.each_slice(vector_of_indices)`
 
@@ -1772,7 +1751,7 @@ Supported operations:
 * `*=` in-place matrix multiplication
 * `=` assignment (copy)
    
-### Form 2
+## Form 2
 
 `.each_slice(lambdaction)`
 
@@ -1781,7 +1760,7 @@ Supported operations:
 * Arithmetic operations as per form 1 are supported, except for `*` and `*=`
   (e.g., matrix multiplication).
 
-### Form 3
+## Form 3
 
 `.each_slice(lambdaction, use_mp)`
 
@@ -1789,7 +1768,7 @@ Supported operations:
 * The function must accept a reference to a `Mat` object with the same element
   type as the underlying cube.
 
-### Form 4
+## Form 4
 
 * Apply the given `lambdaction` to each slice, as per form 3.
 * The argument `use_mp` is a bool to enable the use of OpenMP for multi-threaded
@@ -1799,7 +1778,7 @@ Supported operations:
 * `lambdaction` must be thread-safe, e.g., it must not write to variables
   outside of its scope.
   
-### Examples:
+## Examples:
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> each_slice1_(const int& n) {
@@ -1833,12 +1812,12 @@ Supported operations:
 }
 ```
 
-## Set real
+# Set real
 
 `.set_real(X)` sets the real part of an object. `X` must have the same
 size as the recipient object.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] list set_real1_(const int& n) {
@@ -1852,7 +1831,7 @@ size as the recipient object.
 }
 ```
   
-### Caveat
+## Caveat
 
 To directly construct a complex matrix out of two real matrices, the following
 code is faster:
@@ -1868,12 +1847,12 @@ code is faster:
 }
 ```
 
-## Set imaginary
+# Set imaginary
 
 `.set_imaginary(X)` sets the imaginary part of an object. `X` must have the same
 size as the recipient object.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] list set_imag1_(const int& n) {
@@ -1887,7 +1866,7 @@ size as the recipient object.
 }
 ```
   
-### Caveat
+## Caveat
 
 To directly construct a complex matrix out of two real matrices, the following
 code is faster:
@@ -1903,10 +1882,12 @@ code is faster:
 }
 ```
 
-## Insert columns
+# Insert columns
 
-`.insert_cols(col_number, X)` and `.insert_cols(col_number, number_of_cols)`
-are member functions of `Mat`, `Row` and `Cube`.
+`.insert_cols()` is a member function of `Mat`, `Row` and `Cube`. The arguments
+can be `colnumber, X` to indicate the column number and the matrix to insert, or
+`colnumber, number_of_cols` to indicate the column number and the number of
+columns to insert.
 
 The `X` argument inserts a copy of `X` at the specified column. `X` must have
 the same number of rows (and slices) as the recipient object.
@@ -1914,7 +1895,7 @@ the same number of rows (and slices) as the recipient object.
 The `number_of_cols` argument expands the object by creating new columns that
 are set to zero.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> insert_columns1_(const int& n) {
@@ -1935,10 +1916,12 @@ are set to zero.
 }
 ```
 
-## Insert rows
+# Insert rows
 
-`.insert_rows(row_number, X)` and `.insert_rows(row_number, number_of_rows)`
-are member functions of `Mat`, `Row` and `Cube`.
+`.insert_rows()` is a member function of `Mat`, `Row` and `Cube`. The arguments
+can be `rownumber, X` to indicate the row number and the matrix to insert, or
+`rownumber, number_of_rows` to indicate the row number and the number of rows to
+insert.
 
 The `X` argument inserts a copy of `X` at the specified column. `X` must have
 the same number of columns (and slices) as the recipient object.
@@ -1946,7 +1929,7 @@ the same number of columns (and slices) as the recipient object.
 The `number_of_rows` argument expands the object by creating new rows that
 are set to zero.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> insert_rows1_(const int& n) {
@@ -1967,10 +1950,12 @@ are set to zero.
 }
 ```
 
-## Insert slice
+# Insert slice
 
-`.insert_slices(slice_number, X)` and `.insert_slices(slice_number, number_of_slices)`
-are member functions of `Cube`.
+`.insert_slices()` is a member function of `Cube`. The arguments can be
+`slice_number, X` to indicate the slice number and the matrix to insert, or
+`slice_number, number_of_slices` to indicate the slice number and the number of
+slices to insert.
 
 The `X` argument inserts a copy of `X` at the specified slice. `X` must have
 the same number of columns and rows as the recipient object.
@@ -1978,7 +1963,7 @@ the same number of columns and rows as the recipient object.
 The `number_of_slices` argument expands the object by creating new slices that
 are set to zero.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> insert_slices1_(const int& n) {
@@ -1999,7 +1984,7 @@ are set to zero.
 }
 ```
 
-## Shed columns
+# Shed columns
 
 `.shed_col(row_number)` and `.shed_cols(first_row, last_row)` are member
 functions of `Mat`, `Col`, `SpMat`, and `Cube`. With a single scalar argument it
@@ -2010,7 +1995,7 @@ specified range of columns.
 vector of indices it must evaluate to a vector of type `uvec` containing the
 indices of the columns to remove.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> shed_columns1_(const int& n) {
@@ -2032,7 +2017,7 @@ indices of the columns to remove.
 }
 ```
 
-## Shed rows
+# Shed rows
 
 `.shed_row(row_number)` and `.shed_rows(first_row, last_row)` are member
 functions of `Mat`, `Col`, `SpMat`, and `Cube`. With a single scalar argument it
@@ -2043,7 +2028,7 @@ specified range of rows.
 vector of indices it must evaluate to a vector of type `uvec` containing the
 indices of the rows to remove.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> shed_rows1_(const int& n) {
@@ -2065,15 +2050,17 @@ indices of the rows to remove.
 }
 ```
 
-## Shed slices
+# Shed slices
 
-`.shed_slices(slice_number)`, `.shed_slices(first_slice, last_slice)` and
-`.shed_slices(vector_of_indices)` are member functions of `Cube`. With a single
+`.shed_slices()` is a member function of `Cube`. With a single
 scalar argument it remove the specified slices, and with two scalar arguments it
 removes the specified range of slices. With a vector of indices it must evaluate
-to a vector of type `uvec` containing the indices of the rows to remove.
+to a vector of type `uvec` containing the indices of the rows to remove. The 
+arguments can be `slice_number` to indicate the slice number to remove,
+`first_slice, last_slice` to indicate the range of slices to remove, or
+`vector_of_indices` to indicate the indices of the slices to remove.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> shed_slices1_(const int& n) {
@@ -2097,12 +2084,12 @@ to a vector of type `uvec` containing the indices of the rows to remove.
 }
 ```
 
-## Swap columns
+# Swap columns
 
 `.swap_cols( col1, col2 )` is a member functions of `Mat`, `Col`, `Row`, and
 `SpMat`. It swaps the contents of the specified columns.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> swap_columns1_(const int& n) {
@@ -2118,12 +2105,12 @@ to a vector of type `uvec` containing the indices of the rows to remove.
 }
 ```
 
-## Swap rows
+# Swap rows
 
 `.swap_rows( col1, col2 )` is a member functions of `Mat`, `Col`, `Row`, and
 `SpMat`. It swaps the contents of the specified rows.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> swap_rows1_(const int& n) {
@@ -2139,12 +2126,12 @@ to a vector of type `uvec` containing the indices of the rows to remove.
 }
 ```
 
-## Swap
+# Swap
 
 `.swap( X )` is a member function of `Mat`, `Col`, `Row`, and `Cube`. It swaps
 the contents with object `X`.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> swap1_(const int& n) {
@@ -2157,14 +2144,14 @@ the contents with object `X`.
 }
 ```
 
-## Memory pointer
+# Memory pointer
 
 `.memptr()` is a member function of `Mat`, `Col`, `Row`, and `Cube`. It obtains
 a raw pointer to the memory used for storing elements. Data for matrices is
 stored in a column-by-column order. Data for cubes is stored in a slice-by-slice
 (matrix-by-matrix) order.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> memptr1_(const int& n) {
@@ -2184,18 +2171,18 @@ stored in a column-by-column order. Data for cubes is stored in a slice-by-slice
 }
 ```
 
-### Caveats
+## Caveats
 
 * The pointer becomes invalid after any operation involving a size change or
   aliasing. 
 * This function is not recommended for use unless you know what you are doing.
 
-## Column pointer
+# Column pointer
 
 `.colptr( col_number )` is a member function of the `Mat` class that obtains a
 raw pointer to the memory used by elements in the specified column.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles_matrix<> colptr1_(const int& n) {
@@ -2213,19 +2200,19 @@ raw pointer to the memory used by elements in the specified column.
 }
 ```
 
-### Caveats
+## Caveats
 
 * The pointer becomes invalid after any operation involving a size change or
   aliasing.
 * This function is not recommended for use unless you know what you are doing.
 * It is safer to use `submat()` instead.
 
-## Iterators
+# Iterators
 
 Iterators for traverse over all elements within the specified range. These
 return the column/row/slice of an object as a `uword` type.
 
-### Member functions
+## Member functions
 
 Dense matrices and vectors (`Mat`, `Col`, and `Row`):
 
@@ -2267,7 +2254,7 @@ Dense submatrices and subcubes (`submatrix` and `subcube`):
 * `span(row, col)` and `span(row, col, slice)` can be used to specify the range
   of elements to iterate over.
 
-### Iterator types
+## Iterator types
 
 Dense matrices and vectors (`Mat`, `Col`, and `Row`):
     
@@ -2318,7 +2305,7 @@ Sparse matrices (`SpMat`):
 * `sp_mat::const_row_iterator` is a bidirectional iterator, for read-only access
   to the elements of a specific row.
 
-### Examples
+## Examples
     
 ```cpp
 [[cpp11::register]] doubles_matrix<> iterators1_(const int& n) {
@@ -2393,7 +2380,7 @@ Sparse matrices (`SpMat`):
 }
 ```
 
-### Caveats
+## Caveats
 
 * Writing a zero value into a sparse matrix through an iterator will
   invalidate all current iterators associated with the sparse matrix.
@@ -2406,7 +2393,7 @@ Sparse matrices (`SpMat`):
   subcubes uses short-lived temporary objects that are subject to automatic
   deletion, and as such are error-prone to handle manually.
 
-## Compatibility container functions
+# Compatibility container functions
 
 Member functions for the `Col` and `Row` classes to mimic the functionality of
 containers in the C++ standard library:  
@@ -2422,7 +2409,7 @@ mimic the functionality of containers in the C++ standard library:
   object has one or more elements.    
 * `.size()` returns the total number of elements in an object.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles compatibility1_(const int& n) {
@@ -2452,13 +2439,13 @@ mimic the functionality of containers in the C++ standard library:
 }
 ```
 
-## Convert matrix to column
+# Convert matrix to column
 
 `.as_col()` is a member function of the `Mat` class, it returns a flattened
 version of the matrix as a column vector. Flattening is done by concatenating
 all columns.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles as_col1_(const int& n) {
@@ -2468,13 +2455,13 @@ all columns.
 }
 ```
 
-## Convert matrix to row
+# Convert matrix to row
 
 `.as_row()` is a member function of the `Mat` class, it returns a flattened
 version of the matrix as a row vector. Flattening is done by concatenating
 all rows.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] doubles as_row1_(const int& n) {
@@ -2484,17 +2471,17 @@ all rows.
 }
 ```
 
-### Caveat
+## Caveat
 
 Converting columns to rows is faster than converting rows to columns.
 
-## Convert column to matrix
+# Convert column to matrix
 
 `.col_as_mat(col_number)` is a member function of the `Cube` class, it returns a
 matrix of the specified cube column and the number of rows is preserved. Given
 a cube of size `R x C x S`, the resultant matrix size is `R x S`.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] list col_as_mat1_(const int& n) {
@@ -2515,13 +2502,13 @@ a cube of size `R x C x S`, the resultant matrix size is `R x S`.
 }
 ```
 
-## Convert column to matrix
+# Convert column to matrix
 
 `.row_as_mat(row_number)` is a member function of the `Cube` class, it returns a
 matrix of the specified cube row and the number of columns is preserved. Given
 a cube of size `R x C x S`, the resultant matrix size is `S x C`.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] list row_as_mat1_(const int& n) {
@@ -2542,12 +2529,12 @@ a cube of size `R x C x S`, the resultant matrix size is `S x C`.
 }
 ```
 
-## Convert sparse matrix to dense matrix
+# Convert sparse matrix to dense matrix
 
 `.as_dense()` is a member function of the `SpMat` class, it avoids the
 construction of an intermediate sparse matrix representation of the expression.
 
-### Examples
+## Examples
     
 ```cpp
 [[cpp11::register]] doubles as_dense1_(const int& n) {
@@ -2564,7 +2551,7 @@ construction of an intermediate sparse matrix representation of the expression.
 }
 ```
 
-## Dense matrix and vector transposition
+# Dense matrix and vector transposition
 
 `.t()` is a member function of the `Mat`, `Col` and `Row` classes, it returns a
 transposed copy of the object. For real matrices, the transpose is a simple
@@ -2572,7 +2559,7 @@ transposition of the elements. For complex matrices, the transpose is a
 Hermitian conjugate transposition of the elements (e.g., the signs of the
 imaginary components are flipped).
   
-### Examples
+## Examples
     
 ```cpp
 [[cpp11::register]] doubles_matrix<> transpose1_(const int& n) {
@@ -2582,14 +2569,14 @@ imaginary components are flipped).
 }
 ```
 
-## Sparse matrix transposition
+# Sparse matrix transposition
 
 `.st()` is a member function of the `SpMat` classe, it returns a
 transposed copy of the object. For real matrices, it is not applicable. For
 complex matrices, the transpose is a simple transposition of the elements (e.g.,
 the signs of imaginary components are not flipped).
   
-### Examples
+## Examples
     
 ```cpp
 [[cpp11::register]] doubles_matrix<> transpose2_(const int& n) {
@@ -2600,14 +2587,14 @@ the signs of imaginary components are not flipped).
 }
 ```
 
-## Matrix inversion
+# Matrix inversion
 
 `.i()` is a member function of the `Mat` class, it provides an inverse of the
 matrix. If the matrix is not square sized, a `std::logic_error` exception is
 thrown. If the matrix appears to be singular, the output matrix is reset and a
 `std::runtime_error` exception is thrown.
   
-###  Examples
+##  Examples
     
 ```cpp
 [[cpp11::register]] doubles inverse1_(const doubles_matrix<>& a,
@@ -2622,20 +2609,20 @@ thrown. If the matrix appears to be singular, the output matrix is reset and a
 }
 ```
 
-### Caveats
+## Caveats
 
 * If the matrix is known to be symmetric positive definite, `inv_sympd()`.
 * To solve a system of linear equations, such as `Z = inv(X) * Y`, `solve()` can
   be faster and/or more accurate.
 
-## Maximum and minimum
+# Maximum and minimum
 
 `.min()` and `.max()` are member functions of the `Mat`, `Col`, `Row`, and
-`Cube` classes. They return the minimum and maximum values of the object,
+`Cube` classes. These return the minimum and maximum values of the object,
 respectively. For objects with complex numbers, absolute values are used for
 comparison.
   
-### Examples
+## Examples
     
 ```cpp
 [[cpp11::register]] doubles maxmin1_(const int& n) {
@@ -2651,14 +2638,14 @@ comparison.
 }
 ```
 
-## Linear index of maximum and minimum
+# Linear index of maximum and minimum
 
 `.index_min()` and `.index_max()` are member functions of the `Mat`, `Col`,
 `Row`, and `Cube` classes. They return the linear index of the minimum and
 maximum values of the object, respectively. For objects with complex numbers,
 absolute values are used for comparison. The returned index is of type `uword`.
 
-### Examples
+## Examples
     
 ```cpp
 [[cpp11::register]] doubles index_maxmin1_(const int& n) {
@@ -2679,31 +2666,31 @@ absolute values are used for comparison. The returned index is of type `uword`.
 }
 ```
 
-## In-range
+# In-range
 
 `.in_range(** i **)` is a member function of `Mat`, `Col`, `Row`, `Cube`,
 `SpMat` and `field`, it returns `true` if the given location or span is
 currently valid and `false` if the object is empty, the location is out of
 bounds, or the span is out of bounds.
 
-| Function/Method                                                                               | Mat, Col, Row | Cube | SpMat | Field |
-|-----------------------------------------------------------------------------------------------|---------------|------|-------|-------|
-| `.in_range(span(start, end))`                                                                 | X             | X    | X     | X     |
-| `.in_range(row, col)`                                                                         | X             | X    | X     | X     |
-| `.in_range(span(start_row, end_row), span(start_col, end_col))`                               | X             |      | X     | X     |
-| `.in_range(row, col, slice)`                                                                  |               | X    |       | X     |
-| `.in_range(span(start_row, end_row), span(start_col, end_col), span(start_slice, end_slice))` |               | X    |       | X     |
-| `.in_range(first_row, first_col, size(X))` (`X` is a matrix or field)                         | X             |      | X     | X     |
-| `.in_range(first_row, first_col, size(n_rows, n_cols))`                                       | X             |      | X     | X     |
-| `.in_range(first_row, first_col, first_slice, size(Q))` (`Q` is a cube or field)              |               | X    |       | X     |
-| `.in_range(first_row, first_col, first_slice, size(n_rows, n_cols, n_slices))`                |               | X    |       | X     |
+| Function                                                                                      | Mat | Col | Row | Cube | SpMat | Field |
+|-----------------------------------------------------------------------------------------------|-----|-----|-----|------|-------|-------|
+| `.in_range(span(start, end))`                                                                 | ✓   | ✓   | ✓   | ✓    | ✓     | ✓     |
+| `.in_range(row, col)`                                                                         | ✓   | ✓   | ✓   | ✓    | ✓     | ✓     |
+| `.in_range(span(start_row, end_row), span(start_col, end_col))`                               | ✓   | ✓   | ✓   |      | ✓     | ✓     |
+| `.in_range(row, col, slice)`                                                                  |     |     |     | ✓    |       | ✓     |
+| `.in_range(span(start_row, end_row), span(start_col, end_col), span(start_slice, end_slice))` |     |     |     | ✓    |       | ✓     |
+| `.in_range(first_row, first_col, size(X))` (`X` is a matrix or field)                         | ✓   | ✓   | ✓   |      | ✓     | ✓     |
+| `.in_range(first_row, first_col, size(n_rows, n_cols))`                                       | ✓   | ✓   | ✓   |      | ✓     | ✓     |
+| `.in_range(first_row, first_col, first_slice, size(Q))` (`Q` is a cube or field)              |     |     |     | ✓    |       | ✓     |
+| `.in_range(first_row, first_col, first_slice, size(n_rows, n_cols, n_slices))`                |     |     |     | ✓    |       | ✓     |
 
 Instances of `span(a,b)` can be replaced by:
 
 * `span()` or `span::all` to indicate the entire range.
 * `span(a)` to indicate a particular row, column, or slice.
   
-### Examples
+## Examples
     
 ```cpp
 [[cpp11::register]] logicals in_range1_(const int& n) {
@@ -2720,13 +2707,13 @@ Instances of `span(a,b)` can be replaced by:
 }
 ```
 
-## Is empty
+# Is empty
 
 `.is_empty()` is a member function of the `Mat`, `Col`, `Row`, `Cube`, `SpMat`,
 and `field` classes. It returns `true` if the object has no elements and `false`
 if the object has one or more elements.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] logicals is_empty1_(const int& n) {
@@ -2744,7 +2731,7 @@ if the object has one or more elements.
 }
 ```
 
-## Is vector/column vector/row vector
+# Is vector/column vector/row vector
 
 `.is_vec()`, `.is_colvec()` and `.is_rowvec()` are member functions of `Mat`
 and `SpMat`.
@@ -2756,7 +2743,7 @@ and `SpMat`.
 * `.is_rowvec()` returns `true` if the matrix can be interpreted as a row
   vector and `false` otherwise.
     
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] logicals is_vec1_(const int& n) {
@@ -2779,12 +2766,12 @@ and `SpMat`.
 }
 ```
 
-### Caveat
+## Caveat
 
 Do not assume that the vector has elements if these functions return `true`. It
 is possible to have an empty vector (e.g., 0x1 as in the examples).
 
-## Is sorted
+# Is sorted
 
 `.is_sorted()`, `.is_sorted(sort_direction)` and
 `.is_sorted(sort_direction, dim)` are member function of `Mat`, `Row`, and
@@ -2808,7 +2795,7 @@ following strings:
 * `"strictdescend"`: the elements are strictly descending, and consecutive
   elements cannot be equal.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] logicals is_sorted1_(const int& n) {
@@ -2829,7 +2816,7 @@ following strings:
 }
 ```
 
-## Is upper triangular/lower triangular
+# Is upper triangular/lower triangular
 
 `.is_trimatu()` and `.is_trimatl()` are member functions of `Mat` and `SpMat`.
 `.is_trimatu()` returns `true` if the matrix is upper triangular (e.g., the
@@ -2838,7 +2825,7 @@ matrix is square sized and all elements below the main diagonal are zero) and
 triangular (e.g., the matrix is square sized and all elements above the main
 diagonal are zero) and `false` otherwise.
   
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] logicals is_triangular1_(const int& n) {
@@ -2859,20 +2846,20 @@ diagonal are zero) and `false` otherwise.
 }
 ```
 
-### Caveat
+## Caveat
 
 If these functions return `true`, do not assume that the matrix contains
 non-zero elements on or above/below the main diagonal. It is possible to have an
 empty matrix (e.g., 0x0 as in the examples).
 
-## Is diagonal
+# Is diagonal
 
 `is_diagmat()` is a member function of `Mat` and `SpMat`. It returns `true` if
 the matrix is diagonal (e.g., all elements outside of the main diagonal are
 zero). If the matrix is not square sized, a `std::logic_error` exception is
 thrown.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] logicals is_diagonal1_(const int& n) {
@@ -2893,19 +2880,19 @@ thrown.
 }
 ```
 
-### Caveat
+## Caveat
 
 If this function returns `true`, do not assume that the matrix contains non-zero
 elements on the main diagonal only. It is possible to have an empty matrix
 (e.g., 0x0 as in the examples).
 
-## Is square
+# Is square
 
 `.is_square()` is a member function of the `Mat` and `SpMat` classes. It returns
 `true` if the matrix is square sized (e.g., the number of rows is equal to the
 number of columns) and `false` otherwise.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] logicals is_square1_(const int& n) {
@@ -2926,18 +2913,18 @@ number of columns) and `false` otherwise.
 }
 ```
 
-### Caveats
+## Caveats
 
 If this function returns `true`, do not assume that the matrix is non-empty. It
 is possible to have an empty matrix (e.g., 0x0 as in the examples).
 
-## Is symmetric
+# Is symmetric
 
 `.is_symmetric()` is a member function of the `Mat` and `SpMat` classes. It
 returns `true` if the matrix is symmetric (e.g., the matrix is square sized and
 the transpose is equal to the original matrix) and `false` otherwise.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] logicals is_symmetric1_(const int& n) {
@@ -2958,19 +2945,19 @@ the transpose is equal to the original matrix) and `false` otherwise.
 }
 ```
 
-### Caveats
+## Caveats
 
 If this function returns `true`, do not assume that the matrix is non-empty. It
 is possible to have an empty matrix (e.g., 0x0 as in the examples).
 
-## Is hermitian
+# Is hermitian
 
 `.is_hermitian()` is a member function of the `Mat` and `SpMat` classes. It
 returns `true` if the matrix is Hermitian or self-adjoint (e.g., the matrix is
 square sized and the conjugate transpose is equal to the original matrix) and
 `false` otherwise.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] logicals is_hermitian1_(const int& n) {
@@ -2991,12 +2978,12 @@ square sized and the conjugate transpose is equal to the original matrix) and
 }
 ```
 
-### Caveats
+## Caveats
 
 If this function returns `true`, do not assume that the matrix is non-empty. It
 is possible to have an empty matrix (e.g., 0x0 as in the examples).
 
-## Is symmetric/hermitian positive definite
+# Is symmetric/hermitian positive definite
 
 `.is_sympd()` and `.is_sympd(tol)` are a member function of the `Mat` and
 `SpMat` classes. It returns `true` if the matrix is symmetric/hermitian
@@ -3004,7 +2991,7 @@ positive definite within a tolerance (e.g., the matrix is square sized and all
 its eigenvalues are positive) and `false` otherwise. The `tol` argument is
 optional, the default is `tol = 100 * datum::eps * norm(X, "fro")`.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] logicals is_sympd1_(const int& n) {
@@ -3025,14 +3012,14 @@ optional, the default is `tol = 100 * datum::eps * norm(X, "fro")`.
 }
 ```
 
-## Is zero
+# Is zero
 
 `.is_zero()` and `.is_zero(tol)` are a member function of the `Mat`, `Col`,
 `Row`, `Cube`, and `SpMat` classes. It returns `true` if all elements are zero
 within a tolerance and `false` otherwise. For complex numbers, each component
 (real and imaginary) is checked separately. The `tol` argument is optional.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] logicals is_zero1_(const int& n) {
@@ -3051,13 +3038,13 @@ within a tolerance and `false` otherwise. For complex numbers, each component
 }
 ```
 
-## Is finite
+# Is finite
 
 `.is_finite()` is a member function of the `Mat`, `Col`, `Row`, `Cube`, and
 `SpMat` classes. It returns `true` if all elements are finite and `false`
 otherwise.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] logicals is_finite1_(const int& n) {
@@ -3080,13 +3067,13 @@ otherwise.
 }
 ```
 
-## Has infinity
+# Has infinity
 
 `.has_inf()` is a member function of the `Mat`, `Col`, `Row`, `Cube`, and
 `SpMat` classes. It returns `true` if the object contains at least one infinite
 value and `false` otherwise.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] logicals has_inf1_(const int& n) {
@@ -3109,13 +3096,13 @@ value and `false` otherwise.
 }
 ```
 
-## Has not-a-number
+# Has not-a-number
 
 `.has_nan()` is a member function of the `Mat`, `Col`, `Row`, `Cube`, and
 `SpMat` classes. It returns `true` if the object contains at least one
 not-a-number (NaN) value and `false` otherwise.
 
-### Examples
+## Examples
 
 ```cpp
 [[cpp11::register]] logicals has_nan1_(const int& n) {
@@ -3138,6 +3125,6 @@ not-a-number (NaN) value and `false` otherwise.
 }
 ```
 
-### Caveat
+## Caveat
 
 `NaN` is not equal to anything, even itself.

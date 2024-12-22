@@ -2,6 +2,8 @@ pandoc: 2.9.2.1
 pkgdown: 2.1.1.9000
 pkgdown_sha: 71fd32ce95f17b379e57e7e33f2294bc034727fd
 articles:
-  data-types: data-types.html
-  usage: usage.html
-last_built: 2024-12-22T05:50Z
+  basic-usage: basic-usage.html
+  generated-vectors-matrices-cubes: generated-vectors-matrices-cubes.html
+  matrix-vector-cube-and-field-classes: matrix-vector-cube-and-field-classes.html
+  member-functions-and-variables: member-functions-and-variables.html
+last_built: 2024-12-22T23:19Z

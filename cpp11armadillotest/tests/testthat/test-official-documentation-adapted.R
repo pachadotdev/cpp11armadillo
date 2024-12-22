@@ -359,4 +359,64 @@ test_that("examples derived from official documentation", {
   res78 <- has_nan1_(2)
   expect_type(res78, "logical")
   expect_equal(length(res78), 3)
+
+  res79 <- linspace1_(10)
+  expect_type(res79, "double")
+  expect_equal(length(res79), 10)
+
+  res80 <- logspace1_(10)
+  expect_type(res80, "double")
+  expect_equal(length(res80), 10)
+
+  res81 <- regspace1_(0.1)
+  expect_type(res81, "double")
+  expect_equal(length(res81), 11)
+
+  res82 <- randperm1_(5, 3)
+  expect_type(res82, "integer")
+  expect_equal(length(res82), 5 + 3)
+
+  res83 <- eye2_(2)
+  expect_type(res83, "double")
+  expect_equal(dim(res83), c(2, 2))
+
+  res84 <- ones2_(2)
+  expect_type(res84, "double")
+  expect_equal(dim(res84), c(2, 2))
+
+  res85 <- zeros2_(2)
+  expect_type(res85, "double")
+  expect_equal(dim(res85), c(2, 2))
+
+  res86 <- randu3_(2)
+  expect_type(res86, "double")
+  expect_equal(dim(res86), c(2, 2))
+
+  res87 <- randn3_(2)
+  expect_type(res87, "double")
+  expect_equal(dim(res87), c(2, 2))
+
+  res88 <- randg3_(2)
+  expect_type(res88, "double")
+  expect_equal(dim(res88), c(2, 2))
+
+  res89 <- speye1_(2)
+  expect_type(res89, "double")
+  expect_equal(dim(res89), c(2, 2))
+
+  res90 <- spones1_(2)
+  expect_type(res90, "double")
+  expect_equal(dim(res90), c(2, 2))
+
+  res91 <- sprandu1_(2)
+  expect_type(res91, "double")
+  expect_equal(dim(res91), c(2, 2))
+
+  res91 <- sprandn1_(2)
+  expect_type(res91, "double")
+  expect_equal(dim(res91), c(2, 2))
+
+  res92 <- toeplitz1_(2)
+  expect_type(res92, "double")
+  expect_equal(dim(res92), c(2, 2))
 })
