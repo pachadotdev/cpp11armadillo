@@ -18,6 +18,11 @@ knitr::opts_chunk$set(
 This vignette is adapted from the official Armadillo
 [A Deep Dive Into How R Fits a Linear Model](http://madrury.github.io/jekyll/update/statistics/2016/07/20/lm-in-R.html).
 
+For those interested in Econometrics, do yourself a favour and buy
+[Econometrics](https://users.ssc.wisc.edu/~bhansen/econometrics/) by Prof.
+Bruce E. Hansen. I have [unofficial](https://pacha.dev/hansen/) re-written codes
+using Armadillo for his R examples.
+
 # Linear regression
 
 ## Design matrix and response vector
