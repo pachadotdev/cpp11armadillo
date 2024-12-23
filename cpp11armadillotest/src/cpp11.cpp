@@ -803,6 +803,20 @@ extern "C" SEXP _cpp11armadillotest_toeplitz1_(SEXP n) {
     return cpp11::as_sexp(toeplitz1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
+// 09_regression.cpp
+doubles ols_(const doubles_matrix<>& x, const doubles& y);
+extern "C" SEXP _cpp11armadillotest_ols_(SEXP x, SEXP y) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(ols_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles&>>(y)));
+  END_CPP11
+}
+// 09_regression.cpp
+doubles poisson_(const doubles_matrix<>& x, const doubles& y);
+extern "C" SEXP _cpp11armadillotest_poisson_(SEXP x, SEXP y) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(poisson_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles&>>(y)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
@@ -869,12 +883,14 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_matrix2_",                      (DL_FUNC) &_cpp11armadillotest_matrix2_,                      1},
     {"_cpp11armadillotest_maxmin1_",                      (DL_FUNC) &_cpp11armadillotest_maxmin1_,                      1},
     {"_cpp11armadillotest_memptr1_",                      (DL_FUNC) &_cpp11armadillotest_memptr1_,                      1},
+    {"_cpp11armadillotest_ols_",                          (DL_FUNC) &_cpp11armadillotest_ols_,                          2},
     {"_cpp11armadillotest_ols_dbl",                       (DL_FUNC) &_cpp11armadillotest_ols_dbl,                       2},
     {"_cpp11armadillotest_ols_mat",                       (DL_FUNC) &_cpp11armadillotest_ols_mat,                       2},
     {"_cpp11armadillotest_ols_qr_dbl",                    (DL_FUNC) &_cpp11armadillotest_ols_qr_dbl,                    3},
     {"_cpp11armadillotest_ols_qr_mat",                    (DL_FUNC) &_cpp11armadillotest_ols_qr_mat,                    3},
     {"_cpp11armadillotest_ones1_",                        (DL_FUNC) &_cpp11armadillotest_ones1_,                        1},
     {"_cpp11armadillotest_ones2_",                        (DL_FUNC) &_cpp11armadillotest_ones2_,                        1},
+    {"_cpp11armadillotest_poisson_",                      (DL_FUNC) &_cpp11armadillotest_poisson_,                      2},
     {"_cpp11armadillotest_randg3_",                       (DL_FUNC) &_cpp11armadillotest_randg3_,                       1},
     {"_cpp11armadillotest_randn1_",                       (DL_FUNC) &_cpp11armadillotest_randn1_,                       1},
     {"_cpp11armadillotest_randn2_",                       (DL_FUNC) &_cpp11armadillotest_randn2_,                       1},

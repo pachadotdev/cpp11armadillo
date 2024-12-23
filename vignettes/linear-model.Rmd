@@ -1,0 +1,223 @@
+---
+title: "Fitting regressions with Armadillo"
+output: rmarkdown::html_vignette
+bibliography: "references.bib"
+vignette: >
+  %\VignetteIndexEntry{Fitting regressions with Armadillo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette is adapted from the official Armadillo
+[A Deep Dive Into How R Fits a Linear Model](http://madrury.github.io/jekyll/update/statistics/2016/07/20/lm-in-R.html).
+
+# Linear regression
+
+## Design matrix and response vector
+
+The starting point to fit a linear regresion in R without using the `lm`
+function is to create a design matrix and a response vector. The design matrix
+is a matrix where each row corresponds to an observation and each column
+corresponds to a predictor. The response vector is a vector of the same length
+as the number of observations.
+
+For example, using the `mtcars` dataset it is possible to create a design
+matrix to later estimate the linear regression coefficients for the model:
+
+$$
+\text{mpg}_i = \beta_0 + \beta_1 \times \text{weight}_i + e_i
+$$
+
+For $\beta_0$ and $\beta_1$ to be estimated, the design matrix and the
+response vector are created as follows:
+
+```{r}
+x <- cbind(1, mtcars$wt)
+y <- mtcars$mpg
+
+head(x)
+
+head(y)
+
+dim(x)
+
+length(y)
+```
+
+Certainly, there is a more efficient way to create the design matrix and the
+response vector. The `model.matrix` function can be used to create the design
+matrix and the `model.response` function can be used to create the response
+vector:
+
+```{r}
+x <- model.matrix(mpg ~ wt, data = mtcars)
+y <- model.response(model.frame(mpg ~ wt, data = mtcars))
+```
+
+The advantage of using these functions is that they handle factor variables
+more easily. For example, if the `mtcars` dataset has a factor variable, the
+`model.matrix` function will create one 0/1 column for each level of the factor
+variable.
+
+## Estimating the regression coefficients in R
+
+To estimate the regression coefficients, the `solve` function can be used:
+
+```{r}
+solve(t(x) %*% x) %*% t(x) %*% y
+```
+
+It can be verified that the coefficients are the same as the ones estimated by
+the `lm` function:
+
+```{r}
+lm(mpg ~ wt, data = mtcars)$coefficients
+```
+
+However, the `lm()` function does not use the `solve` function to estimate the
+coefficients. Instead, it uses the QR decomposition and internal functions
+written in C and FORTRAN to estimate the coefficients.
+
+## Estimating the regression coefficients in Armadillo
+
+Using 'cpp11armadillo' library, the regression coefficients can be estimated as
+follows:
+
+```cpp
+vec ols_fit(const Mat<double>& X, const Col<double>& Y) {
+  // QR decomposition
+  mat Q, R;
+  qr_econ(Q, R, X);
+
+  // Least Squares Problem
+  vec betas = solve(trimatu(R), Q.t() * Y);
+
+  return betas;
+}
+
+[[cpp11::register]] doubles ols_(const doubles_matrix<>& x, const doubles& y) {
+  mat X = as_Mat(x);
+  vec Y = as_Col(y);
+  return as_doubles(ols_fit(X, Y));
+}
+```
+
+Verify the equivalence:
+
+```r
+all.equal(ols_(x,y), unname(coef(lm(mpg ~ wt, data = mtcars))))
+[1] TRUE
+```
+
+# Poisson regression
+
+## Design matrix and response vector
+
+The starting point to fit a Poisson regresion in R without using the `glm`
+function is to create a design matrix and a response vector.
+
+For example, using the `mtcars` dataset it is possible to create a design
+matrix to later estimate the Poisson regression coefficients for the model:
+
+$$
+\log(\text{mpg}_i) = \beta_0 + \beta_1 \times \text{weight}_i + e_i
+$$
+
+For $\beta_0$ and $\beta_1$ to be estimated, the design matrix and the
+response vector are created as follows:
+
+```{r}
+x <- model.matrix(mpg ~ wt, data = mtcars)
+y <- log(mtcars$mpg)
+```
+
+## Estimating the regression coefficients in R
+
+The Poisson regression coefficients can be estimated using the `glm` function:
+
+```{r, warning=FALSE}
+glm(mpg ~ wt, data = mtcars, family = poisson(link = "log"))$coefficients
+```
+
+## Estimating the regression coefficients in Armadillo
+
+Estimating a Poisson regression is more complex than estimating a linear
+regression. The Poisson regression coefficients are estimated using an iterative
+algorithm known as the Iteratively Reweighted Least Squares (IRLS) algorithm.
+However, the IRLS algorithm can be simplified by using the weighted least
+squares method, which repeats a linear regression over the transformed data
+using the Poisson link until convergence.
+
+Using 'cpp11armadillo' library, the Poisson regression coefficients can be
+estimated via IRLS as follows:
+
+```cpp
+vec ols_weighted_fit(const Mat<double>& X, const Col<double>& Y, const Col<double>& W) {
+  // Create a diagonal matrix from the weight vector
+  mat W_diag = diagmat(W);
+
+  // Weighted least squares problem
+  mat XTWX = X.t() * W_diag * X;
+  vec XTWY = X.t() * W_diag * Y;
+
+  // Solve the system
+  vec betas = solve(XTWX, XTWY);
+
+  return betas;
+}
+
+vec poisson_fit(const Mat<double>& X, const Col<double>& Y) {
+  // Data transformation
+  vec MU = Y + 0.1;  // Initial guess for MU
+  vec ETA = log(MU);
+  vec Z = ETA + (Y - MU) / MU;
+
+  // Iterate with initial values for the difference and the sum of sq residuals
+  double dif = 1;
+  double rss = 1;
+  double tol = 1e-10;
+
+  vec W;
+  vec betas, res;
+  double rss2;
+
+  while (abs(dif) > tol) {
+    W = MU;  // Weights are the current estimates of MU
+    betas = ols_weighted_fit(X, Z, W);
+    ETA = X * betas;
+    MU = exp(ETA);
+    Z = ETA + (Y - MU) / MU;
+    res = Y - MU;
+    rss2 = sum(res % res);
+    dif = rss2 - rss;
+    rss = rss2;
+  }
+
+  return betas;
+}
+
+[[cpp11::register]] doubles poisson_(const doubles_matrix<>& x, const doubles& y) {
+  mat X = as_Mat(x);
+  vec Y = as_Col(y);
+  return as_doubles(poisson_fit(X, Y));
+}
+```
+
+Verify the equivalence:
+
+```r
+all.equal(poisson_(x,y), unname(coef(glm(mpg ~ wt, data = mtcars, family = poisson()))))
+[1] TRUE
+```
+
+Note: The `glm()` function shows warnings because it expects integer values for
+the response variable. However, the Poisson regression can be estimated with
+non-integer values for the response variable or the `quasipoisson()` family can
+be used to suppress the warnings.

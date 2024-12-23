@@ -455,3 +455,11 @@ sprandn1_ <- function(n) {
 toeplitz1_ <- function(n) {
   .Call(`_cpp11armadillotest_toeplitz1_`, n)
 }
+
+ols_ <- function(x, y) {
+  .Call(`_cpp11armadillotest_ols_`, x, y)
+}
+
+poisson_ <- function(x, y) {
+  .Call(`_cpp11armadillotest_poisson_`, x, y)
+}

@@ -4,6 +4,7 @@ pkgdown_sha: 71fd32ce95f17b379e57e7e33f2294bc034727fd
 articles:
   basic-usage: basic-usage.html
   generated-vectors-matrices-cubes: generated-vectors-matrices-cubes.html
+  linear-model: linear-model.html
   matrix-vector-cube-and-field-classes: matrix-vector-cube-and-field-classes.html
   member-functions-and-variables: member-functions-and-variables.html
-last_built: 2024-12-22T23:19Z
+last_built: 2024-12-23T00:17Z
