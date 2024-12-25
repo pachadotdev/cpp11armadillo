@@ -636,6 +636,66 @@ max1_ <- function(n) {
   .Call(`_cpp11armadillotest_max1_`, n)
 }
 
+nonzeros1_ <- function(n) {
+  .Call(`_cpp11armadillotest_nonzeros1_`, n)
+}
+
+norm1_ <- function(n) {
+  .Call(`_cpp11armadillotest_norm1_`, n)
+}
+
+norm2est1_ <- function(n) {
+  .Call(`_cpp11armadillotest_norm2est1_`, n)
+}
+
+normalise1_ <- function(n) {
+  .Call(`_cpp11armadillotest_normalise1_`, n)
+}
+
+pow1_ <- function(n) {
+  .Call(`_cpp11armadillotest_pow1_`, n)
+}
+
+powmat1_ <- function(n) {
+  .Call(`_cpp11armadillotest_powmat1_`, n)
+}
+
+prod1_ <- function(n) {
+  .Call(`_cpp11armadillotest_prod1_`, n)
+}
+
+rank1_ <- function(n) {
+  .Call(`_cpp11armadillotest_rank1_`, n)
+}
+
+rcond1_ <- function(n) {
+  .Call(`_cpp11armadillotest_rcond1_`, n)
+}
+
+repelem1_ <- function(n) {
+  .Call(`_cpp11armadillotest_repelem1_`, n)
+}
+
+repmat1_ <- function(n) {
+  .Call(`_cpp11armadillotest_repmat1_`, n)
+}
+
+reshape2_ <- function(n) {
+  .Call(`_cpp11armadillotest_reshape2_`, n)
+}
+
+resize2_ <- function(n) {
+  .Call(`_cpp11armadillotest_resize2_`, n)
+}
+
+reverse1_ <- function(n) {
+  .Call(`_cpp11armadillotest_reverse1_`, n)
+}
+
+roots1_ <- function(n) {
+  .Call(`_cpp11armadillotest_roots1_`, n)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }

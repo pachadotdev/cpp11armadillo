@@ -585,4 +585,48 @@ test_that("examples derived from official documentation", {
 
   res137 <- max1_(2)
   expect_type(res137, "list")
+
+  res138 <- nonzeros1_(2)
+  expect_type(res138, "double")
+
+  res139 <- norm1_(2)
+  expect_type(res139, "double")
+
+  res140 <- norm2est1_(2)
+  expect_type(res140, "double")
+
+  res141 <- normalise1_(2)
+  expect_type(res141, "list")
+
+  res142 <- pow1_(2)
+  expect_type(res142, "list")
+
+  res143 <- powmat1_(2)
+  expect_type(res143, "list")
+
+  res144 <- prod1_(2)
+  expect_type(res144, "list")
+
+  res145 <- rank1_(2)
+  expect_type(res145, "list")
+
+  res146 <- rcond1_(2)
+  expect_type(res146, "double")
+
+  res147 <- repelem1_(2)
+  expect_type(res147, "list")
+
+  res148 <- repmat1_(2)
+  expect_type(res148, "list")
+
+  res149 <- reshape2_(2)
+  expect_type(res149, "list")
+
+  res150 <- resize2_(2)
+  expect_type(res150, "list")
+
+  res151 <- reverse1_(2)
+  expect_type(res151, "list")
+
+  res152 <- roots1_(2)
 })

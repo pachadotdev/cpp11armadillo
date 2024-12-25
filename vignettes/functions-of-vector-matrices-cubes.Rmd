@@ -1428,3 +1428,471 @@ min(cube1, cube2);
   return res;
 }
 ```
+
+# Return non-zero values {#nonzeros}
+
+The `nonzeros()` function returns the non-zero values in a vector, matrix or
+cube. The output is a column vector of non-zero values (`vec`). The input matrix
+can be dense or sparse.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles nonzeros1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A.elem(find(A < 0.5)).zeros();  // set elements less than 0.5 to zero
+  vec B = nonzeros(A);
+  return as_doubles(B);
+}
+```
+
+## Caveats
+
+ Caveats:
+
+* For dense matrices/vectors, to obtain the number of non-zero elements, the
+  expression `accu(X != 0)` is more efficient.
+* For sparse matrices, to obtain the number of non-zero elements,
+  `X.n_nonzero` is more efficient.
+
+# Various norms of vectors and matrices {#norm}
+
+The `norm()` function computes the p-norm of a vector or matrix. The optional
+argument `p` can be `p = {1,...,n}`, `p = "inf`", `p = "-inf"`, or `p = "fro"`
+for the 1,2,...,n-norms, maximum norm, minimum quasi-norm, and Frobenius norm,
+respectively. The default is the 2-norm for vectors and the Frobenius norm for
+matrices.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles norm1_(const int& n) {
+  vec A(n, fill::randu);
+  mat B(n, n, fill::randu);
+
+  double a1 = norm(A, 1);
+  double a2 = norm(A, 2);
+  double a3 = norm(A, "inf");
+  double a4 = norm(A, "-inf");
+  double a5 = norm(A, "fro");
+
+  double b1 = norm(B, 1);
+  double b2 = norm(B, 2);
+  double b3 = norm(B, "inf");
+  double b4 = norm(B, "-inf");
+  double b5 = norm(B, "fro");
+
+  writable::doubles res({a1, a2, a3, a4, a5, b1, b2, b3, b4, b5});
+  attr(res, "names") = strings({"a1", "a2", "a3", "a4", "a5",
+    "b1", "b2", "b3", "b4", "b5"});
+}
+```
+
+## Caveats
+
+* The matrix 2-norm (spectral norm) is based on SVD, which is computationally
+  intensive. A faster alternative is `norm2est()`.
+* To obtain the vector norm of each row or column of a matrix, use `vecnorm()`.
+* To obtain the zero/Hamming pseudo-norm (number of non-zero elements), use the
+  expression  `accu(X != 0)`.
+
+# Fast estimate of the matrix 2-norm {#norm2est}
+
+The `norm2est()` function computes a fast estimate of the 2-norm of a matrix.
+The function iterates until `|est1 - est2| / max(est1, est2) < tol` or the
+number of iterations is equal to `max_iter`. The default values are `tol = 1e-5`
+and `max_iter = 100`.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles norm2est1_(const int& n) {
+  mat A(n, n, fill::randu);
+  return doubles({norm2est(A)});
+}
+```
+
+# Normalise vectors to unit p-norm {#normalise}
+
+The `normalise()` function normalises vectors or matrices to a p-norm. The
+default is the 2-norm for vectors and matrices (`p = 2`). For matrices, the
+optional `dim` argument specifies the dimension along which to normalise the
+matrix, with `dim = 0` normalising along columns and `dim = 1` normalising along
+rows.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list normalise1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  mat B = normalise(A, 1, 0);
+  mat C = normalise(A, 1, 1);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(B);
+  res[1] = as_doubles_matrix(C);
+
+  res.attr("names") = strings({"B_norm1_cols", "C_norm1_rows"});
+
+  return res;
+}
+```
+
+# Element-wise power {#pow}
+
+The `pow()` function computes the element-wise power of a matrix or vector. The
+power argument can be a scalar, vector, or matrix.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list pow1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B(n, n, fill::randu);
+
+  mat C = pow(A, 2);
+  mat D = pow(A, B);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(C);
+  res[1] = as_doubles_matrix(D);
+
+  return res;
+}
+```
+
+## Caveats
+
+* To raise all elements to the power 2, use `square()` instead.
+* For the matrix power operation, which takes into account matrix structure, use
+  `powmat()`.
+
+# Matrix power {#powmat}
+
+The `powmat()` function computes the matrix power of a square matrix. The power
+argument must be a scalar (e.g., `double` or `int`). If the input matrix is not
+square, the function throws a `std::runtime_error` exception.
+
+Usage:
+
+```
+Y = powmat(X, 2); // store a matrix
+powmat(Y, X, 2); // store the matrix in Y and return true if successful
+```
+
+If the calculation fails:
+
+* `Y = powmat(X)` throws a `std::runtime_error` exception.
+* `powmat(Y, X, 2)` returns a bool set to false (exception is not thrown).
+
+## Examples
+
+```cpp
+[[cpp11::register]] list powmat1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  mat B = powmat(A, 2);  // form 1
+
+  mat C;
+  bool ok = powmat(C, A, 2);  // form 2
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(B);
+
+  writable::list res2(2);
+  res2[0] = as_doubles_matrix(C);
+  res2[1] = logicals({ok});
+
+  res[1] = res2;
+
+  res.attr("names") = strings({"powmat_form1", "powmat_form2"});
+  res2.attr("names") = strings({"result", "status"});
+
+  return res;
+}
+```
+
+# Product of elements {#prod}
+
+The `prod()` function computes the product of the elements in a vector or
+matrix. The optional `dim` argument specifies the dimension along which to
+compute the matrix product, with `dim = 0` computing the product along columns
+and `dim = 1` computing the product along rows.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list prod1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  rowvec b = prod(A, 0);
+  vec c = prod(A, 1);
+
+  writable::list res(2);
+  res[0] = as_doubles(b.t());
+  res[1] = as_doubles(c);
+
+  return res;
+}
+```
+
+# Rank of matrix {#rank}
+
+The `rank()` function computes the rank of a matrix based on singular values.
+The optional `tolerance` argument specifies the tolerance for the singular
+values. The default is `tolerance = max_rc * max_sv * epsilon`, where:
+
+* `max_rc = max(X.n_rows, X.n_cols)`
+* `max_sv = max(singular values of X)`
+* `epsilon = 1 - min(singular values of X > 1)`
+
+Usage:
+
+```cpp
+val = rank(X, tolerance); // form 1
+rank(val, X, tolerance);   // form 2
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list rank1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  int r1 = rank(A);
+
+  uword r2;
+  bool ok = rank(r2, A);
+
+  writable::list res(2);
+  res[0] = integers({r1});
+
+  writable::list res2(2);
+  res2[0] = integers({static_cast<int>(r2)});
+  res2[1] = logicals({ok});
+
+  res[1] = res2;
+
+  res.attr("names") = strings({"rank1", "rank2"});
+  res2.attr("names") = strings({"result", "status"});
+
+  return res;
+}
+```
+
+# Reciprocal condition number {#rcond}
+
+The `rcond()` function computes the 1-norm estimate of the reciprocal condition
+number of a square matrix. Values close to one indicate a well-conditioned
+matrix, while values close to zero indicate a poorly conditioned matrix. If the
+input matrix is not square, the function throws a `std::runtime_error`
+exception.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles rcond1_(const int& n) {
+  mat A(n, n, fill::randu);
+  return doubles({rcond(A)});
+}
+```
+
+## Caveat
+
+To efficiently calculate the reciprocal condition and the matrix inverse at
+the same time, use `inv()`.
+
+# Replicate elements {#repelem}
+
+The `repelem()` function replicates the elements of a matrix.
+
+Usage:
+
+```cpp
+repelem(A, num_copies_per_row, num_copies_per_col)
+```
+
+The generated matrix has the following size:
+
+* `n_rows = num_copies_per_row * A.n_rows`
+* `n_cols	= num_copies_per_col * A.n_cols`
+
+## Examples
+
+```cpp
+[[cpp11::register]] list repelem1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = repelem(A, 2, 3);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+
+  return res;
+}
+```
+
+# Replicate matrix in block-like fashion {#repmat}
+
+The `repmat()` function replicates a matrix in a block-like fashion.
+
+Usage:
+
+```cpp
+repmat(A, num_reps_row, num_reps_col)
+```
+
+The generated matrix has the following size:
+
+* `n_rows = num_reps_row * A.n_rows`
+* `n_cols = num_reps_col * A.n_cols`
+
+## Examples
+
+```cpp
+[[cpp11::register]] list repmat1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = repmat(A, 2, 3);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+
+  return res;
+}
+```
+
+## Caveat
+
+To apply a vector operation on each row or column of a matrix, it is generally
+more efficient to use `.each_row()` or `.each_col()`.
+
+# Change size while keeping elements {#reshape}
+
+The `reshape()` function changes the size of a vector, matrix or cube while
+keeping the elements in the same order.
+
+Usage:
+
+```cpp
+reshape(vector, n_rows, n_cols)
+reshape(matrix, n_rows, n_cols)
+
+reshape(vector, size(matrix))
+reshape(matrix, size(matrix))
+
+reshape(cube, n_rows, n_cols, n_slices)
+reshape(cube, size(cube))
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list reshape1_(const int& n) {
+  mat A(n, n + 1, fill::randu);
+  
+  mat B = reshape(A, n + 1, n);
+  
+  mat C(n + 4, n - 1);
+  C = reshape(A, size(C));
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(B);
+  res[1] = as_doubles_matrix(C);
+
+  return res;
+}
+```
+
+# Change size while keeping elements and preserving layout {#resize}
+
+The `resize()` function changes the size of a vector, matrix or cube while
+preserving the data. If the new size is larger, the new elements are set to
+zero.
+
+Usage:
+
+```cpp
+resize(vector, n_rows, n_cols)
+resize(matrix, n_rows, n_cols)
+
+resize(vector, size(matrix))
+resize(matrix, size(matrix))
+
+resize(cube, n_rows, n_cols, n_slices)
+resize(cube, size(cube))
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list resize2_(const int& n) {
+  mat A(n, n + 1, fill::randu);
+
+  mat B = resize(A, n + 1, n);
+
+  mat C(n + 4, n - 1);
+  C = resize(A, size(C));
+
+  writable::list res(3);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+
+  return res;
+}
+```
+
+# Reverse order of elements {#reverse}
+
+The `reverse()` function reverses the order of elements in a vector or matrix.
+The optional `dim` argument specifies the dimension along which to reverse the
+matrix, with `dim = 0` reversing along columns and `dim = 1` reversing along
+rows (`dim = 0` by default).
+
+## Examples
+
+```cpp
+[[cpp11::register]] list reverse1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  mat B = reverse(A, 0);
+  mat C = reverse(A, 1);
+
+  writable::list res(3);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+
+  return res;
+}
+```
+
+# Roots of polynomial {#roots}
+
+The `roots()` function computes the roots of a polynomial with real or complex
+coefficients. The input is a vector of coefficients, with the first element
+corresponding to the highest degree term. If the computation fails, the function
+throws a `std::runtime_error` exception.
+
+Usage:
+
+```cpp
+Y = roots(X) // store the roots in Y
+roots(Y, X)  // store the roots in Y and return true if successful
+```
+
+## Examples
+
+FIX LATER !
+
+```cpp
+[[cpp11::register]] list roots1_(const int& n) {
+  // y = p_1*x^n + p_2*x^(n-1) + ... + p_(n-1)*x + p_n
+  // p_1, ..., p_n are random numbers
+  vec A(n + 1, fill::randu);
+  cx_vec B = roots(A);
+  return as_complex(B);
+}
+```

@@ -1943,3 +1943,195 @@
 
   return res;
 }
+
+[[cpp11::register]] doubles nonzeros1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A.elem(find(A < 0.5)).zeros();  // set elements less than 0.5 to zero
+  vec B = nonzeros(A);
+  return as_doubles(B);
+}
+
+[[cpp11::register]] doubles norm1_(const int& n) {
+  vec A(n, fill::randu);
+
+  writable::doubles res({norm(A, 1), norm(A, 2), norm(A, "inf"),
+    norm(A, "-inf"), norm(A, "fro")});
+  res.attr("names") = strings({"norm_1", "norm_2", "norm_inf", "norm_minus_inf",
+    "norm_fro"});
+
+  return res;
+}
+
+[[cpp11::register]] doubles norm2est1_(const int& n) {
+  mat A(n, n, fill::randu);
+  return doubles({norm2est(A)});
+}
+
+[[cpp11::register]] list normalise1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  mat B = normalise(A, 1, 0);
+  mat C = normalise(A, 1, 1);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(B);
+  res[1] = as_doubles_matrix(C);
+
+  res.attr("names") = strings({"B_norm1_cols", "C_norm1_rows"});
+
+  return res;
+}
+
+[[cpp11::register]] list pow1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B(n, n, fill::randu);
+
+  mat C = pow(A, 2);
+  mat D = pow(A, B);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(C);
+  res[1] = as_doubles_matrix(D);
+
+  return res;
+}
+
+[[cpp11::register]] list powmat1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  mat B = powmat(A, 2);  // form 1
+
+  mat C;
+  bool ok = powmat(C, A, 2);  // form 2
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(B);
+
+  writable::list res2(2);
+  res2[0] = as_doubles_matrix(C);
+  res2[1] = logicals({ok});
+
+  res[1] = res2;
+
+  res.attr("names") = strings({"powmat_form1", "powmat_form2"});
+  res2.attr("names") = strings({"result", "status"});
+
+  return res;
+}
+
+[[cpp11::register]] list prod1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  rowvec b = prod(A, 0);
+  vec c = prod(A, 1);
+
+  writable::list res(2);
+  res[0] = as_doubles(b.t());
+  res[1] = as_doubles(c);
+
+  return res;
+}
+
+[[cpp11::register]] list rank1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  int r1 = rank(A);
+
+  uword r2;
+  bool ok = rank(r2, A);
+
+  writable::list res(2);
+  res[0] = integers({r1});
+
+  writable::list res2(2);
+  res2[0] = integers({static_cast<int>(r2)});
+  res2[1] = logicals({ok});
+
+  res[1] = res2;
+
+  res.attr("names") = strings({"rank1", "rank2"});
+  res2.attr("names") = strings({"result", "status"});
+
+  return res;
+}
+
+[[cpp11::register]] doubles rcond1_(const int& n) {
+  mat A(n, n, fill::randu);
+  return doubles({rcond(A)});
+}
+
+[[cpp11::register]] list repelem1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = repelem(A, 2, 3);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+
+  return res;
+}
+
+[[cpp11::register]] list repmat1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = repmat(A, 2, 3);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+
+  return res;
+}
+
+[[cpp11::register]] list reshape2_(const int& n) {
+  mat A(n, n + 1, fill::randu);
+
+  mat B = reshape(A, n + 1, n);
+
+  mat C(n + 4, n - 1);
+  C = reshape(A, size(C));
+
+  writable::list res(3);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+
+  return res;
+}
+
+[[cpp11::register]] list resize2_(const int& n) {
+  mat A(n, n + 1, fill::randu);
+
+  mat B = resize(A, n + 1, n);
+
+  mat C(n + 4, n - 1);
+  C = resize(A, size(C));
+
+  writable::list res(3);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+
+  return res;
+}
+
+[[cpp11::register]] list reverse1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  mat B = reverse(A, 0);
+  mat C = reverse(A, 1);
+
+  writable::list res(3);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+
+  return res;
+}
+
+// [[cpp11::register]] list roots1_(const int& n) {
+//   // y = p_1*x^n + p_2*x^(n-1) + ... + p_(n-1)*x + p_n
+//   // p_1, ..., p_n are random numbers
+//   vec A(n, fill::randu);
+//   cx_vec B = roots(A);
+//   return as_complex_matrix(B);
+// }
