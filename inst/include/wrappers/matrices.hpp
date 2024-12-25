@@ -96,6 +96,23 @@ inline integers_matrix<> as_integers_matrix(const Mat<int>& A) {
   return Mat_to_dblint_matrix_<int, integers_matrix<>>(A);
 }
 
+// Convert umat to integers_matrix<>
+inline integers_matrix<> as_integers_matrix(const umat& A) {
+  const size_t n = A.n_rows;
+  const size_t m = A.n_cols;
+
+  writable::integers_matrix<> B(n, m);
+
+  size_t i,j;
+  for (i = 0; i < n; ++i) {
+    for (j = 0; j < m; ++j) {
+      B(i, j) = A(i, j);
+    }
+  }
+
+  return B;
+}
+
 // Complex
 
 template <typename T>
