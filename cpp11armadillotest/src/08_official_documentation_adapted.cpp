@@ -1642,3 +1642,151 @@
   mat X = diags(V, D, n, n); // lower triangular matrix
   return as_doubles_matrix(X);
 }
+
+[[cpp11::register]] doubles_matrix<> spdiags1_(const int& n) {
+  mat V(n, n, fill::randu);
+  ivec D = {0, -1};
+  sp_mat X = spdiags(V, D, n, n);  // lower triangular matrix
+  return as_doubles_matrix(X);
+}
+
+[[cpp11::register]] doubles_matrix<> diff1_(const int& n) {
+  vec a = randu<vec>(n);
+  vec b = diff(a);
+
+  mat res(n, 2, fill::zeros);
+  
+  res.col(0) = a;
+
+  for (int i = 1; i < n; ++i) {
+    res(i, 1) = b(i - 1);
+  }
+
+  return as_doubles_matrix(res);
+}
+
+[[cpp11::register]] doubles dot1_(const int& n) {
+  vec A(n, fill::randu);
+  vec B(n, fill::randu);
+  return writable::doubles({dot(A, B), cdot(A, B), norm_dot(A, B)});
+}
+
+[[cpp11::register]] doubles_matrix<> eps1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = eps(A);
+  return as_doubles_matrix(B);
+}
+
+[[cpp11::register]] doubles_matrix<> expmat1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = expmat(A);
+  return as_doubles_matrix(B);
+}
+
+[[cpp11::register]] doubles_matrix<> expmat_sym1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A = A + A.t();  // make A symmetric
+  mat B = expmat_sym(A);
+  return as_doubles_matrix(B);
+}
+
+[[cpp11::register]] list find1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B(n, n, fill::randu);
+
+  uvec q1 = find(A > B);
+  uvec q2 = find(A > 0.5);
+  uvec q3 = find(A > 0.5, 3, "last");
+
+  // change elements of A greater than 0.5 to 1
+  A.elem(find(A > 0.5)).ones();
+
+  writable::list res(3);
+  res[0] = as_integers(q1);
+  res[1] = as_integers(q2);
+  res[2] = as_integers(q3);
+
+  return res;
+}
+
+[[cpp11::register]] integers find_finite1_(const int& n) {
+  mat A(n, n, fill::randu);
+  uvec q = find_finite(A);
+  return as_integers(q);
+}
+
+[[cpp11::register]] integers find_nonfinite1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A(0, 0) = datum::inf;
+  uvec q = find_nonfinite(A);
+  return as_integers(q);
+}
+
+[[cpp11::register]] integers find_nan1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A(0, 0) = datum::nan;
+  uvec q = find_nan(A);
+  return as_integers(q);
+}
+
+[[cpp11::register]] integers find_unique1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A(0, 0) = A(1, 1);
+  uvec q = find_unique(A);
+  return as_integers(q);
+}
+
+[[cpp11::register]] list flip1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = fliplr(A);
+  mat C = flipud(A);
+
+  writable::list res(3);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+
+  return res;
+}
+
+[[cpp11::register]] list imag1_(const int& n) {
+  cx_mat X(n, n, fill::randu);
+  mat Y = imag(X);
+  mat Z = real(X);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(Y);
+  res[1] = as_doubles_matrix(Z);
+
+  return res;
+}
+
+[[cpp11::register]] list ind2sub1_(const int& n) {
+  mat M(n, n, fill::randu);
+
+  uvec s = ind2sub(size(M), n);
+
+  uvec indices = find(M > 0.5);
+  umat t = ind2sub(size(M), indices);
+
+  cube Q(2, 3, 4);
+
+  uvec u = ind2sub(size(Q), 8);
+
+  writable::list res(3);
+  res[0] = as_integers(s);
+  res[1] = as_integers_matrix(t);
+  res[2] = as_integers(u);
+
+  return res;
+}
+
+[[cpp11::register]] doubles index_min1_(const int& n) {
+  mat M(n, n + 1, fill::randu);
+
+  urowvec ii = index_max(M);
+  ucolvec jj = index_max(M, 1);
+
+  // max values in col 1 and row n
+  return writable::doubles({M(ii(0), 0), M(n - 1, jj(n - 1))});
+}

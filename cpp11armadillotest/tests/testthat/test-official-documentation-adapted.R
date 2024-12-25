@@ -496,4 +496,59 @@ test_that("examples derived from official documentation", {
   res111 <- diags1_(2)
   expect_type(res111, "double")
   expect_equal(dim(res111), c(2, 2))
+
+  res112 <- spdiags1_(2)
+  expect_type(res112, "double")
+  expect_equal(dim(res112), c(2, 2))
+
+  res113 <- diff1_(3)
+  expect_type(res113, "double")
+  expect_equal(dim(res113), c(3, 2))
+
+  res114 <- dot1_(2)
+  expect_type(res114, "double")
+  expect_equal(length(res114), 3)
+
+  res115 <- eps1_(2)
+  expect_type(res115, "double")
+  expect_equal(dim(res115), c(2, 2))
+
+  res116 <- expmat1_(2)
+  expect_type(res116, "double")
+  expect_equal(dim(res116), c(2, 2))
+
+  res117 <- expmat_sym1_(2)
+  expect_type(res117, "double")
+  expect_equal(dim(res117), c(2, 2))
+
+  res118 <- find1_(2)
+  expect_type(res118, "list")
+
+  res119 <- find_finite1_(2)
+  expect_type(res119, "integer")
+  expect_equal(length(res119), 4)
+
+  res120 <- find_nonfinite1_(2)
+  expect_type(res120, "integer")
+
+  res121 <- find_nan1_(2)
+  expect_type(res121, "integer")
+
+  res122 <- find_unique1_(2)
+  expect_type(res122, "integer")
+
+  res123 <- flip1_(2)
+  expect_type(res123, "list")
+  expect_type(res123[[1]], "double")
+
+  res124 <- imag1_(2)
+  expect_type(res124, "list")
+  expect_type(res124[[1]], "double")
+
+  res125 <- ind2sub1_(2)
+  expect_type(res125, "list")
+
+  res126 <- index_min1_(2)
+  expect_type(res126, "double")
+  expect_equal(length(res126), 2)
 })

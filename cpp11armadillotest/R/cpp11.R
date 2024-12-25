@@ -532,6 +532,66 @@ diags1_ <- function(n) {
   .Call(`_cpp11armadillotest_diags1_`, n)
 }
 
+spdiags1_ <- function(n) {
+  .Call(`_cpp11armadillotest_spdiags1_`, n)
+}
+
+diff1_ <- function(n) {
+  .Call(`_cpp11armadillotest_diff1_`, n)
+}
+
+dot1_ <- function(n) {
+  .Call(`_cpp11armadillotest_dot1_`, n)
+}
+
+eps1_ <- function(n) {
+  .Call(`_cpp11armadillotest_eps1_`, n)
+}
+
+expmat1_ <- function(n) {
+  .Call(`_cpp11armadillotest_expmat1_`, n)
+}
+
+expmat_sym1_ <- function(n) {
+  .Call(`_cpp11armadillotest_expmat_sym1_`, n)
+}
+
+find1_ <- function(n) {
+  .Call(`_cpp11armadillotest_find1_`, n)
+}
+
+find_finite1_ <- function(n) {
+  .Call(`_cpp11armadillotest_find_finite1_`, n)
+}
+
+find_nonfinite1_ <- function(n) {
+  .Call(`_cpp11armadillotest_find_nonfinite1_`, n)
+}
+
+find_nan1_ <- function(n) {
+  .Call(`_cpp11armadillotest_find_nan1_`, n)
+}
+
+find_unique1_ <- function(n) {
+  .Call(`_cpp11armadillotest_find_unique1_`, n)
+}
+
+flip1_ <- function(n) {
+  .Call(`_cpp11armadillotest_flip1_`, n)
+}
+
+imag1_ <- function(n) {
+  .Call(`_cpp11armadillotest_imag1_`, n)
+}
+
+ind2sub1_ <- function(n) {
+  .Call(`_cpp11armadillotest_ind2sub1_`, n)
+}
+
+index_min1_ <- function(n) {
+  .Call(`_cpp11armadillotest_index_min1_`, n)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }

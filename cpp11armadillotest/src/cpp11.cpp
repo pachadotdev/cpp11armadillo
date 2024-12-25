@@ -936,6 +936,111 @@ extern "C" SEXP _cpp11armadillotest_diags1_(SEXP n) {
     return cpp11::as_sexp(diags1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> spdiags1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_spdiags1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(spdiags1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> diff1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_diff1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(diff1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles dot1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_dot1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(dot1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> eps1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_eps1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(eps1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> expmat1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_expmat1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(expmat1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> expmat_sym1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_expmat_sym1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(expmat_sym1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+list find1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_find1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(find1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+integers find_finite1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_find_finite1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(find_finite1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+integers find_nonfinite1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_find_nonfinite1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(find_nonfinite1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+integers find_nan1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_find_nan1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(find_nan1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+integers find_unique1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_find_unique1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(find_unique1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+list flip1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_flip1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(flip1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+list imag1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_imag1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(imag1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+list ind2sub1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_ind2sub1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(ind2sub1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles index_min1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_index_min1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(index_min1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
 // 09_regression.cpp
 doubles ols_(const doubles_matrix<>& x, const doubles& y);
 extern "C" SEXP _cpp11armadillotest_ols_(SEXP x, SEXP y) {
@@ -989,6 +1094,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_diagonal1_",                    (DL_FUNC) &_cpp11armadillotest_diagonal1_,                    1},
     {"_cpp11armadillotest_diags1_",                       (DL_FUNC) &_cpp11armadillotest_diags1_,                       1},
     {"_cpp11armadillotest_diagvec1_",                     (DL_FUNC) &_cpp11armadillotest_diagvec1_,                     1},
+    {"_cpp11armadillotest_diff1_",                        (DL_FUNC) &_cpp11armadillotest_diff1_,                        1},
+    {"_cpp11armadillotest_dot1_",                         (DL_FUNC) &_cpp11armadillotest_dot1_,                         1},
     {"_cpp11armadillotest_each_col1_",                    (DL_FUNC) &_cpp11armadillotest_each_col1_,                    1},
     {"_cpp11armadillotest_each_row1_",                    (DL_FUNC) &_cpp11armadillotest_each_row1_,                    1},
     {"_cpp11armadillotest_each_slice1_",                  (DL_FUNC) &_cpp11armadillotest_each_slice1_,                  1},
@@ -998,17 +1105,29 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_eigen_gen_no_wrapper",          (DL_FUNC) &_cpp11armadillotest_eigen_gen_no_wrapper,          1},
     {"_cpp11armadillotest_eigen_sym_dbl",                 (DL_FUNC) &_cpp11armadillotest_eigen_sym_dbl,                 1},
     {"_cpp11armadillotest_eigen_sym_mat",                 (DL_FUNC) &_cpp11armadillotest_eigen_sym_mat,                 1},
+    {"_cpp11armadillotest_eps1_",                         (DL_FUNC) &_cpp11armadillotest_eps1_,                         1},
+    {"_cpp11armadillotest_expmat1_",                      (DL_FUNC) &_cpp11armadillotest_expmat1_,                      1},
+    {"_cpp11armadillotest_expmat_sym1_",                  (DL_FUNC) &_cpp11armadillotest_expmat_sym1_,                  1},
     {"_cpp11armadillotest_eye1_",                         (DL_FUNC) &_cpp11armadillotest_eye1_,                         1},
     {"_cpp11armadillotest_eye2_",                         (DL_FUNC) &_cpp11armadillotest_eye2_,                         1},
     {"_cpp11armadillotest_field1_",                       (DL_FUNC) &_cpp11armadillotest_field1_,                       2},
     {"_cpp11armadillotest_fill1_",                        (DL_FUNC) &_cpp11armadillotest_fill1_,                        1},
+    {"_cpp11armadillotest_find1_",                        (DL_FUNC) &_cpp11armadillotest_find1_,                        1},
+    {"_cpp11armadillotest_find_finite1_",                 (DL_FUNC) &_cpp11armadillotest_find_finite1_,                 1},
+    {"_cpp11armadillotest_find_nan1_",                    (DL_FUNC) &_cpp11armadillotest_find_nan1_,                    1},
+    {"_cpp11armadillotest_find_nonfinite1_",              (DL_FUNC) &_cpp11armadillotest_find_nonfinite1_,              1},
+    {"_cpp11armadillotest_find_unique1_",                 (DL_FUNC) &_cpp11armadillotest_find_unique1_,                 1},
+    {"_cpp11armadillotest_flip1_",                        (DL_FUNC) &_cpp11armadillotest_flip1_,                        1},
     {"_cpp11armadillotest_for_each1_",                    (DL_FUNC) &_cpp11armadillotest_for_each1_,                    1},
     {"_cpp11armadillotest_has_inf1_",                     (DL_FUNC) &_cpp11armadillotest_has_inf1_,                     1},
     {"_cpp11armadillotest_has_nan1_",                     (DL_FUNC) &_cpp11armadillotest_has_nan1_,                     1},
+    {"_cpp11armadillotest_imag1_",                        (DL_FUNC) &_cpp11armadillotest_imag1_,                        1},
     {"_cpp11armadillotest_imbue1_",                       (DL_FUNC) &_cpp11armadillotest_imbue1_,                       1},
     {"_cpp11armadillotest_imbue2_",                       (DL_FUNC) &_cpp11armadillotest_imbue2_,                       1},
     {"_cpp11armadillotest_in_range1_",                    (DL_FUNC) &_cpp11armadillotest_in_range1_,                    1},
+    {"_cpp11armadillotest_ind2sub1_",                     (DL_FUNC) &_cpp11armadillotest_ind2sub1_,                     1},
     {"_cpp11armadillotest_index_maxmin1_",                (DL_FUNC) &_cpp11armadillotest_index_maxmin1_,                1},
+    {"_cpp11armadillotest_index_min1_",                   (DL_FUNC) &_cpp11armadillotest_index_min1_,                   1},
     {"_cpp11armadillotest_initialization1_",              (DL_FUNC) &_cpp11armadillotest_initialization1_,              1},
     {"_cpp11armadillotest_insert_columns1_",              (DL_FUNC) &_cpp11armadillotest_insert_columns1_,              1},
     {"_cpp11armadillotest_insert_rows1_",                 (DL_FUNC) &_cpp11armadillotest_insert_rows1_,                 1},
@@ -1066,6 +1185,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_shed_columns1_",                (DL_FUNC) &_cpp11armadillotest_shed_columns1_,                1},
     {"_cpp11armadillotest_shed_rows1_",                   (DL_FUNC) &_cpp11armadillotest_shed_rows1_,                   1},
     {"_cpp11armadillotest_shed_slices1_",                 (DL_FUNC) &_cpp11armadillotest_shed_slices1_,                 1},
+    {"_cpp11armadillotest_spdiags1_",                     (DL_FUNC) &_cpp11armadillotest_spdiags1_,                     1},
     {"_cpp11armadillotest_speye1_",                       (DL_FUNC) &_cpp11armadillotest_speye1_,                       1},
     {"_cpp11armadillotest_spones1_",                      (DL_FUNC) &_cpp11armadillotest_spones1_,                      1},
     {"_cpp11armadillotest_sprandn1_",                     (DL_FUNC) &_cpp11armadillotest_sprandn1_,                     1},

@@ -40,9 +40,9 @@ knitr::opts_chunk$set(
 | `det`                   | [Determinant](#det)                                                         |
 | `diagmat`               | [Generate diagonal matrix from given matrix or vector](#diagmat)            |
 | `diagvec`               | [Extract specified diagonal](#diagvec)                                      |
-| `diags`                 | [Generate a matrix with diagonals specified by column vectors (dense matrix)](#diags)      |
+| `diags`                 | [Generate a dense matrix with diagonals specified by column vectors](#diags) |
 | `diff`                  | [Differences between adjacent elements](#diff)                              |
-| `dot / cdot / norm_dot` | [Dot product](#dot--cdot--norm_dot)                                         |
+| `dot/cdot/norm_dot`     | [Dot product](#dot)                                         |
 | `eps`                   | [Obtain distance of each element to next largest floating point representation](#eps) |
 | `expmat`                | [Matrix exponential](#expmat)                                               |
 | `expmat_sym`            | [Matrix exponential of symmetric matrix](#expmat_sym)                       |
@@ -51,10 +51,10 @@ knitr::opts_chunk$set(
 | `find_nonfinite`        | [Find indices of non-finite elements](#find_nonfinite)                      |
 | `find_nan`              | [Find indices of NaN elements](#find_nan)                                   |
 | `find_unique`           | [Find indices of unique elements](#find_unique)                             |
-| `fliplr / flipud`       | [Flip matrix left to right or upside down](#fliplr--flipud)                 |
-| `imag / real`           | [Extract imaginary/real part](#imag--real)                                  |
+| `fliplr/flipud`         | [Flip matrix left to right or upside down](#fliplr)                         |
+| `imag/real`             | [Extract imaginary/real part](#imag)                                        |
 | `ind2sub`               | [Convert linear index to subscripts](#ind2sub)                              |
-| `index_min / index_max` | [Indices of extremum values](#index_min--index_max)                         |
+| `index_min / index_max` | [Indices of extremum values](#index_min)                         |
 | `inplace_trans`         | [In-place transpose](#inplace_trans)                                        |
 | `intersect`             | [Find common elements in two vectors/matrices](#intersect)                  |
 | `join_rows / join_cols` | [Concatenation of matrices](#join_rows--join_cols)                          |
@@ -85,6 +85,7 @@ knitr::opts_chunk$set(
 | `size`                  | [Obtain dimensions of given object](#size)                                  |
 | `sort`                  | [Sort elements](#sort)                                                      |
 | `sort_index`            | [Vector describing sorted order of elements](#sort_index)                   |
+| `spdiags`               | [Generate a sparse matrix with diagonals specified by column vectors](#spdiags) |
 | `sqrtmat`               | [Square root of matrix](#sqrtmat)                                           |
 | `sqrtmat_sympd`         | [Square root of symmetric matrix](#sqrtmat_sympd)                           |
 | `sum`                   | [Sum of elements](#sum)                                                     |
@@ -669,10 +670,10 @@ diagvec(matrix, k); // k = 0 -> main diagonal
 }
 ```
 
-# Generate a matrix with diagonals specified by column vectors (dense matrix) {#diags}
+# Generate a dense matrix with diagonals specified by column vectors {#diags}
 
-The `diags()` function generates a matrix with diagonals specified by column
-vectors from an input matrix and a vector to indicate the diagonals.
+The `diags()` function generates a dense matrix with diagonals specified by
+column vectors from an input matrix and a vector to indicate the diagonals.
 
 Usage:
 
@@ -694,5 +695,408 @@ Each element in the input vector specifies diagonal `k`, where:
   ivec D = {0, -1};
   mat X = diags(V, D, n, n); // lower triangular matrix
   return as_doubles_matrix(X);
+}
+```
+
+# Differences between adjacent elements {#diff}
+
+The `diff()` function computes the differences between adjacent elements in a
+vector or matrix. For a vector, the output is a vector of length `n-k` (the
+default is `k = 1`). For a matrix, the output is a matrix with `n-k` rows
+when `dim = 0` (the default) and `m-k` columns when `dim = 1`. If `k` is greater
+than the length of the vector or the number or rows/columns, the output is an
+empty vector/matrix.
+
+Usage:
+
+```cpp
+diff(vector);
+diff(vector, k);
+
+diff(matrix);
+diff(matrix, k);
+diff(matrix, k, dim); // dim = 0 -> differences along columns
+                      // dim = 1 -> differences along rows
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> diff1_(const int& n) {
+  vec a = randu<vec>(n);
+  vec b = diff(a);
+
+  mat res(n, 2, fill::zeros);
+  
+  res.col(0) = a;
+
+  for (int i = 1; i < n; ++i) {
+    res(i, 1) = b(i - 1);
+  }
+
+  return as_doubles_matrix(res);
+}
+```
+
+# Dot product {#dot}
+
+The `dot()`, `cdot()`, and `norm_dot()` functions compute the dot product of two
+vectors. The `cdot()` function computes the complex conjugate dot product, and
+the `norm_dot()` function computes the dot product and normalises the result by
+the product of the Euclidean norms of the input vectors.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles dot1_(const int& n) {
+  vec A(n, fill::randu);
+  vec B(n, fill::randu);
+  return writable::doubles({dot(A, B), cdot(A, B), norm_dot(A, B)});
+}
+```
+
+## Caveat
+
+`norm()` is more robust for calculating the norm, as it handles underflows and
+overflows.
+
+# Generate a sparse matrix with diagonals specified by column vectors {#spdiags}
+
+The `spdiags()` function generates a sparse matrix with diagonals specified by
+column vectors from an input matrix and a vector to indicate the diagonals.
+
+Usage:
+
+```cpp
+spdiags(matrix, vector, number_of_rows, number_of_columns);
+```
+
+Each element in the input vector specifies diagonal `k`, where:
+
+* `k = 0` is the main diagonal
+* `k > 0` is above the main diagonal
+* `k < 0` is below the main diagonal
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> spdiags1_(const int& n) {
+  mat V(n, n, fill::randu);
+  ivec D = {0, -1};
+  sp_mat X = spdiags(V, D, n, n); // lower triangular matrix
+  return as_doubles_matrix(X);
+}
+```
+
+# Obtain distance of each element to next largest floating point representation {#eps}
+
+The `eps()` function computes the distance of each element in a scalar, vector
+or  matrix to the next largest floating point representation. For vector input,
+the output is a vector of the same orientation and length. For matrix input,
+the output is a matrix of the same dimensions.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> eps1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = eps(A);
+  return as_doubles_matrix(B);
+}
+```
+
+# Matrix exponential {#expmat}
+
+The `expmat()` function computes the matrix exponential of a square matrix. If
+the matrix exponential cannot be computed, the function throws a
+`std::runtime_error`, same if the input is not a square matrix.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> expmat1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = expmat(A);
+  return as_doubles_matrix(B);
+}
+```
+
+## Caveats
+
+* The matrix exponential operation is generally not the same as applying the
+  `exp()` function to each element.
+* If the input matrix is symmetric, `expmat_sym()` is faster.
+
+# Matrix exponential of symmetric matrix {#expmat_sym}
+
+The `expmat_sym()` function computes the matrix exponential of a symmetric or
+Hermitian matrix. If the matrix exponential cannot be computed, the function
+throws a `std::runtime_error`, same if the input is not a square matrix.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> expmat_sym1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A = A + A.t(); // make A symmetric
+  mat B = expmat_sym(A);
+  return as_doubles_matrix(B);
+}
+```
+
+# Find indices of non-zero elements, or elements satisfying a relational condition {#find}
+
+The `find()` function returns the indices of non-zero elements in a vector,
+or that satisfy a relational condition in a vector or matrix. The output is a
+vector of indices (`uvec`).
+
+Usage:
+
+```cpp
+find(vector);
+find(vector, k);
+find(vector, k, s);
+
+find(matrix);
+find(matrix, k);
+find(matrix, k, s);
+```
+
+The parameter `k` (`k=0` by default) returns the indices of all non-zero
+elements or elements that meet the condition. The optional parameter
+`s = "first"` returns the first `m` non-zero indices or indices that meet the
+condition, and `s = "last"` returns the last `m` non-zero indices or indices
+that meet the condition.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list find1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B(n, n, fill::randu);
+
+  uvec q1 = find(A > B);
+  uvec q2 = find(A > 0.5);
+  uvec q3 = find(A > 0.5, 3, "last");
+
+  // change elements of A greater than 0.5 to 1
+  A.elem(find(A > 0.5)).ones();
+
+  return writable::list(as_integers(q1), as_integers(q2), as_integers(q3));
+}
+```
+
+## Caveats
+
+* To clamp values to an interval, `clamp()` is more efficient.
+* To replace a specific value, `.replace()` is more efficient.
+
+# Find indices of finite elements {#find_finite}
+
+The `find_finite()` function returns the indices of finite elements in a vector
+or matrix. The output is a vector of indices (`uvec`).
+
+## Examples
+
+```cpp
+[[cpp11::register]] integers find_finite1_(const int& n) {
+  mat A(n, n, fill::randu);
+  uvec q = find_finite(A);
+  return as_integers(q);
+}
+```
+
+# Find indices of non-finite elements {#find_nonfinite}
+
+The `find_nonfinite()` function returns the indices of non-finite elements in a
+vector or matrix. The output is a vector of indices (`uvec`).
+
+## Examples
+
+```cpp
+[[cpp11::register]] integers find_nonfinite1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A(0, 0) = datum::inf;
+  uvec q = find_nonfinite(A);
+  return as_integers(q);
+}
+```
+
+## Caveat
+
+To replace instances of a specific non-finite value (eg. `NaN` or `Inf`), it is
+more efficient to use `.replace()`.
+
+# Find indices of NaN elements {#find_nan}
+
+The `find_nan()` function returns the indices of NaN elements in a vector or
+matrix. The output is a vector of indices (`uvec`).
+
+## Examples
+
+```cpp
+[[cpp11::register]] integers find_nan1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A(0, 0) = datum::nan;
+  uvec q = find_nan(A);
+  return as_integers(q);
+}
+```
+
+## Caveat
+
+To replace instances of `NaN` values, it is more efficient to use `.replace()`.
+
+# Find indices of unique elements {#find_unique}
+
+The `find_unique()` function returns the indices of unique elements in a vector
+or matrix. The output is a vector of indices (`uvec`).
+
+## Examples
+
+```cpp
+[[cpp11::register]] integers find_unique1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A(0, 0) = A(1, 1);
+  uvec q = find_unique(A);
+  return as_integers(q);
+}
+```
+
+# Flip matrix left to right or upside down {#fliplr}
+
+The `fliplr()` function generates a copy of the input matrix with the order of
+the columns reversed, and the `flipud()` function generates a copy of the input
+matrix with the order of the rows reversed.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list flip1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = fliplr(A);
+  mat C = flipud(A);
+
+  writable::list res(3);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+
+  return res;
+}
+```
+
+# Extract imaginary/real part {#imag}
+
+The `imag()` and `real()` functions extract the imaginary and real parts of
+each element in a complex matrix, respectively.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list imag1_(const int& n) {
+  cx_mat X(n, n, fill::randu);
+  mat Y = imag(X);
+  mat Z = real(X);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(Y);
+  res[1] = as_doubles_matrix(Z);
+
+  return res;
+}
+```
+
+## Caveat
+
+To convert a complex matrix to a list of real matrices, it is more efficient to
+use `as_complex_matrix()`.
+
+# Convert linear index to subscripts {#ind2sub}
+
+The `ind2sub()` function converts a linear index or vector of indexes to
+subscripts. The output is a vector of indices (`uvec`) if the input index is a
+scalar, and a matrix of indices (`umat`) if the input index is a vector.
+
+Usage:
+
+```cpp
+uvec sub = ind2sub(size(X), index)
+uvec sub = ind2sub(size(n_rows, n_cols), index)
+uvec sub = ind2sub(size(n_rows, n_cols, n_slices), index)
+
+umat sub = ind2sub(size(X), vector_of_indices)
+umat sub = ind2sub(size(n_rows, n_cols), vector_of_indices)
+umat sub = ind2sub(size(n_rows, n_cols, n_slices), vector_of_indices)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list ind2sub1_(const int& n) {
+  mat M(n, n, fill::randu);
+
+  uvec s = ind2sub(size(M), n);
+
+  uvec indices = find(M > 0.5);
+  umat t       = ind2sub(size(M), indices);
+
+  cube Q(2,3,4);
+
+  uvec u = ind2sub(size(Q), 8);
+
+  writable::list res(3);
+  res[0] = as_integers(s);
+  res[1] = as_integers_matrix(t);
+  res[2] = as_integers(u);
+
+  return res;
+}
+```
+
+# Indices of extremum values {#index_min}
+
+The `index_min()` and `index_max()` functions return the indices of the minimum
+and maximum values in a vector, matrix or cube. For an input vector, the output
+is a scalar index (`uword`). For an input matrix, the output is a vector of
+indices (`uvec`) with row orientation for the argument `dim = 0` (default) with
+the min/max for each column, and column orientation for `dim = 1` with the
+min/max for each row. For an input cube, the output is a cube of indices
+(`ucube`) with the min/max for each slice's columns when `dim = 0`, the min/max
+for each slice's rows when `dim = 1`, and the min/max for each slice when
+`dim = 2`. For complex objects, the absolute value is used to compare the
+elements.
+
+Usage:
+
+```cpp
+// index_max is analogous
+
+index_min(vector)
+
+index_min(matrix)
+index_min(matrix, dim)
+
+index_min(cube)
+index_min(cube, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles index_min1_(const int& n) {
+  vec v(n, fill::randu);
+
+  uword i = index_max(v);
+  double max_val_in_v = v(i);
+
+
+  mat M(n, n + 1, fill::randu);
+
+  urowvec ii = index_max(M);
+  ucolvec jj = index_max(M, 1);
+
+  // max values in col 0 and row n
+  return writable::doubles res({M(ii(0), 0), M(n, jj(n))});
 }
 ```

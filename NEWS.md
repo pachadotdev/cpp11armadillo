@@ -1,3 +1,7 @@
+# cpp11armadillo 0.4.2
+
+* Expands the package internals to convert `umat` to `integers_matrix<>`.
+
 # cpp11armadillo 0.4.1
 
 * Modified configure file to fix Fedora errors.
