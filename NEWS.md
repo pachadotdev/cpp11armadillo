@@ -1,6 +1,7 @@
 # cpp11armadillo 0.4.2
 
 * Expands the package internals to convert `umat` to `integers_matrix<>`.
+* Expands the package internals to convert `ivec` to `integers`.
 
 # cpp11armadillo 0.4.1
 

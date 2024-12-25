@@ -91,6 +91,16 @@ inline integers as_integers(const uvec& x) {
   return y;
 }
 
+inline integers as_integers(const ivec& x) {
+  const size_t n = x.n_elem;
+
+  writable::integers y(n);
+
+  std::copy(x.begin(), x.end(), y.begin());
+
+  return y;
+}
+
 // same as above, but for matrices
 
 template <typename T, typename U>
