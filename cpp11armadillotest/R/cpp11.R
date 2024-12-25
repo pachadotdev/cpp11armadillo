@@ -456,6 +456,82 @@ toeplitz1_ <- function(n) {
   .Call(`_cpp11armadillotest_toeplitz1_`, n)
 }
 
+abs1_ <- function(n) {
+  .Call(`_cpp11armadillotest_abs1_`, n)
+}
+
+accu1_ <- function(n) {
+  .Call(`_cpp11armadillotest_accu1_`, n)
+}
+
+affmul1_ <- function(n) {
+  .Call(`_cpp11armadillotest_affmul1_`, n)
+}
+
+all1_ <- function(n) {
+  .Call(`_cpp11armadillotest_all1_`, n)
+}
+
+any1_ <- function(n) {
+  .Call(`_cpp11armadillotest_any1_`, n)
+}
+
+approx_equal1_ <- function(n) {
+  .Call(`_cpp11armadillotest_approx_equal1_`, n)
+}
+
+arg1_ <- function(n) {
+  .Call(`_cpp11armadillotest_arg1_`, n)
+}
+
+as_scalar1_ <- function(n) {
+  .Call(`_cpp11armadillotest_as_scalar1_`, n)
+}
+
+clamp2_ <- function(n) {
+  .Call(`_cpp11armadillotest_clamp2_`, n)
+}
+
+cond1_ <- function(n) {
+  .Call(`_cpp11armadillotest_cond1_`, n)
+}
+
+conj1_ <- function(n) {
+  .Call(`_cpp11armadillotest_conj1_`, n)
+}
+
+conv_to1_ <- function(n) {
+  .Call(`_cpp11armadillotest_conv_to1_`, n)
+}
+
+cross1_ <- function(n) {
+  .Call(`_cpp11armadillotest_cross1_`, n)
+}
+
+cumsum1_ <- function(n) {
+  .Call(`_cpp11armadillotest_cumsum1_`, n)
+}
+
+cumprod1_ <- function(n) {
+  .Call(`_cpp11armadillotest_cumprod1_`, n)
+}
+
+det1_ <- function(n) {
+  .Call(`_cpp11armadillotest_det1_`, n)
+}
+
+diagmat1_ <- function(n) {
+  .Call(`_cpp11armadillotest_diagmat1_`, n)
+}
+
+diagvec1_ <- function(n) {
+  .Call(`_cpp11armadillotest_diagvec1_`, n)
+}
+
+diags1_ <- function(n) {
+  .Call(`_cpp11armadillotest_diags1_`, n)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }

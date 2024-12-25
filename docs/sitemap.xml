@@ -6,11 +6,17 @@
 <url><loc>/SUPPORT.html</loc></url>
 <url><loc>/articles/basic-usage.html</loc></url>
 <url><loc>/articles/data-types.html</loc></url>
+<url><loc>/articles/decompositions-factorisations-inverses-and-equation-solvers-dense.html</loc></url>
+<url><loc>/articles/decompositions-factorisations-inverses-and-equation-solvers-sparse.html</loc></url>
+<url><loc>/articles/functions-of-vector-matrices-cubes.html</loc></url>
 <url><loc>/articles/generated-vectors-matrices-cubes.html</loc></url>
 <url><loc>/articles/index.html</loc></url>
 <url><loc>/articles/linear-model.html</loc></url>
 <url><loc>/articles/matrix-vector-cube-and-field-classes.html</loc></url>
 <url><loc>/articles/member-functions-and-variables.html</loc></url>
+<url><loc>/articles/miscellaneous.html</loc></url>
+<url><loc>/articles/signal-and-image-processing.html</loc></url>
+<url><loc>/articles/statistics-and-clustering.html</loc></url>
 <url><loc>/articles/usage.html</loc></url>
 <url><loc>/authors.html</loc></url>
 <url><loc>/index.html</loc></url>

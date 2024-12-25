@@ -3,8 +3,14 @@ pkgdown: 2.1.1.9000
 pkgdown_sha: 71fd32ce95f17b379e57e7e33f2294bc034727fd
 articles:
   basic-usage: basic-usage.html
+  decompositions-factorisations-inverses-and-equation-solvers-dense: decompositions-factorisations-inverses-and-equation-solvers-dense.html
+  decompositions-factorisations-inverses-and-equation-solvers-sparse: decompositions-factorisations-inverses-and-equation-solvers-sparse.html
+  functions-of-vector-matrices-cubes: functions-of-vector-matrices-cubes.html
   generated-vectors-matrices-cubes: generated-vectors-matrices-cubes.html
   linear-model: linear-model.html
   matrix-vector-cube-and-field-classes: matrix-vector-cube-and-field-classes.html
   member-functions-and-variables: member-functions-and-variables.html
-last_built: 2024-12-23T00:25Z
+  miscellaneous: miscellaneous.html
+  signal-and-image-processing: signal-and-image-processing.html
+  statistics-and-clustering: statistics-and-clustering.html
+last_built: 2024-12-25T01:29Z

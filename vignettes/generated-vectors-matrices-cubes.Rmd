@@ -15,10 +15,31 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette is adapted from the official Armadillo
-[documentation](https://arma.sourceforge.net/docs.html).
+**This vignette is adapted from the official Armadillo
+[documentation](https://arma.sourceforge.net/docs.html).**
 
-# Linspace
+# Contents
+
+| Function     | Description |
+|--------------|-------------|
+| `linspace()` | [Generate vector with linearly spaced elements](#linspace) |
+| `logspace()` | [Generate vector with logarithmically spaced elements](#logspace) |
+| `regspace()` | [Generate vector with regularly spaced elements](#regspace) |
+| `randperm()` | [Generate vector with random permutation of a sequence of integers](#randperm) |
+| `eye()`      | [Generate identity matrix](#eye) |
+| `ones()`     | [Generate object filled with ones](#ones) |
+| `zeros()`    | [Generate object filled with zeros](#zeros) |
+| `randu()`    | [Generate object with random values from a uniform distribution](#randu) |
+| `randn()`    | [Generate object with random values from a normal/gaussian distribution](#randn) |
+| `randg()`    | [Generate object with random values from a gamma distribution](#randg) |
+| `randi()`    | [Generate object with random integer values in specified interval](#randi) |
+| `speye()`    | [Generate sparse identity matrix](#speye) |
+| `spones()`   | [Generate sparse matrix with non-zero elements set to one](#spones) |
+| `sprandu()`  | [Generate sparse matrix with non-zero elements set to random values from a uniform distribution](#sprandu) |
+| `sprandn()`  | [Generate sparse matrix with non-zero elements set to random values from a normal/gaussian distribution](#sprandn) |
+| `toeplitz()` | [Generate Toeplitz matrix](#toeplitz) |
+
+# Generate vector with linearly spaced elements {#linspace}
 
 The `linspace()` function generates a vector of linearly spaced values from
 `start` to `end` (it includes `end`). The arguments can be `start, end` or
@@ -49,7 +70,7 @@ vector_type v = linspace<vector_type>(start, end, N)
 
 For `N = 1`, the generated vector will have a single element equal to end.
 
-# Logspace
+# Generate vector with logarithmically spaced elements {#logspace}
 
 The `logspace()` function generates a vector of logarithmically spaced values
 from `10^start` to `10^end` (it includes `10^end`). The arguments can be
@@ -76,7 +97,7 @@ vector_type v = logspace<vector_type>(start, end, N)
 }
 ```
 
-# Regspace
+# Generate vector with regularly spaced elements {#regspace}
 
 The `regspace()` function generates a vector of regularly spaced values
 `start, start + delta, start + 2*delta, ..., start + M * delta` where `M` is
@@ -118,7 +139,7 @@ The output vector will be empty if any of the following conditions are met:
 * Do not use `regspace()` to specify ranges for contiguous submatrix views,
   use `span()` instead.
 
-## Randperm
+# Generate vector with random permutation of a sequence of integers {#randperm}
 
 The `randperm()` function generates a vector of permutation of integers from
 `0` to `N-1`. The argument can be empty, `N`, or `N, M`,
@@ -145,7 +166,7 @@ uvec v = randperm(N, M)
 }
 ```
 
-# Eye
+# Generate identity matrix {#eye}
 
 The `eye()` function generates a matrix of size `n x m`. The argument
 can be `n_rows, n_cols` or `size(X)`. When `n_rows = n_cols`, the output is
@@ -173,7 +194,7 @@ cx_mat C = eye<cx_mat>( size(B) );
 }
 ```
 
-# Ones
+# Generate object filled with ones {#ones}
 
 The `ones()` function generates a vector, matrix or cube. The arguments can be
 `n_elem`, `n_rows, n_cols`, `n_rows, n_cols, n_slices`, or `size(X)`. The
@@ -213,7 +234,7 @@ cube_type R = ones<cube_type>(size(Q))
 Specifying `fill::ones` during object construction is more compact. For example,
 `mat A(5, 6, fill::ones)`.
 
-# Zeros
+# Generate object filled with zeros {#zeros}
 
 The `zeros()` function generates a vector, matrix or cube. The arguments can be
 `n_elem`, `n_rows, n_cols`, `n_rows, n_cols, n_slices`, or `size(X)`.
@@ -253,77 +274,7 @@ cube_type R = zeros<cube_type>(size(Q))
 Specifying `fill::zeros` during object construction is more compact. For
 example, `mat A(5, 6, fill::zeros)`.
 
-# Randu
-
-<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
-<a name="randu"></a>
-<b>randu( )</b> 
-<br><b>randu( distr_param(a,b) )</b>
-<br>
-<br><b>randu( n_elem )</b>
-<br><b>randu( n_elem, distr_param(a,b) )</b> 
-<br>
-<br><b>randu( n_rows, n_cols )</b>
-<br><b>randu( n_rows, n_cols, distr_param(a,b) )</b>
-<br>
-<br><b>randu( n_rows, n_cols, n_slices )</b>
-<br><b>randu( n_rows, n_cols, n_slices, distr_param(a,b) )</b>
-<br>
-<br><b>randu( size(X) )</b>
-<br><b>randu( size(X), distr_param(a,b) )</b>
-<ul>
-<li>
-Generate a scalar, vector, matrix or cube with the elements set to random <b>floating point</b> values uniformly distributed in the [a,b] interval
-</li>
-<br>
-<li>The default distribution parameters are <i>a&thinsp;=&thinsp;0</i> and <i>b&thinsp;=&thinsp;1</i>
-</li>
-<br>
-<li>For complex elements, the real and imaginary parts are treated separately
-</li>
-<br>
-<li>
-Usage:
-<ul>
-<li><i>scalar_type</i> s = randu&lt;<i>scalar_type</i>&gt;( ), where <i>scalar_type</i> &in; { float, double, <a href="#cx_double">cx_float</a>, <a href="#cx_double">cx_double</a> }</li>
-<li><i>scalar_type</i> s = randu&lt;<i>scalar_type</i>&gt;( distr_param(a,b) ), where <i>scalar_type</i>  &in; { float, double, <a href="#cx_double">cx_float</a>, <a href="#cx_double">cx_double</a> }</li>
-<br>
-<li><i>vector_type</i> v = randu&lt;<i>vector_type</i>&gt;( n_elem )</li>
-<li><i>vector_type</i> v = randu&lt;<i>vector_type</i>&gt;( n_elem, distr_param(a,b) )</li>
-<br>
-<li><i>matrix_type</i> X = randu&lt;<i>matrix_type</i>&gt;( n_rows, n_cols )</li>
-<li><i>matrix_type</i> X = randu&lt;<i>matrix_type</i>&gt;( n_rows, n_cols, distr_param(a,b) )</li>
-<br>
-<li><i>cube_type</i> Q = randu&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices )</li>
-<li><i>cube_type</i> Q = randu&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices, distr_param(a,b) )</li>
-</ul>
-</li>
-<br>
-<li>
-<b>Caveat:</b> to generate a matrix with random integer values instead of floating point values, use <a href="#randi">randi()</a> instead 
-</li>
-<br>
-<li>
-Examples:
-<ul>
-<pre>
-double a = randu();
-double b = randu(distr_param(10,20));
-
-vec v1 = randu(5);    // or: vec v1(5, fill::randu);
-vec v2 = randu(5, distr_param(10,20));
-
-rowvec r1 = randu&lt;rowvec&gt;(5);
-rowvec r2 = randu&lt;rowvec&gt;(5, distr_param(10,20));
-
-mat A1 = randu(5, 6);  // or: mat A1(5, 6, fill::randu);
-mat A2 = randu(5, 6, distr_param(10,20));
-
-fmat B1 = randu&lt;fmat&gt;(5, 6);
-fmat B2 = randu&lt;fmat&gt;(5, 6, distr_param(10,20));
-</pre>
-</ul>
-</li>
+# Generate object with random values from a uniform distribution {#randu}
 
 The `randu()` function generates a vector, matrix or cube with the elements set
 to random floating point values uniformly distributed in the `[a,b]` interval.
@@ -384,7 +335,7 @@ cube_type Q = randu<cube_type>(n_rows, n_cols, n_slices, distr_param(a,b))
 To generate a matrix with random integer values instead of floating point
 values, use `randi()` instead.
 
-# Randn
+# Generate object with random values from a normal/gaussian distribution {#randn}
 
 The `randn()` function generates a vector, matrix or cube with the elements set
 to random floating point values normally distributed with mean `0` and standard
@@ -435,7 +386,7 @@ cube_type Q = randn<cube_type>(n_rows, n_cols, n_slices, distr_param(mean, stdde
 }
 ```
 
-# Randg
+# Generate object with random values from a gamma distribution {#randg}
 
 The `randg()` function generates a vector, matrix or cube with the elements set
 to random floating point values gamma distributed with shape `a` and scale `b`.
@@ -484,7 +435,7 @@ cube_type Q = randg<cube_type>(n_rows, n_cols, n_slices, distr_param(a, b))
 }
 ```
 
-# Randi
+# Generate object with random integer values in specified interval {#randi}
 
 The `randi()` function generates a vector, matrix or cube with the elements set
 to random integer values uniformly distributed in the `[a,b]` interval. The
@@ -535,7 +486,7 @@ cube_type Q = randi<cube_type>(n_rows, n_cols, n_slices, distr_param(a, b))
 To generate a matrix with random floating point values (e.g., float or double)
 instead of integers, use `randu()` instead.
 
-# Speye
+# Generate sparse identity matrix {#speye}
 
 The `speye()` function generates a sparse matrix of size `n x n` with the
 elements on the diagonal set to `1` and the remaining elements set to `0`. The
@@ -559,7 +510,7 @@ sparse_matrix_type X = speye<sparse_matrix_type>(size(X))
 }
 ```
 
-# Spones
+# Generate sparse matrix with non-zero elements set to one {#spones}
 
 The `spones(X)` function generates a sparse matrix with the same size as `X` and
 all the non-zero elements set to `1`.
@@ -575,7 +526,7 @@ all the non-zero elements set to `1`.
 }
 ```
 
-# Sprandu
+# Generate sparse matrix with non-zero elements set to random values from a uniform distribution {#sprandu}
 
 The `sprandu()` function generates a sparse matrix of size `n_rows x n_cols`
 with random floating point values uniformly distributed in the `[0,1]` interval.
@@ -598,7 +549,7 @@ sparse_matrix_type X = sprandu<sparse_matrix_type>(size(X), density)
 }
 ```
 
-# Sprandn
+# Generate sparse matrix with non-zero elements set to random values from a normal/gaussian distribution {#sprandn}
 
 The `sprandn()` function generates a sparse matrix of size `n_rows x n_cols`
 with random floating point values normally distributed with mean `0` and
@@ -622,7 +573,7 @@ sparse_matrix_type X = sprandn<sparse_matrix_type>(size(X), density)
 }
 ```
 
-# Toeplitz
+# Generate Toeplitz matrix {#toeplitz}
 
 The `toeplitz()` function generates a toeplitz matrix. The arguments can be
 `a` or `a, b`, where `a` is a vector that determines the first column and `b`

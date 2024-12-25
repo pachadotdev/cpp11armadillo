@@ -1,0 +1,698 @@
+---
+title: "Functions of vectors, matrices, and cubes"
+output: rmarkdown::html_vignette
+bibliography: "references.bib"
+vignette: >
+  %\VignetteIndexEntry{Functions of vectors, matrices, and cubes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+**This vignette is adapted from the official Armadillo
+[documentation](https://arma.sourceforge.net/docs.html).**
+
+# Contents
+
+| Function                | Description                                                                 |
+|-------------------------|-----------------------------------------------------------------------------|
+| `abs`                   | [Obtain magnitude of each element](#abs)                                    |
+| `accu`                  | [Accumulate (sum) all elements](#accu)                                      |
+| `affmul`                | [Affine matrix multiplication](#affmul)                                     |
+| `all`                   | [Check whether all elements are non-zero, or satisfy a relational condition](#all) |
+| `any`                   | [Check whether any element is non-zero, or satisfies a relational condition](#any) |
+| `approx_equal`          | [Approximate equality](#approx_equal)                                       |
+| `arg`                   | [Phase angle of each element](#arg)                                         |
+| `as_scalar`             | [Convert 1x1 matrix to pure scalar](#as_scalar)                             |
+| `clamp`                 | [Obtain clamped elements according to given limits](#clamp)                 |
+| `cond`                  | [Condition number of matrix](#cond)                                         |
+| `conj`                  | [Obtain complex conjugate of each element](#conj)                           |
+| `conv_to`               | [Convert/cast between matrix types](#conv_to)                               |
+| `cross`                 | [Cross product](#cross)                                                     |
+| `cumsum`                | [Cumulative sum](#cumsum)                                                   |
+| `cumprod`               | [Cumulative product](#cumprod)                                              |
+| `det`                   | [Determinant](#det)                                                         |
+| `diagmat`               | [Generate diagonal matrix from given matrix or vector](#diagmat)            |
+| `diagvec`               | [Extract specified diagonal](#diagvec)                                      |
+| `diags`                 | [Generate a matrix with diagonals specified by column vectors (dense matrix)](#diags)      |
+| `diff`                  | [Differences between adjacent elements](#diff)                              |
+| `dot / cdot / norm_dot` | [Dot product](#dot--cdot--norm_dot)                                         |
+| `eps`                   | [Obtain distance of each element to next largest floating point representation](#eps) |
+| `expmat`                | [Matrix exponential](#expmat)                                               |
+| `expmat_sym`            | [Matrix exponential of symmetric matrix](#expmat_sym)                       |
+| `find`                  | [Find indices of non-zero elements, or elements satisfying a relational condition](#find) |
+| `find_finite`           | [Find indices of finite elements](#find_finite)                             |
+| `find_nonfinite`        | [Find indices of non-finite elements](#find_nonfinite)                      |
+| `find_nan`              | [Find indices of NaN elements](#find_nan)                                   |
+| `find_unique`           | [Find indices of unique elements](#find_unique)                             |
+| `fliplr / flipud`       | [Flip matrix left to right or upside down](#fliplr--flipud)                 |
+| `imag / real`           | [Extract imaginary/real part](#imag--real)                                  |
+| `ind2sub`               | [Convert linear index to subscripts](#ind2sub)                              |
+| `index_min / index_max` | [Indices of extremum values](#index_min--index_max)                         |
+| `inplace_trans`         | [In-place transpose](#inplace_trans)                                        |
+| `intersect`             | [Find common elements in two vectors/matrices](#intersect)                  |
+| `join_rows / join_cols` | [Concatenation of matrices](#join_rows--join_cols)                          |
+| `join_slices`           | [Concatenation of cubes](#join_slices)                                      |
+| `kron`                  | [Kronecker tensor product](#kron)                                           |
+| `log_det`               | [Log determinant](#log_det)                                                 |
+| `log_det_sympd`         | [Log determinant of symmetric positive definite matrix](#log_det_sympd)     |
+| `logmat`                | [Matrix logarithm](#logmat)                                                 |
+| `logmat_sympd`          | [Matrix logarithm of symmetric matrix](#logmat_sympd)                       |
+| `min / max`             | [Return extremum values](#min--max)                                         |
+| `nonzeros`              | [Return non-zero values](#nonzeros)                                         |
+| `norm`                  | [Various norms of vectors and matrices](#norm)                              |
+| `norm2est`              | [Fast estimate of the matrix 2-norm](#norm2est)                             |
+| `normalise`             | [Normalise vectors to unit p-norm](#normalise)                              |
+| `pow`                   | [Element-wise power](#pow)                                                  |
+| `powmat`                | [Matrix power](#powmat)                                                     |
+| `prod`                  | [Product of elements](#prod)                                                |
+| `rank`                  | [Rank of matrix](#rank)                                                     |
+| `rcond`                 | [Reciprocal condition number](#rcond)                                       |
+| `repelem`               | [Replicate elements](#repelem)                                              |
+| `repmat`                | [Replicate matrix in block-like fashion](#repmat)                           |
+| `reshape`               | [Change size while keeping elements](#reshape)                              |
+| `resize`                | [Change size while keeping elements and preserving layout](#resize)         |
+| `reverse`               | [Reverse order of elements](#reverse)                                       |
+| `roots`                 | [Roots of polynomial](#roots)                                               |
+| `shift`                 | [Shift elements](#shift)                                                    |
+| `shuffle`               | [Randomly shuffle elements](#shuffle)                                       |
+| `size`                  | [Obtain dimensions of given object](#size)                                  |
+| `sort`                  | [Sort elements](#sort)                                                      |
+| `sort_index`            | [Vector describing sorted order of elements](#sort_index)                   |
+| `sqrtmat`               | [Square root of matrix](#sqrtmat)                                           |
+| `sqrtmat_sympd`         | [Square root of symmetric matrix](#sqrtmat_sympd)                           |
+| `sum`                   | [Sum of elements](#sum)                                                     |
+| `sub2ind`               | [Convert subscripts to linear index](#sub2ind)                              |
+| `symmatu / symmatl`     | [Generate symmetric matrix from given matrix](#symmatu--symmatl)            |
+| `trace`                 | [Sum of diagonal elements](#trace)                                          |
+| `trans`                 | [Transpose of matrix](#trans)                                               |
+| `trapz`                 | [Trapezoidal numerical integration](#trapz)                                 |
+| `trimatu / trimatl`     | [Copy upper/lower triangular part](#trimatu--trimatl)                       |
+| `trimatu_ind / trimatl_ind` | [Obtain indices of upper/lower triangular part](#trimatu_ind--trimatl_ind) |
+| `unique`                | [Return unique elements](#unique)                                           |
+| `vecnorm`               | [Obtain vector norm of each row or column of a matrix](#vecnorm)            |
+| `vectorise`             | [Flatten matrix into vector](#vectorise)                                    |
+| `misc functions`        | [Miscellaneous element-wise functions: exp, log, sqrt, round, sign, ...](#misc-functions) |
+| `trig functions`        | [Trigonometric element-wise functions: cos, sin, tan, ...](#trig-functions) |
+
+# Absolute value {#abs}
+
+The `abs()` function computes the absolute value of each element in a vector,
+matrix, or cube.
+
+Usage:
+
+```cpp
+Y = abs(X); // for non-complex X
+real_object_type Y = abs(X); // for complex X
+```
+
+For the non-complex case, `X` and `Y` must have the same type, such as mat or
+cube.
+
+For the complex case, `Y` must be the real counterpart to the type of `X`. If
+`X` has the type `cx_mat`, then the type of `Y` must be `mat `.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> abs1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = abs(A);
+
+  cx_mat X(n, n, fill::randu);
+  mat Y = abs(X);
+
+  mat res = B + Y;
+
+  return as_doubles_matrix(res);
+}
+```
+
+#  Accumulate (sum) all elements {#accu}
+
+The `accu()` function computes the sum of all elements in a vector, matrix, or
+cube.
+
+## Examples
+
+```cpp
+[[cpp11::register]] double accu1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B(n, n, fill::randu);
+
+  double x = accu(A);
+
+  // accu(A % B) is a "multiply-and-accumulate" operation
+  // as operator % performs element-wise multiplication
+  double y = accu(A % B);
+
+  return (x + y);
+}
+```
+
+# Affine matrix multiplication {#affmul}
+
+The `affmul()` function computes matrix multiplication for `A` and `B` with an
+extended form of `B`. `A` is typically an affine transformation matrix. `B` can
+be a vector or matrix, and is treated as having an additional row of ones.
+
+The number of columns in `A` must be equal to number of rows in the extended
+form of `B` (e.g., `A.n_cols = B.n_rows + 1`).
+
+If `A`has dimensions 3x3 and `B` 2x1, the equivalent matrix multiplication is:
+
+```
+⎡ C0 ⎤   ⎡ A00 A01 A02 ⎤   ⎡ B0 ⎤
+⎢ C1 ⎥ = ⎢ A10 A11 A12 ⎥ x ⎢ B1 ⎥
+⎣ C2 ⎦   ⎣ A20 A21 A22 ⎦   ⎣ 1  ⎦
+```
+
+If `A` has dimensions 2x3 and `B` 2x1, the equivalent matrix multiplication is:
+
+```
+⎡ C0 ⎤   ⎡ A00 A01 A02 ⎤   ⎡ B0 ⎤
+⎢ C1 ⎥ = ⎢ A10 A11 A12 ⎥ x ⎢ B1 ⎥
+                           ⎣ 1  ⎦
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles affmul1_(const int& n) {
+  mat A(n, n + 1, fill::randu);
+  vec B(n, fill::randu);
+
+  vec C = affmul(A, B);
+
+  return as_doubles(C);
+}
+```
+
+# Check whether all elements are non-zero, or satisfy a relational condition {#all}
+
+The `all()` function checks whether all elements in a vector, matrix or cube
+are non-zero, or satisfy a relational condition. It returns true/false booleans
+for vectors and 0/1 vectors for matrices to indicate if the condition is met
+for each row or column.
+
+Usage:
+
+```cpp
+all(vector);
+all(matrix);
+all(matrix, dimension); // dimension = 0 -> returns a row vector urowvec/umat
+                        // dimension = 1 -> returns a column vector ucolvec/umat
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] logicals all1_(const int& n) {
+  vec V(n, fill::randu);
+  mat X(n, n, fill::randu);
+
+  // true if vector V has all non-zero elements
+  bool status1 = all(V);
+
+  // true if vector V has all elements greater than 0.5
+  bool status2 = all(V > 0.5);
+
+  // true if matrix X has all elements greater than 0.6;
+  // note the use of vectorise()
+  bool status3 = all(vectorise(X) > 0.6);
+
+  // row vector indicating which columns of X have all elements greater than 0.7
+  umat A = all(X > 0.7);
+
+  writable::logicals res(4);
+  res[0] = status1;
+  res[1] = status2;
+  res[2] = status3;
+  res[3] = all(vectorise(A) == 1);  // true if all elements of A are 1
+
+  return res;
+}
+```
+
+# Check whether any element is non-zero, or satisfies a relational condition {#any}
+
+The `any()` function checks whether any element in a vector, matrix or cube is
+non-zero, or satisfies a relational condition. It returns true/false booleans
+for vectors and 0/1 vectors for matrices to indicate if the condition is met
+for any row or column.
+
+Usage:
+
+```cpp
+any(vector);
+any(matrix);
+any(matrix, dimension); // dimension = 0 -> returns a row vector urowvec/umat
+                        // dimension = 1 -> returns a column vector ucolvec/umat
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] logicals any1_(const int& n) {
+  vec V(n, fill::randu);
+  mat X(n, n, fill::randu);
+
+  // true if vector V has any non-zero elements
+  bool status1 = any(V);
+
+  // true if vector V has any elements greater than 0.5
+  bool status2 = any(V > 0.5);
+
+  // true if matrix X has any elements greater than 0.6;
+  // note the use of vectorise()
+  bool status3 = any(vectorise(X) > 0.6);
+
+  // row vector indicating which columns of X have any elements greater than 0.7
+  umat A = any(X > 0.7);
+
+  writable::logicals res(4);
+  res[0] = status1;
+  res[1] = status2;
+  res[2] = status3;
+  res[3] = any(vectorise(A) == 1);  // true if any element of A is 1
+
+  return res;
+}
+```
+
+# Approximate equality {#approx_equal}
+
+The `approx_equal()` function checks whether two vectors, matrices or cubes are
+approximately equal. It returns true if all corresponding elements have
+differences less than or equal to a given tolerance.
+
+Usage:
+
+```cpp
+approx_equal(A, B, method, tol)
+approx_equal(A, B, method, abs_tol, rel_tol)
+```
+
+The `method` parameter specifies the method used to compare the elements:
+
+* `method = "absdiff"`: absolute difference (e.g., `|A - B| <= tol`)
+* `method = "reldiff"`: relative difference (e.g., `|A - B| / max(|A|, |B|) <= tol`)
+* `method = "both"`: absolute or relative difference (e.g., `|A - B| <= tol || |A - B| / max(|A|, |B|) <= tol`)
+
+## Examples
+
+```cpp
+[[cpp11::register]] bool approx_equal1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = A + 0.001;
+
+  bool same1 = approx_equal(A, B, "absdiff", 0.002);
+
+  mat C = 1000 * randu<mat>(n, n);
+  mat D = C + 1;
+
+  bool same2 = approx_equal(C, D, "reldiff", 0.1);
+
+  bool same3 = approx_equal(C, D, "both", 2, 0.1);
+
+  bool all_same = same1 && same2 && same3;
+
+  return all_same;
+}
+```
+
+# Phase angle of each element {#arg}
+
+The `arg()` function computes the phase angle of each element in a vector,
+matrix or cube. For non-complex elements, the input is treated as a complex
+element with zero imaginary component. For complex elements, the input must be
+of the same and the output the real counterpart type.
+
+Usage:
+
+```cpp
+real_object_type Y = arg(X);
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> arg1_(const int& n) {
+  cx_mat X(n, n, fill::randu);
+  mat Y = arg(X);
+
+  return as_doubles_matrix(Y);
+}
+```
+
+# Convert 1x1 matrix to pure scalar {#as_scalar}
+
+The `as_scalar()` function converts a 1x1 matrix to a scalar (e.g.,
+`double/int`). It is useful when you want to extract a single element from a
+matrix or an operation (e.g., converting the result of a dot/inner product to a
+scalar).
+
+## Examples
+
+```cpp
+[[cpp11::register]] double as_scalar1_(const int& n) {
+  rowvec r(n, fill::randu);
+  colvec q(n, fill::randu);
+
+  mat X(n, n, fill::randu);
+
+  // examples of expressions which have optimised implementations
+  double a = as_scalar(r*q);
+  double b = as_scalar(r*X*q);
+  double c = as_scalar(r*diagmat(X)*q);
+  double d = as_scalar(r*inv(diagmat(X))*q);
+
+  return (a + b + c + d);
+}
+```
+
+# Obtain clamped elements according to given limits {#clamp}
+
+The `clamp()` function clamps each element in a vector, matrix or cube to a
+given range. Any value less than the lower limit is set to the lower limit, and
+any value greater than the upper limit is set to the upper limit.
+
+For objects with complex elements, the real and imaginary components are
+clamped separately.
+
+If the input is a sparse matrix, only the non-zero elements are clamped.
+
+## Example
+
+```cpp
+[[cpp11::register]] doubles_matrix<> clamp1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = clamp(A, 0.2, 0.8);
+  mat C = clamp(A, A.min(), 0.8);
+  mat D = clamp(A, 0.2, A.max());
+
+  mat res = B + C + D;
+
+  return as_doubles_matrix(res);
+}
+```
+
+# Condition number of matrix {#cond}
+
+The `cond()` function computes the condition number of a matrix. The condition
+number is the ratio of the largest singular value to the smallest singular
+value. It is a measure of how well the matrix can be inverted, a matrix with a
+value close to 1 is well-conditioned, and a matrix with a large value is
+ill-conditioned. The computation is based on the singular value decomposition.
+
+## Examples
+
+```cpp
+[[cpp11::register]] double cond1_(const int& n) {
+  mat A(n, n);
+  A.eye(); // the identity matrix has a condition number of 1
+
+  double cond_num = cond(A);
+
+  return cond_num;
+}
+```
+
+## Caveat
+
+Calculating the approximate reciprocal condition number via `rcond()` is
+considerably more efficient.
+
+# Obtain complex conjugate of each element {#conj}
+
+The `conj()` function computes the complex conjugate of each element in a
+complex matrix or cube.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list conj1_(const int& n) {
+  cx_mat X(n, n, fill::randu);
+  cx_mat Y = conj(X);
+  return as_complex_matrix(Y);
+}
+```
+
+# Convert/cast between matrix types {#conv_to}
+
+The `conv_to()` function converts a matrix or cube to a different type. It can
+convert `mat` to `imat`, `cube` to `icube`, `mat` into `colvec` or any other
+casting that preserves data (e.g., a matrix that cannot be interpreted as a
+vector is not a valid casting). It can also be used to convert a matrix/vector
+into a `std::vector` object.
+
+Usage:
+
+```cpp
+conv_to<type>::from(X) 
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles conv_to1_(const int& n) {
+  mat A(n, n, fill::randu);
+  fmat B = conv_to<fmat>::from(A);
+
+  std::vector<double> x(B.n_elem);
+
+  int i, N = static_cast<int>(B.n_elem);
+  for (i = 0; i < N; ++i) { x[i] = B(i); }
+
+  colvec y = conv_to<colvec>::from(x);
+  std::vector<double> z = conv_to<std::vector<double>>::from(y);
+
+  return as_doubles(z);
+}
+```
+
+## Caveat
+
+To convert an expression that results in a 1x1 matrix to a pure scalar value,
+use `as_scalar()`.
+
+# Cross product {#cross}
+
+The `cross()` function computes the cross product of two vectors under the
+assumption that the vectors are three-dimensional.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles cross1_(const int& n) {
+  vec A(n, fill::randu);
+  vec B(n, fill::randu);
+
+  vec C = cross(A, B);
+
+  return as_doubles(C);
+}
+```
+
+# Cumulative sum {#cumsum}
+
+The `cumsum()` function computes the cumulative sum of elements in a vector or
+matrix. For a vector, it returns a vector of the same orientation. For a matrix,
+it returns a matrix with the cumulative sum along the specified dimension (the
+default is along columns with `dimension = 0`).
+
+Usage:
+
+```cpp
+cumsum(vector);
+cumsum(matrix, dimension); // dimension = 0 -> cumulative sum along columns
+                           // dimension = 1 -> cumulative sum along rows
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles cumsum1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = cumsum(A);
+  mat C = cumsum(A, 1);
+
+  vec x(n, fill::randu);
+  vec y = cumsum(x);
+
+  writable::doubles res(3);
+  res[0] = accu(B);
+  res[1] = accu(C);
+  res[2] = accu(y);
+  
+  return res;
+}
+```
+
+# Cumulative product {#cumprod}
+
+The `cumprod()` function computes the cumulative product of elements in a vector
+or matrix. For a vector, it returns a vector of the same orientation. For a
+matrix, it returns a matrix with the cumulative product along the specified
+dimension (the default is along columns with `dimension = 0`).
+
+Usage:
+
+```cpp
+cumprod(vector);
+cumprod(matrix, dimension); // dimension = 0 -> cumulative prod along columns
+                            // dimension = 1 -> cumulative prod along rows
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles cumprod1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = cumprod(A);
+  mat C = cumprod(A, 1);
+
+  vec x(n, fill::randu);
+  vec y = cumprod(x);
+
+  writable::doubles res(3);
+  res[0] = accu(B);
+  res[1] = accu(C);
+  res[2] = accu(y);
+  
+  return res;
+}
+```
+
+# Determinant {#det}
+
+The `det()` function computes the determinant of a square matrix. It is based
+on the LU decomposition. If the input is a not a square matrix, the function
+throws a `std::runtime_error` exception.
+
+Usage:
+
+```
+val = det(X); // store a scalar
+det(val, A); // store the determinant in val and return true if successful
+```
+
+If the calculation fails:
+
+* `val = det(A)` throws a `std::runtime_error` exception
+* `det(val,A)` returns a bool set to false (exception is not thrown)
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles det1_(const int& n) {
+  mat A(n, n, fill::randu);
+  double val1 = det(A);
+
+  double val2;
+  mat B(n, n, fill::randu);
+  bool success2 = det(val2, B);
+
+  return writable::doubles({val1, val2, static_cast<double>(success2)});
+}
+```
+
+# Generate diagonal matrix from given matrix or vector {#diagmat}
+
+The `diagmat()` function generates a diagonal matrix from a given vector or
+matrix. If the input is a vector, the output is a square matrix with the vector
+as the diagonal. If the input is a matrix, the output is a square matrix with
+the diagonal elements from the input matrix. Any element outside the diagonal
+is set to zero. The default is the main diagonal (`k = 0`).
+
+Usage:
+
+```cpp
+diagmat(vector);
+diagmat(matrix);
+diagmat(matrix, k); // k = 0 -> main diagonal
+                    // k > 0 -> above main diagonal
+                    // k < 0 -> below main diagonal
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> diagmat1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = diagmat(A);
+  mat C = diagmat(A, 1);
+
+  vec v(n, fill::randu);
+  mat D = diagmat(v); // NxN diagonal matrix
+  mat E = diagmat(v, 1); // (N+1)x(N+1) diagonal matrix
+
+  mat res = B + C + D;  
+  res += E.submat(0, 0, 1, 1); // the result is an upper triangular matrix
+
+  return as_doubles_matrix(res);
+}
+```
+
+# Extract specified diagonal {#diagvec}
+
+The `diagvec()` function extracts the specified diagonal from a matrix. The
+default is the main diagonal (`k = 0`).
+
+Usage:
+
+```cpp
+diagvec(matrix);
+diagvec(matrix, k); // k = 0 -> main diagonal
+                    // k > 0 -> above main diagonal
+                    // k < 0 -> below main diagonal
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles diagvec1_(const int& n) {
+  mat A(n, n, fill::randu);
+  vec B = diagvec(A);
+  vec C = diagvec(A, 1);
+
+  vec res = B.subvec(0, 1) + C;
+
+  return as_doubles(res);
+}
+```
+
+# Generate a matrix with diagonals specified by column vectors (dense matrix) {#diags}
+
+The `diags()` function generates a matrix with diagonals specified by column
+vectors from an input matrix and a vector to indicate the diagonals.
+
+Usage:
+
+```cpp
+diags(matrix, vector, number_of_rows, number_of_columns);
+```
+
+Each element in the input vector specifies diagonal `k`, where:
+
+* `k = 0` is the main diagonal
+* `k > 0` is above the main diagonal
+* `k < 0` is below the main diagonal
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> diags1_(const int& n) {
+  mat V(n, n, fill::randu);
+  ivec D = {0, -1};
+  mat X = diags(V, D, n, n); // lower triangular matrix
+  return as_doubles_matrix(X);
+}
+```

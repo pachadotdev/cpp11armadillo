@@ -419,4 +419,81 @@ test_that("examples derived from official documentation", {
   res92 <- toeplitz1_(2)
   expect_type(res92, "double")
   expect_equal(dim(res92), c(2, 2))
+
+  res93 <- abs1_(2)
+  expect_type(res93, "double")
+  expect_equal(dim(res93), c(2, 2))
+
+  res94 <- accu1_(2)
+  expect_type(res94, "double")
+  expect_equal(length(res94), 1)
+
+  res95 <- affmul1_(2)
+  expect_type(res95, "double")
+  expect_equal(length(res95), 2)
+
+  res96 <- all1_(2)
+  expect_type(res96, "logical")
+  expect_equal(length(res96), 4)
+
+  res97 <- any1_(2)
+  expect_type(res97, "logical")
+  expect_equal(length(res97), 4)
+
+  res98 <- approx_equal1_(2)
+  expect_type(res98, "logical")
+  expect_equal(length(res98), 1)
+
+  res99 <- arg1_(2)
+  expect_type(res99, "double")
+  expect_equal(dim(res99), c(2, 2))
+
+  res100 <- as_scalar1_(2)
+  expect_type(res100, "double")
+  expect_equal(length(res100), 1)
+
+  res101 <- clamp2_(2)
+  expect_type(res101, "double")
+  expect_equal(dim(res101), c(2, 2))
+
+  res102 <- cond1_(2)
+  expect_type(res102, "double")
+  expect_equal(length(res102), 1)
+
+  res103 <- conj1_(2)
+  expect_type(res103, "list")
+  expect_type(res103[[1]], "double")
+  expect_equal(dim(res103[[1]]), c(2, 2))
+
+  res104 <- conv_to1_(2)
+  expect_type(res104, "double")
+  expect_equal(length(res104), 4)
+
+  res105 <- cross1_(3)
+  expect_type(res105, "double")
+  expect_equal(length(res105), 3)
+
+  res106 <- cumsum1_(2)
+  expect_type(res106, "double")
+  expect_equal(length(res106), 3)
+
+  res107 <- cumprod1_(2)
+  expect_type(res107, "double")
+  expect_equal(length(res107), 3)
+
+  res108 <- det1_(2)
+  expect_type(res108, "double")
+  expect_equal(length(res108), 3)
+
+  res109 <- diagmat1_(2)
+  expect_type(res109, "double")
+  expect_equal(dim(res109), c(2, 2))
+
+  res110 <- diagvec1_(3)
+  expect_type(res110, "double")
+  expect_equal(length(res110), 2)
+
+  res111 <- diags1_(2)
+  expect_type(res111, "double")
+  expect_equal(dim(res111), c(2, 2))
 })

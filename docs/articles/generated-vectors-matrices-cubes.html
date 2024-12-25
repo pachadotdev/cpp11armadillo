@@ -40,10 +40,16 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/basic-usage.html">Basic 'cpp11armadillo' usage</a></li>
+    <li><a class="dropdown-item" href="../articles/decompositions-factorisations-inverses-and-equation-solvers-dense.html">Decompositions, factorisations, inverses and equation solvers (dense matrices)</a></li>
+    <li><a class="dropdown-item" href="../articles/decompositions-factorisations-inverses-and-equation-solvers-sparse.html">Decompositions, factorisations, inverses and equation solvers (sparse matrices)</a></li>
+    <li><a class="dropdown-item" href="../articles/functions-of-vector-matrices-cubes.html">Functions of vectors, matrices, and cubes</a></li>
     <li><a class="dropdown-item" href="../articles/generated-vectors-matrices-cubes.html">Generated vectors, matrices, and cubes</a></li>
     <li><a class="dropdown-item" href="../articles/linear-model.html">Fitting regressions with Armadillo</a></li>
     <li><a class="dropdown-item" href="../articles/matrix-vector-cube-and-field-classes.html">Matrix, vector, cube and field classes</a></li>
     <li><a class="dropdown-item" href="../articles/member-functions-and-variables.html">Member functions and variables</a></li>
+    <li><a class="dropdown-item" href="../articles/miscellaneous.html">Miscellaneous</a></li>
+    <li><a class="dropdown-item" href="../articles/signal-and-image-processing.html">Signal and image processing</a></li>
+    <li><a class="dropdown-item" href="../articles/statistics-and-clustering.html">Statistics and clustering</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -73,9 +79,89 @@
 
     
     
-<p>This vignette is adapted from the official Armadillo <a href="https://arma.sourceforge.net/docs.html" class="external-link">documentation</a>.</p>
+<p><strong>This vignette is adapted from the official Armadillo <a href="https://arma.sourceforge.net/docs.html" class="external-link">documentation</a>.</strong></p>
 <div class="section level2">
-<h2 id="linspace">Linspace<a class="anchor" aria-label="anchor" href="#linspace"></a>
+<h2 id="contents">Contents<a class="anchor" aria-label="anchor" href="#contents"></a>
+</h2>
+<table class="table">
+<colgroup>
+<col width="51%">
+<col width="48%">
+</colgroup>
+<thead><tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>linspace()</code></td>
+<td><a href="#linspace">Generate vector with linearly spaced elements</a></td>
+</tr>
+<tr class="even">
+<td><code>logspace()</code></td>
+<td><a href="#logspace">Generate vector with logarithmically spaced elements</a></td>
+</tr>
+<tr class="odd">
+<td><code>regspace()</code></td>
+<td><a href="#regspace">Generate vector with regularly spaced elements</a></td>
+</tr>
+<tr class="even">
+<td><code>randperm()</code></td>
+<td><a href="#randperm">Generate vector with random permutation of a sequence of integers</a></td>
+</tr>
+<tr class="odd">
+<td><code>eye()</code></td>
+<td><a href="#eye">Generate identity matrix</a></td>
+</tr>
+<tr class="even">
+<td><code>ones()</code></td>
+<td><a href="#ones">Generate object filled with ones</a></td>
+</tr>
+<tr class="odd">
+<td><code>zeros()</code></td>
+<td><a href="#zeros">Generate object filled with zeros</a></td>
+</tr>
+<tr class="even">
+<td><code>randu()</code></td>
+<td><a href="#randu">Generate object with random values from a uniform distribution</a></td>
+</tr>
+<tr class="odd">
+<td><code>randn()</code></td>
+<td><a href="#randn">Generate object with random values from a normal/gaussian distribution</a></td>
+</tr>
+<tr class="even">
+<td><code>randg()</code></td>
+<td><a href="#randg">Generate object with random values from a gamma distribution</a></td>
+</tr>
+<tr class="odd">
+<td><code>randi()</code></td>
+<td><a href="#randi">Generate object with random integer values in specified interval</a></td>
+</tr>
+<tr class="even">
+<td><code>speye()</code></td>
+<td><a href="#speye">Generate sparse identity matrix</a></td>
+</tr>
+<tr class="odd">
+<td><code>spones()</code></td>
+<td><a href="#spones">Generate sparse matrix with non-zero elements set to one</a></td>
+</tr>
+<tr class="even">
+<td><code>sprandu()</code></td>
+<td><a href="#sprandu">Generate sparse matrix with non-zero elements set to random values from a uniform distribution</a></td>
+</tr>
+<tr class="odd">
+<td><code>sprandn()</code></td>
+<td><a href="#sprandn">Generate sparse matrix with non-zero elements set to random values from a normal/gaussian distribution</a></td>
+</tr>
+<tr class="even">
+<td><code><a href="https://rdrr.io/r/stats/toeplitz.html" class="external-link">toeplitz()</a></code></td>
+<td><a href="#toeplitz">Generate Toeplitz matrix</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="linspace">Generate vector with linearly spaced elements<a class="anchor" aria-label="anchor" href="#linspace"></a>
 </h2>
 <p>The <code>linspace()</code> function generates a vector of linearly spaced values from <code>start</code> to <code>end</code> (it includes <code>end</code>). The arguments can be <code>start, end</code> or <code>start, end, N</code>, where <code>N</code> is optional and indicates the number of elements in the vector (<code>N</code> is 100 by default).</p>
 <p>The usage is:</p>
@@ -100,7 +186,7 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="logspace">Logspace<a class="anchor" aria-label="anchor" href="#logspace"></a>
+<h2 id="logspace">Generate vector with logarithmically spaced elements<a class="anchor" aria-label="anchor" href="#logspace"></a>
 </h2>
 <p>The <code>logspace()</code> function generates a vector of logarithmically spaced values from <code>10^start</code> to <code>10^end</code> (it includes <code>10^end</code>). The arguments can be <code>start, end</code> or <code>start, end, N</code>, where <code>N</code> is optional and indicates the number of elements in the vector (<code>N</code> is 50 by default).</p>
 <p>The usage is:</p>
@@ -120,7 +206,7 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="regspace">Regspace<a class="anchor" aria-label="anchor" href="#regspace"></a>
+<h2 id="regspace">Generate vector with regularly spaced elements<a class="anchor" aria-label="anchor" href="#regspace"></a>
 </h2>
 <p>The <code>regspace()</code> function generates a vector of regularly spaced values <code>start, start + delta, start + 2*delta, ..., start + M * delta</code> where <code>M</code> is <code>M = floor((end - start) / delta)</code>. The arguments can be <code>start, end</code> or <code>start, delta, end</code>, where <code>delta</code> is optional (<code>delta = 1</code> if <code>start &lt;= end</code> and <code>delta = -1</code> if <code>start &gt; end</code> by default).</p>
 <p>The usage is:</p>
@@ -158,14 +244,14 @@
 <li>Do not use <code>regspace()</code> to specify ranges for contiguous submatrix views, use <code>span()</code> instead.</li>
 </ul>
 </div>
-<div class="section level3">
-<h3 id="randperm">Randperm<a class="anchor" aria-label="anchor" href="#randperm"></a>
-</h3>
+</div>
+<div class="section level2">
+<h2 id="randperm">Generate vector with random permutation of a sequence of integers<a class="anchor" aria-label="anchor" href="#randperm"></a>
+</h2>
 <p>The <code>randperm()</code> function generates a vector of permutation of integers from <code>0</code> to <code>N-1</code>. The argument can be empty, <code>N</code>, or <code>N, M</code>, where <code>N</code> (<code>N = 10</code> by default) is the range of integers and <code>M</code> (<code>M = N</code> by default) is the length of the output.</p>
 <p>The usage is:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>uvec v = randperm(N)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>uvec v = randperm(N, M)</span></code></pre></div>
-</div>
 <div class="section level3">
 <h3 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a>
 </h3>
@@ -180,7 +266,7 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="eye">Eye<a class="anchor" aria-label="anchor" href="#eye"></a>
+<h2 id="eye">Generate identity matrix<a class="anchor" aria-label="anchor" href="#eye"></a>
 </h2>
 <p>The <code>eye()</code> function generates a matrix of size <code>n x m</code>. The argument can be <code>n_rows, n_cols</code> or <code>size(X)</code>. When <code>n_rows = n_cols</code>, the output is an identity matrix.</p>
 <p>The usage is:</p>
@@ -202,7 +288,7 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="ones">Ones<a class="anchor" aria-label="anchor" href="#ones"></a>
+<h2 id="ones">Generate object filled with ones<a class="anchor" aria-label="anchor" href="#ones"></a>
 </h2>
 <p>The <code>ones()</code> function generates a vector, matrix or cube. The arguments can be <code>n_elem</code>, <code>n_rows, n_cols</code>, <code>n_rows, n_cols, n_slices</code>, or <code>size(X)</code>. The</p>
 <p>The usage is:</p>
@@ -237,7 +323,7 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="zeros">Zeros<a class="anchor" aria-label="anchor" href="#zeros"></a>
+<h2 id="zeros">Generate object filled with zeros<a class="anchor" aria-label="anchor" href="#zeros"></a>
 </h2>
 <p>The <code>zeros()</code> function generates a vector, matrix or cube. The arguments can be <code>n_elem</code>, <code>n_rows, n_cols</code>, <code>n_rows, n_cols, n_slices</code>, or <code>size(X)</code>.</p>
 <p>The usage is:</p>
@@ -272,79 +358,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="randu">Randu<a class="anchor" aria-label="anchor" href="#randu"></a>
+<h2 id="randu">Generate object with random values from a uniform distribution<a class="anchor" aria-label="anchor" href="#randu"></a>
 </h2>
-<div class="pagebreak">
-
-</div>
-<div class="noprint">
-<hr class="greyline">
-<br>
-</div>
-<a name="randu"></a> <b>randu( )</b> <br><b>randu( distr_param(a,b) )</b> <br><br><b>randu( n_elem )</b> <br><b>randu( n_elem, distr_param(a,b) )</b> <br><br><b>randu( n_rows, n_cols )</b> <br><b>randu( n_rows, n_cols, distr_param(a,b) )</b> <br><br><b>randu( n_rows, n_cols, n_slices )</b> <br><b>randu( n_rows, n_cols, n_slices, distr_param(a,b) )</b> <br><br><b>randu( size(X) )</b> <br><b>randu( size(X), distr_param(a,b) )</b>
-<ul>
-<li>
-Generate a scalar, vector, matrix or cube with the elements set to random <b>floating point</b> values uniformly distributed in the [a,b] interval
-</li>
-<br><li>
-The default distribution parameters are <i>a = 0</i> and <i>b = 1</i>
-</li>
-<br><li>
-For complex elements, the real and imaginary parts are treated separately
-</li>
-<br><li>
-Usage:
-<ul>
-<li>
-<i>scalar_type</i> s = randu&lt;<i>scalar_type</i>&gt;( ), where <i>scalar_type</i> ∈ { float, double, <a href="#cx_double">cx_float</a>, <a href="#cx_double">cx_double</a> }
-</li>
-<li>
-<i>scalar_type</i> s = randu&lt;<i>scalar_type</i>&gt;( distr_param(a,b) ), where <i>scalar_type</i> ∈ { float, double, <a href="#cx_double">cx_float</a>, <a href="#cx_double">cx_double</a> }
-</li>
-<br><li>
-<i>vector_type</i> v = randu&lt;<i>vector_type</i>&gt;( n_elem )
-</li>
-<li>
-<i>vector_type</i> v = randu&lt;<i>vector_type</i>&gt;( n_elem, distr_param(a,b) )
-</li>
-<br><li>
-<i>matrix_type</i> X = randu&lt;<i>matrix_type</i>&gt;( n_rows, n_cols )
-</li>
-<li>
-<i>matrix_type</i> X = randu&lt;<i>matrix_type</i>&gt;( n_rows, n_cols, distr_param(a,b) )
-</li>
-<br><li>
-<i>cube_type</i> Q = randu&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices )
-</li>
-<li>
-<i>cube_type</i> Q = randu&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices, distr_param(a,b) )
-</li>
-</ul>
-</li>
-<br><li>
-<b>Caveat:</b> to generate a matrix with random integer values instead of floating point values, use <a href="#randi">randi()</a> instead
-</li>
-<br><li>
-Examples:
-<ul></ul>
-<pre>
-double a = randu();
-double b = randu(distr_param(10,20));
-
-vec v1 = randu(5);    // or: vec v1(5, fill::randu);
-vec v2 = randu(5, distr_param(10,20));
-
-rowvec r1 = randu&lt;rowvec&gt;(5);
-rowvec r2 = randu&lt;rowvec&gt;(5, distr_param(10,20));
-
-mat A1 = randu(5, 6);  // or: mat A1(5, 6, fill::randu);
-mat A2 = randu(5, 6, distr_param(10,20));
-
-fmat B1 = randu&lt;fmat&gt;(5, 6);
-fmat B2 = randu&lt;fmat&gt;(5, 6, distr_param(10,20));
-</pre>
-</li>
-</ul>
 <p>The <code>randu()</code> function generates a vector, matrix or cube with the elements set to random floating point values uniformly distributed in the <code>[a,b]</code> interval. The arguments can be <code>distr_param(a,b)</code>, <code>n_elem</code>, <code>n_elem, distr_param(a,b)</code>, <code>n_rows, n_cols</code>, <code>n_rows, n_cols, distr_param(a,b)</code>, <code>n_rows, n_cols, n_slices</code>, <code>n_rows, n_cols, n_slices, distr_param(a,b)</code>, <code>size(X)</code>, or <code>size(X), distr_param(a,b)</code>.</p>
 <p>The usage is:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="co">// the scalar type can be: float, double, cx_float, or cx_double</span></span>
@@ -395,7 +410,7 @@ fmat B2 = randu&lt;fmat&gt;(5, 6, distr_param(10,20));
 </div>
 </div>
 <div class="section level2">
-<h2 id="randn">Randn<a class="anchor" aria-label="anchor" href="#randn"></a>
+<h2 id="randn">Generate object with random values from a normal/gaussian distribution<a class="anchor" aria-label="anchor" href="#randn"></a>
 </h2>
 <p>The <code>randn()</code> function generates a vector, matrix or cube with the elements set to random floating point values normally distributed with mean <code>0</code> and standard deviation <code>1</code>. The arguments can be <code>n_elem, distr_param(mean, stddev)</code>, <code>n_elem</code>, <code>n_elem, distr_param(mean, stddev)</code>, <code>n_rows, n_cols</code>, <code>n_rows, n_cols, distr_param(mean, stddev)</code>, <code>n_rows, n_cols, n_slices</code>, <code>n_rows, n_cols, n_slices, distr_param(mean, stddev)</code>, <code>size(X)</code>, or <code>size(X), distr_param(mean, stddev)</code>.</p>
 <p>The usage is:</p>
@@ -436,7 +451,7 @@ fmat B2 = randu&lt;fmat&gt;(5, 6, distr_param(10,20));
 </div>
 </div>
 <div class="section level2">
-<h2 id="randg">Randg<a class="anchor" aria-label="anchor" href="#randg"></a>
+<h2 id="randg">Generate object with random values from a gamma distribution<a class="anchor" aria-label="anchor" href="#randg"></a>
 </h2>
 <p>The <code>randg()</code> function generates a vector, matrix or cube with the elements set to random floating point values gamma distributed with shape <code>a</code> and scale <code>b</code>. The arguments can be <code>distr_param(a, b)</code>, <code>n_elem</code>, <code>n_elem, distr_param(a, b)</code>, <code>n_rows, n_cols</code>, <code>n_rows, n_cols, distr_param(a, b)</code>, <code>n_rows, n_cols, n_slices</code>, <code>n_rows, n_cols, n_slices, distr_param(a, b)</code>, <code>size(X)</code>, or <code>size(X), distr_param(a, b)</code>.</p>
 <p>The usage is:</p>
@@ -476,7 +491,7 @@ fmat B2 = randu&lt;fmat&gt;(5, 6, distr_param(10,20));
 </div>
 </div>
 <div class="section level2">
-<h2 id="randi">Randi<a class="anchor" aria-label="anchor" href="#randi"></a>
+<h2 id="randi">Generate object with random integer values in specified interval<a class="anchor" aria-label="anchor" href="#randi"></a>
 </h2>
 <p>The <code>randi()</code> function generates a vector, matrix or cube with the elements set to random integer values uniformly distributed in the <code>[a,b]</code> interval. The arguments can be <code>distr_param(a, b)</code>, <code>n_elem</code>, <code>n_elem, distr_param(a, b)</code>, <code>n_rows, n_cols</code>, <code>n_rows, n_cols, distr_param(a, b)</code>, <code>n_rows, n_cols, n_slices</code>, <code>n_rows, n_cols, n_slices, distr_param(a, b)</code>, <code>size(X)</code>, or <code>size(X), distr_param(a, b)</code>. The default values are <code>a = 0</code> and <code>b = maximum_int</code>.</p>
 <p>The usage is:</p>
@@ -517,7 +532,7 @@ fmat B2 = randu&lt;fmat&gt;(5, 6, distr_param(10,20));
 </div>
 </div>
 <div class="section level2">
-<h2 id="speye">Speye<a class="anchor" aria-label="anchor" href="#speye"></a>
+<h2 id="speye">Generate sparse identity matrix<a class="anchor" aria-label="anchor" href="#speye"></a>
 </h2>
 <p>The <code>speye()</code> function generates a sparse matrix of size <code>n x n</code> with the elements on the diagonal set to <code>1</code> and the remaining elements set to <code>0</code>. The argument can be <code>n_rows, n_cols</code> or <code>size(X)</code>. An identity matrix is generated when <code>n_rows = n_cols</code>.</p>
 <p>The usage is:</p>
@@ -534,7 +549,7 @@ fmat B2 = randu&lt;fmat&gt;(5, 6, distr_param(10,20));
 </div>
 </div>
 <div class="section level2">
-<h2 id="spones">Spones<a class="anchor" aria-label="anchor" href="#spones"></a>
+<h2 id="spones">Generate sparse matrix with non-zero elements set to one<a class="anchor" aria-label="anchor" href="#spones"></a>
 </h2>
 <p>The <code>spones(X)</code> function generates a sparse matrix with the same size as <code>X</code> and all the non-zero elements set to <code>1</code>.</p>
 <div class="section level3">
@@ -549,7 +564,7 @@ fmat B2 = randu&lt;fmat&gt;(5, 6, distr_param(10,20));
 </div>
 </div>
 <div class="section level2">
-<h2 id="sprandu">Sprandu<a class="anchor" aria-label="anchor" href="#sprandu"></a>
+<h2 id="sprandu">Generate sparse matrix with non-zero elements set to random values from a uniform distribution<a class="anchor" aria-label="anchor" href="#sprandu"></a>
 </h2>
 <p>The <code>sprandu()</code> function generates a sparse matrix of size <code>n_rows x n_cols</code> with random floating point values uniformly distributed in the <code>[0,1]</code> interval. The arguments can be <code>n_rows, n_cols, density</code> or <code>size(X), density</code>.</p>
 <p>The usage is:</p>
@@ -566,7 +581,7 @@ fmat B2 = randu&lt;fmat&gt;(5, 6, distr_param(10,20));
 </div>
 </div>
 <div class="section level2">
-<h2 id="sprandn">Sprandn<a class="anchor" aria-label="anchor" href="#sprandn"></a>
+<h2 id="sprandn">Generate sparse matrix with non-zero elements set to random values from a normal/gaussian distribution<a class="anchor" aria-label="anchor" href="#sprandn"></a>
 </h2>
 <p>The <code>sprandn()</code> function generates a sparse matrix of size <code>n_rows x n_cols</code> with random floating point values normally distributed with mean <code>0</code> and standard deviation <code>1</code>. The arguments can be <code>n_rows, n_cols, density</code> or <code>size(X), density</code>.</p>
 <p>The usage is:</p>
@@ -583,7 +598,7 @@ fmat B2 = randu&lt;fmat&gt;(5, 6, distr_param(10,20));
 </div>
 </div>
 <div class="section level2">
-<h2 id="toeplitz">Toeplitz<a class="anchor" aria-label="anchor" href="#toeplitz"></a>
+<h2 id="toeplitz">Generate Toeplitz matrix<a class="anchor" aria-label="anchor" href="#toeplitz"></a>
 </h2>
 <p>The <code><a href="https://rdrr.io/r/stats/toeplitz.html" class="external-link">toeplitz()</a></code> function generates a toeplitz matrix. The arguments can be <code>a</code> or <code>a, b</code>, where <code>a</code> is a vector that determines the first column and <code>b</code> is an optional vector that determines the first row.</p>
 <p>Alternatively, <code>circ_toeplitz()</code> generates a circulant toeplitz matrix.</p>

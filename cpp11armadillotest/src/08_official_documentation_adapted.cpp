@@ -1390,3 +1390,255 @@
 
   return as_doubles_matrix(res);
 }
+
+[[cpp11::register]] doubles_matrix<> abs1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = abs(A);
+
+  cx_mat X(n, n, fill::randu);
+  mat Y = abs(X);
+
+  mat res = B + Y;
+
+  return as_doubles_matrix(res);
+}
+
+[[cpp11::register]] double accu1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B(n, n, fill::randu);
+
+  double x = accu(A);
+
+  // accu(A % B) is a "multiply-and-accumulate" operation
+  // as operator % performs element-wise multiplication
+  double y = accu(A % B);
+
+  return (x + y);
+}
+
+[[cpp11::register]] doubles affmul1_(const int& n) {
+  mat A(n, n + 1, fill::randu);
+  vec B(n, fill::randu);
+
+  vec C = affmul(A, B);
+
+  return as_doubles(C);
+}
+
+[[cpp11::register]] logicals all1_(const int& n) {
+  vec V(n, fill::randu);
+  mat X(n, n, fill::randu);
+
+  // true if vector V has all non-zero elements
+  bool status1 = all(V);
+
+  // true if vector V has all elements greater than 0.5
+  bool status2 = all(V > 0.5);
+
+  // true if matrix X has all elements greater than 0.6;
+  // note the use of vectorise()
+  bool status3 = all(vectorise(X) > 0.6);
+
+  // row vector indicating which columns of X have all elements greater than 0.7
+  umat A = all(X > 0.7);
+
+  writable::logicals res(4);
+  res[0] = status1;
+  res[1] = status2;
+  res[2] = status3;
+  res[3] = all(vectorise(A) == 1);  // true if all elements of A are 1
+
+  return res;
+}
+
+[[cpp11::register]] logicals any1_(const int& n) {
+  vec V(n, fill::randu);
+  mat X(n, n, fill::randu);
+
+  // true if vector V has any non-zero elements
+  bool status1 = any(V);
+
+  // true if vector V has any elements greater than 0.5
+  bool status2 = any(V > 0.5);
+
+  // true if matrix X has any elements greater than 0.6;
+  // note the use of vectorise()
+  bool status3 = any(vectorise(X) > 0.6);
+
+  // row vector indicating which columns of X have any elements greater than 0.7
+  umat A = any(X > 0.7);
+
+  writable::logicals res(4);
+  res[0] = status1;
+  res[1] = status2;
+  res[2] = status3;
+  res[3] = any(vectorise(A) == 1);  // true if any element of A is 1
+
+  return res;
+}
+
+[[cpp11::register]] bool approx_equal1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = A + 0.001;
+
+  bool same1 = approx_equal(A, B, "absdiff", 0.002);
+
+  mat C = 1000 * randu<mat>(n, n);
+  mat D = C + 1;
+
+  bool same2 = approx_equal(C, D, "reldiff", 0.1);
+
+  bool same3 = approx_equal(C, D, "both", 2, 0.1);
+
+  bool all_same = same1 && same2 && same3;
+
+  return all_same;
+}
+
+[[cpp11::register]] doubles_matrix<> arg1_(const int& n) {
+  cx_mat X(n, n, fill::randu);
+  mat Y = arg(X);
+
+  return as_doubles_matrix(Y);
+}
+
+[[cpp11::register]] double as_scalar1_(const int& n) {
+  rowvec r(n, fill::randu);
+  colvec q(n, fill::randu);
+
+  mat X(n, n, fill::randu);
+
+  // examples of expressions which have optimised implementations
+  double a = as_scalar(r * q);
+  double b = as_scalar(r * X * q);
+  double c = as_scalar(r * diagmat(X) * q);
+  double d = as_scalar(r * inv(diagmat(X)) * q);
+
+  return (a + b + c + d);
+}
+
+[[cpp11::register]] doubles_matrix<> clamp2_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = clamp(A, 0.2, 0.8);
+  mat C = clamp(A, A.min(), 0.8);
+  mat D = clamp(A, 0.2, A.max());
+
+  mat res = B + C + D;
+
+  return as_doubles_matrix(res);
+}
+
+[[cpp11::register]] double cond1_(const int& n) {
+  mat A(n, n);
+  A.eye(); // the identity matrix has a condition number of 1
+
+  double cond_num = cond(A);
+
+  return cond_num;
+}
+
+[[cpp11::register]] list conj1_(const int& n) {
+  cx_mat X(n, n, fill::randu);
+  cx_mat Y = conj(X);
+  return as_complex_matrix(Y);
+}
+
+[[cpp11::register]] doubles conv_to1_(const int& n) {
+  mat A(n, n, fill::randu);
+  fmat B = conv_to<fmat>::from(A);
+
+  std::vector<double> x(B.n_elem);
+
+  int i, N = static_cast<int>(B.n_elem);
+  for (i = 0; i < N; ++i) { x[i] = B(i); }
+
+  colvec y = conv_to<colvec>::from(x);
+  std::vector<double> z = conv_to<std::vector<double>>::from(y);
+
+  return as_doubles(z);
+}
+
+[[cpp11::register]] doubles cross1_(const int& n) {
+  vec A(n, fill::randu);
+  vec B(n, fill::randu);
+
+  vec C = cross(A, B);
+
+  return as_doubles(C);
+}
+
+[[cpp11::register]] doubles cumsum1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = cumsum(A);
+  mat C = cumsum(A, 1);
+
+  vec x(n, fill::randu);
+  vec y = cumsum(x);
+
+  writable::doubles res(3);
+  res[0] = accu(B);
+  res[1] = accu(C);
+  res[2] = accu(y);
+  
+  return res;
+}
+
+[[cpp11::register]] doubles cumprod1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = cumprod(A);
+  mat C = cumprod(A, 1);
+
+  vec x(n, fill::randu);
+  vec y = cumprod(x);
+
+  writable::doubles res(3);
+  res[0] = accu(B);
+  res[1] = accu(C);
+  res[2] = accu(y);
+
+  return res;
+}
+
+[[cpp11::register]] doubles det1_(const int& n) {
+  mat A(n, n, fill::randu);
+  double val1 = det(A);
+
+  double val2;
+  mat B(n, n, fill::randu);
+  bool success2 = det(val2, B);
+
+  return writable::doubles({val1, val2, static_cast<double>(success2)});
+}
+
+[[cpp11::register]] doubles_matrix<> diagmat1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = diagmat(A);
+  mat C = diagmat(A, 1);
+
+  vec v(n, fill::randu);
+  mat D = diagmat(v); // NxN diagonal matrix
+  mat E = diagmat(v, 1); // (N+1)x(N+1) diagonal matrix
+
+  mat res = B + C + D;  
+  res += E.submat(0, 0, n - 1, n - 1); // the result is an upper triangular
+                                       // matrix
+
+  return as_doubles_matrix(res);
+}
+
+[[cpp11::register]] doubles diagvec1_(const int& n) {
+  mat A(n, n, fill::randu);
+  vec B = diagvec(A, -1);
+  vec C = diagvec(A, 1);
+
+  vec res = B + C;
+
+  return as_doubles(res);
+}
+
+[[cpp11::register]] doubles_matrix<> diags1_(const int& n) {
+  mat V(n, n, fill::randu);
+  ivec D = {0, -1};
+  mat X = diags(V, D, n, n); // lower triangular matrix
+  return as_doubles_matrix(X);
+}
