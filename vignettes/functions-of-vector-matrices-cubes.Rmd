@@ -54,17 +54,17 @@ knitr::opts_chunk$set(
 | `fliplr/flipud`         | [Flip matrix left to right or upside down](#fliplr)                         |
 | `imag/real`             | [Extract imaginary/real part](#imag)                                        |
 | `ind2sub`               | [Convert linear index to subscripts](#ind2sub)                              |
-| `index_min / index_max` | [Indices of extremum values](#index_min)                         |
-| `inplace_trans`         | [In-place transpose](#inplace_trans)                                        |
+| `index_min / index_max` | [Indices of extremum values](#index_min)                                    |
+| `inplace_trans`         | [In-place dense transpose](#inplace_trans)                                  |
 | `intersect`             | [Find common elements in two vectors/matrices](#intersect)                  |
-| `join_rows / join_cols` | [Concatenation of matrices](#join_rows--join_cols)                          |
+| `join_rows / join_cols` | [Concatenation of matrices](#join_rows)                                     |
 | `join_slices`           | [Concatenation of cubes](#join_slices)                                      |
 | `kron`                  | [Kronecker tensor product](#kron)                                           |
 | `log_det`               | [Log determinant](#log_det)                                                 |
 | `log_det_sympd`         | [Log determinant of symmetric positive definite matrix](#log_det_sympd)     |
 | `logmat`                | [Matrix logarithm](#logmat)                                                 |
 | `logmat_sympd`          | [Matrix logarithm of symmetric matrix](#logmat_sympd)                       |
-| `min / max`             | [Return extremum values](#min--max)                                         |
+| `min/max`               | [Return extremum values](#min)                                              |
 | `nonzeros`              | [Return non-zero values](#nonzeros)                                         |
 | `norm`                  | [Various norms of vectors and matrices](#norm)                              |
 | `norm2est`              | [Fast estimate of the matrix 2-norm](#norm2est)                             |
@@ -1098,5 +1098,333 @@ index_min(cube, dim)
 
   // max values in col 0 and row n
   return writable::doubles res({M(ii(0), 0), M(n, jj(n))});
+}
+```
+
+# In-place dense transpose {#inplace_trans}
+
+The `inplace_trans()` and `inplace_strans()` function return the in-place
+transpose of a dense matrix. For both functions the optional `method = "lowmem"`
+argument uses a low memory (and slower) algorithm for the transpose (the default
+is `method = "std"`).
+
+For real matrices:
+
+* `inplace_trans()` returns the common transpose of the input matrix.
+* `inplace_strans()` does not apply.
+
+For complex matrices:
+
+* `inplace_trans()` returns the Hermitian transpose (conjugate transpose) of the
+  input matrix.
+* `inplace_strans()` returns the transposed copy without taking the conjugate of
+  the elements of the input matrix.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> inplace_trans1_(const int& n) {
+  mat X(n, n, fill::randu);
+  inplace_trans(X);
+  return as_doubles_matrix(X);
+}
+
+[[cpp11::register]] list inplace_strans1_(const int& n) {
+  cx_mat X(n, n, fill::randu);
+  inplace_strans(X);
+  return as_complex_matrix(X);
+}
+```
+
+# Find common elements in two vectors/matrices {#intersect}
+
+The `intersect()` function returns the common elements for two vectors or
+matrices. The output is an ascending sorted vector of unique common elements.
+
+## Examples
+
+```cpp
+[[cpp11::register]] integers intersect1_(const int& n) {
+  ivec A = regspace<ivec>(n, 1);      // n, ..., 1
+  ivec B = regspace<ivec>(2, n + 1);  // 2, ..., n + 1
+
+  ivec C = intersect(A, B);  // 2, ..., n
+
+  return as_integers(C);
+}
+```
+
+# Concatenation of matrices {#join_rows}
+
+The `join_rows()` and `join_cols()` functions concatenate matrices horizontally
+and vertically, respectively. The input matrices must have the same number of
+rows for `join_rows()` and the same number of columns for `join_cols()`. Both
+functions accept from two to four matrices as input.
+
+Alternatively, `join_horiz()` and `join_vert()` can be used as aliases for
+`join_rows()` and `join_cols()`, respectively.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list join_rows1_(const int& n) {
+  mat A(n, 1, fill::randu);
+  mat B(n, 1, fill::randu);
+  mat C(n, 1, fill::randu);
+
+  mat D = join_rows(A, B, C);
+  mat E = join_cols(A, B, C);
+
+  return writable::list({A, B, C, D, E});
+}
+```
+
+# Concatenation of cubes {#join_slices}
+
+The `join_slices()` function concatenates cubes along the third dimension. For
+two matrices, the input matrices must have the same number of rows and columns.
+For two cubes, the input cubes must have the same number of rows and columns.
+For matrix and cube, the number of rows and columns of the matrix must match the
+number of rows and columns of the cube.
+
+Usage:
+
+```cpp
+join_slices(matrix, matrix)
+join_slices(cube, cube);
+join_slices(matrix, cube);
+join_slices(cube, matrix);
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list join_cubes1_(const int& n) {
+  cube C(n, n + 1, 3, fill::randu);
+  cube D(n, n + 1, 4, fill::randu);
+
+  cube E = join_slices(C, D);
+
+  size_t m = C.n_slices + D.n_slices;
+
+  writable::list res(m);
+
+  for (size_t i = 0; i < m; ++i) {
+    res[i] = as_doubles_matrix(E.slice(i));
+  }
+
+  return res;
+}
+```
+
+# Kronecker tensor product {#kron}
+
+The `kron()` function computes the Kronecker tensor product of two matrices.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> kron1_(const int& n) {
+  mat A(n, n + 1, fill::randu);
+  mat B(n + 1, n, fill::randu);
+
+  mat K = kron(A, B);
+
+  return as_doubles_matrix(K);
+}
+```
+
+# Log determinant {#log_det}
+
+The `log_det()` function computes the natural logarithm of the determinant of a
+square matrix based on LU decomposition. If the matrix is not square or the
+computation fails, the function throws a `std::runtime_error` exception.
+
+Usage:
+
+```cpp
+complex val = log_det(X);
+log_det(val, sign, X);
+```
+
+Form 1: `log_det(X)` returns the complex logarithm of the determinant of `X`. If
+the input matrix is real, the imaginary part of the result is zero.
+
+Form 2: `log_det(val, sign, X)` returns a bool indicating if the calculation
+was successful and stores the logarithm of the determinant in the `val` and
+`sign` variables such that `det(X) = sign * exp(val)`. If the computation fails,
+the values of `val` and `sign` are undefined and it returns `false` without
+throwing an exception.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list log_det1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  cx_double res1 = log_det(A);  // form 1
+
+  cpp11::writable::list res2;
+  res2.push_back(writable::doubles({std::real(res1)}));
+  res2.push_back(writable::doubles({std::imag(res1)}));
+
+  double val;
+  double sign;
+  bool ok = log_det(val, sign, A);  // form 2
+
+  writable::list res3(3);
+  res3[0] = doubles({val});
+  res3[1] = doubles({sign});
+  res3[2] = logicals({ok});
+
+  writable::list res(2);
+  res[0] = res2;
+  res[1] = res3;
+
+  return res;
+}
+```
+
+# Log determinant of symmetric positive definite matrix {#log_det_sympd}
+
+The `log_det_sympd()` function computes the natural logarithm of the determinant
+of a symmetric positive definite matrix. If the matrix is not square or the
+computation fails, a `std::runtime_error` exception is thrown.
+
+Form 1: `log_det_sympd(X)` returns the logarithm of the determinant of `X`.
+
+Form 2: `log_det_sympd(val, X)` returns a bool indicating if the calculation
+was successful and stores the logarithm of the determinant in the `val`
+variable. If the computation fails, the value of `val` is undefined and it
+returns `false` without throwing an exception.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list log_det_sympd1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A = A * A.t();  // make A symmetric positive definite
+
+  double val = log_det_sympd(A);  // form 1
+
+  double val2;
+  bool ok = log_det_sympd(val2, A);  // form 2
+
+  writable::list res(2);
+  res[0] = doubles({val});
+
+  writable::list res2(2);
+  res2[0] = doubles({val2});
+  res2[1] = logicals({ok});
+  res[1] = res2;
+
+  return res;
+}
+```
+
+# Matrix logarithm {#logmat}
+
+The `logmat()` function computes the matrix logarithm of a square matrix. If the
+input matrix is not square or the computation fails, a `std::runtime_error`
+exception is thrown.
+
+Form 1: `logmat(X)` returns the matrix logarithm of `X`.
+
+Form 2: `logmat(val, X)` returns a bool indicating if the calculation was
+successful and stores the matrix logarithm in the `val` variable. If the
+computation fails, the value of `val` is undefined and it returns `false` without
+throwing an exception.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list logmat1_(const int& n) {
+  mat A(n, n, fill::randu);
+  cx_mat B = logmat(A);
+  return as_complex_matrix(B);
+}
+```
+
+## Caveats
+
+* The matrix logarithm operation is generally not the same as applying the
+  `log()` function to each element.
+* If the input matrix is symmetric positive definite, `logmat_sympd()` is
+  faster.
+
+# Matrix logarithm of symmetric matrix {#logmat_sympd}
+
+The `logmat_sympd()` function computes the matrix logarithm of a symmetric
+positive definite matrix. If the input matrix is not square or the computation
+fails, a `std::runtime_error` exception is thrown.
+
+Form 1: `logmat_sympd(X)` returns the matrix logarithm of `X`.
+
+Form 2: `logmat_sympd(Y, X)` returns a bool indicating if the calculation was
+successful and stores the matrix logarithm in the `Y` variable. If the
+computation fails, the value of `Y` is undefined and it returns `false` without
+throwing an exception.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> logmat_sympd1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = A * A.t();  // make symmetric matrix
+  mat C = logmat_sympd(B);
+  return as_doubles_matrix(C);
+}
+```
+
+# Return extremum values {#min}
+
+The `min()` and `max()` functions return the minimum and maximum values in a
+vector, matrix or cube. For a vector, the output is a scalar. For a matrix, the
+output is a vector with the minimum or maximum value for each column when
+`dim = 0` (default) and each row when `dim = 1`. For a cube, the output is a
+cube with the minimum or maximum value for each slice's columns when `dim = 0`,
+the minimum or maximum value for each slice's rows when `dim = 1`, and the
+minimum or maximum value for each slice when `dim = 2`. For complex objects,
+the absolute value is used to compare the elements.
+
+Usage:
+
+```cpp
+// max() is analogous
+
+min(vector);
+min(vector1, vector2);
+
+min(matrix);
+min(matrix, dim);
+min(matrix1, matrix2);
+
+min(cube);
+min(cube, dim);
+min(cube1, cube2);
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list max1_(const int& n) {
+  mat M(n, n, fill::randu);
+
+  rowvec a = max(M);
+  rowvec b = max(M, 0);
+  colvec c = max(M, 1);
+
+  // element-wise maximum
+  mat X(n, n, fill::randu);
+  mat Y(n, n, fill::randu);
+  mat Z = arma::max(X, Y);  // use arma:: prefix to distinguish from std::max()
+
+  writable::list res(4);
+  res[0] = as_doubles(a.t());
+  res[1] = as_doubles(b.t());
+  res[2] = as_doubles(c);
+  res[3] = as_doubles_matrix(Z);
+
+  return res;
 }
 ```

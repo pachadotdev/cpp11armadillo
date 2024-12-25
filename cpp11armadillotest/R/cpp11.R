@@ -592,6 +592,50 @@ index_min1_ <- function(n) {
   .Call(`_cpp11armadillotest_index_min1_`, n)
 }
 
+inplace_trans1_ <- function(n) {
+  .Call(`_cpp11armadillotest_inplace_trans1_`, n)
+}
+
+inplace_strans1_ <- function(n) {
+  .Call(`_cpp11armadillotest_inplace_strans1_`, n)
+}
+
+intersect1_ <- function(n) {
+  .Call(`_cpp11armadillotest_intersect1_`, n)
+}
+
+join_rows1_ <- function(n) {
+  .Call(`_cpp11armadillotest_join_rows1_`, n)
+}
+
+join_cubes1_ <- function(n) {
+  .Call(`_cpp11armadillotest_join_cubes1_`, n)
+}
+
+kron1_ <- function(n) {
+  .Call(`_cpp11armadillotest_kron1_`, n)
+}
+
+log_det1_ <- function(n) {
+  .Call(`_cpp11armadillotest_log_det1_`, n)
+}
+
+log_det_sympd1_ <- function(n) {
+  .Call(`_cpp11armadillotest_log_det_sympd1_`, n)
+}
+
+logmat1_ <- function(n) {
+  .Call(`_cpp11armadillotest_logmat1_`, n)
+}
+
+logmat_sympd1_ <- function(n) {
+  .Call(`_cpp11armadillotest_logmat_sympd1_`, n)
+}
+
+max1_ <- function(n) {
+  .Call(`_cpp11armadillotest_max1_`, n)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }

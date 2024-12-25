@@ -551,4 +551,38 @@ test_that("examples derived from official documentation", {
   res126 <- index_min1_(2)
   expect_type(res126, "double")
   expect_equal(length(res126), 2)
+
+  res127 <- inplace_trans1_(2)
+  expect_type(res127, "double")
+  expect_equal(dim(res127), c(2, 2))
+
+  res128 <- inplace_strans1_(2)
+  expect_type(res128, "list")
+
+  res129 <- intersect1_(5)
+  expect_type(res129, "integer")
+
+  res130 <- join_rows1_(2)
+  expect_type(res130, "list")
+
+  res131 <- join_cubes1_(2)
+  expect_type(res131, "list")
+
+  res132 <- kron1_(2)
+  expect_type(res132, "double")
+
+  res133 <- log_det1_(2)
+  expect_type(res133, "list")
+
+  res134 <- log_det_sympd1_(2)
+  expect_type(res134, "list")
+
+  res135 <- logmat1_(2)
+  expect_type(res135, "list")
+
+  res136 <- logmat_sympd1_(2)
+  expect_type(res136, "list")
+
+  res137 <- max1_(2)
+  expect_type(res137, "list")
 })
