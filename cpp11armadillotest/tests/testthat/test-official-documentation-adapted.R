@@ -627,6 +627,4 @@ test_that("examples derived from official documentation", {
 
   res151 <- reverse1_(2)
   expect_type(res151, "list")
-
-  res152 <- roots1_(2)
 })

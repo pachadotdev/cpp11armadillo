@@ -95,23 +95,27 @@ amount of setup to get you started.
 From RStudio/VSCode, go to an empty directory of your choice and run:
 
 ``` r
-cpp11armadillo::pkg_template(".", "packagename")
+# subdir + package name
+# subdir can be "." to create the package in the current directory
+cpp11armadillo::pkg_template("pkgtemplate", "myownpackage")
 ```
 
-Then follow the instructions from the README. The template contains a
-simple Ordinary Least Squares (OLS) example that you can run to test the
-package.
+Then follow the instructions from README.md in the path where the new
+package is. The template contains a simple Ordinary Least Squares (OLS)
+example that you can run to test the package.
+
+The vignette expands on the OLS estimator, and the [hansen
+package](https://pacha.dev/hansen/) expands on how to use cpp11armadillo
+for Econometric models.
 
 The
 [cpp11armadillotest](https://github.com/pachadotdev/cpp11armadillo/tree/main/cpp11armadillotest)
 directory contains a package that I use to test cpp11armadillo. It
 includes tests for OLS, eigenvalues, matrix decompositions (Cholesky and
 QR), the Capital Asset Pricing Model (CAPM), and data consistency
-between R and C++.
-
-The vignette expands on the OLS estimator, and the [hansen
-package](https://pacha.dev/hansen/) expands on how to use cpp11armadillo
-for Econometric models.
+between R and C++. Please note that cpp11armadillotest is a dummy
+package to test the C++ build with GitHub Actions, and you do not need
+to install it. You can check its code to get extra examples.
 
 ## Linear Algebra Libraries
 

@@ -692,10 +692,6 @@ reverse1_ <- function(n) {
   .Call(`_cpp11armadillotest_reverse1_`, n)
 }
 
-roots1_ <- function(n) {
-  .Call(`_cpp11armadillotest_roots1_`, n)
-}
-
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }
