@@ -103,7 +103,7 @@ inline integers_matrix<> as_integers_matrix(const umat& A) {
 
   writable::integers_matrix<> B(n, m);
 
-  size_t i,j;
+  size_t i, j;
   for (i = 0; i < n; ++i) {
     for (j = 0; j < m; ++j) {
       B(i, j) = A(i, j);

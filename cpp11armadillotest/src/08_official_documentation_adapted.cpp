@@ -879,7 +879,7 @@
 [[cpp11::register]] list col_as_mat1_(const int& n) {
   cube C(n, n + 1, n + 2, fill::randu);
   mat M = C.col_as_mat(0);  // size n x (n + 1)
-  
+
   writable::list res(5);
   res[0] = as_doubles_matrix(C.slice(0));
   res[1] = as_doubles_matrix(C.slice(1));
@@ -887,8 +887,7 @@
   res[3] = as_doubles_matrix(C.slice(3));
   res[4] = as_doubles_matrix(M);
 
-  res.attr("names") = strings({"slice0", "slice1", "slice2", "slice3",
-    "col_as_mat"});
+  res.attr("names") = strings({"slice0", "slice1", "slice2", "slice3", "col_as_mat"});
 
   return res;
 }
@@ -904,8 +903,7 @@
   res[3] = as_doubles_matrix(C.slice(3));
   res[4] = as_doubles_matrix(M);
 
-  res.attr("names") = strings({"slice0", "slice1", "slice2", "slice3",
-    "row_as_mat"});
+  res.attr("names") = strings({"slice0", "slice1", "slice2", "slice3", "row_as_mat"});
 
   return res;
 }
@@ -936,8 +934,7 @@
   return as_doubles_matrix(B);
 }
 
-[[cpp11::register]] doubles inverse1_(const doubles_matrix<>& a,
-                                      const doubles b) {
+[[cpp11::register]] doubles inverse1_(const doubles_matrix<>& a, const doubles b) {
   mat A = as_Mat(a);
   vec B = as_Col(b);
 
@@ -970,8 +967,8 @@
   res[4] = A(0, 1);
   res[5] = A(1, 1);
 
-  res.attr("names") = strings({"index_max", "index_min", "element0", "element1",
-    "element2", "element3"});
+  res.attr("names") =
+      strings({"index_max", "index_min", "element0", "element1", "element2", "element3"});
 
   return res;
 }
@@ -1016,8 +1013,8 @@
   res[3] = C.is_colvec();
   res[4] = D.is_rowvec();
 
-  res.attr("names") = strings({"Nx1_is_vec", "Nx1_is_colvec", "1xN_is_rowvec",
-    "0x1_is_colvec", "1x0_is_rowvec"});
+  res.attr("names") = strings(
+      {"Nx1_is_vec", "Nx1_is_colvec", "1xN_is_rowvec", "0x1_is_colvec", "1x0_is_rowvec"});
 
   return res;
 }
@@ -1033,8 +1030,7 @@
   res[2] = A.is_sorted("descend", 1);
   res[4] = A.is_sorted("ascend", 1);
 
-  res.attr("names") = strings({"a_sorted", "b_sorted", "A_descend",
-    "A_ascend"});
+  res.attr("names") = strings({"a_sorted", "b_sorted", "A_descend", "A_ascend"});
 
   return res;
 }
@@ -1050,8 +1046,7 @@
   B.reset();
   res[2] = B.is_trimatu();
 
-  res.attr("names") = strings({"is_trimatu", "is_trimatl",
-    "is_trimatu_after_reset"});
+  res.attr("names") = strings({"is_trimatu", "is_trimatl", "is_trimatu_after_reset"});
 
   return res;
 }
@@ -1067,8 +1062,7 @@
   A.reset();
   res[2] = A.is_diagmat();
 
-  res.attr("names") = strings({"A_diagmat", "B_diagmat",
-    "A_diagmat_after_reset"});
+  res.attr("names") = strings({"A_diagmat", "B_diagmat", "A_diagmat_after_reset"});
 
   return res;
 }
@@ -1084,8 +1078,7 @@
   A.reset();
   res[2] = A.is_square();
 
-  res.attr("names") = strings({"A_square", "B_square",
-    "A_square_after_reset"});
+  res.attr("names") = strings({"A_square", "B_square", "A_square_after_reset"});
 
   return res;
 }
@@ -1101,8 +1094,7 @@
   A.reset();
   res[2] = A.is_symmetric();
 
-  res.attr("names") = strings({"A_symmetric", "B_symmetric",
-    "A_symmetric_after_reset"});
+  res.attr("names") = strings({"A_symmetric", "B_symmetric", "A_symmetric_after_reset"});
 
   return res;
 }
@@ -1118,8 +1110,7 @@
   A.reset();
   res[2] = A.is_hermitian();
 
-  res.attr("names") = strings({"A_hermitian", "B_hermitian",
-    "A_hermitian_after_reset"});
+  res.attr("names") = strings({"A_hermitian", "B_hermitian", "A_hermitian_after_reset"});
 
   return res;
 }
@@ -1272,8 +1263,7 @@
 
   cube Q = ones(n, n, n + 1);  // or: cube Q(n, n, n + 1, fill::ones);
 
-  mat res = diagmat(v) + diagmat(conv_to<vec>::from(u)) + diagmat(r) + A + B +
-    Q.slice(0);
+  mat res = diagmat(v) + diagmat(conv_to<vec>::from(u)) + diagmat(r) + A + B + Q.slice(0);
 
   return as_doubles_matrix(res);
 }
@@ -1309,8 +1299,7 @@
   fmat B1 = randu<fmat>(n, n);
   fmat B2 = randu<fmat>(n, n, distr_param(10, 20));
 
-  mat res = diagmat(v1) + diagmat(v2) + diagmat(r1) + diagmat(r2) + A1 + A2 +
-    B1 + B2;
+  mat res = diagmat(v1) + diagmat(v2) + diagmat(r1) + diagmat(r2) + A1 + A2 + B1 + B2;
 
   res.each_col([a](vec& x) { x += a; });
   res.each_row([b](rowvec& y) { y /= b; });
@@ -1530,7 +1519,7 @@
 
 [[cpp11::register]] double cond1_(const int& n) {
   mat A(n, n);
-  A.eye(); // the identity matrix has a condition number of 1
+  A.eye();  // the identity matrix has a condition number of 1
 
   double cond_num = cond(A);
 
@@ -1550,7 +1539,9 @@
   std::vector<double> x(B.n_elem);
 
   int i, N = static_cast<int>(B.n_elem);
-  for (i = 0; i < N; ++i) { x[i] = B(i); }
+  for (i = 0; i < N; ++i) {
+    x[i] = B(i);
+  }
 
   colvec y = conv_to<colvec>::from(x);
   std::vector<double> z = conv_to<std::vector<double>>::from(y);
@@ -1579,7 +1570,7 @@
   res[0] = accu(B);
   res[1] = accu(C);
   res[2] = accu(y);
-  
+
   return res;
 }
 
@@ -1616,12 +1607,12 @@
   mat C = diagmat(A, 1);
 
   vec v(n, fill::randu);
-  mat D = diagmat(v); // NxN diagonal matrix
-  mat E = diagmat(v, 1); // (N+1)x(N+1) diagonal matrix
+  mat D = diagmat(v);     // NxN diagonal matrix
+  mat E = diagmat(v, 1);  // (N+1)x(N+1) diagonal matrix
 
-  mat res = B + C + D;  
-  res += E.submat(0, 0, n - 1, n - 1); // the result is an upper triangular
-                                       // matrix
+  mat res = B + C + D;
+  res += E.submat(0, 0, n - 1, n - 1);  // the result is an upper triangular
+                                        // matrix
 
   return as_doubles_matrix(res);
 }
@@ -1639,7 +1630,7 @@
 [[cpp11::register]] doubles_matrix<> diags1_(const int& n) {
   mat V(n, n, fill::randu);
   ivec D = {0, -1};
-  mat X = diags(V, D, n, n); // lower triangular matrix
+  mat X = diags(V, D, n, n);  // lower triangular matrix
   return as_doubles_matrix(X);
 }
 
@@ -1655,7 +1646,7 @@
   vec b = diff(a);
 
   mat res(n, 2, fill::zeros);
-  
+
   res.col(0) = a;
 
   for (int i = 1; i < n; ++i) {
@@ -1820,8 +1811,8 @@
   mat D = join_rows(A, B, C);
   mat E = join_cols(A, B, C);
 
-  return writable::list({as_doubles_matrix(A), as_doubles_matrix(B),
-    as_doubles_matrix(C), as_doubles_matrix(D), as_doubles_matrix(E)});
+  return writable::list({as_doubles_matrix(A), as_doubles_matrix(B), as_doubles_matrix(C),
+                         as_doubles_matrix(D), as_doubles_matrix(E)});
 }
 
 [[cpp11::register]] list join_cubes1_(const int& n) {
@@ -1904,9 +1895,9 @@
 [[cpp11::register]] list logmat_sympd1_(const int& n) {
   mat A(n, n, fill::randu);
   mat B = A * A.t();  // make symmetric matrix
-  
+
   mat C = logmat_sympd(B);
-  
+
   writable::list res(2);
 
   res[0] = as_doubles_matrix(C);
@@ -1919,7 +1910,7 @@
   res2[1] = logicals({ok});
 
   res[1] = res2;
-  
+
   return res;
 }
 
@@ -1954,10 +1945,10 @@
 [[cpp11::register]] doubles norm1_(const int& n) {
   vec A(n, fill::randu);
 
-  writable::doubles res({norm(A, 1), norm(A, 2), norm(A, "inf"),
-    norm(A, "-inf"), norm(A, "fro")});
-  res.attr("names") = strings({"norm_1", "norm_2", "norm_inf", "norm_minus_inf",
-    "norm_fro"});
+  writable::doubles res(
+      {norm(A, 1), norm(A, 2), norm(A, "inf"), norm(A, "-inf"), norm(A, "fro")});
+  res.attr("names") =
+      strings({"norm_1", "norm_2", "norm_inf", "norm_minus_inf", "norm_fro"});
 
   return res;
 }
