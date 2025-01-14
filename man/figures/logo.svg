@@ -7,7 +7,7 @@
    viewBox="0 0 43.929581 50.831631"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   inkscape:version="1.4 (1:1.4+202410161351+e7c3feb100)"
    sodipodi:docname="logo.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -27,9 +27,9 @@
      inkscape:cx="62.511273"
      inkscape:cy="91.8705"
      inkscape:window-width="1920"
-     inkscape:window-height="1043"
+     inkscape:window-height="1131"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="32"
      inkscape:window-maximized="1"
      inkscape:current-layer="g78555"
      showguides="true"
@@ -37,15 +37,19 @@
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0">
+     fit-margin-bottom="0"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1">
     <sodipodi:guide
        position="26.608324,41.550427"
        orientation="0,-1"
-       id="guide62573" />
+       id="guide62573"
+       inkscape:locked="false" />
     <sodipodi:guide
        position="20.879456,14.466576"
        orientation="0,-1"
-       id="guide66307" />
+       id="guide66307"
+       inkscape:locked="false" />
   </sodipodi:namedview>
   <defs
      id="defs2">
@@ -285,7 +289,7 @@
                transform="rotate(-30,-112.35409,-551.13016)">
               <path
                  sodipodi:type="star"
-                 style="fill:#7382b3;fill-opacity:1;stroke:#000000;stroke-width:21.7043;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                 style="fill:#8d91d0;fill-opacity:1;stroke:#000000;stroke-width:21.7043;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
                  id="path4560"
                  sodipodi:sides="6"
                  sodipodi:cx="-5551.2134"

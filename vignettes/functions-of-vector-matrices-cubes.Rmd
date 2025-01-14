@@ -90,12 +90,12 @@ knitr::opts_chunk$set(
 | `sqrtmat_sympd`         | [Square root of symmetric matrix](#sqrtmat_sympd)                           |
 | `sum`                   | [Sum of elements](#sum)                                                     |
 | `sub2ind`               | [Convert subscripts to linear index](#sub2ind)                              |
-| `symmatu / symmatl`     | [Generate symmetric matrix from given matrix](#symmatu--symmatl)            |
+| `symmatu / symmatl`     | [Generate symmetric matrix from given matrix](#symmatu-symmatl)            |
 | `trace`                 | [Sum of diagonal elements](#trace)                                          |
-| `trans`                 | [Transpose of matrix](#trans)                                               |
+| `trans / strans`        | [Transpose of matrix](#trans-strans)                                               |
 | `trapz`                 | [Trapezoidal numerical integration](#trapz)                                 |
-| `trimatu / trimatl`     | [Copy upper/lower triangular part](#trimatu--trimatl)                       |
-| `trimatu_ind / trimatl_ind` | [Obtain indices of upper/lower triangular part](#trimatu_ind--trimatl_ind) |
+| `trimatu / trimatl`     | [Copy upper/lower triangular part](#trimatu-trimatl)                       |
+| `trimatu_ind / trimatl_ind` | [Obtain indices of upper/lower triangular part](#trimatu_ind-trimatl_ind) |
 | `unique`                | [Return unique elements](#unique)                                           |
 | `vecnorm`               | [Obtain vector norm of each row or column of a matrix](#vecnorm)            |
 | `vectorise`             | [Flatten matrix into vector](#vectorise)                                    |
@@ -759,34 +759,6 @@ the product of the Euclidean norms of the input vectors.
 
 `norm()` is more robust for calculating the norm, as it handles underflows and
 overflows.
-
-# Generate a sparse matrix with diagonals specified by column vectors {#spdiags}
-
-The `spdiags()` function generates a sparse matrix with diagonals specified by
-column vectors from an input matrix and a vector to indicate the diagonals.
-
-Usage:
-
-```cpp
-spdiags(matrix, vector, number_of_rows, number_of_columns);
-```
-
-Each element in the input vector specifies diagonal `k`, where:
-
-* `k = 0` is the main diagonal
-* `k > 0` is above the main diagonal
-* `k < 0` is below the main diagonal
-
-## Examples
-
-```cpp
-[[cpp11::register]] doubles_matrix<> spdiags1_(const int& n) {
-  mat V(n, n, fill::randu);
-  ivec D = {0, -1};
-  sp_mat X = spdiags(V, D, n, n); // lower triangular matrix
-  return as_doubles_matrix(X);
-}
-```
 
 # Obtain distance of each element to next largest floating point representation {#eps}
 
@@ -1885,14 +1857,757 @@ roots(Y, X)  // store the roots in Y and return true if successful
 
 ## Examples
 
-FIX LATER !
-
 ```cpp
 [[cpp11::register]] list roots1_(const int& n) {
   // y = p_1*x^n + p_2*x^(n-1) + ... + p_(n-1)*x + p_n
   // p_1, ..., p_n are random numbers
-  vec A(n + 1, fill::randu);
-  cx_vec B = roots(A);
-  return as_complex(B);
+  mat A(n, 1, fill::randu);
+  cx_mat B = roots(A);
+  list res = as_complex_matrix(B);
+  return res;
+}
+```
+
+# Shift elements {#shift}
+
+The `shift()` function generates a copy of a vector `V` or a matrix `M` with the
+elements shifted by `N` positions in a circular manner. The `N` argument can be
+positive or negative. For a matrix, the optional `dim` argument specifies the
+dimension along which to shift the matrix, with `dim = 0` shifting along columns
+(default) and `dim = 1` shifting along rows.
+
+Usage:
+
+```cpp
+shift(V, N)
+shift(M, N)
+shift(M, N, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list shift1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = shift(A, -1);
+  mat C = shift(A, +1);
+
+  writable::list res(3);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+
+  return res;
+}
+```
+
+# Randomly shuffle elements {#shuffle}
+
+<!-- shuffle( V )
+shuffle( X )
+shuffle( X, dim )
+
+    For vector V, generate a copy of the vector with the elements shuffled
+
+    For matrix X, generate a copy of the matrix with the elements shuffled in each column (dim = 0), or each row (dim = 1)
+
+    The dim argument is optional; by default dim = 0 is used
+
+    Examples:
+
+        mat A(4, 5, fill::randu);
+        mat B = shuffle(A);
+ -->
+
+The `shuffle()` function generates a copy of a vector `V` or matrix `M` with the
+elements shuffled. For a matrix, the optional `dim` argument specifies the
+dimension along which to shuffle the matrix, with `dim = 0` shuffling along
+columns (default) and `dim = 1` shuffling along rows.
+
+Usage:
+
+```cpp
+shuffle(V)
+shuffle(M)
+shuffle(M, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list shuffle1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = shuffle(A);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+
+  return res;
+}
+```
+
+# Obtain dimensions of given object {#size}
+
+The `size()` function obtains the dimensions of a matrix or cube `X`. It can
+also be used to explicitly specify the dimensions of a matrix or cube.
+
+Usage:
+
+```cpp
+size(X)
+size(n_rows, n_cols)
+size(n_rows, n_cols, n_slices)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list size1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  mat B(size(A), fill::zeros);
+
+  mat C;
+  C.randu(size(A));
+  mat D = ones<mat>(size(A));
+
+  mat E(2 * n, 2 * n, fill::ones);
+  E(1, 2, size(C)) = C;  // access submatrix of E
+
+  mat F(size(A) + size(E), fill::randu);
+
+  mat G(size(A) * 2, fill::randu);
+
+  writable::list res(7);
+
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+  res[3] = as_doubles_matrix(D);
+  res[4] = as_doubles_matrix(E);
+  res[5] = as_doubles_matrix(F);
+  res[6] = as_doubles_matrix(G);
+
+  return res;
+}
+```
+
+# Sort elements {#sort}
+
+The `sort()` function returns a sorted version of a vector `V` or matrix `M`.
+For a matrix, the optional `dim` argument specifies the dimension along which to
+sort the matrix, with `dim = 0` sorting along columns (default) and `dim = 1`
+sorting along rows. The optional `sort_direction` argument specifies the sorting
+direction, with `sort_direction = "ascend"` (default) sorting in ascending order
+and `sort_direction = "descend"` sorting in descending order.
+
+Usage:
+
+```cpp
+sort(V)
+sort(V, sort_direction)
+
+sort(M)
+sort(M, sort_direction)
+sort(M, sort_direction, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list sort1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = sort(A);
+  mat C = sort(A, "descend");
+  mat D = sort(A, "ascend", 1);
+  mat E = sort(A, "descend", 1);
+
+  writable::list res(5);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+  res[3] = as_doubles_matrix(D);
+  res[4] = as_doubles_matrix(E);
+
+  return res;
+}
+```
+
+# Vector describing sorted order of elements {#sort_index}
+
+The `sort_index()` function returns a vector describing the sorted order of the
+elements of a vector `V` or matrix `M`. The optional `sort_direction` argument
+specifies the sorting direction, with `sort_direction = "ascend"` (default)
+sorting in ascending order and `sort_direction = "descend"` sorting in
+descending order.
+
+Usage:
+
+```cpp
+sort_index(V)
+sort_index(V, sort_direction)
+
+sort_index(M)
+sort_index(M, sort_direction)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list sort_index1_(const int& n) {
+  mat A(n, n, fill::randu);
+  uvec B = sort_index(A);
+  uvec C = sort_index(A, "descend");
+
+  writable::list res(3);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_integers(B);
+  res[2] = as_integers(C);
+
+  return res;
+}
+```
+
+# Generate a sparse matrix with diagonals specified by column vectors {#spdiags}
+
+The `spdiags()` function generates a sparse matrix with diagonals specified by
+column vectors from an input matrix and a vector to indicate the diagonals.
+
+Usage:
+
+```cpp
+spdiags(matrix, vector, number_of_rows, number_of_columns);
+```
+
+Each element in the input vector specifies diagonal `k`, where:
+
+* `k = 0` is the main diagonal
+* `k > 0` is above the main diagonal
+* `k < 0` is below the main diagonal
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> spdiags1_(const int& n) {
+  mat V(n, n, fill::randu);
+  ivec D = {0, -1};
+  sp_mat X = spdiags(V, D, n, n); // lower triangular matrix
+  return as_doubles_matrix(X);
+}
+```
+
+# Square root of matrix {#sqrtmat}
+
+The `sqrtmat()` function computes the complex square root of a general square
+matrix. If the input matrix is not square, the function throws an error. If the
+matrix appears to be singular, an approximate square root is attempted.
+
+Usage:
+
+```cpp
+B = sqrtmat(A)
+sqrtmat(B, A)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list sqrtmat1_(const int& n) {
+  mat A(n, n, fill::randu);
+  
+  cx_mat B = sqrtmat(A);
+
+  cx_mat C;
+  bool ok = sqrtmat(C, A);
+
+  writable::list res(4);
+
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_complex_matrix(B);
+  res[2] = as_complex_matrix(C);
+  res[3] = logicals({ok});
+
+  return res;
+}
+```
+
+# Square root of symmetric matrix {#sqrtmat_sympd}
+
+The `sqrtmat_sympd()` function computes the square root of a symmetric positive
+definite matrix. If the input matrix is not square or the computation fails, the
+function throws an error.
+
+Usage:
+
+```cpp
+B = sqrtmat_sympd(A)
+sqrtmat_sympd(B, A)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> sqrtmat_sympd1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A = A * A.t();  // make A symmetric positive definite
+
+  mat B = sqrtmat_sympd(A);
+
+  return as_doubles_matrix(B);
+}
+```
+
+# Sum of elements {#sum}
+
+The `sum()` function computes the sum of the elements in a vector, matrix or
+cube. For a matrix, the optional `dim` argument specifies the dimension along
+which to compute the sum, with `dim = 0` computing the sum along columns and
+`dim = 1` computing the sum along rows. For a cube, the optional `dim` argument
+specifies the dimension along which to compute the sum, with `dim = 0` computing
+the sum along columns, `dim = 1` computing the sum along rows, and `dim = 2`
+computing the sum along slices.
+
+Usage:
+
+```cpp
+sum(vector)
+
+sum(matrix)
+sum(matrix, dim)
+
+sum(cube)
+sum(cube, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list sum2_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  vec a = sum(A, 1);
+  vec b = sum(A, 0).t();
+  double c = accu(A);  // overall sum
+
+  writable::list res(3);
+  res[0] = as_doubles(a);
+  res[1] = as_doubles(b);
+  res[2] = doubles({c});
+
+  return res;
+}
+```
+
+# Convert subscripts to linear index {#sub2ind}
+
+The `sub2ind()` function converts subscripts to a linear index. If a subscript
+is out of range, the function returns an error.
+
+Usage:
+
+```cpp
+sub2ind(size(matrix), row, col)
+sub2ind(size(matrix), matrix_of_subscripts)
+
+sub2ind(size(cube), row, col, slice)
+sub2ind(size(cube), matrix_of_subscripts)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] integers sub2ind1_(const int& n) {
+  mat M(n, n, fill::randu);
+
+  uword i = sub2ind(size(M), n - 1, n - 1);
+
+  return integers({static_cast<int>(i)});
+}
+```
+
+# Generate symmetric matrix from given matrix {#symmatu-symmatl}
+
+The `symmatu()` function generates a symmetric matrix from a square matrix `A`
+by reflecting the upper triangle to the lower triangle. The `symmatl()` function
+generates a symmetric matrix from a square matrix `A` by reflecting the lower
+triangle to the upper triangle. If `A` is a complex matrix, the reflection uses
+the complex conjugate of the elements. To disable the complex conjugate, set
+`do_conj` to `false`. If `A` is non-square, an error is thrown.
+
+Usage:
+
+```cpp
+symmatu(A)
+symmatu(A, do_conj)
+
+symmatl(A)
+symmatl(A, do_conj)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> symmatu1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = symmatu(A);
+  return as_doubles_matrix(B);
+}
+```
+
+# Sum of diagonal elements {#trace}
+
+The `trace()` function computes the sum of the elements on the main diagonal of
+a matrix. If the input matrix is not square, an error is thrown.
+
+Usage:
+
+```cpp
+trace(X)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles trace1_(const int& n) {
+  mat A(n, n, fill::randu);
+  return doubles({trace(A)});
+}
+```
+
+# Transpose of matrix {#trans-strans}
+
+The `trans()` function transposes a matrix. For a real matrix,
+`trans()` provides a transposed copy of the matrix. For a complex matrix,
+`trans()` provides a Hermitian (conjugate) transposed copy, where the signs of
+the imaginary components are flipped. The `strans()` function provides a simple
+transposed copy, where the signs of the imaginary components are not flipped.
+
+Usage:
+
+```
+trans(A)
+strans(A)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list trans1_(const int& n) {
+  mat A(n, n, fill::randu);
+  
+  mat B = trans(A);
+  mat C = A.t();  // same as trans(A)
+
+  writable::list res(2);
+
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(C);
+
+  return res;
+}
+```
+
+# Trapezoidal numerical integration {#trapz}
+
+The `trapz()` function computes the trapezoidal integral of a vector `Y` with
+respect to spacing in a vector `X`. The optional `dim` argument specifies the
+dimension along which to compute the trapezoidal integral, with `dim = 0`
+computing the integral along columns and `dim = 1` computing the integral along
+rows.
+
+Usage:
+
+```cpp
+trapz(X, Y)
+trapz(X, Y, dim)
+
+trapz(Y)
+trapz(Y, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> trapz1_(n) {
+  vec X = linspace<vec>(0, datum::pi, n);
+  vec Y = sin(X);
+  
+  mat Z = trapz(X,Y);
+
+  return as_doubles_matrix(Z);
+}
+```
+
+# Copy upper/lower triangular part {#trimatu-trimatl}
+
+The `trimatu()` function creates a new matrix by copying the upper triangular
+part from a square matrix `A` and setting the remaining elements to zero. The
+`trimatl()` function creates a new matrix by copying the lower triangular part
+from a square matrix `A` and setting the remaining elements to zero. The
+optional `k` argument specifies the diagonal (`k = 0` by default, which sets
+the main diagonal). For `k > 0`, the `k`-th upper-diagonal is used (above the
+main diagonal, towards the top-right corner). For `k < 0`, the `k`-th
+lower-diagonal is used (below the main diagonal, towards the bottom-left
+corner).
+
+Usage:
+
+```cpp
+trimatu(A)
+trimatu(A, k)
+
+trimatl(A)
+trimatl(A, k)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> trimatu1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = trimatu(A);
+  return as_doubles_matrix(B);
+}
+```
+
+# Obtain indices of upper/lower triangular part {#trimatu_ind-trimatl_ind}
+
+The `trimatu_ind()` function returns a column vector containing the indices of
+elements that form the upper triangular part of a matrix `A`. The
+`trimatl_ind()` function returns a column vector containing the indices of
+elements that form the lower triangular part of a matrix `A`. The optional `k`
+argument specifies the diagonal (`k = 0` by default, which sets the main
+diagonal). For `k > 0`, the `k`-th upper-diagonal is used (above the main
+diagonal, towards the top-right corner). For `k < 0`, the `k`-th lower-diagonal
+is used (below the main diagonal, towards the bottom-left corner).
+
+Usage:
+
+```cpp
+trimatu_ind(size(A))
+trimatu_ind(size(A), k)
+
+trimatl_ind(size(A))
+trimatl_ind(size(A), k)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] integers trimatu_ind1_(const int& n) {
+  mat A(n, n, fill::randu);
+  uvec B = trimatu_ind(size(A));
+  return as_integers(B);
+}
+```
+
+# Return unique elements {#unique}
+
+The `unique()` function returns the unique elements of a vector or matrix `A`,
+sorted in ascending order. If `A` is a vector, the output is also a vector with
+the same orientation (row or column) as `A`. If `A` is a matrix, the output is
+always a column vector.
+
+Usage:
+
+```cpp
+unique(A)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles unique1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A(0, 0) = A(1, 1)
+  vec B = unique(A);
+  return as_doubles(B);
+}
+```
+
+# Obtain vector norm of each row or column of a matrix {#vecnorm}
+
+The `vecnorm()` function computes the p-norm of each column vector (when
+`dim = 0`) or row vector (when `dim = 1`) of a matrix `X`. The optional `p`
+argument specifies the norm to compute, with `p = 2` (default) computing the
+2-norm, `p = 1` computing the 1-norm, `p = "inf"` computing the maximum norm,
+and `p = "-inf"` computing the minimum quasi-norm.
+
+Usage:
+
+```cpp
+vecnorm(X)
+vecnorm(X, p)
+vecnorm(X, p, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list vecnorm1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  colvec a = vecnorm(A, 2).t();
+  colvec b = vecnorm(A, "inf", 1);
+
+  writable::list res(2);
+  res[0] = as_doubles(a);
+  res[1] = as_doubles(b);
+
+  return res;
+}
+```
+
+# Flatten matrix into vector {#vectorise}
+
+The `vectorise()` function generates a flattened version of a matrix `M` or cube
+`Q`. The optional `dim` argument specifies the dimension along which to flatten
+the matrix, with `dim = 0` flattening column-wise (default) and `dim = 1`
+flattening row-wise.
+
+Usage:
+
+```cpp
+vectorise(M)
+vectorise(M, dim)
+
+vectorise(Q)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles vectorise1_(const int& n) {
+  mat A(n, n, fill::randu);
+  vec B = vectorise(A);
+  return as_doubles(B);
+}
+```
+
+# Miscellaneous element-wise functions: exp, log, sqrt, round, sign, and others {#misc-functions}
+
+Miscellaneous element-wise functions include:
+
+| Function            | Description               |
+|---------------------|---------------------------|
+| `exp()`             | Base-e exponential: `e^x` |
+| `exp2()`            | Base-2 exponential: `2^x` |
+| `exp10()`           | Base-10 exponential: `10^x` |
+| `expm1()`           | Compute `exp(A)-1` accurately for values of `A` close to zero (only for float and double elements) |
+| `trunc_exp()`       | Base-e exponential, truncated to avoid infinity (only for float and double elements) |
+| `log()`             | Natural log: `loge(x)`  |
+| `log2()`            | Base-2 log: `log2(x)`   |
+| `log10()`           | Base-10 log: `log10(x)` |
+| `log1p()`           | Compute `log(1+A)` accurately for values of `A` close to zero (only for float and double elements) |
+| `trunc_log()`       | Natural log, truncated to avoid +/-infinity (only for float and double elements) |
+| `square()`          | Square: `x^2`           |
+| `sqrt()`            | Square root: `x^(1.2)`  |
+| `cbrt()`            | Cube root: `x^(1/3)`    |
+| `floor()`           | Largest integral value that is not greater than the input value |
+| `ceil()`            | Smallest integral value that is not less than the input value |
+| `round()`           | Round to nearest integer, with halfway cases rounded away from zero |
+| `trunc()`           | Round to nearest integer, towards zero |
+| `erf()`             | Error function (only for float and double elements) |
+| `erfc()`            | Complementary error function (only for float and double elements) |
+| `tgamma()`          | Gamma function (only for float and double elements) |
+| `lgamma()`          | Natural log of the absolute value of gamma function (only for float and double elements) |
+| `sign()`            | Signum function; for each element `a` in `A`, the corresponding element `b` in `B` is: `-1` if `a < 0`, `0` if `a = 0`, `+1` if `a > 0`. If `a` is complex and non-zero, then `b = a / abs(a)` |
+
+## Caveats
+
+All of the above functions are applied element-wise, where each element is
+treated independently. `expmat()`, `logmat()`, `sqrtmat()`, and `powmat()` take
+into account matrix structure.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list misc1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = exp(A);
+  mat C = log(A);
+  mat D = sqrt(A);
+  mat E = round(A);
+  mat F = sign(A);
+
+  writable::list res(6);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+  res[3] = as_doubles_matrix(D);
+  res[4] = as_doubles_matrix(E);
+  res[5] = as_doubles_matrix(F);
+
+  return res;
+}
+```
+
+# Trigonometric element-wise functions: cos, sin, tan, and others {#trig-functions}
+
+
+<!-- trigonometric element-wise functions (cos, sin, tan, ...)
+
+    For single argument functions, B = trig_fn(A), where trig_fn is applied to each element in A, with trig_fn as one of:
+        cos, acos, cosh, acosh
+        sin, asin, sinh, asinh
+        tan, atan, tanh, atanh
+        sinc, defined as sinc(x) = sin(πx) / (πx) for x ≠ 0, and sinc(x) = 1 for x = 0
+
+    For dual argument functions, apply the function to each tuple of two corresponding elements in X and Y:
+        Z = atan2(Y, X)
+        Z = hypot(X, Y)
+
+    Examples:
+
+        mat X(5, 5, fill::randu);
+        mat Y = cos(X);
+ -->
+
+Trigonometric element-wise functions include:
+
+| Function            | Description               |
+|---------------------|---------------------------|
+| `cos()`             | Cosine: `cos(x)`         |
+| `acos()`            | Inverse cosine: `arccos(x)` |
+| `cosh()`            | Hyperbolic cosine: `cosh(x)` |
+| `acosh()`           | Inverse hyperbolic cosine: `arccosh(x)` |
+| `sin()`             | Sine: `sin(x)`           |
+| `asin()`            | Inverse sine: `arcsin(x)` |
+| `sinh()`            | Hyperbolic sine: `sinh(x)` |
+| `asinh()`           | Inverse hyperbolic sine: `arcsinh(x)` |
+| `tan()`             | Tangent: `tan(x)`         |
+| `atan()`            | Inverse tangent: `arctan(x)` |
+| `tanh()`            | Hyperbolic tangent: `tanh(x)` |
+| `atanh()`           | Inverse hyperbolic tangent: `arctanh(x)` |
+| `sinc()`            | Sinc function: `sinc(x) = sin(datum::pi * x) / (datum::pi * x)` for `x != 0`, and `sinc(x) = 1` for `x = 0` |
+| `atan2()`           | Two-argument arctangent: `atan2(y, x)` |
+| `hypot()`           | Hypotenuse: `hypot(x, y)` |
+
+## Caveats
+
+All of the above functions are applied element-wise, where each element is
+treated independently.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list trig1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = cos(A);
+  mat C = sin(A);
+  mat D = tan(A);
+  mat E = atan2(C, B);
+  mat F = hypot(B, C);
+
+  writable::list res(6);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+  res[3] = as_doubles_matrix(D);
+  res[4] = as_doubles_matrix(E);
+  res[5] = as_doubles_matrix(F);
+
+  return res;
 }
 ```

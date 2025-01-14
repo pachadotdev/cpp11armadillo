@@ -692,6 +692,94 @@ reverse1_ <- function(n) {
   .Call(`_cpp11armadillotest_reverse1_`, n)
 }
 
+roots1_ <- function(n) {
+  .Call(`_cpp11armadillotest_roots1_`, n)
+}
+
+shift1_ <- function(n) {
+  .Call(`_cpp11armadillotest_shift1_`, n)
+}
+
+shuffle1_ <- function(n) {
+  .Call(`_cpp11armadillotest_shuffle1_`, n)
+}
+
+size1_ <- function(n) {
+  .Call(`_cpp11armadillotest_size1_`, n)
+}
+
+sort1_ <- function(n) {
+  .Call(`_cpp11armadillotest_sort1_`, n)
+}
+
+sort_index1_ <- function(n) {
+  .Call(`_cpp11armadillotest_sort_index1_`, n)
+}
+
+sqrtmat1_ <- function(n) {
+  .Call(`_cpp11armadillotest_sqrtmat1_`, n)
+}
+
+sqrtmat_sympd1_ <- function(n) {
+  .Call(`_cpp11armadillotest_sqrtmat_sympd1_`, n)
+}
+
+sum1_ <- function(n) {
+  .Call(`_cpp11armadillotest_sum1_`, n)
+}
+
+sum2_ <- function(n) {
+  .Call(`_cpp11armadillotest_sum2_`, n)
+}
+
+sub2ind1_ <- function(n) {
+  .Call(`_cpp11armadillotest_sub2ind1_`, n)
+}
+
+symmatu1_ <- function(n) {
+  .Call(`_cpp11armadillotest_symmatu1_`, n)
+}
+
+trace1_ <- function(n) {
+  .Call(`_cpp11armadillotest_trace1_`, n)
+}
+
+trans1_ <- function(n) {
+  .Call(`_cpp11armadillotest_trans1_`, n)
+}
+
+trapz1_ <- function(n) {
+  .Call(`_cpp11armadillotest_trapz1_`, n)
+}
+
+trimatu1_ <- function(n) {
+  .Call(`_cpp11armadillotest_trimatu1_`, n)
+}
+
+trimatu_ind1_ <- function(n) {
+  .Call(`_cpp11armadillotest_trimatu_ind1_`, n)
+}
+
+unique1_ <- function(n) {
+  .Call(`_cpp11armadillotest_unique1_`, n)
+}
+
+vecnorm1_ <- function(n) {
+  .Call(`_cpp11armadillotest_vecnorm1_`, n)
+}
+
+vectorise1_ <- function(n) {
+  .Call(`_cpp11armadillotest_vectorise1_`, n)
+}
+
+misc1_ <- function(n) {
+  .Call(`_cpp11armadillotest_misc1_`, n)
+}
+
+trig1_ <- function(n) {
+  .Call(`_cpp11armadillotest_trig1_`, n)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }

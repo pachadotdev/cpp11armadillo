@@ -2,17 +2,8 @@
 
 ## Read the documentation
 
-The basic examples should be enough to get you started. If you need more
-information, you can read the rest of the documentation, which is quite
-comprehensive.
-
-1. [Basic examples[(https://pacha.dev/cpp11armadillo/articles/basic-usage.html)
-2. [Member functions and variables](https://pacha.dev/cpp11armadillo/articles/member-functions-and-variables.html)
-3. [Matrix, vector, cube and field classes](https://pacha.dev/cpp11armadillo/articles/matrix-vector-cube-and-field-classes.html)
-4. [Generated vectors, matrices, and cubes](https://pacha.dev/cpp11armadillo/articles/generated-vectors-matrices-cubes.html)
-5. [Functions of vectors, matrices, and cubes](https://pacha.dev/cpp11armadillo/articles/functions-of-vector-matrices-cubes.html)
-6. [Porting R codes from Hansen's Econometrics to C++](https://pacha.dev/hansen/)
-7. [Fitting regressions with Armadillo](https://pacha.dev/cpp11armadillo/articles/linear-model.html)
+The [basic examples](https://pacha.dev/cpp11armadillo/articles/basic-usage.html)
+should be enough to get you started. 
 
 ## Test the package
 
@@ -32,3 +23,13 @@ comprehensive.
    
    Windows: Edit `./src/Makevars.win` to set `DARMA_OPENMP_THREADS` to another
             value.
+
+## Additional documentation
+
+1. [Member functions and variables](https://pacha.dev/cpp11armadillo/articles/member-functions-and-variables.html)
+2. [Matrix, vector, cube and field classes](https://pacha.dev/cpp11armadillo/articles/matrix-vector-cube-and-field-classes.html)
+3. [Generated vectors, matrices, and cubes](https://pacha.dev/cpp11armadillo/articles/generated-vectors-matrices-cubes.html)
+4. [Functions of vectors, matrices, and cubes](https://pacha.dev/cpp11armadillo/articles/functions-of-vector-matrices-cubes.html)
+5. [Fitting regressions with Armadillo](https://pacha.dev/cpp11armadillo/articles/linear-model.html)
+
+For specific Econometrics examples, see the [hansen package](https://pacha.dev/hansen/) documentation.

@@ -1,3 +1,9 @@
+# cpp11armadillo 0.4.3
+
+* Expanded documentation.
+* Added a new vignette "Functions of vectors, matrices, and cubes".
+* New package template.
+
 # cpp11armadillo 0.4.2
 
 * Expands the package internals to convert `umat` to `integers_matrix<>`.

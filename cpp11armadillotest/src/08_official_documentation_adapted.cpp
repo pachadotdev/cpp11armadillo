@@ -2119,10 +2119,270 @@
   return res;
 }
 
-// [[cpp11::register]] list roots1_(const int& n) {
-//   // y = p_1*x^n + p_2*x^(n-1) + ... + p_(n-1)*x + p_n
-//   // p_1, ..., p_n are random numbers
-//   vec A(n, fill::randu);
-//   cx_vec B = roots(A);
-//   return as_complex_matrix(B);
-// }
+// TODO: check later why vec + cx_vec reurns an error
+[[cpp11::register]] list roots1_(const int& n) {
+  // y = p_1*x^n + p_2*x^(n-1) + ... + p_(n-1)*x + p_n
+  // p_1, ..., p_n are random numbers
+  mat A(n, 1, fill::randu);
+  cx_mat B = roots(A);
+  list res = as_complex_matrix(B);
+  return res;
+}
+
+[[cpp11::register]] list shift1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = shift(A, -1);
+  mat C = shift(A, +1);
+
+  writable::list res(3);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+
+  return res;
+}
+
+[[cpp11::register]] list shuffle1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = shuffle(A);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+
+  return res;
+}
+
+[[cpp11::register]] list size1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  mat B(size(A), fill::zeros);
+
+  mat C;
+  C.randu(size(A));
+  mat D = ones<mat>(size(A));
+
+  mat E(2 * n, 2 * n, fill::ones);
+  E(1, 2, size(C)) = C;  // access submatrix of E
+
+  mat F(size(A) + size(E), fill::randu);
+
+  mat G(size(A) * 2, fill::randu);
+
+  writable::list res(7);
+
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+  res[3] = as_doubles_matrix(D);
+  res[4] = as_doubles_matrix(E);
+  res[5] = as_doubles_matrix(F);
+  res[6] = as_doubles_matrix(G);
+
+  return res;
+}
+
+[[cpp11::register]] list sort1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = sort(A);
+  mat C = sort(A, "descend");
+  mat D = sort(A, "ascend", 1);
+  mat E = sort(A, "descend", 1);
+
+  writable::list res(5);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+  res[3] = as_doubles_matrix(D);
+  res[4] = as_doubles_matrix(E);
+
+  return res;
+}
+
+[[cpp11::register]] list sort_index1_(const int& n) {
+  mat A(n, n, fill::randu);
+  uvec B = sort_index(A);
+  uvec C = sort_index(A, "descend");
+
+  writable::list res(3);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_integers(B);
+  res[2] = as_integers(C);
+
+  return res;
+}
+
+[[cpp11::register]] list sqrtmat1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  cx_mat B = sqrtmat(A);
+
+  cx_mat C;
+  bool ok = sqrtmat(C, A);
+
+  writable::list res(4);
+
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_complex_matrix(B);
+  res[2] = as_complex_matrix(C);
+  res[3] = logicals({ok});
+
+  return res;
+}
+
+[[cpp11::register]] doubles_matrix<> sqrtmat_sympd1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A = A * A.t();  // make A symmetric positive definite
+
+  mat B = sqrtmat_sympd(A);
+
+  return as_doubles_matrix(B);
+}
+
+[[cpp11::register]] list sum1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  rowvec a = sum(A, 0);
+  colvec b = sum(A, 1);
+  double c = accu(A);  // overall sum
+
+  writable::list res(4);
+  res[0] = as_doubles(a);
+  res[1] = as_doubles(b);
+  res[2] = doubles({c});
+
+  return res;
+}
+
+[[cpp11::register]] list sum2_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  vec a = sum(A, 1);
+  vec b = sum(A, 0).t();
+  double c = accu(A);  // overall sum
+
+  writable::list res(3);
+  res[0] = as_doubles(a);
+  res[1] = as_doubles(b);
+  res[2] = doubles({c});
+
+  return res;
+}
+
+[[cpp11::register]] integers sub2ind1_(const int& n) {
+  mat M(n, n, fill::randu);
+
+  uword i = sub2ind(size(M), n - 1, n - 1);
+
+  return integers({static_cast<int>(i)});
+}
+
+[[cpp11::register]] doubles_matrix<> symmatu1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = symmatu(A);
+  return as_doubles_matrix(B);
+}
+
+[[cpp11::register]] doubles trace1_(const int& n) {
+  mat A(n, n, fill::randu);
+  return doubles({trace(A)});
+}
+
+[[cpp11::register]] list trans1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  mat B = trans(A);
+  mat C = A.t();  // same as trans(A)
+
+  writable::list res(2);
+
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(C);
+
+  return res;
+}
+
+[[cpp11::register]] doubles_matrix<> trapz1_(const int& n) {
+  vec X = linspace<vec>(0, datum::pi, n);
+  vec Y = sin(X);
+
+  mat Z = trapz(X, Y);
+
+  return as_doubles_matrix(Z);
+}
+
+[[cpp11::register]] doubles_matrix<> trimatu1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = trimatu(A);
+  return as_doubles_matrix(B);
+}
+
+[[cpp11::register]] integers trimatu_ind1_(const int& n) {
+  mat A(n, n, fill::randu);
+  uvec B = trimatu_ind(size(A));
+  return as_integers(B);
+}
+
+[[cpp11::register]] doubles unique1_(const int& n) {
+  mat A(n, n, fill::randu);
+  A(0, 0) = A(1, 1);
+  vec B = unique(A);
+  return as_doubles(B);
+}
+
+[[cpp11::register]] list vecnorm1_(const int& n) {
+  mat A(n, n, fill::randu);
+
+  colvec a = vecnorm(A, 2).t();
+  colvec b = vecnorm(A, "inf", 1);
+
+  writable::list res(2);
+  res[0] = as_doubles(a);
+  res[1] = as_doubles(b);
+
+  return res;
+}
+
+[[cpp11::register]] doubles vectorise1_(const int& n) {
+  mat A(n, n, fill::randu);
+  vec B = vectorise(A);
+  return as_doubles(B);
+}
+
+[[cpp11::register]] list misc1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = exp(A);
+  mat C = log(A);
+  mat D = sqrt(A);
+  mat E = round(A);
+  mat F = sign(A);
+
+  writable::list res(6);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+  res[3] = as_doubles_matrix(D);
+  res[4] = as_doubles_matrix(E);
+  res[5] = as_doubles_matrix(F);
+
+  return res;
+}
+
+[[cpp11::register]] list trig1_(const int& n) {
+  mat A(n, n, fill::randu);
+  mat B = cos(A);
+  mat C = sin(A);
+  mat D = tan(A);
+  mat E = atan2(C, B);
+  mat F = hypot(B, C);
+
+  writable::list res(6);
+  res[0] = as_doubles_matrix(A);
+  res[1] = as_doubles_matrix(B);
+  res[2] = as_doubles_matrix(C);
+  res[3] = as_doubles_matrix(D);
+  res[4] = as_doubles_matrix(E);
+  res[5] = as_doubles_matrix(F);
+
+  return res;
+}

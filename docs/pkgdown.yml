@@ -1,6 +1,6 @@
 pandoc: 2.9.2.1
-pkgdown: 2.1.1.9000
-pkgdown_sha: 71fd32ce95f17b379e57e7e33f2294bc034727fd
+pkgdown: 2.1.1
+pkgdown_sha: ~
 articles:
   basic-usage: basic-usage.html
   decompositions-factorisations-inverses-and-equation-solvers-dense: decompositions-factorisations-inverses-and-equation-solvers-dense.html
@@ -13,4 +13,4 @@ articles:
   miscellaneous: miscellaneous.html
   signal-and-image-processing: signal-and-image-processing.html
   statistics-and-clustering: statistics-and-clustering.html
-last_built: 2024-12-25T01:29Z
+last_built: 2025-01-14T10:54Z
