@@ -2119,13 +2119,16 @@
   return res;
 }
 
-// TODO: check later why vec + cx_vec reurns an error
 [[cpp11::register]] list roots1_(const int& n) {
   // y = p_1*x^n + p_2*x^(n-1) + ... + p_(n-1)*x + p_n
   // p_1, ..., p_n are random numbers
-  mat A(n, 1, fill::randu);
-  cx_mat B = roots(A);
-  list res = as_complex_matrix(B);
+  vec y(n, 1, fill::randu);
+
+  // note that mat and cx_mat operate directly
+  // but vec and cx_vec require conv_to<...>::from()
+  cx_vec z = roots(conv_to<cx_vec>::from(y));
+
+  list res = as_complex_doubles(z);
   return res;
 }
 
@@ -2383,6 +2386,131 @@
   res[3] = as_doubles_matrix(D);
   res[4] = as_doubles_matrix(E);
   res[5] = as_doubles_matrix(F);
+
+  return res;
+}
+
+[[cpp11::register]] list mean1_(const doubles_matrix<>& X, const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+  
+  // create a cube with 3 copies of B + random noise
+  cube C(B.n_rows, B.n_cols, 3);
+  C.slice(0) = B + 0.1 * randn<mat>(B.n_rows, B.n_cols);
+  C.slice(1) = B + 0.2 * randn<mat>(B.n_rows, B.n_cols);
+  C.slice(2) = B + 0.3 * randn<mat>(B.n_rows, B.n_cols);
+
+  vec D = mean(A).t();
+  vec E = mean(A, 1);
+  vec F = mean(mean(B, 1), 1);
+
+  writable::list res(3);
+  res[0] = as_doubles(D);
+  res[1] = as_doubles(E);
+  res[2] = as_doubles(F);
+
+  return res;
+}
+
+[[cpp11::register]] list median1_(const doubles_matrix<>& X, const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+
+  vec C = median(A).t();
+  vec D = median(A, 1);
+  vec E = median(median(B, 1), 1);
+
+  writable::list res(3);
+  res[0] = as_doubles(C);
+  res[1] = as_doubles(D);
+  res[2] = as_doubles(E);
+
+  return res;
+}
+
+[[cpp11::register]] list stddev1_(const doubles_matrix<>& X, const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+
+  vec C = stddev(A).t();
+  vec D = stddev(A, 1).t();
+  vec E = stddev(A, 1, 1);
+
+  writable::list res(3);
+  res[0] = as_doubles(C);
+  res[1] = as_doubles(D);
+  res[2] = as_doubles(E);
+
+  return res;
+}
+
+[[cpp11::register]] list var1_(const doubles_matrix<>& X, const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+
+  vec C = var(A).t();
+  vec D = var(A, 1).t();
+  vec E = var(A, 1, 1);
+
+  writable::list res(3);
+  res[0] = as_doubles(C);
+  res[1] = as_doubles(D);
+  res[2] = as_doubles(E);
+
+  return res;
+}
+
+[[cpp11::register]] list range1_(const doubles_matrix<>& X, const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+
+  vec C = range(A).t();
+  vec D = range(A, 1);
+
+  writable::list res(2);
+  res[0] = as_doubles(C);
+  res[1] = as_doubles(D);
+
+  return res;
+}
+
+[[cpp11::register]] list cov1_(const doubles_matrix<>& X, const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+
+  mat C = cov(A, B);
+  mat D = cov(A, B, 1);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(C);
+  res[1] = as_doubles_matrix(D);
+
+  return res;
+}
+
+[[cpp11::register]] list cor1_(const doubles_matrix<>& X, const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+
+  mat C = cor(A, B);
+  mat D = cor(A, B, 1);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(C);
+  res[1] = as_doubles_matrix(D);
+
+  return res;
+}
+
+[[cpp11::register]] list hist1_(const int& n) {
+  vec A = randu<vec>(n);
+
+  uvec h1 = hist(A, 11);
+  uvec h2 = hist(A, linspace<vec>(-2, 2, 11));
+
+  writable::list res(2);
+  res[0] = as_integers(h1);
+  res[1] = as_integers(h2);
 
   return res;
 }

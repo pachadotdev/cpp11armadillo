@@ -1,8 +1,11 @@
 # cpp11armadillo 0.4.3
 
 * Expanded documentation.
-* Added a new vignette "Functions of vectors, matrices, and cubes".
+* Added a new vignettes:
+  * Functions of vectors, matrices, and cubes.
+  * Statistics and clustering.
 * New package template.
+* Provides `as_mat()` and `as_col()` as wrappers for `as_Mat()` and `as_Col()`.
 
 # cpp11armadillo 0.4.2
 

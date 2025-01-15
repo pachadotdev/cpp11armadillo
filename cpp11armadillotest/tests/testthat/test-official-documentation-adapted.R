@@ -558,76 +558,182 @@ test_that("examples derived from official documentation", {
 
   res128 <- inplace_strans1_(2)
   expect_type(res128, "list")
+  expect_equal(length(res128), 2)
 
   res129 <- intersect1_(5)
   expect_type(res129, "integer")
+  expect_equal(res129, 2:5)
 
   res130 <- join_rows1_(2)
   expect_type(res130, "list")
+  expect_equal(length(res130), 5)
 
   res131 <- join_cubes1_(2)
   expect_type(res131, "list")
+  expect_equal(length(res131), 7)
 
   res132 <- kron1_(2)
   expect_type(res132, "double")
+  expect_equal(dim(res132), c(6, 6))
 
   res133 <- log_det1_(2)
   expect_type(res133, "list")
+  expect_equal(length(res133), 2)
 
   res134 <- log_det_sympd1_(2)
   expect_type(res134, "list")
+  expect_equal(length(res134), 2)
 
   res135 <- logmat1_(2)
   expect_type(res135, "list")
+  expect_equal(length(res135), 2)
 
   res136 <- logmat_sympd1_(2)
   expect_type(res136, "list")
+  expect_equal(length(res136), 2)
 
   res137 <- max1_(2)
   expect_type(res137, "list")
+  expect_equal(length(res137), 4)
 
   res138 <- nonzeros1_(2)
   expect_type(res138, "double")
 
   res139 <- norm1_(2)
   expect_type(res139, "double")
+  expect_equal(length(res139), 5)
 
   res140 <- norm2est1_(2)
   expect_type(res140, "double")
+  expect_equal(length(res140), 1)
 
   res141 <- normalise1_(2)
   expect_type(res141, "list")
+  expect_equal(length(res141), 2)
 
   res142 <- pow1_(2)
   expect_type(res142, "list")
+  expect_equal(length(res142), 2)
 
   res143 <- powmat1_(2)
   expect_type(res143, "list")
+  expect_equal(length(res143), 2)
 
   res144 <- prod1_(2)
   expect_type(res144, "list")
+  expect_equal(length(res144), 2)
 
   res145 <- rank1_(2)
   expect_type(res145, "list")
+  expect_equal(length(res145), 2)
 
   res146 <- rcond1_(2)
   expect_type(res146, "double")
+  expect_equal(length(res146), 1)
 
   res147 <- repelem1_(2)
   expect_type(res147, "list")
+  expect_equal(length(res147), 2)
 
   res148 <- repmat1_(2)
   expect_type(res148, "list")
+  expect_equal(length(res148), 2)
 
   res149 <- reshape2_(2)
   expect_type(res149, "list")
+  expect_equal(length(res149), 3)
 
   res150 <- resize2_(2)
   expect_type(res150, "list")
+  expect_equal(length(res150), 3)
 
   res151 <- reverse1_(2)
   expect_type(res151, "list")
+  expect_equal(length(res151), 3)
 
   res152 <- roots1_(2)
   expect_type(res152, "list")
+  expect_equal(length(res152), 2)
+
+  res153 <- shift1_(2)
+  expect_type(res153, "list")
+  expect_equal(length(res153), 3)
+
+  res154 <- shuffle1_(2)
+  expect_type(res154, "list")
+  expect_equal(length(res154), 2)
+
+  res155 <- size1_(2)
+  expect_type(res155, "list")
+  expect_equal(length(res155), 7)
+
+  res156 <- sort1_(2)
+  expect_type(res156, "list")
+  expect_equal(length(res156), 5)
+
+  res157 <- sort_index1_(2)
+  expect_type(res157, "list")
+  expect_equal(length(res157), 3)
+
+  res158 <- sqrtmat1_(2)
+  expect_type(res158, "list")
+  expect_equal(length(res158), 4)
+
+  res159 <- sqrtmat_sympd1_(2)
+  expect_type(res159, "double")
+  expect_equal(dim(res159), c(2, 2))
+
+  res160 <- sum2_(2)
+  expect_type(res160, "list")
+  expect_equal(length(res160), 3)
+
+  res161 <- sub2ind1_(2)
+  expect_type(res161, "integer")
+  expect_equal(length(res161), 1)
+
+  res162 <- trace1_(2)
+  expect_type(res162, "double")
+  expect_equal(length(res162), 1)
+
+  res163 <- trans1_(2)
+  expect_type(res163, "list")
+  expect_equal(length(res163), 2)
+
+  res164 <- trapz1_(2)
+  expect_type(res164, "double")
+  expect_equal(length(res164), 1)
+
+  set.seed(123)
+  X <- matrix(rnorm(4), nrow = 2, ncol = 2)
+  Y <- matrix(rnorm(4), nrow = 2, ncol = 2)
+
+  res165 <- mean1_(X, Y)
+  res166 <- median1_(X, Y)
+  res167 <- stddev1_(X, Y)
+  res168 <- var1_(X, Y)
+  res169 <- range1_(X, Y)
+  res170 <- cov1_(X,Y)
+  res171 <- cor1_(X,Y)
+
+  expect_type(res165, "list")
+  expect_equal(length(res165), 3)
+
+  expect_type(res166, "list")
+  expect_equal(length(res166), 3)
+  expect_equal(res165, res166)
+
+  expect_type(res167, "list")
+  expect_equal(length(res167), 3)
+
+  expect_type(res168, "list")
+  expect_equal(length(res168), 3)
+
+  expect_type(res169, "list")
+  expect_equal(length(res169), 2)
+
+  expect_type(res170, "list")
+  expect_equal(length(res170), 2)
+
+  expect_type(res171, "list")
+  expect_equal(length(res171), 2)
 })

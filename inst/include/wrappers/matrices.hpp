@@ -16,6 +16,11 @@ inline Mat<T> as_Mat(const T& x) {
   throw std::runtime_error("Cannot convert to Mat");
 }
 
+// armadillo 0.4.3
+// as_mat = as_Mat
+template <typename T>
+inline Mat<T> as_Mat(const Mat<T>& x) { return x; }
+
 template <typename T, typename U>
 inline Mat<T> dblint_matrix_to_Mat_(const U& x) {
   const int n = x.nrow();

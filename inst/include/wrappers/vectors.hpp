@@ -20,6 +20,11 @@ inline Col<T> as_Col(const T& x) {
   throw std::runtime_error("Cannot convert to Col");
 }
 
+// armadillo 0.4.3
+// as_col = as_Col
+template <typename T>
+inline Col<T> as_Col(const Col<T>& x) { return x; }
+
 template <typename T, typename U>
 inline Col<T> as_Col_(const U& x) {
   const size_t n = x.size();

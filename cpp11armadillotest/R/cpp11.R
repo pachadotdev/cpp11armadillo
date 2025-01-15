@@ -780,6 +780,38 @@ trig1_ <- function(n) {
   .Call(`_cpp11armadillotest_trig1_`, n)
 }
 
+mean1_ <- function(X, Y) {
+  .Call(`_cpp11armadillotest_mean1_`, X, Y)
+}
+
+median1_ <- function(X, Y) {
+  .Call(`_cpp11armadillotest_median1_`, X, Y)
+}
+
+stddev1_ <- function(X, Y) {
+  .Call(`_cpp11armadillotest_stddev1_`, X, Y)
+}
+
+var1_ <- function(X, Y) {
+  .Call(`_cpp11armadillotest_var1_`, X, Y)
+}
+
+range1_ <- function(X, Y) {
+  .Call(`_cpp11armadillotest_range1_`, X, Y)
+}
+
+cov1_ <- function(X, Y) {
+  .Call(`_cpp11armadillotest_cov1_`, X, Y)
+}
+
+cor1_ <- function(X, Y) {
+  .Call(`_cpp11armadillotest_cor1_`, X, Y)
+}
+
+hist1_ <- function(n) {
+  .Call(`_cpp11armadillotest_hist1_`, n)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }

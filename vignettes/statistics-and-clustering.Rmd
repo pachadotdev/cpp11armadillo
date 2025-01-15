@@ -17,3 +17,383 @@ knitr::opts_chunk$set(
 
 This vignette is adapted from the official Armadillo
 [documentation](https://arma.sourceforge.net/docs.html).
+
+| Function           | Description                                             |
+|--------------------|---------------------------------------------------------|
+| `mean`             | Mean {#mean}                                            |
+| `median`           | Median {#median}                                        |
+| `stddev`           | Standard deviation {#stddev}                            |
+| `var`              | Variance {#var}                                         |
+| `range`            | Range {#range}                                          |
+| `cov`              | Covariance {#cov}                                       |
+| `cor`              | Correlation {#cor}                                      |
+| `hist`             | Histogram of counts {#hist}                             |
+| `histc`            | Histogram of counts with user specified edges {#histc}  |
+| `quantile`         | Quantiles of a dataset {#quantile}                      |
+| `princomp`         | Principal component analysis (PCA) {#princomp}          |
+| `normpdf`          | Probability density function of normal distribution {#normpdf} |
+| `log_normpdf`      | Logarithm version of probability density function of normal distribution {#log_normpdf} |
+| `normcdf`          | Cumulative distribution function of normal distribution {#normcdf} |
+| `mvnrnd`           | Random vectors from multivariate normal distribution {#mvnrnd} |
+| `chi2rnd`          | Random numbers from chi-squared distribution {#chi2rnd} |
+| `wishrnd`          | Random matrix from Wishart distribution {#wishrnd}      |
+| `iwishrnd`         | Random matrix from inverse Wishart distribution {#iwishrnd} |
+| `running_stat`     | Running statistics of scalars (one dimensional process/signal) {#running_stat} |
+| `running_stat_vec` | Running statistics of vectors (multi-dimensional process/signal) {#running_stat_vec} |
+| `kmeans`           | Cluster data into disjoint sets {#kmeans}               |
+| `gmm_diag` / `gmm_full` | Probabilistic clustering and likelihood calculation via mixture of Gaussians {#gmm_diag-gmm_full} |
+
+# Mean {#mean}
+
+The `mean` function computes the mean of a vector, matrix, or cube. For a vector
+argument, the mean is calculated using all the elements of the vector. For a
+matrix argument, the mean is calculated for each column by default (`dim = 0`),
+or for each row (`dim = 1`). For a cube argument, the mean is calculated along
+the specified dimension (same as for matrices plus `dim = 2` for slices).
+
+Usage:
+
+```cpp
+mean(V)
+
+mean(M)
+mean(M, dim)
+
+mean(Q)
+mean(Q, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list mean1_(const doubles_matrix<>& X,
+  const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+  
+  // create a cube with 3 copies of B + random noise
+  cube C(B.n_rows, B.n_cols, 3);
+  C.slice(0) = B + 0.1 * randn<mat>(B.n_rows, B.n_cols);
+  C.slice(1) = B + 0.2 * randn<mat>(B.n_rows, B.n_cols);
+  C.slice(2) = B + 0.3 * randn<mat>(B.n_rows, B.n_cols);
+
+  vec D = mean(A).t();
+  vec E = mean(A, 1);
+  vec F = mean(mean(B, 1), 1);
+
+  writable::list res(3);
+  res[0] = as_doubles(D);
+  res[1] = as_doubles(E);
+  res[2] = as_doubles(F);
+
+  return res;
+}
+```
+
+# Median {#median}
+
+The `median` function computes the median of a vector or matrix. For a vector
+argument, the median is calculated using all the elements of the vector. For a
+matrix argument, the median is calculated for each column by default
+(`dim = 0`), or for each row (`dim = 1`).
+
+Usage:
+
+```cpp
+median(V)
+
+median(M)
+median(M, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list median1_(const doubles_matrix<>& X,
+  const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+
+  vec C = median(A).t();
+  vec D = median(A, 1);
+  vec E = median(median(B, 1), 1);
+
+  writable::list res(3);
+  res[0] = as_doubles(C);
+  res[1] = as_doubles(D);
+  res[2] = as_doubles(E);
+
+  return res;
+}
+```
+
+# Standard deviation {#stddev}
+
+The `stddev` function computes the standard deviation of a vector or matrix.
+For a vector argument, the standard deviation is calculated using all the
+elements of the vector. For a matrix argument, the standard deviation is
+calculated for each column by default (`dim = 0`), or for each row (`dim = 1`).
+
+The `norm_type` argument is optional; by default `norm_type = 0` is used. The
+`norm_type` argument controls the type of normalization used, with `N` denoting
+the number of observations:
+
+- for `norm_type = 0`, normalization is done using `N-1`, providing the best
+  unbiased estimation of the standard deviation (if the observations are from a
+  normal distribution).
+- for `norm_type = 1`, normalization is done using `N`, which provides the
+  second moment of the observations about their mean.
+
+Usage:
+
+```cpp
+stddev(V)
+stddev(V, norm_type)
+
+stddev(M)
+stddev(M, norm_type)
+stddev(M, norm_type, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list stddev1_(const doubles_matrix<>& X,
+  const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+
+  vec C = stddev(A).t();
+  vec D = stddev(A, 1).t();
+  vec E = stddev(A, 1, 1);
+
+  writable::list res(3);
+  res[0] = as_doubles(C);
+  res[1] = as_doubles(D);
+  res[2] = as_doubles(E);
+
+  return res;
+}
+```
+
+# Variance {#var}
+
+The `var` function computes the variance of a vector or matrix.
+For a vector argument, the variance is calculated using all the
+elements of the vector. For a matrix argument, the variance is
+calculated for each column by default (`dim = 0`), or for each row (`dim = 1`).
+
+The `norm_type` argument is optional; by default `norm_type = 0` is used. The
+`norm_type` argument controls the type of normalization used, with `N` denoting
+the number of observations:
+
+- for `norm_type = 0`, normalization is done using `N-1`, providing the best
+  unbiased estimation of the standard deviation (if the observations are from a
+  normal distribution).
+- for `norm_type = 1`, normalization is done using `N`, which provides the
+  second moment of the observations about their mean.
+
+Usage:
+
+```cpp
+var(V)
+var(V, norm_type)
+
+var(M)
+var(M, norm_type)
+var(M, norm_type, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list var1_(const doubles_matrix<>& X,
+  const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+
+  vec C = var(A).t();
+  vec D = var(A, 1).t();
+  vec E = var(A, 1, 1);
+
+  writable::list res(3);
+  res[0] = as_doubles(C);
+  res[1] = as_doubles(D);
+  res[2] = as_doubles(E);
+
+  return res;
+}
+```
+
+# Range {#range}
+
+The `range` function computes the range of a vector or matrix. For a vector
+argument, the range is calculated using all the elements of the vector. For a
+matrix argument, the range is calculated for each column by default (`dim = 0`),
+or for each row (`dim = 1`).
+
+Usage:
+
+```cpp
+range(V)
+
+range(M)
+range(M, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list range1_(const doubles_matrix<>& X,
+  const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+
+  vec C = range(A).t();
+  vec D = range(A, 1);
+
+  writable::list res(2);
+  res[0] = as_doubles(C);
+  res[1] = as_doubles(D);
+
+  return res;
+}
+```
+
+# Covariance {#cov}
+
+The `cov` function computes the covariance between two matrices or vectors. If
+each row of `X` and `Y` is an observation and each column is a variable, the
+`(i,j)`-th entry of `cov(X,Y)` is the covariance between the `i`-th variable in
+`X` and the `j`-th variable in `Y`.
+
+For two matrix arguments `X` and `Y`, the `cov(X,Y)` function computes the
+covariance between the two matrices. For vector arguments, the type of vector is
+ignored and each element in the vector is treated as an observation. The
+`cov(X)` function is equivalent to `cov(X, X)`.
+
+The `norm_type` argument is optional; by default `norm_type = 0` is used. The
+`norm_type` argument controls the type of normalization used, with `N` denoting
+the number of observations:
+
+- for `norm_type = 0`, normalization is done using `N-1`, providing the best
+  unbiased estimation of the covariance matrix (if the observations are from a
+  normal distribution).
+- for `norm_type = 1`, normalization is done using `N`, which provides the
+  second moment matrix of the observations about their mean.
+
+Usage:
+
+```cpp
+cov(X, Y, norm_type)
+
+cov(X)
+cov(X, norm_type)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list cov1_(const doubles_matrix<>& X,
+  const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+
+  mat C = cov(A, B);
+  mat D = cov(A, B, 1);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(C);
+  res[1] = as_doubles_matrix(D);
+
+  return res;
+}
+```
+
+# Correlation {#cor}
+
+The `cor` function computes the correlation coefficient between two matrices or
+vectors. If each row of `X` and `Y` is an observation and each column is a
+variable, the `(i,j)`-th entry of `cor(X,Y)` is the correlation coefficient
+between the `i`-th variable in `X` and the `j`-th variable in `Y`.
+
+For two matrix arguments `X` and `Y`, the `cor(X,Y)` function computes the
+correlation coefficient between the two matrices. For vector arguments, the type
+of vector is ignored and each element in the vector is treated as an observation.
+
+The `norm_type` argument is optional; by default `norm_type = 0` is used. The
+`norm_type` argument controls the type of normalization used, with `N` denoting
+the number of observations:
+
+- for `norm_type = 0`, normalization is done using `N-1`.
+- for `norm_type = 1`, normalization is done using `N`.
+
+Usage:
+
+```cpp
+cor(X, Y)
+cor(X, Y, norm_type)
+
+cor(X)
+cor(X, norm_type)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list cor1_(const doubles_matrix<>& X,
+  const doubles_matrix<>& Y) {
+  mat A = as_Mat(X);
+  mat B = as_Mat(Y);
+
+  mat C = cor(A, B);
+  mat D = cor(A, B, 1);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(C);
+  res[1] = as_doubles_matrix(D);
+
+  return res;
+}
+```
+
+# Histogram {#hist}
+
+The `hist` function computes a histogram of counts for a vector or matrix. For a
+vector argument, the histogram is calculated using all the elements of the
+vector. For a matrix argument, the histogram is calculated for each column by
+default (`dim = 0`), or for each row (`dim = 1`).
+
+The bin centers can be automatically determined from the data, with the number
+of bins specified via `n_bins` (the default is 10). The range of the bins is
+determined by the range of the data. The bin centers can also be explicitly
+specified via the `centers` vector, which must contain monotonically increasing
+values.
+
+Usage:
+
+```cpp
+hist(V)
+hist(V, n_bins)
+hist(V, centers)
+
+hist(M, centers)
+hist(M, centers, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list hist1_(const int& n) {
+  vec A = randu<vec>(n);
+
+  uvec h1 = hist(A, 11);
+  uvec h2 = hist(A, linspace<vec>(-2, 2, 11));
+
+  writable::list res(2);
+  res[0] = as_integers(h1);
+  res[1] = as_integers(h2);
+
+  return res;
+}
+```
