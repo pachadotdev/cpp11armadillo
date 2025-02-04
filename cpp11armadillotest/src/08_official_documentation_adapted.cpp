@@ -2514,3 +2514,127 @@
 
   return res;
 }
+
+[[cpp11::register]] integers histc1_(const int& n) {
+  vec A = randu<vec>(n);
+
+  uvec h = histc(A, linspace<vec>(-2, 2, 11));
+
+  return as_integers(h);
+}
+
+[[cpp11::register]] doubles quantile1_(const int& n) {
+  vec A = randu<vec>(n);
+
+  vec P = {0.0, 0.25, 0.50, 0.75, 1.0};
+  vec Q = quantile(A, P);
+
+  return as_doubles(Q);
+}
+
+[[cpp11::register]] list normpdf1_(const int& n) {
+  vec X = randu<vec>(n);
+  vec M = randu<vec>(n);
+  vec S = randu<vec>(n);
+
+  vec P1 = normpdf(X);
+  vec P2 = normpdf(X, M, S);
+  vec P3 = normpdf(1.23, M, S);
+  vec P4 = normpdf(X, 4.56, 7.89);
+  double P5 = normpdf(1.23, 4.56, 7.89);
+
+  writable::list res(5);
+
+  res[0] = as_doubles(P1);
+  res[1] = as_doubles(P2);
+  res[2] = as_doubles(P3);
+  res[3] = as_doubles(P4);
+  res[4] = as_doubles({P5});
+
+  return res;
+}
+
+[[cpp11::register]] list lognormpdf1_(const int& n) {
+  vec X = randu<vec>(n);
+  vec M = randu<vec>(n);
+  vec S = randu<vec>(n);
+
+  vec P1 = log_normpdf(X);
+  vec P2 = log_normpdf(X, M, S);
+  vec P3 = log_normpdf(1.23, M, S);
+  vec P4 = log_normpdf(X, 4.56, 7.89);
+  double P5 = log_normpdf(1.23, 4.56, 7.89);
+
+  writable::list res(5);
+
+  res[0] = as_doubles(P1);
+  res[1] = as_doubles(P2);
+  res[2] = as_doubles(P3);
+  res[3] = as_doubles(P4);
+  res[4] = as_doubles({P5});
+
+  return res;
+}
+
+[[cpp11::register]] list normcdf1_(const int& n) {
+  vec X = randu<vec>(n);
+  vec M = randu<vec>(n);
+  vec S = randu<vec>(n);
+
+  vec P1 = normcdf(X);
+  vec P2 = normcdf(X, M, S);
+  vec P3 = normcdf(1.23, M, S);
+  vec P4 = normcdf(X, 4.56, 7.89);
+  double P5 = normcdf(1.23, 4.56, 7.89);
+
+  writable::list res(5);
+
+  res[0] = as_doubles(P1);
+  res[1] = as_doubles(P2);
+  res[2] = as_doubles(P3);
+  res[3] = as_doubles(P4);
+  res[4] = as_doubles({P5});
+
+  return res;
+}
+
+[[cpp11::register]] doubles_matrix<> mvnrnd1_(const int& n, const int&m) {
+  vec M = randu<vec>(n);
+
+  mat B = randu<mat>(n, n);
+  mat C = B.t() * B;
+
+  mat X = mvnrnd(M, C, m);
+
+  return as_doubles_matrix(X);
+}
+
+[[cpp11::register]] list chi2rnd1_(const int& n, const int& m) {
+  mat X = chi2rnd(2, n, m);
+  mat Y = randi<mat>(n, m, distr_param(1, 10));
+  mat Z = chi2rnd(Y);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(X);
+  res[1] = as_doubles_matrix(Z);
+
+  return res; 
+}
+
+[[cpp11::register]] doubles_matrix<> wishrnd1_(const int& n) {
+  mat X = randu<mat>(n, n);
+  mat S = X.t() * X;
+
+  mat W = wishrnd(S, 6.7);
+
+  return as_doubles_matrix(W);
+}
+
+[[cpp11::register]] doubles_matrix<> iwishrnd1_(const int& n, const double& d) {
+  mat X = randu<mat>(n, n);
+  mat T = X.t() * X;
+
+  mat W = iwishrnd(T, d);
+
+  return as_doubles_matrix(W);
+}

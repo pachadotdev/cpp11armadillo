@@ -736,4 +736,33 @@ test_that("examples derived from official documentation", {
 
   expect_type(res171, "list")
   expect_equal(length(res171), 2)
+
+  res172 <- normpdf1_(5)
+  expect_type(res172, "list")
+  expect_equal(length(res172), 5)
+
+  res173 <- lognormpdf1_(5)
+  expect_type(res173, "list")
+  expect_equal(length(res173), 5)
+
+  res174 <- normcdf1_(5)
+  expect_type(res174, "list")
+  expect_equal(length(res174), 5)
+
+  res175 <- mvnrnd1_(3, 5)
+  expect_type(res175, "double")
+  expect_equal(dim(res175), c(3, 5))
+
+  res176 <- chi2rnd1_(3, 5)
+  expect_type(res176, "list")
+  expect_equal(length(res176), 2)
+  expect_equal(dim(res176[[1]]), c(3, 5))
+
+  res177 <- wishrnd1_(3)
+  expect_type(res177, "double")
+  expect_equal(dim(res177), c(3, 3))
+
+  res178 <- iwishrnd1_(3,4)
+  expect_type(res178, "double")
+  expect_equal(dim(res178), c(3, 3))
 })

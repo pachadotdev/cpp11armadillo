@@ -50,6 +50,7 @@
     <li><a class="dropdown-item" href="../articles/miscellaneous.html">Miscellaneous</a></li>
     <li><a class="dropdown-item" href="../articles/signal-and-image-processing.html">Signal and image processing</a></li>
     <li><a class="dropdown-item" href="../articles/statistics-and-clustering.html">Statistics and clustering</a></li>
+    <li><a class="dropdown-item" href="../articles/syntax-comparison-for-matlab-users.html">Syntax comparison for MATLAB/Octave users</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -1905,11 +1906,15 @@ powmat(Y, X, 2); // store the matrix in Y and return true if successful</code></
 <div class="sourceCode" id="cb86"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">roots1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true"></a>  <span class="co">// y = p_1*x^n + p_2*x^(n-1) + ... + p_(n-1)*x + p_n</span></span>
 <span id="cb86-3"><a href="#cb86-3" aria-hidden="true"></a>  <span class="co">// p_1, ..., p_n are random numbers</span></span>
-<span id="cb86-4"><a href="#cb86-4" aria-hidden="true"></a>  mat A(n, <span class="dv">1</span>, fill::randu);</span>
-<span id="cb86-5"><a href="#cb86-5" aria-hidden="true"></a>  cx_mat B = roots(A);</span>
-<span id="cb86-6"><a href="#cb86-6" aria-hidden="true"></a>  list res = as_complex_matrix(B);</span>
-<span id="cb86-7"><a href="#cb86-7" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb86-8"><a href="#cb86-8" aria-hidden="true"></a>}</span></code></pre></div>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true"></a>  vec y(n, <span class="dv">1</span>, fill::randu);</span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true"></a></span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true"></a>  <span class="co">// note that mat and cx_mat operate directly</span></span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true"></a>  <span class="co">// but vec and cx_vec require conv_to&lt;...&gt;::from()</span></span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true"></a>  cx_vec z = roots(conv_to&lt;cx_vec&gt;::from(y));</span>
+<span id="cb86-9"><a href="#cb86-9" aria-hidden="true"></a></span>
+<span id="cb86-10"><a href="#cb86-10" aria-hidden="true"></a>  list res = as_complex_doubles(z);</span>
+<span id="cb86-11"><a href="#cb86-11" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb86-12"><a href="#cb86-12" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">

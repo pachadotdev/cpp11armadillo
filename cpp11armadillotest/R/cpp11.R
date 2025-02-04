@@ -812,6 +812,42 @@ hist1_ <- function(n) {
   .Call(`_cpp11armadillotest_hist1_`, n)
 }
 
+histc1_ <- function(n) {
+  .Call(`_cpp11armadillotest_histc1_`, n)
+}
+
+quantile1_ <- function(n) {
+  .Call(`_cpp11armadillotest_quantile1_`, n)
+}
+
+normpdf1_ <- function(n) {
+  .Call(`_cpp11armadillotest_normpdf1_`, n)
+}
+
+lognormpdf1_ <- function(n) {
+  .Call(`_cpp11armadillotest_lognormpdf1_`, n)
+}
+
+normcdf1_ <- function(n) {
+  .Call(`_cpp11armadillotest_normcdf1_`, n)
+}
+
+mvnrnd1_ <- function(n, m) {
+  .Call(`_cpp11armadillotest_mvnrnd1_`, n, m)
+}
+
+chi2rnd1_ <- function(n, m) {
+  .Call(`_cpp11armadillotest_chi2rnd1_`, n, m)
+}
+
+wishrnd1_ <- function(n) {
+  .Call(`_cpp11armadillotest_wishrnd1_`, n)
+}
+
+iwishrnd1_ <- function(n, d) {
+  .Call(`_cpp11armadillotest_iwishrnd1_`, n, d)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }

@@ -32,14 +32,12 @@ This vignette is adapted from the official Armadillo
 | `quantile`         | Quantiles of a dataset {#quantile}                      |
 | `princomp`         | Principal component analysis (PCA) {#princomp}          |
 | `normpdf`          | Probability density function of normal distribution {#normpdf} |
-| `log_normpdf`      | Logarithm version of probability density function of normal distribution {#log_normpdf} |
+| `log_normpdf`      | Probability density function of log-normal distribution {#log_normpdf} |
 | `normcdf`          | Cumulative distribution function of normal distribution {#normcdf} |
 | `mvnrnd`           | Random vectors from multivariate normal distribution {#mvnrnd} |
 | `chi2rnd`          | Random numbers from chi-squared distribution {#chi2rnd} |
 | `wishrnd`          | Random matrix from Wishart distribution {#wishrnd}      |
 | `iwishrnd`         | Random matrix from inverse Wishart distribution {#iwishrnd} |
-| `running_stat`     | Running statistics of scalars (one dimensional process/signal) {#running_stat} |
-| `running_stat_vec` | Running statistics of vectors (multi-dimensional process/signal) {#running_stat_vec} |
 | `kmeans`           | Cluster data into disjoint sets {#kmeans}               |
 | `gmm_diag` / `gmm_full` | Probabilistic clustering and likelihood calculation via mixture of Gaussians {#gmm_diag-gmm_full} |
 
@@ -366,8 +364,8 @@ default (`dim = 0`), or for each row (`dim = 1`).
 
 The bin centers can be automatically determined from the data, with the number
 of bins specified via `n_bins` (the default is 10). The range of the bins is
-determined by the range of the data. The bin centers can also be explicitly
-specified via the `centers` vector, which must contain monotonically increasing
+determined by the range of the data. The bin centers can be explicitly
+specified in the `centers` vector, which must contain monotonically increasing
 values.
 
 Usage:
@@ -397,3 +395,431 @@ hist(M, centers, dim)
   return res;
 }
 ```
+
+# Histogram of counts with user specified edges {#histc}
+
+The `histc` function computes a histogram of counts for a vector or matrix. For
+a vector argument, the histogram is calculated using all the elements of the
+vector. For a matrix argument, the histogram is calculated for each column by
+default (`dim = 0`), or for each row (`dim = 1`).
+
+The bin edges have to be specified and contain monotonically increasing
+values.
+
+Usage:
+
+```cpp
+histc(V)
+histc(V, edges)
+
+hist(M, edges)
+hist(M, edges, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] integers histc1_(const int& n) {
+  vec A = randu<vec>(n);
+
+  uvec h = histc(A, linspace<vec>(-2,2,11));
+
+  return as_integers(h);
+}
+```
+
+# Quantiles of a dataset {#quantile}
+
+The `quantile` function computes the quantiles corresponding to the cumulative
+probability values for a vector or matrix. For a vector argument, the quantiles
+are calculated using all the elements of the vector. For a matrix argument, the
+quantiles are calculated for each column by default (`dim = 0`), or for each
+row (`dim = 1`).
+
+The probabilities have to be specified as a second argument `P`.
+
+The algorithm for calculating the quantiles is based on Definition 5 in:
+*Rob J. Hyndman and Yanan Fan. Sample Quantiles in Statistical Packages. The American Statistician, 50(4), 361-365, 1996. DOI: 10.2307/2684934*
+
+Usage:
+
+```cpp
+quantile(V, P)
+
+quantile(M, P)
+quantile(M, P, dim)
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles quantile1_(const int& n) {
+  vec A = randu<vec>(n);
+
+  vec P = {0.0, 0.25, 0.50, 0.75, 1.0};
+  vec Q = quantile(A, P);
+
+  return as_doubles(Q);
+}
+```
+
+# Principal component analysis (PCA) {#princomp}
+
+TODO: This needs a custom method.
+
+# Probability density function of normal distribution {#normpdf}
+
+The `normpdf` function computes the probability density function of a normal
+distribution for a scalar, vector, or matrix. For each scalar `x` in `X`, the
+probability density function is computed according to a Gaussian (normal)
+distribution using the corresponding mean value `m` in `M` and the corresponding
+standard deviation value `s` in `S`.
+
+$$
+y = \frac{1}{s \sqrt{2\pi}} \exp\left[-\frac{(x - m)^2}{2s^2}\right]
+$$
+
+* `X` can be a scalar, vector, or matrix.
+* `M` and `S` can jointly be either scalars, vectors, or matrices.
+* If `M` and `S` are omitted, their values are assumed to be 0 and 1,
+  respectively.
+
+## Caveat
+
+To reduce the incidence of numerical underflows, consider using `log_normpdf()`.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list normpdf1_(const int& n) {
+  vec X = randu<vec>(n);
+  vec M = randu<vec>(n);
+  vec S = randu<vec>(n);
+
+  vec P1 = normpdf(X);
+  vec P2 = normpdf(X, M, S);
+  vec P3 = normpdf(1.23, M, S);
+  vec P4 = normpdf(X, 4.56, 7.89);
+  double P5 = normpdf(1.23, 4.56, 7.89);
+
+  writable::list res(5);
+
+  res[0] = as_doubles(P1);
+  res[1] = as_doubles(P2);
+  res[2] = as_doubles(P3);
+  res[3] = as_doubles(P4);
+  res[4] = as_doubles({P5});
+
+  return res;
+}
+```
+
+# Probability density function of log-normal distribution {#log_normpdf}
+
+The `log_normpdf` function computes the probability density function of a
+log-normal distribution for a scalar, vector, or matrix. For each scalar `x` in
+`X`, the probability density function is computed according to a log-normal
+distribution using the corresponding mean value `m` in `M` and the corresponding
+standard deviation value `s` in `S`.
+
+$$
+y = \log\left[\frac{1}{x s \sqrt{2\pi}} \exp\left[-\frac{(\log(x) - m)^2}{2s^2}\right]\right]
+$$
+
+* `X` can be a scalar, vector, or matrix.
+* `M` and `S` can jointly be either scalars, vectors, or matrices.
+* If `M` and `S` are omitted, their values are assumed to be 0 and 1,
+  respectively.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list lognormpdf1_(const int& n) {
+  vec X = randu<vec>(n);
+  vec M = randu<vec>(n);
+  vec S = randu<vec>(n);
+
+  vec P1 = log_normpdf(X);
+  vec P2 = log_normpdf(X, M, S);
+  vec P3 = log_normpdf(1.23, M, S);
+  vec P4 = log_normpdf(X, 4.56, 7.89);
+  double P5 = log_normpdf(1.23, 4.56, 7.89);
+
+  writable::list res(5);
+
+  res[0] = as_doubles(P1);
+  res[1] = as_doubles(P2);
+  res[2] = as_doubles(P3);
+  res[3] = as_doubles(P4);
+  res[4] = as_doubles({P5});
+
+  return res;
+}
+```
+
+# Cumulative distribution function of normal distribution {#normcdf}
+
+<!-- normcdf( X )
+normcdf( X, M, S )
+
+    For each scalar x in X, compute its cumulative distribution function according to a Gaussian (normal) distribution using the corresponding mean value m in M and the corresponding standard deviation value s in S
+
+    X can be a scalar, vector, or matrix
+
+    M and S can jointly be either scalars, vectors, or matrices
+
+    If M and S are omitted, their values are assumed to be 0 and 1, respectively
+
+    Examples:
+
+        vec X(10, fill::randu);
+        vec M(10, fill::randu);
+        vec S(10, fill::randu);
+
+           vec P1 = normcdf(X);
+           vec P2 = normcdf(X,    M,    S   );
+           vec P3 = normcdf(1.23, M,    S   );
+           vec P4 = normcdf(X,    4.56, 7.89);
+        double P5 = normcdf(1.23, 4.56, 7.89);
+ -->
+
+For each scalar `x` in `X`, compute its cumulative distribution function
+according to a Gaussian (normal) distribution using the corresponding mean value
+`m` in `M` and the corresponding standard deviation value `s` in `S`.
+
+* `X` can be a scalar, vector, or matrix.
+* `M` and `S` can jointly be either scalars, vectors, or matrices.
+* If `M` and `S` are omitted, their values are assumed to be 0 and 1,
+  respectively.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list normcdf1_(const int& n) {
+  vec X = randu<vec>(n);
+  vec M = randu<vec>(n);
+  vec S = randu<vec>(n);
+
+  vec P1 = normcdf(X);
+  vec P2 = normcdf(X, M, S);
+  vec P3 = normcdf(1.23, M, S);
+  vec P4 = normcdf(X, 4.56, 7.89);
+  double P5 = normcdf(1.23, 4.56, 7.89);
+
+  writable::list res(5);
+
+  res[0] = as_doubles(P1);
+  res[1] = as_doubles(P2);
+  res[2] = as_doubles(P3);
+  res[3] = as_doubles(P4);
+  res[4] = as_doubles({P5});
+
+  return res;
+}
+```
+
+# Random vectors from multivariate normal distribution {#mvnrnd}
+
+<!-- X = mvnrnd( M, C )
+X = mvnrnd( M, C, N )
+
+mvnrnd( X, M, C )
+mvnrnd( X, M, C, N )
+
+    Generate a matrix with random column vectors from a multivariate Gaussian (normal) distribution with parameters M and C:
+        M is the mean; must be a column vector
+        C is the covariance matrix; must be symmetric positive semi-definite (preferably positive definite)
+
+    N is the number of column vectors to generate; if N is omitted, it is assumed to be 1
+
+    Caveat: repeated generation of one vector (or a small number of vectors) using the same M and C parameters can be inefficient;
+    for repeated generation consider using the generate() function in the gmm_diag and gmm_full classes
+
+    If generating the random vectors fails:
+        X = mvnrnd(M, C) and X = mvnrnd(M, C, N) reset X and throw a std::runtime_error exception
+        mvnrnd(X, M, C) and mvnrnd(X, M, C, N) reset X and return a bool set to false (exception is not thrown)
+
+    Examples:
+
+        vec M(5, fill::randu);
+
+        mat B(5, 5, fill::randu);
+        mat C = B.t() * B;
+
+        mat X = mvnrnd(M, C, 100);
+ -->
+
+Generate a matrix with random column vectors from a multivariate Gaussian
+(normal) distribution with parameters `M` and `C`.
+
+* `M` is the mean and it must be a column vector.
+* `C` is the covariance matrix and it must be symmetric positive semi-definite
+  (ideally positive definite).
+* `N` is the number of column vectors to generate. If `N` is omitted, it is
+  assumed to be 1.
+
+Usage:
+
+```cpp
+X = mvnrnd(M, C)
+mvnrnd(X, M, C)
+mvnrnd(X. M. C. N)
+```
+
+The first form returns an error if the generation fails. The second and third
+form reset `X` and return a boolean set to `false` without error if the
+generation fails.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> mvnrnd1_(const int& n, const int&m) {
+  vec M = randu<vec>(n);
+
+  mat B = randu<mat>(n, n);
+  mat C = B.t() * B;
+
+  mat X = mvnrnd(M, C, m);
+
+  return as_doubles_matrix(X);
+}
+```
+
+# Random numbers from chi-squared distribution {#chi2rnd}
+
+<!-- chi2rnd( DF )
+chi2rnd( DF_scalar )
+chi2rnd( DF_scalar, n_elem )
+chi2rnd( DF_scalar, n_rows, n_cols )
+chi2rnd( DF_scalar, size(X) )
+
+    Generate a random scalar, vector or matrix with elements sampled from a chi-squared distribution with the degrees of freedom specified by parameter DF or DF_scalar
+
+    DF is a vector or matrix, while DF_scalar is a scalar
+
+    Each value in DF and DF_scalar must be greater than zero
+
+    For the chi2rnd(DF) form, the output vector/matrix has the same size and type as DF; each element in DF specifies a separate degree of freedom
+
+    Usage:
+        vector_type v = chi2rnd( DF ), where the type of DF is a real vector_type
+        matrix_type X = chi2rnd( DF ), where the type of DF is a real matrix_type
+
+        scalar_type s = chi2rnd<scalar_type>( DF_scalar ), where scalar_type is either float or double
+        vector_type v = chi2rnd<vector_type>( DF_scalar, n_elem )
+        matrix_type X = chi2rnd<matrix_type>( DF_scalar, n_rows, n_cols )
+        matrix_type Y = chi2rnd<matrix_type>( DF_scalar, size(X) ) -->
+
+Generate a random scalar, vector, or matrix with elements sampled from a
+chi-squared distribution with the degrees of freedom specified by parameter `DF`
+or `DF_scalar`.
+
+* `DF` is a vector or matrix, while `DF_scalar` is a scalar.
+* For the `chi2rnd(DF)` form, the output vector or matrix has the same size and
+  type as `DF`.
+* Each value in `DF` and `DF_scalar` must be greater than zero.
+* Each element in `DF` specifies a separate degree of freedom.
+
+Usage:
+
+```cpp
+v = chi2rnd(DF)
+X = chi2rnd(DF)
+
+double s = chi2rnd<double>(DF_scalar) // float also works
+vec v = chi2rnd<vec>(DF_scalar, n_elem)
+mat X = chi2rnd<mat>(DF_scalar, n_rows, n_cols)
+mat Y = chi2rnd<mat>(DF_scalar, size(X))
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list chi2rnd1_(const int& n, const int& m) {
+  mat X = chi2rnd(2, n, m);
+  mat Y = randi<mat>(n, m, distr_param(1, 10));
+  mat Z = chi2rnd(Y);
+
+  writable::list res(2);
+  res[0] = as_doubles_matrix(X);
+  res[1] = as_doubles_matrix(Z);
+
+  return res; 
+}
+```
+
+# Random matrix from Wishart distribution {#wishrnd}
+
+Generate a random matrix sampled from the Wishart distribution with parameters
+`S` and `df`.
+
+* `S` is a symmetric positive definite matrix (e.g., a covariance matrix).
+* `df` is a scalar specifying the degrees of freedom; it can be a non-integer
+  value.
+* `D` is an optional argument to specify the Cholesky decomposition of `S`.
+
+Usage:
+
+```cpp
+W = wishrnd(S, df)
+wishrnd(W, S, df)
+```
+
+The first form returns an error if the generation fails. The second form resets
+`W` and returns a boolean set to `false` without error if the generation fails.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> wishrnd1_(const int& n) {
+  mat X = randu<mat>(n, n);
+  mat S = X.t() * X;
+
+  mat W = wishrnd(S, 6.7);
+
+  return as_doubles_matrix(W);
+}
+```
+
+# Random matrix from inverse Wishart distribution {#iwishrnd}
+
+Generate a random matrix sampled from the inverse Wishart distribution with
+parameters `T` and `df`.
+
+* `T` is a symmetric positive definite matrix.
+* `df` is a scalar specifying the degrees of freedom; it can be a non-integer
+  value.
+* `Dinv` is an optional argument; it specifies the Cholesky decomposition of the
+  inverse of `T`. If `Dinv` is provided, `T` is ignored. Using `Dinv` is more
+  efficient if `iwishrnd()` needs to be used many times for the same `T` matrix.
+
+Usage:
+
+```cpp
+W = iwishrnd(T, df)
+iwishrnd(W, T, df)
+```
+
+The first form returns an error if the generation fails. The second form resets
+`W` and returns a boolean set to `false` without error if the generation fails.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> iwishrnd1_(const int& n, const double& d) {
+  mat X = randu<mat>(n, n);
+  mat T = X.t() * X;
+
+  mat W = iwishrnd(T, d);
+
+  return as_doubles_matrix(W);
+}
+```
+
+# Cluster data into disjoint sets {#kmeans}
+
+TODO: This needs a custom method.
+
+# Probabilistic clustering and likelihood calculation via mixture of Gaussians {#gmm_diag-gmm_full}
+
+TODO: maybe this needs a custom method.

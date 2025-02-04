@@ -1,0 +1,62 @@
+---
+title: "Syntax comparison for MATLAB/Octave users"
+output: rmarkdown::html_vignette
+bibliography: "references.bib"
+vignette: >
+  %\VignetteIndexEntry{Syntax comparison for MATLAB/Octave users}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+**This vignette is adapted from the official Armadillo
+[documentation](https://arma.sourceforge.net/docs.html).**
+
+# Matlab/Octave syntax and corresponding Armadillo syntax
+
+The following table uses `V` for vectors, `M` for matrices, `Q` for cubes
+and `F` for fields. For operations, `A`, `B` and `C` denote matrices. Because
+MATLAB indexes from 1 (as R does), the k-th column in MATLAB has index `k` but
+in C++ it has index `k-1`.
+
+| Matlab/Octave |	Armadillo      | Notes                       |
+|---------------|----------------|-----------------------------|
+| `M(1, 1)`   	| `M(0, 0)` 	   | indexing in C++ starts at 0 |
+| `M(k, k)`     | `M(k-1, k-1)`  | indexing in C++ starts at 0 |
+| `size(M,1)`   |	`M.n_rows` 	   |	read only                  |
+| `size(M,2)`   | `M.n_cols` 	   | read only                   |                         	 
+| `size(Q,3)`   |	`Q.n_slices`   |                             |
+| `numel(A)` 	  |	`M.n_elem`     |                             |
+| `M(:, k)` 	  |	`M.col(k-1)` 	 |                             |
+| `M(k, :)` 	  |	`M.row(k)`     |                             |  	 
+| `M(:, p:q)` 	| `M.cols(p, q)` |                             |  	 
+| `M(p:q, :)` 	| `M.rows(p, q)` |                             | 
+| `M(p:q, r:s)` |	`M(span(p,q), span(r,s))` |                  |
+| `Q(:, :, k)` 	| `Q.slice(k)`   |                             |
+| `Q(:, :, t:u)` | `Q.slices(t, u)` |                          |
+| `Q(p:q, r:s, t:u)` | `Q( span(p,q), span(r,s), span(t,u))` | |      	  	  	  	 
+| `M'` 	  	    | `M.t()` or `trans(M)` | matrix transpose / Hermitian transpose (for complex matrices, the conjugate of each element is taken) |
+| `M = zeros(size(M))` | `M.zeros()` |                         |
+| `M = ones(size(M))`  | `M.ones()`  |                         |
+| `M = zeros(k)` | `M = zeros<mat>(k,k)` |                     |
+| `M = ones(k)`  | `M = ones<mat>(k,k)`  |                     |      	  	  	  	 
+| `C = complex(A,B)` | `cx_mat C = cx_mat(A,B)` |              |      	  	  	  	 
+| `A .* B`           | `A % B`           | element-wise multiplication |
+| `A ./ B` 	  	     | `A / B`           | element-wise division       |
+| `A \ B` 	  	     | `solve(A,B)` 	   | more efficient than `inv(A)*B` |
+| `M = M + 1` 	  	 | `M++`             |                     |
+| `M = M - 1` 	  	 | `M--`             |                     |      	  	  	  	 
+| `M = [1 2; 3 4;]`  | `M = {{1, 2}, {3, 4}}` | element initialization |
+| `M = A(:)`         | `M = vectorise(A)`     |                        |
+| `M = [A  B]`       | `M = join_horiz(A,B)`  |                        |
+| `M = [A; B]` 	  	 | `M = join_vert(A,B)`   |                        |    	  	  	  	 
+| `M` 	  	         | `cout << M << endl` or `M.print("M =")` |       |
+| `A = randn(2,3)`   | `mat A = randn(2,3)`   |                        |
+| `B = randn(4,5)`   | `mat B = randn(4,5)`   |                        |
+| `F = {A; B}`       | `field<mat> F(2,1)`, `F(0,0) = A` or  `F(1,0) = B` | fields store arbitrary objects, such as matrices |
