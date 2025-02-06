@@ -2393,7 +2393,7 @@
 [[cpp11::register]] list mean1_(const doubles_matrix<>& X, const doubles_matrix<>& Y) {
   mat A = as_Mat(X);
   mat B = as_Mat(Y);
-  
+
   // create a cube with 3 copies of B + random noise
   cube C(B.n_rows, B.n_cols, 3);
   C.slice(0) = B + 0.1 * randn<mat>(B.n_rows, B.n_cols);
@@ -2598,7 +2598,7 @@
   return res;
 }
 
-[[cpp11::register]] doubles_matrix<> mvnrnd1_(const int& n, const int&m) {
+[[cpp11::register]] doubles_matrix<> mvnrnd1_(const int& n, const int& m) {
   vec M = randu<vec>(n);
 
   mat B = randu<mat>(n, n);
@@ -2618,7 +2618,7 @@
   res[0] = as_doubles_matrix(X);
   res[1] = as_doubles_matrix(Z);
 
-  return res; 
+  return res;
 }
 
 [[cpp11::register]] doubles_matrix<> wishrnd1_(const int& n) {
@@ -2687,8 +2687,7 @@
 
   gmm_diag model;
 
-  bool status = model.learn(data, 2, maha_dist, random_subset, 10, 5, 1e-5,
-    true);
+  bool status = model.learn(data, 2, maha_dist, random_subset, 10, 5, 1e-5, true);
 
   if (status == false) {
     stop("learning failed");

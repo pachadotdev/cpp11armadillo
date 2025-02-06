@@ -7,6 +7,7 @@
   * Syntax comparison for MATLAB/Octave users.
 * New package template.
 * Provides `as_mat()` and `as_col()` as wrappers for `as_Mat()` and `as_Col()`.
+* Allows to convert `uword` to `integers`.
 
 # cpp11armadillo 0.4.2
 

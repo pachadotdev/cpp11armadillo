@@ -23,7 +23,9 @@ inline Col<T> as_Col(const T& x) {
 // armadillo 0.4.3
 // as_col = as_Col
 template <typename T>
-inline Col<T> as_Col(const Col<T>& x) { return x; }
+inline Col<T> as_Col(const Col<T>& x) {
+  return x;
+}
 
 template <typename T, typename U>
 inline Col<T> as_Col_(const U& x) {
@@ -110,7 +112,7 @@ inline integers as_integers(const uword& x) {
   writable::integers y(1);
 
   y[0] = static_cast<int>(x);
-  
+
   return y;
 }
 
