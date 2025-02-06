@@ -106,6 +106,14 @@ inline integers as_integers(const ivec& x) {
   return y;
 }
 
+inline integers as_integers(const uword& x) {
+  writable::integers y(1);
+
+  y[0] = static_cast<int>(x);
+  
+  return y;
+}
+
 // same as above, but for matrices
 
 template <typename T, typename U>

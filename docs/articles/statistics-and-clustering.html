@@ -81,100 +81,6 @@
     
     
 <p>This vignette is adapted from the official Armadillo <a href="https://arma.sourceforge.net/docs.html" class="external-link">documentation</a>.</p>
-<table class="table">
-<colgroup>
-<col width="25%">
-<col width="74%">
-</colgroup>
-<thead><tr class="header">
-<th>Function</th>
-<th>Description</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td><code>mean</code></td>
-<td>Mean {#mean}</td>
-</tr>
-<tr class="even">
-<td><code>median</code></td>
-<td>Median {#median}</td>
-</tr>
-<tr class="odd">
-<td><code>stddev</code></td>
-<td>Standard deviation {#stddev}</td>
-</tr>
-<tr class="even">
-<td><code>var</code></td>
-<td>Variance {#var}</td>
-</tr>
-<tr class="odd">
-<td><code>range</code></td>
-<td>Range {#range}</td>
-</tr>
-<tr class="even">
-<td><code>cov</code></td>
-<td>Covariance {#cov}</td>
-</tr>
-<tr class="odd">
-<td><code>cor</code></td>
-<td>Correlation {#cor}</td>
-</tr>
-<tr class="even">
-<td><code>hist</code></td>
-<td>Histogram of counts {#hist}</td>
-</tr>
-<tr class="odd">
-<td><code>histc</code></td>
-<td>Histogram of counts with user specified edges {#histc}</td>
-</tr>
-<tr class="even">
-<td><code>quantile</code></td>
-<td>Quantiles of a dataset {#quantile}</td>
-</tr>
-<tr class="odd">
-<td><code>princomp</code></td>
-<td>Principal component analysis (PCA) {#princomp}</td>
-</tr>
-<tr class="even">
-<td><code>normpdf</code></td>
-<td>Probability density function of normal distribution {#normpdf}</td>
-</tr>
-<tr class="odd">
-<td><code>log_normpdf</code></td>
-<td>Probability density function of log-normal distribution {#log_normpdf}</td>
-</tr>
-<tr class="even">
-<td><code>normcdf</code></td>
-<td>Cumulative distribution function of normal distribution {#normcdf}</td>
-</tr>
-<tr class="odd">
-<td><code>mvnrnd</code></td>
-<td>Random vectors from multivariate normal distribution {#mvnrnd}</td>
-</tr>
-<tr class="even">
-<td><code>chi2rnd</code></td>
-<td>Random numbers from chi-squared distribution {#chi2rnd}</td>
-</tr>
-<tr class="odd">
-<td><code>wishrnd</code></td>
-<td>Random matrix from Wishart distribution {#wishrnd}</td>
-</tr>
-<tr class="even">
-<td><code>iwishrnd</code></td>
-<td>Random matrix from inverse Wishart distribution {#iwishrnd}</td>
-</tr>
-<tr class="odd">
-<td><code>kmeans</code></td>
-<td>Cluster data into disjoint sets {#kmeans}</td>
-</tr>
-<tr class="even">
-<td>
-<code>gmm_diag</code> / <code>gmm_full</code>
-</td>
-<td>Probabilistic clustering and likelihood calculation via mixture of Gaussians {#gmm_diag-gmm_full}</td>
-</tr>
-</tbody>
-</table>
 <div class="section level2">
 <h2 id="mean">Mean<a class="anchor" aria-label="anchor" href="#mean"></a>
 </h2>
@@ -704,28 +610,6 @@ mvnrnd( X, M, C, N )
 <div class="section level2">
 <h2 id="chi2rnd">Random numbers from chi-squared distribution<a class="anchor" aria-label="anchor" href="#chi2rnd"></a>
 </h2>
-<!-- chi2rnd( DF )
-chi2rnd( DF_scalar )
-chi2rnd( DF_scalar, n_elem )
-chi2rnd( DF_scalar, n_rows, n_cols )
-chi2rnd( DF_scalar, size(X) )
-
-    Generate a random scalar, vector or matrix with elements sampled from a chi-squared distribution with the degrees of freedom specified by parameter DF or DF_scalar
-
-    DF is a vector or matrix, while DF_scalar is a scalar
-
-    Each value in DF and DF_scalar must be greater than zero
-
-    For the chi2rnd(DF) form, the output vector/matrix has the same size and type as DF; each element in DF specifies a separate degree of freedom
-
-    Usage:
-        vector_type v = chi2rnd( DF ), where the type of DF is a real vector_type
-        matrix_type X = chi2rnd( DF ), where the type of DF is a real matrix_type
-
-        scalar_type s = chi2rnd<scalar_type>( DF_scalar ), where scalar_type is either float or double
-        vector_type v = chi2rnd<vector_type>( DF_scalar, n_elem )
-        matrix_type X = chi2rnd<matrix_type>( DF_scalar, n_rows, n_cols )
-        matrix_type Y = chi2rnd<matrix_type>( DF_scalar, size(X) ) -->
 <p>Generate a random scalar, vector, or matrix with elements sampled from a chi-squared distribution with the degrees of freedom specified by parameter <code>DF</code> or <code>DF_scalar</code>.</p>
 <ul>
 <li>
@@ -819,12 +703,268 @@ chi2rnd( DF_scalar, size(X) )
 <div class="section level2">
 <h2 id="kmeans">Cluster data into disjoint sets<a class="anchor" aria-label="anchor" href="#kmeans"></a>
 </h2>
-<p>TODO: This needs a custom method.</p>
+<p>Cluster given data into <code>k</code> disjoint sets.</p>
+<p>Usage:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a>kmeans(means, data, k, seed_mode, n_iter, print_mode)</span></code></pre></div>
+<ul>
+<li>The <code>means</code> parameter is the output matrix for storing the resulting centroids of the sets, with each centroid stored as a column vector. If the clustering fails, the <code>means</code> matrix is reset and set to <code>false</code>.</li>
+<li>The <code>data</code> parameter is the input data matrix, with each sample stored as a column vector. The <code>k</code> parameter indicates the number of centroids.</li>
+<li>The <code>seed_mode</code> parameter specifies how the initial centroids are seeded. It is one of:
+<ul>
+<li>
+<code>keep_existing</code>: use the centroids specified in the <code>means</code> matrix as the starting point.</li>
+<li>
+<code>static_subset</code>: use a subset of the data vectors (repeatable).</li>
+<li>
+<code>random_subset</code>: use a subset of the data vectors (random).</li>
+<li>
+<code>static_spread</code>: use a maximally spread subset of data vectors (repeatable).</li>
+<li>
+<code>random_spread</code>: use a maximally spread subset of data vectors (random start).</li>
+</ul>
+</li>
+<li>The <code>n_iter</code> parameter specifies the number of clustering iterations. This is data dependent, but about 10 is typically sufficient.</li>
+<li>The <code>print_mode</code> parameter is either <code>true</code> or <code>false</code>, indicating whether progress is printed during clustering.</li>
+</ul>
+<div class="section level3">
+<h3 id="caveats">Caveats<a class="anchor" aria-label="anchor" href="#caveats"></a>
+</h3>
+<ul>
+<li>The number of samples in the data matrix should be larger than <code>k</code>.</li>
+<li>Works much faster with OpenMP enabled in the compiler (e.g., <code>-fopenmp</code> in GCC and clang). Cpp11armadillo finds OpenMP and uses it by default.</li>
+<li>For probabilistic clustering, use the <code>gmm_diag</code> or <code>gmm_full</code> classes instead.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="examples-17">Examples<a class="anchor" aria-label="anchor" href="#examples-17"></a>
+</h3>
+<div class="sourceCode" id="cb33"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">kmeans1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n, <span class="at">const</span> <span class="dt">int</span>&amp; d) {</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a>  mat data(d, n, fill::randu);</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true"></a>  mat means;</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true"></a>  <span class="dt">bool</span> status = kmeans(means, data, <span class="dv">2</span>, random_subset, <span class="dv">10</span>, <span class="kw">true</span>);</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true"></a>  <span class="cf">if</span> (status == <span class="kw">false</span>) {</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true"></a>    stop(<span class="st">"clustering failed"</span>);</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true"></a>  }</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true"></a></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true"></a>  writable::list res(<span class="dv">2</span>);</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true"></a></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true"></a>  res[<span class="dv">0</span>] = writable::logicals({status});</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles_matrix(means);</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true"></a></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="gmm_diag-gmm_full">Probabilistic clustering and likelihood calculation via mixture of Gaussians<a class="anchor" aria-label="anchor" href="#gmm_diag-gmm_full"></a>
 </h2>
-<p>TODO: maybe this needs a custom method.</p>
+<p><code>gmm_diag</code> and <code>gmm_full</code> are classes for multi-variate probabilistic clustering and likelihood calculation via Gaussian Mixture Models (GMMs).</p>
+<p>The distribution of data is modelled as:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><munderover><mo>∑</mo><mrow><mi>g</mi><mo>=</mo><mn>0</mn></mrow><mrow><msub><mi>n</mi><mtext mathvariant="normal">gaus</mtext></msub><mo>−</mo><mn>1</mn></mrow></munderover><msub><mi>h</mi><mi>g</mi></msub><mi>N</mi><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>∣</mo><msub><mi>m</mi><mi>g</mi></msub><mo>,</mo><msub><mi>C</mi><mi>g</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+p(x) = \sum_{g=0}^{n_{\text{gaus}}-1} h_g N(x \mid m_g, C_g)
+</annotation></semantics></math></p>
+<p>where:</p>
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math> is a column vector.</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mtext mathvariant="normal">gaus</mtext></msub><annotation encoding="application/x-tex">n_{\text{gaus}}</annotation></semantics></math> is the number of Gaussians; <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mtext mathvariant="normal">gaus</mtext></msub><mo>≥</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n_{\text{gaus}} \geq 1</annotation></semantics></math>.</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>∣</mo><msub><mi>m</mi><mi>g</mi></msub><mo>,</mo><msub><mi>C</mi><mi>g</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">N(x \mid m_g, C_g)</annotation></semantics></math> represents a Gaussian (normal) distribution.</li>
+<li>Each Gaussian <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>g</mi><annotation encoding="application/x-tex">g</annotation></semantics></math> has the following parameters:
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>h</mi><mi>g</mi></msub><annotation encoding="application/x-tex">h_g</annotation></semantics></math> is the heft (weight), with constraints <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>h</mi><mi>g</mi></msub><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">h_g \geq 0</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∑</mo><msub><mi>h</mi><mi>g</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sum h_g = 1</annotation></semantics></math>.</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>m</mi><mi>g</mi></msub><annotation encoding="application/x-tex">m_g</annotation></semantics></math> is the mean vector (centroid) with dimensionality <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mtext mathvariant="normal">dims</mtext></msub><annotation encoding="application/x-tex">n_{\text{dims}}</annotation></semantics></math>.</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>C</mi><mi>g</mi></msub><annotation encoding="application/x-tex">C_g</annotation></semantics></math> is the covariance matrix (either diagonal or full).</li>
+</ul>
+</li>
+</ul>
+<p>Both <code>gmm_diag</code> and <code>gmm_full</code> include tailored k-means and Expectation Maximisation algorithms for learning model parameters from training data.</p>
+<p>For an instance of <code>gmm_diag</code> or <code>gmm_full</code> named as <code>M</code>, the member functions and variables are:</p>
+<ul>
+<li>
+<code>M.log_p(V)</code>: return a scalar representing the log-likelihood of vector <code>V</code> (of type <code>vec</code>).</li>
+<li>
+<code>M.log_p(V, g)</code>: return a scalar representing the log-likelihood of vector <code>V</code> (of type <code>vec</code>), according to Gaussian with index <code>g</code>.</li>
+<li>
+<code>M.log_p(X)</code>: return a row vector (of type <code>rowvec</code>) containing log-likelihoods of each column vector in matrix <code>X</code> (of type <code>mat</code>).</li>
+<li>
+<code>M.log_p(X, g)</code>: return a row vector (of type <code>rowvec</code>) containing log-likelihoods of each column vector in matrix <code>X</code> (of type <code>mat</code>), according to Gaussian with index <code>g</code>.</li>
+<li>
+<code>M.sum_log_p(X)</code>: return a scalar representing the sum of log-likelihoods for all column vectors in matrix <code>X</code> (of type <code>mat</code>).</li>
+<li>
+<code>M.sum_log_p(X, g)</code>: return a scalar representing the sum of log-likelihoods for all column vectors in matrix <code>X</code> (of type <code>mat</code>), according to Gaussian with index <code>g</code>.</li>
+<li>
+<code>M.avg_log_p(X)</code>: return a scalar representing the average log-likelihood of all column vectors in matrix <code>X</code> (of type <code>mat</code>).</li>
+<li>
+<code>M.avg_log_p(X, g)</code>: return a scalar representing the average log-likelihood of all column vectors in matrix <code>X</code> (of type <code>mat</code>), according to Gaussian with index <code>g</code>.</li>
+<li>
+<code>M.assign(V, dist_mode)</code>: return the index of the closest mean (or Gaussian) to vector <code>V</code> (of type <code>vec</code>); parameter <code>dist_mode</code> is one of:
+<ul>
+<li>
+<code>eucl_dist</code>: Euclidean distance (takes only means into account).</li>
+<li>
+<code>prob_dist</code>: probabilistic “distance”, defined as the inverse likelihood (takes into account means, covariances, and hefts).</li>
+</ul>
+</li>
+<li>
+<code>M.assign(X, dist_mode)</code>: return a row vector (of type <code>urowvec</code>) containing the indices of the closest means (or Gaussians) to each column vector in matrix <code>X</code> (of type <code>mat</code>); parameter <code>dist_mode</code> is either <code>eucl_dist</code> or <code>prob_dist</code> (as per the <code>.assign()</code> function above).</li>
+<li>
+<code>M.raw_hist(X, dist_mode)</code>: return a row vector (of type <code>urowvec</code>) representing the raw histogram of counts; each entry is the number of counts corresponding to a Gaussian; each count is the number times the corresponding Gaussian was the closest to each column vector in matrix <code>X</code>; parameter <code>dist_mode</code> is either <code>eucl_dist</code> or <code>prob_dist</code> (as per the <code>.assign()</code> function above).</li>
+<li>
+<code>M.norm_hist(X, dist_mode)</code>: similar to the <code>.raw_hist()</code> function above; return a row vector (of type <code>rowvec</code>) containing normalised counts; the vector sums to one; parameter <code>dist_mode</code> is either <code>eucl_dist</code> or <code>prob_dist</code> (as per the <code>.assign()</code> function above).</li>
+<li>
+<code>M.generate()</code>: return a column vector (of type <code>vec</code>) representing a random sample generated according to the model’s parameters.</li>
+<li>
+<code>M.generate(N)</code>: return a matrix (of type <code>mat</code>) containing <code>N</code> column vectors, with each vector representing a random sample generated according to the model’s parameters.</li>
+<li>M.save(filename): save the model to a file and return a bool indicating either success (true) or failure (false).</li>
+<li>M.load(filename): load the model from a file and return a bool indicating either success (true) or failure (false).</li>
+<li>M.n_gaus(): return the number of means/Gaussians in the model.</li>
+<li>M.n_dims(): return the dimensionality of the means/Gaussians in the model.</li>
+<li>M.reset(n_dims, n_gaus): set the model to have dimensionality <code>n_dims</code>, with <code>n_gaus</code> number of Gaussians; all the means are set to zero, all covariance matrix representations are equivalent to the identity matrix, and all the hefts (weights) are set to be uniform.</li>
+<li>M.hefts: read-only row vector (of type <code>rowvec</code>) containing the hefts (weights).</li>
+<li>M.means: read-only matrix (of type <code>mat</code>) containing the means (centroids), stored as column vectors.</li>
+<li>M.dcovs: read-only matrix (of type <code>mat</code>) containing the representation of diagonal covariance matrices, with the set of diagonal covariances for each Gaussian stored as a column vector; applicable only to the <code>gmm_diag</code> class.</li>
+<li>M.fcovs: read-only cube containing the full covariance matrices, with each covariance matrix stored as a slice within the cube; applicable only to the <code>gmm_full</code> class.</li>
+<li>M.set_hefts(V): set the hefts (weights) of the model to be as specified in row vector <code>V</code> (of type <code>rowvec</code>); the number of hefts must match the existing model.</li>
+<li>M.set_means(X): set the means to be as specified in matrix <code>X</code> (of type <code>mat</code>); the number of means and their dimensionality must match the existing model.</li>
+<li>M.set_dcovs(X): set the diagonal covariances matrices to be as specified in matrix <code>X</code> (of type <code>mat</code>), with the set of diagonal covariances for each Gaussian stored as a column vector; the number of covariance matrices and their dimensionality must match the existing model; applicable only to the <code>gmm_diag</code> class.</li>
+<li>M.set_fcovs(X): set the full covariances matrices to be as specified in cube <code>X</code>, with each covariance matrix stored as a slice within the cube; the number of covariance matrices and their dimensionality must match the existing model; applicable only to the <code>gmm_full</code> class.</li>
+<li>M.set_params(means, covs, hefts): set all the parameters at the same time; the type and layout of the parameters is as per the <code>.set_hefts()</code>, <code>.set_means()</code>, <code>.set_dcovs()</code>, and <code>.set_fcovs()</code> functions above; the number of Gaussians and dimensionality can be different from the existing model.</li>
+<li>M.learn(data, n_gaus, dist_mode, seed_mode, km_iter, em_iter, var_floor, print_mode): learn the model parameters via multi-threaded k-means and/or EM algorithms; return a bool value, with true indicating success, and false indicating failure; the parameters have the following meanings:
+<ul>
+<li>
+<code>data</code>: matrix (of type <code>mat</code>) containing training samples; each sample is stored as a column vector.</li>
+<li>
+<code>n_gaus</code>: set the number of Gaussians to <code>n_gaus</code>; to help convergence, it is recommended that the given data matrix (above) contains at least 10 samples for each Gaussian.</li>
+<li>
+<code>dist_mode</code>: specifies the distance used during the seeding of initial means and k-means clustering:
+<ul>
+<li>
+<code>eucl_dist</code>: Euclidean distance.</li>
+<li>
+<code>maha_dist</code>: Mahalanobis distance, which uses a global diagonal covariance matrix estimated from the training samples; this is recommended for probabilistic applications.</li>
+</ul>
+</li>
+<li>
+<code>seed_mode</code>: specifies how the initial means are seeded prior to running k-means and/or EM algorithms:
+<ul>
+<li>
+<code>keep_existing</code>: keep the existing model (do not modify the means, covariances, and hefts).</li>
+<li>
+<code>static_subset</code>: a subset of the training samples (repeatable).</li>
+<li>
+<code>random_subset</code>: a subset of the training samples (random).</li>
+<li>
+<code>static_spread</code>: a maximally spread subset of training samples (repeatable).</li>
+<li>
+<code>random_spread</code>: a maximally spread subset of training samples (random start).</li>
+<li>Caveat: seeding the initial means with <code>static_spread</code> and <code>random_spread</code> can be much more time consuming than with <code>static_subset</code> and <code>random_subset</code>.</li>
+</ul>
+</li>
+<li>
+<code>km_iter</code>: the number of iterations of the k-means algorithm; this is data dependent, but typically 10 iterations are sufficient.</li>
+<li>
+<code>em_iter</code>: the number of iterations of the EM algorithm; this is data dependent, but typically 5 to 10 iterations are sufficient.</li>
+<li>
+<code>var_floor</code>: the variance floor (smallest allowed value) for the diagonal covariances; setting this to a small non-zero value can help with convergence and/or better quality parameter estimates.</li>
+<li>
+<code>print_mode</code>: either <code>true</code> or <code>false</code>; enable or disable printing of progress during the k-means and EM algorithms.</li>
+</ul>
+</li>
+</ul>
+<div class="section level3">
+<h3 id="caveats-1">Caveats<a class="anchor" aria-label="anchor" href="#caveats-1"></a>
+</h3>
+<ul>
+<li>
+<code>gmm_diag</code> is tailored for diagonal covariance matrices.</li>
+<li>
+<code>gmm_full</code> is tailored for full covariance matrices.</li>
+<li>
+<code>gmm_diag</code> is considerably faster than <code>gmm_full</code>, at the cost of some reduction in modelling accuracy.</li>
+<li>For faster execution on multi-core machines, enable OpenMP in your compiler (e.g., <code>-fopenmp</code> in GCC and clang). Cpp11armadillo finds OpenMP and uses it by default.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="examples-18">Examples<a class="anchor" aria-label="anchor" href="#examples-18"></a>
+</h3>
+<div class="sourceCode" id="cb34"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">gmm1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n, <span class="at">const</span> <span class="dt">int</span>&amp; d) {</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true"></a>  <span class="co">// create synthetic data with 2 Gaussians</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true"></a>  mat data(d, n, fill::zeros);</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true"></a>  vec mean0 = linspace&lt;vec&gt;(<span class="dv">1</span>, d, d);</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true"></a>  vec mean1 = mean0 + <span class="dv">2</span>;</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true"></a>  <span class="dt">int</span> i = <span class="dv">0</span>;</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true"></a></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true"></a>  <span class="cf">while</span> (i &lt; n) {</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true"></a>    <span class="cf">if</span> (i &lt; n) {</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true"></a>      data.col(i) = mean0 + randn&lt;vec&gt;(d);</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true"></a>      ++i;</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true"></a>    }</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true"></a>    <span class="cf">if</span> (i &lt; n) {</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true"></a>      data.col(i) = mean0 + randn&lt;vec&gt;(d);</span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true"></a>      ++i;</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true"></a>    }</span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true"></a>    <span class="cf">if</span> (i &lt; n) {</span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true"></a>      data.col(i) = mean1 + randn&lt;vec&gt;(d);</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true"></a>      ++i;</span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true"></a>    }</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true"></a>  }</span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true"></a></span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true"></a>  <span class="co">// model the data as a diagonal GMM with 2 Gaussians</span></span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true"></a></span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true"></a>  gmm_diag model;</span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true"></a></span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true"></a>  <span class="dt">bool</span> status = model.learn(data, <span class="dv">2</span>, maha_dist, random_subset, <span class="dv">10</span>, <span class="dv">5</span>, <span class="fl">1e-5</span>,</span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true"></a>    <span class="kw">true</span>);</span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true"></a></span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true"></a>  <span class="cf">if</span> (status == <span class="kw">false</span>) {</span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true"></a>    stop(<span class="st">"learning failed"</span>);</span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true"></a>  }</span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true"></a></span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true"></a>  model.means.print(<span class="st">"means:"</span>);</span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true"></a></span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true"></a>  <span class="dt">double</span> scalar_likelihood = model.log_p(data.col(<span class="dv">0</span>));</span>
+<span id="cb34-40"><a href="#cb34-40" aria-hidden="true"></a>  rowvec set_likelihood = model.log_p(data.cols(<span class="dv">0</span>, <span class="dv">9</span>));</span>
+<span id="cb34-41"><a href="#cb34-41" aria-hidden="true"></a></span>
+<span id="cb34-42"><a href="#cb34-42" aria-hidden="true"></a>  <span class="dt">double</span> overall_likelihood = model.avg_log_p(data);</span>
+<span id="cb34-43"><a href="#cb34-43" aria-hidden="true"></a></span>
+<span id="cb34-44"><a href="#cb34-44" aria-hidden="true"></a>  uword gaus_id = model.assign(data.col(<span class="dv">0</span>), eucl_dist);</span>
+<span id="cb34-45"><a href="#cb34-45" aria-hidden="true"></a>  urowvec gaus_ids = model.assign(data.cols(<span class="dv">0</span>, <span class="dv">9</span>), prob_dist);</span>
+<span id="cb34-46"><a href="#cb34-46" aria-hidden="true"></a></span>
+<span id="cb34-47"><a href="#cb34-47" aria-hidden="true"></a>  rowvec hist1 = model.norm_hist(data, eucl_dist);</span>
+<span id="cb34-48"><a href="#cb34-48" aria-hidden="true"></a>  urowvec hist2 = model.raw_hist(data, prob_dist);</span>
+<span id="cb34-49"><a href="#cb34-49" aria-hidden="true"></a></span>
+<span id="cb34-50"><a href="#cb34-50" aria-hidden="true"></a>  writable::list res(<span class="dv">9</span>);</span>
+<span id="cb34-51"><a href="#cb34-51" aria-hidden="true"></a></span>
+<span id="cb34-52"><a href="#cb34-52" aria-hidden="true"></a>  res[<span class="dv">0</span>] = writable::logicals({status});</span>
+<span id="cb34-53"><a href="#cb34-53" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles_matrix(model.means);</span>
+<span id="cb34-54"><a href="#cb34-54" aria-hidden="true"></a>  res[<span class="dv">2</span>] = as_doubles({scalar_likelihood});</span>
+<span id="cb34-55"><a href="#cb34-55" aria-hidden="true"></a>  res[<span class="dv">3</span>] = as_doubles(set_likelihood.t());</span>
+<span id="cb34-56"><a href="#cb34-56" aria-hidden="true"></a>  res[<span class="dv">4</span>] = as_doubles({overall_likelihood});</span>
+<span id="cb34-57"><a href="#cb34-57" aria-hidden="true"></a>  res[<span class="dv">5</span>] = as_integers(gaus_id);</span>
+<span id="cb34-58"><a href="#cb34-58" aria-hidden="true"></a>  res[<span class="dv">6</span>] = as_integers(gaus_ids.t());</span>
+<span id="cb34-59"><a href="#cb34-59" aria-hidden="true"></a>  res[<span class="dv">7</span>] = as_doubles(hist1.t());</span>
+<span id="cb34-60"><a href="#cb34-60" aria-hidden="true"></a>  res[<span class="dv">8</span>] = as_integers(hist2.t());</span>
+<span id="cb34-61"><a href="#cb34-61" aria-hidden="true"></a></span>
+<span id="cb34-62"><a href="#cb34-62" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
+<span id="cb34-63"><a href="#cb34-63" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="implementation-details">Implementation details<a class="anchor" aria-label="anchor" href="#implementation-details"></a>
+</h3>
+<p>The implementation details are available in the following <a href="https://arma.sourceforge.net/armadillo_spcs_2017.pdf" class="external-link">paper</a>:</p>
+<p>Sanderson, Conrad, and Ryan Curtin. “An open source C++ implementation of multi-threaded Gaussian mixture models, k-means and expectation maximisation.” In <em>2017 11th international conference on signal processing and communication systems (ICSPCS)</em>, pp. 1-8. IEEE, 2017.</p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

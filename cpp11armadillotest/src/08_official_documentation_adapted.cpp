@@ -2657,3 +2657,67 @@
 
   return res;
 }
+
+[[cpp11::register]] list gmm1_(const int& n, const int& d) {
+  // create synthetic data with 2 Gaussians
+
+  mat data(d, n, fill::zeros);
+
+  vec mean0 = linspace<vec>(1, d, d);
+  vec mean1 = mean0 + 2;
+
+  int i = 0;
+
+  while (i < n) {
+    if (i < n) {
+      data.col(i) = mean0 + randn<vec>(d);
+      ++i;
+    }
+    if (i < n) {
+      data.col(i) = mean0 + randn<vec>(d);
+      ++i;
+    }
+    if (i < n) {
+      data.col(i) = mean1 + randn<vec>(d);
+      ++i;
+    }
+  }
+
+  // model the data as a diagonal GMM with 2 Gaussians
+
+  gmm_diag model;
+
+  bool status = model.learn(data, 2, maha_dist, random_subset, 10, 5, 1e-5,
+    true);
+
+  if (status == false) {
+    stop("learning failed");
+  }
+
+  model.means.print("means:");
+
+  double scalar_likelihood = model.log_p(data.col(0));
+  rowvec set_likelihood = model.log_p(data.cols(0, 9));
+
+  double overall_likelihood = model.avg_log_p(data);
+
+  uword gaus_id = model.assign(data.col(0), eucl_dist);
+  urowvec gaus_ids = model.assign(data.cols(0, 9), prob_dist);
+
+  rowvec hist1 = model.norm_hist(data, eucl_dist);
+  urowvec hist2 = model.raw_hist(data, prob_dist);
+
+  writable::list res(9);
+
+  res[0] = writable::logicals({status});
+  res[1] = as_doubles_matrix(model.means);
+  res[2] = as_doubles({scalar_likelihood});
+  res[3] = as_doubles(set_likelihood.t());
+  res[4] = as_doubles({overall_likelihood});
+  res[5] = as_integers(gaus_id);
+  res[6] = as_integers(gaus_ids.t());
+  res[7] = as_doubles(hist1.t());
+  res[8] = as_integers(hist2.t());
+
+  return res;
+}

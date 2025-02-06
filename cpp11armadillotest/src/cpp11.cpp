@@ -1496,6 +1496,13 @@ extern "C" SEXP _cpp11armadillotest_kmeans1_(SEXP n, SEXP d) {
     return cpp11::as_sexp(kmeans1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n), cpp11::as_cpp<cpp11::decay_t<const int&>>(d)));
   END_CPP11
 }
+// 08_official_documentation_adapted.cpp
+list gmm1_(const int& n, const int& d);
+extern "C" SEXP _cpp11armadillotest_gmm1_(SEXP n, SEXP d) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(gmm1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n), cpp11::as_cpp<cpp11::decay_t<const int&>>(d)));
+  END_CPP11
+}
 // 09_regression.cpp
 doubles ols_(const doubles_matrix<>& x, const doubles& y);
 extern "C" SEXP _cpp11armadillotest_ols_(SEXP x, SEXP y) {
@@ -1577,6 +1584,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_find_unique1_",                 (DL_FUNC) &_cpp11armadillotest_find_unique1_,                 1},
     {"_cpp11armadillotest_flip1_",                        (DL_FUNC) &_cpp11armadillotest_flip1_,                        1},
     {"_cpp11armadillotest_for_each1_",                    (DL_FUNC) &_cpp11armadillotest_for_each1_,                    1},
+    {"_cpp11armadillotest_gmm1_",                         (DL_FUNC) &_cpp11armadillotest_gmm1_,                         2},
     {"_cpp11armadillotest_has_inf1_",                     (DL_FUNC) &_cpp11armadillotest_has_inf1_,                     1},
     {"_cpp11armadillotest_has_nan1_",                     (DL_FUNC) &_cpp11armadillotest_has_nan1_,                     1},
     {"_cpp11armadillotest_hist1_",                        (DL_FUNC) &_cpp11armadillotest_hist1_,                        1},

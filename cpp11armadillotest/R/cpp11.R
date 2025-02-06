@@ -852,6 +852,10 @@ kmeans1_ <- function(n, d) {
   .Call(`_cpp11armadillotest_kmeans1_`, n, d)
 }
 
+gmm1_ <- function(n, d) {
+  .Call(`_cpp11armadillotest_gmm1_`, n, d)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }

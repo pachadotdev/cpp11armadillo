@@ -18,29 +18,6 @@ knitr::opts_chunk$set(
 This vignette is adapted from the official Armadillo
 [documentation](https://arma.sourceforge.net/docs.html).
 
-| Function           | Description                                             |
-|--------------------|---------------------------------------------------------|
-| `mean`             | Mean {#mean}                                            |
-| `median`           | Median {#median}                                        |
-| `stddev`           | Standard deviation {#stddev}                            |
-| `var`              | Variance {#var}                                         |
-| `range`            | Range {#range}                                          |
-| `cov`              | Covariance {#cov}                                       |
-| `cor`              | Correlation {#cor}                                      |
-| `hist`             | Histogram of counts {#hist}                             |
-| `histc`            | Histogram of counts with user specified edges {#histc}  |
-| `quantile`         | Quantiles of a dataset {#quantile}                      |
-| `princomp`         | Principal component analysis (PCA) {#princomp}          |
-| `normpdf`          | Probability density function of normal distribution {#normpdf} |
-| `log_normpdf`      | Probability density function of log-normal distribution {#log_normpdf} |
-| `normcdf`          | Cumulative distribution function of normal distribution {#normcdf} |
-| `mvnrnd`           | Random vectors from multivariate normal distribution {#mvnrnd} |
-| `chi2rnd`          | Random numbers from chi-squared distribution {#chi2rnd} |
-| `wishrnd`          | Random matrix from Wishart distribution {#wishrnd}      |
-| `iwishrnd`         | Random matrix from inverse Wishart distribution {#iwishrnd} |
-| `kmeans`           | Cluster data into disjoint sets {#kmeans}               |
-| `gmm_diag` / `gmm_full` | Probabilistic clustering and likelihood calculation via mixture of Gaussians {#gmm_diag-gmm_full} |
-
 # Mean {#mean}
 
 The `mean` function computes the mean of a vector, matrix, or cube. For a vector
@@ -687,29 +664,6 @@ generation fails.
 
 # Random numbers from chi-squared distribution {#chi2rnd}
 
-<!-- chi2rnd( DF )
-chi2rnd( DF_scalar )
-chi2rnd( DF_scalar, n_elem )
-chi2rnd( DF_scalar, n_rows, n_cols )
-chi2rnd( DF_scalar, size(X) )
-
-    Generate a random scalar, vector or matrix with elements sampled from a chi-squared distribution with the degrees of freedom specified by parameter DF or DF_scalar
-
-    DF is a vector or matrix, while DF_scalar is a scalar
-
-    Each value in DF and DF_scalar must be greater than zero
-
-    For the chi2rnd(DF) form, the output vector/matrix has the same size and type as DF; each element in DF specifies a separate degree of freedom
-
-    Usage:
-        vector_type v = chi2rnd( DF ), where the type of DF is a real vector_type
-        matrix_type X = chi2rnd( DF ), where the type of DF is a real matrix_type
-
-        scalar_type s = chi2rnd<scalar_type>( DF_scalar ), where scalar_type is either float or double
-        vector_type v = chi2rnd<vector_type>( DF_scalar, n_elem )
-        matrix_type X = chi2rnd<matrix_type>( DF_scalar, n_rows, n_cols )
-        matrix_type Y = chi2rnd<matrix_type>( DF_scalar, size(X) ) -->
-
 Generate a random scalar, vector, or matrix with elements sampled from a
 chi-squared distribution with the degrees of freedom specified by parameter `DF`
 or `DF_scalar`.
@@ -818,8 +772,295 @@ The first form returns an error if the generation fails. The second form resets
 
 # Cluster data into disjoint sets {#kmeans}
 
-TODO: This needs a custom method.
+Cluster given data into `k` disjoint sets.
+
+Usage:
+
+```cpp
+kmeans(means, data, k, seed_mode, n_iter, print_mode)
+```
+
+* The `means` parameter is the output matrix for storing the resulting centroids
+  of the sets, with each centroid stored as a column vector. If the clustering
+  fails, the `means` matrix is reset and set to `false`.
+* The `data` parameter is the input data matrix, with each sample stored as a
+  column vector. The `k` parameter indicates the number of centroids.
+* The `seed_mode` parameter specifies how the initial centroids are seeded. It
+  is one of:
+  - `keep_existing`: use the centroids specified in the `means` matrix as the
+    starting point.
+  - `static_subset`: use a subset of the data vectors (repeatable).
+  - `random_subset`: use a subset of the data vectors (random).
+  - `static_spread`: use a maximally spread subset of data vectors (repeatable).
+  - `random_spread`: use a maximally spread subset of data vectors (random
+    start).
+* The `n_iter` parameter specifies the number of clustering iterations. This is
+  data dependent, but about 10 is typically sufficient.
+* The `print_mode` parameter is either `true` or `false`, indicating whether
+  progress is printed during clustering.
+
+## Caveats
+
+* The number of samples in the data matrix should be larger than `k`.
+* Works much faster with OpenMP enabled in the compiler (e.g., `-fopenmp` in GCC
+  and clang). Cpp11armadillo finds OpenMP and uses it by default.
+* For probabilistic clustering, use the `gmm_diag` or `gmm_full` classes
+  instead.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list kmeans1_(const int& n, const int& d) {
+  mat data(d, n, fill::randu);
+
+  mat means;
+
+  bool status = kmeans(means, data, 2, random_subset, 10, true);
+
+  if (status == false) {
+    stop("clustering failed");
+  }
+
+  writable::list res(2);
+
+  res[0] = writable::logicals({status});
+  res[1] = as_doubles_matrix(means);
+
+  return res;
+}
+```
 
 # Probabilistic clustering and likelihood calculation via mixture of Gaussians {#gmm_diag-gmm_full}
 
-TODO: maybe this needs a custom method.
+`gmm_diag` and `gmm_full` are classes for multi-variate probabilistic
+clustering and likelihood calculation via Gaussian Mixture Models (GMMs).
+
+The distribution of data is modelled as:
+
+$$
+p(x) = \sum_{g=0}^{n_{\text{gaus}}-1} h_g N(x \mid m_g, C_g)
+$$
+
+where:
+
+* $x$ is a column vector.
+* $n_{\text{gaus}}$ is the number of Gaussians; $n_{\text{gaus}} \geq 1$.
+* $N(x \mid m_g, C_g)$ represents a Gaussian (normal) distribution.
+* Each Gaussian $g$ has the following parameters:
+  - $h_g$ is the heft (weight), with constraints $h_g \geq 0$ and
+    $\sum h_g = 1$.
+  - $m_g$ is the mean vector (centroid) with dimensionality $n_{\text{dims}}$.
+  - $C_g$ is the covariance matrix (either diagonal or full).
+
+Both `gmm_diag` and `gmm_full` include tailored k-means and Expectation
+Maximisation algorithms for learning model parameters from training data.
+
+For an instance of `gmm_diag` or `gmm_full` named as `M`, the member functions
+and variables are:
+
+* `M.log_p(V)`: return a scalar representing the log-likelihood of vector `V`
+  (of type `vec`).
+* `M.log_p(V, g)`: return a scalar representing the log-likelihood of vector `V`
+  (of type `vec`), according to Gaussian with index `g`.
+* `M.log_p(X)`: return a row vector (of type `rowvec`) containing
+  log-likelihoods of each column vector in matrix `X` (of type `mat`).
+* `M.log_p(X, g)`: return a row vector (of type `rowvec`) containing
+  log-likelihoods of each column vector in matrix `X` (of type `mat`), according
+  to Gaussian with index `g`.
+* `M.sum_log_p(X)`: return a scalar representing the sum of log-likelihoods for
+  all column vectors in matrix `X` (of type `mat`).
+* `M.sum_log_p(X, g)`: return a scalar representing the sum of log-likelihoods
+  for all column vectors in matrix `X` (of type `mat`), according to Gaussian
+  with index `g`.
+* `M.avg_log_p(X)`: return a scalar representing the average log-likelihood of
+  all column vectors in matrix `X` (of type `mat`).
+* `M.avg_log_p(X, g)`: return a scalar representing the average log-likelihood
+  of all column vectors in matrix `X` (of type `mat`), according to Gaussian
+  with index `g`.
+* `M.assign(V, dist_mode)`: return the index of the closest mean (or Gaussian)
+  to vector `V` (of type `vec`); parameter `dist_mode` is one of:
+  - `eucl_dist`: Euclidean distance (takes only means into account).
+  - `prob_dist`: probabilistic "distance", defined as the inverse likelihood
+    (takes into account means, covariances, and hefts).
+* `M.assign(X, dist_mode)`: return a row vector (of type `urowvec`) containing
+  the indices of the closest means (or Gaussians) to each column vector in
+  matrix `X` (of type `mat`); parameter `dist_mode` is either `eucl_dist` or
+  `prob_dist` (as per the `.assign()` function above).
+* `M.raw_hist(X, dist_mode)`: return a row vector (of type `urowvec`)
+  representing the raw histogram of counts; each entry is the number of counts
+  corresponding to a Gaussian; each count is the number times the corresponding
+  Gaussian was the closest to each column vector in matrix `X`;
+  parameter `dist_mode` is either `eucl_dist` or `prob_dist` (as per the
+  `.assign()` function above).
+* `M.norm_hist(X, dist_mode)`: similar to the `.raw_hist()` function above;
+  return a row vector (of type `rowvec`) containing normalised counts; the
+  vector sums to one; parameter `dist_mode` is either `eucl_dist` or `prob_dist`
+  (as per the `.assign()` function above).
+* `M.generate()`: return a column vector (of type `vec`) representing a random
+  sample generated according to the model's parameters.
+* `M.generate(N)`: return a matrix (of type `mat`) containing `N` column
+  vectors, with each vector representing a random sample generated according to
+  the model's parameters.
+* M.save(filename): save the model to a file and return a bool indicating either
+  success (true) or failure (false).
+* M.load(filename): load the model from a file and return a bool indicating
+  either success (true) or failure (false).
+* M.n_gaus(): return the number of means/Gaussians in the model.
+* M.n_dims(): return the dimensionality of the means/Gaussians in the model.
+* M.reset(n_dims, n_gaus): set the model to have dimensionality `n_dims`, with
+  `n_gaus` number of Gaussians; all the means are set to zero, all covariance
+  matrix representations are equivalent to the identity matrix, and all the
+  hefts (weights) are set to be uniform.
+* M.hefts: read-only row vector (of type `rowvec`) containing the hefts
+  (weights).
+* M.means: read-only matrix (of type `mat`) containing the means (centroids),
+  stored as column vectors.
+* M.dcovs: read-only matrix (of type `mat`) containing the representation of
+  diagonal covariance matrices, with the set of diagonal covariances for each
+  Gaussian stored as a column vector; applicable only to the `gmm_diag` class.
+* M.fcovs: read-only cube containing the full covariance matrices, with each
+  covariance matrix stored as a slice within the cube; applicable only to the
+  `gmm_full` class.
+* M.set_hefts(V): set the hefts (weights) of the model to be as specified in row
+  vector `V` (of type `rowvec`); the number of hefts must match the existing
+  model.
+* M.set_means(X): set the means to be as specified in matrix `X` (of type
+  `mat`); the number of means and their dimensionality must match the existing
+  model.
+* M.set_dcovs(X): set the diagonal covariances matrices to be as specified in
+  matrix `X` (of type `mat`), with the set of diagonal covariances for each
+  Gaussian stored as a column vector; the number of covariance matrices and
+  their dimensionality must match the existing model; applicable only to the
+  `gmm_diag` class.
+* M.set_fcovs(X): set the full covariances matrices to be as specified in cube
+  `X`, with each covariance matrix stored as a slice within the cube; the number
+  of covariance matrices and their dimensionality must match the existing model;
+  applicable only to the `gmm_full` class.
+* M.set_params(means, covs, hefts): set all the parameters at the same time; the
+  type and layout of the parameters is as per the `.set_hefts()`,
+  `.set_means()`, `.set_dcovs()`, and `.set_fcovs()` functions above; the number
+  of Gaussians and dimensionality can be different from the existing model.
+* M.learn(data, n_gaus, dist_mode, seed_mode, km_iter, em_iter, var_floor,
+  print_mode): learn the model parameters via multi-threaded k-means and/or EM
+  algorithms; return a bool value, with true indicating success, and false
+  indicating failure; the parameters have the following meanings:
+  - `data`: matrix (of type `mat`) containing training samples; each sample is
+    stored as a column vector.
+  - `n_gaus`: set the number of Gaussians to `n_gaus`; to help convergence, it
+    is recommended that the given data matrix (above) contains at least 10
+    samples for each Gaussian.
+  - `dist_mode`: specifies the distance used during the seeding of initial means
+    and k-means clustering:
+    - `eucl_dist`: Euclidean distance.
+    - `maha_dist`: Mahalanobis distance, which uses a global diagonal covariance
+      matrix estimated from the training samples; this is recommended for
+      probabilistic applications.
+  - `seed_mode`: specifies how the initial means are seeded prior to running
+    k-means and/or EM algorithms:
+    - `keep_existing`: keep the existing model (do not modify the means,
+      covariances, and hefts).
+    - `static_subset`: a subset of the training samples (repeatable).
+    - `random_subset`: a subset of the training samples (random).
+    - `static_spread`: a maximally spread subset of training samples (repeatable).
+    - `random_spread`: a maximally spread subset of training samples (random
+      start).
+    - Caveat: seeding the initial means with `static_spread` and `random_spread`
+      can be much more time consuming than with `static_subset` and
+      `random_subset`.
+  - `km_iter`: the number of iterations of the k-means algorithm; this is data
+    dependent, but typically 10 iterations are sufficient.
+  - `em_iter`: the number of iterations of the EM algorithm; this is data
+    dependent, but typically 5 to 10 iterations are sufficient.
+  - `var_floor`: the variance floor (smallest allowed value) for the diagonal
+    covariances; setting this to a small non-zero value can help with
+    convergence and/or better quality parameter estimates.
+  - `print_mode`: either `true` or `false`; enable or disable printing of
+    progress during the k-means and EM algorithms.
+
+## Caveats
+
+* `gmm_diag` is tailored for diagonal covariance matrices.
+* `gmm_full` is tailored for full covariance matrices.
+* `gmm_diag` is considerably faster than `gmm_full`, at the cost of some
+  reduction in modelling accuracy.
+* For faster execution on multi-core machines, enable OpenMP in your compiler
+  (e.g., `-fopenmp` in GCC and clang). Cpp11armadillo finds OpenMP and uses it
+  by default.
+  
+## Examples
+
+```cpp
+[[cpp11::register]] list gmm1_(const int& n, const int& d) {
+  // create synthetic data with 2 Gaussians
+
+  mat data(d, n, fill::zeros);
+
+  vec mean0 = linspace<vec>(1, d, d);
+  vec mean1 = mean0 + 2;
+
+  int i = 0;
+
+  while (i < n) {
+    if (i < n) {
+      data.col(i) = mean0 + randn<vec>(d);
+      ++i;
+    }
+    if (i < n) {
+      data.col(i) = mean0 + randn<vec>(d);
+      ++i;
+    }
+    if (i < n) {
+      data.col(i) = mean1 + randn<vec>(d);
+      ++i;
+    }
+  }
+
+  // model the data as a diagonal GMM with 2 Gaussians
+
+  gmm_diag model;
+
+  bool status = model.learn(data, 2, maha_dist, random_subset, 10, 5, 1e-5,
+    true);
+
+  if (status == false) {
+    stop("learning failed");
+  }
+
+  model.means.print("means:");
+
+  double scalar_likelihood = model.log_p(data.col(0));
+  rowvec set_likelihood = model.log_p(data.cols(0, 9));
+
+  double overall_likelihood = model.avg_log_p(data);
+
+  uword gaus_id = model.assign(data.col(0), eucl_dist);
+  urowvec gaus_ids = model.assign(data.cols(0, 9), prob_dist);
+
+  rowvec hist1 = model.norm_hist(data, eucl_dist);
+  urowvec hist2 = model.raw_hist(data, prob_dist);
+
+  writable::list res(9);
+
+  res[0] = writable::logicals({status});
+  res[1] = as_doubles_matrix(model.means);
+  res[2] = as_doubles({scalar_likelihood});
+  res[3] = as_doubles(set_likelihood.t());
+  res[4] = as_doubles({overall_likelihood});
+  res[5] = as_integers(gaus_id);
+  res[6] = as_integers(gaus_ids.t());
+  res[7] = as_doubles(hist1.t());
+  res[8] = as_integers(hist2.t());
+
+  return res;
+}
+```
+
+## Implementation details
+
+The implementation details are available in the following
+[paper](https://arma.sourceforge.net/armadillo_spcs_2017.pdf):
+
+  Sanderson, Conrad, and Ryan Curtin. "An open source C++ implementation of
+  multi-threaded Gaussian mixture models, k-means and expectation maximisation."
+  In *2017 11th international conference on signal processing and communication
+  systems (ICSPCS)*, pp. 1-8. IEEE, 2017.
