@@ -11,7 +11,7 @@ test:
 
 check:
 	@echo "Local"
-	@Rscript -e 'devtools::document()'
+	@Rscript -e 'devtools::install()'
 	@Rscript -e 'devtools::check(); devtools::check("cpp11armadillotest")'
 
 site:

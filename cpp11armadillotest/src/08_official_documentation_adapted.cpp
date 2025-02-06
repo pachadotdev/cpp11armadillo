@@ -2638,3 +2638,22 @@
 
   return as_doubles_matrix(W);
 }
+
+[[cpp11::register]] list kmeans1_(const int& n, const int& d) {
+  mat data(d, n, fill::randu);
+
+  mat means;
+
+  bool status = kmeans(means, data, 2, random_subset, 10, true);
+
+  if (status == false) {
+    stop("clustering failed");
+  }
+
+  writable::list res(2);
+
+  res[0] = writable::logicals({status});
+  res[1] = as_doubles_matrix(means);
+
+  return res;
+}

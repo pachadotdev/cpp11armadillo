@@ -765,4 +765,10 @@ test_that("examples derived from official documentation", {
   res178 <- iwishrnd1_(3,4)
   expect_type(res178, "double")
   expect_equal(dim(res178), c(3, 3))
+
+  res179 <- kmeans1_(4,3)
+  expect_type(res179, "list")
+  expect_equal(res179[[1]], TRUE)
+  expect_type(res179[[2]], "double")
+  expect_equal(dim(res179[[2]]), c(3, 2))
 })

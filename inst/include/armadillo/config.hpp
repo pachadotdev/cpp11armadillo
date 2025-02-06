@@ -226,20 +226,21 @@
 #pragma message("WARNING: use ARMA_COUT_STREAM and ARMA_CERR_STREAM instead")
 #endif
 
+// Pacha: R check() does not like std::cerr
+// I use stopstream() instead of stopstream so that ARMA_CERR_STREAM is a
+// std::ostream& forward declaration of stopstream()
+
+std::ostream& stopstream();
+std::ostream& messagestream();
+
 #if !defined(ARMA_COUT_STREAM)
 #if defined(ARMA_DEFAULT_OSTREAM)
 // for compatibility with earlier versions of Armadillo
 #define ARMA_COUT_STREAM ARMA_DEFAULT_OSTREAM
 #else
-#define ARMA_COUT_STREAM std::cout
+#define ARMA_COUT_STREAM messagestream()  // hack: this was std::cout
 #endif
 #endif
-
-// hack: R check() does not like std::cerr
-// I use stopstream() instead of stopstream
-// so that ARMA_CERR_STREAM is a std::ostream&
-// forward declaration of stopstream()
-std::ostream& stopstream();
 
 #if !defined(ARMA_CERR_STREAM)
 #if defined(ARMA_DEFAULT_OSTREAM)
