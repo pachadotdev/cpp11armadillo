@@ -1,3 +1,9 @@
+# cpp11armadillo 0.4.4
+
+* Provides wrappers to avoid CRAN notes with Armadillo functions that use
+  `std::cout` (#05a342b).
+* Allows to convert `uword` to `integers`.
+
 # cpp11armadillo 0.4.3
 
 * Expanded documentation.
@@ -7,7 +13,6 @@
   * Syntax comparison for MATLAB/Octave users.
 * New package template.
 * Provides `as_mat()` and `as_col()` as wrappers for `as_Mat()` and `as_Col()`.
-* Allows to convert `uword` to `integers`.
 
 # cpp11armadillo 0.4.2
 
@@ -69,7 +74,7 @@
 # cpp11armadillo 0.2.8
 
 * Provides templates to convert to and from sparse matrices.
-* Removes `using namespace std;` from headers (see https://www.reddit.com/r/cpp_questions/comments/160eivk/is_using_namespace_std_really_considered_bad/)
+* Removes `using namespace std;` from headers (see https://www.reddit.com/r/cpp_questions/comments/160eivk/is_using_namespace_std_really_considered_bad/).
 
 # cpp11armadillo 0.2.7
 

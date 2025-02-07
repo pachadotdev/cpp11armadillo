@@ -10,3 +10,8 @@
 ^README$
 ^README\.Rmd$
 ^src/Makevars$
+^A\.bin$
+^A\.csv$
+^A\.txt$
+^F\.bin$
+^F\.ppm$

@@ -1503,6 +1503,20 @@ extern "C" SEXP _cpp11armadillotest_gmm1_(SEXP n, SEXP d) {
     return cpp11::as_sexp(gmm1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n), cpp11::as_cpp<cpp11::decay_t<const int&>>(d)));
   END_CPP11
 }
+// 08_official_documentation_adapted.cpp
+int saveload1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_saveload1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(saveload1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+int saveload2_(const int& n, const int& m);
+extern "C" SEXP _cpp11armadillotest_saveload2_(SEXP n, SEXP m) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(saveload2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n), cpp11::as_cpp<cpp11::decay_t<const int&>>(m)));
+  END_CPP11
+}
 // 09_regression.cpp
 doubles ols_(const doubles_matrix<>& x, const doubles& y);
 extern "C" SEXP _cpp11armadillotest_ols_(SEXP x, SEXP y) {
@@ -1683,6 +1697,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_roots1_",                       (DL_FUNC) &_cpp11armadillotest_roots1_,                       1},
     {"_cpp11armadillotest_row1_",                         (DL_FUNC) &_cpp11armadillotest_row1_,                         2},
     {"_cpp11armadillotest_row_as_mat1_",                  (DL_FUNC) &_cpp11armadillotest_row_as_mat1_,                  1},
+    {"_cpp11armadillotest_saveload1_",                    (DL_FUNC) &_cpp11armadillotest_saveload1_,                    1},
+    {"_cpp11armadillotest_saveload2_",                    (DL_FUNC) &_cpp11armadillotest_saveload2_,                    2},
     {"_cpp11armadillotest_set_imag1_",                    (DL_FUNC) &_cpp11armadillotest_set_imag1_,                    1},
     {"_cpp11armadillotest_set_real1_",                    (DL_FUNC) &_cpp11armadillotest_set_real1_,                    1},
     {"_cpp11armadillotest_set_real2_",                    (DL_FUNC) &_cpp11armadillotest_set_real2_,                    1},

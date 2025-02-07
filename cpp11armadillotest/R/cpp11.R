@@ -856,6 +856,14 @@ gmm1_ <- function(n, d) {
   .Call(`_cpp11armadillotest_gmm1_`, n, d)
 }
 
+saveload1_ <- function(n) {
+  .Call(`_cpp11armadillotest_saveload1_`, n)
+}
+
+saveload2_ <- function(n, m) {
+  .Call(`_cpp11armadillotest_saveload2_`, n, m)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }

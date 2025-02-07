@@ -2720,3 +2720,66 @@
 
   return res;
 }
+
+[[cpp11::register]] int saveload1_(const int& n) {
+  arma::mat A(n, n, fill::randu);
+
+  // default save format is arma_binary
+  A.save("A.bin");
+
+  // save in raw_ascii format
+  A.save("A.txt", arma::raw_ascii);
+
+  // save in CSV format without a header
+  A.save("A.csv", arma::csv_ascii);
+
+  // save in CSV format with a header
+  arma::field<std::string> header(A.n_cols);
+  header(0) = "foo";
+  header(1) = "bar";  // etc
+  A.save(arma::csv_name("A.csv", header));
+
+  // save in HDF5 format with internal dataset named as "my_data"
+  // see the caveats
+  // A.save(arma::hdf5_name("A.h5", "my_data"));
+
+  // automatically detect format type while loading
+  arma::mat B;
+  B.load("A.bin");
+
+  // force loading in arma_ascii format
+  arma::mat C;
+  C.load("A.txt", arma::arma_ascii);
+
+  // example of testing for success
+  arma::mat D;
+  bool ok = D.load("A.bin");
+
+  if (ok == true) {
+    message("Matrix loaded successfully");
+  } else {
+    stop("Problem with loading");
+  }
+
+  return 0;
+}
+
+[[cpp11::register]] int saveload2_(const int& n, const int& m) {
+  arma::field<arma::mat> F(m);
+
+  for (int i = 0; i < m; i++) {
+    F(i) = arma::mat(n, n, fill::randu);
+  }
+
+  // default save format is arma_binary
+  F.save("F.bin");
+
+  // save in PPM format
+  F.save("F.ppm", arma::ppm_binary);
+
+  // automatically detect format type while loading
+  arma::field<arma::mat> G;
+  G.load("F.bin");
+
+  return 0;
+}

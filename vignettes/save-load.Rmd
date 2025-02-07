@@ -1,0 +1,161 @@
+---
+title: "Saving and loading Armadillo objects on C++ side"
+output: rmarkdown::html_vignette
+bibliography: "references.bib"
+vignette: >
+  %\VignetteIndexEntry{Signal and image processing}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette is adapted from the official Armadillo
+[documentation](https://arma.sourceforge.net/docs.html).
+
+# Saving and loading matrices and cubes
+
+Armadillo provides functions to save and load matrices and cubes to and from files. The following file types are supported:
+
+- `arma_binary`: Numerical data stored in machine dependent binary format, with a simple header to speed up loading. The header indicates the type and size of matrix/cube.
+- `arma_ascii`: Numerical data stored in human readable text format, with a simple header to speed up loading. The header indicates the type and size of matrix/cube.
+- `raw_binary`: Numerical data stored in machine dependent raw binary format, without a header. Matrices are loaded to have one column, while cubes are loaded to have one slice with one column. The `.reshape()` function can be used to alter the size of the loaded matrix/cube without losing data.
+- `raw_ascii`: Numerical data stored in raw ASCII format, without a header. The numbers are separated by whitespace. The number of columns must be the same in each row. Cubes are loaded as one slice. Data which was saved in Matlab/Octave using the `-ascii` option can be read in Armadillo, except for complex numbers. Complex numbers are stored in standard C++ notation, which is a tuple surrounded by brackets: eg. `(1.23,4.56)` indicates 1.24 + 4.56i.
+- `csv_ascii`: Numerical data stored in comma separated value (CSV) text format, without a header. To save/load with a header, use the `csv_name(filename, header)` specification instead. Handles complex numbers stored in the compound form of `1.24+4.56i`. Applicable to `Mat` and `SpMat`.
+- `coord_ascii`: Numerical data stored as a text file in coordinate list format, without a header. Only non-zero values are stored. For real matrices, each line contains information in the following format: `row column value`. For complex matrices, each line contains information in the following format: `row column real_value imag_value`. The rows and columns start at zero. Applicable to `Mat` and `SpMat`.
+- `pgm_binary`: Image data stored in Portable Gray Map (PGM) format. Applicable to `Mat` only. Saving int, float or double matrices is a lossy operation, as each element is copied and converted to an 8 bit representation. As such the matrix should have values in the `[0,255]` interval, otherwise the resulting image may not display correctly.
+- `ppm_binary`: Image data stored in Portable Pixel Map (PPM) format. Applicable to `Cube` only. Saving int, float or double matrices is a lossy operation, as each element is copied and converted to an 8 bit representation. As such the cube/field should have values in the `[0,255]` interval, otherwise the resulting image may not display correctly.
+- `hdf5_binary`: Numerical data stored in portable HDF5 binary format. For saving, the default dataset name within the HDF5 file is `"dataset"`. For loading, the order of operations is: (1) try loading a dataset named `"dataset"`, (2) try loading a dataset named `"value"`, (3) try loading the first available dataset. To explicitly control the dataset name, specify it via the `hdf5_name(filename, dataset)` argument. HDF5 support can be enabled by defining `ARMA_USE_HDF5` before including the Armadillo header.
+
+The following file types are supported for fields:
+
+- `arma_binary`: See above.
+- `ppm_binary`: See above.
+
+Usage:
+
+```cpp
+.save(filename)
+.load(filename)
+
+.save(filename, file_type)
+.load(filename, file_type)
+
+.save(stream)
+.load(stream)
+
+.save(stream, file_type)
+.load(stream, file_type)
+
+.save(hdf5_name(filename, dataset))
+.load(hdf5_name(filename, dataset))
+
+.save(hdf5_name(filename, dataset, settings))
+.load(hdf5_name(filename, dataset, settings))
+
+.save(csv_name(filename, header))
+.load(csv_name(filename, header))
+
+.save(csv_name(filename, header, settings))
+.load(csv_name(filename, header, settings))
+```
+
+By providing either `hdf5_name(filename, dataset)` or `hdf5_name(filename, dataset, settings)`, the `file_type` type is assumed to be `hdf5_binary`. The `dataset` argument specifies an HDF5 dataset name (eg. `"my_dataset"`) that can include a full path (eg. `"/group_name/my_dataset"`); if a blank dataset name is specified (ie. `""`), it is assumed to be `"dataset"`. The `settings` argument is optional; it is one of the following, or a combination thereof
+
+- `hdf5_opts::trans`: Save/load the data with columns transposed to rows (and vice versa).
+- `hdf5_opts::append`: Instead of overwriting the file, append the specified dataset to the file; the specified dataset must not already exist in the file.
+- `hdf5_opts::replace`: Instead of overwriting the file, replace the specified dataset in the file.
+- These settings can be combined using the `+` operator (e.g., `hdf5_opts::trans + hdf5_opts::append`)
+
+By providing either `csv_name(filename, header)` or `csv_name(filename, header, settings)`, the file is assumed to have data in comma separated value (CSV) text format. The `header` argument specifies the object which stores the separate elements of the header line; it must have the type `field<std::string>`. The optional `settings` argument is one of the following, or a combination thereof
+
+- `csv_opts::trans`: Save/load the data with columns transposed to rows (and vice versa).
+- `csv_opts::no_header`: Assume there is no header line; the header argument is not referenced.
+- `csv_opts::semicolon`: Use semicolon (`;`) instead of comma (`,`) as the separator character.
+- `csv_opts::strict`: Interpret missing values as `NaN` (not applicable to sparse matrices).
+- These settings can be combined using the `+` operator (e.g., `csv_opts::trans + csv_opts::no_header`)
+
+## Caveats
+
+* For saving/loading HDF5 files, support for HDF5 must be enabled within Armadillo's configuration. The `hdf5.h` header file must be available on your system and you will need to link with the HDF5 library (eg. `-lhdf5`). HDF5 support can be enabled by defining `ARMA_USE_HDF5` before including the Armadillo header.
+* Enabling HD5 requires to vendor cpp11armadillo in orderto adhere to CRAN compliance.
+* Armadillo save and load methods are only accessible from C++ side.
+* Once an object is exported to R, it is more efficient to load/save using `saveRDS()` and `readRDS()`.
+
+## Examples
+
+Save and load matrices:
+
+```cpp
+[[cpp11::register]] int saveload1_(const int& n) {
+  arma::mat A(n, n, fill::randu);
+
+  // default save format is arma_binary
+  A.save("A.bin");
+
+  // save in raw_ascii format
+  A.save("A.txt", arma::raw_ascii);
+
+  // save in CSV format without a header
+  A.save("A.csv", arma::csv_ascii);
+
+  // save in CSV format with a header
+  arma::field<std::string> header(A.n_cols);
+  header(0) = "foo";
+  header(1) = "bar";  // etc
+  A.save(arma::csv_name("A.csv", header));
+
+  // save in HDF5 format with internal dataset named as "my_data"
+  // see the caveats
+  // A.save(arma::hdf5_name("A.h5", "my_data"));
+
+  // automatically detect format type while loading
+  arma::mat B;
+  B.load("A.bin");
+
+  // force loading in arma_ascii format
+  arma::mat C;
+  C.load("A.txt", arma::arma_ascii);
+
+  // example of testing for success
+  arma::mat D;
+  bool ok = D.load("A.bin");
+
+  if(ok == true) {
+    message("Matrix loaded successfully");
+  } else {
+    stop("Problem with loading");
+  }
+
+  return 0;
+}
+```
+
+Save and load fields:
+
+```cpp
+[[cpp11::register]] int saveload2_(const int& n) {
+  arma::field<arma::mat> F(n);
+
+  for (int i = 0; i < n; i++) {
+    F(i) = arma::mat(n, n, fill::randu);
+  }
+
+  // default save format is arma_binary
+  F.save("F.bin");
+
+  // save in PPM format
+  F.save("F.ppm", arma::ppm_binary);
+
+  // automatically detect format type while loading
+  arma::field<arma::mat> G;
+  G.load("F.bin");
+
+  return 0;
+}
+```
