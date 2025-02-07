@@ -2783,3 +2783,61 @@
 
   return 0;
 }
+
+[[cpp11::register]] list conv1_(const doubles& x, const doubles& y) {
+  vec a = as_col(x);
+  vec b = as_col(y);
+
+  vec c = conv(a, b);
+  vec d = conv(a, b, "same");
+
+  writable::list out(2);
+  out[0] = as_doubles(c);
+  out[1] = as_doubles(d);
+
+  return out;
+}
+
+[[cpp11::register]] list conv2_(const doubles_matrix<>& x, const doubles_matrix<>& y) {
+  mat a = as_mat(x);
+  mat b = as_mat(y);
+
+  mat c = conv2(a, b);
+  mat d = conv2(a, b, "same");
+
+  writable::list out(2);
+  out[0] = as_doubles_matrix(c);
+  out[1] = as_doubles_matrix(d);
+
+  return out;
+}
+
+[[cpp11::register]] doubles interp1_(const int& n) {
+  vec x = linspace<vec>(0, 3, n);
+  vec y = square(x);
+
+  vec xx = linspace<vec>(0, 3, 2 * n);
+  vec yy;
+
+  interp1(x, y, xx, yy);             // use linear interpolation by default
+  interp1(x, y, xx, yy, "*linear");  // faster than "linear"
+  interp1(x, y, xx, yy, "nearest");
+
+  return as_doubles(yy);
+}
+
+[[cpp11::register]] doubles_matrix<> interp2_(const int& n) {
+  mat Z(n, n, fill::randu);
+
+  vec X = regspace(1, Z.n_cols);  // X = horizontal spacing
+  vec Y = regspace(1, Z.n_rows);  // Y = vertical spacing
+
+  vec XI = regspace(X.min(), 1.0 / 2.0, X.max());  // magnify by approx 2
+  vec YI = regspace(Y.min(), 1.0 / 3.0, Y.max());  // magnify by approx 3
+
+  mat ZI;
+
+  interp2(X, Y, Z, XI, YI, ZI);  // use linear interpolation by default
+
+  return as_doubles_matrix(ZI);
+}

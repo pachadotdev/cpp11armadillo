@@ -17,3 +17,159 @@ knitr::opts_chunk$set(
 
 This vignette is adapted from the official Armadillo
 [documentation](https://arma.sourceforge.net/docs.html).
+
+# One-dimensional convolution {#conv}
+
+The `conv()` function performs a one-dimensional convolution of two vectors. The orientation of the result vector is the same as the orientation of the first input vector.
+
+Usage:
+
+```cpp
+vec conv(x, y, shape);
+```
+
+The `shape` argument is optional and can be one of the following:
+
+- `"full"`: return the full convolution (default setting), with the size equal to `x.n_elem + y.n_elem - 1`.
+- `"same"`: return the central part of the convolution, with the same size as vector `x`.
+
+The convolution operation is also equivalent to finite impulse response (FIR) filtering.
+
+## Examples
+
+
+```cpp
+[[cpp11::register]] list conv1_(const doubles& x, const doubles& y) {
+  vec a = as_col(x);
+  vec b = as_col(y);
+
+  vec c = conv(a, b);
+  vec d = conv(a, b, "same");
+
+  writable::list out(2);
+  out[0] = as_doubles(c);
+  out[1] = as_doubles(d);
+
+  return out;
+}
+```
+
+# Two-dimensional convolution {#conv2}
+
+The `conv2()` function performs a two-dimensional convolution of two matrices. The orientation of the result matrix is the same as the orientation of the first input matrix.
+
+Usage:
+
+```cpp
+mat conv2(A, B, shape);
+```
+
+The `shape` argument is optional and can be one of the following:
+
+- `"full"`: return the full convolution (default setting), with the size equal to `size(A) + size(B) - 1`.
+- `"same"`: return the central part of the convolution, with the same size as matrix `A`.
+
+## Caveats
+
+The implementation of 2D convolution in this version is preliminary.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list conv2_(const doubles_matrix<>& x,
+  const doubles_matrix<>& y) {
+  mat a = as_mat(x);
+  mat b = as_mat(y);
+
+  mat c = conv2(a, b);
+  mat d = conv2(a, b, "same");
+
+  writable::list out(2);
+  out[0] = as_doubles_matrix(c);
+  out[1] = as_doubles_matrix(d);
+
+  return out;
+}
+```
+
+# One-dimensional interpolation {#interp1}
+
+The `interp1()` function performs one-dimensional interpolation of a function specified by vectors `X` and `Y`. The function generates a vector `YI` that contains interpolated values at locations `XI`.
+
+Usage:
+
+```cpp
+vec interp1(X, Y, XI, YI);
+vec interp1(X, Y, XI, YI, method);
+vec interp1(X, Y, XI, YI, method, extrapolation_value);
+```
+
+The `method` argument is optional and can be one of the following:
+
+- `"nearest"`: interpolate using single nearest neighbour.
+- `"linear"`: linear interpolation between two nearest neighbours (default setting).
+- `"*nearest"`: as per `"nearest"`, but faster by assuming that `X` and `XI` are monotonically increasing.
+- `"*linear"`: as per `"linear"`, but faster by assuming that `X` and `XI` are monotonically increasing.
+
+If a location in `XI` is outside the domain of `X`, the corresponding value in `YI` is set to `extrapolation_value`.
+
+The `extrapolation_value` argument is optional; by default, it is `datum::nan` (not-a-number).
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles interp1_(const int& n) {
+  vec x = linspace<vec>(0, 3, n);
+  vec y = square(x);
+
+  vec xx = linspace<vec>(0, 3, 2 * n);
+  vec yy;
+
+  interp1(x, y, xx, yy);             // use linear interpolation by default
+  interp1(x, y, xx, yy, "*linear");  // faster than "linear"
+  interp1(x, y, xx, yy, "nearest");
+
+  return as_doubles(yy);
+}
+```
+
+# Two-dimensional interpolation {#interp2}
+
+The `interp2()` function performs two-dimensional interpolation of a function specified by matrix `Z` with coordinates given by vectors `X` and `Y`. The function generates a matrix `ZI` that contains interpolated values at the coordinates given by vectors `XI` and `YI`.
+
+Usage:
+
+```cpp
+mat interp2(X, Y, Z, XI, YI, ZI);
+mat interp2(X, Y, Z, XI, YI, ZI, method);
+mat interp2(X, Y, Z, XI, YI, ZI, method, extrapolation_value);
+```
+
+The `method` argument is optional and can be one of the following:
+
+- `"nearest"`: interpolate using nearest neighbours.
+- `"linear"`: linear interpolation between nearest neighbours (default setting).
+
+If a coordinate in the 2D grid specified by `(XI, YI)` is outside the domain of the 2D grid specified by `(X, Y)`, the corresponding value in `ZI` is set to `extrapolation_value`.
+
+The `extrapolation_value` argument is optional; by default, it is `datum::nan` (not-a-number).
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles_matrix<> interp2_(const int& n) {
+  mat Z(n, n, fill::randu);
+
+  vec X = regspace(1, Z.n_cols);  // X = horizontal spacing
+  vec Y = regspace(1, Z.n_rows);  // Y = vertical spacing
+
+  vec XI = regspace(X.min(), 1.0/2.0, X.max()); // magnify by approx 2
+  vec YI = regspace(Y.min(), 1.0/3.0, Y.max()); // magnify by approx 3
+
+  mat ZI;
+
+  interp2(X, Y, Z, XI, YI, ZI); // use linear interpolation by default
+
+  return as_doubles_matrix(ZI);
+}
+```

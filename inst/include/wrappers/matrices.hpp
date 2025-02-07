@@ -16,8 +16,6 @@ inline Mat<T> as_Mat(const T& x) {
   throw std::runtime_error("Cannot convert to Mat");
 }
 
-// armadillo 0.4.3
-// as_mat = as_Mat
 template <typename T>
 inline Mat<T> as_Mat(const Mat<T>& x) {
   return x;
@@ -65,6 +63,27 @@ inline Mat<int> as_Mat(const integers_matrix<>& x) {
 inline Mat<double> as_Mat(const doubles& x) { return dblint_to_Mat_<double, doubles>(x); }
 
 inline Mat<int> as_Mat(const integers& x) { return dblint_to_Mat_<int, integers>(x); }
+
+// cpp11armadillo 0.4.3
+// as_mat() = alias for as_Mat()
+
+template <typename T>
+inline Mat<T> as_mat(const T& x) {
+  return as_Mat(x);
+}
+
+template <typename T>
+inline Mat<T> as_mat(const Mat<T>& x) {
+  return as_Mat(x);
+}
+
+inline Mat<double> as_mat(const doubles_matrix<>& x) { return as_Mat(x); }
+
+inline Mat<int> as_mat(const integers_matrix<>& x) { return as_Mat(x); }
+
+inline Mat<double> as_mat(const doubles& x) { return as_Mat(x); }
+
+inline Mat<int> as_mat(const integers& x) { return as_Mat(x); }
 
 ////////////////////////////////////////////////////////////////
 // Armadillo to R

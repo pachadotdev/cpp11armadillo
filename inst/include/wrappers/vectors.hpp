@@ -20,8 +20,6 @@ inline Col<T> as_Col(const T& x) {
   throw std::runtime_error("Cannot convert to Col");
 }
 
-// armadillo 0.4.3
-// as_col = as_Col
 template <typename T>
 inline Col<T> as_Col(const Col<T>& x) {
   return x;
@@ -45,6 +43,23 @@ inline Col<T> as_Col_(const U& x) {
 inline Col<double> as_Col(const doubles& x) { return as_Col_<double, doubles>(x); }
 
 inline Col<int> as_Col(const integers& x) { return as_Col_<int, integers>(x); }
+
+// cpp11armadillo 0.4.3
+// as_col() = alias for as_Col()
+
+template <typename T>
+inline Col<T> as_col(const T& x) {
+  return as_Col(x);
+}
+
+template <typename T>
+inline Col<T> as_col(const Col<T>& x) {
+  return as_Col(x);
+}
+
+inline Col<double> as_col(const doubles& x) { return as_Col(x); }
+
+inline Col<int> as_col(const integers& x) { return as_Col(x); }
 
 inline uvec as_uvec(const cpp11::integers& x) {
   uvec res(x.size());

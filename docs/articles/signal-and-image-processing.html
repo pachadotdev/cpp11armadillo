@@ -82,7 +82,153 @@
     
     
 <p>This vignette is adapted from the official Armadillo <a href="https://arma.sourceforge.net/docs.html" class="external-link">documentation</a>.</p>
-  </main>
+<div class="section level2">
+<h2 id="conv">One-dimensional convolution<a class="anchor" aria-label="anchor" href="#conv"></a>
+</h2>
+<p>The <code>conv()</code> function performs a one-dimensional convolution of two vectors. The orientation of the result vector is the same as the orientation of the first input vector.</p>
+<p>Usage:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>vec conv(x, y, shape);</span></code></pre></div>
+<p>The <code>shape</code> argument is optional and can be one of the following:</p>
+<ul>
+<li>
+<code>"full"</code>: return the full convolution (default setting), with the size equal to <code>x.n_elem + y.n_elem - 1</code>.</li>
+<li>
+<code>"same"</code>: return the central part of the convolution, with the same size as vector <code>x</code>.</li>
+</ul>
+<p>The convolution operation is also equivalent to finite impulse response (FIR) filtering.</p>
+<div class="section level3">
+<h3 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">conv1_</span>(<span class="at">const</span> doubles&amp; x, <span class="at">const</span> doubles&amp; y) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  vec a = as_col(x);</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  vec b = as_col(y);</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  vec c = conv(a, b);</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>  vec d = conv(a, b, <span class="st">"same"</span>);</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>  out[<span class="dv">0</span>] = as_doubles(c);</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles(d);</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="conv2">Two-dimensional convolution<a class="anchor" aria-label="anchor" href="#conv2"></a>
+</h2>
+<p>The <code>conv2()</code> function performs a two-dimensional convolution of two matrices. The orientation of the result matrix is the same as the orientation of the first input matrix.</p>
+<p>Usage:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>mat conv2(A, B, shape);</span></code></pre></div>
+<p>The <code>shape</code> argument is optional and can be one of the following:</p>
+<ul>
+<li>
+<code>"full"</code>: return the full convolution (default setting), with the size equal to <code>size(A) + size(B) - 1</code>.</li>
+<li>
+<code>"same"</code>: return the central part of the convolution, with the same size as matrix <code>A</code>.</li>
+</ul>
+<div class="section level3">
+<h3 id="caveats">Caveats<a class="anchor" aria-label="anchor" href="#caveats"></a>
+</h3>
+<p>The implementation of 2D convolution in this version is preliminary.</p>
+</div>
+<div class="section level3">
+<h3 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">conv2_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  <span class="at">const</span> doubles_matrix&lt;&gt;&amp; y) {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>  mat a = as_mat(x);</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>  mat b = as_mat(y);</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>  mat c = conv2(a, b);</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>  mat d = conv2(a, b, <span class="st">"same"</span>);</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>  out[<span class="dv">0</span>] = as_doubles_matrix(c);</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(d);</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="interp1">One-dimensional interpolation<a class="anchor" aria-label="anchor" href="#interp1"></a>
+</h2>
+<p>The <code>interp1()</code> function performs one-dimensional interpolation of a function specified by vectors <code>X</code> and <code>Y</code>. The function generates a vector <code>YI</code> that contains interpolated values at locations <code>XI</code>.</p>
+<p>Usage:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>vec interp1(X, Y, XI, YI);</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>vec interp1(X, Y, XI, YI, method);</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>vec interp1(X, Y, XI, YI, method, extrapolation_value);</span></code></pre></div>
+<p>The <code>method</code> argument is optional and can be one of the following:</p>
+<ul>
+<li>
+<code>"nearest"</code>: interpolate using single nearest neighbour.</li>
+<li>
+<code>"linear"</code>: linear interpolation between two nearest neighbours (default setting).</li>
+<li>
+<code>"*nearest"</code>: as per <code>"nearest"</code>, but faster by assuming that <code>X</code> and <code>XI</code> are monotonically increasing.</li>
+<li>
+<code>"*linear"</code>: as per <code>"linear"</code>, but faster by assuming that <code>X</code> and <code>XI</code> are monotonically increasing.</li>
+</ul>
+<p>If a location in <code>XI</code> is outside the domain of <code>X</code>, the corresponding value in <code>YI</code> is set to <code>extrapolation_value</code>.</p>
+<p>The <code>extrapolation_value</code> argument is optional; by default, it is <code>datum::nan</code> (not-a-number).</p>
+<div class="section level3">
+<h3 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">interp1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  vec x = linspace&lt;vec&gt;(<span class="dv">0</span>, <span class="dv">3</span>, n);</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  vec y = square(x);</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>  vec xx = linspace&lt;vec&gt;(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">2</span> * n);</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>  vec yy;</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>  interp1(x, y, xx, yy);             <span class="co">// use linear interpolation by default</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>  interp1(x, y, xx, yy, <span class="st">"*linear"</span>);  <span class="co">// faster than "linear"</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>  interp1(x, y, xx, yy, <span class="st">"nearest"</span>);</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(yy);</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="interp2">Two-dimensional interpolation<a class="anchor" aria-label="anchor" href="#interp2"></a>
+</h2>
+<p>The <code>interp2()</code> function performs two-dimensional interpolation of a function specified by matrix <code>Z</code> with coordinates given by vectors <code>X</code> and <code>Y</code>. The function generates a matrix <code>ZI</code> that contains interpolated values at the coordinates given by vectors <code>XI</code> and <code>YI</code>.</p>
+<p>Usage:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>mat interp2(X, Y, Z, XI, YI, ZI);</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>mat interp2(X, Y, Z, XI, YI, ZI, method);</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>mat interp2(X, Y, Z, XI, YI, ZI, method, extrapolation_value);</span></code></pre></div>
+<p>The <code>method</code> argument is optional and can be one of the following:</p>
+<ul>
+<li>
+<code>"nearest"</code>: interpolate using nearest neighbours.</li>
+<li>
+<code>"linear"</code>: linear interpolation between nearest neighbours (default setting).</li>
+</ul>
+<p>If a coordinate in the 2D grid specified by <code>(XI, YI)</code> is outside the domain of the 2D grid specified by <code>(X, Y)</code>, the corresponding value in <code>ZI</code> is set to <code>extrapolation_value</code>.</p>
+<p>The <code>extrapolation_value</code> argument is optional; by default, it is <code>datum::nan</code> (not-a-number).</p>
+<div class="section level3">
+<h3 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a>
+</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">interp2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>  mat Z(n, n, fill::randu);</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>  vec X = regspace(<span class="dv">1</span>, Z.n_cols);  <span class="co">// X = horizontal spacing</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>  vec Y = regspace(<span class="dv">1</span>, Z.n_rows);  <span class="co">// Y = vertical spacing</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>  vec XI = regspace(X.min(), <span class="fl">1.0</span>/<span class="fl">2.0</span>, X.max()); <span class="co">// magnify by approx 2</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>  vec YI = regspace(Y.min(), <span class="fl">1.0</span>/<span class="fl">3.0</span>, Y.max()); <span class="co">// magnify by approx 3</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a>  mat ZI;</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a>  interp2(X, Y, Z, XI, YI, ZI); <span class="co">// use linear interpolation by default</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(ZI);</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

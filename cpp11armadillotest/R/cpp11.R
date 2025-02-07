@@ -864,6 +864,22 @@ saveload2_ <- function(n, m) {
   .Call(`_cpp11armadillotest_saveload2_`, n, m)
 }
 
+conv1_ <- function(x, y) {
+  .Call(`_cpp11armadillotest_conv1_`, x, y)
+}
+
+conv2_ <- function(x, y) {
+  .Call(`_cpp11armadillotest_conv2_`, x, y)
+}
+
+interp1_ <- function(n) {
+  .Call(`_cpp11armadillotest_interp1_`, n)
+}
+
+interp2_ <- function(n) {
+  .Call(`_cpp11armadillotest_interp2_`, n)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }

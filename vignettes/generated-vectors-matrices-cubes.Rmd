@@ -18,27 +18,6 @@ knitr::opts_chunk$set(
 **This vignette is adapted from the official Armadillo
 [documentation](https://arma.sourceforge.net/docs.html).**
 
-# Contents
-
-| Function     | Description |
-|--------------|-------------|
-| `linspace()` | [Generate vector with linearly spaced elements](#linspace) |
-| `logspace()` | [Generate vector with logarithmically spaced elements](#logspace) |
-| `regspace()` | [Generate vector with regularly spaced elements](#regspace) |
-| `randperm()` | [Generate vector with random permutation of a sequence of integers](#randperm) |
-| `eye()`      | [Generate identity matrix](#eye) |
-| `ones()`     | [Generate object filled with ones](#ones) |
-| `zeros()`    | [Generate object filled with zeros](#zeros) |
-| `randu()`    | [Generate object with random values from a uniform distribution](#randu) |
-| `randn()`    | [Generate object with random values from a normal/gaussian distribution](#randn) |
-| `randg()`    | [Generate object with random values from a gamma distribution](#randg) |
-| `randi()`    | [Generate object with random integer values in specified interval](#randi) |
-| `speye()`    | [Generate sparse identity matrix](#speye) |
-| `spones()`   | [Generate sparse matrix with non-zero elements set to one](#spones) |
-| `sprandu()`  | [Generate sparse matrix with non-zero elements set to random values from a uniform distribution](#sprandu) |
-| `sprandn()`  | [Generate sparse matrix with non-zero elements set to random values from a normal/gaussian distribution](#sprandn) |
-| `toeplitz()` | [Generate Toeplitz matrix](#toeplitz) |
-
 # Generate vector with linearly spaced elements {#linspace}
 
 The `linspace()` function generates a vector of linearly spaced values from

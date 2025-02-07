@@ -771,4 +771,31 @@ test_that("examples derived from official documentation", {
   # expect_equal(res179[[1]], TRUE)
   # expect_type(res179[[2]], "double")
   # expect_equal(dim(res179[[2]]), c(3, 2))
+  # TODO: add RNG later
+
+  set.seed(321)
+  x <- rnorm(10, 0, 1)
+  y <- rnorm(10, 2, 3)
+  res180 <- conv1_(x,y)
+  expect_type(res180, "list")
+  expect_equal(length(res180[[1]]), length(x) + length(y) - 1)
+  expect_equal(length(res180[[2]]), length(x))
+
+  set.seed(213)
+  x <- matrix(rnorm(100, 0, 1), 10, 10)
+  y <- matrix(rnorm(100, 2, 3), 10, 10)
+  res181 <- conv2_(x,y)
+  expect_type(res181, "list")
+  expect_equal(nrow(res181[[1]]), nrow(x) + nrow(y) - 1)
+  expect_equal(nrow(res181[[2]]), nrow(x))
+
+  res182 <- interp1_(5)
+  expect_type(res182, "double")
+  expect_equal(length(res182), 10)
+
+  n <- 10
+  res183 <- interp2_(n)
+  expect_type(res183, "double")
+  expect_equal(nrow(res183), 2 * n + (n - 2))
+  expect_equal(ncol(res183), 2 * n - 1)
 })

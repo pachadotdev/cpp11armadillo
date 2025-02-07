@@ -1517,6 +1517,34 @@ extern "C" SEXP _cpp11armadillotest_saveload2_(SEXP n, SEXP m) {
     return cpp11::as_sexp(saveload2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n), cpp11::as_cpp<cpp11::decay_t<const int&>>(m)));
   END_CPP11
 }
+// 08_official_documentation_adapted.cpp
+list conv1_(const doubles& x, const doubles& y);
+extern "C" SEXP _cpp11armadillotest_conv1_(SEXP x, SEXP y) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(conv1_(cpp11::as_cpp<cpp11::decay_t<const doubles&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles&>>(y)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+list conv2_(const doubles_matrix<>& x, const doubles_matrix<>& y);
+extern "C" SEXP _cpp11armadillotest_conv2_(SEXP x, SEXP y) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(conv2_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(y)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles interp1_(const int& n);
+extern "C" SEXP _cpp11armadillotest_interp1_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(interp1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles_matrix<> interp2_(const int& n);
+extern "C" SEXP _cpp11armadillotest_interp2_(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(interp2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
+  END_CPP11
+}
 // 09_regression.cpp
 doubles ols_(const doubles_matrix<>& x, const doubles& y);
 extern "C" SEXP _cpp11armadillotest_ols_(SEXP x, SEXP y) {
@@ -1560,6 +1588,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_compatibility2_",               (DL_FUNC) &_cpp11armadillotest_compatibility2_,               1},
     {"_cpp11armadillotest_cond1_",                        (DL_FUNC) &_cpp11armadillotest_cond1_,                        1},
     {"_cpp11armadillotest_conj1_",                        (DL_FUNC) &_cpp11armadillotest_conj1_,                        1},
+    {"_cpp11armadillotest_conv1_",                        (DL_FUNC) &_cpp11armadillotest_conv1_,                        2},
+    {"_cpp11armadillotest_conv2_",                        (DL_FUNC) &_cpp11armadillotest_conv2_,                        2},
     {"_cpp11armadillotest_conv_to1_",                     (DL_FUNC) &_cpp11armadillotest_conv_to1_,                     1},
     {"_cpp11armadillotest_copy_size1_",                   (DL_FUNC) &_cpp11armadillotest_copy_size1_,                   1},
     {"_cpp11armadillotest_cor1_",                         (DL_FUNC) &_cpp11armadillotest_cor1_,                         2},
@@ -1616,6 +1646,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_insert_columns1_",              (DL_FUNC) &_cpp11armadillotest_insert_columns1_,              1},
     {"_cpp11armadillotest_insert_rows1_",                 (DL_FUNC) &_cpp11armadillotest_insert_rows1_,                 1},
     {"_cpp11armadillotest_insert_slices1_",               (DL_FUNC) &_cpp11armadillotest_insert_slices1_,               1},
+    {"_cpp11armadillotest_interp1_",                      (DL_FUNC) &_cpp11armadillotest_interp1_,                      1},
+    {"_cpp11armadillotest_interp2_",                      (DL_FUNC) &_cpp11armadillotest_interp2_,                      1},
     {"_cpp11armadillotest_intersect1_",                   (DL_FUNC) &_cpp11armadillotest_intersect1_,                   1},
     {"_cpp11armadillotest_inverse1_",                     (DL_FUNC) &_cpp11armadillotest_inverse1_,                     2},
     {"_cpp11armadillotest_is_diagonal1_",                 (DL_FUNC) &_cpp11armadillotest_is_diagonal1_,                 1},

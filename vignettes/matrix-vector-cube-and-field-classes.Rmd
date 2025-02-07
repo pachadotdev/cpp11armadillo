@@ -18,16 +18,6 @@ knitr::opts_chunk$set(
 This vignette is adapted from the official Armadillo
 [documentation](https://arma.sourceforge.net/docs.html).
 
-| Class                            | Description                                                             |
-|----------------------------------|-------------------------------------------------------------------------|
-| `Mat<type>, mat, cx_mat`         | dense matrix class                                                      |
-| `Col<type>, colvec, vec`         | dense column vector class                                               |
-| `Row<type>, rowvec`              | dense row vector class                                                  |
-| `Cube<type>, cube, cx_cube`      | dense cube class ("3D matrix")                                          |
-| `field<object type>`             | class for storing arbitrary objects in matrix-like or cube-like layouts |
-| `SpMat<type>, sp_mat, sp_cx_mat` | sparse matrix class                                                     |
-| `+ - * % / == != <= >= < > &&`   | operators                                                               |
-
 # Dense matrix class
 
 `Mat<type>`, `mat` and `cx_mat` are classes for dense matrices, with elements
