@@ -270,13 +270,17 @@ test_that("examples derived from official documentation", {
 
   res57 <- col_as_mat1_(2L)
   expect_type(res57, "list")
-  expect_equal(cbind(res57[[1]][ , 1], res57[[2]][ , 1], res57[[3]][ , 1],
-    res57[[4]][ , 1]), res57[[5]])
+  expect_equal(cbind(
+    res57[[1]][, 1], res57[[2]][, 1], res57[[3]][, 1],
+    res57[[4]][, 1]
+  ), res57[[5]])
 
   res58 <- row_as_mat1_(2L)
   expect_type(res58, "list")
-  expect_equal(rbind(res58[[1]][1, ], res58[[2]][1, ], res58[[3]][1, ],
-    res58[[4]][1, ]), res58[[5]])
+  expect_equal(rbind(
+    res58[[1]][1, ], res58[[2]][1, ], res58[[3]][1, ],
+    res58[[4]][1, ]
+  ), res58[[5]])
 
   res59 <- as_dense1_(2L)
   expect_type(res59, "double")
@@ -712,8 +716,8 @@ test_that("examples derived from official documentation", {
   res167 <- stddev1_(X, Y)
   res168 <- var1_(X, Y)
   res169 <- range1_(X, Y)
-  res170 <- cov1_(X,Y)
-  res171 <- cor1_(X,Y)
+  res170 <- cov1_(X, Y)
+  res171 <- cor1_(X, Y)
 
   expect_type(res165, "list")
   expect_equal(length(res165), 3)
@@ -762,11 +766,11 @@ test_that("examples derived from official documentation", {
   expect_type(res177, "double")
   expect_equal(dim(res177), c(3, 3))
 
-  res178 <- iwishrnd1_(3,4)
+  res178 <- iwishrnd1_(3, 4)
   expect_type(res178, "double")
   expect_equal(dim(res178), c(3, 3))
 
-  res179 <- kmeans1_(4,3)
+  res179 <- kmeans1_(4, 3)
   expect_type(res179, "list")
   # expect_equal(res179[[1]], TRUE)
   # expect_type(res179[[2]], "double")
@@ -776,7 +780,7 @@ test_that("examples derived from official documentation", {
   set.seed(321)
   x <- rnorm(10, 0, 1)
   y <- rnorm(10, 2, 3)
-  res180 <- conv1_(x,y)
+  res180 <- conv1_(x, y)
   expect_type(res180, "list")
   expect_equal(length(res180[[1]]), length(x) + length(y) - 1)
   expect_equal(length(res180[[2]]), length(x))
@@ -784,18 +788,41 @@ test_that("examples derived from official documentation", {
   set.seed(213)
   x <- matrix(rnorm(100, 0, 1), 10, 10)
   y <- matrix(rnorm(100, 2, 3), 10, 10)
-  res181 <- conv2_(x,y)
+  res181 <- conv2_(x, y)
   expect_type(res181, "list")
   expect_equal(nrow(res181[[1]]), nrow(x) + nrow(y) - 1)
   expect_equal(nrow(res181[[2]]), nrow(x))
 
-  res182 <- interp1_(5)
-  expect_type(res182, "double")
-  expect_equal(length(res182), 10)
+  set.seed(123)
+  x <- rnorm(10)
+  res182 <- fft1_(x)
+  expect_type(res182, "list")
+  expect_equal(length(res182), 2)
+  expect_equal(length(res182[[1]][[1]]), 10)
+  expect_equal(res182[[2]][[1]], x)
+
+  set.seed(321)
+  x <- matrix(rnorm(20), 10, 2)
+  res183 <- fft2_(x)
+  expect_type(res183, "list")
+  expect_equal(length(res183), 2)
+  expect_equal(dim(res183[[1]][[1]]), c(10, 2))
+  expect_equal(res183[[2]][[1]], x)
+
+  res184 <- interp1_(5)
+  expect_type(res184, "double")
+  expect_equal(length(res184), 10)
 
   n <- 10
-  res183 <- interp2_(n)
-  expect_type(res183, "double")
-  expect_equal(nrow(res183), 2 * n + (n - 2))
-  expect_equal(ncol(res183), 2 * n - 1)
+  res185 <- interp2_(n)
+  expect_type(res185, "double")
+  expect_equal(nrow(res185), 2 * n + (n - 2))
+  expect_equal(ncol(res185), 2 * n - 1)
+
+  res186 <- polyfit1_(10, 2)
+  expect_type(res186, "double")
+  expect_equal(res186, c(2, 2, 1))
+
+  res187 <- polyval1_(10, 2)
+  expect_type(res187, "double")
 })

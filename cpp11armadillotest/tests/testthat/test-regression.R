@@ -7,7 +7,8 @@ test_that("examples derived from official documentation", {
   betas2 <- poisson_(x, y)
 
   betas3 <- suppressWarnings(
-    glm(mpg ~ wt, data = mtcars, family = poisson)$coefficients)
+    glm(mpg ~ wt, data = mtcars, family = poisson)$coefficients
+  )
 
   expect_equal(betas2, unname(betas3))
 })

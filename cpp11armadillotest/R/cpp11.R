@@ -880,6 +880,22 @@ interp2_ <- function(n) {
   .Call(`_cpp11armadillotest_interp2_`, n)
 }
 
+fft1_ <- function(x) {
+  .Call(`_cpp11armadillotest_fft1_`, x)
+}
+
+fft2_ <- function(x) {
+  .Call(`_cpp11armadillotest_fft2_`, x)
+}
+
+polyfit1_ <- function(n, m) {
+  .Call(`_cpp11armadillotest_polyfit1_`, n, m)
+}
+
+polyval1_ <- function(n, m) {
+  .Call(`_cpp11armadillotest_polyval1_`, n, m)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }

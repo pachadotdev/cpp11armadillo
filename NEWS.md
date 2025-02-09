@@ -3,11 +3,13 @@
 * Provides wrappers to avoid CRAN notes with Armadillo functions that use
   `std::cout` (#05a342b).
 * Allows to convert `uword` to `integers`.
+* Added new vignettes:
+  * Signal and image processing.
 
 # cpp11armadillo 0.4.3
 
 * Expanded documentation.
-* Added a new vignettes:
+* Added new vignettes:
   * Functions of vectors, matrices, and cubes.
   * Statistics and clustering.
   * Syntax comparison for MATLAB/Octave users.

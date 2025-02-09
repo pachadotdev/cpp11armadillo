@@ -152,13 +152,131 @@
 </div>
 </div>
 <div class="section level2">
+<h2 id="fft-ifft">One-dimensional Fast Fourier Transform<a class="anchor" aria-label="anchor" href="#fft-ifft"></a>
+</h2>
+<p>The <code><a href="https://rdrr.io/r/stats/fft.html" class="external-link">fft()</a></code> function computes the fast Fourier transform (FFT) of a vector or matrix. The function returns a complex matrix.</p>
+<p>Similarly, <code>ifft()</code> computes the inverse fast Fourier transform (IFFT) of a complex matrix.</p>
+<p>The transform is done on each column vector of the input matrix.</p>
+<p>Usage:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="co">// real or complex</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>cx_vec Y = fft(X);</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>cx_vec Y = fft(X, n);</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="co">// complex only</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>cx_mat Z = ifft(cx_mat Y);</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>cx_mat Z = ifft(cx_mat Y, n);</span></code></pre></div>
+<p>The optional <code>n</code> argument specifies the transform length:</p>
+<ul>
+<li>If <code>n</code> is larger than the length of the input vector, a zero-padded version of the vector is used.</li>
+<li>If <code>n</code> is smaller than the length of the input vector, only the first <code>n</code> elements of the vector are used.</li>
+</ul>
+<div class="section level3">
+<h3 id="caveats-1">Caveats<a class="anchor" aria-label="anchor" href="#caveats-1"></a>
+</h3>
+<ul>
+<li>The transform is fastest when the transform length is a power of 2 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>k</mi></msup><mo>,</mo><mspace width="0.222em"></mspace><mi>k</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>,</mo><mi>…</mi></mrow><annotation encoding="application/x-tex">2^k,\: k = 1, 2, 3, \ldots</annotation></semantics></math>).</li>
+<li>By default, the function uses an internal FFT algorithm based on KISS FFT. With vendoring, it is possible to use the FFTW3 library for faster execution by modifying the cpp11armadillo header to:</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>...</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;Rmath.h&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="pp">#define ARMA_USE_FFTW3 </span><span class="co">// add this line</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>...</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">fft1_</span>(<span class="at">const</span> doubles&amp; x) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>  vec a = as_Col(x);</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>  cx_vec b = fft(a);</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>  cx_vec c = ifft(b);</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>  writable::list out2(<span class="dv">2</span>);</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a>  writable::list out3(<span class="dv">2</span>);</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>  out2[<span class="dv">0</span>] = as_doubles(real(b));</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a>  out2[<span class="dv">1</span>] = as_doubles(imag(b));</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a>  out3[<span class="dv">0</span>] = as_doubles(real(c));</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a>  out3[<span class="dv">1</span>] = as_doubles(imag(c));</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true"></a>  out[<span class="dv">0</span>] = out2;</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true"></a>  out[<span class="dv">1</span>] = out3;</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="fft-ifft-1">Two-dimensional Fast Fourier Transform<a class="anchor" aria-label="anchor" href="#fft-ifft-1"></a>
+</h2>
+<p>The <code>fft2()</code> function computes the two-dimensional fast Fourier transform (FFT) of a matrix. The function returns a complex matrix.</p>
+<p>Similarly, <code>ifft2()</code> computes the inverse fast Fourier transform (IFFT) of a complex matrix.</p>
+<p>Usage:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="co">// real or complex</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>cx_mat Y = fft2(mat X);</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>cx_mat Y = fft2(mat X, <span class="dt">int</span> n_rows, <span class="dt">int</span> n_cols);</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="co">// complex only</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>cx_mat Z = ifft2(cx_mat Y);</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>cx_mat Z = ifft2(cx_mat Y, <span class="dt">int</span> n_rows, <span class="dt">int</span> n_cols);</span></code></pre></div>
+<p>The optional <code>n_rows</code> and <code>n_cols</code> arguments specify the transform size:</p>
+<ul>
+<li>If <code>n_rows</code> and <code>n_cols</code> are larger than the size of the input matrix, a zero-padded version of the matrix is used.</li>
+<li>If <code>n_rows</code> and <code>n_cols</code> are smaller than the size of the input matrix, only the first <code>n_rows</code> and <code>n_cols</code> elements of the matrix are used.</li>
+</ul>
+<div class="section level3">
+<h3 id="caveats-2">Caveats<a class="anchor" aria-label="anchor" href="#caveats-2"></a>
+</h3>
+<ul>
+<li>The implementation of the 2D transform in this version is preliminary.</li>
+<li>The transform is fastest when both <code>n_rows</code> and <code>n_cols</code> are a power of 2 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>k</mi></msup><mo>,</mo><mspace width="0.222em"></mspace><mi>k</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>,</mo><mi>…</mi></mrow><annotation encoding="application/x-tex">2^k,\: k = 1, 2, 3, \ldots</annotation></semantics></math>).</li>
+<li>By default, the function uses an internal FFT algorithm based on KISS FFT. With vendoring, it is possible to use the FFTW3 library for faster execution by modifying the cpp11armadillo header to:</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>...</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;Rmath.h&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="pp">#define ARMA_USE_FFTW3 </span><span class="co">// add this line</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>...</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a>
+</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">fft2_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>  mat a = as_mat(x);</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>  cx_mat b = fft2(a);</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>  cx_mat c = ifft2(b);</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a>  writable::list out2(<span class="dv">2</span>);</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a>  writable::list out3(<span class="dv">2</span>);</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a>  out2[<span class="dv">0</span>] = as_doubles(real(b));</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a>  out2[<span class="dv">1</span>] = as_doubles(imag(b));</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a>  out3[<span class="dv">0</span>] = as_doubles(real(c));</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a>  out3[<span class="dv">1</span>] = as_doubles(imag(c));</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true"></a>  out[<span class="dv">0</span>] = out2;</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true"></a>  out[<span class="dv">1</span>] = out3;</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
 <h2 id="interp1">One-dimensional interpolation<a class="anchor" aria-label="anchor" href="#interp1"></a>
 </h2>
 <p>The <code>interp1()</code> function performs one-dimensional interpolation of a function specified by vectors <code>X</code> and <code>Y</code>. The function generates a vector <code>YI</code> that contains interpolated values at locations <code>XI</code>.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>vec interp1(X, Y, XI, YI);</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>vec interp1(X, Y, XI, YI, method);</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>vec interp1(X, Y, XI, YI, method, extrapolation_value);</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>vec interp1(X, Y, XI, YI);</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>vec interp1(X, Y, XI, YI, method);</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>vec interp1(X, Y, XI, YI, method, extrapolation_value);</span></code></pre></div>
 <p>The <code>method</code> argument is optional and can be one of the following:</p>
 <ul>
 <li>
@@ -173,21 +291,21 @@
 <p>If a location in <code>XI</code> is outside the domain of <code>X</code>, the corresponding value in <code>YI</code> is set to <code>extrapolation_value</code>.</p>
 <p>The <code>extrapolation_value</code> argument is optional; by default, it is <code>datum::nan</code> (not-a-number).</p>
 <div class="section level3">
-<h3 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a>
+<h3 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">interp1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  vec x = linspace&lt;vec&gt;(<span class="dv">0</span>, <span class="dv">3</span>, n);</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  vec y = square(x);</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>  vec xx = linspace&lt;vec&gt;(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">2</span> * n);</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>  vec yy;</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>  interp1(x, y, xx, yy);             <span class="co">// use linear interpolation by default</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>  interp1(x, y, xx, yy, <span class="st">"*linear"</span>);  <span class="co">// faster than "linear"</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>  interp1(x, y, xx, yy, <span class="st">"nearest"</span>);</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(yy);</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">interp1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>  vec x = linspace&lt;vec&gt;(<span class="dv">0</span>, <span class="dv">3</span>, n);</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>  vec y = square(x);</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>  vec xx = linspace&lt;vec&gt;(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">2</span> * n);</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>  vec yy;</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a>  interp1(x, y, xx, yy);             <span class="co">// use linear interpolation by default</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>  interp1(x, y, xx, yy, <span class="st">"*linear"</span>);  <span class="co">// faster than "linear"</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a>  interp1(x, y, xx, yy, <span class="st">"nearest"</span>);</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(yy);</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -195,9 +313,9 @@
 </h2>
 <p>The <code>interp2()</code> function performs two-dimensional interpolation of a function specified by matrix <code>Z</code> with coordinates given by vectors <code>X</code> and <code>Y</code>. The function generates a matrix <code>ZI</code> that contains interpolated values at the coordinates given by vectors <code>XI</code> and <code>YI</code>.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>mat interp2(X, Y, Z, XI, YI, ZI);</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>mat interp2(X, Y, Z, XI, YI, ZI, method);</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>mat interp2(X, Y, Z, XI, YI, ZI, method, extrapolation_value);</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a>mat interp2(X, Y, Z, XI, YI, ZI);</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>mat interp2(X, Y, Z, XI, YI, ZI, method);</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a>mat interp2(X, Y, Z, XI, YI, ZI, method, extrapolation_value);</span></code></pre></div>
 <p>The <code>method</code> argument is optional and can be one of the following:</p>
 <ul>
 <li>
@@ -208,23 +326,124 @@
 <p>If a coordinate in the 2D grid specified by <code>(XI, YI)</code> is outside the domain of the 2D grid specified by <code>(X, Y)</code>, the corresponding value in <code>ZI</code> is set to <code>extrapolation_value</code>.</p>
 <p>The <code>extrapolation_value</code> argument is optional; by default, it is <code>datum::nan</code> (not-a-number).</p>
 <div class="section level3">
-<h3 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a>
+<h3 id="examples-5">Examples<a class="anchor" aria-label="anchor" href="#examples-5"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">interp2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>  mat Z(n, n, fill::randu);</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>  vec X = regspace(<span class="dv">1</span>, Z.n_cols);  <span class="co">// X = horizontal spacing</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>  vec Y = regspace(<span class="dv">1</span>, Z.n_rows);  <span class="co">// Y = vertical spacing</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>  vec XI = regspace(X.min(), <span class="fl">1.0</span>/<span class="fl">2.0</span>, X.max()); <span class="co">// magnify by approx 2</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>  vec YI = regspace(Y.min(), <span class="fl">1.0</span>/<span class="fl">3.0</span>, Y.max()); <span class="co">// magnify by approx 3</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a>  mat ZI;</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a>  interp2(X, Y, Z, XI, YI, ZI); <span class="co">// use linear interpolation by default</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(ZI);</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">interp2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>  mat Z(n, n, fill::randu);</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>  vec X = regspace(<span class="dv">1</span>, Z.n_cols);  <span class="co">// X = horizontal spacing</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a>  vec Y = regspace(<span class="dv">1</span>, Z.n_rows);  <span class="co">// Y = vertical spacing</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>  vec XI = regspace(X.min(), <span class="fl">1.0</span>/<span class="fl">2.0</span>, X.max()); <span class="co">// magnify by approx 2</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a>  vec YI = regspace(Y.min(), <span class="fl">1.0</span>/<span class="fl">3.0</span>, Y.max()); <span class="co">// magnify by approx 3</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a>  mat ZI;</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true"></a>  interp2(X, Y, Z, XI, YI, ZI); <span class="co">// use linear interpolation by default</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(ZI);</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="polyfit">Find polynomial coefficients for data fitting<a class="anchor" aria-label="anchor" href="#polyfit"></a>
+</h2>
+<!-- P = polyfit( X, Y, N )
+polyfit( P, X, Y, N )
+
+    Given a 1D function specified in vectors X and Y (where X holds independent values and Y holds the corresponding dependent values),
+    model the function as a polynomial of order N and store the polynomial coefficients in column vector P
+
+    The given function is modelled as:
+        y = p0xN + p1xN-1 + p2xN-2 + ... + pN-1x1 + pN where pi is the i-th polynomial coefficient; the coefficients are selected to minimise the overall error of the fit (least squares)
+
+    The column vector P has N+1 coefficients
+
+    N must be smaller than the number of elements in X
+
+    If the polynomial coefficients cannot be found:
+        P = polyfit( X, Y, N ) resets P and throws a std::runtime_error exception
+        polyfit( P, X, Y, N ) resets P and returns a bool set to false (exception is not thrown)
+
+    Examples:
+
+        vec x = linspace<vec>(0,4*datum::pi,100);
+        vec y = cos(x);
+
+        vec p = polyfit(x,y,10);
+ -->
+<p>The <code>polyfit()</code> function finds the polynomial coefficients for data fitting. The function models a 1D function specified by vectors <code>X</code> and <code>Y</code> as a polynomial of order <code>N</code> and stores the polynomial coefficients in a column vector <code>P</code>.</p>
+<p>The given function is modelled as:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><msub><mi>p</mi><mn>0</mn></msub><msup><mi>x</mi><mi>N</mi></msup><mo>+</mo><msub><mi>p</mi><mn>1</mn></msub><msup><mi>x</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>+</mo><msub><mi>p</mi><mn>2</mn></msub><msup><mi>x</mi><mrow><mi>N</mi><mo>−</mo><mn>2</mn></mrow></msup><mo>+</mo><mi>…</mi><mo>+</mo><msub><mi>p</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub><msup><mi>x</mi><mn>1</mn></msup><mo>+</mo><msub><mi>p</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">
+y = p_0 x^N + p_1 x^{N-1} + p_2 x^{N-2} + \ldots + p_{N-1} x^1 + p_N
+</annotation></semantics></math></p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>i</mi></msub><annotation encoding="application/x-tex">p_i</annotation></semantics></math> is the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>-th polynomial coefficient. The coefficients are selected to minimise the overall error of the fit (least squares).</p>
+<p>The column vector <code>P</code> has <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N+1</annotation></semantics></math> coefficients.</p>
+<p><code>N</code> must be smaller than the number of elements in <code>X</code>.</p>
+<p>Usage:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>P = polyfit(X, Y, N);</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>polyfit(P, X, Y, N);</span></code></pre></div>
+<p>If the polynomial coefficients cannot be found:</p>
+<ul>
+<li>
+<code>P = polyfit(X, Y, N)</code> resets <code>P</code> and returns an error.</li>
+<li>
+<code>polyfit(P, X, Y, N)</code> resets <code>P</code> and returns a <code>bool</code> set to <code>false</code> without an error.</li>
+</ul>
+<div class="section level3">
+<h3 id="examples-6">Examples<a class="anchor" aria-label="anchor" href="#examples-6"></a>
+</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">polyfit1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n, <span class="at">const</span> <span class="dt">int</span>&amp; m) {</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a>  vec x = linspace&lt;vec&gt;(<span class="dv">0</span>, <span class="dv">1</span>, n);</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a>  vec y = <span class="dv">2</span>*pow(x,<span class="dv">2</span>) + <span class="dv">2</span>*x + ones&lt;vec&gt;(n);</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a>  vec p = polyfit(x, y, m);</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(p);</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="polyval">Evaluate polynomial<a class="anchor" aria-label="anchor" href="#polyval"></a>
+</h2>
+<!-- Y = polyval( P, X )
+
+    Given vector P of polynomial coefficients and vector X containing the independent values of a 1D function,
+    generate vector Y which contains the corresponding dependent values
+
+    For each x value in vector X, the corresponding y value in vector Y is generated using:
+        y = p0xN + p1xN-1 + p2xN-2 + ... + pN-1x1 + pN where pi is the i-th polynomial coefficient in vector P
+
+    P must contain polynomial coefficients in descending powers (eg. generated by the polyfit() function)
+
+    Examples:
+
+        vec x1 = linspace<vec>(0,4*datum::pi,100);
+        vec y1 = cos(x1);
+        vec p1 = polyfit(x1,y1,10);
+
+        vec y2 = polyval(p1,x1); -->
+<p>The <code>polyval()</code> function evaluates a polynomial. Given a vector <code>P</code> of polynomial coefficients and a vector <code>X</code> containing the independent values of a 1D function, the function generates a vector <code>Y</code> that contains the corresponding dependent values.</p>
+<p>For each <code>x</code> value in vector <code>X</code>, the corresponding <code>y</code> value in vector <code>Y</code> is generated using:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><msub><mi>p</mi><mn>0</mn></msub><msup><mi>x</mi><mi>N</mi></msup><mo>+</mo><msub><mi>p</mi><mn>1</mn></msub><msup><mi>x</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>+</mo><msub><mi>p</mi><mn>2</mn></msub><msup><mi>x</mi><mrow><mi>N</mi><mo>−</mo><mn>2</mn></mrow></msup><mo>+</mo><mi>…</mi><mo>+</mo><msub><mi>p</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub><msup><mi>x</mi><mn>1</mn></msup><mo>+</mo><msub><mi>p</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">
+y = p_0 x^N + p_1 x^{N-1} + p_2 x^{N-2} + \ldots + p_{N-1} x^1 + p_N
+</annotation></semantics></math></p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>i</mi></msub><annotation encoding="application/x-tex">p_i</annotation></semantics></math> is the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>-th polynomial coefficient in vector <code>P</code>.</p>
+<p><code>P</code> must contain polynomial coefficients in descending powers (e.g., generated by the <code>polyfit()</code> function).</p>
+<p>Usage:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>Y = polyval(P, X);</span></code></pre></div>
+<div class="section level3">
+<h3 id="examples-7">Examples<a class="anchor" aria-label="anchor" href="#examples-7"></a>
+</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">polyval1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n, <span class="at">const</span> <span class="dt">int</span>&amp; m) {</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a>  vec x = linspace&lt;vec&gt;(<span class="dv">0</span>, <span class="dv">1</span>, n);</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a>  vec y = <span class="dv">2</span>*pow(x,<span class="dv">2</span>) + <span class="dv">2</span>*x + ones&lt;vec&gt;(n);</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a>  vec p = polyfit(x, y, m);</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a>  vec q = polyval(p, x);</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(q);</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

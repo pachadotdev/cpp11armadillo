@@ -1545,6 +1545,34 @@ extern "C" SEXP _cpp11armadillotest_interp2_(SEXP n) {
     return cpp11::as_sexp(interp2_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n)));
   END_CPP11
 }
+// 08_official_documentation_adapted.cpp
+list fft1_(const doubles& x);
+extern "C" SEXP _cpp11armadillotest_fft1_(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(fft1_(cpp11::as_cpp<cpp11::decay_t<const doubles&>>(x)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+list fft2_(const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_fft2_(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(fft2_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles polyfit1_(const int& n, const int& m);
+extern "C" SEXP _cpp11armadillotest_polyfit1_(SEXP n, SEXP m) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(polyfit1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n), cpp11::as_cpp<cpp11::decay_t<const int&>>(m)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles polyval1_(const int& n, const int& m);
+extern "C" SEXP _cpp11armadillotest_polyval1_(SEXP n, SEXP m) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(polyval1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n), cpp11::as_cpp<cpp11::decay_t<const int&>>(m)));
+  END_CPP11
+}
 // 09_regression.cpp
 doubles ols_(const doubles_matrix<>& x, const doubles& y);
 extern "C" SEXP _cpp11armadillotest_ols_(SEXP x, SEXP y) {
@@ -1619,6 +1647,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_expmat_sym1_",                  (DL_FUNC) &_cpp11armadillotest_expmat_sym1_,                  1},
     {"_cpp11armadillotest_eye1_",                         (DL_FUNC) &_cpp11armadillotest_eye1_,                         1},
     {"_cpp11armadillotest_eye2_",                         (DL_FUNC) &_cpp11armadillotest_eye2_,                         1},
+    {"_cpp11armadillotest_fft1_",                         (DL_FUNC) &_cpp11armadillotest_fft1_,                         1},
+    {"_cpp11armadillotest_fft2_",                         (DL_FUNC) &_cpp11armadillotest_fft2_,                         1},
     {"_cpp11armadillotest_field1_",                       (DL_FUNC) &_cpp11armadillotest_field1_,                       2},
     {"_cpp11armadillotest_fill1_",                        (DL_FUNC) &_cpp11armadillotest_fill1_,                        1},
     {"_cpp11armadillotest_find1_",                        (DL_FUNC) &_cpp11armadillotest_find1_,                        1},
@@ -1700,6 +1730,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_ones1_",                        (DL_FUNC) &_cpp11armadillotest_ones1_,                        1},
     {"_cpp11armadillotest_ones2_",                        (DL_FUNC) &_cpp11armadillotest_ones2_,                        1},
     {"_cpp11armadillotest_poisson_",                      (DL_FUNC) &_cpp11armadillotest_poisson_,                      2},
+    {"_cpp11armadillotest_polyfit1_",                     (DL_FUNC) &_cpp11armadillotest_polyfit1_,                     2},
+    {"_cpp11armadillotest_polyval1_",                     (DL_FUNC) &_cpp11armadillotest_polyval1_,                     2},
     {"_cpp11armadillotest_pow1_",                         (DL_FUNC) &_cpp11armadillotest_pow1_,                         1},
     {"_cpp11armadillotest_powmat1_",                      (DL_FUNC) &_cpp11armadillotest_powmat1_,                      1},
     {"_cpp11armadillotest_prod1_",                        (DL_FUNC) &_cpp11armadillotest_prod1_,                        1},

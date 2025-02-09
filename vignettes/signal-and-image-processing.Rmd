@@ -92,6 +92,137 @@ The implementation of 2D convolution in this version is preliminary.
 }
 ```
 
+# One-dimensional Fast Fourier Transform {#fft-ifft}
+
+The `fft()` function computes the fast Fourier transform (FFT) of a vector or matrix. The function returns a complex matrix.
+
+Similarly, `ifft()` computes the inverse fast Fourier transform (IFFT) of a complex matrix.
+
+The transform is done on each column vector of the input matrix.
+
+Usage:
+
+```cpp
+// real or complex
+cx_vec Y = fft(X);
+cx_vec Y = fft(X, n);
+
+// complex only
+cx_mat Z = ifft(cx_mat Y);
+cx_mat Z = ifft(cx_mat Y, n);
+```
+
+The optional `n` argument specifies the transform length:
+
+- If `n` is larger than the length of the input vector, a zero-padded version of the vector is used.
+- If `n` is smaller than the length of the input vector, only the first `n` elements of the vector are used.
+
+## Caveats
+
+* The transform is fastest when the transform length is a power of 2 ($2^k,\: k = 1, 2, 3, \ldots$).
+* By default, the function uses an internal FFT algorithm based on KISS FFT. With vendoring, it is possible to
+  use the FFTW3 library for faster execution by modifying the cpp11armadillo header to:
+
+```cpp
+...
+#include <Rmath.h>
+
+#define ARMA_USE_FFTW3 // add this line
+#include <armadillo.hpp>
+...
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list fft1_(const doubles& x) {
+  vec a = as_Col(x);
+
+  cx_vec b = fft(a);
+  cx_vec c = ifft(b);
+
+  writable::list out(2);
+  writable::list out2(2);
+  writable::list out3(2);
+
+  out2[0] = as_doubles(real(b));
+  out2[1] = as_doubles(imag(b));
+
+  out3[0] = as_doubles(real(c));
+  out3[1] = as_doubles(imag(c));
+
+  out[0] = out2;
+  out[1] = out3;
+
+  return out;
+}
+```
+
+# Two-dimensional Fast Fourier Transform {#fft-ifft}
+
+The `fft2()` function computes the two-dimensional fast Fourier transform (FFT) of a matrix. The function returns a complex matrix.
+
+Similarly, `ifft2()` computes the inverse fast Fourier transform (IFFT) of a complex matrix.
+
+Usage:
+
+```cpp
+// real or complex
+cx_mat Y = fft2(mat X);
+cx_mat Y = fft2(mat X, int n_rows, int n_cols);
+
+// complex only
+cx_mat Z = ifft2(cx_mat Y);
+cx_mat Z = ifft2(cx_mat Y, int n_rows, int n_cols);
+```
+
+The optional `n_rows` and `n_cols` arguments specify the transform size:
+
+- If `n_rows` and `n_cols` are larger than the size of the input matrix, a zero-padded version of the matrix is used.
+- If `n_rows` and `n_cols` are smaller than the size of the input matrix, only the first `n_rows` and `n_cols` elements of the matrix are used.
+
+## Caveats
+
+- The implementation of the 2D transform in this version is preliminary.
+- The transform is fastest when both `n_rows` and `n_cols` are a power of 2 ($2^k,\: k = 1, 2, 3, \ldots$).
+- By default, the function uses an internal FFT algorithm based on KISS FFT. With vendoring, it is possible to
+  use the FFTW3 library for faster execution by modifying the cpp11armadillo header to:
+
+```cpp
+...
+#include <Rmath.h>
+
+#define ARMA_USE_FFTW3 // add this line
+#include <armadillo.hpp>
+...
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] list fft2_(const doubles_matrix<>& x) {
+  mat a = as_mat(x);
+
+  cx_mat b = fft2(a);
+  cx_mat c = ifft2(b);
+
+  writable::list out(2);
+  writable::list out2(2);
+  writable::list out3(2);
+
+  out2[0] = as_doubles(real(b));
+  out2[1] = as_doubles(imag(b));
+
+  out3[0] = as_doubles(real(c));
+  out3[1] = as_doubles(imag(c));
+
+  out[0] = out2;
+  out[1] = out3;
+
+  return out;
+}
+```
+
 # One-dimensional interpolation {#interp1}
 
 The `interp1()` function performs one-dimensional interpolation of a function specified by vectors `X` and `Y`. The function generates a vector `YI` that contains interpolated values at locations `XI`.
@@ -171,5 +302,123 @@ The `extrapolation_value` argument is optional; by default, it is `datum::nan` (
   interp2(X, Y, Z, XI, YI, ZI); // use linear interpolation by default
 
   return as_doubles_matrix(ZI);
+}
+```
+
+# Find polynomial coefficients for data fitting {#polyfit}
+
+<!-- P = polyfit( X, Y, N )
+polyfit( P, X, Y, N )
+
+    Given a 1D function specified in vectors X and Y (where X holds independent values and Y holds the corresponding dependent values),
+    model the function as a polynomial of order N and store the polynomial coefficients in column vector P
+
+    The given function is modelled as:
+        y = p0xN + p1xN-1 + p2xN-2 + ... + pN-1x1 + pN where pi is the i-th polynomial coefficient; the coefficients are selected to minimise the overall error of the fit (least squares)
+
+    The column vector P has N+1 coefficients
+
+    N must be smaller than the number of elements in X
+
+    If the polynomial coefficients cannot be found:
+        P = polyfit( X, Y, N ) resets P and throws a std::runtime_error exception
+        polyfit( P, X, Y, N ) resets P and returns a bool set to false (exception is not thrown)
+
+    Examples:
+
+        vec x = linspace<vec>(0,4*datum::pi,100);
+        vec y = cos(x);
+
+        vec p = polyfit(x,y,10);
+ -->
+
+The `polyfit()` function finds the polynomial coefficients for data fitting. The function models a 1D function specified by vectors `X` and `Y` as a polynomial of order `N` and stores the polynomial coefficients in a column vector `P`.
+
+The given function is modelled as:
+
+$$
+y = p_0 x^N + p_1 x^{N-1} + p_2 x^{N-2} + \ldots + p_{N-1} x^1 + p_N
+$$
+
+where $p_i$ is the $i$-th polynomial coefficient. The coefficients are selected to minimise the overall error of the fit (least squares).
+
+The column vector `P` has $N+1$ coefficients.
+
+`N` must be smaller than the number of elements in `X`.
+
+Usage:
+
+```cpp
+P = polyfit(X, Y, N);
+polyfit(P, X, Y, N);
+```
+
+If the polynomial coefficients cannot be found:
+
+- `P = polyfit(X, Y, N)` resets `P` and returns an error.
+- `polyfit(P, X, Y, N)` resets `P` and returns a `bool` set to `false` without an error.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles polyfit1_(const int& n, const int& m) {
+  vec x = linspace<vec>(0, 1, n);
+  vec y = 2*pow(x,2) + 2*x + ones<vec>(n);
+
+  vec p = polyfit(x, y, m);
+
+  return as_doubles(p);
+}
+```
+
+# Evaluate polynomial {#polyval}
+
+<!-- Y = polyval( P, X )
+
+    Given vector P of polynomial coefficients and vector X containing the independent values of a 1D function,
+    generate vector Y which contains the corresponding dependent values
+
+    For each x value in vector X, the corresponding y value in vector Y is generated using:
+        y = p0xN + p1xN-1 + p2xN-2 + ... + pN-1x1 + pN where pi is the i-th polynomial coefficient in vector P
+
+    P must contain polynomial coefficients in descending powers (eg. generated by the polyfit() function)
+
+    Examples:
+
+        vec x1 = linspace<vec>(0,4*datum::pi,100);
+        vec y1 = cos(x1);
+        vec p1 = polyfit(x1,y1,10);
+
+        vec y2 = polyval(p1,x1); -->
+
+The `polyval()` function evaluates a polynomial. Given a vector `P` of polynomial coefficients and a vector `X` containing the independent values of a 1D function, the function generates a vector `Y` that contains the corresponding dependent values.
+
+For each `x` value in vector `X`, the corresponding `y` value in vector `Y` is generated using:
+
+$$
+y = p_0 x^N + p_1 x^{N-1} + p_2 x^{N-2} + \ldots + p_{N-1} x^1 + p_N
+$$
+
+where $p_i$ is the $i$-th polynomial coefficient in vector `P`.
+
+`P` must contain polynomial coefficients in descending powers (e.g., generated by the `polyfit()` function).
+
+Usage:
+
+```cpp
+Y = polyval(P, X);
+```
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles polyval1_(const int& n, const int& m) {
+  vec x = linspace<vec>(0, 1, n);
+  vec y = 2*pow(x,2) + 2*x + ones<vec>(n);
+
+  vec p = polyfit(x, y, m);
+  vec q = polyval(p, x);
+
+  return as_doubles(q);
 }
 ```

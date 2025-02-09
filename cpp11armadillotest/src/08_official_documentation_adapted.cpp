@@ -2841,3 +2841,72 @@
 
   return as_doubles_matrix(ZI);
 }
+
+[[cpp11::register]] list fft1_(const doubles& x) {
+  vec a = as_Col(x);
+
+  cx_vec b = fft(a);
+  cx_vec c = ifft(b);
+
+  writable::list out(2);
+  writable::list out2(2);
+  writable::list out3(2);
+
+  out2[0] = as_doubles(real(b));
+  out2[1] = as_doubles(imag(b));
+
+  out3[0] = as_doubles(real(c));
+  out3[1] = as_doubles(imag(c));
+
+  out[0] = out2;
+  out[1] = out3;
+
+  return out;
+}
+
+[[cpp11::register]] list fft2_(const doubles_matrix<>& x) {
+  mat a = as_mat(x);
+
+  cx_mat b = fft2(a);
+  cx_mat c = ifft2(b);
+
+  writable::list out(2);
+  writable::list out2(2);
+  writable::list out3(2);
+
+  mat b_real = real(b);
+  mat b_imag = imag(b);
+
+  mat c_real = real(c);
+  mat c_imag = imag(c);
+
+  out2[0] = as_doubles_matrix(b_real);
+  out2[1] = as_doubles_matrix(b_imag);
+
+  out3[0] = as_doubles_matrix(c_real);
+  out3[1] = as_doubles_matrix(c_imag);
+
+  out[0] = out2;
+  out[1] = out3;
+
+  return out;
+}
+
+[[cpp11::register]] doubles polyfit1_(const int& n, const int& m) {
+  vec x = linspace<vec>(0, 1, n);
+  vec y = 2 * pow(x, 2) + 2 * x + ones<vec>(n);
+
+  vec p = polyfit(x, y, m);
+
+  return as_doubles(p);
+}
+
+[[cpp11::register]] doubles polyval1_(const int& n, const int& m) {
+  vec x = linspace<vec>(0, 1, n);
+  vec y = 2 * pow(x, 2) + 2 * x + ones<vec>(n);
+
+  vec p = polyfit(x, y, m);
+  vec q = polyval(p, x);
+
+  return as_doubles(q);
+}
