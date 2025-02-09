@@ -15,7 +15,7 @@ articles:
   signal-and-image-processing: signal-and-image-processing.html
   statistics-and-clustering: statistics-and-clustering.html
   syntax-comparison-for-matlab-users: syntax-comparison-for-matlab-users.html
-last_built: 2025-02-09T17:08Z
+last_built: 2025-02-09T17:21Z
 urls:
-  reference: https://pacha.dev/cpp11armadillo/reference
-  article: https://pacha.dev/cpp11armadillo/articles
+  reference: ../cpp11armadillo/reference
+  article: ../cpp11armadillo/articles

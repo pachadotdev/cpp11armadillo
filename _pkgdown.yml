@@ -1,4 +1,5 @@
 template:
   bootstrap: 5
 
-url: https://pacha.dev/cpp11armadillo/
+url: ../cpp11armadillo/
+destination: docs

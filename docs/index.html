@@ -19,7 +19,7 @@
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="An Armadillo Interface">
 <meta name="description" content="Provides function declarations and inline function definitions that facilitate communication between R and the Armadillo C++ library for linear algebra and scientific computing. This implementation is detailed in Vargas Sepulveda and Schneider Malamud (2024) &lt;doi:10.48550/arXiv.2408.11074&gt;.">
 <meta property="og:description" content="Provides function declarations and inline function definitions that facilitate communication between R and the Armadillo C++ library for linear algebra and scientific computing. This implementation is detailed in Vargas Sepulveda and Schneider Malamud (2024) &lt;doi:10.48550/arXiv.2408.11074&gt;.">
-<meta property="og:image" content="https://pacha.dev/cpp11armadillo/logo.svg">
+<meta property="og:image" content="../cpp11armadillo/logo.svg">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -63,7 +63,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/pachadotdev/cpp11armadillo/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="nav-link" href="https://github.com/pachadotdev/cpp11armadillo/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -136,7 +136,7 @@
 <span><span class="fu">cpp11armadillo</span><span class="fu">::</span><span class="fu"><a href="reference/pkg_template.html">pkg_template</a></span><span class="op">(</span><span class="st">"pkgtemplate"</span>, <span class="st">"myownpackage"</span><span class="op">)</span></span></code></pre></div>
 <p>Then follow the instructions from README.md in the path where the new package is. The template contains a simple Ordinary Least Squares (OLS) example that you can run to test the package.</p>
 <p>The vignette expands on the OLS estimator, and the <a href="https://pacha.dev/hansen/" class="external-link">hansen package</a> expands on how to use cpp11armadillo for Econometric models.</p>
-<p>The <a href="https://github.com/pachadotdev/cpp11armadillo/tree/main/cpp11armadillotest" class="external-link">cpp11armadillotest</a> directory contains a package that I use to test cpp11armadillo. It includes tests for OLS, eigenvalues, matrix decompositions (Cholesky and QR), the Capital Asset Pricing Model (CAPM), and data consistency between R and C++. Please note that cpp11armadillotest is a dummy package to test the C++ build with GitHub Actions, and you do not need to install it. You can check its code to get extra examples.</p>
+<p>The <a href="https://github.com/pachadotdev/cpp11armadillo/tree/main/cpp11armadillotest">cpp11armadillotest</a> directory contains a package that I use to test cpp11armadillo. It includes tests for OLS, eigenvalues, matrix decompositions (Cholesky and QR), the Capital Asset Pricing Model (CAPM), and data consistency between R and C++. Please note that cpp11armadillotest is a dummy package to test the C++ build with GitHub Actions, and you do not need to install it. You can check its code to get extra examples.</p>
 </div>
 <div class="section level2">
 <h2 id="linear-algebra-libraries">Linear Algebra Libraries<a class="anchor" aria-label="anchor" href="#linear-algebra-libraries"></a>
@@ -157,8 +157,8 @@
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=cpp11armadillo" class="external-link">View on CRAN</a></li>
-<li><a href="https://github.com/pachadotdev/cpp11armadillo/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/pachadotdev/cpp11armadillo/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/pachadotdev/cpp11armadillo/">Browse source code</a></li>
+<li><a href="https://github.com/pachadotdev/cpp11armadillo/issues">Report a bug</a></li>
 </ul>
 </div>
 
@@ -198,8 +198,8 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/pachadotdev/cpp11armadillo" class="external-link"><img src="https://codecov.io/gh/pachadotdev/cpp11armadillo/graph/badge.svg?token=mWfiUCgfNu" alt="codecov"></a></li>
+<li><a href="https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml"><img src="https://github.com/pachadotdev/cpp11armadillo/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/pachadotdev/cpp11armadillo"><img src="https://codecov.io/gh/pachadotdev/cpp11armadillo/graph/badge.svg?token=mWfiUCgfNu" alt="codecov"></a></li>
 <li><a href="https://buymeacoffee.com/pacha" class="external-link"><img src="https://raw.githubusercontent.com/pachadotdev/buymeacoffee-badges/main/bmc-donate-white.svg" alt="BuyMeACoffee"></a></li>
 <li><a href="https://CRAN.R-project.org/package=cpp11armadillo" class="external-link"><img src="https://www.r-pkg.org/badges/version/cpp11armadillo" alt="CRAN status"></a></li>
 </ul>
