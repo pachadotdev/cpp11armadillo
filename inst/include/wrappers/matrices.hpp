@@ -64,6 +64,28 @@ inline Mat<double> as_Mat(const doubles& x) { return dblint_to_Mat_<double, doub
 
 inline Mat<int> as_Mat(const integers& x) { return dblint_to_Mat_<int, integers>(x); }
 
+// Convert integers_matrix<> to umat/imat
+
+template <typename TargetMatType>
+inline TargetMatType as_target_mat(const integers_matrix<>& x) {
+  const int n = x.nrow();
+  const int m = x.ncol();
+
+  TargetMatType y(n, m);
+
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
+      y(i, j) = static_cast<typename TargetMatType::elem_type>(x(i, j));
+    }
+  }
+
+  return y;
+}
+
+inline umat as_umat(const integers_matrix<>& x) { return as_target_mat<umat>(x); }
+
+inline imat as_imat(const integers_matrix<>& x) { return as_target_mat<imat>(x); }
+
 // cpp11armadillo 0.4.3
 // as_mat() = alias for as_Mat()
 
@@ -122,22 +144,27 @@ inline integers_matrix<> as_integers_matrix(const Mat<int>& A) {
   return Mat_to_dblint_matrix_<int, integers_matrix<>>(A);
 }
 
-// Convert umat to integers_matrix<>
-inline integers_matrix<> as_integers_matrix(const umat& A) {
+// Convert umat/imat to integers_matrix<>
+
+template <typename SourceMatType>
+inline integers_matrix<> as_integers_matrix(const SourceMatType& A) {
   const size_t n = A.n_rows;
   const size_t m = A.n_cols;
 
   writable::integers_matrix<> B(n, m);
 
-  size_t i, j;
-  for (i = 0; i < n; ++i) {
-    for (j = 0; j < m; ++j) {
-      B(i, j) = A(i, j);
+  for (size_t i = 0; i < n; ++i) {
+    for (size_t j = 0; j < m; ++j) {
+      B(i, j) = static_cast<int>(A(i, j));
     }
   }
 
   return B;
 }
+
+inline integers_matrix<> as_integers_matrix(const umat& A) { return as_integers_matrix<umat>(A); }
+
+inline integers_matrix<> as_integers_matrix(const imat& A) { return as_integers_matrix<imat>(A); }
 
 // Complex
 

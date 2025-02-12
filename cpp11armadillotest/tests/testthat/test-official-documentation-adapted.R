@@ -825,4 +825,8 @@ test_that("examples derived from official documentation", {
 
   res187 <- polyval1_(10, 2)
   expect_type(res187, "double")
+
+  set.seed(123)
+  X <- matrix(rnorm(25), 5, 5)
+  chol1_(X, "upper", "matrix")
 })

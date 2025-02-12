@@ -1573,6 +1573,13 @@ extern "C" SEXP _cpp11armadillotest_polyval1_(SEXP n, SEXP m) {
     return cpp11::as_sexp(polyval1_(cpp11::as_cpp<cpp11::decay_t<const int&>>(n), cpp11::as_cpp<cpp11::decay_t<const int&>>(m)));
   END_CPP11
 }
+// 08_official_documentation_adapted.cpp
+list chol1_(const doubles_matrix<>& x, const strings& layout, const strings& output);
+extern "C" SEXP _cpp11armadillotest_chol1_(SEXP x, SEXP layout, SEXP output) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(chol1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const strings&>>(layout), cpp11::as_cpp<cpp11::decay_t<const strings&>>(output)));
+  END_CPP11
+}
 // 09_regression.cpp
 doubles ols_(const doubles_matrix<>& x, const doubles& y);
 extern "C" SEXP _cpp11armadillotest_ols_(SEXP x, SEXP y) {
@@ -1605,6 +1612,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_attr1_",                        (DL_FUNC) &_cpp11armadillotest_attr1_,                        1},
     {"_cpp11armadillotest_capm",                          (DL_FUNC) &_cpp11armadillotest_capm,                          3},
     {"_cpp11armadillotest_chi2rnd1_",                     (DL_FUNC) &_cpp11armadillotest_chi2rnd1_,                     2},
+    {"_cpp11armadillotest_chol1_",                        (DL_FUNC) &_cpp11armadillotest_chol1_,                        3},
     {"_cpp11armadillotest_chol_mat",                      (DL_FUNC) &_cpp11armadillotest_chol_mat,                      2},
     {"_cpp11armadillotest_clamp1_",                       (DL_FUNC) &_cpp11armadillotest_clamp1_,                       1},
     {"_cpp11armadillotest_clamp2_",                       (DL_FUNC) &_cpp11armadillotest_clamp2_,                       1},

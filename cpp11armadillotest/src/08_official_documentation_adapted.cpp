@@ -2910,3 +2910,25 @@
 
   return as_doubles(q);
 }
+
+[[cpp11::register]] list chol1_(const doubles_matrix<>& x, const strings& layout, const strings& output) {
+  mat X = as_mat(x);
+
+  std::string layout_str = layout[0];
+  const char* layout_cstr = layout_str.c_str();
+
+  std::string output_str = output[0];
+  const char* output_cstr = output_str.c_str();
+
+  mat Y = X.t() * X;
+
+  mat R;
+  umat P;
+
+  writable::list out(2);
+  bool ok = chol(R, P, Y, layout_cstr, output_cstr);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles_matrix(R);
+
+  return out;
+}

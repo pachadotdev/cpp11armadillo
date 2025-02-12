@@ -17,3 +17,83 @@ knitr::opts_chunk$set(
 
 This vignette is adapted from the official Armadillo
 [documentation](https://arma.sourceforge.net/docs.html).
+
+# Cholesky decomposition {#chol}
+
+Cholesky decomposition of symmetric/hermitian matrix `X` into a triangular
+matrix `R`, with an optional permutation vector/matrix `P`. By default, `R` is
+upper triangular.
+
+Usage:
+
+```cpp
+chol(R, P, X, layout, output)
+
+// form 1
+mat R = chol(X) // chol(X, "upper") or chol(X, "lower") also work
+
+// form 2
+chol(R, X) // chol(R, X, "upper") or chol(R, X, "lower") also work
+
+// form 3
+chol(R, P, X, "upper", "vector") // chol(R, P, X, "lower", "vector") also work
+
+// form 4
+chol(R, P, X, "upper", "matrix") // chol(R, P, X, "lower", "matrix") also work
+```
+
+The optional argument `layout` is either `"upper"` or `"lower"`,
+which specifies whether `R` is upper or lower triangular.
+
+Forms 1 and 2 require `X` to be positive definite.
+
+Forms 3 and 4 require `X` to be positive semi-definite. The pivoted
+decomposition provides a permutation vector or matrix `P` with type `uvec` or
+`umat`.
+
+The decomposition has the following form:
+
+- Forms 1 and 2 with `layout = "upper"`: `X = R.t() * R`
+- Forms 1 and 2 with `layout = "lower"`: `X = R * R.t()`
+- Form 3 with `layout = "upper"`: `X(P,P) = R.t() * R`, where `X(P,P)` is a
+  non-contiguous view of `X`
+- Form 3 with `layout = "lower"`: `X(P,P) = R * R.t()`, where `X(P,P)` is a
+  non-contiguous view of `X`
+- Form 4 with `layout = "upper"`: `X = P * R.t() * R * P.t()`
+- Form 4 with `layout = "lower"`: `X = P * R * R.t() * P.t()`
+
+Caveats:
+
+- `R = chol(X)` and `R = chol(X,layout)` reset `R` and throw an error if the
+  decomposition fails. The other forms reset `R` and `P`, and return a bool set
+  to false without an error.
+- To find the inverse of a positive definite matrix, use `inv_sympd()`.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list chol1_(const doubles_matrix<>& x, const strings& layout, const strings& output) {
+  mat X = as_mat(x);
+
+  std::string layout_str = layout[0];
+  const char* layout_cstr = layout_str.c_str();
+
+  std::string output_str = output[0];
+  const char* output_cstr = output_str.c_str();
+
+  mat Y = X.t() * X;
+
+  mat R;
+  umat P;
+
+  writable::list out(2);
+  bool ok = chol(R, P, Y, layout_cstr, output_cstr);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles_matrix(R);
+
+  return out;
+}
+```
+
+
+

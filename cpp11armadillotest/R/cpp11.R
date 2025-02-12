@@ -896,6 +896,10 @@ polyval1_ <- function(n, m) {
   .Call(`_cpp11armadillotest_polyval1_`, n, m)
 }
 
+chol1_ <- function(x, layout, output) {
+  .Call(`_cpp11armadillotest_chol1_`, x, layout, output)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }
