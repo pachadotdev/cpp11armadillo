@@ -162,6 +162,12 @@ inline integers_matrix<> as_integers_matrix(const Col<int>& x) {
   return Col_to_dblint_matrix_<int, integers_matrix<>>(x);
 }
 
+// Specialization for fmat
+inline doubles_matrix<> as_doubles_matrix(const fmat& x) {
+  Mat<double> temp = conv_to<Mat<double>>::from(x);
+  return Mat_to_dblint_matrix_<double, doubles_matrix<>>(temp);
+}
+
 // Complex
 
 inline list as_complex_doubles(const Col<std::complex<double>>& x) {

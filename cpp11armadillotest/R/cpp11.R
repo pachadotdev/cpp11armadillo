@@ -76,6 +76,14 @@ typedef_SpMat_int <- function(x) {
   .Call(`_cpp11armadillotest_typedef_SpMat_int`, x)
 }
 
+typedef_dblmat_exchangeability <- function(x) {
+  .Call(`_cpp11armadillotest_typedef_dblmat_exchangeability`, x)
+}
+
+typedef_intmat_exchangeability <- function(x) {
+  .Call(`_cpp11armadillotest_typedef_intmat_exchangeability`, x)
+}
+
 random_matrix_nxn <- function(n) {
   .Call(`_cpp11armadillotest_random_matrix_nxn`, n)
 }

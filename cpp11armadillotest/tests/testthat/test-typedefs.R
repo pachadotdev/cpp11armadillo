@@ -70,3 +70,21 @@ test_that("elemental tests for matrices", {
   expect_error(typedef_Mat_int(y), "expected 'integer' actual 'double'")
   expect_equal(y, typedef_Mat_double(y))
 })
+
+test_that("compatible casting for matrices", {
+  set.seed(123)
+  x <- round(matrix(rnorm(4), nrow = 2), 3)
+  res <- typedef_dblmat_exchangeability(x)
+  n <- length(res)
+  for (i in seq_len(n - 1)) {
+    expect_true(all.equal(res[[n]], res[[i]]))
+  }
+
+  set.seed(321)
+  y <- matrix(rbinom(25, 1, 0.5), 5, 5)
+  res <- typedef_intmat_exchangeability(y)
+  n <- length(res)
+  for (i in seq_len(n - 1)) {
+    expect_true(all.equal(res[[n]], res[[i]]))
+  }
+})

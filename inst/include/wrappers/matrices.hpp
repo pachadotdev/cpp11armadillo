@@ -86,6 +86,11 @@ inline umat as_umat(const integers_matrix<>& x) { return as_target_mat<umat>(x);
 
 inline imat as_imat(const integers_matrix<>& x) { return as_target_mat<imat>(x); }
 
+inline fmat as_fmat(const doubles_matrix<>& x) {
+  Mat<double> y = dblint_matrix_to_Mat_<double, doubles_matrix<>>(x);
+  return arma::conv_to<fmat>::from(y);
+}
+
 // cpp11armadillo 0.4.3
 // as_mat() = alias for as_Mat()
 
@@ -162,9 +167,13 @@ inline integers_matrix<> as_integers_matrix(const SourceMatType& A) {
   return B;
 }
 
-inline integers_matrix<> as_integers_matrix(const umat& A) { return as_integers_matrix<umat>(A); }
+inline integers_matrix<> as_integers_matrix(const umat& A) {
+  return as_integers_matrix<umat>(A);
+}
 
-inline integers_matrix<> as_integers_matrix(const imat& A) { return as_integers_matrix<imat>(A); }
+inline integers_matrix<> as_integers_matrix(const imat& A) {
+  return as_integers_matrix<imat>(A);
+}
 
 // Complex
 

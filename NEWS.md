@@ -2,9 +2,9 @@
 
 * Provides wrappers to avoid CRAN notes with Armadillo functions that use
   `std::cout` (#05a342b).
-* Allows to convert `uword` to `integers`.
-* Allows to convert `imat` and `umat` to `integers_matrix<>`.
-* Allows to convert `integers_matrix<>` to `imat` and `umat`.
+* Allows to convert `uword` to `integers` and vice versa.
+* Allows to convert `imat` and `umat` to `integers_matrix<>` and vice versa.
+* Allows to convert `fmat` to `doubles_matrix<>` and vice versa.
 * Added new vignettes:
   * Signal and image processing.
   * Decompositions, factorisations, inverses and equation solvers (dense matrices).

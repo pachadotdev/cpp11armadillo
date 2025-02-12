@@ -2911,7 +2911,8 @@
   return as_doubles(q);
 }
 
-[[cpp11::register]] list chol1_(const doubles_matrix<>& x, const strings& layout, const strings& output) {
+[[cpp11::register]] list chol1_(const doubles_matrix<>& x, const strings& layout,
+                                const strings& output) {
   mat X = as_mat(x);
 
   std::string layout_str = layout[0];
