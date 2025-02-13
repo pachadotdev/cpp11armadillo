@@ -828,5 +828,77 @@ test_that("examples derived from official documentation", {
 
   set.seed(123)
   X <- matrix(rnorm(25), 5, 5)
-  chol1_(X, "upper", "matrix")
+
+  set.seed(321)
+  Y <- matrix(rnorm(25), 5, 5)
+
+  res188 <- chol1_(X, "upper", "matrix")
+  res189 <- eig_sym1_(X, "dc")
+  res190 <- eig_gen1_(X, "nobalance")
+  res191 <- eig_pair1_(X, Y)
+  res192 <- hess1_(X)
+  res193 <- inv1_(X)
+  res194 <- inv_sympd1_(X)
+  res195 <- lu1_(X)
+
+  expect_type(res188, "list")
+  expect_type(res189, "list")
+  expect_type(res190, "list")
+  expect_type(res191, "list")
+  expect_type(res192, "list")
+  expect_type(res193, "list")
+  expect_type(res194, "list")
+  expect_type(res195, "list")
+
+  set.seed(321)
+  Z <- matrix(rnorm(30), 5, 6)
+  res196 <- null1_(Z)
+  expect_type(res196, "list")
+
+  res197 <- orth1_(Z)
+  expect_type(res197, "list")
+
+  res198 <- pinv1_(Z)
+  expect_type(res198, "list")
+
+  res199 <- qr1_(X)
+  res200 <- qr_econ1_(X)
+  expect_type(res199, "list")
+  expect_type(res200, "list")
+  expect_equal(res199[[2]] %*% res199[[3]], X %*% res199[[4]])
+  expect_equal(res200[[2]] %*% res200[[3]], X)
+
+  set.seed(123)
+  X <- matrix(rnorm(25), 5, 5)
+  Y <- matrix(rnorm(25), 5, 5)
+
+  res201 <- qz1_(X, Y, "none")
+  expect_type(res201, "list")
+
+  res202 <- schur1_(X)
+  expect_type(res202, "list")
+
+  res203 <- solve1_(X, Y)
+  expect_type(res203, "double")
+
+  res204 <- svd1_(X)
+  U <- res204[[2]]
+  S <- diag(res204[[3]])
+  V <- res204[[4]]
+  expect_type(res204, "list")
+  expect_equal(U %*% S %*% t(V), X)
+
+  res205 <- svd_econ1_(X)
+  U <- res205[[1]]
+  S <- diag(res205[[2]])
+  V <- res205[[3]]
+  expect_type(res205, "list")
+  expect_equal(U %*% S %*% t(V), X)
+
+  set.seed(123)
+  A <- matrix(rnorm(25), 5, 5)
+  B <- matrix(rnorm(25), 5, 5)
+  C <- matrix(rnorm(25), 5, 5)
+  res206 <- syl1_(A,B,C)
+  expect_type(res206, "double")
 })

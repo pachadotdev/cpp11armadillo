@@ -2911,15 +2911,9 @@
   return as_doubles(q);
 }
 
-[[cpp11::register]] list chol1_(const doubles_matrix<>& x, const strings& layout,
-                                const strings& output) {
+[[cpp11::register]] list chol1_(const doubles_matrix<>& x, const char* layout,
+                                const char* output) {
   mat X = as_mat(x);
-
-  std::string layout_str = layout[0];
-  const char* layout_cstr = layout_str.c_str();
-
-  std::string output_str = output[0];
-  const char* output_cstr = output_str.c_str();
 
   mat Y = X.t() * X;
 
@@ -2927,9 +2921,276 @@
   umat P;
 
   writable::list out(2);
-  bool ok = chol(R, P, Y, layout_cstr, output_cstr);
+  bool ok = chol(R, P, Y, layout, output);
   out[0] = writable::logicals({ok});
   out[1] = as_doubles_matrix(R);
 
   return out;
+}
+
+[[cpp11::register]] list eig_sym1_(const doubles_matrix<>& x, const char* method) {
+  mat X = as_mat(x);
+
+  vec eigval;
+  mat eigvec;
+
+  bool ok = eig_sym(eigval, eigvec, X, method);
+
+  writable::list out(3);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles(eigval);
+  out[2] = as_doubles_matrix(eigvec);
+
+  return out;
+}
+
+[[cpp11::register]] list eig_gen1_(const doubles_matrix<>& x, const char* balance) {
+  mat X = as_mat(x);
+
+  cx_vec eigval;
+  cx_mat eigvec;
+
+  bool ok = eig_gen(eigval, eigvec, X, balance);
+
+  writable::list out(3);
+  out[0] = writable::logicals({ok});
+  out[1] = as_complex_doubles(eigval);
+  out[2] = as_complex_matrix(eigvec);
+
+  return out;
+}
+
+[[cpp11::register]] list eig_pair1_(const doubles_matrix<>& a,
+                                    const doubles_matrix<>& b) {
+  mat A = as_mat(a);
+  mat B = as_mat(b);
+
+  cx_vec eigval;
+  cx_mat eigvec;
+
+  bool ok = eig_pair(eigval, eigvec, A, B);
+
+  writable::list out(3);
+  out[0] = writable::logicals({ok});
+  out[1] = as_complex_doubles(eigval);
+  out[2] = as_complex_matrix(eigvec);
+
+  return out;
+}
+
+[[cpp11::register]] list hess1_(const doubles_matrix<>& x) {
+  mat X = as_mat(x);
+
+  mat H;
+  bool ok = hess(H, X);
+
+  writable::list out(2);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles_matrix(H);
+
+  return out;
+}
+
+[[cpp11::register]] list inv1_(const doubles_matrix<>& a) {
+  mat A = as_mat(a);
+
+  mat B;
+  bool ok = inv(B, A, inv_opts::allow_approx);
+
+  writable::list out(2);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles_matrix(B);
+
+  return out;
+}
+
+[[cpp11::register]] list inv_sympd1_(const doubles_matrix<>& a) {
+  mat A = as_mat(a);
+
+  mat B;
+  bool ok = inv_sympd(B, A, inv_opts::allow_approx);
+
+  writable::list out(2);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles_matrix(B);
+
+  return out;
+}
+
+[[cpp11::register]] list lu1_(const doubles_matrix<>& x) {
+  mat X = as_mat(x);
+
+  mat L, U, P;
+
+  bool ok = lu(L, U, P, X);
+
+  writable::list out(4);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles_matrix(L);
+  out[2] = as_doubles_matrix(U);
+  out[3] = as_doubles_matrix(P);
+
+  return out;
+}
+
+[[cpp11::register]] list null1_(const doubles_matrix<>& a) {
+  mat A = as_mat(a);
+
+  A.row(0).zeros();  // make the first row zero
+  A.col(0).zeros();  // make the first column zero
+
+  mat B;
+  bool ok = null(B, A);
+
+  writable::list out(2);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles_matrix(B);
+
+  return out;
+}
+
+[[cpp11::register]] list orth1_(const doubles_matrix<>& a) {
+  mat A = as_mat(a);
+
+  mat B;
+  bool ok = orth(B, A);
+
+  writable::list out(2);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles_matrix(B);
+
+  return out;
+}
+
+[[cpp11::register]] list pinv1_(const doubles_matrix<>& a) {
+  mat A = as_mat(a);
+
+  mat B = pinv(A);
+
+  writable::list out(1);
+  out[0] = as_doubles_matrix(B);
+
+  return out;
+}
+
+[[cpp11::register]] list qr1_(const doubles_matrix<>& x) {
+  mat X = as_mat(x);
+
+  mat Q, R;
+  umat P;
+
+  bool ok = qr(Q, R, P, X, "matrix");
+
+  writable::list out(4);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles_matrix(Q);
+  out[2] = as_doubles_matrix(R);
+  out[3] = as_integers_matrix(P);
+
+  return out;
+}
+
+[[cpp11::register]] list qr_econ1_(const doubles_matrix<>& x) {
+  mat X = as_mat(x);
+
+  mat Q, R;
+
+  bool ok = qr_econ(Q, R, X);
+
+  writable::list out(3);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles_matrix(Q);
+  out[2] = as_doubles_matrix(R);
+
+  return out;
+}
+
+[[cpp11::register]] list qz1_(const doubles_matrix<>& a, const doubles_matrix<>& b,
+                                 const char* select) {
+  mat A = as_mat(a);
+  mat B = as_mat(b);
+
+  mat AA, BB, Q, Z;
+
+  bool ok = qz(AA, BB, Q, Z, A, B, select);
+
+  writable::list out(5);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles_matrix(AA);
+  out[2] = as_doubles_matrix(BB);
+  out[3] = as_doubles_matrix(Q);
+  out[4] = as_doubles_matrix(Z);
+
+  return out;
+}
+
+[[cpp11::register]] list schur1_(const doubles_matrix<>& x) {
+  mat X = as_mat(x);
+
+  mat U, S;
+
+  bool ok = schur(U, S, X);
+
+  writable::list out(3);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles_matrix(U);
+  out[2] = as_doubles_matrix(S);
+
+  return out;
+}
+
+[[cpp11::register]] doubles_matrix<> solve1_(const doubles_matrix<>& a, const doubles_matrix<>& b) {
+  mat A = as_mat(a);
+  mat B = as_mat(b);
+
+  mat X = solve(A, B);
+
+  return as_doubles_matrix(X);
+}
+
+[[cpp11::register]] list svd1_(const doubles_matrix<>& x) {
+  mat X = as_mat(x);
+
+  mat U;
+  vec s;
+  mat V;
+
+  bool ok = svd(U, s, V, X);
+
+  writable::list out(4);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles_matrix(U);
+  out[2] = as_doubles(s);
+  out[3] = as_doubles_matrix(V);
+
+  return out;
+}
+
+[[cpp11::register]] list svd_econ1_(const doubles_matrix<>& x) {
+  mat X = as_mat(x);
+
+  mat U;
+  vec s;
+  mat V;
+
+  svd_econ(U, s, V, X);
+
+  writable::list out(3);
+  out[0] = as_doubles_matrix(U);
+  out[1] = as_doubles(s);
+  out[2] = as_doubles_matrix(V);
+
+  return out;
+}
+
+[[cpp11::register]] doubles_matrix<> syl1_(const doubles_matrix<>& a,
+                                           const doubles_matrix<>& b,
+                                           const doubles_matrix<>& c) {
+  mat A = as_mat(a);
+  mat B = as_mat(b);
+  mat C = as_mat(c);
+
+  mat X = syl(A, B, C);
+
+  return as_doubles_matrix(X);
 }

@@ -908,6 +908,78 @@ chol1_ <- function(x, layout, output) {
   .Call(`_cpp11armadillotest_chol1_`, x, layout, output)
 }
 
+eig_sym1_ <- function(x, method) {
+  .Call(`_cpp11armadillotest_eig_sym1_`, x, method)
+}
+
+eig_gen1_ <- function(x, balance) {
+  .Call(`_cpp11armadillotest_eig_gen1_`, x, balance)
+}
+
+eig_pair1_ <- function(a, b) {
+  .Call(`_cpp11armadillotest_eig_pair1_`, a, b)
+}
+
+hess1_ <- function(x) {
+  .Call(`_cpp11armadillotest_hess1_`, x)
+}
+
+inv1_ <- function(a) {
+  .Call(`_cpp11armadillotest_inv1_`, a)
+}
+
+inv_sympd1_ <- function(a) {
+  .Call(`_cpp11armadillotest_inv_sympd1_`, a)
+}
+
+lu1_ <- function(x) {
+  .Call(`_cpp11armadillotest_lu1_`, x)
+}
+
+null1_ <- function(a) {
+  .Call(`_cpp11armadillotest_null1_`, a)
+}
+
+orth1_ <- function(a) {
+  .Call(`_cpp11armadillotest_orth1_`, a)
+}
+
+pinv1_ <- function(a) {
+  .Call(`_cpp11armadillotest_pinv1_`, a)
+}
+
+qr1_ <- function(x) {
+  .Call(`_cpp11armadillotest_qr1_`, x)
+}
+
+qr_econ1_ <- function(x) {
+  .Call(`_cpp11armadillotest_qr_econ1_`, x)
+}
+
+qz1_ <- function(a, b, select) {
+  .Call(`_cpp11armadillotest_qz1_`, a, b, select)
+}
+
+schur1_ <- function(x) {
+  .Call(`_cpp11armadillotest_schur1_`, x)
+}
+
+solve1_ <- function(a, b) {
+  .Call(`_cpp11armadillotest_solve1_`, a, b)
+}
+
+svd1_ <- function(x) {
+  .Call(`_cpp11armadillotest_svd1_`, x)
+}
+
+svd_econ1_ <- function(x) {
+  .Call(`_cpp11armadillotest_svd_econ1_`, x)
+}
+
+syl1_ <- function(a, b, c) {
+  .Call(`_cpp11armadillotest_syl1_`, a, b, c)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }
