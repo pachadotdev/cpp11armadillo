@@ -91,7 +91,7 @@ Caveats:
 }
 ```
 
-# Eigen decomposition of dense symmetric matrix {#eig_sym}
+# Eigen decomposition of a symmetric matrix {#eig_sym}
 
 Eigen decomposition of dense symmetric (or hermitian) matrix `X` into
 eigenvalues `eigval` and eigenvectors `eigvec`.
@@ -138,14 +138,14 @@ If the decomposition fails:
 
   writable::list out(3);
   out[0] = writable::logicals({ok});
-  out[1] = as_doubles_vector(eigval);
+  out[1] = as_doubles(eigval);
   out[2] = as_doubles_matrix(eigvec);
 
   return out;
 }
 ```
 
-# Eigen decomposition of dense general matrix {#eig_gen}
+# Eigen decomposition of a general matrix {#eig_gen}
 
 Eigen decomposition of dense general (non-symmetric/non-hermitian) square matrix
 `X` into eigenvalues `eigval` and eigenvectors `eigvec`.
@@ -687,24 +687,6 @@ a bool set to false (an error is not thrown).
 
 # Economic QR decomposition {#qr_econ}
 
-<!-- qr_econ( Q, R, X )
-
-    Economical decomposition of X (with size m x n) into an orthogonal matrix Q and a right triangular matrix R, such that Q*R = X
-
-    If m > n, only the first n rows of R and the first n columns of Q are calculated (ie. the zero rows of R and the corresponding columns of Q are omitted)
-
-    If the decomposition fails, Q and R are reset and the function returns a bool set to false (exception is not thrown)
-
-    Examples:
-
-        mat X(6, 5, fill::randu);
-
-        mat Q;
-        mat R;
-
-        qr_econ(Q, R, X);
- -->
-
 Economical QR decomposition of matrix `X` into an orthogonal matrix `Q` and a
 right triangular matrix `R`, such that $QR = X$.
 
@@ -816,84 +798,14 @@ Caveat: in general, Schur decomposition is not unique.
 
 # Solve a system of linear equations {#solve}
 
-<!-- X = solve( A, B )
-X = solve( A, B, settings )
-
-solve( X, A, B )
-solve( X, A, B, settings )
-
-    Solve a dense system of linear equations, A*X = B, where X is unknown; similar functionality to the \ operator in Matlab/Octave, ie. X = A \ B
-
-    A can be square sized (critically determined system), or non-square (under/over-determined system); A can be rank deficient
-
-    B can be a vector or matrix
-
-    The number of rows in A and B must be the same
-
-    By default, matrix A is analysed to automatically determine whether it is a general matrix, band matrix, diagonal matrix, or symmetric/hermitian positive definite (sympd) matrix; based on the detected matrix structure, a specialised solver is used for faster execution; if no solution is found, an approximate solver is automatically used as a fallback; see the associated paper for more details
-
-    If A is known to be a triangular matrix, the solution can be computed faster by explicitly indicating that A is triangular through trimatu() or trimatl(); see examples below
-
-    The settings argument is optional; it is one of the following, or a combination thereof:
-
-    solve_opts::fast	   	fast mode: disable determining solution quality via rcond, disable iterative refinement, disable equilibration
-    solve_opts::refine	   	apply iterative refinement to improve solution quality   (matrix A must be square)
-    solve_opts::equilibrate	   	equilibrate the system before solving   (matrix A must be square)
-    solve_opts::likely_sympd	   	indicate that matrix A is likely symmetric/hermitian positive definite (sympd)
-    solve_opts::allow_ugly	   	keep solutions of systems that are singular to working precision
-    solve_opts::no_approx	   	do not find approximate solutions for rank deficient systems
-    solve_opts::force_sym	   	force use of the symmetric/hermitian solver (not limited to sympd matrices)
-    solve_opts::force_approx	   	force use of the approximate solver
-
-    the above settings can be combined using the + operator; for example: solve_opts::fast + solve_opts::no_approx
-
-    If a rank deficient system is detected and the solve_opts::no_approx option is not enabled, a warning is emitted and an approximate solution is attempted;
-    since Armadillo 10.4, this warning can be disabled by setting ARMA_WARN_LEVEL to 1 before including the armadillo header:
-    #define ARMA_WARN_LEVEL 1
-    #include <armadillo>
-
-    Caveats:
-        using solve_opts::fast will speed up finding the solution, but for poorly conditioned systems the solution may have lower quality
-        not all sympd matrices are automatically detected; to directly indicate that matrix A is likely sympd, use solve_opts::likely_sympd
-        using solve_opts::force_approx is only advised if the system is known to be rank deficient; the approximate solver is considerably slower
-
-    If no solution is found:
-        X = solve(A,B) resets X and throws a std::runtime_error exception
-        solve(X,A,B) resets X and returns a bool set to false (exception is not thrown)
-
-    Implementation details are available in the following paper:
-        Conrad Sanderson and Ryan Curtin.
-        An Adaptive Solver for Systems of Linear Equations.
-        International Conference on Signal Processing and Communication Systems, 2020. 
-
-    Examples:
-
-        mat A(5, 5, fill::randu);
-        vec b(5,    fill::randu);
-        mat B(5, 5, fill::randu);
-
-        vec x1 = solve(A, b);
-
-        vec x2;
-        bool status = solve(x2, A, b);
-
-        mat X1 = solve(A, B);
-
-        mat X2 = solve(A, B, solve_opts::fast);  // enable fast mode
-
-        mat X3 = solve(trimatu(A), B);  // indicate that A is triangular
- -->
-
 Solve a dense system of linear equations, $AX = B$, where $X$ is unknown.
 This is similar functionality to the `\` operator in Matlab/Octave (e.g.,
-`X = A \ B`).
+`X = A \ B`). The implementation details are available in @Sanderson2017.
 
-Matrix `A` can be square sized (critically determined system), or non-square
-(under/over-determined system).
+$A$ can be square sized (critically determined system), non-square
+(under/over-determined system), or rank deficient.
 
-`A` can be rank deficient.
-
-`B` can be a vector or matrix.
+$B$ can be a vector or matrix.
 
 The number of rows in `A` and `B` must be the same.
 
@@ -971,16 +883,6 @@ If no solution is found:
 }
 ```
 
-## Implementation details
-
-The implementation details are available in the following
-[paper](https://arma.sourceforge.net/armadillo_spcs_2017.pdf):
-
-  Sanderson, Conrad, and Ryan Curtin. "An open source C++ implementation of
-  multi-threaded Gaussian mixture models, k-means and expectation maximisation."
-  In *2017 11th international conference on signal processing and communication
-  systems (ICSPCS)*, pp. 1-8. IEEE, 2017.
-
 # Singular value decomposition {#svd}
 
 Singular value decomposition of dense matrix `X`.
@@ -1029,41 +931,6 @@ If the decomposition fails:
 
 # Economic singular value decomposition {#svd_econ}
 
-<!-- svd_econ( mat U, vec s, mat V, mat X )
-svd_econ( mat U, vec s, mat V, mat X, mode )
-svd_econ( mat U, vec s, mat V, mat X, mode, method )
-
-svd_econ( cx_mat U, vec s, cx_mat V, cx_mat X )
-svd_econ( cx_mat U, vec s, cx_mat V, cx_mat X, mode )
-svd_econ( cx_mat U, vec s, cx_mat V, cx_mat X, mode, method )
-
-    Economical singular value decomposition of dense matrix X
-
-    The singular values are in descending order
-
-    The mode argument is optional; mode is one of:
-        	"both"	 = 	compute both left and right singular vectors (default operation)
-        	"left"	 = 	compute only left singular vectors
-        	"right"	 = 	compute only right singular vectors
-
-    The method argument is optional; method is either "dc" or "std"
-        "dc" indicates divide-and-conquer method (default setting)
-        "std" indicates standard method
-        the divide-and-conquer method provides slightly different results than the standard method, but is considerably faster for large matrices
-
-    If the decomposition fails, U, s, V are reset and a bool set to false is returned (exception is not thrown)
-
-    Examples:
-
-        mat X(4, 5, fill::randu);
-
-        mat U;
-        vec s;
-        mat V;
-
-        svd_econ(U, s, V, X);
- -->
-
 Economical singular value decomposition of dense matrix `X`.
 
 The singular values are in descending order.
@@ -1106,29 +973,6 @@ is returned (an error is not thrown).
 ```
 
 # Sylvester equation solver {#syl}
-
-<!-- X = syl( A, B, C )
-syl( X, A, B, C )
-
-    Solve the Sylvester equation, ie. AX + XB + C = 0, where X is unknown
-
-    Matrices A, B and C must be square sized
-
-    If no solution is found:
-        syl(A,B,C) resets X and throws a std::runtime_error exception
-        syl(X,A,B,C) resets X and returns a bool set to false (exception is not thrown)
-
-    Examples:
-
-        mat A(5, 5, fill::randu);
-        mat B(5, 5, fill::randu);
-        mat C(5, 5, fill::randu);
-
-        mat X1 = syl(A, B, C);
-
-        mat X2;
-        syl(X2, A, B, C);
- -->
 
 Solve the Sylvester equation, i.e., $AX + XB + C = 0$, where $X$ is unknown.
 

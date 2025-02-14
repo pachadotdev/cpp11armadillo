@@ -82,7 +82,418 @@
     
     
 <p>This vignette is adapted from the official Armadillo <a href="https://arma.sourceforge.net/docs.html" class="external-link">documentation</a>.</p>
-  </main>
+<div class="section level2">
+<h2 id="eig_sym">Eigen decomposition of a symmetric matrix<a class="anchor" aria-label="anchor" href="#eig_sym"></a>
+</h2>
+<p>Obtain a limited number of eigenvalues and eigenvectors of sparse symmetric real matrix <code>X</code>.</p>
+<p>Usage:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>vec eigval = eigs_sym(X, k)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>vec eigval = eigs_sym(X, k, form)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>vec eigval = eigs_sym(X, k, form, opts)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>vec eigval = eigs_sym(X, k, sigma)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>vec eigval = eigs_sym(X, k, sigma, opts)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>eigs_sym(eigval, X, k)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>eigs_sym(eigval, X, k, form)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>eigs_sym(eigval, X, k, form, opts)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>eigs_sym(eigval, X, k, sigma)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>eigs_sym(eigval, X, k, sigma, opts)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>eigs_sym(eigval, eigvec, X, k)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>eigs_sym(eigval, eigvec, X, k, form)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>eigs_sym(eigval, eigvec, X, k, form, opts)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>eigs_sym(eigval, eigvec, X, k, sigma)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>eigs_sym(eigval, eigvec, X, k, sigma, opts)</span></code></pre></div>
+<p><code>k</code> specifies the number of eigenvalues and eigenvectors.</p>
+<p>The argument <code>form</code> is optional and is one of the following:</p>
+<ul>
+<li>
+<code>"lm"</code>: obtain eigenvalues with largest magnitude (default operation).</li>
+<li>
+<code>"sm"</code>: obtain eigenvalues with smallest magnitude (see the caveats below).</li>
+<li>
+<code>"la"</code>: obtain eigenvalues with largest algebraic value.</li>
+</ul>
+<p>The argument <code>sigma</code> is optional; if <code>sigma</code> is given, eigenvalues closest to <code>sigma</code> are found via shift-invert mode. Note that to use <code>sigma</code>, both <code>ARMA_USE_ARPACK</code> and <code>ARMA_USE_SUPERLU</code> must be enabled in <code>armadillo/config.hpp</code>.</p>
+<p>The <code>opts</code> argument is optional; <code>opts</code> is an instance of the <code>eigs_opts</code> structure:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">struct</span> eigs_opts</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>{</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  <span class="dt">double</span>       tol;     <span class="co">// default: 0</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>  <span class="dt">unsigned</span> <span class="dt">int</span> maxiter; <span class="co">// default: 1000</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  <span class="dt">unsigned</span> <span class="dt">int</span> subdim;  <span class="co">// default: max(2*k+1, 20)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>};</span></code></pre></div>
+<ul>
+<li>
+<code>tol</code> specifies the tolerance for convergence.</li>
+<li>
+<code>maxiter</code> specifies the maximum number of Arnoldi iterations.</li>
+<li>
+<code>subdim</code> specifies the dimension of the Krylov subspace, with the constraint <code>k &lt; subdim &lt;= X.n_rows</code>; the recommended value is <code>subdim &gt;= 2*k</code>.</li>
+</ul>
+<p>The eigenvalues and corresponding eigenvectors are stored in <code>eigval</code> and <code>eigvec</code>, respectively.</p>
+<p>If <code>X</code> is not square sized, an error is thrown.</p>
+<p>If the decomposition fails:</p>
+<ul>
+<li>
+<code>eigval = eigs_sym(X,k)</code> resets <code>eigval</code> and throws an error.</li>
+<li>
+<code>eigs_sym(eigval,X,k)</code> resets <code>eigval</code> and returns a bool set to false (an error is not thrown).</li>
+<li>
+<code>eigs_sym(eigval,eigvec,X,k)</code> resets <code>eigval</code> and <code>eigvec</code> and returns a bool set to false (an error is not thrown).</li>
+</ul>
+<p>Caveats:</p>
+<ul>
+<li>The number of obtained eigenvalues/eigenvectors may be lower than requested, depending on the given data.</li>
+<li>If the decomposition fails, try first increasing <code>opts.subdim</code> (Krylov subspace dimension), and, as secondary options, try increasing <code>opts.maxiter</code> (maximum number of iterations), and/or <code>opts.tol</code> (tolerance for convergence), and/or <code>k</code> (number of eigenvalues).</li>
+<li>For an alternative to the <code>"sm"</code> form, use the shift-invert mode with <code>sigma</code> set to <code>0.0</code>.</li>
+<li>The implementation in Armadillo 12.6 is considerably faster than earlier versions; further speedups can be obtained by enabling OpenMP in your compiler (e.g., <code>-fopenmp</code> in GCC and clang).</li>
+</ul>
+<div class="section level3">
+<h3 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">eig_sym2_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>                                   <span class="at">const</span> <span class="dt">char</span>* method,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>                                   <span class="at">const</span> <span class="dt">int</span>&amp; k) {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>  sp_mat X = as_SpMat(x);</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>  sp_mat Y = X.t() * X;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>  vec eigval;</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>  mat eigvec;</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>  eigs_opts opts;</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>  opts.maxiter = <span class="dv">10000</span>;</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a>  <span class="dt">bool</span> ok = eigs_sym(eigval, eigvec, Y, k, method, opts);</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>  writable::list out(<span class="dv">3</span>);</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles(eigval);</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_doubles_matrix(eigvec);</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="eig_gen">Eigen decomposition of a general matrix<a class="anchor" aria-label="anchor" href="#eig_gen"></a>
+</h2>
+<p>Obtain a limited number of eigenvalues and eigenvectors of sparse general (non-symmetric/non-hermitian) square matrix <code>X</code>.</p>
+<p>Usage:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>cx_vec eigval = eigs_gen(X, k)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>cx_vec eigval = eigs_gen(X, k, form)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>cx_vec eigval = eigs_gen(X, k, sigma)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>cx_vec eigval = eigs_gen(X, k, form, opts)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>cx_vec eigval = eigs_gen(X, k, sigma, opts)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>eigs_gen(eigval, X, k)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>eigs_gen(eigval, X, k, form)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>eigs_gen(eigval, X, k, sigma)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>eigs_gen(eigval, X, k, form, opts)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>eigs_gen(eigval, X, k, sigma, opts)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>eigs_gen(eigval, eigvec, X, k)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>eigs_gen(eigval, eigvec, X, k, form)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>eigs_gen(eigval, eigvec, X, k, sigma)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>eigs_gen(eigval, eigvec, X, k, form, opts)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>eigs_gen(eigval, eigvec, X, k, sigma, opts)</span></code></pre></div>
+<p><code>k</code> specifies the number of eigenvalues and eigenvectors.</p>
+<p>The argument <code>form</code> is optional; <code>form</code> is one of the following:</p>
+<ul>
+<li>
+<code>"lm"</code>: obtain eigenvalues with largest magnitude (default operation).</li>
+<li>
+<code>"sm"</code>: obtain eigenvalues with smallest magnitude (see the caveats below).</li>
+<li>
+<code>"lr"</code>: obtain eigenvalues with largest real part.</li>
+<li>
+<code>"sr"</code>: obtain eigenvalues with smallest real part.</li>
+<li>
+<code>"li"</code>: obtain eigenvalues with largest imaginary part.</li>
+<li>
+<code>"si"</code>: obtain eigenvalues with smallest imaginary part.</li>
+</ul>
+<p>The argument <code>sigma</code> is optional; if <code>sigma</code> is given, eigenvalues closest to <code>sigma</code> are found via shift-invert mode. Note that to use <code>sigma</code>, both <code>ARMA_USE_ARPACK</code> and <code>ARMA_USE_SUPERLU</code> must be enabled in <code>armadillo/config.hpp</code>.</p>
+<p>The <code>opts</code> argument is optional; <code>opts</code> is an instance of the <code>eigs_opts</code> structure:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">struct</span> eigs_opts</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>{</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  <span class="dt">double</span>       tol;     <span class="co">// default: 0</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>  <span class="dt">unsigned</span> <span class="dt">int</span> maxiter; <span class="co">// default: 1000</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>  <span class="dt">unsigned</span> <span class="dt">int</span> subdim;  <span class="co">// default: max(2*k+1, 20)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>};</span></code></pre></div>
+<ul>
+<li>
+<code>tol</code> specifies the tolerance for convergence.</li>
+<li>
+<code>maxiter</code> specifies the maximum number of Arnoldi iterations.</li>
+<li>
+<code>subdim</code> specifies the dimension of the Krylov subspace, with the constraint <code>k &lt; subdim &lt;= X.n_rows</code>; the recommended value is <code>subdim &gt;= 2*k</code>.</li>
+</ul>
+<p>The eigenvalues and corresponding eigenvectors are stored in <code>eigval</code> and <code>eigvec</code>, respectively.</p>
+<p>If <code>X</code> is not square sized, an error is thrown.</p>
+<p>If the decomposition fails:</p>
+<ul>
+<li>
+<code>eigval = eigs_gen(X, k)</code> resets <code>eigval</code> and throws an error.</li>
+<li>
+<code>eigs_gen(eigval, X, k)</code> resets <code>eigval</code> and returns a bool set to false (an error is not thrown).</li>
+<li>
+<code>eigs_gen(eigval,eigvec, X, k)</code> resets <code>eigval</code> and <code>eigvec</code> and returns a bool set to false (an error is not thrown).</li>
+</ul>
+<p>Caveats:</p>
+<ul>
+<li>The number of obtained eigenvalues/eigenvectors may be lower than requested, depending on the given data.</li>
+<li>If the decomposition fails, try first increasing <code>opts.subdim</code> (Krylov subspace dimension), and, as secondary options, try increasing <code>opts.maxiter</code> (maximum number of iterations), and/or <code>opts.tol</code> (tolerance for convergence), and/or <code>k</code> (number of eigenvalues).</li>
+<li>For an alternative to the <code>"sm"</code> form, use the shift-invert mode with <code>sigma</code> set to <code>0.0</code>.</li>
+</ul>
+<div class="section level3">
+<h3 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">eig_gen2_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>                                   <span class="at">const</span> <span class="dt">char</span>* method,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>                                   <span class="at">const</span> <span class="dt">int</span>&amp; k) {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>  sp_mat X = as_SpMat(x);</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>  cx_vec eigval;</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>  cx_mat eigvec;</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>  eigs_opts opts;</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>  opts.maxiter = <span class="dv">10000</span>;</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>  <span class="dt">bool</span> ok = eigs_gen(eigval, eigvec, X, k, method, opts);</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a>  writable::list out(<span class="dv">3</span>);</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_complex_doubles(eigval);</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_complex_matrix(eigvec);</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="svds">Truncated singular value decomposition<a class="anchor" aria-label="anchor" href="#svds"></a>
+</h2>
+<p>Obtain a limited number of singular values and singular vectors (truncated SVD) of a sparse matrix.</p>
+<p>The singular values and vectors are calculated via sparse eigen decomposition of:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center"><msub><mn>0</mn><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow></msub></mtd><mtd columnalign="center"><mi>X</mi></mtd></mtr><mtr><mtd columnalign="center"><msup><mi>X</mi><mi>T</mi></msup></mtd><mtd columnalign="center"><msub><mn>0</mn><mrow><mi>m</mi><mo>×</mo><mi>m</mi></mrow></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">
+\begin{bmatrix}
+0_{n \times n} &amp; X \\
+X^T &amp; 0_{m \times m}
+\end{bmatrix}
+</annotation></semantics></math></p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math> are the number of rows and columns of <code>X</code>, respectively.</p>
+<p>Usage:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>vec s = svds(X, k)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>vec s = svds(X, k, tol)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>svds(vec s, X, k)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>svds(vec s, X, k, tol)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>svds(mat U, vec s, mat V, sp_mat X, k)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>svds(mat U, vec s, mat V, sp_mat X, k, tol)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a>svds(cx_mat U, vec s, cx_mat V, sp_cx_mat X, k)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>svds(cx_mat U, vec s, cx_mat V, sp_cx_mat X, k, tol)</span></code></pre></div>
+<p><code>k</code> specifies the number of singular values and singular vectors.</p>
+<p>The singular values are in descending order.</p>
+<p>The argument <code>tol</code> is optional; it specifies the tolerance for convergence, and it is passed as <code>tol / sqrt(2)</code> to <code>eigs_sym</code>.</p>
+<p>If the decomposition fails:</p>
+<ul>
+<li>
+<code>s = svds(X, k)</code> resets <code>s</code> and throws an error.</li>
+<li>
+<code>svds(s, X, k)</code> resets <code>s</code> and returns a bool set to false (an error is not thrown).</li>
+<li>
+<code>svds(U, s, V, X, k)</code> resets <code>U</code>, <code>s</code>, and <code>V</code> and returns a bool set to false (an error is not thrown).</li>
+</ul>
+<p>Caveats:</p>
+<ul>
+<li>
+<code>svds</code> is intended only for finding a few singular values from a large sparse matrix; to find all singular values, use <code>svd</code> instead.</li>
+<li>Depending on the given matrix, <code>svds</code> may find fewer singular values than specified.</li>
+<li>The implementation in Armadillo 12.6 is considerably faster than earlier versions; further speedups can be obtained by enabling OpenMP in your compiler (e.g., <code>-fopenmp</code> in GCC and clang).</li>
+</ul>
+<div class="section level3">
+<h3 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a>
+</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">svds1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x, <span class="at">const</span> <span class="dt">int</span>&amp; k) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>  sp_mat X = as_SpMat(x);</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>  <span class="co">// convert all values below 0.1 to zero</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>  X.transform([](<span class="dt">double</span> val) { <span class="cf">return</span> (<span class="bu">std::</span>abs(val) &lt; <span class="fl">0.1</span>) ? <span class="dv">0</span> : val; });</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>  mat U;</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>  vec s;</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a>  mat V;</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>  <span class="dt">bool</span> ok = svds(U, s, V, X, k);</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a>  writable::list out(<span class="dv">4</span>);</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles(s);</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_doubles_matrix(U);</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true"></a>  out[<span class="dv">3</span>] = as_doubles_matrix(V);</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="spsolve">Solve a system of linear equations<a class="anchor" aria-label="anchor" href="#spsolve"></a>
+</h2>
+<p>Solve a sparse system of linear equations, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>⋅</mo><mi>X</mi><mo>=</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">A \cdot X = B</annotation></semantics></math>, where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> is a sparse matrix, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> is a dense matrix or vector, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math> is unknown.</p>
+<p>The number of rows in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> must be the same.</p>
+<p>Usage:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="co">// A = matrix, b = vector</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>vec x = spsolve(A, b)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>vec x = spsolve(A, b, solver)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>vec x = spsolve(A, b, solver, opts)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="co">// A = matrix, B = matrix</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>mat X = spsolve(A, B)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a>spsolve(x, A, b)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a>spsolve(x, A, b, solver)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a>spsolve(x, A, b, solver, opts)</span></code></pre></div>
+<p>The <code>solver</code> argument is optional; <code>solver</code> is either <code>"superlu"</code> (default) or <code>"lapack"</code>.</p>
+<ul>
+<li>For <code>"superlu"</code>, <code>ARMA_USE_SUPERLU</code> must be enabled in <code>armadillo/config.hpp</code>.</li>
+<li>For <code>"lapack"</code>, the sparse matrix <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> is converted to a dense matrix before using the LAPACK solver. This considerably increases memory usage.</li>
+</ul>
+<p>The <code>opts</code> argument is optional and applicable to the SuperLU solver, and is an instance of the <code>superlu_opts</code> structure:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="kw">struct</span> superlu_opts</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>{</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>  <span class="dt">bool</span>             allow_ugly;   <span class="co">// default: false</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>  <span class="dt">bool</span>             equilibrate;  <span class="co">// default: false</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>  <span class="dt">bool</span>             symmetric;    <span class="co">// default: false</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>  <span class="dt">double</span>           pivot_thresh; <span class="co">// default: 1.0</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>  <span class="dt">permutation_type</span> permutation;  <span class="co">// default: superlu_opts::COLAMD</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a>  <span class="dt">refine_type</span>      refine;       <span class="co">// default: superlu_opts::REF_NONE</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a>};</span></code></pre></div>
+<ul>
+<li>
+<code>allow_ugly</code> is either <code>true</code> or <code>false</code>; it indicates whether to keep solutions of systems singular to working precision.</li>
+<li>
+<code>equilibrate</code> is either <code>true</code> or <code>false</code>; it indicates whether to equilibrate the system (scale the rows and columns of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> to have unit norm).</li>
+<li>
+<code>symmetric</code> is either <code>true</code> or <code>false</code>; it indicates whether to use SuperLU symmetric mode, which gives preference to diagonal pivots.</li>
+<li>
+<code>pivot_thresh</code> is in the range [0.0, 1.0], used for determining whether a diagonal entry is an acceptable pivot (details in SuperLU documentation).</li>
+<li>
+<code>permutation</code> specifies the type of column permutation; it is one of:
+<ul>
+<li>
+<code>superlu_opts::NATURAL</code>: natural ordering.</li>
+<li>
+<code>superlu_opts::MMD_ATA</code>: minimum degree ordering on structure of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mi>T</mi></msup><mo>⋅</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A^T \cdot A</annotation></semantics></math>.</li>
+<li>
+<code>superlu_opts::MMD_AT_PLUS_A</code>: minimum degree ordering on structure of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mi>T</mi></msup><mo>+</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">A^T + A</annotation></semantics></math>.</li>
+<li>
+<code>superlu_opts::COLAMD</code>: approximate minimum degree column ordering.</li>
+</ul>
+</li>
+<li>
+<code>refine</code> specifies the type of iterative refinement; it is one of:
+<ul>
+<li>
+<code>superlu_opts::REF_NONE</code>: no refinement.</li>
+<li>
+<code>superlu_opts::REF_SINGLE</code>: iterative refinement in single precision.</li>
+<li>
+<code>superlu_opts::REF_DOUBLE</code>: iterative refinement in double precision.</li>
+<li>
+<code>superlu_opts::REF_EXTRA</code>: iterative refinement in extra precision.</li>
+</ul>
+</li>
+</ul>
+<p>If no solution is found:</p>
+<ul>
+<li>
+<code>x = spsolve(A, b)</code> resets <code>x</code> and throws an error.</li>
+<li>
+<code>spsolve(x, A, b)</code> resets <code>x</code> and returns a bool set to false (an error is not thrown).</li>
+</ul>
+<p>The SuperLU solver is mainly useful for very large and/or highly sparse matrices.</p>
+<p>To reuse the SuperLU factorisation of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> for finding solutions where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> is iteratively changed, see the <code>spsolve_factoriser</code> class.</p>
+<p>If there is sufficient memory to store a dense version of matrix <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>, the LAPACK solver can be faster.</p>
+<div class="section level3">
+<h3 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a>
+</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">spsolve1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>                                      <span class="at">const</span> doubles&amp; b,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>                                      <span class="at">const</span> <span class="dt">char</span>* method) {</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>  sp_mat A = as_SpMat(a);</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a>  vec B = as_Col(b);</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a>  vec X = spsolve(A, B, method);</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(X);</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="spsolve_factoriser">Factorise a sparse matrix for solving linear systems<a class="anchor" aria-label="anchor" href="#spsolve_factoriser"></a>
+</h2>
+<p>Class for factorisation of sparse matrix <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> for solving systems of linear equations in the form <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>X</mi><mo>=</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">AX = B</annotation></semantics></math>.</p>
+<p>Allows the SuperLU factorisation of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> to be reused for finding solutions in cases where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> is iteratively changed.</p>
+<p>For an instance of <code>spsolve_factoriser</code> named as <code>SF</code>, the member functions are:</p>
+<ul>
+<li>
+<code>SF.factorise(A. opts)</code>: factorise square-sized sparse matrix $A<code>. Optional   settings are given in the</code>opts<code>argument as per the</code>spsolve()` function. If the factorisation fails, a bool set to false is returned.</li>
+<li>
+<code>SF.solve(X, B)</code>: using the given dense matrix <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> and the computed factorisation, store in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math> the solution to $AX = B`. If computing the solution fails, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math> is reset and a bool set to false is returned.</li>
+<li>
+<code>SF.rcond()</code>: return the 1-norm estimate of the reciprocal condition number computed during the factorisation. Values close to 1 suggest that the factorised matrix is well-conditioned. Values close to 0 suggest that the factorised matrix is badly conditioned.</li>
+<li>
+<code>SF.reset()</code>: reset the instance and release all memory related to the stored factorisation; this is automatically done when the instance goes out of scope.</li>
+</ul>
+<p>Caveats:</p>
+<ul>
+<li>If the factorisation of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> does not need to be reused, use <code>spsolve()</code> instead.</li>
+<li>This class internally uses the SuperLU solver; <code>ARMA_USE_SUPERLU</code> must be enabled in <code>config.hpp</code>.</li>
+</ul>
+<div class="section level3">
+<h3 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a>
+</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">spsolve_factoriser1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>                                              <span class="at">const</span> list&amp; b) {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>  sp_mat A = as_SpMat(a);</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>  <span class="dt">bool</span> status = SF.factorise(A);</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>  <span class="cf">if</span> (status == <span class="kw">false</span>) {</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a>    stop(<span class="st">"factorisation failed"</span>);</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>  }</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a>  </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a>  <span class="dt">double</span> rcond_value = SF.rcond();</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a>  vec B1 = as_Col(b[<span class="dv">0</span>]);</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true"></a>  vec B2 = as_Col(b[<span class="dv">1</span>]);</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true"></a>  vec X1, X2;</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true"></a>  <span class="dt">bool</span> ok1 = SF.solve(X1, B1);</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true"></a>  <span class="dt">bool</span> ok2 = SF.solve(X2, B2);</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true"></a>  <span class="cf">if</span> (ok1 == <span class="kw">false</span>) {</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true"></a>    stop(<span class="st">"couldn't find X1"</span>);</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true"></a>  }</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true"></a></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true"></a>  <span class="cf">if</span> (ok2 == <span class="kw">false</span>) {</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true"></a>    stop(<span class="st">"couldn't find X2"</span>);</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true"></a>  }</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true"></a></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true"></a>  writable::list out(<span class="dv">3</span>);</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({status &amp;&amp; ok1 &amp;&amp; ok2});</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles(X1);</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_doubles(X2);</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true"></a></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true"></a>}</span></code></pre></div>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

@@ -7,7 +7,7 @@ test:
 	@Rscript -e 'devtools::document()'
 	@Rscript -e 'devtools::load_all(); devtools::test()'
 	@echo "Testing C++ code"
-	@Rscript -e 'devtools::load_all("cpp11armadillotest"); devtools::test("cpp11armadillotest")'
+	@Rscript -e 'devtools::clean_dll("cpp11armadillotest"); devtools::load_all("cpp11armadillotest"); devtools::test("cpp11armadillotest")'
 
 check:
 	@echo "Local"

@@ -1823,22 +1823,6 @@ shift(M, N, dim)
 
 # Randomly shuffle elements {#shuffle}
 
-<!-- shuffle( V )
-shuffle( X )
-shuffle( X, dim )
-
-    For vector V, generate a copy of the vector with the elements shuffled
-
-    For matrix X, generate a copy of the matrix with the elements shuffled in each column (dim = 0), or each row (dim = 1)
-
-    The dim argument is optional; by default dim = 0 is used
-
-    Examples:
-
-        mat A(4, 5, fill::randu);
-        mat B = shuffle(A);
- -->
-
 The `shuffle()` function generates a copy of a vector `V` or matrix `M` with the
 elements shuffled. For a matrix, the optional `dim` argument specifies the
 dimension along which to shuffle the matrix, with `dim = 0` shuffling along
@@ -2464,25 +2448,6 @@ into account matrix structure.
 ```
 
 # Trigonometric element-wise functions: cos, sin, tan, and others {#trig-functions}
-
-
-<!-- trigonometric element-wise functions (cos, sin, tan, ...)
-
-    For single argument functions, B = trig_fn(A), where trig_fn is applied to each element in A, with trig_fn as one of:
-        cos, acos, cosh, acosh
-        sin, asin, sinh, asinh
-        tan, atan, tanh, atanh
-        sinc, defined as sinc(x) = sin(πx) / (πx) for x ≠ 0, and sinc(x) = 1 for x = 0
-
-    For dual argument functions, apply the function to each tuple of two corresponding elements in X and Y:
-        Z = atan2(Y, X)
-        Z = hypot(X, Y)
-
-    Examples:
-
-        mat X(5, 5, fill::randu);
-        mat Y = cos(X);
- -->
 
 Trigonometric element-wise functions include:
 

@@ -3,7 +3,7 @@ title: "Saving and loading Armadillo objects on C++ side"
 output: rmarkdown::html_vignette
 bibliography: "references.bib"
 vignette: >
-  %\VignetteIndexEntry{Signal and image processing}
+  %\VignetteIndexEntry{Saving and loading Armadillo objects on C++ side}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

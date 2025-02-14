@@ -17,3 +17,186 @@ knitr::opts_chunk$set(
 
 This vignette is adapted from the official Armadillo
 [documentation](https://arma.sourceforge.net/docs.html).
+
+# Constants {#constants}
+
+The reference for these constants are @NIST1994 and @Wolfram2009.
+
+| Expression                       | Description                               |
+|----------------------------------|-------------------------------------------|
+| `datum::tau`                     | The ratio of any circle's circumference to its radius ($\tau \approx 6.28319$) |
+| `datum::pi`                      | The ratio of any circle's circumference to its diameter ($\pi \approx 3.14159$) |
+| `datum::inf`                     | Infinity ($\infty$) |
+| `datum::nan`                     | Not a number |
+| `datum::eps`                     | Machine dependent epsilon ($\epsilon \approx 2.2204 \times 10^{-16}$) |
+| `datum::e`                       | Base of the natural logarithm ($e \approx 2.71828$) |
+| `datum::sqrt2`                   | Square root of two ($\sqrt{2} \approx 1.41421$) |
+| `datum::log_min`                 | Type and machine dependent log of minimum non-zero value |
+| `datum::log_max`                 | Type and machine dependent log of maximum value |
+| `datum::euler`                   | Euler-Mascheroni constant ($\gamma \approx 0.577216$) |
+| `datum::gratio`                  | Golden ratio ($\phi \approx 1.61803 $) |
+| `datum::m_u`                     | Atomic mass constant in kilograms ($m_u \approx 1.66054 \times 10^{-27} \text{kg}$) |
+| `datum::N_A`                     | Avogadro constant ($N_A \approx 6.02214 \times 10^{23} \text{mol}^{-1}$) |
+| `datum::k`                       | Boltzmann constant in joules per kelvin ($k \approx 1.38065 \times 10^{-23} \text{J/K}$) |
+| `datum::k_evk`                   | Boltzmann constant in eV/K ($k \approx 8.61733 \times 10^{-5} \text{eV/K}$) |
+| `datum::a_0`                     | Bohr radius in meters ($a_0 \approx 5.29177 \times 10^{-11} \text{m}$) |
+| `datum::mu_B`                    | Bohr magneton ($\mu_B \approx 9.27401 \times 10^{-24} \text{J/T}$) |
+| `datum::Z_0`                     | Characteristic impedance of vacuum in ohms ($Z_0 \approx 376.730 \Omega$) |
+| `datum::G_0`                     | Conductance quantum in siemens ($G_0 \approx 7.74809 \times 10^{-5} \text{S}$) |
+| `datum::k_e`                     | Coulomb's constant in meters per farad ($k_e \approx 8.98755 \times 10^9 \text{m/F}$) |
+| `datum::eps_0`                   | Electric constant in farads per meter ($\epsilon_0 \approx 8.85419 \times 10^{-12} \text{F/m}$) |
+| `datum::m_e`                     | Electron mass in kilograms ($m_e \approx 9.10938 \times 10^{-31} \text{kg}$) |
+| `datum::eV`                      | Electron volt in joules ($1 \text{ eV} \approx 1.60218 \times 10^{-19} \text{J}$) |
+| `datum::ec`                      | Elementary charge in coulombs ($e \approx 1.60218 \times 10^{-19} \text{C}$) |
+| `datum::F`                       | Faraday constant in coulombs ($F \approx 9.64853 \times 10^4 \text{C/mol}$) |
+| `datum::alpha`                   | Fine-structure constant ($\alpha \approx 7.29735 \times 10^{-3}$) |
+| `datum::alpha_inv`               | Inverse fine-structure constant ($\alpha^{-1} \approx 137.036$) |
+| `datum::K_J`                     | Josephson constant ($K_J \approx 4.83598 \times 10^{14} \text{Hz/V}$) |
+| `datum::mu_0`                    | Magnetic constant in henries per meter ($\mu_0 \approx 1.25664 \times 10^{-6} \text{H/m}$) |
+| `datum::phi_0`                   | Magnetic flux quantum in webers ($\phi_0 \approx 2.06783 \times 10^{-15} \text{Wb}$) |
+| `datum::R`                       | Molar gas constant in joules per mole kelvin ($R \approx 8.31446 \text{ J/mol K}$) |
+| `datum::G`                       | Newtonian constant of gravitation in newton square meters per kilogram squared ($G \approx 6.67430 \times 10^{-11} \text{m}^3 \text{kg}^{-1} \text{s}^{-2}$) |
+| `datum::h`                       | Planck constant in joule seconds ($h \approx 6.62607 \times 10^{-34} \text{J s}$) |
+| `datum::h_bar`                   | Reduced Planck constant in joule seconds ($\hbar \approx 1.05457 \times 10^{-34} \text{J s}$) |
+| `datum::m_p`                     | Proton mass in kilograms ($m_p \approx 1.67262 \times 10^{-27} \text{kg}$) |
+| `datum::R_inf`                   | Rydberg constant in reciprocal meters ($R_\infty \approx 1.09737 \times 10^7 \text{m}^{-1}$) |
+| `datum::c_0`                     | Speed of light in vacuum in meters per second ($c_0 \approx 2.99792 \times 10^8 \text{m/s}$) |
+| `datum::sigma`                   | Stefan-Boltzmann constant ($\sigma \approx 5.67037 \times 10^{-8} \text{W} \text{m}^{-2} \text{K}^{-4}$) |
+| `datum::R_k`                     | von Klitzing constant in ohms ($R_k \approx 25,812.807 \Omega$) |
+| `datum::b`                       | Wien wavelength displacement law constant ($b \approx 2.89777 \times 10^{-3} \text{m K}$) |
+
+The constants are stored in the `Datum<type>` class, where `type` is either
+`float` or `double`. For convenience, `Datum<double>` is typedefed as `datum`,
+and `Datum<float>` is typedefed as `fdatum`.
+
+Caveats:
+
+- `datum::nan` is not equal to anything, even itself.
+- To check whether a scalar `x` is finite, use `std::isfinite(x)`.
+
+These caveats mean that
+
+```cpp
+double x = datum::pi;
+double y = datum::nan;
+
+bool is_nan_y = (y == datum::nan); // false
+
+// this block will lead to an arithmetic error
+if (is_nan_y == false) {
+  return x + y; // pi + nan
+}
+```
+
+# Wall clock {#tictoc}
+
+The `wall_clock` class is a simple timer class for measuring the number of
+elapsed seconds. An instance of the class has two member functions:
+
+- `.tic()`: start the timer
+- `.toc()`: return the number of seconds since the last call to `.tic()`
+
+## Examples
+
+```cpp
+[[cpp11::register]] list tictoc1_(const int& n) {
+  mat m1(n, n, fill::randu);
+
+  wall_clock timer;
+  timer.tic();
+
+  mat m2 = inv(m1);
+
+  double n = timer.toc(); // time to invert m1
+
+  writable::list res(2);
+
+  res[0] = n
+  res[1] = as_doubles_matrix(m2);
+
+  return res;
+}
+```
+
+# Random number generator {#rng}
+
+The random number generator (RNG) is based on the Mersenne Twister algorithm.
+The RNG is thread-safe, and each thread has its own RNG state.
+
+Usage:
+
+```cpp
+set_seed(integer);
+set_seed_random();
+```
+
+The `set_seed()` function sets the RNG seed to the specified value.
+
+The `set_seed_random()` function sets the RNG seed to a value drawn from
+`std::random_device` (if the reported entropy is not zero), or `/dev/urandom`
+for Linux and macOS, or based on the current time (on systems without
+`/dev/urandom`).
+
+Caveat:
+
+- When using a multi-threading framework (such as OpenMP) and the underlying
+  system supports the `thread_local` storage specifier, the above functions
+  change the seed only within the thread they are running on.
+
+To change the seeds on all OpenMP threads to the same value, adapt the
+following code:
+
+```cpp
+#pragma omp parallel
+{
+  set_seed(123);
+  // some computation
+}
+```
+
+To change the seeds on all OpenMP threads to unique values, adapt the following
+code:
+
+```cpp
+std::atomic<std::size_t> counter(0);
+
+#pragma omp parallel
+{
+  set_seed(123 + counter++);
+  // some computation
+}
+```
+
+# Unsigned and signed integers {#uword_sword}
+
+The `uword` class is a typedef for an unsigned integer type. It is used for
+matrix indices as well as all internal counters and loops.
+
+The `sword` class is a typedef for a signed integer type.
+
+The minimum width of both `uword` and `sword` is either 32 or 64 bits:
+
+- The default width is 32 bits on 32-bit platforms.
+- The default width is 64 bits on 64-bit platforms.
+- The default width is 32 bits when using Armadillo in the R environment on
+  either 32-bit or 64-bit platforms.
+
+The width can also be forcefully set to 64 bits by enabling `ARMA_64BIT_WORD`
+by editing `armadillo/config.hpp`.
+
+# Short forms for complex data types {#cx_double_cx_float}
+
+The `cx_double` class is a convenience short form (typedef) for the complex
+element type `std::complex<double>`.
+
+The `cx_float` class is a convenience short form (typedef) for the complex
+element type `std::complex<float>`.
+
+Example:
+
+```cpp
+[[cpp11::register]] list cx_double_example_() {
+  cx_double z(3.4, 5.6);
+  return as_complex(z);
+}
+```

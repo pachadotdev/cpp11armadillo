@@ -75,6 +75,14 @@ inline SpMat<int> as_SpMat(const integers& x) {
   return dblint_to_SpMat_<int, integers>(x);
 }
 
+inline SpMat<double> as_spmat(const doubles_matrix<>& x) { return as_SpMat(x); }
+
+inline SpMat<int> as_spmat(const integers_matrix<>& x) { return as_SpMat(x); }
+
+inline SpMat<double> as_spmat(const doubles& x) { return as_SpMat(x); }
+
+inline SpMat<int> as_spmat(const integers& x) { return as_SpMat(x); }
+
 ////////////////////////////////////////////////////////////////
 // Armadillo to R
 ////////////////////////////////////////////////////////////////

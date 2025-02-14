@@ -1614,21 +1614,6 @@ powmat(Y, X, 2); // store the matrix in Y and return true if successful</code></
 <div class="section level2">
 <h2 id="shuffle">Randomly shuffle elements<a class="anchor" aria-label="anchor" href="#shuffle"></a>
 </h2>
-<!-- shuffle( V )
-shuffle( X )
-shuffle( X, dim )
-
-    For vector V, generate a copy of the vector with the elements shuffled
-
-    For matrix X, generate a copy of the matrix with the elements shuffled in each column (dim = 0), or each row (dim = 1)
-
-    The dim argument is optional; by default dim = 0 is used
-
-    Examples:
-
-        mat A(4, 5, fill::randu);
-        mat B = shuffle(A);
- -->
 <p>The <code>shuffle()</code> function generates a copy of a vector <code>V</code> or matrix <code>M</code> with the elements shuffled. For a matrix, the optional <code>dim</code> argument specifies the dimension along which to shuffle the matrix, with <code>dim = 0</code> shuffling along columns (default) and <code>dim = 1</code> shuffling along rows.</p>
 <p>Usage:</p>
 <div class="sourceCode" id="cb89"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true"></a>shuffle(V)</span>
@@ -2206,23 +2191,6 @@ shuffle( X, dim )
 <div class="section level2">
 <h2 id="trig-functions">Trigonometric element-wise functions: cos, sin, tan, and others<a class="anchor" aria-label="anchor" href="#trig-functions"></a>
 </h2>
-<!-- trigonometric element-wise functions (cos, sin, tan, ...)
-
-    For single argument functions, B = trig_fn(A), where trig_fn is applied to each element in A, with trig_fn as one of:
-        cos, acos, cosh, acosh
-        sin, asin, sinh, asinh
-        tan, atan, tanh, atanh
-        sinc, defined as sinc(x) = sin(πx) / (πx) for x ≠ 0, and sinc(x) = 1 for x = 0
-
-    For dual argument functions, apply the function to each tuple of two corresponding elements in X and Y:
-        Z = atan2(Y, X)
-        Z = hypot(X, Y)
-
-    Examples:
-
-        mat X(5, 5, fill::randu);
-        mat Y = cos(X);
- -->
 <p>Trigonometric element-wise functions include:</p>
 <table class="table">
 <colgroup>

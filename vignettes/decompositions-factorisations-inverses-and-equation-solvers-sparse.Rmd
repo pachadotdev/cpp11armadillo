@@ -17,3 +17,469 @@ knitr::opts_chunk$set(
 
 This vignette is adapted from the official Armadillo
 [documentation](https://arma.sourceforge.net/docs.html).
+
+# Eigen decomposition of a symmetric matrix {#eig_sym}
+
+Obtain a limited number of eigenvalues and eigenvectors of sparse symmetric real
+matrix `X`.
+
+Usage:
+
+```cpp
+vec eigval = eigs_sym(X, k)
+vec eigval = eigs_sym(X, k, form)
+vec eigval = eigs_sym(X, k, form, opts)
+vec eigval = eigs_sym(X, k, sigma)
+vec eigval = eigs_sym(X, k, sigma, opts)
+
+eigs_sym(eigval, X, k)
+eigs_sym(eigval, X, k, form)
+eigs_sym(eigval, X, k, form, opts)
+eigs_sym(eigval, X, k, sigma)
+eigs_sym(eigval, X, k, sigma, opts)
+
+eigs_sym(eigval, eigvec, X, k)
+eigs_sym(eigval, eigvec, X, k, form)
+eigs_sym(eigval, eigvec, X, k, form, opts)
+eigs_sym(eigval, eigvec, X, k, sigma)
+eigs_sym(eigval, eigvec, X, k, sigma, opts)
+```
+
+`k` specifies the number of eigenvalues and eigenvectors.
+
+The argument `form` is optional and is one of the following:
+
+- `"lm"`: obtain eigenvalues with largest magnitude (default operation).
+- `"sm"`: obtain eigenvalues with smallest magnitude (see the caveats below).
+- `"la"`: obtain eigenvalues with largest algebraic value.
+
+The argument `sigma` is optional; if `sigma` is given, eigenvalues closest to
+`sigma` are found via shift-invert mode. Note that to use `sigma`, both
+`ARMA_USE_ARPACK` and `ARMA_USE_SUPERLU` must be enabled in
+`armadillo/config.hpp`.
+
+The `opts` argument is optional; `opts` is an instance of the `eigs_opts`
+structure:
+
+```cpp
+struct eigs_opts
+{
+  double       tol;     // default: 0
+  unsigned int maxiter; // default: 1000
+  unsigned int subdim;  // default: max(2*k+1, 20)
+};
+```
+
+- `tol` specifies the tolerance for convergence.
+- `maxiter` specifies the maximum number of Arnoldi iterations.
+- `subdim` specifies the dimension of the Krylov subspace, with the constraint
+  `k < subdim <= X.n_rows`; the recommended value is `subdim >= 2*k`.
+
+The eigenvalues and corresponding eigenvectors are stored in `eigval` and
+`eigvec`, respectively.
+
+If `X` is not square sized, an error is thrown.
+
+If the decomposition fails:
+
+- `eigval = eigs_sym(X,k)` resets `eigval` and throws an error.
+- `eigs_sym(eigval,X,k)` resets `eigval` and returns a bool set to false (an
+  error is not thrown).
+- `eigs_sym(eigval,eigvec,X,k)` resets `eigval` and `eigvec` and returns a bool
+  set to false (an error is not thrown).
+
+Caveats:
+
+- The number of obtained eigenvalues/eigenvectors may be lower than requested,
+  depending on the given data.
+- If the decomposition fails, try first increasing `opts.subdim` (Krylov
+  subspace dimension), and, as secondary options, try increasing `opts.maxiter`
+  (maximum number of iterations), and/or `opts.tol` (tolerance for convergence),
+  and/or `k` (number of eigenvalues).
+- For an alternative to the `"sm"` form, use the shift-invert mode with `sigma`
+  set to `0.0`.
+- The implementation in Armadillo 12.6 is considerably faster than earlier
+  versions; further speedups can be obtained by enabling OpenMP in your compiler
+  (e.g., `-fopenmp` in GCC and clang).
+
+## Examples
+
+```cpp
+[[cpp11::register]] list eig_sym2_(const doubles_matrix<>& x,
+                                   const char* method,
+                                   const int& k) {
+  sp_mat X = as_SpMat(x);
+
+  sp_mat Y = X.t() * X;
+
+  vec eigval;
+  mat eigvec;
+
+  eigs_opts opts;
+  opts.maxiter = 10000;
+  bool ok = eigs_sym(eigval, eigvec, Y, k, method, opts);
+
+  writable::list out(3);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles(eigval);
+  out[2] = as_doubles_matrix(eigvec);
+
+  return out;
+}
+```
+
+# Eigen decomposition of a general matrix {#eig_gen}
+
+Obtain a limited number of eigenvalues and eigenvectors of sparse general
+(non-symmetric/non-hermitian) square matrix `X`.
+
+Usage:
+
+```cpp
+cx_vec eigval = eigs_gen(X, k)
+cx_vec eigval = eigs_gen(X, k, form)
+cx_vec eigval = eigs_gen(X, k, sigma)
+cx_vec eigval = eigs_gen(X, k, form, opts)
+cx_vec eigval = eigs_gen(X, k, sigma, opts)
+
+eigs_gen(eigval, X, k)
+eigs_gen(eigval, X, k, form)
+eigs_gen(eigval, X, k, sigma)
+eigs_gen(eigval, X, k, form, opts)
+eigs_gen(eigval, X, k, sigma, opts)
+
+eigs_gen(eigval, eigvec, X, k)
+eigs_gen(eigval, eigvec, X, k, form)
+eigs_gen(eigval, eigvec, X, k, sigma)
+eigs_gen(eigval, eigvec, X, k, form, opts)
+eigs_gen(eigval, eigvec, X, k, sigma, opts)
+```
+
+`k` specifies the number of eigenvalues and eigenvectors.
+
+The argument `form` is optional; `form` is one of the following:
+
+- `"lm"`: obtain eigenvalues with largest magnitude (default operation).
+- `"sm"`: obtain eigenvalues with smallest magnitude (see the caveats below).
+- `"lr"`: obtain eigenvalues with largest real part.
+- `"sr"`: obtain eigenvalues with smallest real part.
+- `"li"`: obtain eigenvalues with largest imaginary part.
+- `"si"`: obtain eigenvalues with smallest imaginary part.
+
+The argument `sigma` is optional; if `sigma` is given, eigenvalues closest to
+`sigma` are found via shift-invert mode. Note that to use `sigma`, both
+`ARMA_USE_ARPACK` and `ARMA_USE_SUPERLU` must be enabled in
+`armadillo/config.hpp`.
+
+The `opts` argument is optional; `opts` is an instance of the `eigs_opts`
+structure:
+
+```cpp
+struct eigs_opts
+{
+  double       tol;     // default: 0
+  unsigned int maxiter; // default: 1000
+  unsigned int subdim;  // default: max(2*k+1, 20)
+};
+```
+
+- `tol` specifies the tolerance for convergence.
+- `maxiter` specifies the maximum number of Arnoldi iterations.
+- `subdim` specifies the dimension of the Krylov subspace, with the constraint
+  `k < subdim <= X.n_rows`; the recommended value is `subdim >= 2*k`.
+
+The eigenvalues and corresponding eigenvectors are stored in `eigval` and
+`eigvec`, respectively.
+
+If `X` is not square sized, an error is thrown.
+
+If the decomposition fails:
+
+- `eigval = eigs_gen(X, k)` resets `eigval` and throws an error.
+- `eigs_gen(eigval, X, k)` resets `eigval` and returns a bool set to false (an
+  error is not thrown).
+- `eigs_gen(eigval,eigvec, X, k)` resets `eigval` and `eigvec` and returns a
+  bool set to false (an error is not thrown).
+
+Caveats:
+
+- The number of obtained eigenvalues/eigenvectors may be lower than requested,
+  depending on the given data.
+- If the decomposition fails, try first increasing `opts.subdim` (Krylov
+  subspace dimension), and, as secondary options, try increasing `opts.maxiter`
+  (maximum number of iterations), and/or `opts.tol` (tolerance for convergence),
+  and/or `k` (number of eigenvalues).
+- For an alternative to the `"sm"` form, use the shift-invert mode with `sigma`
+  set to `0.0`.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list eig_gen2_(const doubles_matrix<>& x,
+                                   const char* method,
+                                   const int& k) {
+  sp_mat X = as_SpMat(x);
+
+  cx_vec eigval;
+  cx_mat eigvec;
+
+  eigs_opts opts;
+  opts.maxiter = 10000;
+
+  bool ok = eigs_gen(eigval, eigvec, X, k, method, opts);
+
+  writable::list out(3);
+  out[0] = writable::logicals({ok});
+  out[1] = as_complex_doubles(eigval);
+  out[2] = as_complex_matrix(eigvec);
+
+  return out;
+}
+```
+
+# Truncated singular value decomposition {#svds}
+
+Obtain a limited number of singular values and singular vectors (truncated SVD)
+of a sparse matrix.
+
+The singular values and vectors are calculated via sparse eigen decomposition
+of:
+
+$$
+\begin{bmatrix}
+0_{n \times n} & X \\
+X^T & 0_{m \times m}
+\end{bmatrix}
+$$
+
+where $n$ and $m$ are the number of rows and columns of `X`, respectively.
+
+Usage:
+
+```cpp
+vec s = svds(X, k)
+vec s = svds(X, k, tol)
+
+svds(vec s, X, k)
+svds(vec s, X, k, tol)
+
+svds(mat U, vec s, mat V, sp_mat X, k)
+svds(mat U, vec s, mat V, sp_mat X, k, tol)
+
+svds(cx_mat U, vec s, cx_mat V, sp_cx_mat X, k)
+svds(cx_mat U, vec s, cx_mat V, sp_cx_mat X, k, tol)
+```
+
+`k` specifies the number of singular values and singular vectors.
+
+The singular values are in descending order.
+
+The argument `tol` is optional; it specifies the tolerance for convergence, and
+it is passed as `tol / sqrt(2)` to `eigs_sym`.
+
+If the decomposition fails:
+
+- `s = svds(X, k)` resets `s` and throws an error.
+- `svds(s, X, k)` resets `s` and returns a bool set to false (an error is not
+  thrown).
+- `svds(U, s, V, X, k)` resets `U`, `s`, and `V` and returns a bool set to
+  false (an error is not thrown).
+
+Caveats:
+
+- `svds` is intended only for finding a few singular values from a large sparse
+  matrix; to find all singular values, use `svd` instead.
+- Depending on the given matrix, `svds` may find fewer singular values than
+  specified.
+- The implementation in Armadillo 12.6 is considerably faster than earlier
+  versions; further speedups can be obtained by enabling OpenMP in your compiler
+  (e.g., `-fopenmp` in GCC and clang).
+
+## Examples
+
+```cpp
+[[cpp11::register]] list svds1_(const doubles_matrix<>& x, const int& k) {
+  sp_mat X = as_SpMat(x);
+
+  // convert all values below 0.1 to zero
+  X.transform([](double val) { return (std::abs(val) < 0.1) ? 0 : val; });
+
+  mat U;
+  vec s;
+  mat V;
+
+  bool ok = svds(U, s, V, X, k);
+
+  writable::list out(4);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles(s);
+  out[2] = as_doubles_matrix(U);
+  out[3] = as_doubles_matrix(V);
+
+  return out;
+}
+```
+
+# Solve a system of linear equations {#spsolve}
+
+Solve a sparse system of linear equations, $A \cdot X = B$, where $A$ is a
+sparse matrix, $B$ is a dense matrix or vector, and $X$ is unknown.
+
+The number of rows in $A$ and $B$ must be the same.
+
+Usage:
+
+```cpp
+// A = matrix, b = vector
+vec x = spsolve(A, b)
+vec x = spsolve(A, b, solver)
+vec x = spsolve(A, b, solver, opts)
+
+// A = matrix, B = matrix
+mat X = spsolve(A, B)
+
+spsolve(x, A, b)
+spsolve(x, A, b, solver)
+spsolve(x, A, b, solver, opts)
+```
+
+The `solver` argument is optional; `solver` is either `"superlu"` (default) or
+`"lapack"`.
+
+- For `"superlu"`, `ARMA_USE_SUPERLU` must be enabled in `armadillo/config.hpp`.
+- For `"lapack"`, the sparse matrix $A$ is converted to a dense matrix before
+  using the LAPACK solver. This considerably increases memory usage.
+
+The `opts` argument is optional and applicable to the SuperLU solver, and is an
+instance of the `superlu_opts` structure:
+
+```cpp
+struct superlu_opts
+{
+  bool             allow_ugly;   // default: false
+  bool             equilibrate;  // default: false
+  bool             symmetric;    // default: false
+  double           pivot_thresh; // default: 1.0
+  permutation_type permutation;  // default: superlu_opts::COLAMD
+  refine_type      refine;       // default: superlu_opts::REF_NONE
+};
+```
+
+- `allow_ugly` is either `true` or `false`; it indicates whether to keep
+  solutions of systems singular to working precision.
+- `equilibrate` is either `true` or `false`; it indicates whether to equilibrate
+  the system (scale the rows and columns of $A$ to have unit norm).
+- `symmetric` is either `true` or `false`; it indicates whether to use SuperLU
+  symmetric mode, which gives preference to diagonal pivots.
+- `pivot_thresh` is in the range [0.0, 1.0], used for determining whether a
+  diagonal entry is an acceptable pivot (details in SuperLU documentation).
+- `permutation` specifies the type of column permutation; it is one of:
+  - `superlu_opts::NATURAL`: natural ordering.
+  - `superlu_opts::MMD_ATA`: minimum degree ordering on structure of $A^T \cdot A$.
+  - `superlu_opts::MMD_AT_PLUS_A`: minimum degree ordering on structure of $A^T + A$.
+  - `superlu_opts::COLAMD`: approximate minimum degree column ordering.
+- `refine` specifies the type of iterative refinement; it is one of:
+  - `superlu_opts::REF_NONE`: no refinement.
+  - `superlu_opts::REF_SINGLE`: iterative refinement in single precision.
+  - `superlu_opts::REF_DOUBLE`: iterative refinement in double precision.
+  - `superlu_opts::REF_EXTRA`: iterative refinement in extra precision.
+
+If no solution is found:
+
+- `x = spsolve(A, b)` resets `x` and throws an error.
+- `spsolve(x, A, b)` resets `x` and returns a bool set to false (an error is not
+  thrown).
+
+The SuperLU solver is mainly useful for very large and/or highly sparse
+matrices.
+
+To reuse the SuperLU factorisation of $A$ for finding solutions where $B$ is
+iteratively changed, see the `spsolve_factoriser` class.
+
+If there is sufficient memory to store a dense version of matrix $A$, the LAPACK
+solver can be faster.
+
+## Examples
+
+```cpp
+[[cpp11::register]] doubles spsolve1_(const doubles_matrix<>& a,
+                                      const doubles& b,
+                                      const char* method) {
+  sp_mat A = as_SpMat(a);
+  vec B = as_Col(b);
+
+  vec X = spsolve(A, B, method);
+
+  return as_doubles(X);
+}
+```
+
+# Factorise a sparse matrix for solving linear systems {#spsolve_factoriser}
+
+Class for factorisation of sparse matrix $A$ for solving systems of linear
+equations in the form $AX = B$.
+
+Allows the SuperLU factorisation of $A$ to be reused for finding solutions in
+cases where $B$ is iteratively changed.
+
+For an instance of `spsolve_factoriser` named as `SF`, the member functions are:
+
+- `SF.factorise(A. opts)`: factorise square-sized sparse matrix $A`. Optional
+  settings are given in the `opts` argument as per the `spsolve()` function. If
+  the factorisation fails, a bool set to false is returned.
+- `SF.solve(X, B)`: using the given dense matrix $B$ and the computed
+  factorisation, store in $X$ the solution to $AX = B`. If computing the
+  solution fails, $X$ is reset and a bool set to false is returned.
+- `SF.rcond()`: return the 1-norm estimate of the reciprocal condition number
+  computed during the factorisation. Values close to 1 suggest that the
+  factorised matrix is well-conditioned. Values close to 0 suggest that the
+  factorised matrix is badly conditioned.
+- `SF.reset()`: reset the instance and release all memory related to the stored
+  factorisation; this is automatically done when the instance goes out of scope.
+
+Caveats:
+
+- If the factorisation of $A$ does not need to be reused, use `spsolve()`
+ instead.
+- This class internally uses the SuperLU solver; `ARMA_USE_SUPERLU` must be
+  enabled in `config.hpp`.
+
+## Examples
+
+```cpp
+[[cpp11::register]] list spsolve_factoriser1_(const doubles_matrix<>& a,
+                                              const list& b) {
+  sp_mat A = as_SpMat(a);
+
+  bool status = SF.factorise(A);
+
+  if (status == false) {
+    stop("factorisation failed");
+  }
+  
+  double rcond_value = SF.rcond();
+
+  vec B1 = as_Col(b[0]);
+  vec B2 = as_Col(b[1]);
+
+  vec X1, X2;
+
+  bool ok1 = SF.solve(X1, B1);
+  bool ok2 = SF.solve(X2, B2);
+
+  if (ok1 == false) {
+    stop("couldn't find X1");
+  }
+
+  if (ok2 == false) {
+    stop("couldn't find X2");
+  }
+
+  writable::list out(3);
+  out[0] = writable::logicals({status && ok1 && ok2});
+  out[1] = as_doubles(X1);
+  out[2] = as_doubles(X2);
+
+  return out;
+}
+```

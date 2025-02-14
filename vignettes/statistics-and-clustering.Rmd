@@ -536,30 +536,6 @@ $$
 
 # Cumulative distribution function of normal distribution {#normcdf}
 
-<!-- normcdf( X )
-normcdf( X, M, S )
-
-    For each scalar x in X, compute its cumulative distribution function according to a Gaussian (normal) distribution using the corresponding mean value m in M and the corresponding standard deviation value s in S
-
-    X can be a scalar, vector, or matrix
-
-    M and S can jointly be either scalars, vectors, or matrices
-
-    If M and S are omitted, their values are assumed to be 0 and 1, respectively
-
-    Examples:
-
-        vec X(10, fill::randu);
-        vec M(10, fill::randu);
-        vec S(10, fill::randu);
-
-           vec P1 = normcdf(X);
-           vec P2 = normcdf(X,    M,    S   );
-           vec P3 = normcdf(1.23, M,    S   );
-           vec P4 = normcdf(X,    4.56, 7.89);
-        double P5 = normcdf(1.23, 4.56, 7.89);
- -->
-
 For each scalar `x` in `X`, compute its cumulative distribution function
 according to a Gaussian (normal) distribution using the corresponding mean value
 `m` in `M` and the corresponding standard deviation value `s` in `S`.
@@ -596,35 +572,6 @@ according to a Gaussian (normal) distribution using the corresponding mean value
 ```
 
 # Random vectors from multivariate normal distribution {#mvnrnd}
-
-<!-- X = mvnrnd( M, C )
-X = mvnrnd( M, C, N )
-
-mvnrnd( X, M, C )
-mvnrnd( X, M, C, N )
-
-    Generate a matrix with random column vectors from a multivariate Gaussian (normal) distribution with parameters M and C:
-        M is the mean; must be a column vector
-        C is the covariance matrix; must be symmetric positive semi-definite (preferably positive definite)
-
-    N is the number of column vectors to generate; if N is omitted, it is assumed to be 1
-
-    Caveat: repeated generation of one vector (or a small number of vectors) using the same M and C parameters can be inefficient;
-    for repeated generation consider using the generate() function in the gmm_diag and gmm_full classes
-
-    If generating the random vectors fails:
-        X = mvnrnd(M, C) and X = mvnrnd(M, C, N) reset X and throw a std::runtime_error exception
-        mvnrnd(X, M, C) and mvnrnd(X, M, C, N) reset X and return a bool set to false (exception is not thrown)
-
-    Examples:
-
-        vec M(5, fill::randu);
-
-        mat B(5, 5, fill::randu);
-        mat C = B.t() * B;
-
-        mat X = mvnrnd(M, C, 100);
- -->
 
 Generate a matrix with random column vectors from a multivariate Gaussian
 (normal) distribution with parameters `M` and `C`.
@@ -834,6 +781,7 @@ kmeans(means, data, k, seed_mode, n_iter, print_mode)
 
 `gmm_diag` and `gmm_full` are classes for multi-variate probabilistic
 clustering and likelihood calculation via Gaussian Mixture Models (GMMs).
+The implementation details are available in @Sanderson2017.
 
 The distribution of data is modelled as:
 
@@ -1054,13 +1002,3 @@ and variables are:
   return res;
 }
 ```
-
-## Implementation details
-
-The implementation details are available in the following
-[paper](https://arma.sourceforge.net/armadillo_spcs_2017.pdf):
-
-  Sanderson, Conrad, and Ryan Curtin. "An open source C++ implementation of
-  multi-threaded Gaussian mixture models, k-means and expectation maximisation."
-  In *2017 11th international conference on signal processing and communication
-  systems (ICSPCS)*, pp. 1-8. IEEE, 2017.

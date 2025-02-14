@@ -5,9 +5,12 @@
 * Allows to convert `uword` to `integers` and vice versa.
 * Allows to convert `imat` and `umat` to `integers_matrix<>` and vice versa.
 * Allows to convert `fmat` to `doubles_matrix<>` and vice versa.
+* Provides `as_spmat()` as a wrapper for `as_SpMat()`.
 * Added new vignettes:
   * Signal and image processing.
   * Decompositions, factorisations, inverses and equation solvers (dense matrices).
+  * Decompositions, factorisations, inverses and equation solvers (sparse matrices).
+  * Miscellaneous.
 
 # cpp11armadillo 0.4.3
 

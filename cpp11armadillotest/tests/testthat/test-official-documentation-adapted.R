@@ -833,12 +833,18 @@ test_that("examples derived from official documentation", {
   Y <- matrix(rnorm(25), 5, 5)
 
   res188 <- chol1_(X, "upper", "matrix")
-  res189 <- eig_sym1_(X, "dc")
+  
+  set.seed(123)
+  res189 <- eig_sym1_(matrix(rpois(25, 2), 5, 5) + 0.05, "std")
+
   res190 <- eig_gen1_(X, "nobalance")
   res191 <- eig_pair1_(X, Y)
   res192 <- hess1_(X)
   res193 <- inv1_(X)
-  res194 <- inv_sympd1_(X)
+
+  set.seed(123)
+  res194 <- inv_sympd1_(matrix(rpois(25, 2), 5, 5) + 0.05)
+  
   res195 <- lu1_(X)
 
   expect_type(res188, "list")
@@ -901,4 +907,17 @@ test_that("examples derived from official documentation", {
   C <- matrix(rnorm(25), 5, 5)
   res206 <- syl1_(A,B,C)
   expect_type(res206, "double")
+
+  res207 <- eig_sym2_(A, "lm", 3)
+  expect_type(res207, "list")
+
+  res208 <- eig_gen2_(A, "lm", 2)
+  expect_type(res208, "list")
+
+  res209 <- svds1_(A, 2)
+  expect_type(res209, "list")
+
+  set.seed(123)
+  b <- rnorm(5)
+  res210 <- spsolve1_(A, b, "lapack")
 })

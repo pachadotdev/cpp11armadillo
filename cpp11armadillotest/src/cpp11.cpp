@@ -1720,6 +1720,34 @@ extern "C" SEXP _cpp11armadillotest_syl1_(SEXP a, SEXP b, SEXP c) {
     return cpp11::as_sexp(syl1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(b), cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(c)));
   END_CPP11
 }
+// 08_official_documentation_adapted.cpp
+list eig_sym2_(const doubles_matrix<>& x, const char* method, const int& k);
+extern "C" SEXP _cpp11armadillotest_eig_sym2_(SEXP x, SEXP method, SEXP k) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(eig_sym2_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const char*>>(method), cpp11::as_cpp<cpp11::decay_t<const int&>>(k)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+list eig_gen2_(const doubles_matrix<>& x, const char* method, const int& k);
+extern "C" SEXP _cpp11armadillotest_eig_gen2_(SEXP x, SEXP method, SEXP k) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(eig_gen2_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const char*>>(method), cpp11::as_cpp<cpp11::decay_t<const int&>>(k)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+list svds1_(const doubles_matrix<>& x, const int& k);
+extern "C" SEXP _cpp11armadillotest_svds1_(SEXP x, SEXP k) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(svds1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const int&>>(k)));
+  END_CPP11
+}
+// 08_official_documentation_adapted.cpp
+doubles spsolve1_(const doubles_matrix<>& a, const doubles& b, const char* method);
+extern "C" SEXP _cpp11armadillotest_spsolve1_(SEXP a, SEXP b, SEXP method) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(spsolve1_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(a), cpp11::as_cpp<cpp11::decay_t<const doubles&>>(b), cpp11::as_cpp<cpp11::decay_t<const char*>>(method)));
+  END_CPP11
+}
 // 09_regression.cpp
 doubles ols_(const doubles_matrix<>& x, const doubles& y);
 extern "C" SEXP _cpp11armadillotest_ols_(SEXP x, SEXP y) {
@@ -1785,8 +1813,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_each_row1_",                     (DL_FUNC) &_cpp11armadillotest_each_row1_,                     1},
     {"_cpp11armadillotest_each_slice1_",                   (DL_FUNC) &_cpp11armadillotest_each_slice1_,                   1},
     {"_cpp11armadillotest_eig_gen1_",                      (DL_FUNC) &_cpp11armadillotest_eig_gen1_,                      2},
+    {"_cpp11armadillotest_eig_gen2_",                      (DL_FUNC) &_cpp11armadillotest_eig_gen2_,                      3},
     {"_cpp11armadillotest_eig_pair1_",                     (DL_FUNC) &_cpp11armadillotest_eig_pair1_,                     2},
     {"_cpp11armadillotest_eig_sym1_",                      (DL_FUNC) &_cpp11armadillotest_eig_sym1_,                      2},
+    {"_cpp11armadillotest_eig_sym2_",                      (DL_FUNC) &_cpp11armadillotest_eig_sym2_,                      3},
     {"_cpp11armadillotest_eigen_gen_dbl_complex_wrapper",  (DL_FUNC) &_cpp11armadillotest_eigen_gen_dbl_complex_wrapper,  1},
     {"_cpp11armadillotest_eigen_gen_mat",                  (DL_FUNC) &_cpp11armadillotest_eigen_gen_mat,                  1},
     {"_cpp11armadillotest_eigen_gen_mat_complex_wrapper",  (DL_FUNC) &_cpp11armadillotest_eigen_gen_mat_complex_wrapper,  1},
@@ -1943,6 +1973,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_spones1_",                       (DL_FUNC) &_cpp11armadillotest_spones1_,                       1},
     {"_cpp11armadillotest_sprandn1_",                      (DL_FUNC) &_cpp11armadillotest_sprandn1_,                      1},
     {"_cpp11armadillotest_sprandu1_",                      (DL_FUNC) &_cpp11armadillotest_sprandu1_,                      1},
+    {"_cpp11armadillotest_spsolve1_",                      (DL_FUNC) &_cpp11armadillotest_spsolve1_,                      3},
     {"_cpp11armadillotest_sqrtmat1_",                      (DL_FUNC) &_cpp11armadillotest_sqrtmat1_,                      1},
     {"_cpp11armadillotest_sqrtmat_sympd1_",                (DL_FUNC) &_cpp11armadillotest_sqrtmat_sympd1_,                1},
     {"_cpp11armadillotest_stddev1_",                       (DL_FUNC) &_cpp11armadillotest_stddev1_,                       2},
@@ -1953,6 +1984,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_sum2_",                          (DL_FUNC) &_cpp11armadillotest_sum2_,                          1},
     {"_cpp11armadillotest_svd1_",                          (DL_FUNC) &_cpp11armadillotest_svd1_,                          1},
     {"_cpp11armadillotest_svd_econ1_",                     (DL_FUNC) &_cpp11armadillotest_svd_econ1_,                     1},
+    {"_cpp11armadillotest_svds1_",                         (DL_FUNC) &_cpp11armadillotest_svds1_,                         2},
     {"_cpp11armadillotest_swap1_",                         (DL_FUNC) &_cpp11armadillotest_swap1_,                         1},
     {"_cpp11armadillotest_swap_columns1_",                 (DL_FUNC) &_cpp11armadillotest_swap_columns1_,                 1},
     {"_cpp11armadillotest_swap_rows1_",                    (DL_FUNC) &_cpp11armadillotest_swap_rows1_,                    1},

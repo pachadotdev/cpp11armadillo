@@ -980,6 +980,22 @@ syl1_ <- function(a, b, c) {
   .Call(`_cpp11armadillotest_syl1_`, a, b, c)
 }
 
+eig_sym2_ <- function(x, method, k) {
+  .Call(`_cpp11armadillotest_eig_sym2_`, x, method, k)
+}
+
+eig_gen2_ <- function(x, method, k) {
+  .Call(`_cpp11armadillotest_eig_gen2_`, x, method, k)
+}
+
+svds1_ <- function(x, k) {
+  .Call(`_cpp11armadillotest_svds1_`, x, k)
+}
+
+spsolve1_ <- function(a, b, method) {
+  .Call(`_cpp11armadillotest_spsolve1_`, a, b, method)
+}
+
 ols_ <- function(x, y) {
   .Call(`_cpp11armadillotest_ols_`, x, y)
 }

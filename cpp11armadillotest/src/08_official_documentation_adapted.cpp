@@ -3106,7 +3106,7 @@
 }
 
 [[cpp11::register]] list qz1_(const doubles_matrix<>& a, const doubles_matrix<>& b,
-                                 const char* select) {
+                              const char* select) {
   mat A = as_mat(a);
   mat B = as_mat(b);
 
@@ -3139,7 +3139,8 @@
   return out;
 }
 
-[[cpp11::register]] doubles_matrix<> solve1_(const doubles_matrix<>& a, const doubles_matrix<>& b) {
+[[cpp11::register]] doubles_matrix<> solve1_(const doubles_matrix<>& a,
+                                             const doubles_matrix<>& b) {
   mat A = as_mat(a);
   mat B = as_mat(b);
 
@@ -3193,4 +3194,76 @@
   mat X = syl(A, B, C);
 
   return as_doubles_matrix(X);
+}
+
+[[cpp11::register]] list eig_sym2_(const doubles_matrix<>& x, const char* method,
+                                   const int& k) {
+  sp_mat X = as_SpMat(x);
+
+  sp_mat Y = X.t() * X;
+
+  vec eigval;
+  mat eigvec;
+
+  eigs_opts opts;
+  opts.maxiter = 10000;
+  bool ok = eigs_sym(eigval, eigvec, Y, k, method, opts);
+
+  writable::list out(3);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles(eigval);
+  out[2] = as_doubles_matrix(eigvec);
+
+  return out;
+}
+
+[[cpp11::register]] list eig_gen2_(const doubles_matrix<>& x, const char* method,
+                                   const int& k) {
+  sp_mat X = as_SpMat(x);
+
+  cx_vec eigval;
+  cx_mat eigvec;
+
+  eigs_opts opts;
+  opts.maxiter = 10000;
+
+  bool ok = eigs_gen(eigval, eigvec, X, k, method, opts);
+
+  writable::list out(3);
+  out[0] = writable::logicals({ok});
+  out[1] = as_complex_doubles(eigval);
+  out[2] = as_complex_matrix(eigvec);
+
+  return out;
+}
+
+[[cpp11::register]] list svds1_(const doubles_matrix<>& x, const int& k) {
+  sp_mat X = as_SpMat(x);
+
+  // convert all values below 0.1 to zero
+  X.transform([](double val) { return (std::abs(val) < 0.1) ? 0 : val; });
+
+  mat U;
+  vec s;
+  mat V;
+
+  bool ok = svds(U, s, V, X, k);
+
+  writable::list out(4);
+  out[0] = writable::logicals({ok});
+  out[1] = as_doubles(s);
+  out[2] = as_doubles_matrix(U);
+  out[3] = as_doubles_matrix(V);
+
+  return out;
+}
+
+[[cpp11::register]] doubles spsolve1_(const doubles_matrix<>& a, const doubles& b,
+                                      const char* method) {
+  sp_mat A = as_SpMat(a);
+  vec B = as_Col(b);
+
+  vec X = spsolve(A, B, method);
+
+  return as_doubles(X);
 }

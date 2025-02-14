@@ -491,29 +491,6 @@ y = \log\left[\frac{1}{x s \sqrt{2\pi}} \exp\left[-\frac{(\log(x) - m)^2}{2s^2}\
 <div class="section level2">
 <h2 id="normcdf">Cumulative distribution function of normal distribution<a class="anchor" aria-label="anchor" href="#normcdf"></a>
 </h2>
-<!-- normcdf( X )
-normcdf( X, M, S )
-
-    For each scalar x in X, compute its cumulative distribution function according to a Gaussian (normal) distribution using the corresponding mean value m in M and the corresponding standard deviation value s in S
-
-    X can be a scalar, vector, or matrix
-
-    M and S can jointly be either scalars, vectors, or matrices
-
-    If M and S are omitted, their values are assumed to be 0 and 1, respectively
-
-    Examples:
-
-        vec X(10, fill::randu);
-        vec M(10, fill::randu);
-        vec S(10, fill::randu);
-
-           vec P1 = normcdf(X);
-           vec P2 = normcdf(X,    M,    S   );
-           vec P3 = normcdf(1.23, M,    S   );
-           vec P4 = normcdf(X,    4.56, 7.89);
-        double P5 = normcdf(1.23, 4.56, 7.89);
- -->
 <p>For each scalar <code>x</code> in <code>X</code>, compute its cumulative distribution function according to a Gaussian (normal) distribution using the corresponding mean value <code>m</code> in <code>M</code> and the corresponding standard deviation value <code>s</code> in <code>S</code>.</p>
 <ul>
 <li>
@@ -551,34 +528,6 @@ normcdf( X, M, S )
 <div class="section level2">
 <h2 id="mvnrnd">Random vectors from multivariate normal distribution<a class="anchor" aria-label="anchor" href="#mvnrnd"></a>
 </h2>
-<!-- X = mvnrnd( M, C )
-X = mvnrnd( M, C, N )
-
-mvnrnd( X, M, C )
-mvnrnd( X, M, C, N )
-
-    Generate a matrix with random column vectors from a multivariate Gaussian (normal) distribution with parameters M and C:
-        M is the mean; must be a column vector
-        C is the covariance matrix; must be symmetric positive semi-definite (preferably positive definite)
-
-    N is the number of column vectors to generate; if N is omitted, it is assumed to be 1
-
-    Caveat: repeated generation of one vector (or a small number of vectors) using the same M and C parameters can be inefficient;
-    for repeated generation consider using the generate() function in the gmm_diag and gmm_full classes
-
-    If generating the random vectors fails:
-        X = mvnrnd(M, C) and X = mvnrnd(M, C, N) reset X and throw a std::runtime_error exception
-        mvnrnd(X, M, C) and mvnrnd(X, M, C, N) reset X and return a bool set to false (exception is not thrown)
-
-    Examples:
-
-        vec M(5, fill::randu);
-
-        mat B(5, 5, fill::randu);
-        mat C = B.t() * B;
-
-        mat X = mvnrnd(M, C, 100);
- -->
 <p>Generate a matrix with random column vectors from a multivariate Gaussian (normal) distribution with parameters <code>M</code> and <code>C</code>.</p>
 <ul>
 <li>
@@ -762,7 +711,7 @@ mvnrnd( X, M, C, N )
 <div class="section level2">
 <h2 id="gmm_diag-gmm_full">Probabilistic clustering and likelihood calculation via mixture of Gaussians<a class="anchor" aria-label="anchor" href="#gmm_diag-gmm_full"></a>
 </h2>
-<p><code>gmm_diag</code> and <code>gmm_full</code> are classes for multi-variate probabilistic clustering and likelihood calculation via Gaussian Mixture Models (GMMs).</p>
+<p><code>gmm_diag</code> and <code>gmm_full</code> are classes for multi-variate probabilistic clustering and likelihood calculation via Gaussian Mixture Models (GMMs). The implementation details are available in <span class="citation">Sanderson and Curtin (2017)</span>.</p>
 <p>The distribution of data is modelled as:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><munderover><mo>∑</mo><mrow><mi>g</mi><mo>=</mo><mn>0</mn></mrow><mrow><msub><mi>n</mi><mtext mathvariant="normal">gaus</mtext></msub><mo>−</mo><mn>1</mn></mrow></munderover><msub><mi>h</mi><mi>g</mi></msub><mi>N</mi><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>∣</mo><msub><mi>m</mi><mi>g</mi></msub><mo>,</mo><msub><mi>C</mi><mi>g</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
 p(x) = \sum_{g=0}^{n_{\text{gaus}}-1} h_g N(x \mid m_g, C_g)
@@ -959,12 +908,11 @@ p(x) = \sum_{g=0}^{n_{\text{gaus}}-1} h_g N(x \mid m_g, C_g)
 <span id="cb34-61"><a href="#cb34-61" aria-hidden="true"></a></span>
 <span id="cb34-62"><a href="#cb34-62" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
 <span id="cb34-63"><a href="#cb34-63" aria-hidden="true"></a>}</span></code></pre></div>
+<div id="refs" class="references hanging-indent">
+<div id="ref-Sanderson2017">
+<p>Sanderson, Conrad, and Ryan Curtin. 2017. “An Open Source C++ Implementation of Multi-Threaded Gaussian Mixture Models, K-Means and Expectation Maximisation.” In <em>2017 11th International Conference on Signal Processing and Communication Systems (ICSPCS)</em>, 1–8. <a href="https://doi.org/10.1109/ICSPCS.2017.8270510" class="external-link">https://doi.org/10.1109/ICSPCS.2017.8270510</a>.</p>
 </div>
-<div class="section level3">
-<h3 id="implementation-details">Implementation details<a class="anchor" aria-label="anchor" href="#implementation-details"></a>
-</h3>
-<p>The implementation details are available in the following <a href="https://arma.sourceforge.net/armadillo_spcs_2017.pdf" class="external-link">paper</a>:</p>
-<p>Sanderson, Conrad, and Ryan Curtin. “An open source C++ implementation of multi-threaded Gaussian mixture models, k-means and expectation maximisation.” In <em>2017 11th international conference on signal processing and communication systems (ICSPCS)</em>, pp. 1-8. IEEE, 2017.</p>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
