@@ -3,8 +3,8 @@
 using namespace arma;
 using namespace cpp11;
 
-#ifndef SPARSEMATRICES
-#define SPARSEMATRICES
+#ifndef SPARSEMATRICES_HPP
+#define SPARSEMATRICES_HPP
 
 ////////////////////////////////////////////////////////////////
 // R to Armadillo
@@ -75,13 +75,21 @@ inline SpMat<int> as_SpMat(const integers& x) {
   return dblint_to_SpMat_<int, integers>(x);
 }
 
-inline SpMat<double> as_spmat(const doubles_matrix<>& x) { return as_SpMat(x); }
+inline SpMat<double> as_sp_dmat(const doubles_matrix<>& x) { return as_SpMat(x); }
+inline SpMat<float> as_sp_fmat(const doubles_matrix<>& x) {
+  SpMat<double> y = dblint_matrix_to_SpMat_<double, doubles_matrix<>>(x);
+  return arma::conv_to<SpMat<float>>::from(y);
+}
 
-inline SpMat<int> as_spmat(const integers_matrix<>& x) { return as_SpMat(x); }
+inline SpMat<uword> as_sp_umat(const integers_matrix<>& x) {
+  SpMat<int> y = dblint_matrix_to_SpMat_<int, integers_matrix<>>(x);
+  return arma::conv_to<SpMat<uword>>::from(y);
+}
 
-inline SpMat<double> as_spmat(const doubles& x) { return as_SpMat(x); }
-
-inline SpMat<int> as_spmat(const integers& x) { return as_SpMat(x); }
+inline SpMat<sword> as_sp_imat(const integers_matrix<>& x) {
+  SpMat<int> y = dblint_matrix_to_SpMat_<int, integers_matrix<>>(x);
+  return arma::conv_to<SpMat<sword>>::from(y);
+}
 
 ////////////////////////////////////////////////////////////////
 // Armadillo to R
@@ -119,6 +127,11 @@ inline doubles_matrix<> as_doubles_matrix(const SpMat<double>& A) {
 
 inline integers_matrix<> as_integers_matrix(const SpMat<int>& A) {
   return SpMat_to_dblint_matrix_<int, integers_matrix<>>(A);
+}
+
+inline doubles_matrix<> as_doubles_matrix(const SpMat<float>& A) {
+  SpMat<double> B = arma::conv_to<SpMat<double>>::from(A);
+  return as_doubles_matrix(B);
 }
 
 // Complex

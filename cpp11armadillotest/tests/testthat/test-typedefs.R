@@ -80,9 +80,18 @@ test_that("compatible casting for matrices", {
     expect_true(all.equal(res[[n]], res[[i]]))
   }
 
-  set.seed(321)
+  set.seed(200100)
   y <- matrix(rbinom(25, 1, 0.5), 5, 5)
-  res <- typedef_intmat_exchangeability(y)
+  storage.mode(y) <- "double"
+  res <- typedef_spmat_exchangeability(y)
+  n <- length(res)
+  for (i in seq_len(n - 1)) {
+    expect_true(all.equal(res[[n]], res[[i]]))
+  }
+
+  set.seed(200200)
+  y <- matrix(rbinom(25, 1, 0.5), 5, 5)
+  res <- typedef_spmat_int_exchangeability(y)
   n <- length(res)
   for (i in seq_len(n - 1)) {
     expect_true(all.equal(res[[n]], res[[i]]))

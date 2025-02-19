@@ -80,8 +80,12 @@ typedef_dblmat_exchangeability <- function(x) {
   .Call(`_cpp11armadillotest_typedef_dblmat_exchangeability`, x)
 }
 
-typedef_intmat_exchangeability <- function(x) {
-  .Call(`_cpp11armadillotest_typedef_intmat_exchangeability`, x)
+typedef_spmat_exchangeability <- function(x) {
+  .Call(`_cpp11armadillotest_typedef_spmat_exchangeability`, x)
+}
+
+typedef_spmat_int_exchangeability <- function(x) {
+  .Call(`_cpp11armadillotest_typedef_spmat_int_exchangeability`, x)
 }
 
 random_matrix_nxn <- function(n) {

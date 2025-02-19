@@ -48,7 +48,17 @@
 // umat 	 =  	Mat<uword>
 // imat 	 =  	Mat<sword>
 
-// round decimals because of precision
+// sp_mat 	  =  	SpMat<double>
+// sp_dmat 	  =  	SpMat<double>
+// sp_fmat 	  =  	SpMat<float>
+// sp_cx_mat 	=  	SpMat<cx_double>
+// sp_cx_dmat =  	SpMat<cx_double>
+// sp_cx_fmat =  	SpMat<cx_float>
+// sp_umat 	  =  	SpMat<uword>
+// sp_imat 	  =  	SpMat<sword>
+
+// round decimals because of precision for the float type
+
 [[cpp11::register]] list typedef_dblmat_exchangeability(const doubles_matrix<>& x) {
   Mat<double> x1 = as_Mat(x);
   Mat<double> x2 = as_Mat(x);
@@ -75,18 +85,38 @@
   return res;
 }
 
-[[cpp11::register]] list typedef_intmat_exchangeability(const integers_matrix<>& x) {
-  Mat<int> x1 = as_Mat(x);
-  Mat<int> x2 = as_mat(x);
-  umat x3 = as_umat(x);
-  imat x4 = as_imat(x);
+// round decimals because of precision for the float type
 
-  writable::list res(4);
+[[cpp11::register]] list typedef_spmat_exchangeability(const doubles_matrix<>& x) {
+  SpMat<double> x1 = as_SpMat(x);
+  sp_dmat x2 = as_sp_dmat(x);
+  sp_fmat x3 = as_sp_fmat(x);
+  // sp_cx_mat x4 = as_sp_cx_mat(x);
+  // sp_cx_dmat x5 = as_sp_cx_dmat(x);
+  // sp_cx_fmat x6 = as_sp_cx_fmat(x);
+
+  writable::list res(3);
+
+  res[0] = as_doubles_matrix(x1);
+  res[1] = as_doubles_matrix(x2);
+  res[2] = as_doubles_matrix(x3);
+  // res[3] = as_complex_matrix(x4);
+  // res[4] = as_complex_matrix(x5);
+  // res[5] = as_complex_matrix(x6);
+
+  return res;
+}
+
+[[cpp11::register]] list typedef_spmat_int_exchangeability(const integers_matrix<>& x) {
+  SpMat<int> x1 = as_SpMat(x);
+  sp_umat x2 = as_sp_umat(x);
+  sp_imat x3 = as_sp_imat(x);
+
+  writable::list res(3);
 
   res[0] = as_integers_matrix(x1);
   res[1] = as_integers_matrix(x2);
   res[2] = as_integers_matrix(x3);
-  res[3] = as_integers_matrix(x4);
 
   return res;
 }
