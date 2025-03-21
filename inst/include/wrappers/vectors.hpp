@@ -185,38 +185,4 @@ inline list as_complex_matrix(const Col<std::complex<double>>& x) {
       {"real"_nm = as_doubles_matrix(x_real), "imag"_nm = as_doubles_matrix(x_imag)});
 }
 
-////////////////////////////////////////////////////////////////
-// as_cpp() specializations for matrices
-////////////////////////////////////////////////////////////////
-
-// this is to match the as_cpp() behavior in cpp11
-
-// R to Armadillo
-
-// doubles -> Col<double> / vec
-template <>
-inline Col<double> as_cpp<Col<double>>(const doubles& x) {
-  return as_Col(x);
-}
-
-// integers -> Col<int>
-template <>
-inline Col<int> as_cpp<Col<int>>(const integers& x) {
-  return as_Col(x);
-}
-
-// Armadillo to R
-
-// Col<double> / vec -> doubles
-template <>
-inline doubles as_cpp<doubles>(const Col<double>& x) {
-  return as_doubles(x);
-}
-
-// Col<int> -> integers
-template <>
-inline integers as_cpp<integers>(const Mat<int>& x) {
-  return as_integers(x);
-}
-
 #endif

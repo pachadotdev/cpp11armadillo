@@ -17,6 +17,7 @@ status](https://www.r-pkg.org/badges/version/cpp11armadillo)](https://CRAN.R-pro
 The goal of cpp11armadillo is to provide a novel approach to use the
 [Armadillo C++ library](https://arma.sourceforge.net/docs.html) by using
 the header-only cpp11 R package and to simplify things for the end-user.
+It uses the Apache 2.0 license.
 
 ⚠️Important⚠️: cpp11armadillo was created to ease writing functions in
 your own packages and does not offer on-the-fly compilation for code
@@ -46,15 +47,15 @@ cpp11armadillo, and the real difference for the end user is that
 cpp11armadillo:
 
   - Has a smaller memory footprint.
-  - Uses the Apache license (i.e., The Apache license is permissive and
-    allows commercial use with attribution, unlike the GPL-3, which
-    requires open-source redistribution.)
+  - Uses the Apache license instead of GPL-3 (i.e., The Apache license
+    is permissive and allows commercial use with attribution, unlike the
+    GPL-3, which requires open-source redistribution.)
   - Can be vendored to be used in restricted environments (i.e., servers
     with no internet access or where IT restricts the installation of
     packages).
 
-This is expanded in the current
-[preprint](https://arxiv.org/abs/2408.11074).
+This is expanded in our article [cpp11armadillo: An R package to use the
+Armadillo C++ library](https://dx.doi.org/10.1016/j.softx.2025.102087).
 
 If this software is useful to you, please consider donating on [Buy Me A
 Coffee](https://buymeacoffee.com/pacha). All donations will be used to

@@ -1,6 +1,6 @@
 # cpp11armadillo 0.4.6
 
-* Provides wrappers to use `as_cpp<>` as in the cpp11 package templates.
+* Added links to cpp11armadillo article.
 
 # cpp11armadillo 0.4.5
 

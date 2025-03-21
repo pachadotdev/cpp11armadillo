@@ -96,8 +96,4 @@ test_that("compatible casting for matrices", {
   for (i in seq_len(n - 1)) {
     expect_true(all.equal(res[[n]], res[[i]]))
   }
-
-  set.seed(200100)
-  x <- matrix(rnorm(4), 2, 2)
-  expect_true(typedef_equivalences(x))
 })
