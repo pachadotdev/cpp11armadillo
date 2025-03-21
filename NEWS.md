@@ -1,3 +1,11 @@
+# cpp11armadillo 0.4.6
+
+* Provides wrappers to use `as_cpp<>` as in the cpp11 package templates.
+
+# cpp11armadillo 0.4.5
+
+* refactored Armadillo to R integers matrix conversion.
+
 # cpp11armadillo 0.4.4
 
 * Provides wrappers to avoid CRAN notes with Armadillo functions that use

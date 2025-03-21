@@ -1,0 +1,11 @@
+bibentry(
+  "Article",
+  title = "{cpp11armadillo}: An {R} package to use the Armadillo {C++} library",
+  author = "Mauricio Vargas Sepulveda, Jonathan Schneider Malamud",
+  month = "May",
+  year = 2025,
+  journal = "{SoftwareX}",
+  volume = 30,
+  pages = 102087,
+  doi = "10.1016/j.softx.2025.102087"
+)

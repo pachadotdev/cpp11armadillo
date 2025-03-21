@@ -1,5 +1,3 @@
-#!/bin/sh
-
 # We make sure that the R and Armadillo bindings are compatible (i.e., messages)
 # this is why we add the R and cpp11 path
 CPP11_INCLUDE_PATH=`${R_HOME}/bin/Rscript -e "cat(system.file('include', package = 'cpp11'))"`

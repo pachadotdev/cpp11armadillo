@@ -83,6 +83,33 @@ In the previous code, the `ols_mat_()` function receives inputs from R and calls
 `ols_()` to do the computation on C++ side, and `ols_dbl_()` does the same but
 it returns a vector instead of a matrix.
 
+# Equivalent Commands
+
+cpp11armadillo provides different commands to convert data from R to C++ and
+viceversa. The following commands are equivalent:
+
+```cpp
+// R to C++
+
+Mat<double> Y = as_Mat(y); 
+Mat<double> Y = as_cpp<Mat<double>>(y);
+mat Y = as_mat(y);
+mat Y = as_cpp<mat>(y);
+
+Col<double> Z = as_Col(z);
+Col<double> Z = as_cpp<Col<double>>(z);
+vec Z = as_col(z);
+vec Z = as_cpp<vec>(z);
+
+// C++ to R
+
+doubles_matrix<> y = as_doubles_matrix(Y);
+doubles_matrix<> y = as_cpp<doubles_matrix<>>(Y);
+
+doubles z = as_doubles(Z);
+doubles z = as_cpp<doubles>(Z);
+```
+
 # Additional Examples
 
 The package repository includes the directory `cpp11armadillotest`, which

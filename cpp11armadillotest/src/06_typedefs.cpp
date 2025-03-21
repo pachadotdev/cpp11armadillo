@@ -120,3 +120,12 @@
 
   return res;
 }
+
+[[cpp11::register]] bool typedef_equivalences(const doubles_matrix<>& x) {
+  Mat<double> y1 = as_Mat(x);
+  mat y2 = as_mat(x);
+  Mat<double> y3 = as_cpp<Mat<double>>(x);
+  mat y4 = as_cpp<mat>(x);
+
+  return all(vectorise(y1 == y2)) && all(vectorise(y1 == y3)) && all(vectorise(y1 == y4));
+}

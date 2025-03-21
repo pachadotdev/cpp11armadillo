@@ -88,6 +88,10 @@ typedef_spmat_int_exchangeability <- function(x) {
   .Call(`_cpp11armadillotest_typedef_spmat_int_exchangeability`, x)
 }
 
+typedef_equivalences <- function(x) {
+  .Call(`_cpp11armadillotest_typedef_equivalences`, x)
+}
+
 random_matrix_nxn <- function(n) {
   .Call(`_cpp11armadillotest_random_matrix_nxn`, n)
 }

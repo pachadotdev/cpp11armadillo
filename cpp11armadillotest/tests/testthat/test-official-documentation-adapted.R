@@ -871,8 +871,12 @@ test_that("examples derived from official documentation", {
   res200 <- qr_econ1_(X)
   expect_type(res199, "list")
   expect_type(res200, "list")
-  expect_equal(res199[[2]] %*% res199[[3]], X %*% res199[[4]])
-  expect_equal(res200[[2]] %*% res200[[3]], X)
+  q1 <- res199[[2]]
+  r1 <- res199[[3]]
+  q2 <- res200[[2]]
+  r2 <- res200[[3]]
+  expect_equal(q1 %*% r1, X)
+  expect_equal(q2 %*% r2, X)
 
   set.seed(123)
   X <- matrix(rnorm(25), 5, 5)

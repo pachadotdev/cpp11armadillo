@@ -3077,15 +3077,17 @@
   mat X = as_mat(x);
 
   mat Q, R;
-  umat P;
+  // umat P;
 
-  bool ok = qr(Q, R, P, X, "matrix");
+  // bool ok = qr(Q, R, P, X, "matrix");
+  bool ok = qr(Q, R, X);
 
-  writable::list out(4);
+  // writable::list out(4);
+  writable::list out(3);
   out[0] = writable::logicals({ok});
   out[1] = as_doubles_matrix(Q);
   out[2] = as_doubles_matrix(R);
-  out[3] = as_integers_matrix(P);
+  // out[3] = as_integers_matrix(P);
 
   return out;
 }

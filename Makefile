@@ -4,8 +4,7 @@ clean:
 
 test:
 	@echo "Testing R code"
-	@Rscript -e 'devtools::document()'
-	@Rscript -e 'devtools::load_all(); devtools::test()'
+	@Rscript -e 'devtools::document(); devtools::test(); devtools::install()'
 	@echo "Testing C++ code"
 	@Rscript -e 'devtools::clean_dll("cpp11armadillotest"); devtools::load_all("cpp11armadillotest"); devtools::test("cpp11armadillotest")'
 

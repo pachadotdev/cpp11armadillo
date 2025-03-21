@@ -159,6 +159,13 @@ extern "C" SEXP _cpp11armadillotest_typedef_spmat_int_exchangeability(SEXP x) {
     return cpp11::as_sexp(typedef_spmat_int_exchangeability(cpp11::as_cpp<cpp11::decay_t<const integers_matrix<>&>>(x)));
   END_CPP11
 }
+// 06_typedefs.cpp
+bool typedef_equivalences(const doubles_matrix<>& x);
+extern "C" SEXP _cpp11armadillotest_typedef_equivalences(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(typedef_equivalences(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x)));
+  END_CPP11
+}
 // 07_reproducibility.cpp
 integers_matrix<> random_matrix_nxn(const int& n);
 extern "C" SEXP _cpp11armadillotest_random_matrix_nxn(SEXP n) {
@@ -2014,6 +2021,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_typedef_SpMat_double",              (DL_FUNC) &_cpp11armadillotest_typedef_SpMat_double,              1},
     {"_cpp11armadillotest_typedef_SpMat_int",                 (DL_FUNC) &_cpp11armadillotest_typedef_SpMat_int,                 1},
     {"_cpp11armadillotest_typedef_dblmat_exchangeability",    (DL_FUNC) &_cpp11armadillotest_typedef_dblmat_exchangeability,    1},
+    {"_cpp11armadillotest_typedef_equivalences",              (DL_FUNC) &_cpp11armadillotest_typedef_equivalences,              1},
     {"_cpp11armadillotest_typedef_spmat_exchangeability",     (DL_FUNC) &_cpp11armadillotest_typedef_spmat_exchangeability,     1},
     {"_cpp11armadillotest_typedef_spmat_int_exchangeability", (DL_FUNC) &_cpp11armadillotest_typedef_spmat_int_exchangeability, 1},
     {"_cpp11armadillotest_typedef_uvec",                      (DL_FUNC) &_cpp11armadillotest_typedef_uvec,                      1},

@@ -157,12 +157,9 @@ inline integers_matrix<> as_integers_matrix(const SourceMatType& A) {
   const size_t m = A.n_cols;
 
   writable::integers_matrix<> B(n, m);
+  int* B_data = INTEGER(B);
 
-  for (size_t i = 0; i < n; ++i) {
-    for (size_t j = 0; j < m; ++j) {
-      B(i, j) = static_cast<int>(A(i, j));
-    }
-  }
+  std::memcpy(B_data, A.memptr(), n * m * sizeof(int));
 
   return B;
 }
@@ -191,6 +188,102 @@ inline list Mat_to_complex_matrix_(const Mat<T>& A) {
 
 inline list as_complex_matrix(const Mat<std::complex<double>>& A) {
   return Mat_to_complex_matrix_<std::complex<double>>(A);
+}
+
+// Specialized version for sparse matrices
+
+template <typename T>
+inline integers_matrix<> as_integers_matrix(const SpMat<T>& A) {
+  const size_t n = A.n_rows;
+  const size_t m = A.n_cols;
+
+  writable::integers_matrix<> B(n, m);
+
+  // Initialize with zeros
+  for (size_t i = 0; i < n; ++i) {
+    for (size_t j = 0; j < m; ++j) {
+      B(i, j) = 0;
+    }
+  }
+
+  // Copy non-zero elements
+  for (typename SpMat<T>::const_iterator it = A.begin(); it != A.end(); ++it) {
+    B(it.row(), it.col()) = static_cast<int>(*it);
+  }
+
+  return B;
+}
+
+inline integers_matrix<> as_integers_matrix(const SpMat<unsigned long long>& A) {
+  return as_integers_matrix<unsigned long long>(A);
+}
+
+inline integers_matrix<> as_integers_matrix(const SpMat<long long>& A) {
+  return as_integers_matrix<long long>(A);
+}
+
+////////////////////////////////////////////////////////////////
+// as_cpp() specializations for matrices
+////////////////////////////////////////////////////////////////
+
+// this is to match the as_cpp() behavior in cpp11
+
+// R to Armadillo
+
+template <typename To, typename From>
+inline To as_cpp(const From& x) {
+  static_assert(sizeof(To) == 0,
+                "No conversion available from the given type to the target type");
+  return To();  // Never reached due to static_assert, but needed for compilation
+}
+
+// doubles_matrix<> -> Mat<double> / mat / fmat
+template <>
+inline Mat<double> as_cpp<Mat<double>>(const doubles_matrix<>& x) {
+  return as_Mat(x);
+}
+template <>
+inline fmat as_cpp<fmat>(const doubles_matrix<>& x) {
+  return as_fmat(x);
+}
+
+// integers_matrix<> -> Mat<int> / imat
+template <>
+inline Mat<int> as_cpp<Mat<int>>(const integers_matrix<>& x) {
+  return as_Mat(x);
+}
+template <>
+inline imat as_cpp<imat>(const integers_matrix<>& x) {
+  return as_imat(x);
+}
+
+// Armadillo to R
+
+// Mat<double> / mat / fmat -> doubles_matrix<>
+template <>
+inline doubles_matrix<> as_cpp<doubles_matrix<>>(const Mat<double>& x) {
+  return as_doubles_matrix(x);
+}
+template <>
+inline doubles_matrix<> as_cpp<doubles_matrix<>>(const fmat& x) {
+  mat temp = arma::conv_to<mat>::from(x);
+  return as_doubles_matrix(temp);
+}
+
+// Mat<int> / imat -> integers_matrix<>
+template <>
+inline integers_matrix<> as_cpp<integers_matrix<>>(const Mat<int>& x) {
+  return as_integers_matrix(x);
+}
+template <>
+inline integers_matrix<> as_cpp<integers_matrix<>>(const imat& x) {
+  return as_integers_matrix(x);
+}
+
+// umat -> integers_matrix<>
+template <>
+inline integers_matrix<> as_cpp<integers_matrix<>>(const umat& x) {
+  return as_integers_matrix(x);
 }
 
 #endif
