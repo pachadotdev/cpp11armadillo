@@ -1,0 +1,54 @@
+---
+title: "Sparse matrices"
+output: rmarkdown::html_vignette
+bibliography: "references.bib"
+vignette: >
+  %\VignetteIndexEntry{Sparse matrices}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Limited support
+
+`cpp11armadillo`, as of v0.5.0, supports the `dgCMatrix` class from the
+`Matrix` package. This class is a sparse matrix class that stores the matrix in
+a compressed column format.
+
+The strategy for an efficient conversion from R to C++ and vice versa is to
+create an indexing of the non-zero elements of the input matrix and then use
+this indexing to create `dgCMatrix` (R) or `SpMat` (Armadillo/C++) object.
+
+Note that `cpp11` does not provide sparse matrices as it is the case for
+the dense data types `doubles_matrix<>` or `integers_matrix<>`. `cpp11armadillo`
+uses `SEXP` to provide a method to convert `dgCMatrix` objects to `SpMat`
+objects and vice versa using some properties of S4 objects.
+
+Here is an example of how to convert a `dgCMatrix` object to a `SpMat` object
+and re-import it to R:
+
+```{cpp}
+[[cpp11::register]] SEXP sum_matrices_(SEXP x) {
+  // Convert from dgCMatrix to SpMat
+  SpMat<double> A = as_SpMat(x);
+
+  // Create a matrix B with a diagonal of random numbers
+  SpMat<double> B(A.n_rows, A.n_cols);
+  for (uword i = 0; i < A.n_rows; ++i) {
+    B(i, i) = randu<double>();
+  }
+
+  A += B; // Add the two matrices
+
+  // Convert back to dgCMatrix and return
+  return as_dgCMatrix(A);
+}
+```
+
+# References

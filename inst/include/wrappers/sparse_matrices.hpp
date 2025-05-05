@@ -153,3 +153,98 @@ inline list as_complex_matrix(const SpMat<std::complex<double>>& A) {
 }
 
 #endif
+
+////////////////////////////////////////////////////////////////
+// dgCMatrix to Armadillo
+////////////////////////////////////////////////////////////////
+
+// reference:
+// https://www.r-bloggers.com/2020/03/what-is-a-dgcmatrix-object-made-of-sparse-matrix-format-in-r/
+// http://adv-r.had.co.nz/OO-essentials.html#s4
+
+inline bool is_dgCMatrix(SEXP x) { return Rf_inherits(x, "dgCMatrix"); }
+
+inline SpMat<double> as_SpMat(SEXP x) {
+  if (!is_dgCMatrix(x)) {
+    stop("Input is not a dgCMatrix");
+  }
+
+  // Extract the slots from dgCMatrix
+  SEXP i_slot = R_do_slot(x, Rf_mkString("i"));      // Row indices
+  SEXP p_slot = R_do_slot(x, Rf_mkString("p"));      // Column pointers
+  SEXP x_slot = R_do_slot(x, Rf_mkString("x"));      // Values
+  SEXP dim_slot = R_do_slot(x, Rf_mkString("Dim"));  // Dimensions
+
+  // Dimensions
+  int n_rows = INTEGER(dim_slot)[0];
+  int n_cols = INTEGER(dim_slot)[1];
+
+  // Row indices, column pointers and values
+  int* row_indices = INTEGER(i_slot);
+  int* col_ptrs = INTEGER(p_slot);
+  double* values = REAL(x_slot);
+
+  // Number of non-zero elements
+  int nnz = LENGTH(x_slot);
+
+  // Create a temporary array for row indices and column pointers
+  arma::umat locations(2, nnz);
+  arma::vec vals(nnz);
+
+  // Convert CSC format to coordinate list format
+  int k = 0;
+  for (int j = 0; j < n_cols; j++) {
+    for (int p = col_ptrs[j]; p < col_ptrs[j + 1]; p++) {
+      locations(0, k) = row_indices[p];  // Row
+      locations(1, k) = j;               // Column
+      vals(k) = values[p];               // Value
+      k++;
+    }
+  }
+
+  // Create sparse matrix from locations and values
+  return SpMat<double>(locations, vals, n_rows, n_cols);
+}
+
+////////////////////////////////////////////////////////////////
+// SpMat to dgCMatrix
+////////////////////////////////////////////////////////////////
+
+inline SEXP as_dgCMatrix(const SpMat<double>& A) {
+  // Create data in triplet format (COO)
+  std::vector<int> i_vec, j_vec;
+  std::vector<double> x_vec;
+
+  i_vec.reserve(A.n_nonzero);
+  j_vec.reserve(A.n_nonzero);
+  x_vec.reserve(A.n_nonzero);
+
+  // Extract non-zero elements
+  for (uword col = 0; col < A.n_cols; col++) {
+    for (SpMat<double>::const_iterator it = A.begin_col(col); it != A.end_col(col);
+         ++it) {
+      i_vec.push_back(it.row() + 1);  // 1-based indexing for R
+      j_vec.push_back(col + 1);       // 1-based indexing for R
+      x_vec.push_back(*it);
+    }
+  }
+
+  // Create R vectors using cpp11 instead of low-level SEXP manipulation
+  writable::integers i(i_vec.begin(), i_vec.end());
+  writable::integers j(j_vec.begin(), j_vec.end());
+  writable::doubles x(x_vec.begin(), x_vec.end());
+  writable::integers dims = {static_cast<int>(A.n_rows), static_cast<int>(A.n_cols)};
+
+  // Get R functions from base environment
+  function getNamespace = function(Rf_findFun(Rf_install("getNamespace"), R_GlobalEnv));
+  SEXP Matrix_ns = getNamespace("Matrix");
+
+  function get = function(Rf_findFun(Rf_install("get"), R_GlobalEnv));
+  SEXP sparseMatrix_fn = get("sparseMatrix", Matrix_ns);
+
+  function sparseMatrix = function(sparseMatrix_fn);
+
+  // Call sparseMatrix directly with named arguments
+  return sparseMatrix(named_arg("i") = i, named_arg("j") = j, named_arg("x") = x,
+                      named_arg("dims") = dims);
+}

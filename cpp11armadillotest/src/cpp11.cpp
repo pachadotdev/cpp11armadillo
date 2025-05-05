@@ -1769,6 +1769,20 @@ extern "C" SEXP _cpp11armadillotest_poisson_(SEXP x, SEXP y) {
     return cpp11::as_sexp(poisson_(cpp11::as_cpp<cpp11::decay_t<const doubles_matrix<>&>>(x), cpp11::as_cpp<cpp11::decay_t<const doubles&>>(y)));
   END_CPP11
 }
+// 10_sparse_matrices.cpp
+SEXP test_dgCMatrix_to_SpMat(SEXP x);
+extern "C" SEXP _cpp11armadillotest_test_dgCMatrix_to_SpMat(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(test_dgCMatrix_to_SpMat(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
+  END_CPP11
+}
+// 10_sparse_matrices.cpp
+SEXP sum_matrices_(SEXP x);
+extern "C" SEXP _cpp11armadillotest_sum_matrices_(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(sum_matrices_(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
@@ -1989,6 +2003,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_subview2_",                         (DL_FUNC) &_cpp11armadillotest_subview2_,                         1},
     {"_cpp11armadillotest_sum1_",                             (DL_FUNC) &_cpp11armadillotest_sum1_,                             1},
     {"_cpp11armadillotest_sum2_",                             (DL_FUNC) &_cpp11armadillotest_sum2_,                             1},
+    {"_cpp11armadillotest_sum_matrices_",                     (DL_FUNC) &_cpp11armadillotest_sum_matrices_,                     1},
     {"_cpp11armadillotest_svd1_",                             (DL_FUNC) &_cpp11armadillotest_svd1_,                             1},
     {"_cpp11armadillotest_svd_econ1_",                        (DL_FUNC) &_cpp11armadillotest_svd_econ1_,                        1},
     {"_cpp11armadillotest_svds1_",                            (DL_FUNC) &_cpp11armadillotest_svds1_,                            2},
@@ -1997,6 +2012,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_swap_rows1_",                       (DL_FUNC) &_cpp11armadillotest_swap_rows1_,                       1},
     {"_cpp11armadillotest_syl1_",                             (DL_FUNC) &_cpp11armadillotest_syl1_,                             3},
     {"_cpp11armadillotest_symmatu1_",                         (DL_FUNC) &_cpp11armadillotest_symmatu1_,                         1},
+    {"_cpp11armadillotest_test_dgCMatrix_to_SpMat",           (DL_FUNC) &_cpp11armadillotest_test_dgCMatrix_to_SpMat,           1},
     {"_cpp11armadillotest_toeplitz1_",                        (DL_FUNC) &_cpp11armadillotest_toeplitz1_,                        1},
     {"_cpp11armadillotest_trace1_",                           (DL_FUNC) &_cpp11armadillotest_trace1_,                           1},
     {"_cpp11armadillotest_trans1_",                           (DL_FUNC) &_cpp11armadillotest_trans1_,                           1},

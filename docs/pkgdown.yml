@@ -13,9 +13,10 @@ articles:
   miscellaneous: miscellaneous.html
   save-load: save-load.html
   signal-and-image-processing: signal-and-image-processing.html
+  sparse-matrices: sparse-matrices.html
   statistics-and-clustering: statistics-and-clustering.html
   syntax-comparison-for-matlab-users: syntax-comparison-for-matlab-users.html
-last_built: 2025-03-21T00:29Z
+last_built: 2025-05-05T07:50Z
 urls:
   reference: ../cpp11armadillo/reference
   article: ../cpp11armadillo/articles

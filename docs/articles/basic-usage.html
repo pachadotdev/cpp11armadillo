@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cpp11armadillo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,6 +50,7 @@
     <li><a class="dropdown-item" href="../articles/miscellaneous.html">Miscellaneous</a></li>
     <li><a class="dropdown-item" href="../articles/save-load.html">Saving and loading Armadillo objects on C++ side</a></li>
     <li><a class="dropdown-item" href="../articles/signal-and-image-processing.html">Signal and image processing</a></li>
+    <li><a class="dropdown-item" href="../articles/sparse-matrices.html">Sparse matrices</a></li>
     <li><a class="dropdown-item" href="../articles/statistics-and-clustering.html">Statistics and clustering</a></li>
     <li><a class="dropdown-item" href="../articles/syntax-comparison-for-matlab-users.html">Syntax comparison for MATLAB/Octave users</a></li>
   </ul>
@@ -123,30 +124,6 @@
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(beta);</span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a>}</span></code></pre></div>
 <p>In the previous code, the <code>ols_mat_()</code> function receives inputs from R and calls <code>ols_()</code> to do the computation on C++ side, and <code>ols_dbl_()</code> does the same but it returns a vector instead of a matrix.</p>
-</div>
-<div class="section level2">
-<h2 id="equivalent-commands">Equivalent Commands<a class="anchor" aria-label="anchor" href="#equivalent-commands"></a>
-</h2>
-<p>cpp11armadillo provides different commands to convert data from R to C++ and viceversa. The following commands are equivalent:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co">// R to C++</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>Mat&lt;<span class="dt">double</span>&gt; Y = as_Mat(y); </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>Mat&lt;<span class="dt">double</span>&gt; Y = as_cpp&lt;Mat&lt;<span class="dt">double</span>&gt;&gt;(y);</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>mat Y = as_mat(y);</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>mat Y = as_cpp&lt;mat&gt;(y);</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>Col&lt;<span class="dt">double</span>&gt; Z = as_Col(z);</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>Col&lt;<span class="dt">double</span>&gt; Z = as_cpp&lt;Col&lt;<span class="dt">double</span>&gt;&gt;(z);</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>vec Z = as_col(z);</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>vec Z = as_cpp&lt;vec&gt;(z);</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="co">// C++ to R</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>doubles_matrix&lt;&gt; y = as_doubles_matrix(Y);</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>doubles_matrix&lt;&gt; y = as_cpp&lt;doubles_matrix&lt;&gt;&gt;(Y);</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a>doubles z = as_doubles(Z);</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a>doubles z = as_cpp&lt;doubles&gt;(Z);</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="additional-examples">Additional Examples<a class="anchor" aria-label="anchor" href="#additional-examples"></a>

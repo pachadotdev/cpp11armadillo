@@ -17,8 +17,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="An Armadillo Interface">
-<meta name="description" content="Provides function declarations and inline function definitions that facilitate communication between R and the Armadillo C++ library for linear algebra and scientific computing. This implementation is detailed in Vargas Sepulveda and Schneider Malamud (2024) &lt;doi:10.48550/arXiv.2408.11074&gt;.">
-<meta property="og:description" content="Provides function declarations and inline function definitions that facilitate communication between R and the Armadillo C++ library for linear algebra and scientific computing. This implementation is detailed in Vargas Sepulveda and Schneider Malamud (2024) &lt;doi:10.48550/arXiv.2408.11074&gt;.">
+<meta name="description" content="Provides function declarations and inline function definitions that facilitate communication between R and the Armadillo C++ library for linear algebra and scientific computing. This implementation is detailed in Vargas Sepulveda and Schneider Malamud (2024) &lt;doi:10.1016/j.softx.2025.102087&gt;.">
+<meta property="og:description" content="Provides function declarations and inline function definitions that facilitate communication between R and the Armadillo C++ library for linear algebra and scientific computing. This implementation is detailed in Vargas Sepulveda and Schneider Malamud (2024) &lt;doi:10.1016/j.softx.2025.102087&gt;.">
 <meta property="og:image" content="../cpp11armadillo/logo.svg">
 </head>
 <body>
@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="index.html">cpp11armadillo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,7 @@
     <li><a class="dropdown-item" href="articles/miscellaneous.html">Miscellaneous</a></li>
     <li><a class="dropdown-item" href="articles/save-load.html">Saving and loading Armadillo objects on C++ side</a></li>
     <li><a class="dropdown-item" href="articles/signal-and-image-processing.html">Signal and image processing</a></li>
+    <li><a class="dropdown-item" href="articles/sparse-matrices.html">Sparse matrices</a></li>
     <li><a class="dropdown-item" href="articles/statistics-and-clustering.html">Statistics and clustering</a></li>
     <li><a class="dropdown-item" href="articles/syntax-comparison-for-matlab-users.html">Syntax comparison for MATLAB/Octave users</a></li>
   </ul>
@@ -80,7 +81,7 @@
 <div class="section level2">
 <h2 id="about">About<a class="anchor" aria-label="anchor" href="#about"></a>
 </h2>
-<p>The goal of cpp11armadillo is to provide a novel approach to use the <a href="https://arma.sourceforge.net/docs.html" class="external-link">Armadillo C++ library</a> by using the header-only cpp11 R package and to simplify things for the end-user.</p>
+<p>The goal of cpp11armadillo is to provide a novel approach to use the <a href="https://arma.sourceforge.net/docs.html" class="external-link">Armadillo C++ library</a> by using the header-only cpp11 R package and to simplify things for the end-user. It uses the Apache 2.0 license.</p>
 <p>⚠️Important⚠️: cpp11armadillo was created to ease writing functions in your own packages and does not offer on-the-fly compilation for code snippets.</p>
 <p>The idea is to pass matrices/vectors from R to C++, write pure C++/Armadillo code for the computation, and then export the result back to R with the proper data structures.</p>
 <p><a href="https://cran.r-project.org/package=RcppArmadillo" class="external-link">RcppArmadillo</a> is a popular R package used by over 1200 CRAN packages as of 2024-12-13. RcppArmadillo uses the GPL-3 license.</p>
@@ -97,10 +98,10 @@
 <p>The design differences result in marginally higher speed for cpp11armadillo, and the real difference for the end user is that cpp11armadillo:</p>
 <ul>
 <li>Has a smaller memory footprint.</li>
-<li>Uses the Apache license (i.e., The Apache license is permissive and allows commercial use with attribution, unlike the GPL-3, which requires open-source redistribution.)</li>
+<li>Uses the Apache license instead of GPL-3 (i.e., The Apache license is permissive and allows commercial use with attribution, unlike the GPL-3, which requires open-source redistribution.)</li>
 <li>Can be vendored to be used in restricted environments (i.e., servers with no internet access or where IT restricts the installation of packages).</li>
 </ul>
-<p>This is expanded in the current <a href="https://arxiv.org/abs/2408.11074" class="external-link">preprint</a>.</p>
+<p>This is expanded in our article <a href="https://dx.doi.org/10.1016/j.softx.2025.102087" class="external-link">cpp11armadillo: An R package to use the Armadillo C++ library</a>.</p>
 <p>If this software is useful to you, please consider donating on <a href="https://buymeacoffee.com/pacha" class="external-link">Buy Me A Coffee</a>. All donations will be used to continue improving cpp11armadillo.</p>
 </div>
 <div class="section level2">
