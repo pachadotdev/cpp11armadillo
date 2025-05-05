@@ -1011,7 +1011,3 @@ poisson_ <- function(x, y) {
 test_dgCMatrix_to_SpMat <- function(x) {
   .Call(`_cpp11armadillotest_test_dgCMatrix_to_SpMat`, x)
 }
-
-sum_matrices_ <- function(x) {
-  .Call(`_cpp11armadillotest_sum_matrices_`, x)
-}
