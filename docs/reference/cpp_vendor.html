@@ -21,6 +21,7 @@ project is using. It is often used in the go language community."><meta property
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/basic-usage.html">Basic 'cpp11armadillo' usage</a></li>
+    <li><a class="dropdown-item" href="../articles/configuration.html">Armadillo configuration</a></li>
     <li><a class="dropdown-item" href="../articles/decompositions-factorisations-inverses-and-equation-solvers-dense.html">Decompositions, factorisations, inverses and equation solvers (dense matrices)</a></li>
     <li><a class="dropdown-item" href="../articles/decompositions-factorisations-inverses-and-equation-solvers-sparse.html">Decompositions, factorisations, inverses and equation solvers (sparse matrices)</a></li>
     <li><a class="dropdown-item" href="../articles/functions-of-vector-matrices-cubes.html">Functions of vectors, matrices, and cubes</a></li>
@@ -94,7 +95,7 @@ available for your code until you run `cpp_vendor()` again.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># create a new directory</span></span></span>
 <span class="r-in"><span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'/tmp/Rtmp78enTv' already exists</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'/tmp/RtmpgLPntu' already exists</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># vendor the cpp11 headers into the directory</span></span></span>
 <span class="r-in"><span><span class="fu">cpp_vendor</span><span class="op">(</span><span class="va">dir</span><span class="op">)</span></span></span>

@@ -3,6 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   basic-usage: basic-usage.html
+  configuration: configuration.html
   decompositions-factorisations-inverses-and-equation-solvers-dense: decompositions-factorisations-inverses-and-equation-solvers-dense.html
   decompositions-factorisations-inverses-and-equation-solvers-sparse: decompositions-factorisations-inverses-and-equation-solvers-sparse.html
   functions-of-vector-matrices-cubes: functions-of-vector-matrices-cubes.html
@@ -16,7 +17,7 @@ articles:
   sparse-matrices: sparse-matrices.html
   statistics-and-clustering: statistics-and-clustering.html
   syntax-comparison-for-matlab-users: syntax-comparison-for-matlab-users.html
-last_built: 2025-05-05T07:50Z
+last_built: 2025-05-07T01:19Z
 urls:
   reference: ../cpp11armadillo/reference
   article: ../cpp11armadillo/articles
