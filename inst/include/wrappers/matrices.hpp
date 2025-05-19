@@ -23,33 +23,25 @@ inline Mat<T> as_Mat(const Mat<T>& x) {
 
 template <typename T, typename U>
 inline Mat<T> dblint_matrix_to_Mat_(const U& x) {
-  const int n = x.nrow();
-  const int m = x.ncol();
-
-  Mat<T> y(n, m);
+  const size_t n = x.nrow();
+  const size_t m = x.ncol();
 
   if (std::is_same<U, doubles_matrix<>>::value) {
-    y = Mat<T>(reinterpret_cast<T*>(REAL(x.data())), n, m, false, false);
+    return Mat<T>(reinterpret_cast<T*>(REAL(x.data())), n, m, false, false);
   } else {
-    y = Mat<T>(reinterpret_cast<T*>(INTEGER(x.data())), n, m, false, false);
+    return Mat<T>(reinterpret_cast<T*>(INTEGER(x.data())), n, m, false, false);
   }
-
-  return y;
 }
 
 template <typename T, typename U>
 inline Mat<T> dblint_to_Mat_(const U& x) {
   const int n = x.size();
 
-  Mat<T> y(n, 1);
-
   if (std::is_same<U, doubles>::value) {
-    y = Mat<T>(reinterpret_cast<T*>(REAL(x.data())), n, 1, false, false);
+    return Mat<T>(reinterpret_cast<T*>(REAL(x.data())), n, 1, false, false);
   } else {
-    y = Mat<T>(reinterpret_cast<T*>(INTEGER(x.data())), n, 1, false, false);
+    return Mat<T>(reinterpret_cast<T*>(INTEGER(x.data())), n, 1, false, false);
   }
-
-  return y;
 }
 
 inline Mat<double> as_Mat(const doubles_matrix<>& x) {
@@ -68,15 +60,21 @@ inline Mat<int> as_Mat(const integers& x) { return dblint_to_Mat_<int, integers>
 
 template <typename TargetMatType>
 inline TargetMatType as_target_mat(const integers_matrix<>& x) {
-  const int n = x.nrow();
-  const int m = x.ncol();
+  const uword n = x.nrow();
+  const uword m = x.ncol();
+  const uword nm = n * m;
 
+  // Allocate our Armadillo matrix once
   TargetMatType y(n, m);
 
-  for (int i = 0; i < n; ++i) {
-    for (int j = 0; j < m; ++j) {
-      y(i, j) = static_cast<typename TargetMatType::elem_type>(x(i, j));
-    }
+  // Raw pointers into R's data and Armadillo's storage
+  const int* src = INTEGER(x.data());
+  typename TargetMatType::elem_type* dst = y.memptr();
+
+// Copy all entries in one flat loop (faster than y(i,j) indexing)
+#pragma omp parallel for if (nm > 10000)
+  for (uword idx = 0; idx < nm; ++idx) {
+    dst[idx] = static_cast<typename TargetMatType::elem_type>(src[idx]);
   }
 
   return y;
@@ -194,21 +192,35 @@ inline list as_complex_matrix(const Mat<std::complex<double>>& A) {
 
 template <typename T>
 inline integers_matrix<> as_integers_matrix(const SpMat<T>& A) {
-  const size_t n = A.n_rows;
-  const size_t m = A.n_cols;
+  const uword n = A.n_rows;
+  const uword m = A.n_cols;
+  const size_t nm = n * m;
 
   writable::integers_matrix<> B(n, m);
+  int* B_data = INTEGER(B);
 
   // Initialize with zeros
-  for (size_t i = 0; i < n; ++i) {
-    for (size_t j = 0; j < m; ++j) {
-      B(i, j) = 0;
-    }
-  }
+  std::memset(B_data, 0, nm * sizeof(int));
 
   // Copy non-zero elements
-  for (typename SpMat<T>::const_iterator it = A.begin(); it != A.end(); ++it) {
-    B(it.row(), it.col()) = static_cast<int>(*it);
+  // for (typename SpMat<T>::const_iterator it = A.begin(); it != A.end(); ++it) {
+  //   B(it.row(), it.col()) = static_cast<int>(*it);
+  // }
+
+  const auto& col_ptrs = A.col_ptrs;     // length m+1
+  const auto& row_inds = A.row_indices;  // length nnz
+  const auto& values = A.values;         // length nnz
+
+  uword i, j, start, end, idx;
+
+  for (j = 0; j < m; ++j) {
+    start = col_ptrs[j];
+    end   = col_ptrs[j+1];
+    for (idx = start; idx < end; ++idx) {
+      i = row_inds[idx];
+      // linear index = row + col * n
+      B_data[i + j * n] = static_cast<int>(values[idx]);
+    }
   }
 
   return B;

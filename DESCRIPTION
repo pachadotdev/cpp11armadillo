@@ -6,7 +6,7 @@ Description: Provides function declarations and inline function definitions that
     linear algebra and scientific computing. This implementation is detailed
     in Vargas Sepulveda and Schneider Malamud (2024)
     <doi:10.1016/j.softx.2025.102087>.
-Version: 0.5.0
+Version: 0.5.2
 Authors@R: c(
     person(
         given = "Mauricio",

@@ -1,3 +1,11 @@
+# cpp11armadillo 0.5.2
+
+* Slightly improved copying speed.
+
+# cpp11armadillo 0.5.0
+
+* Basic support for sparse matrices.
+
 # cpp11armadillo 0.4.6
 
 * Added links to cpp11armadillo article.

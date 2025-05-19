@@ -29,15 +29,11 @@ template <typename T, typename U>
 inline Col<T> as_Col_(const U& x) {
   const size_t n = x.size();
 
-  Col<T> y(n);
-
   if (std::is_same<U, doubles>::value) {
-    y = Col<T>(reinterpret_cast<T*>(REAL(x.data())), n, false);
+    return Col<T>(reinterpret_cast<T*>(REAL(x.data())), n, false);
   } else {
-    y = Col<T>(reinterpret_cast<T*>(INTEGER(x.data())), n, false);
+    return Col<T>(reinterpret_cast<T*>(INTEGER(x.data())), n, false);
   }
-
-  return y;
 }
 
 inline Col<double> as_Col(const doubles& x) { return as_Col_<double, doubles>(x); }
