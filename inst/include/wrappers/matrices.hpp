@@ -215,7 +215,7 @@ inline integers_matrix<> as_integers_matrix(const SpMat<T>& A) {
 
   for (j = 0; j < m; ++j) {
     start = col_ptrs[j];
-    end   = col_ptrs[j+1];
+    end = col_ptrs[j + 1];
     for (idx = start; idx < end; ++idx) {
       i = row_inds[idx];
       // linear index = row + col * n
