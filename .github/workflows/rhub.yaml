@@ -13,15 +13,19 @@ on:
   workflow_dispatch:
     inputs:
       config:
-        description: 'A comma separated list of R-hub platforms to use.'
+        description: 'Address sanitizers'
         type: string
-        default: 'linux,windows,macos'
+        default: 'm1-san,clang-asan,clang-ubsan,valgrind'
       name:
-        description: 'Run name. You can leave this empty now.'
+        description: 'UBSAN and other CRAN checks'
         type: string
       id:
-        description: 'Unique ID. You can leave this empty now.'
+        description: 'CRAN-checks'
         type: string
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
 
@@ -64,6 +68,17 @@ jobs:
         with:
           token: ${{ secrets.RHUB_TOKEN }}
           job-config: ${{ matrix.config.job-config }}
+      - name: Install and test cpp11armadillotest
+        run: |
+          options(warn = 2)
+          pak::local_install_dev_deps("cpp11armadillotest", dependencies = TRUE)
+          install.packages(".", repos = NULL, type = "source")
+          install.packages("cpp11armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
+          setwd("cpp11armadillotest/tests")
+          library(testthat)
+          library(cpp11armadillotest)
+          test_check("cpp11armadillotest", reporter = "progress")
+        shell: Rscript {0}
 
   other-platforms:
     needs: setup
@@ -93,3 +108,15 @@ jobs:
         with:
           job-config: ${{ matrix.config.job-config }}
           token: ${{ secrets.RHUB_TOKEN }}
+      - name: Install and test cpp11armadillotest
+        run: |
+          options(warn = 2)
+          pak::local_install_dev_deps("cpp11armadillotest", dependencies = TRUE)
+          install.packages(".", repos = NULL, type = "source")
+          install.packages("cpp11armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
+          setwd("cpp11armadillotest/tests")
+          library(testthat)
+          library(cpp11armadillotest)
+          test_check("cpp11armadillotest", reporter = "progress")
+        shell: Rscript {0}
+        
