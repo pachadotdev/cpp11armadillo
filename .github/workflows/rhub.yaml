@@ -17,7 +17,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {name: 'ASAN/UBSAN', image: 'rhub/ubuntu-clang-devel'}
+          - {name: 'ASAN', image: 'ghcr.io/r-hub/containers/clang-asan:latest'}
+          - {name: 'UBSAN', image: 'ghcr.io/r-hub/containers/clang-ubsan:latest'}
         
     container:
       image: ${{ matrix.config.image }}
@@ -33,15 +34,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Setup sanitizers
-        if: matrix.config.name == 'ASAN/UBSAN'
-        run: |
-          # Set up ASAN/UBSAN environment
-          echo "ASAN_OPTIONS=detect_leaks=0:detect_odr_violation=0" >> $GITHUB_ENV
-          echo "UBSAN_OPTIONS=print_stacktrace=1" >> $GITHUB_ENV
-          echo "R_COMPILE_FLAGS=-fsanitize=address,undefined -fno-omit-frame-pointer" >> $GITHUB_ENV
-          echo "R_LINK_FLAGS=-fsanitize=address,undefined" >> $GITHUB_ENV
-          
       - name: Install system dependencies
         run: |
           # Update and install basic system dependencies
@@ -99,7 +91,7 @@ jobs:
           # Build package
           R CMD build --no-build-vignettes --no-manual .
           PKG_TARBALL=$(ls -1t *.tar.gz | head -n 1)
-          R CMD check --no-manual --no-vignettes --no-build-vignettes --use-gct "$PKG_TARBALL"
+          R CMD check --no-manual --no-vignettes --no-build-vignettes "$PKG_TARBALL"
           
       - name: Install and test cpp11armadillotest
         if: always()
