@@ -1,0 +1,3 @@
+PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS) -DARMA_OPENMP_THREADS=40
+PKG_LIBS = -L$(MKLROOT)/lib/intel64_lin -lmkl_rt -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core -lpthread -lm -ldl
+

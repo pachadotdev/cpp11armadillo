@@ -1,0 +1,25 @@
+Dear Editor and Reviewers,
+
+I have addressed the following presentation changes:
+
+- you have your name listed twice on the title page.  
+Why not list your affiliation on a single line?
+"Munk School of Global Affairs and Public Policy and Department of Electrical and Computer Engineering, University of Toronto, Toronto, Ontario, Canada"
+
+- put the citations in numerical order (e.g [1], [2], ..) as specified by our journal guidelines
+
+- the text beginning with "CHANGE .." on page 6 - is this correct?
+
+- there are things that need to be capitalized in the references
+(e.g, C++
+
+- Burns ref ( r or R)?  is there a better reference or link - it seems incomplete
+
+- 'R" Core  - the trailing quote is reversed and also in the title
+
+- long dash with "2019" - something is missing and capitalize C++
+
+- Vaugn - "c++" and "r's c" ?
+
+Each of these is highlighted as a Git diff in the PDF with the changes.
+

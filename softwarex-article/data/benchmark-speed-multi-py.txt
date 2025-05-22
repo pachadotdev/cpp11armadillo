@@ -1,0 +1,5 @@
+Min execution time: 2.369523 seconds
+25th percentile (p25) execution time: 2.531388 seconds
+Median execution time: 2.603311 seconds
+75th percentile (p75) execution time: 2.673085 seconds
+Max execution time: 3.417670 seconds

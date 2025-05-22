@@ -1,0 +1,76 @@
+
+scontrol show job 13795457
+JobId=13795457 JobName=pybenchmarkmulti
+   UserId=msep(3137691) GroupId=shirimb(6091943) MCS_label=N/A
+   Priority=2244609 Nice=0 Account=def-shirimb QOS=normal
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:04:26 TimeLimit=12:00:00 TimeMin=N/A
+   SubmitTime=2024-10-30T15:07:37 EligibleTime=2024-10-30T15:07:37
+   AccrueTime=2024-10-30T15:07:37
+   StartTime=2024-10-30T15:07:37 EndTime=2024-10-30T15:12:03 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2024-10-30T15:07:37 Scheduler=Main
+   Partition=compute AllocNode:Sid=nia-login01:254261
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=nia0106
+   BatchHost=nia0106
+   NumNodes=1 NumCPUs=80 NumTasks=40 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=40,mem=175000M,node=1,billing=20
+   AllocTRES=cpu=80,mem=175000M,node=1,billing=40
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=1 MinMemoryNode=175000M MinTmpDiskNode=0
+   Features=[skylake|cascade] DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) Network=(null)
+   Command=/gpfs/fs0/scratch/s/shirimb/msep/cpp11armadillopaper/paper/data/00-run-benchmark-multi-py.sh
+   WorkDir=/gpfs/fs0/scratch/s/shirimb/msep/cpp11armadillopaper/paper/data
+   Comment=/opt/slurm/bin/sbatch --export=NONE 00-run-benchmark-multi-py.sh 
+   StdErr=/scratch/s/shirimb/msep/cpp11armadillopaper/paper/data/pybenchmark.txt
+   StdIn=/dev/null
+   StdOut=/scratch/s/shirimb/msep/cpp11armadillopaper/paper/data/pybenchmark.txt
+   Power=
+   
+
+sacct -j 13795457
+JobID           JobName    Account    Elapsed  MaxVMSize     MaxRSS  SystemCPU    UserCPU ExitCode 
+------------ ---------- ---------- ---------- ---------- ---------- ---------- ---------- -------- 
+13795457     pybenchma+ def-shiri+   00:04:27                         00:00:00   00:00:00      0:0 
+13795457.ba+      batch def-shiri+   00:04:27                         00:00:00   00:00:00      0:0 
+13795457.ex+     extern def-shiri+   00:04:27                         00:00:00   00:00:00      0:0 
+
+scontrol show job 13795456
+JobId=13795456 JobName=pybenchmarkeigenvalues
+   UserId=msep(3137691) GroupId=shirimb(6091943) MCS_label=N/A
+   Priority=2244609 Nice=0 Account=def-shirimb QOS=normal
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=03:06:39 TimeLimit=12:00:00 TimeMin=N/A
+   SubmitTime=2024-10-30T15:07:27 EligibleTime=2024-10-30T15:07:27
+   AccrueTime=2024-10-30T15:07:27
+   StartTime=2024-10-30T15:07:29 EndTime=2024-10-30T18:14:08 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2024-10-30T15:07:29 Scheduler=Main
+   Partition=compute AllocNode:Sid=nia-login01:254261
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=nia0100
+   BatchHost=nia0100
+   NumNodes=1 NumCPUs=80 NumTasks=40 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=40,mem=175000M,node=1,billing=20
+   AllocTRES=cpu=80,mem=175000M,node=1,billing=40
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=1 MinMemoryNode=175000M MinTmpDiskNode=0
+   Features=[skylake|cascade] DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) Network=(null)
+   Command=/gpfs/fs0/scratch/s/shirimb/msep/cpp11armadillopaper/paper/data/00-run-benchmark-eigenvalues-py.sh
+   WorkDir=/gpfs/fs0/scratch/s/shirimb/msep/cpp11armadillopaper/paper/data
+   Comment=/opt/slurm/bin/sbatch --export=NONE 00-run-benchmark-eigenvalues-py.sh 
+   StdErr=/scratch/s/shirimb/msep/cpp11armadillopaper/paper/data/pybenchmark.txt
+   StdIn=/dev/null
+   StdOut=/scratch/s/shirimb/msep/cpp11armadillopaper/paper/data/pybenchmark.txt
+   Power=
+   
+
+sacct -j 13795456
+JobID           JobName    Account    Elapsed  MaxVMSize     MaxRSS  SystemCPU    UserCPU ExitCode 
+------------ ---------- ---------- ---------- ---------- ---------- ---------- ---------- -------- 
+13795456     pybenchma+ def-shiri+   03:06:39                         03:03:39 5-00:15:00      0:0 
+13795456.ba+      batch def-shiri+   03:06:39   5355704K   2315868K   03:03:39 5-00:15:00      0:0 
+13795456.ex+     extern def-shiri+   03:06:39    148744K      1080K   00:00:00   00:00:00      0:0 
