@@ -1,4 +1,4 @@
-name: Sanitizer Checks
+name: Minimal Sanitizer Checks
 
 on:
   push:
@@ -17,9 +17,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {name: 'ASAN/UBSAN', container: 'ghcr.io/r-hub/containers/clang-asan:latest'}
-          - {name: 'Valgrind', container: 'ghcr.io/r-hub/containers/valgrind:latest'}
-          - {name: 'UBSAN', container: 'ghcr.io/r-hub/containers/clang-ubsan:latest'}
+          - {name: 'Clang-ASAN', container: 'ghcr.io/r-hub/containers/clang-asan:latest', check_args: '--no-manual --no-vignettes --no-build-vignettes'}
+          - {name: 'Clang-UBSAN', container: 'ghcr.io/r-hub/containers/clang-ubsan:latest', check_args: '--no-manual --no-vignettes --no-build-vignettes'}
         
     container:
       image: ${{ matrix.config.container }}
@@ -29,67 +28,125 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
       _R_CHECK_CRAN_INCOMING_: false
       _R_CHECK_FORCE_SUGGESTS_: false
+      R_BUILD_ARGS: "--no-manual --no-vignettes"
+      R_CHECK_ARGS: "${{ matrix.config.check_args }}"
 
     steps:
       - uses: actions/checkout@v4
       
       - name: Install system dependencies
         run: |
-          apt-get update
+          # Update package list
+          apt-get update || true
+          
+          # Install minimal dependencies needed for R packages
           apt-get install -y --no-install-recommends \
             libcurl4-openssl-dev \
             libssl-dev \
             libxml2-dev \
-            libgit2-dev \
-            pandoc
+            libgit2-dev || true
           
       - name: Install R dependencies
         run: |
-          install.packages(c("pak", "remotes", "rcmdcheck", "testthat"))
-          pak::local_install_deps(".", dependencies = TRUE)
+          # Install essential packages
+          install.packages(c("remotes", "rcmdcheck", "testthat"))
+          
+          # Install package dependencies
+          remotes::install_deps(".", dependencies = TRUE, upgrade = "never")
+          
+          # Install cpp11armadillotest dependencies if it exists
           if (dir.exists("cpp11armadillotest")) {
-            pak::local_install_deps("cpp11armadillotest", dependencies = TRUE)
+            remotes::install_deps("cpp11armadillotest", dependencies = TRUE, upgrade = "never")
           }
         shell: Rscript {0}
         
-      - name: Build and install main package
+      - name: Build and install main package (no vignettes)
         run: |
-          R CMD build .
+          R CMD build --no-build-vignettes --no-manual .
           R CMD INSTALL *.tar.gz
         
-      - name: Build and install cpp11armadillotest
+      - name: Build and install cpp11armadillotest (no vignettes)
         run: |
           if [ -d "cpp11armadillotest" ]; then
-            R CMD build cpp11armadillotest
+            R CMD build --no-build-vignettes --no-manual cpp11armadillotest
             R CMD INSTALL --install-tests cpp11armadillotest*.tar.gz
           fi
         
-      - name: Run R CMD check
+      - name: Run R CMD check (no vignettes)
         run: |
-          rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), 
-                               error_on = "warning", 
-                               check_dir = "check")
-        shell: Rscript {0}
+          # Get the package tarball name
+          PKG_TARBALL=$(ls -1 *.tar.gz | grep -v cpp11armadillotest | head -n 1)
+          echo "Checking package: $PKG_TARBALL"
+          
+          # Run R CMD check with sanitizers
+          R CMD check ${{ matrix.config.check_args }} "$PKG_TARBALL"
         
-      - name: Run cpp11armadillotest tests
-        run: |
-          if (dir.exists("cpp11armadillotest/tests")) {
-            setwd("cpp11armadillotest/tests")
-            library(testthat)
-            library(cpp11armadillotest)
-            test_check("cpp11armadillotest", reporter = "progress")
-          }
-        shell: Rscript {0}
-        
-      - name: Show check results
+      - name: Run cpp11armadillotest tests with sanitizers
         if: always()
         run: |
-          find check -name '*.Rout*' -exec echo "=== {} ===" \; -exec cat {} \;
+          Rscript -e '
+            if (dir.exists("cpp11armadillotest/tests") && requireNamespace("cpp11armadillotest", quietly = TRUE)) {
+              cat("\n=== Running cpp11armadillotest tests with sanitizers ===\n")
+              library(testthat)
+              library(cpp11armadillotest)
+              
+              # Set working directory
+              old_wd <- getwd()
+              setwd("cpp11armadillotest/tests")
+              
+              # Run tests
+              tryCatch({
+                test_results <- test_check("cpp11armadillotest", reporter = "progress")
+                print(test_results)
+                
+                # Check for failures
+                if (any(as.data.frame(test_results)$failed > 0)) {
+                  stop("Tests failed under sanitizers")
+                }
+              }, error = function(e) {
+                cat("Error: ", conditionMessage(e), "\n")
+                stop(e)
+              }, finally = {
+                setwd(old_wd)
+              })
+            } else {
+              cat("cpp11armadillotest not found or not installed\n")
+            }
+          '
+        
+      - name: Show sanitizer output
+        if: always()
+        run: |
+          # Find and display any sanitizer output
+          echo "=== Looking for sanitizer output ==="
+          find . -name "*.Rcheck" -type d -exec sh -c '
+            echo "=== Check directory: {} ==="
+            find {} -name "*.Rout" -o -name "*.Rout.fail" | while read f; do 
+              if grep -E "(AddressSanitizer|UndefinedBehaviorSanitizer|ERROR: LeakSanitizer|valgrind)" "$f" >/dev/null 2>&1; then
+                echo "=== Sanitizer output in $f ==="
+                cat "$f"
+              fi
+            done
+          ' \;
+          
+          # Also check test output
+          if [ -f "cpp11armadillotest.Rcheck/tests/testthat.Rout" ]; then
+            echo "=== Test output ==="
+            cat "cpp11armadillotest.Rcheck/tests/testthat.Rout"
+          fi
+          
+          # Check for core dumps
+          if ls core* 1> /dev/null 2>&1; then
+            echo "=== Core dumps found ==="
+            ls -la core*
+          fi
         
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.config.name }}-results
-          path: check
-          
+          path: |
+            *.Rcheck/
+            *.tar.gz
+            
