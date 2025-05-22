@@ -7,7 +7,7 @@
 # It is unlikely that you need to modify this file manually.
 
 name: R-hub
-run-name: "${{ github.event.inputs.id }}: ${{ github.event.inputs.name || format('Manually run by {0}', github.triggering_actor) }}"
+run-name: "${{ github.event.inputs.id || 'R-hub check' }}: ${{ github.event.inputs.name || format('Running tests - triggered by {0}', github.triggering_actor) }}"
 
 on:
   workflow_dispatch:
@@ -41,12 +41,16 @@ jobs:
       with:
         config: ${{ github.event.inputs.config }}
       id: rhub-setup
+    - name: Debug setup outputs
+      run: |
+        echo "Containers: ${{ steps.rhub-setup.outputs.containers }}"
+        echo "Platforms: ${{ steps.rhub-setup.outputs.platforms }}"
 
   linux-containers:
     needs: setup
     if: ${{ needs.setup.outputs.containers != '[]' }}
     runs-on: ubuntu-latest
-    name: ${{ matrix.config.label }}
+    name: "Linux: ${{ matrix.config.label || 'Container check' }}"
     strategy:
       fail-fast: false
       matrix:
@@ -56,6 +60,8 @@ jobs:
 
     steps:
       - uses: r-hub/actions/checkout@v1
+      - name: Debug configuration
+        run: echo "Running with config: ${{ toJson(matrix.config) }}"
       - uses: r-hub/actions/platform-info@v1
         with:
           token: ${{ secrets.RHUB_TOKEN }}
@@ -68,12 +74,15 @@ jobs:
         with:
           token: ${{ secrets.RHUB_TOKEN }}
           job-config: ${{ matrix.config.job-config }}
-      - name: Install and test cpp11armadillotest
+      - name: Install cpp11armadillotest
         run: |
           options(warn = 2)
           pak::local_install_dev_deps("cpp11armadillotest", dependencies = TRUE)
           install.packages(".", repos = NULL, type = "source")
           install.packages("cpp11armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
+        shell: Rscript {0}
+      - name: Run cpp11armadillotest tests
+        run: |
           setwd("cpp11armadillotest/tests")
           library(testthat)
           library(cpp11armadillotest)
@@ -84,7 +93,7 @@ jobs:
     needs: setup
     if: ${{ needs.setup.outputs.platforms != '[]' }}
     runs-on: ${{ matrix.config.os }}
-    name: ${{ matrix.config.label }}
+    name: "Platform: ${{ matrix.config.label || matrix.config.os || 'Other platform check' }}"
     strategy:
       fail-fast: false
       matrix:
@@ -92,6 +101,8 @@ jobs:
 
     steps:
       - uses: r-hub/actions/checkout@v1
+      - name: Debug configuration
+        run: echo "Running with config: ${{ toJson(matrix.config) }}"
       - uses: r-hub/actions/setup-r@v1
         with:
           job-config: ${{ matrix.config.job-config }}
@@ -108,12 +119,15 @@ jobs:
         with:
           job-config: ${{ matrix.config.job-config }}
           token: ${{ secrets.RHUB_TOKEN }}
-      - name: Install and test cpp11armadillotest
+      - name: Install cpp11armadillotest
         run: |
           options(warn = 2)
           pak::local_install_dev_deps("cpp11armadillotest", dependencies = TRUE)
           install.packages(".", repos = NULL, type = "source")
           install.packages("cpp11armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
+        shell: Rscript {0}
+      - name: Run cpp11armadillotest tests
+        run: |
           setwd("cpp11armadillotest/tests")
           library(testthat)
           library(cpp11armadillotest)
