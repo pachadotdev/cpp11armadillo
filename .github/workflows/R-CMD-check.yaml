@@ -1,223 +1,85 @@
-# R-hub's generic GitHub Actions workflow file with custom test integration
-# Adapted to properly run cpp11armadillotest tests on specific containers
-
-name: R-hub Enhanced
-run-name: "${{ github.event.inputs.id || 'R-hub check' }}: ${{ github.event.inputs.name || format('Running tests - {0}', github.event.head_commit.message || github.event.pull_request.title || 'triggered by ' + github.triggering_actor) }}"
-
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
-  workflow_dispatch:
-    inputs:
-      config:
-        description: 'Container configurations'
-        type: string
-        default: 'm1-san,clang-asan,clang-ubsan,valgrind'
-      name:
-        description: 'Custom run name'
-        type: string
-      id:
-        description: 'Custom run ID'
-        type: string
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
-    branches: [main, master]
+    branches: [main]
+
+name: R-CMD-check
 
 permissions: read-all
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    outputs:
-      containers: ${{ steps.rhub-setup.outputs.containers }}
-      platforms: ${{ steps.rhub-setup.outputs.platforms }}
-      should-run: ${{ steps.check-conditions.outputs.should-run }}
-
-    steps:
-    - name: Check conditions
-      id: check-conditions
-      run: |
-        # Always run unless explicitly skipped
-        echo "should-run=true" >> $GITHUB_OUTPUT
-        
-    - uses: r-hub/actions/setup@v1
-      with:
-        config: ${{ github.event.inputs.config }}
-      id: rhub-setup
-      
-    - name: Debug setup outputs
-      run: |
-        echo "Containers: ${{ steps.rhub-setup.outputs.containers }}"
-        echo "Platforms: ${{ steps.rhub-setup.outputs.platforms }}"
-        echo "Should run: ${{ steps.check-conditions.outputs.should-run }}"
-
-  linux-containers:
-    needs: setup
-    if: ${{ needs.setup.outputs.should-run == 'true' && needs.setup.outputs.containers != '[]' && needs.setup.outputs.containers != '' }}
-    runs-on: ubuntu-latest
-    name: "Linux: ${{ matrix.config.label || matrix.config.container || 'Container check' }}"
-    
-    strategy:
-      fail-fast: false
-      matrix:
-        config: ${{ fromJson(needs.setup.outputs.containers) }}
-        
-    container:
-      image: ${{ matrix.config.container }}
-      options: --user root
-      
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      R_KEEP_PKG_SOURCE: yes
-
-    steps:
-      - uses: r-hub/actions/checkout@v1
-      
-      - name: Debug configuration
-        run: |
-          echo "Running with config: ${{ toJson(matrix.config) }}"
-          echo "Container: ${{ matrix.config.container }}"
-          echo "Event: ${{ github.event_name }}"
-          
-      - uses: r-hub/actions/platform-info@v1
-        with:
-          token: ${{ secrets.RHUB_TOKEN }}
-          job-config: ${{ matrix.config.job-config }}
-          
-      - uses: r-hub/actions/setup-deps@v1
-        with:
-          token: ${{ secrets.RHUB_TOKEN }}
-          job-config: ${{ matrix.config.job-config }}
-          
-      - name: Install additional dependencies
-        run: |
-          # Ensure pak is available
-          if (!requireNamespace("pak", quietly = TRUE)) {
-            install.packages("pak", repos = "https://r-lib.github.io/p/pak/devel/")
-          }
-        shell: Rscript {0}
-        
-      - name: Install main package
-        run: |
-          options(warn = 2)
-          pak::local_install(".", dependencies = TRUE, upgrade = TRUE)
-        shell: Rscript {0}
-        
-      - name: Install cpp11armadillotest
-        run: |
-          options(warn = 2)
-          # Install cpp11armadillotest with tests
-          if (dir.exists("cpp11armadillotest")) {
-            pak::local_install("cpp11armadillotest", dependencies = TRUE, upgrade = TRUE)
-            install.packages("cpp11armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
-          } else {
-            cat("cpp11armadillotest directory not found, skipping installation\n")
-          }
-        shell: Rscript {0}
-        
-      - uses: r-hub/actions/run-check@v1
-        with:
-          token: ${{ secrets.RHUB_TOKEN }}
-          job-config: ${{ matrix.config.job-config }}
-          
-      - name: Run cpp11armadillotest tests
-        run: |
-          if (dir.exists("cpp11armadillotest/tests")) {
-            setwd("cpp11armadillotest/tests")
-            library(testthat)
-            if (requireNamespace("cpp11armadillotest", quietly = TRUE)) {
-              library(cpp11armadillotest)
-              test_check("cpp11armadillotest", reporter = "progress")
-            } else {
-              cat("cpp11armadillotest package not available, skipping tests\n")
-            }
-          } else {
-            cat("cpp11armadillotest/tests directory not found, skipping tests\n")
-          }
-        shell: Rscript {0}
-        continue-on-error: false
-
-  other-platforms:
-    needs: setup
-    if: ${{ needs.setup.outputs.should-run == 'true' && needs.setup.outputs.platforms != '[]' && needs.setup.outputs.platforms != '' }}
+  R-CMD-check:
     runs-on: ${{ matrix.config.os }}
-    name: "Platform: ${{ matrix.config.label || matrix.config.os || 'Other platform' }}"
-    
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
     strategy:
       fail-fast: false
       matrix:
-        config: ${{ fromJson(needs.setup.outputs.platforms) }}
-        
+        config:
+          - {os: macos-14, r: 'release', name: "macOS 14"}
+          - {os: macos-13, r: 'release', name: "macOS 13"}
+          - {os: windows-latest, r: 'release', name: "Windows latest"}
+          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release', name: "Ubuntu latest (R devel)"}
+          - {os: ubuntu-latest,   r: 'release', custom: 'no-cpp11armadillotest', name: "Ubuntu latest"}
+          - {os: ubuntu-latest,   r: 'release', custom: 'no-cpp11armadillotest', name: "Ubuntu latest (no cpp11armadillotest)"}
+          - {os: ubuntu-latest,   r: 'release', custom: 'cpp15', name: "Ubuntu latest (GCC15)"} # CRAN email Dec 7, 2024
+
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: r-hub/actions/checkout@v1
-      
-      - name: Debug configuration
-        run: |
-          echo "Running with config: ${{ toJson(matrix.config) }}"
-          echo "OS: ${{ matrix.config.os }}"
-          echo "Event: ${{ github.event_name }}"
-          
-      - uses: r-hub/actions/setup-r@v1
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
         with:
-          job-config: ${{ matrix.config.job-config }}
-          token: ${{ secrets.RHUB_TOKEN }}
-          
-      - uses: r-hub/actions/platform-info@v1
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          token: ${{ secrets.RHUB_TOKEN }}
-          job-config: ${{ matrix.config.job-config }}
-          
-      - uses: r-hub/actions/setup-deps@v1
-        with:
-          job-config: ${{ matrix.config.job-config }}
-          token: ${{ secrets.RHUB_TOKEN }}
-          
-      - name: Install additional dependencies
-        run: |
-          if (!requireNamespace("pak", quietly = TRUE)) {
-            install.packages("pak", repos = "https://r-lib.github.io/p/pak/devel/")
-          }
-        shell: Rscript {0}
-        
-      - name: Install main package
-        run: |
-          options(warn = 2)
-          pak::local_install(".", dependencies = TRUE, upgrade = TRUE)
-        shell: Rscript {0}
+          extra-packages: any::rcmdcheck
+          needs: check
         
       - name: Install cpp11armadillotest
+        if: matrix.config.custom != 'no-cpp11armadillotest'
         run: |
           options(warn = 2)
-          if (dir.exists("cpp11armadillotest")) {
-            pak::local_install("cpp11armadillotest", dependencies = TRUE, upgrade = TRUE)
-            install.packages("cpp11armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
-          } else {
-            cat("cpp11armadillotest directory not found, skipping installation\n")
-          }
+          pak::local_install_dev_deps("cpp11armadillotest", dependencies = TRUE)
+          install.packages(".", repos = NULL, type = "source")
+          install.packages("cpp11armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
         shell: Rscript {0}
-        
-      - uses: r-hub/actions/run-check@v1
+
+      - uses: r-lib/actions/check-r-package@v2
         with:
-          job-config: ${{ matrix.config.job-config }}
-          token: ${{ secrets.RHUB_TOKEN }}
-          
+          upload-snapshots: true
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+
       - name: Run cpp11armadillotest tests
+        if: matrix.config.custom != 'no-cpp11armadillotest' && matrix.config.custom != 'cpp15'
         run: |
-          if (dir.exists("cpp11armadillotest/tests")) {
-            setwd("cpp11armadillotest/tests")
-            library(testthat)
-            if (requireNamespace("cpp11armadillotest", quietly = TRUE)) {
-              library(cpp11armadillotest)
-              test_check("cpp11armadillotest", reporter = "progress")
-            } else {
-              cat("cpp11armadillotest package not available, skipping tests\n")
-            }
-          } else {
-            cat("cpp11armadillotest/tests directory not found, skipping tests\n")
-          }
+          setwd("cpp11armadillotest/tests")
+          library(testthat)
+          library(cpp11armadillotest)
+          test_check("cpp11armadillotest", reporter = "progress")
         shell: Rscript {0}
-        continue-on-error: false
+
+      - name: Run cpp11armadillotest tests (C++15)
+        if: matrix.config.custom == 'cpp15'
+        run: |
+          Sys.setenv(CXXFLAGS = "-std=c++15")
+          install.packages(".", repos = NULL, type = "source")
+          install.packages("cpp11armadillotest", repos = NULL, INSTALL_opts = "--install-tests", type = "source")
+          setwd("cpp11armadillotest/tests")
+          library(testthat)
+          library(cpp11armadillotest)
+          test_check("cpp11armadillotest", reporter = "progress")
+        shell: Rscript {0}
         
