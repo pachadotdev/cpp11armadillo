@@ -40,6 +40,28 @@ inline Col<double> as_Col(const doubles& x) { return as_Col_<double, doubles>(x)
 
 inline Col<int> as_Col(const integers& x) { return as_Col_<int, integers>(x); }
 
+inline Col<double> as_Col(const doubles_matrix<>& x) {
+  if (x.ncol() != 1) {
+    throw std::runtime_error("Cannot convert matrix with multiple columns to Col");
+  }
+
+  const size_t n = x.nrow();
+  return Col<double>(reinterpret_cast<double*>(REAL(x.data())), n, false);
+}
+
+inline Col<int> as_Col(const integers_matrix<>& x) {
+  // Only convert if it's a column vector (1 column)
+  if (x.ncol() != 1) {
+    throw std::runtime_error("Cannot convert matrix with multiple columns to Col");
+  }
+
+  const size_t n = x.nrow();
+  return Col<int>(reinterpret_cast<int*>(INTEGER(x.data())), n, false);
+}
+
+inline Col<double> as_col(const doubles_matrix<>& x) { return as_Col(x); }
+inline Col<int> as_col(const integers_matrix<>& x) { return as_Col(x); }
+
 // cpp11armadillo 0.4.3
 // as_vec() = alias for as_Col()
 

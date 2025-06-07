@@ -1,3 +1,7 @@
+# cpp11armadillo 0.5.3
+
+* Allows aliases (i.e., `vec`) when converting matrices to R.
+
 # cpp11armadillo 0.5.2
 
 * Slightly improved copying speed.

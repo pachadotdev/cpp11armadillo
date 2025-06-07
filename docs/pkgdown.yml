@@ -1,5 +1,5 @@
 pandoc: 2.9.2.1
-pkgdown: 2.1.1
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   basic-usage: basic-usage.html
@@ -17,7 +17,8 @@ articles:
   sparse-matrices: sparse-matrices.html
   statistics-and-clustering: statistics-and-clustering.html
   syntax-comparison-for-matlab-users: syntax-comparison-for-matlab-users.html
-last_built: 2025-05-19T20:54Z
+last_built: 2025-06-06T19:21Z
 urls:
   reference: ../cpp11armadillo/reference
   article: ../cpp11armadillo/articles
+
