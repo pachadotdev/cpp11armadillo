@@ -36,7 +36,8 @@ inline SpMat<T> dblint_matrix_to_SpMat_(const U& x) {
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-  for (const auto& pos : non_zero_positions) {
+  for (size_t k = 0; k < non_zero_positions.size(); ++k) {
+    const auto& pos = non_zero_positions[k];
     y(pos.first, pos.second) = x(pos.first, pos.second);
   }
 
