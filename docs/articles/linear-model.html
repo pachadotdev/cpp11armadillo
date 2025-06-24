@@ -13,15 +13,14 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../deps/jquery-3.6.1/jquery-3.6.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Fitting regressions with Armadillo">
 <meta property="og:description" content="cpp11armadillo">
 <meta property="og:image" content="../cpp11armadillo/logo.svg">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<!-- mathjax --><script src="file:///usr/share/javascript/mathjax/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
@@ -89,7 +88,8 @@
 
 
 
-<script src="linear-model_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Fitting regressions with Armadillo</h1>
             
@@ -100,20 +100,30 @@
 
     
     
-<p>This vignette is adapted from the official Armadillo <a href="http://madrury.github.io/jekyll/update/statistics/2016/07/20/lm-in-R.html" class="external-link">A Deep Dive Into How R Fits a Linear Model</a>.</p>
-<p>For those interested in Econometrics, do yourself a favour and buy <a href="https://users.ssc.wisc.edu/~bhansen/econometrics/" class="external-link">Econometrics</a> by Prof. Bruce E. Hansen. I have <a href="https://pacha.dev/hansen/" class="external-link">unofficial</a> re-written codes using Armadillo for his R examples.</p>
+<p>This vignette is adapted from the official Armadillo <a href="http://madrury.github.io/jekyll/update/statistics/2016/07/20/lm-in-R.html" class="external-link">A
+Deep Dive Into How R Fits a Linear Model</a>.</p>
+<p>For those interested in Econometrics, do yourself a favour and buy <a href="https://users.ssc.wisc.edu/~bhansen/econometrics/" class="external-link">Econometrics</a>
+by Prof. Bruce E. Hansen. I have <a href="https://pacha.dev/hansen/" class="external-link">unofficial</a> re-written codes using
+Armadillo for his R examples.</p>
 <div class="section level2">
 <h2 id="linear-regression">Linear regression<a class="anchor" aria-label="anchor" href="#linear-regression"></a>
 </h2>
 <div class="section level3">
 <h3 id="design-matrix-and-response-vector">Design matrix and response vector<a class="anchor" aria-label="anchor" href="#design-matrix-and-response-vector"></a>
 </h3>
-<p>The starting point to fit a linear regresion in R without using the <code>lm</code> function is to create a design matrix and a response vector. The design matrix is a matrix where each row corresponds to an observation and each column corresponds to a predictor. The response vector is a vector of the same length as the number of observations.</p>
-<p>For example, using the <code>mtcars</code> dataset it is possible to create a design matrix to later estimate the linear regression coefficients for the model:</p>
+<p>The starting point to fit a linear regresion in R without using the
+<code>lm</code> function is to create a design matrix and a response
+vector. The design matrix is a matrix where each row corresponds to an
+observation and each column corresponds to a predictor. The response
+vector is a vector of the same length as the number of observations.</p>
+<p>For example, using the <code>mtcars</code> dataset it is possible to
+create a design matrix to later estimate the linear regression
+coefficients for the model:</p>
 <p><span class="math display">\[
 \text{mpg}_i = \beta_0 + \beta_1 \times \text{weight}_i + e_i
 \]</span></p>
-<p>For <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> to be estimated, the design matrix and the response vector are created as follows:</p>
+<p>For <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> to be estimated, the design
+matrix and the response vector are created as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span></span>
@@ -135,51 +145,63 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 32</span></span></code></pre></div>
-<p>Certainly, there is a more efficient way to create the design matrix and the response vector. The <code>model.matrix</code> function can be used to create the design matrix and the <code>model.response</code> function can be used to create the response vector:</p>
+<p>Certainly, there is a more efficient way to create the design matrix
+and the response vector. The <code>model.matrix</code> function can be
+used to create the design matrix and the <code>model.response</code>
+function can be used to create the response vector:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.extract.html" class="external-link">model.response</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/model.frame.html" class="external-link">model.frame</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>The advantage of using these functions is that they handle factor variables more easily. For example, if the <code>mtcars</code> dataset has a factor variable, the <code>model.matrix</code> function will create one 0/1 column for each level of the factor variable.</p>
+<p>The advantage of using these functions is that they handle factor
+variables more easily. For example, if the <code>mtcars</code> dataset
+has a factor variable, the <code>model.matrix</code> function will
+create one 0/1 column for each level of the factor variable.</p>
 </div>
 <div class="section level3">
 <h3 id="estimating-the-regression-coefficients-in-r">Estimating the regression coefficients in R<a class="anchor" aria-label="anchor" href="#estimating-the-regression-coefficients-in-r"></a>
 </h3>
-<p>To estimate the regression coefficients, the <code>solve</code> function can be used:</p>
+<p>To estimate the regression coefficients, the <code>solve</code>
+function can be used:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">y</span></span>
 <span><span class="co">#&gt;                  [,1]</span></span>
 <span><span class="co">#&gt; (Intercept) 37.285126</span></span>
 <span><span class="co">#&gt; wt          -5.344472</span></span></code></pre></div>
-<p>It can be verified that the coefficients are the same as the ones estimated by the <code>lm</code> function:</p>
+<p>It can be verified that the coefficients are the same as the ones
+estimated by the <code>lm</code> function:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span></span>
 <span><span class="co">#&gt; (Intercept)          wt </span></span>
 <span><span class="co">#&gt;   37.285126   -5.344472</span></span></code></pre></div>
-<p>However, the <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> function does not use the <code>solve</code> function to estimate the coefficients. Instead, it uses the QR decomposition and internal functions written in C and FORTRAN to estimate the coefficients.</p>
+<p>However, the <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> function does not use the
+<code>solve</code> function to estimate the coefficients. Instead, it
+uses the QR decomposition and internal functions written in C and
+FORTRAN to estimate the coefficients.</p>
 </div>
 <div class="section level3">
 <h3 id="estimating-the-regression-coefficients-in-armadillo">Estimating the regression coefficients in Armadillo<a class="anchor" aria-label="anchor" href="#estimating-the-regression-coefficients-in-armadillo"></a>
 </h3>
-<p>Using ‘cpp11armadillo’ library, the regression coefficients can be estimated as follows:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>vec ols_fit(<span class="at">const</span> Mat&lt;<span class="dt">double</span>&gt;&amp; X, <span class="at">const</span> Col&lt;<span class="dt">double</span>&gt;&amp; Y) {</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>  <span class="co">// QR decomposition</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  mat Q, R;</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>  qr_econ(Q, R, X);</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>  <span class="co">// Least Squares Problem</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>  vec betas = solve(trimatu(R), Q.t() * Y);</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a>  <span class="cf">return</span> betas;</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a>}</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">ols_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x, <span class="at">const</span> doubles&amp; y) {</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a>  mat X = as_Mat(x);</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a>  vec Y = as_Col(y);</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(ols_fit(X, Y));</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a>}</span></code></pre></div>
+<p>Using ‘cpp11armadillo’ library, the regression coefficients can be
+estimated as follows:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>vec ols_fit<span class="op">(</span><span class="at">const</span> Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;&amp;</span> X<span class="op">,</span> <span class="at">const</span> Col<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;&amp;</span> Y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="co">// QR decomposition</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  mat Q<span class="op">,</span> R<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  qr_econ<span class="op">(</span>Q<span class="op">,</span> R<span class="op">,</span> X<span class="op">);</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="co">// Least Squares Problem</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  vec betas <span class="op">=</span> solve<span class="op">(</span>trimatu<span class="op">(</span>R<span class="op">),</span> Q<span class="op">.</span>t<span class="op">()</span> <span class="op">*</span> Y<span class="op">);</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>  <span class="cf">return</span> betas<span class="op">;</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles <span class="va">ols_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">,</span> <span class="at">const</span> doubles<span class="op">&amp;</span> y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>  mat X <span class="op">=</span> as_Mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>  vec Y <span class="op">=</span> as_Col<span class="op">(</span>y<span class="op">);</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>  <span class="cf">return</span> as_doubles<span class="op">(</span>ols_fit<span class="op">(</span>X<span class="op">,</span> Y<span class="op">));</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Verify the equivalence:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">all.equal</span>(<span class="kw">ols_</span>(x,y), <span class="kw">unname</span>(<span class="kw">coef</span>(<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars))))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>[<span class="dv">1</span>] <span class="ot">TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">ols_</span>(x,y), <span class="fu">unname</span>(<span class="fu">coef</span>(<span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars))))</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -188,12 +210,17 @@
 <div class="section level3">
 <h3 id="design-matrix-and-response-vector-1">Design matrix and response vector<a class="anchor" aria-label="anchor" href="#design-matrix-and-response-vector-1"></a>
 </h3>
-<p>The starting point to fit a Poisson regresion in R without using the <code>glm</code> function is to create a design matrix and a response vector.</p>
-<p>For example, using the <code>mtcars</code> dataset it is possible to create a design matrix to later estimate the Poisson regression coefficients for the model:</p>
+<p>The starting point to fit a Poisson regresion in R without using the
+<code>glm</code> function is to create a design matrix and a response
+vector.</p>
+<p>For example, using the <code>mtcars</code> dataset it is possible to
+create a design matrix to later estimate the Poisson regression
+coefficients for the model:</p>
 <p><span class="math display">\[
 \log(\text{mpg}_i) = \beta_0 + \beta_1 \times \text{weight}_i + e_i
 \]</span></p>
-<p>For <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> to be estimated, the design matrix and the response vector are created as follows:</p>
+<p>For <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> to be estimated, the design
+matrix and the response vector are created as follows:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span><span class="op">)</span></span></code></pre></div>
@@ -201,7 +228,8 @@
 <div class="section level3">
 <h3 id="estimating-the-regression-coefficients-in-r-1">Estimating the regression coefficients in R<a class="anchor" aria-label="anchor" href="#estimating-the-regression-coefficients-in-r-1"></a>
 </h3>
-<p>The Poisson regression coefficients can be estimated using the <code>glm</code> function:</p>
+<p>The Poisson regression coefficients can be estimated using the
+<code>glm</code> function:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span></span>
 <span><span class="co">#&gt; (Intercept)          wt </span></span>
@@ -210,61 +238,72 @@
 <div class="section level3">
 <h3 id="estimating-the-regression-coefficients-in-armadillo-1">Estimating the regression coefficients in Armadillo<a class="anchor" aria-label="anchor" href="#estimating-the-regression-coefficients-in-armadillo-1"></a>
 </h3>
-<p>Estimating a Poisson regression is more complex than estimating a linear regression. The Poisson regression coefficients are estimated using an iterative algorithm known as the Iteratively Reweighted Least Squares (IRLS) algorithm. However, the IRLS algorithm can be simplified by using the weighted least squares method, which repeats a linear regression over the transformed data using the Poisson link until convergence.</p>
-<p>Using ‘cpp11armadillo’ library, the Poisson regression coefficients can be estimated via IRLS as follows:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>vec ols_weighted_fit(<span class="at">const</span> Mat&lt;<span class="dt">double</span>&gt;&amp; X, <span class="at">const</span> Col&lt;<span class="dt">double</span>&gt;&amp; Y, <span class="at">const</span> Col&lt;<span class="dt">double</span>&gt;&amp; W) {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>  <span class="co">// Create a diagonal matrix from the weight vector</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>  mat W_diag = diagmat(W);</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>  <span class="co">// Weighted least squares problem</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>  mat XTWX = X.t() * W_diag * X;</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>  vec XTWY = X.t() * W_diag * Y;</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a>  <span class="co">// Solve the system</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a>  vec betas = solve(XTWX, XTWY);</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a>  <span class="cf">return</span> betas;</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a>}</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a>vec poisson_fit(<span class="at">const</span> Mat&lt;<span class="dt">double</span>&gt;&amp; X, <span class="at">const</span> Col&lt;<span class="dt">double</span>&gt;&amp; Y) {</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a>  <span class="co">// Data transformation</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a>  vec MU = Y + <span class="fl">0.1</span>;  <span class="co">// Initial guess for MU</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a>  vec ETA = log(MU);</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a>  vec Z = ETA + (Y - MU) / MU;</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true"></a>  <span class="co">// Iterate with initial values for the difference and the sum of sq residuals</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true"></a>  <span class="dt">double</span> dif = <span class="dv">1</span>;</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true"></a>  <span class="dt">double</span> rss = <span class="dv">1</span>;</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true"></a>  <span class="dt">double</span> tol = <span class="fl">1e-10</span>;</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true"></a></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true"></a>  vec W;</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true"></a>  vec betas, res;</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true"></a>  <span class="dt">double</span> rss2;</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true"></a></span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true"></a>  <span class="cf">while</span> (abs(dif) &gt; tol) {</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true"></a>    W = MU;  <span class="co">// Weights are the current estimates of MU</span></span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true"></a>    betas = ols_weighted_fit(X, Z, W);</span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true"></a>    ETA = X * betas;</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true"></a>    MU = exp(ETA);</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true"></a>    Z = ETA + (Y - MU) / MU;</span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true"></a>    res = Y - MU;</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true"></a>    rss2 = sum(res % res);</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true"></a>    dif = rss2 - rss;</span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true"></a>    rss = rss2;</span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true"></a>  }</span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true"></a></span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true"></a>  <span class="cf">return</span> betas;</span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true"></a>}</span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true"></a></span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">poisson_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x, <span class="at">const</span> doubles&amp; y) {</span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true"></a>  mat X = as_Mat(x);</span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true"></a>  vec Y = as_Col(y);</span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(poisson_fit(X, Y));</span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true"></a>}</span></code></pre></div>
+<p>Estimating a Poisson regression is more complex than estimating a
+linear regression. The Poisson regression coefficients are estimated
+using an iterative algorithm known as the Iteratively Reweighted Least
+Squares (IRLS) algorithm. However, the IRLS algorithm can be simplified
+by using the weighted least squares method, which repeats a linear
+regression over the transformed data using the Poisson link until
+convergence.</p>
+<p>Using ‘cpp11armadillo’ library, the Poisson regression coefficients
+can be estimated via IRLS as follows:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>vec ols_weighted_fit<span class="op">(</span><span class="at">const</span> Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;&amp;</span> X<span class="op">,</span> <span class="at">const</span> Col<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;&amp;</span> Y<span class="op">,</span> <span class="at">const</span> Col<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;&amp;</span> W<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="co">// Create a diagonal matrix from the weight vector</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  mat W_diag <span class="op">=</span> diagmat<span class="op">(</span>W<span class="op">);</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="co">// Weighted least squares problem</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  mat XTWX <span class="op">=</span> X<span class="op">.</span>t<span class="op">()</span> <span class="op">*</span> W_diag <span class="op">*</span> X<span class="op">;</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  vec XTWY <span class="op">=</span> X<span class="op">.</span>t<span class="op">()</span> <span class="op">*</span> W_diag <span class="op">*</span> Y<span class="op">;</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>  <span class="co">// Solve the system</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>  vec betas <span class="op">=</span> solve<span class="op">(</span>XTWX<span class="op">,</span> XTWY<span class="op">);</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>  <span class="cf">return</span> betas<span class="op">;</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>vec poisson_fit<span class="op">(</span><span class="at">const</span> Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;&amp;</span> X<span class="op">,</span> <span class="at">const</span> Col<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;&amp;</span> Y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>  <span class="co">// Data transformation</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>  vec MU <span class="op">=</span> Y <span class="op">+</span> <span class="fl">0.1</span><span class="op">;</span>  <span class="co">// Initial guess for MU</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>  vec ETA <span class="op">=</span> log<span class="op">(</span>MU<span class="op">);</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>  vec Z <span class="op">=</span> ETA <span class="op">+</span> <span class="op">(</span>Y <span class="op">-</span> MU<span class="op">)</span> <span class="op">/</span> MU<span class="op">;</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a>  <span class="co">// Iterate with initial values for the difference and the sum of sq residuals</span></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>  <span class="dt">double</span> dif <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a>  <span class="dt">double</span> rss <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a>  <span class="dt">double</span> tol <span class="op">=</span> <span class="fl">1e-10</span><span class="op">;</span></span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a>  vec W<span class="op">;</span></span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a>  vec betas<span class="op">,</span> res<span class="op">;</span></span>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a>  <span class="dt">double</span> rss2<span class="op">;</span></span>
+<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>abs<span class="op">(</span>dif<span class="op">)</span> <span class="op">&gt;</span> tol<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a>    W <span class="op">=</span> MU<span class="op">;</span>  <span class="co">// Weights are the current estimates of MU</span></span>
+<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a>    betas <span class="op">=</span> ols_weighted_fit<span class="op">(</span>X<span class="op">,</span> Z<span class="op">,</span> W<span class="op">);</span></span>
+<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a>    ETA <span class="op">=</span> X <span class="op">*</span> betas<span class="op">;</span></span>
+<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a>    MU <span class="op">=</span> exp<span class="op">(</span>ETA<span class="op">);</span></span>
+<span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a>    Z <span class="op">=</span> ETA <span class="op">+</span> <span class="op">(</span>Y <span class="op">-</span> MU<span class="op">)</span> <span class="op">/</span> MU<span class="op">;</span></span>
+<span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a>    res <span class="op">=</span> Y <span class="op">-</span> MU<span class="op">;</span></span>
+<span id="cb9-37"><a href="#cb9-37" tabindex="-1"></a>    rss2 <span class="op">=</span> sum<span class="op">(</span>res <span class="op">%</span> res<span class="op">);</span></span>
+<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a>    dif <span class="op">=</span> rss2 <span class="op">-</span> rss<span class="op">;</span></span>
+<span id="cb9-39"><a href="#cb9-39" tabindex="-1"></a>    rss <span class="op">=</span> rss2<span class="op">;</span></span>
+<span id="cb9-40"><a href="#cb9-40" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb9-41"><a href="#cb9-41" tabindex="-1"></a></span>
+<span id="cb9-42"><a href="#cb9-42" tabindex="-1"></a>  <span class="cf">return</span> betas<span class="op">;</span></span>
+<span id="cb9-43"><a href="#cb9-43" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb9-44"><a href="#cb9-44" tabindex="-1"></a></span>
+<span id="cb9-45"><a href="#cb9-45" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles <span class="va">poisson_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">,</span> <span class="at">const</span> doubles<span class="op">&amp;</span> y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-46"><a href="#cb9-46" tabindex="-1"></a>  mat X <span class="op">=</span> as_Mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb9-47"><a href="#cb9-47" tabindex="-1"></a>  vec Y <span class="op">=</span> as_Col<span class="op">(</span>y<span class="op">);</span></span>
+<span id="cb9-48"><a href="#cb9-48" tabindex="-1"></a>  <span class="cf">return</span> as_doubles<span class="op">(</span>poisson_fit<span class="op">(</span>X<span class="op">,</span> Y<span class="op">));</span></span>
+<span id="cb9-49"><a href="#cb9-49" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Verify the equivalence:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="kw">all.equal</span>(<span class="kw">poisson_</span>(x,y), <span class="kw">unname</span>(<span class="kw">coef</span>(<span class="kw">glm</span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars, <span class="dt">family =</span> <span class="kw">poisson</span>()))))</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>[<span class="dv">1</span>] <span class="ot">TRUE</span></span></code></pre></div>
-<p>Note: The <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm()</a></code> function shows warnings because it expects integer values for the response variable. However, the Poisson regression can be estimated with non-integer values for the response variable or the <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">quasipoisson()</a></code> family can be used to suppress the warnings.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">poisson_</span>(x,y), <span class="fu">unname</span>(<span class="fu">coef</span>(<span class="fu">glm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars, <span class="at">family =</span> <span class="fu">poisson</span>()))))</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span></code></pre></div>
+<p>Note: The <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm()</a></code> function shows warnings because it
+expects integer values for the response variable. However, the Poisson
+regression can be estimated with non-integer values for the response
+variable or the <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">quasipoisson()</a></code> family can be used to
+suppress the warnings.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

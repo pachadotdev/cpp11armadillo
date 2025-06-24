@@ -13,15 +13,14 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../deps/jquery-3.6.1/jquery-3.6.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Generated vectors, matrices, and cubes">
 <meta property="og:description" content="cpp11armadillo">
 <meta property="og:image" content="../cpp11armadillo/logo.svg">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<!-- mathjax --><script src="file:///usr/share/javascript/mathjax/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
@@ -89,7 +88,8 @@
 
 
 
-<script src="generated-vectors-matrices-cubes_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Generated vectors, matrices, and cubes</h1>
             
@@ -104,58 +104,77 @@
 <div class="section level2">
 <h2 id="linspace">Generate vector with linearly spaced elements<a class="anchor" aria-label="anchor" href="#linspace"></a>
 </h2>
-<p>The <code>linspace()</code> function generates a vector of linearly spaced values from <code>start</code> to <code>end</code> (it includes <code>end</code>). The arguments can be <code>start, end</code> or <code>start, end, N</code>, where <code>N</code> is optional and indicates the number of elements in the vector (<code>N</code> is 100 by default).</p>
+<p>The <code>linspace()</code> function generates a vector of linearly
+spaced values from <code>start</code> to <code>end</code> (it includes
+<code>end</code>). The arguments can be <code>start, end</code> or
+<code>start, end, N</code>, where <code>N</code> is optional and
+indicates the number of elements in the vector (<code>N</code> is 100 by
+default).</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>vec v = linspace(start, end, N)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="dt">vector_type</span> v = linspace&lt;<span class="dt">vector_type</span>&gt;(start, end, N)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>vec v <span class="op">=</span> linspace<span class="op">(</span>start<span class="op">,</span> end<span class="op">,</span> N<span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> linspace<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>start<span class="op">,</span> end<span class="op">,</span> N<span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">linspace1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  vec a = linspace(<span class="dv">1</span>, <span class="dv">2</span>, n);</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  rowvec b = linspace&lt;rowvec&gt;(<span class="dv">3</span>, <span class="dv">4</span>, n);</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  vec res = a + b.t();</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(res);</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles <span class="va">linspace1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  vec a <span class="op">=</span> linspace<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  rowvec b <span class="op">=</span> linspace<span class="op">&lt;</span>rowvec<span class="op">&gt;(</span><span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  vec res <span class="op">=</span> a <span class="op">+</span> b<span class="op">.</span>t<span class="op">();</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="cf">return</span> as_doubles<span class="op">(</span>res<span class="op">);</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="caveat">Caveat<a class="anchor" aria-label="anchor" href="#caveat"></a>
 </h3>
-<p>For <code>N = 1</code>, the generated vector will have a single element equal to end.</p>
+<p>For <code>N = 1</code>, the generated vector will have a single
+element equal to end.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="logspace">Generate vector with logarithmically spaced elements<a class="anchor" aria-label="anchor" href="#logspace"></a>
 </h2>
-<p>The <code>logspace()</code> function generates a vector of logarithmically spaced values from <code>10^start</code> to <code>10^end</code> (it includes <code>10^end</code>). The arguments can be <code>start, end</code> or <code>start, end, N</code>, where <code>N</code> is optional and indicates the number of elements in the vector (<code>N</code> is 50 by default).</p>
+<p>The <code>logspace()</code> function generates a vector of
+logarithmically spaced values from <code>10^start</code> to
+<code>10^end</code> (it includes <code>10^end</code>). The arguments can
+be <code>start, end</code> or <code>start, end, N</code>, where
+<code>N</code> is optional and indicates the number of elements in the
+vector (<code>N</code> is 50 by default).</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>vec v = logspace(start, end, N)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="dt">vector_type</span> v = logspace&lt;<span class="dt">vector_type</span>&gt;(start, end, N)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>vec v <span class="op">=</span> logspace<span class="op">(</span>start<span class="op">,</span> end<span class="op">,</span> N<span class="op">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> logspace<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>start<span class="op">,</span> end<span class="op">,</span> N<span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">logspace1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  vec a = logspace(<span class="dv">1</span>, <span class="dv">2</span>, n);</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>  rowvec b = logspace&lt;rowvec&gt;(<span class="dv">3</span>, <span class="dv">4</span>, n);</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>  vec res = a + b.t();</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(res);</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles <span class="va">logspace1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  vec a <span class="op">=</span> logspace<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  rowvec b <span class="op">=</span> logspace<span class="op">&lt;</span>rowvec<span class="op">&gt;(</span><span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  vec res <span class="op">=</span> a <span class="op">+</span> b<span class="op">.</span>t<span class="op">();</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="cf">return</span> as_doubles<span class="op">(</span>res<span class="op">);</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="regspace">Generate vector with regularly spaced elements<a class="anchor" aria-label="anchor" href="#regspace"></a>
 </h2>
-<p>The <code>regspace()</code> function generates a vector of regularly spaced values <code>start, start + delta, start + 2*delta, ..., start + M * delta</code> where <code>M</code> is <code>M = floor((end - start) / delta)</code>. The arguments can be <code>start, end</code> or <code>start, delta, end</code>, where <code>delta</code> is optional (<code>delta = 1</code> if <code>start &lt;= end</code> and <code>delta = -1</code> if <code>start &gt; end</code> by default).</p>
+<p>The <code>regspace()</code> function generates a vector of regularly
+spaced values
+<code>start, start + delta, start + 2*delta, ..., start + M * delta</code>
+where <code>M</code> is <code>M = floor((end - start) / delta)</code>.
+The arguments can be <code>start, end</code> or
+<code>start, delta, end</code>, where <code>delta</code> is optional
+(<code>delta = 1</code> if <code>start &lt;= end</code> and
+<code>delta = -1</code> if <code>start &gt; end</code> by default).</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>vec v = regspace(start, end)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>vec v = regspace(start, delta, end)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="dt">vector_type</span> v = regspace&lt;<span class="dt">vector_type</span>&gt;(start, end)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="dt">vector_type</span> v = regspace&lt;<span class="dt">vector_type</span>&gt;(start, delta, end)</span></code></pre></div>
-<p>The output vector will be empty if any of the following conditions are met:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>vec v <span class="op">=</span> regspace<span class="op">(</span>start<span class="op">,</span> end<span class="op">)</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>vec v <span class="op">=</span> regspace<span class="op">(</span>start<span class="op">,</span> delta<span class="op">,</span> end<span class="op">)</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> regspace<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>start<span class="op">,</span> end<span class="op">)</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> regspace<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>start<span class="op">,</span> delta<span class="op">,</span> end<span class="op">)</span></span></code></pre></div>
+<p>The output vector will be empty if any of the following conditions
+are met:</p>
 <ul>
 <li>
 <code>start &lt; end</code> and <code>delta &lt; 0</code>
@@ -168,393 +187,471 @@
 <div class="section level3">
 <h3 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">regspace1_</span>(<span class="at">const</span> <span class="dt">double</span>&amp; delta) {</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  vec a = regspace(<span class="dv">1</span>, delta, <span class="dv">2</span>);</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  rowvec b = regspace&lt;rowvec&gt;(<span class="dv">3</span>, delta, <span class="dv">4</span>);</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>  vec res = a + b.t();</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(res);</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles <span class="va">regspace1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">double</span><span class="op">&amp;</span> delta<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  vec a <span class="op">=</span> regspace<span class="op">(</span><span class="dv">1</span><span class="op">,</span> delta<span class="op">,</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  rowvec b <span class="op">=</span> regspace<span class="op">&lt;</span>rowvec<span class="op">&gt;(</span><span class="dv">3</span><span class="op">,</span> delta<span class="op">,</span> <span class="dv">4</span><span class="op">);</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  vec res <span class="op">=</span> a <span class="op">+</span> b<span class="op">.</span>t<span class="op">();</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  <span class="cf">return</span> as_doubles<span class="op">(</span>res<span class="op">);</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="caveats">Caveats<a class="anchor" aria-label="anchor" href="#caveats"></a>
 </h3>
 <ul>
 <li>This is different from Matlab/Octave.</li>
-<li>Do not use <code>regspace()</code> to specify ranges for contiguous submatrix views, use <code>span()</code> instead.</li>
+<li>Do not use <code>regspace()</code> to specify ranges for contiguous
+submatrix views, use <code>span()</code> instead.</li>
 </ul>
 </div>
 </div>
 <div class="section level2">
-<h2 id="randperm">Generate vector with random permutation of a sequence of integers<a class="anchor" aria-label="anchor" href="#randperm"></a>
+<h2 id="randperm">Generate vector with random permutation of a sequence of
+integers<a class="anchor" aria-label="anchor" href="#randperm"></a>
 </h2>
-<p>The <code>randperm()</code> function generates a vector of permutation of integers from <code>0</code> to <code>N-1</code>. The argument can be empty, <code>N</code>, or <code>N, M</code>, where <code>N</code> (<code>N = 10</code> by default) is the range of integers and <code>M</code> (<code>M = N</code> by default) is the length of the output.</p>
+<p>The <code>randperm()</code> function generates a vector of
+permutation of integers from <code>0</code> to <code>N-1</code>. The
+argument can be empty, <code>N</code>, or <code>N, M</code>, where
+<code>N</code> (<code>N = 10</code> by default) is the range of integers
+and <code>M</code> (<code>M = N</code> by default) is the length of the
+output.</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>uvec v = randperm(N)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>uvec v = randperm(N, M)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>uvec v <span class="op">=</span> randperm<span class="op">(</span>N<span class="op">)</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>uvec v <span class="op">=</span> randperm<span class="op">(</span>N<span class="op">,</span> M<span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] integers <span class="va">randperm1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n, <span class="at">const</span> <span class="dt">int</span>&amp; m) {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>  uvec a = randperm(n);</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>  uvec b = randperm(n, m);</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>  uvec res = a + b;</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>  <span class="cf">return</span> as_integers(res);</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> integers <span class="va">randperm1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">,</span> <span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> m<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  uvec a <span class="op">=</span> randperm<span class="op">(</span>n<span class="op">);</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  uvec b <span class="op">=</span> randperm<span class="op">(</span>n<span class="op">,</span> m<span class="op">);</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  uvec res <span class="op">=</span> a <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  <span class="cf">return</span> as_integers<span class="op">(</span>res<span class="op">);</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="eye">Generate identity matrix<a class="anchor" aria-label="anchor" href="#eye"></a>
 </h2>
-<p>The <code>eye()</code> function generates a matrix of size <code>n x m</code>. The argument can be <code>n_rows, n_cols</code> or <code>size(X)</code>. When <code>n_rows = n_cols</code>, the output is an identity matrix.</p>
+<p>The <code>eye()</code> function generates a matrix of size
+<code>n x m</code>. The argument can be <code>n_rows, n_cols</code> or
+<code>size(X)</code>. When <code>n_rows = n_cols</code>, the output is
+an identity matrix.</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>mat X = eye(n_rows, n_cols)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="dt">matrix_type</span> X = eye&lt;<span class="dt">matrix_type</span>&gt;(n_rows, n_cols) </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="dt">matrix_type</span> X = eye&lt;<span class="dt">matrix_type</span>&gt;(size(X))</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>mat X <span class="op">=</span> eye<span class="op">(</span>n_rows<span class="op">,</span> n_cols<span class="op">)</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="dt">matrix_type</span> X <span class="op">=</span> eye<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">)</span> </span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="dt">matrix_type</span> X <span class="op">=</span> eye<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>size<span class="op">(</span>X<span class="op">))</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a>
 </h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">eye1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>  mat A = eye(<span class="dv">5</span>,<span class="dv">5</span>);  <span class="co">// or:  mat A(5,5,fill::eye);</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>  fmat B = <span class="fl">123.0</span> * eye&lt;fmat&gt;(<span class="dv">5</span>,<span class="dv">5</span>);</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>cx_mat C = eye&lt;cx_mat&gt;( size(B) );</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(res);</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">eye1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  mat A <span class="op">=</span> eye<span class="op">(</span><span class="dv">5</span><span class="op">,</span><span class="dv">5</span><span class="op">);</span>  <span class="co">// or:  mat A(5,5,fill::eye);</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  fmat B <span class="op">=</span> <span class="fl">123.0</span> <span class="op">*</span> eye<span class="op">&lt;</span>fmat<span class="op">&gt;(</span><span class="dv">5</span><span class="op">,</span><span class="dv">5</span><span class="op">);</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>cx_mat C <span class="op">=</span> eye<span class="op">&lt;</span>cx_mat<span class="op">&gt;(</span> size<span class="op">(</span>B<span class="op">)</span> <span class="op">);</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>  <span class="cf">return</span> as_doubles<span class="op">(</span>res<span class="op">);</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="ones">Generate object filled with ones<a class="anchor" aria-label="anchor" href="#ones"></a>
 </h2>
-<p>The <code>ones()</code> function generates a vector, matrix or cube. The arguments can be <code>n_elem</code>, <code>n_rows, n_cols</code>, <code>n_rows, n_cols, n_slices</code>, or <code>size(X)</code>. The</p>
+<p>The <code>ones()</code> function generates a vector, matrix or cube.
+The arguments can be <code>n_elem</code>, <code>n_rows, n_cols</code>,
+<code>n_rows, n_cols, n_slices</code>, or <code>size(X)</code>. The</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="dt">vector_type</span> v = ones&lt;<span class="dt">vector_type</span>&gt;(n_elem)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="dt">matrix_type</span> X = ones&lt;<span class="dt">matrix_type</span>&gt;(n_rows, n_cols)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="dt">matrix_type</span> Y = ones&lt;<span class="dt">matrix_type</span>&gt;(size(X))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a><span class="dt">cube_type</span> Q = ones&lt;<span class="dt">cube_type</span>&gt;(n_rows, n_cols, n_slices)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a><span class="dt">cube_type</span> R = ones&lt;<span class="dt">cube_type</span>&gt;(size(Q))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> ones<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>n_elem<span class="op">)</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="dt">matrix_type</span> X <span class="op">=</span> ones<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">)</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="dt">matrix_type</span> Y <span class="op">=</span> ones<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>size<span class="op">(</span>X<span class="op">))</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="dt">cube_type</span> Q <span class="op">=</span> ones<span class="op">&lt;</span><span class="dt">cube_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> n_slices<span class="op">)</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="dt">cube_type</span> R <span class="op">=</span> ones<span class="op">&lt;</span><span class="dt">cube_type</span><span class="op">&gt;(</span>size<span class="op">(</span>Q<span class="op">))</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-5">Examples<a class="anchor" aria-label="anchor" href="#examples-5"></a>
 </h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">ones2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>  vec v = ones(n);  <span class="co">// or: vec v(10, fill::ones);</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>  uvec u = ones&lt;uvec&gt;(n);</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a>  rowvec r = ones&lt;rowvec&gt;(n);</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>  mat A = ones(n, n);  <span class="co">// or: mat A(n, n, fill::ones);</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>  fmat B = ones&lt;fmat&gt;(n, n);</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>  cube Q = ones(n, n, n + <span class="dv">1</span>);  <span class="co">// or: cube Q(n, n, n + 1, fill::ones);</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a>  mat res = diagmat(v) + diagmat(conv_to&lt;vec&gt;::from(u)) + diagmat(r) + A + B +</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a>    Q.slice(<span class="dv">0</span>);</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">ones2_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  vec v <span class="op">=</span> ones<span class="op">(</span>n<span class="op">);</span>  <span class="co">// or: vec v(10, fill::ones);</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  uvec u <span class="op">=</span> ones<span class="op">&lt;</span>uvec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  rowvec r <span class="op">=</span> ones<span class="op">&lt;</span>rowvec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  mat A <span class="op">=</span> ones<span class="op">(</span>n<span class="op">,</span> n<span class="op">);</span>  <span class="co">// or: mat A(n, n, fill::ones);</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>  fmat B <span class="op">=</span> ones<span class="op">&lt;</span>fmat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>  cube Q <span class="op">=</span> ones<span class="op">(</span>n<span class="op">,</span> n<span class="op">,</span> n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span>  <span class="co">// or: cube Q(n, n, n + 1, fill::ones);</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>  mat res <span class="op">=</span> diagmat<span class="op">(</span>v<span class="op">)</span> <span class="op">+</span> diagmat<span class="op">(</span>conv_to<span class="op">&lt;</span>vec<span class="op">&gt;::</span>from<span class="op">(</span>u<span class="op">))</span> <span class="op">+</span> diagmat<span class="op">(</span>r<span class="op">)</span> <span class="op">+</span> A <span class="op">+</span> B <span class="op">+</span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>    Q<span class="op">.</span>slice<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>res<span class="op">);</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="caveat-1">Caveat<a class="anchor" aria-label="anchor" href="#caveat-1"></a>
 </h3>
-<p>Specifying <code>fill::ones</code> during object construction is more compact. For example, <code>mat A(5, 6, fill::ones)</code>.</p>
+<p>Specifying <code>fill::ones</code> during object construction is more
+compact. For example, <code>mat A(5, 6, fill::ones)</code>.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="zeros">Generate object filled with zeros<a class="anchor" aria-label="anchor" href="#zeros"></a>
 </h2>
-<p>The <code>zeros()</code> function generates a vector, matrix or cube. The arguments can be <code>n_elem</code>, <code>n_rows, n_cols</code>, <code>n_rows, n_cols, n_slices</code>, or <code>size(X)</code>.</p>
+<p>The <code>zeros()</code> function generates a vector, matrix or cube.
+The arguments can be <code>n_elem</code>, <code>n_rows, n_cols</code>,
+<code>n_rows, n_cols, n_slices</code>, or <code>size(X)</code>.</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="dt">vector_type</span> v = zeros&lt;<span class="dt">vector_type</span>&gt;(n_elem)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="dt">matrix_type</span> X = zeros&lt;<span class="dt">matrix_type</span>&gt;(n_rows, n_cols)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="dt">matrix_type</span> Y = zeros&lt;<span class="dt">matrix_type</span>&gt;(size(X))</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a><span class="dt">cube_type</span> Q = zeros&lt;<span class="dt">cube_type</span>&gt;(n_rows, n_cols, n_slices)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a><span class="dt">cube_type</span> R = zeros&lt;<span class="dt">cube_type</span>&gt;(size(Q))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> zeros<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>n_elem<span class="op">)</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="dt">matrix_type</span> X <span class="op">=</span> zeros<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">)</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="dt">matrix_type</span> Y <span class="op">=</span> zeros<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>size<span class="op">(</span>X<span class="op">))</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="dt">cube_type</span> Q <span class="op">=</span> zeros<span class="op">&lt;</span><span class="dt">cube_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> n_slices<span class="op">)</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="dt">cube_type</span> R <span class="op">=</span> zeros<span class="op">&lt;</span><span class="dt">cube_type</span><span class="op">&gt;(</span>size<span class="op">(</span>Q<span class="op">))</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-6">Examples<a class="anchor" aria-label="anchor" href="#examples-6"></a>
 </h3>
-<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">zeros2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>  vec v = zeros(n);  <span class="co">// or: vec v(10, fill::zeros);</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a>  uvec u = zeros&lt;uvec&gt;(n);</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>  rowvec r = zeros&lt;rowvec&gt;(n);</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a>  mat A = zeros(n, n);  <span class="co">// or: mat A(n, n, fill::zeros);</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>  fmat B = zeros&lt;fmat&gt;(n, n);</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a>  cube Q = zeros(n, n, n + <span class="dv">1</span>);  <span class="co">// or: cube Q(n, n, n + 1, fill::zeros);</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true"></a>  mat res = diagmat(v) + diagmat(conv_to&lt;vec&gt;::from(u)) + diagmat(r) + A + B +</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true"></a>    Q.slice(<span class="dv">0</span>);</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true"></a></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">zeros2_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  vec v <span class="op">=</span> zeros<span class="op">(</span>n<span class="op">);</span>  <span class="co">// or: vec v(10, fill::zeros);</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  uvec u <span class="op">=</span> zeros<span class="op">&lt;</span>uvec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  rowvec r <span class="op">=</span> zeros<span class="op">&lt;</span>rowvec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  mat A <span class="op">=</span> zeros<span class="op">(</span>n<span class="op">,</span> n<span class="op">);</span>  <span class="co">// or: mat A(n, n, fill::zeros);</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  fmat B <span class="op">=</span> zeros<span class="op">&lt;</span>fmat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>  cube Q <span class="op">=</span> zeros<span class="op">(</span>n<span class="op">,</span> n<span class="op">,</span> n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span>  <span class="co">// or: cube Q(n, n, n + 1, fill::zeros);</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>  mat res <span class="op">=</span> diagmat<span class="op">(</span>v<span class="op">)</span> <span class="op">+</span> diagmat<span class="op">(</span>conv_to<span class="op">&lt;</span>vec<span class="op">&gt;::</span>from<span class="op">(</span>u<span class="op">))</span> <span class="op">+</span> diagmat<span class="op">(</span>r<span class="op">)</span> <span class="op">+</span> A <span class="op">+</span> B <span class="op">+</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>    Q<span class="op">.</span>slice<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>res<span class="op">);</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="caveat-2">Caveat<a class="anchor" aria-label="anchor" href="#caveat-2"></a>
 </h3>
-<p>Specifying <code>fill::zeros</code> during object construction is more compact. For example, <code>mat A(5, 6, fill::zeros)</code>.</p>
+<p>Specifying <code>fill::zeros</code> during object construction is
+more compact. For example, <code>mat A(5, 6, fill::zeros)</code>.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="randu">Generate object with random values from a uniform distribution<a class="anchor" aria-label="anchor" href="#randu"></a>
 </h2>
-<p>The <code>randu()</code> function generates a vector, matrix or cube with the elements set to random floating point values uniformly distributed in the <code>[a,b]</code> interval. The arguments can be <code>distr_param(a,b)</code>, <code>n_elem</code>, <code>n_elem, distr_param(a,b)</code>, <code>n_rows, n_cols</code>, <code>n_rows, n_cols, distr_param(a,b)</code>, <code>n_rows, n_cols, n_slices</code>, <code>n_rows, n_cols, n_slices, distr_param(a,b)</code>, <code>size(X)</code>, or <code>size(X), distr_param(a,b)</code>.</p>
+<p>The <code>randu()</code> function generates a vector, matrix or cube
+with the elements set to random floating point values uniformly
+distributed in the <code>[a,b]</code> interval. The arguments can be
+<code>distr_param(a,b)</code>, <code>n_elem</code>,
+<code>n_elem, distr_param(a,b)</code>, <code>n_rows, n_cols</code>,
+<code>n_rows, n_cols, distr_param(a,b)</code>,
+<code>n_rows, n_cols, n_slices</code>,
+<code>n_rows, n_cols, n_slices, distr_param(a,b)</code>,
+<code>size(X)</code>, or <code>size(X), distr_param(a,b)</code>.</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="co">// the scalar type can be: float, double, cx_float, or cx_double</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a><span class="dt">scalar_type</span> s = randu&lt;<span class="dt">scalar_type</span>&gt;()</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a><span class="dt">scalar_type</span> s = randu&lt;<span class="dt">scalar_type</span>&gt;(distr_param(a,b))</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true"></a><span class="dt">vector_type</span> v = randu&lt;<span class="dt">vector_type</span>&gt;(n_elem)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true"></a><span class="dt">vector_type</span> v = randu&lt;<span class="dt">vector_type</span>&gt;(n_elem, distr_param(a,b))</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true"></a><span class="dt">matrix_type</span> X = randu&lt;<span class="dt">matrix_type</span>&gt;(n_rows, n_cols)</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true"></a><span class="dt">matrix_type</span> X = randu&lt;<span class="dt">matrix_type</span>&gt;(n_rows, n_cols, distr_param(a,b))</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true"></a><span class="dt">cube_type</span> Q = randu&lt;<span class="dt">cube_type</span>&gt;(n_rows, n_cols, n_slices)</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true"></a><span class="dt">cube_type</span> Q = randu&lt;<span class="dt">cube_type</span>&gt;(n_rows, n_cols, n_slices, distr_param(a,b))</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co">// the scalar type can be: float, double, cx_float, or cx_double</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="dt">scalar_type</span> s <span class="op">=</span> randu<span class="op">&lt;</span><span class="dt">scalar_type</span><span class="op">&gt;()</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="dt">scalar_type</span> s <span class="op">=</span> randu<span class="op">&lt;</span><span class="dt">scalar_type</span><span class="op">&gt;(</span>distr_param<span class="op">(</span>a<span class="op">,</span>b<span class="op">))</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> randu<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>n_elem<span class="op">)</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> randu<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>n_elem<span class="op">,</span> distr_param<span class="op">(</span>a<span class="op">,</span>b<span class="op">))</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="dt">matrix_type</span> X <span class="op">=</span> randu<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">)</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="dt">matrix_type</span> X <span class="op">=</span> randu<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> distr_param<span class="op">(</span>a<span class="op">,</span>b<span class="op">))</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="dt">cube_type</span> Q <span class="op">=</span> randu<span class="op">&lt;</span><span class="dt">cube_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> n_slices<span class="op">)</span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="dt">cube_type</span> Q <span class="op">=</span> randu<span class="op">&lt;</span><span class="dt">cube_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> n_slices<span class="op">,</span> distr_param<span class="op">(</span>a<span class="op">,</span>b<span class="op">))</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-7">Examples<a class="anchor" aria-label="anchor" href="#examples-7"></a>
 </h3>
-<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">randu3_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a>  <span class="dt">double</span> a = randu();</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a>  <span class="dt">double</span> b = randu(distr_param(<span class="dv">10</span>, <span class="dv">20</span>));</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a>  vec v1 = randu(n);  <span class="co">// or vec v1(n, fill::randu);</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a>  vec v2 = randu(n, distr_param(<span class="dv">10</span>, <span class="dv">20</span>));</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a>  rowvec r1 = randu&lt;rowvec&gt;(n);</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true"></a>  rowvec r2 = randu&lt;rowvec&gt;(n, distr_param(<span class="dv">10</span>, <span class="dv">20</span>));</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true"></a>  mat A1 = randu(n, n);  <span class="co">// or mat A1(n, n, fill::randu);</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true"></a>  mat A2 = randu(n, n, distr_param(<span class="dv">10</span>, <span class="dv">20</span>));</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true"></a></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true"></a>  fmat B1 = randu&lt;fmat&gt;(n, n);</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true"></a>  fmat B2 = randu&lt;fmat&gt;(n, n, distr_param(<span class="dv">10</span>, <span class="dv">20</span>));</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true"></a></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true"></a>  mat res = diagmat(v1) + diagmat(v2) + diagmat(r1) + diagmat(r2) + A1 + A2 +</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true"></a>    B1 + B2;</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true"></a></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true"></a>  res.each_col([a](vec&amp; x) { x += a; });</span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true"></a>  res.each_row([b](rowvec&amp; y) { y /= b; });</span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true"></a></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);</span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">randu3_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="dt">double</span> a <span class="op">=</span> randu<span class="op">();</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="dt">double</span> b <span class="op">=</span> randu<span class="op">(</span>distr_param<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">));</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>  vec v1 <span class="op">=</span> randu<span class="op">(</span>n<span class="op">);</span>  <span class="co">// or vec v1(n, fill::randu);</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>  vec v2 <span class="op">=</span> randu<span class="op">(</span>n<span class="op">,</span> distr_param<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">));</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>  rowvec r1 <span class="op">=</span> randu<span class="op">&lt;</span>rowvec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>  rowvec r2 <span class="op">=</span> randu<span class="op">&lt;</span>rowvec<span class="op">&gt;(</span>n<span class="op">,</span> distr_param<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">));</span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>  mat A1 <span class="op">=</span> randu<span class="op">(</span>n<span class="op">,</span> n<span class="op">);</span>  <span class="co">// or mat A1(n, n, fill::randu);</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>  mat A2 <span class="op">=</span> randu<span class="op">(</span>n<span class="op">,</span> n<span class="op">,</span> distr_param<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">));</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a>  fmat B1 <span class="op">=</span> randu<span class="op">&lt;</span>fmat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a>  fmat B2 <span class="op">=</span> randu<span class="op">&lt;</span>fmat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">,</span> distr_param<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">));</span></span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a></span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a>  mat res <span class="op">=</span> diagmat<span class="op">(</span>v1<span class="op">)</span> <span class="op">+</span> diagmat<span class="op">(</span>v2<span class="op">)</span> <span class="op">+</span> diagmat<span class="op">(</span>r1<span class="op">)</span> <span class="op">+</span> diagmat<span class="op">(</span>r2<span class="op">)</span> <span class="op">+</span> A1 <span class="op">+</span> A2 <span class="op">+</span></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a>    B1 <span class="op">+</span> B2<span class="op">;</span></span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a>  res<span class="op">.</span>each_col<span class="op">([</span>a<span class="op">](</span>vec<span class="op">&amp;</span> x<span class="op">)</span> <span class="op">{</span> x <span class="op">+=</span> a<span class="op">;</span> <span class="op">});</span></span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a>  res<span class="op">.</span>each_row<span class="op">([</span>b<span class="op">](</span>rowvec<span class="op">&amp;</span> y<span class="op">)</span> <span class="op">{</span> y <span class="op">/=</span> b<span class="op">;</span> <span class="op">});</span></span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>res<span class="op">);</span></span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="caveat-3">Caveat<a class="anchor" aria-label="anchor" href="#caveat-3"></a>
 </h3>
-<p>To generate a matrix with random integer values instead of floating point values, use <code>randi()</code> instead.</p>
+<p>To generate a matrix with random integer values instead of floating
+point values, use <code>randi()</code> instead.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="randn">Generate object with random values from a normal/gaussian distribution<a class="anchor" aria-label="anchor" href="#randn"></a>
+<h2 id="randn">Generate object with random values from a normal/gaussian
+distribution<a class="anchor" aria-label="anchor" href="#randn"></a>
 </h2>
-<p>The <code>randn()</code> function generates a vector, matrix or cube with the elements set to random floating point values normally distributed with mean <code>0</code> and standard deviation <code>1</code>. The arguments can be <code>n_elem, distr_param(mean, stddev)</code>, <code>n_elem</code>, <code>n_elem, distr_param(mean, stddev)</code>, <code>n_rows, n_cols</code>, <code>n_rows, n_cols, distr_param(mean, stddev)</code>, <code>n_rows, n_cols, n_slices</code>, <code>n_rows, n_cols, n_slices, distr_param(mean, stddev)</code>, <code>size(X)</code>, or <code>size(X), distr_param(mean, stddev)</code>.</p>
+<p>The <code>randn()</code> function generates a vector, matrix or cube
+with the elements set to random floating point values normally
+distributed with mean <code>0</code> and standard deviation
+<code>1</code>. The arguments can be
+<code>n_elem, distr_param(mean, stddev)</code>, <code>n_elem</code>,
+<code>n_elem, distr_param(mean, stddev)</code>,
+<code>n_rows, n_cols</code>,
+<code>n_rows, n_cols, distr_param(mean, stddev)</code>,
+<code>n_rows, n_cols, n_slices</code>,
+<code>n_rows, n_cols, n_slices, distr_param(mean, stddev)</code>,
+<code>size(X)</code>, or
+<code>size(X), distr_param(mean, stddev)</code>.</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="co">// the scalar type can be: float, double, cx_float, or cx_double</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a><span class="dt">scalar_type</span> s = randn&lt;<span class="dt">scalar_type</span>&gt;()</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a><span class="dt">scalar_type</span> s = randn&lt;<span class="dt">scalar_type</span>&gt;(distr_param(mean, stddev))</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true"></a><span class="dt">vector_type</span> v = randn&lt;<span class="dt">vector_type</span>&gt;(n_elem)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true"></a><span class="dt">vector_type</span> v = randn&lt;<span class="dt">vector_type</span>&gt;(n_elem, distr_param(mean, stddev))</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true"></a><span class="dt">matrix_type</span> X = randn&lt;<span class="dt">matrix_type</span>&gt;(n_rows, n_cols)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true"></a><span class="dt">matrix_type</span> X = randn&lt;<span class="dt">matrix_type</span>&gt;(n_rows, n_cols, distr_param(mean, stddev))</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true"></a></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true"></a><span class="dt">cube_type</span> Q = randn&lt;<span class="dt">cube_type</span>&gt;(n_rows, n_cols, n_slices)</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true"></a><span class="dt">cube_type</span> Q = randn&lt;<span class="dt">cube_type</span>&gt;(n_rows, n_cols, n_slices, distr_param(mean, stddev))</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co">// the scalar type can be: float, double, cx_float, or cx_double</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="dt">scalar_type</span> s <span class="op">=</span> randn<span class="op">&lt;</span><span class="dt">scalar_type</span><span class="op">&gt;()</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="dt">scalar_type</span> s <span class="op">=</span> randn<span class="op">&lt;</span><span class="dt">scalar_type</span><span class="op">&gt;(</span>distr_param<span class="op">(</span>mean<span class="op">,</span> stddev<span class="op">))</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> randn<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>n_elem<span class="op">)</span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> randn<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>n_elem<span class="op">,</span> distr_param<span class="op">(</span>mean<span class="op">,</span> stddev<span class="op">))</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="dt">matrix_type</span> X <span class="op">=</span> randn<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">)</span></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="dt">matrix_type</span> X <span class="op">=</span> randn<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> distr_param<span class="op">(</span>mean<span class="op">,</span> stddev<span class="op">))</span></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a><span class="dt">cube_type</span> Q <span class="op">=</span> randn<span class="op">&lt;</span><span class="dt">cube_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> n_slices<span class="op">)</span></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a><span class="dt">cube_type</span> Q <span class="op">=</span> randn<span class="op">&lt;</span><span class="dt">cube_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> n_slices<span class="op">,</span> distr_param<span class="op">(</span>mean<span class="op">,</span> stddev<span class="op">))</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-8">Examples<a class="anchor" aria-label="anchor" href="#examples-8"></a>
 </h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">randn3_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a>  vec v1 = randn(n);  <span class="co">// or vec v1(n, fill::randn);</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a>  vec v2 = randn(n, distr_param(<span class="dv">10</span>, <span class="dv">20</span>));</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a>  rowvec r1 = randn&lt;rowvec&gt;(n);</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a>  rowvec r2 = randn&lt;rowvec&gt;(n, distr_param(<span class="dv">10</span>, <span class="dv">20</span>));</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true"></a>  mat A1 = randn(n, n);  <span class="co">// or mat A1(n, n, fill::randn);</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true"></a>  mat A2 = randn(n, n, distr_param(<span class="dv">10</span>, <span class="dv">20</span>));</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true"></a></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true"></a>  fmat B1 = randn&lt;fmat&gt;(n, n);</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true"></a>  fmat B2 = randn&lt;fmat&gt;(n, n, distr_param(<span class="dv">10</span>, <span class="dv">20</span>));</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true"></a></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true"></a>  mat res = diagmat(v1) + diagmat(v2) + diagmat(r1) + diagmat(r2) + A1 + A2 +</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true"></a>    B1 + B2;</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true"></a></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">randn3_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  vec v1 <span class="op">=</span> randn<span class="op">(</span>n<span class="op">);</span>  <span class="co">// or vec v1(n, fill::randn);</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  vec v2 <span class="op">=</span> randn<span class="op">(</span>n<span class="op">,</span> distr_param<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">));</span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>  rowvec r1 <span class="op">=</span> randn<span class="op">&lt;</span>rowvec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>  rowvec r2 <span class="op">=</span> randn<span class="op">&lt;</span>rowvec<span class="op">&gt;(</span>n<span class="op">,</span> distr_param<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">));</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>  mat A1 <span class="op">=</span> randn<span class="op">(</span>n<span class="op">,</span> n<span class="op">);</span>  <span class="co">// or mat A1(n, n, fill::randn);</span></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a>  mat A2 <span class="op">=</span> randn<span class="op">(</span>n<span class="op">,</span> n<span class="op">,</span> distr_param<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">));</span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>  fmat B1 <span class="op">=</span> randn<span class="op">&lt;</span>fmat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a>  fmat B2 <span class="op">=</span> randn<span class="op">&lt;</span>fmat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">,</span> distr_param<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">));</span></span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a>  mat res <span class="op">=</span> diagmat<span class="op">(</span>v1<span class="op">)</span> <span class="op">+</span> diagmat<span class="op">(</span>v2<span class="op">)</span> <span class="op">+</span> diagmat<span class="op">(</span>r1<span class="op">)</span> <span class="op">+</span> diagmat<span class="op">(</span>r2<span class="op">)</span> <span class="op">+</span> A1 <span class="op">+</span> A2 <span class="op">+</span></span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a>    B1 <span class="op">+</span> B2<span class="op">;</span></span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>res<span class="op">);</span></span>
+<span id="cb18-18"><a href="#cb18-18" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="randg">Generate object with random values from a gamma distribution<a class="anchor" aria-label="anchor" href="#randg"></a>
 </h2>
-<p>The <code>randg()</code> function generates a vector, matrix or cube with the elements set to random floating point values gamma distributed with shape <code>a</code> and scale <code>b</code>. The arguments can be <code>distr_param(a, b)</code>, <code>n_elem</code>, <code>n_elem, distr_param(a, b)</code>, <code>n_rows, n_cols</code>, <code>n_rows, n_cols, distr_param(a, b)</code>, <code>n_rows, n_cols, n_slices</code>, <code>n_rows, n_cols, n_slices, distr_param(a, b)</code>, <code>size(X)</code>, or <code>size(X), distr_param(a, b)</code>.</p>
+<p>The <code>randg()</code> function generates a vector, matrix or cube
+with the elements set to random floating point values gamma distributed
+with shape <code>a</code> and scale <code>b</code>. The arguments can be
+<code>distr_param(a, b)</code>, <code>n_elem</code>,
+<code>n_elem, distr_param(a, b)</code>, <code>n_rows, n_cols</code>,
+<code>n_rows, n_cols, distr_param(a, b)</code>,
+<code>n_rows, n_cols, n_slices</code>,
+<code>n_rows, n_cols, n_slices, distr_param(a, b)</code>,
+<code>size(X)</code>, or <code>size(X), distr_param(a, b)</code>.</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="co">// the scalar type can be: float, double, cx_float, or cx_double</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a><span class="dt">scalar_type</span> s = randg&lt;<span class="dt">scalar_type</span>&gt;()</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a><span class="dt">scalar_type</span> s = randg&lt;<span class="dt">scalar_type</span>&gt;(distr_param(a, b))</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true"></a><span class="dt">vector_type</span> v = randg&lt;<span class="dt">vector_type</span>&gt;(n_elem)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true"></a><span class="dt">vector_type</span> v = randg&lt;<span class="dt">vector_type</span>&gt;(n_elem, distr_param(a, b))</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true"></a><span class="dt">matrix_type</span> X = randg&lt;<span class="dt">matrix_type</span>&gt;(n_rows, n_cols)</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true"></a><span class="dt">matrix_type</span> X = randg&lt;<span class="dt">matrix_type</span>&gt;(n_rows, n_cols, distr_param(a, b))</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true"></a></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true"></a><span class="dt">cube_type</span> Q = randg&lt;<span class="dt">cube_type</span>&gt;(n_rows, n_cols, n_slices)</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true"></a><span class="dt">cube_type</span> Q = randg&lt;<span class="dt">cube_type</span>&gt;(n_rows, n_cols, n_slices, distr_param(a, b))</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co">// the scalar type can be: float, double, cx_float, or cx_double</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="dt">scalar_type</span> s <span class="op">=</span> randg<span class="op">&lt;</span><span class="dt">scalar_type</span><span class="op">&gt;()</span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="dt">scalar_type</span> s <span class="op">=</span> randg<span class="op">&lt;</span><span class="dt">scalar_type</span><span class="op">&gt;(</span>distr_param<span class="op">(</span>a<span class="op">,</span> b<span class="op">))</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> randg<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>n_elem<span class="op">)</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> randg<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>n_elem<span class="op">,</span> distr_param<span class="op">(</span>a<span class="op">,</span> b<span class="op">))</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="dt">matrix_type</span> X <span class="op">=</span> randg<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">)</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="dt">matrix_type</span> X <span class="op">=</span> randg<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> distr_param<span class="op">(</span>a<span class="op">,</span> b<span class="op">))</span></span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="dt">cube_type</span> Q <span class="op">=</span> randg<span class="op">&lt;</span><span class="dt">cube_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> n_slices<span class="op">)</span></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="dt">cube_type</span> Q <span class="op">=</span> randg<span class="op">&lt;</span><span class="dt">cube_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> n_slices<span class="op">,</span> distr_param<span class="op">(</span>a<span class="op">,</span> b<span class="op">))</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-9">Examples<a class="anchor" aria-label="anchor" href="#examples-9"></a>
 </h3>
-<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">randg3_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a>  <span class="dt">int</span> a = randi();</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true"></a>  <span class="dt">int</span> b = randi(distr_param(-<span class="dv">10</span>, +<span class="dv">20</span>));</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true"></a>  imat A1 = randi(n, n);</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true"></a>  imat A2 = randi(n, n, distr_param(-<span class="dv">10</span>, +<span class="dv">20</span>));</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true"></a>  mat B1 = randi&lt;mat&gt;(n, n);</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true"></a>  mat B2 = randi&lt;mat&gt;(n, n, distr_param(-<span class="dv">10</span>, +<span class="dv">20</span>));</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true"></a></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true"></a>  mat res = A1 + A2 + B1 + B2;</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true"></a></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true"></a>  res.each_col([a](vec&amp; x) { x *= a; });</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true"></a>  res.each_row([b](rowvec&amp; y) { y -= b; });</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true"></a></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(res);</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">randg3_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  <span class="dt">int</span> a <span class="op">=</span> randi<span class="op">();</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>  <span class="dt">int</span> b <span class="op">=</span> randi<span class="op">(</span>distr_param<span class="op">(-</span><span class="dv">10</span><span class="op">,</span> <span class="op">+</span><span class="dv">20</span><span class="op">));</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>  imat A1 <span class="op">=</span> randi<span class="op">(</span>n<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>  imat A2 <span class="op">=</span> randi<span class="op">(</span>n<span class="op">,</span> n<span class="op">,</span> distr_param<span class="op">(-</span><span class="dv">10</span><span class="op">,</span> <span class="op">+</span><span class="dv">20</span><span class="op">));</span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a>  mat B1 <span class="op">=</span> randi<span class="op">&lt;</span>mat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a>  mat B2 <span class="op">=</span> randi<span class="op">&lt;</span>mat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">,</span> distr_param<span class="op">(-</span><span class="dv">10</span><span class="op">,</span> <span class="op">+</span><span class="dv">20</span><span class="op">));</span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a>  mat res <span class="op">=</span> A1 <span class="op">+</span> A2 <span class="op">+</span> B1 <span class="op">+</span> B2<span class="op">;</span></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a>  res<span class="op">.</span>each_col<span class="op">([</span>a<span class="op">](</span>vec<span class="op">&amp;</span> x<span class="op">)</span> <span class="op">{</span> x <span class="op">*=</span> a<span class="op">;</span> <span class="op">});</span></span>
+<span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a>  res<span class="op">.</span>each_row<span class="op">([</span>b<span class="op">](</span>rowvec<span class="op">&amp;</span> y<span class="op">)</span> <span class="op">{</span> y <span class="op">-=</span> b<span class="op">;</span> <span class="op">});</span></span>
+<span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>res<span class="op">);</span></span>
+<span id="cb20-17"><a href="#cb20-17" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="randi">Generate object with random integer values in specified interval<a class="anchor" aria-label="anchor" href="#randi"></a>
+<h2 id="randi">Generate object with random integer values in specified
+interval<a class="anchor" aria-label="anchor" href="#randi"></a>
 </h2>
-<p>The <code>randi()</code> function generates a vector, matrix or cube with the elements set to random integer values uniformly distributed in the <code>[a,b]</code> interval. The arguments can be <code>distr_param(a, b)</code>, <code>n_elem</code>, <code>n_elem, distr_param(a, b)</code>, <code>n_rows, n_cols</code>, <code>n_rows, n_cols, distr_param(a, b)</code>, <code>n_rows, n_cols, n_slices</code>, <code>n_rows, n_cols, n_slices, distr_param(a, b)</code>, <code>size(X)</code>, or <code>size(X), distr_param(a, b)</code>. The default values are <code>a = 0</code> and <code>b = maximum_int</code>.</p>
+<p>The <code>randi()</code> function generates a vector, matrix or cube
+with the elements set to random integer values uniformly distributed in
+the <code>[a,b]</code> interval. The arguments can be
+<code>distr_param(a, b)</code>, <code>n_elem</code>,
+<code>n_elem, distr_param(a, b)</code>, <code>n_rows, n_cols</code>,
+<code>n_rows, n_cols, distr_param(a, b)</code>,
+<code>n_rows, n_cols, n_slices</code>,
+<code>n_rows, n_cols, n_slices, distr_param(a, b)</code>,
+<code>size(X)</code>, or <code>size(X), distr_param(a, b)</code>. The
+default values are <code>a = 0</code> and
+<code>b = maximum_int</code>.</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="dt">scalar_type</span> s = randi&lt;<span class="dt">scalar_type</span>&gt;()</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a><span class="dt">scalar_type</span> s = randi&lt;<span class="dt">scalar_type</span>&gt;(distr_param(a, b))</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true"></a><span class="dt">vector_type</span> v = randi&lt;<span class="dt">vector_type</span>&gt;(n_elem)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true"></a><span class="dt">vector_type</span> v = randi&lt;<span class="dt">vector_type</span>&gt;(n_elem, distr_param(a, b))</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true"></a><span class="dt">matrix_type</span> X = randi&lt;<span class="dt">matrix_type</span>&gt;(n_rows, n_cols)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true"></a><span class="dt">matrix_type</span> X = randi&lt;<span class="dt">matrix_type</span>&gt;(n_rows, n_cols, distr_param(a, b))</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true"></a><span class="dt">cube_type</span> Q = randi&lt;<span class="dt">cube_type</span>&gt;(n_rows, n_cols, n_slices)</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true"></a><span class="dt">cube_type</span> Q = randi&lt;<span class="dt">cube_type</span>&gt;(n_rows, n_cols, n_slices, distr_param(a, b))</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="dt">scalar_type</span> s <span class="op">=</span> randi<span class="op">&lt;</span><span class="dt">scalar_type</span><span class="op">&gt;()</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="dt">scalar_type</span> s <span class="op">=</span> randi<span class="op">&lt;</span><span class="dt">scalar_type</span><span class="op">&gt;(</span>distr_param<span class="op">(</span>a<span class="op">,</span> b<span class="op">))</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> randi<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>n_elem<span class="op">)</span></span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="dt">vector_type</span> v <span class="op">=</span> randi<span class="op">&lt;</span><span class="dt">vector_type</span><span class="op">&gt;(</span>n_elem<span class="op">,</span> distr_param<span class="op">(</span>a<span class="op">,</span> b<span class="op">))</span></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="dt">matrix_type</span> X <span class="op">=</span> randi<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">)</span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a><span class="dt">matrix_type</span> X <span class="op">=</span> randi<span class="op">&lt;</span><span class="dt">matrix_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> distr_param<span class="op">(</span>a<span class="op">,</span> b<span class="op">))</span></span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="dt">cube_type</span> Q <span class="op">=</span> randi<span class="op">&lt;</span><span class="dt">cube_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> n_slices<span class="op">)</span></span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a><span class="dt">cube_type</span> Q <span class="op">=</span> randi<span class="op">&lt;</span><span class="dt">cube_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> n_slices<span class="op">,</span> distr_param<span class="op">(</span>a<span class="op">,</span> b<span class="op">))</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-10">Examples<a class="anchor" aria-label="anchor" href="#examples-10"></a>
 </h3>
-<div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] integers_matrix&lt;&gt; <span class="va">randi3_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a>  uvec v1 = randi(n);  <span class="co">// or uvec v1(n, fill::randi);</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true"></a>  uvec v2 = randi(n, distr_param(<span class="dv">10</span>, <span class="dv">20</span>));</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true"></a>  umat A1 = randi(n, n);  <span class="co">// or umat A1(n, n, fill::randi);</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true"></a>  umat A2 = randi(n, n, distr_param(<span class="dv">10</span>, <span class="dv">20</span>));</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true"></a></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true"></a>  icube Q1 = randi(icube(n, n, n + <span class="dv">1</span>));  <span class="co">// or icube Q1(n, n, n + 1, fill::randi);</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true"></a>  icube Q2 = randi(icube(n, n, n + <span class="dv">1</span>), distr_param(<span class="dv">10</span>, <span class="dv">20</span>));</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true"></a></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true"></a>  mat res = diagmat(conv_to&lt;vec&gt;::from(v1)) + diagmat(conv_to&lt;vec&gt;::from(v2)) +</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true"></a>    A1 + A2 + Q1.slice(<span class="dv">0</span>) + Q2.slice(<span class="dv">0</span>);</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true"></a></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true"></a>  <span class="cf">return</span> as_integers_matrix(res);</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> integers_matrix<span class="op">&lt;&gt;</span> <span class="va">randi3_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>  uvec v1 <span class="op">=</span> randi<span class="op">(</span>n<span class="op">);</span>  <span class="co">// or uvec v1(n, fill::randi);</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>  uvec v2 <span class="op">=</span> randi<span class="op">(</span>n<span class="op">,</span> distr_param<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">));</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>  umat A1 <span class="op">=</span> randi<span class="op">(</span>n<span class="op">,</span> n<span class="op">);</span>  <span class="co">// or umat A1(n, n, fill::randi);</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>  umat A2 <span class="op">=</span> randi<span class="op">(</span>n<span class="op">,</span> n<span class="op">,</span> distr_param<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">));</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a>  icube Q1 <span class="op">=</span> randi<span class="op">(</span>icube<span class="op">(</span>n<span class="op">,</span> n<span class="op">,</span> n <span class="op">+</span> <span class="dv">1</span><span class="op">));</span>  <span class="co">// or icube Q1(n, n, n + 1, fill::randi);</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a>  icube Q2 <span class="op">=</span> randi<span class="op">(</span>icube<span class="op">(</span>n<span class="op">,</span> n<span class="op">,</span> n <span class="op">+</span> <span class="dv">1</span><span class="op">),</span> distr_param<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">));</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a>  mat res <span class="op">=</span> diagmat<span class="op">(</span>conv_to<span class="op">&lt;</span>vec<span class="op">&gt;::</span>from<span class="op">(</span>v1<span class="op">))</span> <span class="op">+</span> diagmat<span class="op">(</span>conv_to<span class="op">&lt;</span>vec<span class="op">&gt;::</span>from<span class="op">(</span>v2<span class="op">))</span> <span class="op">+</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a>    A1 <span class="op">+</span> A2 <span class="op">+</span> Q1<span class="op">.</span>slice<span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">+</span> Q2<span class="op">.</span>slice<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a>  <span class="cf">return</span> as_integers_matrix<span class="op">(</span>res<span class="op">);</span></span>
+<span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="caveat-4">Caveat<a class="anchor" aria-label="anchor" href="#caveat-4"></a>
 </h3>
-<p>To generate a matrix with random floating point values (e.g., float or double) instead of integers, use <code>randu()</code> instead.</p>
+<p>To generate a matrix with random floating point values (e.g., float
+or double) instead of integers, use <code>randu()</code> instead.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="speye">Generate sparse identity matrix<a class="anchor" aria-label="anchor" href="#speye"></a>
 </h2>
-<p>The <code>speye()</code> function generates a sparse matrix of size <code>n x n</code> with the elements on the diagonal set to <code>1</code> and the remaining elements set to <code>0</code>. The argument can be <code>n_rows, n_cols</code> or <code>size(X)</code>. An identity matrix is generated when <code>n_rows = n_cols</code>.</p>
+<p>The <code>speye()</code> function generates a sparse matrix of size
+<code>n x n</code> with the elements on the diagonal set to
+<code>1</code> and the remaining elements set to <code>0</code>. The
+argument can be <code>n_rows, n_cols</code> or <code>size(X)</code>. An
+identity matrix is generated when <code>n_rows = n_cols</code>.</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="dt">sparse_matrix_type</span> X = speye(n_rows, n_cols)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a><span class="dt">sparse_matrix_type</span> X = speye&lt;<span class="dt">sparse_matrix_type</span>&gt;(size(X))</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="dt">sparse_matrix_type</span> X <span class="op">=</span> speye<span class="op">(</span>n_rows<span class="op">,</span> n_cols<span class="op">)</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="dt">sparse_matrix_type</span> X <span class="op">=</span> speye<span class="op">&lt;</span><span class="dt">sparse_matrix_type</span><span class="op">&gt;(</span>size<span class="op">(</span>X<span class="op">))</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-11">Examples<a class="anchor" aria-label="anchor" href="#examples-11"></a>
 </h3>
-<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">speye1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true"></a>  sp_mat A = speye&lt;sp_mat&gt;(n, n);</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true"></a>  mat B = mat(A);</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(B);</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">speye1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>  sp_mat A <span class="op">=</span> speye<span class="op">&lt;</span>sp_mat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>  mat B <span class="op">=</span> mat<span class="op">(</span>A<span class="op">);</span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>B<span class="op">);</span></span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="spones">Generate sparse matrix with non-zero elements set to one<a class="anchor" aria-label="anchor" href="#spones"></a>
 </h2>
-<p>The <code>spones(X)</code> function generates a sparse matrix with the same size as <code>X</code> and all the non-zero elements set to <code>1</code>.</p>
+<p>The <code>spones(X)</code> function generates a sparse matrix with
+the same size as <code>X</code> and all the non-zero elements set to
+<code>1</code>.</p>
 <div class="section level3">
 <h3 id="examples-12">Examples<a class="anchor" aria-label="anchor" href="#examples-12"></a>
 </h3>
-<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">spones1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a>  sp_mat A = sprandu&lt;sp_mat&gt;(n, n, <span class="fl">0.1</span>);</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true"></a>  sp_mat B = spones(A);</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true"></a>  mat C = mat(B);</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(C);</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">spones1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  sp_mat A <span class="op">=</span> sprandu<span class="op">&lt;</span>sp_mat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">,</span> <span class="fl">0.1</span><span class="op">);</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>  sp_mat B <span class="op">=</span> spones<span class="op">(</span>A<span class="op">);</span></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>  mat C <span class="op">=</span> mat<span class="op">(</span>B<span class="op">);</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>C<span class="op">);</span></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="sprandu">Generate sparse matrix with non-zero elements set to random values from a uniform distribution<a class="anchor" aria-label="anchor" href="#sprandu"></a>
+<h2 id="sprandu">Generate sparse matrix with non-zero elements set to random values
+from a uniform distribution<a class="anchor" aria-label="anchor" href="#sprandu"></a>
 </h2>
-<p>The <code>sprandu()</code> function generates a sparse matrix of size <code>n_rows x n_cols</code> with random floating point values uniformly distributed in the <code>[0,1]</code> interval. The arguments can be <code>n_rows, n_cols, density</code> or <code>size(X), density</code>.</p>
+<p>The <code>sprandu()</code> function generates a sparse matrix of size
+<code>n_rows x n_cols</code> with random floating point values uniformly
+distributed in the <code>[0,1]</code> interval. The arguments can be
+<code>n_rows, n_cols, density</code> or
+<code>size(X), density</code>.</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true"></a><span class="dt">sparse_matrix_type</span> X = sprandu&lt;<span class="dt">sparse_matrix_type</span>&gt;(n_rows, n_cols, density)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true"></a><span class="dt">sparse_matrix_type</span> X = sprandu&lt;<span class="dt">sparse_matrix_type</span>&gt;(size(X), density)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="dt">sparse_matrix_type</span> X <span class="op">=</span> sprandu<span class="op">&lt;</span><span class="dt">sparse_matrix_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> density<span class="op">)</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="dt">sparse_matrix_type</span> X <span class="op">=</span> sprandu<span class="op">&lt;</span><span class="dt">sparse_matrix_type</span><span class="op">&gt;(</span>size<span class="op">(</span>X<span class="op">),</span> density<span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-13">Examples<a class="anchor" aria-label="anchor" href="#examples-13"></a>
 </h3>
-<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">sprandu1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a>  sp_mat A = sprandu&lt;sp_mat&gt;(n, n, <span class="fl">0.05</span>);</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true"></a>  mat B = mat(A);</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(B);</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">sprandu1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>  sp_mat A <span class="op">=</span> sprandu<span class="op">&lt;</span>sp_mat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">,</span> <span class="fl">0.05</span><span class="op">);</span></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>  mat B <span class="op">=</span> mat<span class="op">(</span>A<span class="op">);</span></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>B<span class="op">);</span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="sprandn">Generate sparse matrix with non-zero elements set to random values from a normal/gaussian distribution<a class="anchor" aria-label="anchor" href="#sprandn"></a>
+<h2 id="sprandn">Generate sparse matrix with non-zero elements set to random values
+from a normal/gaussian distribution<a class="anchor" aria-label="anchor" href="#sprandn"></a>
 </h2>
-<p>The <code>sprandn()</code> function generates a sparse matrix of size <code>n_rows x n_cols</code> with random floating point values normally distributed with mean <code>0</code> and standard deviation <code>1</code>. The arguments can be <code>n_rows, n_cols, density</code> or <code>size(X), density</code>.</p>
+<p>The <code>sprandn()</code> function generates a sparse matrix of size
+<code>n_rows x n_cols</code> with random floating point values normally
+distributed with mean <code>0</code> and standard deviation
+<code>1</code>. The arguments can be
+<code>n_rows, n_cols, density</code> or
+<code>size(X), density</code>.</p>
 <p>The usage is:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true"></a><span class="dt">sparse_matrix_type</span> X = sprandn&lt;<span class="dt">sparse_matrix_type</span>&gt;(n_rows, n_cols, density)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true"></a><span class="dt">sparse_matrix_type</span> X = sprandn&lt;<span class="dt">sparse_matrix_type</span>&gt;(size(X), density)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="dt">sparse_matrix_type</span> X <span class="op">=</span> sprandn<span class="op">&lt;</span><span class="dt">sparse_matrix_type</span><span class="op">&gt;(</span>n_rows<span class="op">,</span> n_cols<span class="op">,</span> density<span class="op">)</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="dt">sparse_matrix_type</span> X <span class="op">=</span> sprandn<span class="op">&lt;</span><span class="dt">sparse_matrix_type</span><span class="op">&gt;(</span>size<span class="op">(</span>X<span class="op">),</span> density<span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-14">Examples<a class="anchor" aria-label="anchor" href="#examples-14"></a>
 </h3>
-<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">sprandn1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a>  sp_mat A = sprandn&lt;sp_mat&gt;(n, n, <span class="fl">0.05</span>);</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true"></a>  mat B = mat(A);</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(B);</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">sprandn1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  sp_mat A <span class="op">=</span> sprandn<span class="op">&lt;</span>sp_mat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">,</span> <span class="fl">0.05</span><span class="op">);</span></span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  mat B <span class="op">=</span> mat<span class="op">(</span>A<span class="op">);</span></span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>B<span class="op">);</span></span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="toeplitz">Generate Toeplitz matrix<a class="anchor" aria-label="anchor" href="#toeplitz"></a>
 </h2>
-<p>The <code><a href="https://rdrr.io/r/stats/toeplitz.html" class="external-link">toeplitz()</a></code> function generates a toeplitz matrix. The arguments can be <code>a</code> or <code>a, b</code>, where <code>a</code> is a vector that determines the first column and <code>b</code> is an optional vector that determines the first row.</p>
-<p>Alternatively, <code>circ_toeplitz()</code> generates a circulant toeplitz matrix.</p>
+<p>The <code><a href="https://rdrr.io/r/stats/toeplitz.html" class="external-link">toeplitz()</a></code> function generates a toeplitz matrix. The
+arguments can be <code>a</code> or <code>a, b</code>, where
+<code>a</code> is a vector that determines the first column and
+<code>b</code> is an optional vector that determines the first row.</p>
+<p>Alternatively, <code>circ_toeplitz()</code> generates a circulant
+toeplitz matrix.</p>
 <div class="section level3">
 <h3 id="examples-15">Examples<a class="anchor" aria-label="anchor" href="#examples-15"></a>
 </h3>
-<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">toeplitz1_</span>() {</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a>  vec a = linspace(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">5</span>);</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true"></a>  vec b = linspace(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">5</span>);</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true"></a>  mat A = toeplitz(a, b);</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true"></a>  mat B = circ_toeplitz(a);</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true"></a></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(A + B);</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">toeplitz1_</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>  vec a <span class="op">=</span> linspace<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">5</span><span class="op">);</span></span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>  vec b <span class="op">=</span> linspace<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">5</span><span class="op">);</span></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a>  mat A <span class="op">=</span> toeplitz<span class="op">(</span>a<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a>  mat B <span class="op">=</span> circ_toeplitz<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>A <span class="op">+</span> B<span class="op">);</span></span>
+<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

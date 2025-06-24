@@ -13,15 +13,14 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../deps/jquery-3.6.1/jquery-3.6.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Statistics and clustering">
 <meta property="og:description" content="cpp11armadillo">
 <meta property="og:image" content="../cpp11armadillo/logo.svg">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<!-- mathjax --><script src="file:///usr/share/javascript/mathjax/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
@@ -89,7 +88,8 @@
 
 
 
-<script src="statistics-and-clustering_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Statistics and clustering</h1>
             
@@ -104,317 +104,406 @@
 <div class="section level2">
 <h2 id="mean">Mean<a class="anchor" aria-label="anchor" href="#mean"></a>
 </h2>
-<p>The <code>mean</code> function computes the mean of a vector, matrix, or cube. For a vector argument, the mean is calculated using all the elements of the vector. For a matrix argument, the mean is calculated for each column by default (<code>dim = 0</code>), or for each row (<code>dim = 1</code>). For a cube argument, the mean is calculated along the specified dimension (same as for matrices plus <code>dim = 2</code> for slices).</p>
+<p>The <code>mean</code> function computes the mean of a vector, matrix,
+or cube. For a vector argument, the mean is calculated using all the
+elements of the vector. For a matrix argument, the mean is calculated
+for each column by default (<code>dim = 0</code>), or for each row
+(<code>dim = 1</code>). For a cube argument, the mean is calculated
+along the specified dimension (same as for matrices plus
+<code>dim = 2</code> for slices).</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>mean(V)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>mean(M)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>mean(M, dim)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>mean(Q)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>mean(Q, dim)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>mean<span class="op">(</span>V<span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>mean<span class="op">(</span>M<span class="op">)</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>mean<span class="op">(</span>M<span class="op">,</span> dim<span class="op">)</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>mean<span class="op">(</span>Q<span class="op">)</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>mean<span class="op">(</span>Q<span class="op">,</span> dim<span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">mean1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; X,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  <span class="at">const</span> doubles_matrix&lt;&gt;&amp; Y) {</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  mat A = as_Mat(X);</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>  mat B = as_Mat(Y);</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>  <span class="co">// create a cube with 3 copies of B + random noise</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>  cube C(B.n_rows, B.n_cols, <span class="dv">3</span>);</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>  C.slice(<span class="dv">0</span>) = B + <span class="fl">0.1</span> * randn&lt;mat&gt;(B.n_rows, B.n_cols);</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>  C.slice(<span class="dv">1</span>) = B + <span class="fl">0.2</span> * randn&lt;mat&gt;(B.n_rows, B.n_cols);</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>  C.slice(<span class="dv">2</span>) = B + <span class="fl">0.3</span> * randn&lt;mat&gt;(B.n_rows, B.n_cols);</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>  vec D = mean(A).t();</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>  vec E = mean(A, <span class="dv">1</span>);</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>  vec F = mean(mean(B, <span class="dv">1</span>), <span class="dv">1</span>);</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>  writable::list res(<span class="dv">3</span>);</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a>  res[<span class="dv">0</span>] = as_doubles(D);</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles(E);</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a>  res[<span class="dv">2</span>] = as_doubles(F);</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">mean1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> X<span class="op">,</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> Y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  mat A <span class="op">=</span> as_Mat<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  mat B <span class="op">=</span> as_Mat<span class="op">(</span>Y<span class="op">);</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  </span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="co">// create a cube with 3 copies of B + random noise</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  cube C<span class="op">(</span>B<span class="op">.</span>n_rows<span class="op">,</span> B<span class="op">.</span>n_cols<span class="op">,</span> <span class="dv">3</span><span class="op">);</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  C<span class="op">.</span>slice<span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">=</span> B <span class="op">+</span> <span class="fl">0.1</span> <span class="op">*</span> randn<span class="op">&lt;</span>mat<span class="op">&gt;(</span>B<span class="op">.</span>n_rows<span class="op">,</span> B<span class="op">.</span>n_cols<span class="op">);</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  C<span class="op">.</span>slice<span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">=</span> B <span class="op">+</span> <span class="fl">0.2</span> <span class="op">*</span> randn<span class="op">&lt;</span>mat<span class="op">&gt;(</span>B<span class="op">.</span>n_rows<span class="op">,</span> B<span class="op">.</span>n_cols<span class="op">);</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  C<span class="op">.</span>slice<span class="op">(</span><span class="dv">2</span><span class="op">)</span> <span class="op">=</span> B <span class="op">+</span> <span class="fl">0.3</span> <span class="op">*</span> randn<span class="op">&lt;</span>mat<span class="op">&gt;(</span>B<span class="op">.</span>n_rows<span class="op">,</span> B<span class="op">.</span>n_cols<span class="op">);</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>  vec D <span class="op">=</span> mean<span class="op">(</span>A<span class="op">).</span>t<span class="op">();</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  vec E <span class="op">=</span> mean<span class="op">(</span>A<span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>  vec F <span class="op">=</span> mean<span class="op">(</span>mean<span class="op">(</span>B<span class="op">,</span> <span class="dv">1</span><span class="op">),</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>D<span class="op">);</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>E<span class="op">);</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>F<span class="op">);</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="median">Median<a class="anchor" aria-label="anchor" href="#median"></a>
 </h2>
-<p>The <code>median</code> function computes the median of a vector or matrix. For a vector argument, the median is calculated using all the elements of the vector. For a matrix argument, the median is calculated for each column by default (<code>dim = 0</code>), or for each row (<code>dim = 1</code>).</p>
+<p>The <code>median</code> function computes the median of a vector or
+matrix. For a vector argument, the median is calculated using all the
+elements of the vector. For a matrix argument, the median is calculated
+for each column by default (<code>dim = 0</code>), or for each row
+(<code>dim = 1</code>).</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>median(V)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>median(M)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>median(M, dim)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>median<span class="op">(</span>V<span class="op">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>median<span class="op">(</span>M<span class="op">)</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>median<span class="op">(</span>M<span class="op">,</span> dim<span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">median1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; X,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  <span class="at">const</span> doubles_matrix&lt;&gt;&amp; Y) {</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>  mat A = as_Mat(X);</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>  mat B = as_Mat(Y);</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>  vec C = median(A).t();</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>  vec D = median(A, <span class="dv">1</span>);</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>  vec E = median(median(B, <span class="dv">1</span>), <span class="dv">1</span>);</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>  writable::list res(<span class="dv">3</span>);</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>  res[<span class="dv">0</span>] = as_doubles(C);</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles(D);</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>  res[<span class="dv">2</span>] = as_doubles(E);</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">median1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> X<span class="op">,</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> Y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  mat A <span class="op">=</span> as_Mat<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  mat B <span class="op">=</span> as_Mat<span class="op">(</span>Y<span class="op">);</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  vec C <span class="op">=</span> median<span class="op">(</span>A<span class="op">).</span>t<span class="op">();</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  vec D <span class="op">=</span> median<span class="op">(</span>A<span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  vec E <span class="op">=</span> median<span class="op">(</span>median<span class="op">(</span>B<span class="op">,</span> <span class="dv">1</span><span class="op">),</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>C<span class="op">);</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>D<span class="op">);</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>E<span class="op">);</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="stddev">Standard deviation<a class="anchor" aria-label="anchor" href="#stddev"></a>
 </h2>
-<p>The <code>stddev</code> function computes the standard deviation of a vector or matrix. For a vector argument, the standard deviation is calculated using all the elements of the vector. For a matrix argument, the standard deviation is calculated for each column by default (<code>dim = 0</code>), or for each row (<code>dim = 1</code>).</p>
-<p>The <code>norm_type</code> argument is optional; by default <code>norm_type = 0</code> is used. The <code>norm_type</code> argument controls the type of normalization used, with <code>N</code> denoting the number of observations:</p>
+<p>The <code>stddev</code> function computes the standard deviation of a
+vector or matrix. For a vector argument, the standard deviation is
+calculated using all the elements of the vector. For a matrix argument,
+the standard deviation is calculated for each column by default
+(<code>dim = 0</code>), or for each row (<code>dim = 1</code>).</p>
+<p>The <code>norm_type</code> argument is optional; by default
+<code>norm_type = 0</code> is used. The <code>norm_type</code> argument
+controls the type of normalization used, with <code>N</code> denoting
+the number of observations:</p>
 <ul>
-<li>for <code>norm_type = 0</code>, normalization is done using <code>N-1</code>, providing the best unbiased estimation of the standard deviation (if the observations are from a normal distribution).</li>
-<li>for <code>norm_type = 1</code>, normalization is done using <code>N</code>, which provides the second moment of the observations about their mean.</li>
+<li>for <code>norm_type = 0</code>, normalization is done using
+<code>N-1</code>, providing the best unbiased estimation of the standard
+deviation (if the observations are from a normal distribution).</li>
+<li>for <code>norm_type = 1</code>, normalization is done using
+<code>N</code>, which provides the second moment of the observations
+about their mean.</li>
 </ul>
 <p>Usage:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>stddev(V)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>stddev(V, <span class="dt">norm_type</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>stddev(M)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>stddev(M, <span class="dt">norm_type</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>stddev(M, <span class="dt">norm_type</span>, dim)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>stddev<span class="op">(</span>V<span class="op">)</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>stddev<span class="op">(</span>V<span class="op">,</span> <span class="dt">norm_type</span><span class="op">)</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>stddev<span class="op">(</span>M<span class="op">)</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>stddev<span class="op">(</span>M<span class="op">,</span> <span class="dt">norm_type</span><span class="op">)</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>stddev<span class="op">(</span>M<span class="op">,</span> <span class="dt">norm_type</span><span class="op">,</span> dim<span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">stddev1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; X,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  <span class="at">const</span> doubles_matrix&lt;&gt;&amp; Y) {</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  mat A = as_Mat(X);</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>  mat B = as_Mat(Y);</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>  vec C = stddev(A).t();</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>  vec D = stddev(A, <span class="dv">1</span>).t();</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>  vec E = stddev(A, <span class="dv">1</span>, <span class="dv">1</span>);</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>  writable::list res(<span class="dv">3</span>);</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>  res[<span class="dv">0</span>] = as_doubles(C);</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles(D);</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>  res[<span class="dv">2</span>] = as_doubles(E);</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">stddev1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> X<span class="op">,</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> Y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  mat A <span class="op">=</span> as_Mat<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  mat B <span class="op">=</span> as_Mat<span class="op">(</span>Y<span class="op">);</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  vec C <span class="op">=</span> stddev<span class="op">(</span>A<span class="op">).</span>t<span class="op">();</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  vec D <span class="op">=</span> stddev<span class="op">(</span>A<span class="op">,</span> <span class="dv">1</span><span class="op">).</span>t<span class="op">();</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  vec E <span class="op">=</span> stddev<span class="op">(</span>A<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>C<span class="op">);</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>D<span class="op">);</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>E<span class="op">);</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="var">Variance<a class="anchor" aria-label="anchor" href="#var"></a>
 </h2>
-<p>The <code>var</code> function computes the variance of a vector or matrix. For a vector argument, the variance is calculated using all the elements of the vector. For a matrix argument, the variance is calculated for each column by default (<code>dim = 0</code>), or for each row (<code>dim = 1</code>).</p>
-<p>The <code>norm_type</code> argument is optional; by default <code>norm_type = 0</code> is used. The <code>norm_type</code> argument controls the type of normalization used, with <code>N</code> denoting the number of observations:</p>
+<p>The <code>var</code> function computes the variance of a vector or
+matrix. For a vector argument, the variance is calculated using all the
+elements of the vector. For a matrix argument, the variance is
+calculated for each column by default (<code>dim = 0</code>), or for
+each row (<code>dim = 1</code>).</p>
+<p>The <code>norm_type</code> argument is optional; by default
+<code>norm_type = 0</code> is used. The <code>norm_type</code> argument
+controls the type of normalization used, with <code>N</code> denoting
+the number of observations:</p>
 <ul>
-<li>for <code>norm_type = 0</code>, normalization is done using <code>N-1</code>, providing the best unbiased estimation of the standard deviation (if the observations are from a normal distribution).</li>
-<li>for <code>norm_type = 1</code>, normalization is done using <code>N</code>, which provides the second moment of the observations about their mean.</li>
+<li>for <code>norm_type = 0</code>, normalization is done using
+<code>N-1</code>, providing the best unbiased estimation of the standard
+deviation (if the observations are from a normal distribution).</li>
+<li>for <code>norm_type = 1</code>, normalization is done using
+<code>N</code>, which provides the second moment of the observations
+about their mean.</li>
 </ul>
 <p>Usage:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>var(V)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>var(V, <span class="dt">norm_type</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>var(M)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>var(M, <span class="dt">norm_type</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>var(M, <span class="dt">norm_type</span>, dim)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>var<span class="op">(</span>V<span class="op">)</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>var<span class="op">(</span>V<span class="op">,</span> <span class="dt">norm_type</span><span class="op">)</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>var<span class="op">(</span>M<span class="op">)</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>var<span class="op">(</span>M<span class="op">,</span> <span class="dt">norm_type</span><span class="op">)</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>var<span class="op">(</span>M<span class="op">,</span> <span class="dt">norm_type</span><span class="op">,</span> dim<span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">var1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; X,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>  <span class="at">const</span> doubles_matrix&lt;&gt;&amp; Y) {</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>  mat A = as_Mat(X);</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>  mat B = as_Mat(Y);</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>  vec C = var(A).t();</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>  vec D = var(A, <span class="dv">1</span>).t();</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>  vec E = var(A, <span class="dv">1</span>, <span class="dv">1</span>);</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a>  writable::list res(<span class="dv">3</span>);</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>  res[<span class="dv">0</span>] = as_doubles(C);</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles(D);</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a>  res[<span class="dv">2</span>] = as_doubles(E);</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">var1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> X<span class="op">,</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> Y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  mat A <span class="op">=</span> as_Mat<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  mat B <span class="op">=</span> as_Mat<span class="op">(</span>Y<span class="op">);</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  vec C <span class="op">=</span> var<span class="op">(</span>A<span class="op">).</span>t<span class="op">();</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  vec D <span class="op">=</span> var<span class="op">(</span>A<span class="op">,</span> <span class="dv">1</span><span class="op">).</span>t<span class="op">();</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  vec E <span class="op">=</span> var<span class="op">(</span>A<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>C<span class="op">);</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>D<span class="op">);</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>E<span class="op">);</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="range">Range<a class="anchor" aria-label="anchor" href="#range"></a>
 </h2>
-<p>The <code>range</code> function computes the range of a vector or matrix. For a vector argument, the range is calculated using all the elements of the vector. For a matrix argument, the range is calculated for each column by default (<code>dim = 0</code>), or for each row (<code>dim = 1</code>).</p>
+<p>The <code>range</code> function computes the range of a vector or
+matrix. For a vector argument, the range is calculated using all the
+elements of the vector. For a matrix argument, the range is calculated
+for each column by default (<code>dim = 0</code>), or for each row
+(<code>dim = 1</code>).</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>range(V)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>range(M)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>range(M, dim)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>range<span class="op">(</span>V<span class="op">)</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>range<span class="op">(</span>M<span class="op">)</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>range<span class="op">(</span>M<span class="op">,</span> dim<span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a>
 </h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">range1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; X,</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>  <span class="at">const</span> doubles_matrix&lt;&gt;&amp; Y) {</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>  mat A = as_Mat(X);</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>  mat B = as_Mat(Y);</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>  vec C = range(A).t();</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>  vec D = range(A, <span class="dv">1</span>);</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a>  writable::list res(<span class="dv">2</span>);</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a>  res[<span class="dv">0</span>] = as_doubles(C);</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles(D);</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">range1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> X<span class="op">,</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> Y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  mat A <span class="op">=</span> as_Mat<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  mat B <span class="op">=</span> as_Mat<span class="op">(</span>Y<span class="op">);</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  vec C <span class="op">=</span> range<span class="op">(</span>A<span class="op">).</span>t<span class="op">();</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  vec D <span class="op">=</span> range<span class="op">(</span>A<span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>C<span class="op">);</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>D<span class="op">);</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="cov">Covariance<a class="anchor" aria-label="anchor" href="#cov"></a>
 </h2>
-<p>The <code>cov</code> function computes the covariance between two matrices or vectors. If each row of <code>X</code> and <code>Y</code> is an observation and each column is a variable, the <code>(i,j)</code>-th entry of <code>cov(X,Y)</code> is the covariance between the <code>i</code>-th variable in <code>X</code> and the <code>j</code>-th variable in <code>Y</code>.</p>
-<p>For two matrix arguments <code>X</code> and <code>Y</code>, the <code>cov(X,Y)</code> function computes the covariance between the two matrices. For vector arguments, the type of vector is ignored and each element in the vector is treated as an observation. The <code>cov(X)</code> function is equivalent to <code>cov(X, X)</code>.</p>
-<p>The <code>norm_type</code> argument is optional; by default <code>norm_type = 0</code> is used. The <code>norm_type</code> argument controls the type of normalization used, with <code>N</code> denoting the number of observations:</p>
+<p>The <code>cov</code> function computes the covariance between two
+matrices or vectors. If each row of <code>X</code> and <code>Y</code> is
+an observation and each column is a variable, the <code>(i,j)</code>-th
+entry of <code>cov(X,Y)</code> is the covariance between the
+<code>i</code>-th variable in <code>X</code> and the <code>j</code>-th
+variable in <code>Y</code>.</p>
+<p>For two matrix arguments <code>X</code> and <code>Y</code>, the
+<code>cov(X,Y)</code> function computes the covariance between the two
+matrices. For vector arguments, the type of vector is ignored and each
+element in the vector is treated as an observation. The
+<code>cov(X)</code> function is equivalent to
+<code>cov(X, X)</code>.</p>
+<p>The <code>norm_type</code> argument is optional; by default
+<code>norm_type = 0</code> is used. The <code>norm_type</code> argument
+controls the type of normalization used, with <code>N</code> denoting
+the number of observations:</p>
 <ul>
-<li>for <code>norm_type = 0</code>, normalization is done using <code>N-1</code>, providing the best unbiased estimation of the covariance matrix (if the observations are from a normal distribution).</li>
-<li>for <code>norm_type = 1</code>, normalization is done using <code>N</code>, which provides the second moment matrix of the observations about their mean.</li>
+<li>for <code>norm_type = 0</code>, normalization is done using
+<code>N-1</code>, providing the best unbiased estimation of the
+covariance matrix (if the observations are from a normal
+distribution).</li>
+<li>for <code>norm_type = 1</code>, normalization is done using
+<code>N</code>, which provides the second moment matrix of the
+observations about their mean.</li>
 </ul>
 <p>Usage:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>cov(X, Y, <span class="dt">norm_type</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>cov(X)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>cov(X, <span class="dt">norm_type</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>cov<span class="op">(</span>X<span class="op">,</span> Y<span class="op">,</span> <span class="dt">norm_type</span><span class="op">)</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>cov<span class="op">(</span>X<span class="op">)</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>cov<span class="op">(</span>X<span class="op">,</span> <span class="dt">norm_type</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-5">Examples<a class="anchor" aria-label="anchor" href="#examples-5"></a>
 </h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">cov1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; X,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>  <span class="at">const</span> doubles_matrix&lt;&gt;&amp; Y) {</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>  mat A = as_Mat(X);</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a>  mat B = as_Mat(Y);</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>  mat C = cov(A, B);</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>  mat D = cov(A, B, <span class="dv">1</span>);</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>  writable::list res(<span class="dv">2</span>);</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a>  res[<span class="dv">0</span>] = as_doubles_matrix(C);</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles_matrix(D);</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">cov1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> X<span class="op">,</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> Y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  mat A <span class="op">=</span> as_Mat<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  mat B <span class="op">=</span> as_Mat<span class="op">(</span>Y<span class="op">);</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  mat C <span class="op">=</span> cov<span class="op">(</span>A<span class="op">,</span> B<span class="op">);</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>  mat D <span class="op">=</span> cov<span class="op">(</span>A<span class="op">,</span> B<span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>C<span class="op">);</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>D<span class="op">);</span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="cor">Correlation<a class="anchor" aria-label="anchor" href="#cor"></a>
 </h2>
-<p>The <code>cor</code> function computes the correlation coefficient between two matrices or vectors. If each row of <code>X</code> and <code>Y</code> is an observation and each column is a variable, the <code>(i,j)</code>-th entry of <code>cor(X,Y)</code> is the correlation coefficient between the <code>i</code>-th variable in <code>X</code> and the <code>j</code>-th variable in <code>Y</code>.</p>
-<p>For two matrix arguments <code>X</code> and <code>Y</code>, the <code>cor(X,Y)</code> function computes the correlation coefficient between the two matrices. For vector arguments, the type of vector is ignored and each element in the vector is treated as an observation.</p>
-<p>The <code>norm_type</code> argument is optional; by default <code>norm_type = 0</code> is used. The <code>norm_type</code> argument controls the type of normalization used, with <code>N</code> denoting the number of observations:</p>
+<p>The <code>cor</code> function computes the correlation coefficient
+between two matrices or vectors. If each row of <code>X</code> and
+<code>Y</code> is an observation and each column is a variable, the
+<code>(i,j)</code>-th entry of <code>cor(X,Y)</code> is the correlation
+coefficient between the <code>i</code>-th variable in <code>X</code> and
+the <code>j</code>-th variable in <code>Y</code>.</p>
+<p>For two matrix arguments <code>X</code> and <code>Y</code>, the
+<code>cor(X,Y)</code> function computes the correlation coefficient
+between the two matrices. For vector arguments, the type of vector is
+ignored and each element in the vector is treated as an observation.</p>
+<p>The <code>norm_type</code> argument is optional; by default
+<code>norm_type = 0</code> is used. The <code>norm_type</code> argument
+controls the type of normalization used, with <code>N</code> denoting
+the number of observations:</p>
 <ul>
-<li>for <code>norm_type = 0</code>, normalization is done using <code>N-1</code>.</li>
-<li>for <code>norm_type = 1</code>, normalization is done using <code>N</code>.</li>
+<li>for <code>norm_type = 0</code>, normalization is done using
+<code>N-1</code>.</li>
+<li>for <code>norm_type = 1</code>, normalization is done using
+<code>N</code>.</li>
 </ul>
 <p>Usage:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a>cor(X, Y)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>cor(X, Y, <span class="dt">norm_type</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>cor(X)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a>cor(X, <span class="dt">norm_type</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>cor<span class="op">(</span>X<span class="op">,</span> Y<span class="op">)</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>cor<span class="op">(</span>X<span class="op">,</span> Y<span class="op">,</span> <span class="dt">norm_type</span><span class="op">)</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>cor<span class="op">(</span>X<span class="op">)</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>cor<span class="op">(</span>X<span class="op">,</span> <span class="dt">norm_type</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-6">Examples<a class="anchor" aria-label="anchor" href="#examples-6"></a>
 </h3>
-<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">cor1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; X,</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>  <span class="at">const</span> doubles_matrix&lt;&gt;&amp; Y) {</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a>  mat A = as_Mat(X);</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>  mat B = as_Mat(Y);</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a>  mat C = cor(A, B);</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>  mat D = cor(A, B, <span class="dv">1</span>);</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a>  writable::list res(<span class="dv">2</span>);</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a>  res[<span class="dv">0</span>] = as_doubles_matrix(C);</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles_matrix(D);</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true"></a></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">cor1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> X<span class="op">,</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> Y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  mat A <span class="op">=</span> as_Mat<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  mat B <span class="op">=</span> as_Mat<span class="op">(</span>Y<span class="op">);</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  mat C <span class="op">=</span> cor<span class="op">(</span>A<span class="op">,</span> B<span class="op">);</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  mat D <span class="op">=</span> cor<span class="op">(</span>A<span class="op">,</span> B<span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>C<span class="op">);</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>D<span class="op">);</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="hist">Histogram<a class="anchor" aria-label="anchor" href="#hist"></a>
 </h2>
-<p>The <code>hist</code> function computes a histogram of counts for a vector or matrix. For a vector argument, the histogram is calculated using all the elements of the vector. For a matrix argument, the histogram is calculated for each column by default (<code>dim = 0</code>), or for each row (<code>dim = 1</code>).</p>
-<p>The bin centers can be automatically determined from the data, with the number of bins specified via <code>n_bins</code> (the default is 10). The range of the bins is determined by the range of the data. The bin centers can be explicitly specified in the <code>centers</code> vector, which must contain monotonically increasing values.</p>
+<p>The <code>hist</code> function computes a histogram of counts for a
+vector or matrix. For a vector argument, the histogram is calculated
+using all the elements of the vector. For a matrix argument, the
+histogram is calculated for each column by default
+(<code>dim = 0</code>), or for each row (<code>dim = 1</code>).</p>
+<p>The bin centers can be automatically determined from the data, with
+the number of bins specified via <code>n_bins</code> (the default is
+10). The range of the bins is determined by the range of the data. The
+bin centers can be explicitly specified in the <code>centers</code>
+vector, which must contain monotonically increasing values.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>hist(V)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>hist(V, n_bins)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a>hist(V, centers)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a>hist(M, centers)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true"></a>hist(M, centers, dim)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>hist<span class="op">(</span>V<span class="op">)</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>hist<span class="op">(</span>V<span class="op">,</span> n_bins<span class="op">)</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>hist<span class="op">(</span>V<span class="op">,</span> centers<span class="op">)</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>hist<span class="op">(</span>M<span class="op">,</span> centers<span class="op">)</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>hist<span class="op">(</span>M<span class="op">,</span> centers<span class="op">,</span> dim<span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-7">Examples<a class="anchor" aria-label="anchor" href="#examples-7"></a>
 </h3>
-<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">hist1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a>  vec A = randu&lt;vec&gt;(n);</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a>  uvec h1 = hist(A, <span class="dv">11</span>);</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a>  uvec h2 = hist(A, linspace&lt;vec&gt;(-<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">11</span>));</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a>  writable::list res(<span class="dv">2</span>);</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a>  res[<span class="dv">0</span>] = as_integers(h1);</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_integers(h2);</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">hist1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  vec A <span class="op">=</span> randu<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>  uvec h1 <span class="op">=</span> hist<span class="op">(</span>A<span class="op">,</span> <span class="dv">11</span><span class="op">);</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>  uvec h2 <span class="op">=</span> hist<span class="op">(</span>A<span class="op">,</span> linspace<span class="op">&lt;</span>vec<span class="op">&gt;(-</span><span class="dv">2</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">11</span><span class="op">));</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_integers<span class="op">(</span>h1<span class="op">);</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_integers<span class="op">(</span>h2<span class="op">);</span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="histc">Histogram of counts with user specified edges<a class="anchor" aria-label="anchor" href="#histc"></a>
 </h2>
-<p>The <code>histc</code> function computes a histogram of counts for a vector or matrix. For a vector argument, the histogram is calculated using all the elements of the vector. For a matrix argument, the histogram is calculated for each column by default (<code>dim = 0</code>), or for each row (<code>dim = 1</code>).</p>
-<p>The bin edges have to be specified and contain monotonically increasing values.</p>
+<p>The <code>histc</code> function computes a histogram of counts for a
+vector or matrix. For a vector argument, the histogram is calculated
+using all the elements of the vector. For a matrix argument, the
+histogram is calculated for each column by default
+(<code>dim = 0</code>), or for each row (<code>dim = 1</code>).</p>
+<p>The bin edges have to be specified and contain monotonically
+increasing values.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>histc(V)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a>histc(V, edges)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a>hist(M, edges)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a>hist(M, edges, dim)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>histc<span class="op">(</span>V<span class="op">)</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>histc<span class="op">(</span>V<span class="op">,</span> edges<span class="op">)</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>hist<span class="op">(</span>M<span class="op">,</span> edges<span class="op">)</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>hist<span class="op">(</span>M<span class="op">,</span> edges<span class="op">,</span> dim<span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-8">Examples<a class="anchor" aria-label="anchor" href="#examples-8"></a>
 </h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] integers <span class="va">histc1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a>  vec A = randu&lt;vec&gt;(n);</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a>  uvec h = histc(A, linspace&lt;vec&gt;(-<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">11</span>));</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a>  <span class="cf">return</span> as_integers(h);</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> integers <span class="va">histc1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  vec A <span class="op">=</span> randu<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>  uvec h <span class="op">=</span> histc<span class="op">(</span>A<span class="op">,</span> linspace<span class="op">&lt;</span>vec<span class="op">&gt;(-</span><span class="dv">2</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">11</span><span class="op">));</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>  <span class="cf">return</span> as_integers<span class="op">(</span>h<span class="op">);</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="quantile">Quantiles of a dataset<a class="anchor" aria-label="anchor" href="#quantile"></a>
 </h2>
-<p>The <code>quantile</code> function computes the quantiles corresponding to the cumulative probability values for a vector or matrix. For a vector argument, the quantiles are calculated using all the elements of the vector. For a matrix argument, the quantiles are calculated for each column by default (<code>dim = 0</code>), or for each row (<code>dim = 1</code>).</p>
-<p>The probabilities have to be specified as a second argument <code>P</code>.</p>
-<p>The algorithm for calculating the quantiles is based on Definition 5 in: <em>Rob J. Hyndman and Yanan Fan. Sample Quantiles in Statistical Packages. The American Statistician, 50(4), 361-365, 1996. DOI: 10.2307/2684934</em></p>
+<p>The <code>quantile</code> function computes the quantiles
+corresponding to the cumulative probability values for a vector or
+matrix. For a vector argument, the quantiles are calculated using all
+the elements of the vector. For a matrix argument, the quantiles are
+calculated for each column by default (<code>dim = 0</code>), or for
+each row (<code>dim = 1</code>).</p>
+<p>The probabilities have to be specified as a second argument
+<code>P</code>.</p>
+<p>The algorithm for calculating the quantiles is based on Definition 5
+in: <em>Rob J. Hyndman and Yanan Fan. Sample Quantiles in Statistical
+Packages. The American Statistician, 50(4), 361-365, 1996. DOI:
+10.2307/2684934</em></p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a>quantile(V, P)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a>quantile(M, P)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a>quantile(M, P, dim)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>quantile<span class="op">(</span>V<span class="op">,</span> P<span class="op">)</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>quantile<span class="op">(</span>M<span class="op">,</span> P<span class="op">)</span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>quantile<span class="op">(</span>M<span class="op">,</span> P<span class="op">,</span> dim<span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-9">Examples<a class="anchor" aria-label="anchor" href="#examples-9"></a>
 </h3>
-<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">quantile1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a>  vec A = randu&lt;vec&gt;(n);</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true"></a>  vec P = {<span class="fl">0.0</span>, <span class="fl">0.25</span>, <span class="fl">0.50</span>, <span class="fl">0.75</span>, <span class="fl">1.0</span>};</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true"></a>  vec Q = quantile(A, P);</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(Q);</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles <span class="va">quantile1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  vec A <span class="op">=</span> randu<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>  vec P <span class="op">=</span> <span class="op">{</span><span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.25</span><span class="op">,</span> <span class="fl">0.50</span><span class="op">,</span> <span class="fl">0.75</span><span class="op">,</span> <span class="fl">1.0</span><span class="op">};</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>  vec Q <span class="op">=</span> quantile<span class="op">(</span>A<span class="op">,</span> P<span class="op">);</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>  <span class="cf">return</span> as_doubles<span class="op">(</span>Q<span class="op">);</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -425,7 +514,13 @@
 <div class="section level2">
 <h2 id="normpdf">Probability density function of normal distribution<a class="anchor" aria-label="anchor" href="#normpdf"></a>
 </h2>
-<p>The <code>normpdf</code> function computes the probability density function of a normal distribution for a scalar, vector, or matrix. For each scalar <code>x</code> in <code>X</code>, the probability density function is computed according to a Gaussian (normal) distribution using the corresponding mean value <code>m</code> in <code>M</code> and the corresponding standard deviation value <code>s</code> in <code>S</code>.</p>
+<p>The <code>normpdf</code> function computes the probability density
+function of a normal distribution for a scalar, vector, or matrix. For
+each scalar <code>x</code> in <code>X</code>, the probability density
+function is computed according to a Gaussian (normal) distribution using
+the corresponding mean value <code>m</code> in <code>M</code> and the
+corresponding standard deviation value <code>s</code> in
+<code>S</code>.</p>
 <p><span class="math display">\[
 y = \frac{1}{s \sqrt{2\pi}} \exp\left[-\frac{(x - m)^2}{2s^2}\right]
 \]</span></p>
@@ -433,240 +528,284 @@ y = \frac{1}{s \sqrt{2\pi}} \exp\left[-\frac{(x - m)^2}{2s^2}\right]
 <li>
 <code>X</code> can be a scalar, vector, or matrix.</li>
 <li>
-<code>M</code> and <code>S</code> can jointly be either scalars, vectors, or matrices.</li>
-<li>If <code>M</code> and <code>S</code> are omitted, their values are assumed to be 0 and 1, respectively.</li>
+<code>M</code> and <code>S</code> can jointly be either scalars,
+vectors, or matrices.</li>
+<li>If <code>M</code> and <code>S</code> are omitted, their values are
+assumed to be 0 and 1, respectively.</li>
 </ul>
 <div class="section level3">
 <h3 id="caveat">Caveat<a class="anchor" aria-label="anchor" href="#caveat"></a>
 </h3>
-<p>To reduce the incidence of numerical underflows, consider using <code>log_normpdf()</code>.</p>
+<p>To reduce the incidence of numerical underflows, consider using
+<code>log_normpdf()</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="examples-10">Examples<a class="anchor" aria-label="anchor" href="#examples-10"></a>
 </h3>
-<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">normpdf1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a>  vec X = randu&lt;vec&gt;(n);</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a>  vec M = randu&lt;vec&gt;(n);</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true"></a>  vec S = randu&lt;vec&gt;(n);</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true"></a>  vec P1 = normpdf(X);</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true"></a>  vec P2 = normpdf(X, M, S);</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true"></a>  vec P3 = normpdf(<span class="fl">1.23</span>, M, S);</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true"></a>  vec P4 = normpdf(X, <span class="fl">4.56</span>, <span class="fl">7.89</span>);</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true"></a>  <span class="dt">double</span> P5 = normpdf(<span class="fl">1.23</span>, <span class="fl">4.56</span>, <span class="fl">7.89</span>);</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true"></a></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true"></a>  writable::list res(<span class="dv">5</span>);</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true"></a></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true"></a>  res[<span class="dv">0</span>] = as_doubles(P1);</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles(P2);</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true"></a>  res[<span class="dv">2</span>] = as_doubles(P3);</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true"></a>  res[<span class="dv">3</span>] = as_doubles(P4);</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true"></a>  res[<span class="dv">4</span>] = as_doubles({P5});</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true"></a></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">normpdf1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  vec X <span class="op">=</span> randu<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>  vec M <span class="op">=</span> randu<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>  vec S <span class="op">=</span> randu<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>  vec P1 <span class="op">=</span> normpdf<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>  vec P2 <span class="op">=</span> normpdf<span class="op">(</span>X<span class="op">,</span> M<span class="op">,</span> S<span class="op">);</span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>  vec P3 <span class="op">=</span> normpdf<span class="op">(</span><span class="fl">1.23</span><span class="op">,</span> M<span class="op">,</span> S<span class="op">);</span></span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a>  vec P4 <span class="op">=</span> normpdf<span class="op">(</span>X<span class="op">,</span> <span class="fl">4.56</span><span class="op">,</span> <span class="fl">7.89</span><span class="op">);</span></span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a>  <span class="dt">double</span> P5 <span class="op">=</span> normpdf<span class="op">(</span><span class="fl">1.23</span><span class="op">,</span> <span class="fl">4.56</span><span class="op">,</span> <span class="fl">7.89</span><span class="op">);</span></span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">5</span><span class="op">);</span></span>
+<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>P1<span class="op">);</span></span>
+<span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>P2<span class="op">);</span></span>
+<span id="cb21-16"><a href="#cb21-16" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>P3<span class="op">);</span></span>
+<span id="cb21-17"><a href="#cb21-17" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>P4<span class="op">);</span></span>
+<span id="cb21-18"><a href="#cb21-18" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">4</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">({</span>P5<span class="op">});</span></span>
+<span id="cb21-19"><a href="#cb21-19" tabindex="-1"></a></span>
+<span id="cb21-20"><a href="#cb21-20" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb21-21"><a href="#cb21-21" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="log_normpdf">Probability density function of log-normal distribution<a class="anchor" aria-label="anchor" href="#log_normpdf"></a>
 </h2>
-<p>The <code>log_normpdf</code> function computes the probability density function of a log-normal distribution for a scalar, vector, or matrix. For each scalar <code>x</code> in <code>X</code>, the probability density function is computed according to a log-normal distribution using the corresponding mean value <code>m</code> in <code>M</code> and the corresponding standard deviation value <code>s</code> in <code>S</code>.</p>
+<p>The <code>log_normpdf</code> function computes the probability
+density function of a log-normal distribution for a scalar, vector, or
+matrix. For each scalar <code>x</code> in <code>X</code>, the
+probability density function is computed according to a log-normal
+distribution using the corresponding mean value <code>m</code> in
+<code>M</code> and the corresponding standard deviation value
+<code>s</code> in <code>S</code>.</p>
 <p><span class="math display">\[
-y = \log\left[\frac{1}{x s \sqrt{2\pi}} \exp\left[-\frac{(\log(x) - m)^2}{2s^2}\right]\right]
+y = \log\left[\frac{1}{x s \sqrt{2\pi}} \exp\left[-\frac{(\log(x) -
+m)^2}{2s^2}\right]\right]
 \]</span></p>
 <ul>
 <li>
 <code>X</code> can be a scalar, vector, or matrix.</li>
 <li>
-<code>M</code> and <code>S</code> can jointly be either scalars, vectors, or matrices.</li>
-<li>If <code>M</code> and <code>S</code> are omitted, their values are assumed to be 0 and 1, respectively.</li>
+<code>M</code> and <code>S</code> can jointly be either scalars,
+vectors, or matrices.</li>
+<li>If <code>M</code> and <code>S</code> are omitted, their values are
+assumed to be 0 and 1, respectively.</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-11">Examples<a class="anchor" aria-label="anchor" href="#examples-11"></a>
 </h3>
-<div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">lognormpdf1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a>  vec X = randu&lt;vec&gt;(n);</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true"></a>  vec M = randu&lt;vec&gt;(n);</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true"></a>  vec S = randu&lt;vec&gt;(n);</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true"></a></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true"></a>  vec P1 = log_normpdf(X);</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true"></a>  vec P2 = log_normpdf(X, M, S);</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true"></a>  vec P3 = log_normpdf(<span class="fl">1.23</span>, M, S);</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true"></a>  vec P4 = log_normpdf(X, <span class="fl">4.56</span>, <span class="fl">7.89</span>);</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true"></a>  <span class="dt">double</span> P5 = log_normpdf(<span class="fl">1.23</span>, <span class="fl">4.56</span>, <span class="fl">7.89</span>);</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true"></a></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true"></a>  writable::list res(<span class="dv">5</span>);</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true"></a></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true"></a>  res[<span class="dv">0</span>] = as_doubles(P1);</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles(P2);</span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true"></a>  res[<span class="dv">2</span>] = as_doubles(P3);</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true"></a>  res[<span class="dv">3</span>] = as_doubles(P4);</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true"></a>  res[<span class="dv">4</span>] = as_doubles({P5});</span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true"></a></span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">lognormpdf1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>  vec X <span class="op">=</span> randu<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>  vec M <span class="op">=</span> randu<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>  vec S <span class="op">=</span> randu<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>  vec P1 <span class="op">=</span> log_normpdf<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>  vec P2 <span class="op">=</span> log_normpdf<span class="op">(</span>X<span class="op">,</span> M<span class="op">,</span> S<span class="op">);</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a>  vec P3 <span class="op">=</span> log_normpdf<span class="op">(</span><span class="fl">1.23</span><span class="op">,</span> M<span class="op">,</span> S<span class="op">);</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a>  vec P4 <span class="op">=</span> log_normpdf<span class="op">(</span>X<span class="op">,</span> <span class="fl">4.56</span><span class="op">,</span> <span class="fl">7.89</span><span class="op">);</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a>  <span class="dt">double</span> P5 <span class="op">=</span> log_normpdf<span class="op">(</span><span class="fl">1.23</span><span class="op">,</span> <span class="fl">4.56</span><span class="op">,</span> <span class="fl">7.89</span><span class="op">);</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">5</span><span class="op">);</span></span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>P1<span class="op">);</span></span>
+<span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>P2<span class="op">);</span></span>
+<span id="cb22-16"><a href="#cb22-16" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>P3<span class="op">);</span></span>
+<span id="cb22-17"><a href="#cb22-17" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>P4<span class="op">);</span></span>
+<span id="cb22-18"><a href="#cb22-18" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">4</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">({</span>P5<span class="op">});</span></span>
+<span id="cb22-19"><a href="#cb22-19" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb22-21"><a href="#cb22-21" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="normcdf">Cumulative distribution function of normal distribution<a class="anchor" aria-label="anchor" href="#normcdf"></a>
 </h2>
-<p>For each scalar <code>x</code> in <code>X</code>, compute its cumulative distribution function according to a Gaussian (normal) distribution using the corresponding mean value <code>m</code> in <code>M</code> and the corresponding standard deviation value <code>s</code> in <code>S</code>.</p>
+<p>For each scalar <code>x</code> in <code>X</code>, compute its
+cumulative distribution function according to a Gaussian (normal)
+distribution using the corresponding mean value <code>m</code> in
+<code>M</code> and the corresponding standard deviation value
+<code>s</code> in <code>S</code>.</p>
 <ul>
 <li>
 <code>X</code> can be a scalar, vector, or matrix.</li>
 <li>
-<code>M</code> and <code>S</code> can jointly be either scalars, vectors, or matrices.</li>
-<li>If <code>M</code> and <code>S</code> are omitted, their values are assumed to be 0 and 1, respectively.</li>
+<code>M</code> and <code>S</code> can jointly be either scalars,
+vectors, or matrices.</li>
+<li>If <code>M</code> and <code>S</code> are omitted, their values are
+assumed to be 0 and 1, respectively.</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-12">Examples<a class="anchor" aria-label="anchor" href="#examples-12"></a>
 </h3>
-<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">normcdf1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a>  vec X = randu&lt;vec&gt;(n);</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a>  vec M = randu&lt;vec&gt;(n);</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a>  vec S = randu&lt;vec&gt;(n);</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true"></a>  vec P1 = normcdf(X);</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true"></a>  vec P2 = normcdf(X, M, S);</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true"></a>  vec P3 = normcdf(<span class="fl">1.23</span>, M, S);</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true"></a>  vec P4 = normcdf(X, <span class="fl">4.56</span>, <span class="fl">7.89</span>);</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true"></a>  <span class="dt">double</span> P5 = normcdf(<span class="fl">1.23</span>, <span class="fl">4.56</span>, <span class="fl">7.89</span>);</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true"></a></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true"></a>  writable::list res(<span class="dv">5</span>);</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true"></a></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true"></a>  res[<span class="dv">0</span>] = as_doubles(P1);</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles(P2);</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true"></a>  res[<span class="dv">2</span>] = as_doubles(P3);</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true"></a>  res[<span class="dv">3</span>] = as_doubles(P4);</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true"></a>  res[<span class="dv">4</span>] = as_doubles({P5});</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true"></a></span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">normcdf1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>  vec X <span class="op">=</span> randu<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>  vec M <span class="op">=</span> randu<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>  vec S <span class="op">=</span> randu<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>  vec P1 <span class="op">=</span> normcdf<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>  vec P2 <span class="op">=</span> normcdf<span class="op">(</span>X<span class="op">,</span> M<span class="op">,</span> S<span class="op">);</span></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>  vec P3 <span class="op">=</span> normcdf<span class="op">(</span><span class="fl">1.23</span><span class="op">,</span> M<span class="op">,</span> S<span class="op">);</span></span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>  vec P4 <span class="op">=</span> normcdf<span class="op">(</span>X<span class="op">,</span> <span class="fl">4.56</span><span class="op">,</span> <span class="fl">7.89</span><span class="op">);</span></span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>  <span class="dt">double</span> P5 <span class="op">=</span> normcdf<span class="op">(</span><span class="fl">1.23</span><span class="op">,</span> <span class="fl">4.56</span><span class="op">,</span> <span class="fl">7.89</span><span class="op">);</span></span>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">5</span><span class="op">);</span></span>
+<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>P1<span class="op">);</span></span>
+<span id="cb23-15"><a href="#cb23-15" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>P2<span class="op">);</span></span>
+<span id="cb23-16"><a href="#cb23-16" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>P3<span class="op">);</span></span>
+<span id="cb23-17"><a href="#cb23-17" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>P4<span class="op">);</span></span>
+<span id="cb23-18"><a href="#cb23-18" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">4</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">({</span>P5<span class="op">});</span></span>
+<span id="cb23-19"><a href="#cb23-19" tabindex="-1"></a></span>
+<span id="cb23-20"><a href="#cb23-20" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb23-21"><a href="#cb23-21" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="mvnrnd">Random vectors from multivariate normal distribution<a class="anchor" aria-label="anchor" href="#mvnrnd"></a>
 </h2>
-<p>Generate a matrix with random column vectors from a multivariate Gaussian (normal) distribution with parameters <code>M</code> and <code>C</code>.</p>
+<p>Generate a matrix with random column vectors from a multivariate
+Gaussian (normal) distribution with parameters <code>M</code> and
+<code>C</code>.</p>
 <ul>
 <li>
 <code>M</code> is the mean and it must be a column vector.</li>
 <li>
-<code>C</code> is the covariance matrix and it must be symmetric positive semi-definite (ideally positive definite).</li>
+<code>C</code> is the covariance matrix and it must be symmetric
+positive semi-definite (ideally positive definite).</li>
 <li>
-<code>N</code> is the number of column vectors to generate. If <code>N</code> is omitted, it is assumed to be 1.</li>
+<code>N</code> is the number of column vectors to generate. If
+<code>N</code> is omitted, it is assumed to be 1.</li>
 </ul>
 <p>Usage:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a>X = mvnrnd(M, C)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true"></a>mvnrnd(X, M, C)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true"></a>mvnrnd(X. M. C. N)</span></code></pre></div>
-<p>The first form returns an error if the generation fails. The second and third form reset <code>X</code> and return a boolean set to <code>false</code> without error if the generation fails.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>X <span class="op">=</span> mvnrnd<span class="op">(</span>M<span class="op">,</span> C<span class="op">)</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>mvnrnd<span class="op">(</span>X<span class="op">,</span> M<span class="op">,</span> C<span class="op">)</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>mvnrnd<span class="op">(</span>X<span class="op">.</span> M<span class="op">.</span> C<span class="op">.</span> N<span class="op">)</span></span></code></pre></div>
+<p>The first form returns an error if the generation fails. The second
+and third form reset <code>X</code> and return a boolean set to
+<code>false</code> without error if the generation fails.</p>
 <div class="section level3">
 <h3 id="examples-13">Examples<a class="anchor" aria-label="anchor" href="#examples-13"></a>
 </h3>
-<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">mvnrnd1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n, <span class="at">const</span> <span class="dt">int</span>&amp;m) {</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a>  vec M = randu&lt;vec&gt;(n);</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true"></a>  mat B = randu&lt;mat&gt;(n, n);</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true"></a>  mat C = B.t() * B;</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true"></a></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true"></a>  mat X = mvnrnd(M, C, m);</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true"></a></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(X);</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">mvnrnd1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">,</span> <span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span>m<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  vec M <span class="op">=</span> randu<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>  mat B <span class="op">=</span> randu<span class="op">&lt;</span>mat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>  mat C <span class="op">=</span> B<span class="op">.</span>t<span class="op">()</span> <span class="op">*</span> B<span class="op">;</span></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>  mat X <span class="op">=</span> mvnrnd<span class="op">(</span>M<span class="op">,</span> C<span class="op">,</span> m<span class="op">);</span></span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="chi2rnd">Random numbers from chi-squared distribution<a class="anchor" aria-label="anchor" href="#chi2rnd"></a>
 </h2>
-<p>Generate a random scalar, vector, or matrix with elements sampled from a chi-squared distribution with the degrees of freedom specified by parameter <code>DF</code> or <code>DF_scalar</code>.</p>
+<p>Generate a random scalar, vector, or matrix with elements sampled
+from a chi-squared distribution with the degrees of freedom specified by
+parameter <code>DF</code> or <code>DF_scalar</code>.</p>
 <ul>
 <li>
-<code>DF</code> is a vector or matrix, while <code>DF_scalar</code> is a scalar.</li>
-<li>For the <code>chi2rnd(DF)</code> form, the output vector or matrix has the same size and type as <code>DF</code>.</li>
-<li>Each value in <code>DF</code> and <code>DF_scalar</code> must be greater than zero.</li>
-<li>Each element in <code>DF</code> specifies a separate degree of freedom.</li>
+<code>DF</code> is a vector or matrix, while <code>DF_scalar</code>
+is a scalar.</li>
+<li>For the <code>chi2rnd(DF)</code> form, the output vector or matrix
+has the same size and type as <code>DF</code>.</li>
+<li>Each value in <code>DF</code> and <code>DF_scalar</code> must be
+greater than zero.</li>
+<li>Each element in <code>DF</code> specifies a separate degree of
+freedom.</li>
 </ul>
 <p>Usage:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true"></a>v = chi2rnd(DF)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true"></a>X = chi2rnd(DF)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true"></a><span class="dt">double</span> s = chi2rnd&lt;<span class="dt">double</span>&gt;(DF_scalar) <span class="co">// float also works</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true"></a>vec v = chi2rnd&lt;vec&gt;(DF_scalar, n_elem)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true"></a>mat X = chi2rnd&lt;mat&gt;(DF_scalar, n_rows, n_cols)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true"></a>mat Y = chi2rnd&lt;mat&gt;(DF_scalar, size(X))</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>v <span class="op">=</span> chi2rnd<span class="op">(</span>DF<span class="op">)</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>X <span class="op">=</span> chi2rnd<span class="op">(</span>DF<span class="op">)</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="dt">double</span> s <span class="op">=</span> chi2rnd<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;(</span>DF_scalar<span class="op">)</span> <span class="co">// float also works</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>vec v <span class="op">=</span> chi2rnd<span class="op">&lt;</span>vec<span class="op">&gt;(</span>DF_scalar<span class="op">,</span> n_elem<span class="op">)</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>mat X <span class="op">=</span> chi2rnd<span class="op">&lt;</span>mat<span class="op">&gt;(</span>DF_scalar<span class="op">,</span> n_rows<span class="op">,</span> n_cols<span class="op">)</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a>mat Y <span class="op">=</span> chi2rnd<span class="op">&lt;</span>mat<span class="op">&gt;(</span>DF_scalar<span class="op">,</span> size<span class="op">(</span>X<span class="op">))</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-14">Examples<a class="anchor" aria-label="anchor" href="#examples-14"></a>
 </h3>
-<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">chi2rnd1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n, <span class="at">const</span> <span class="dt">int</span>&amp; m) {</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a>  mat X = chi2rnd(<span class="dv">2</span>, n, m);</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true"></a>  mat Y = randi&lt;mat&gt;(n, m, distr_param(<span class="dv">1</span>, <span class="dv">10</span>));</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true"></a>  mat Z = chi2rnd(Y);</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true"></a>  writable::list res(<span class="dv">2</span>);</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true"></a>  res[<span class="dv">0</span>] = as_doubles_matrix(X);</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles_matrix(Z);</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true"></a></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true"></a>  <span class="cf">return</span> res; </span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">chi2rnd1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">,</span> <span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> m<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>  mat X <span class="op">=</span> chi2rnd<span class="op">(</span><span class="dv">2</span><span class="op">,</span> n<span class="op">,</span> m<span class="op">);</span></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>  mat Y <span class="op">=</span> randi<span class="op">&lt;</span>mat<span class="op">&gt;(</span>n<span class="op">,</span> m<span class="op">,</span> distr_param<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">10</span><span class="op">));</span></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>  mat Z <span class="op">=</span> chi2rnd<span class="op">(</span>Y<span class="op">);</span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>Z<span class="op">);</span></span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span> </span>
+<span id="cb27-11"><a href="#cb27-11" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="wishrnd">Random matrix from Wishart distribution<a class="anchor" aria-label="anchor" href="#wishrnd"></a>
 </h2>
-<p>Generate a random matrix sampled from the Wishart distribution with parameters <code>S</code> and <code>df</code>.</p>
+<p>Generate a random matrix sampled from the Wishart distribution with
+parameters <code>S</code> and <code>df</code>.</p>
 <ul>
 <li>
-<code>S</code> is a symmetric positive definite matrix (e.g., a covariance matrix).</li>
+<code>S</code> is a symmetric positive definite matrix (e.g., a
+covariance matrix).</li>
 <li>
-<code>df</code> is a scalar specifying the degrees of freedom; it can be a non-integer value.</li>
+<code>df</code> is a scalar specifying the degrees of freedom; it
+can be a non-integer value.</li>
 <li>
-<code>D</code> is an optional argument to specify the Cholesky decomposition of <code>S</code>.</li>
+<code>D</code> is an optional argument to specify the Cholesky
+decomposition of <code>S</code>.</li>
 </ul>
 <p>Usage:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true"></a>W = wishrnd(S, df)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true"></a>wishrnd(W, S, df)</span></code></pre></div>
-<p>The first form returns an error if the generation fails. The second form resets <code>W</code> and returns a boolean set to <code>false</code> without error if the generation fails.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>W <span class="op">=</span> wishrnd<span class="op">(</span>S<span class="op">,</span> df<span class="op">)</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>wishrnd<span class="op">(</span>W<span class="op">,</span> S<span class="op">,</span> df<span class="op">)</span></span></code></pre></div>
+<p>The first form returns an error if the generation fails. The second
+form resets <code>W</code> and returns a boolean set to
+<code>false</code> without error if the generation fails.</p>
 <div class="section level3">
 <h3 id="examples-15">Examples<a class="anchor" aria-label="anchor" href="#examples-15"></a>
 </h3>
-<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">wishrnd1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a>  mat X = randu&lt;mat&gt;(n, n);</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true"></a>  mat S = X.t() * X;</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true"></a></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true"></a>  mat W = wishrnd(S, <span class="fl">6.7</span>);</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true"></a></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(W);</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">wishrnd1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  mat X <span class="op">=</span> randu<span class="op">&lt;</span>mat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  mat S <span class="op">=</span> X<span class="op">.</span>t<span class="op">()</span> <span class="op">*</span> X<span class="op">;</span></span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>  mat W <span class="op">=</span> wishrnd<span class="op">(</span>S<span class="op">,</span> <span class="fl">6.7</span><span class="op">);</span></span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>W<span class="op">);</span></span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="iwishrnd">Random matrix from inverse Wishart distribution<a class="anchor" aria-label="anchor" href="#iwishrnd"></a>
 </h2>
-<p>Generate a random matrix sampled from the inverse Wishart distribution with parameters <code>T</code> and <code>df</code>.</p>
+<p>Generate a random matrix sampled from the inverse Wishart
+distribution with parameters <code>T</code> and <code>df</code>.</p>
 <ul>
 <li>
 <code>T</code> is a symmetric positive definite matrix.</li>
 <li>
-<code>df</code> is a scalar specifying the degrees of freedom; it can be a non-integer value.</li>
+<code>df</code> is a scalar specifying the degrees of freedom; it
+can be a non-integer value.</li>
 <li>
-<code>Dinv</code> is an optional argument; it specifies the Cholesky decomposition of the inverse of <code>T</code>. If <code>Dinv</code> is provided, <code>T</code> is ignored. Using <code>Dinv</code> is more efficient if <code>iwishrnd()</code> needs to be used many times for the same <code>T</code> matrix.</li>
+<code>Dinv</code> is an optional argument; it specifies the Cholesky
+decomposition of the inverse of <code>T</code>. If <code>Dinv</code> is
+provided, <code>T</code> is ignored. Using <code>Dinv</code> is more
+efficient if <code>iwishrnd()</code> needs to be used many times for the
+same <code>T</code> matrix.</li>
 </ul>
 <p>Usage:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a>W = iwishrnd(T, df)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a>iwishrnd(W, T, df)</span></code></pre></div>
-<p>The first form returns an error if the generation fails. The second form resets <code>W</code> and returns a boolean set to <code>false</code> without error if the generation fails.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>W <span class="op">=</span> iwishrnd<span class="op">(</span>T<span class="op">,</span> df<span class="op">)</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>iwishrnd<span class="op">(</span>W<span class="op">,</span> T<span class="op">,</span> df<span class="op">)</span></span></code></pre></div>
+<p>The first form returns an error if the generation fails. The second
+form resets <code>W</code> and returns a boolean set to
+<code>false</code> without error if the generation fails.</p>
 <div class="section level3">
 <h3 id="examples-16">Examples<a class="anchor" aria-label="anchor" href="#examples-16"></a>
 </h3>
-<div class="sourceCode" id="cb31"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">iwishrnd1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n, <span class="at">const</span> <span class="dt">double</span>&amp; d) {</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a>  mat X = randu&lt;mat&gt;(n, n);</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true"></a>  mat T = X.t() * X;</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true"></a></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true"></a>  mat W = iwishrnd(T, d);</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(W);</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">iwishrnd1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">,</span> <span class="at">const</span> <span class="dt">double</span><span class="op">&amp;</span> d<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>  mat X <span class="op">=</span> randu<span class="op">&lt;</span>mat<span class="op">&gt;(</span>n<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>  mat T <span class="op">=</span> X<span class="op">.</span>t<span class="op">()</span> <span class="op">*</span> X<span class="op">;</span></span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>  mat W <span class="op">=</span> iwishrnd<span class="op">(</span>T<span class="op">,</span> d<span class="op">);</span></span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>W<span class="op">);</span></span>
+<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -674,63 +813,86 @@ y = \log\left[\frac{1}{x s \sqrt{2\pi}} \exp\left[-\frac{(\log(x) - m)^2}{2s^2}\
 </h2>
 <p>Cluster given data into <code>k</code> disjoint sets.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a>kmeans(means, data, k, seed_mode, n_iter, print_mode)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>kmeans<span class="op">(</span>means<span class="op">,</span> data<span class="op">,</span> k<span class="op">,</span> seed_mode<span class="op">,</span> n_iter<span class="op">,</span> print_mode<span class="op">)</span></span></code></pre></div>
 <ul>
-<li>The <code>means</code> parameter is the output matrix for storing the resulting centroids of the sets, with each centroid stored as a column vector. If the clustering fails, the <code>means</code> matrix is reset and set to <code>false</code>.</li>
-<li>The <code>data</code> parameter is the input data matrix, with each sample stored as a column vector. The <code>k</code> parameter indicates the number of centroids.</li>
-<li>The <code>seed_mode</code> parameter specifies how the initial centroids are seeded. It is one of:
+<li>The <code>means</code> parameter is the output matrix for storing
+the resulting centroids of the sets, with each centroid stored as a
+column vector. If the clustering fails, the <code>means</code> matrix is
+reset and set to <code>false</code>.</li>
+<li>The <code>data</code> parameter is the input data matrix, with each
+sample stored as a column vector. The <code>k</code> parameter indicates
+the number of centroids.</li>
+<li>The <code>seed_mode</code> parameter specifies how the initial
+centroids are seeded. It is one of:
 <ul>
 <li>
-<code>keep_existing</code>: use the centroids specified in the <code>means</code> matrix as the starting point.</li>
+<code>keep_existing</code>: use the centroids specified in the
+<code>means</code> matrix as the starting point.</li>
 <li>
-<code>static_subset</code>: use a subset of the data vectors (repeatable).</li>
+<code>static_subset</code>: use a subset of the data vectors
+(repeatable).</li>
 <li>
-<code>random_subset</code>: use a subset of the data vectors (random).</li>
+<code>random_subset</code>: use a subset of the data vectors
+(random).</li>
 <li>
-<code>static_spread</code>: use a maximally spread subset of data vectors (repeatable).</li>
+<code>static_spread</code>: use a maximally spread subset of data
+vectors (repeatable).</li>
 <li>
-<code>random_spread</code>: use a maximally spread subset of data vectors (random start).</li>
+<code>random_spread</code>: use a maximally spread subset of data
+vectors (random start).</li>
 </ul>
 </li>
-<li>The <code>n_iter</code> parameter specifies the number of clustering iterations. This is data dependent, but about 10 is typically sufficient.</li>
-<li>The <code>print_mode</code> parameter is either <code>true</code> or <code>false</code>, indicating whether progress is printed during clustering.</li>
+<li>The <code>n_iter</code> parameter specifies the number of clustering
+iterations. This is data dependent, but about 10 is typically
+sufficient.</li>
+<li>The <code>print_mode</code> parameter is either <code>true</code> or
+<code>false</code>, indicating whether progress is printed during
+clustering.</li>
 </ul>
 <div class="section level3">
 <h3 id="caveats">Caveats<a class="anchor" aria-label="anchor" href="#caveats"></a>
 </h3>
 <ul>
-<li>The number of samples in the data matrix should be larger than <code>k</code>.</li>
-<li>Works much faster with OpenMP enabled in the compiler (e.g., <code>-fopenmp</code> in GCC and clang). Cpp11armadillo finds OpenMP and uses it by default.</li>
-<li>For probabilistic clustering, use the <code>gmm_diag</code> or <code>gmm_full</code> classes instead.</li>
+<li>The number of samples in the data matrix should be larger than
+<code>k</code>.</li>
+<li>Works much faster with OpenMP enabled in the compiler (e.g.,
+<code>-fopenmp</code> in GCC and clang). Cpp11armadillo finds OpenMP and
+uses it by default.</li>
+<li>For probabilistic clustering, use the <code>gmm_diag</code> or
+<code>gmm_full</code> classes instead.</li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="examples-17">Examples<a class="anchor" aria-label="anchor" href="#examples-17"></a>
 </h3>
-<div class="sourceCode" id="cb33"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">kmeans1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n, <span class="at">const</span> <span class="dt">int</span>&amp; d) {</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a>  mat data(d, n, fill::randu);</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true"></a>  mat means;</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true"></a></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true"></a>  <span class="dt">bool</span> status = kmeans(means, data, <span class="dv">2</span>, random_subset, <span class="dv">10</span>, <span class="kw">true</span>);</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true"></a></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true"></a>  <span class="cf">if</span> (status == <span class="kw">false</span>) {</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true"></a>    stop(<span class="st">"clustering failed"</span>);</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true"></a>  }</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true"></a></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true"></a>  writable::list res(<span class="dv">2</span>);</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true"></a></span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true"></a>  res[<span class="dv">0</span>] = writable::logicals({status});</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles_matrix(means);</span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true"></a></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">kmeans1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">,</span> <span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> d<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>  mat data<span class="op">(</span>d<span class="op">,</span> n<span class="op">,</span> fill<span class="op">::</span>randu<span class="op">);</span></span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>  mat means<span class="op">;</span></span>
+<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a>  <span class="dt">bool</span> status <span class="op">=</span> kmeans<span class="op">(</span>means<span class="op">,</span> data<span class="op">,</span> <span class="dv">2</span><span class="op">,</span> random_subset<span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span></span>
+<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>status <span class="op">==</span> <span class="kw">false</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a>    stop<span class="op">(</span><span class="st">"clustering failed"</span><span class="op">);</span></span>
+<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="#cb33-12" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb33-13"><a href="#cb33-13" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="#cb33-14" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>status<span class="op">});</span></span>
+<span id="cb33-15"><a href="#cb33-15" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>means<span class="op">);</span></span>
+<span id="cb33-16"><a href="#cb33-16" tabindex="-1"></a></span>
+<span id="cb33-17"><a href="#cb33-17" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb33-18"><a href="#cb33-18" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="gmm_diag-gmm_full">Probabilistic clustering and likelihood calculation via mixture of Gaussians<a class="anchor" aria-label="anchor" href="#gmm_diag-gmm_full"></a>
+<h2 id="gmm_diag-gmm_full">Probabilistic clustering and likelihood calculation via mixture of
+Gaussians<a class="anchor" aria-label="anchor" href="#gmm_diag-gmm_full"></a>
 </h2>
-<p><code>gmm_diag</code> and <code>gmm_full</code> are classes for multi-variate probabilistic clustering and likelihood calculation via Gaussian Mixture Models (GMMs). The implementation details are available in <span class="citation">Sanderson and Curtin (2017)</span>.</p>
+<p><code>gmm_diag</code> and <code>gmm_full</code> are classes for
+multi-variate probabilistic clustering and likelihood calculation via
+Gaussian Mixture Models (GMMs). The implementation details are available
+in <span class="citation">Sanderson and Curtin (2017)</span>.</p>
 <p>The distribution of data is modelled as:</p>
 <p><span class="math display">\[
 p(x) = \sum_{g=0}^{n_{\text{gaus}}-1} h_g N(x \mid m_g, C_g)
@@ -740,111 +902,224 @@ p(x) = \sum_{g=0}^{n_{\text{gaus}}-1} h_g N(x \mid m_g, C_g)
 <li>
 <span class="math inline">\(x\)</span> is a column vector.</li>
 <li>
-<span class="math inline">\(n_{\text{gaus}}\)</span> is the number of Gaussians; <span class="math inline">\(n_{\text{gaus}} \geq 1\)</span>.</li>
+<span class="math inline">\(n_{\text{gaus}}\)</span> is the number
+of Gaussians; <span class="math inline">\(n_{\text{gaus}} \geq
+1\)</span>.</li>
 <li>
-<span class="math inline">\(N(x \mid m_g, C_g)\)</span> represents a Gaussian (normal) distribution.</li>
-<li>Each Gaussian <span class="math inline">\(g\)</span> has the following parameters:
+<span class="math inline">\(N(x \mid m_g, C_g)\)</span> represents a
+Gaussian (normal) distribution.</li>
+<li>Each Gaussian <span class="math inline">\(g\)</span> has the
+following parameters:
 <ul>
 <li>
-<span class="math inline">\(h_g\)</span> is the heft (weight), with constraints <span class="math inline">\(h_g \geq 0\)</span> and <span class="math inline">\(\sum h_g = 1\)</span>.</li>
+<span class="math inline">\(h_g\)</span> is the heft (weight), with
+constraints <span class="math inline">\(h_g \geq 0\)</span> and <span class="math inline">\(\sum h_g = 1\)</span>.</li>
 <li>
-<span class="math inline">\(m_g\)</span> is the mean vector (centroid) with dimensionality <span class="math inline">\(n_{\text{dims}}\)</span>.</li>
+<span class="math inline">\(m_g\)</span> is the mean vector
+(centroid) with dimensionality <span class="math inline">\(n_{\text{dims}}\)</span>.</li>
 <li>
-<span class="math inline">\(C_g\)</span> is the covariance matrix (either diagonal or full).</li>
+<span class="math inline">\(C_g\)</span> is the covariance matrix
+(either diagonal or full).</li>
 </ul>
 </li>
 </ul>
-<p>Both <code>gmm_diag</code> and <code>gmm_full</code> include tailored k-means and Expectation Maximisation algorithms for learning model parameters from training data.</p>
-<p>For an instance of <code>gmm_diag</code> or <code>gmm_full</code> named as <code>M</code>, the member functions and variables are:</p>
+<p>Both <code>gmm_diag</code> and <code>gmm_full</code> include tailored
+k-means and Expectation Maximisation algorithms for learning model
+parameters from training data.</p>
+<p>For an instance of <code>gmm_diag</code> or <code>gmm_full</code>
+named as <code>M</code>, the member functions and variables are:</p>
 <ul>
 <li>
-<code>M.log_p(V)</code>: return a scalar representing the log-likelihood of vector <code>V</code> (of type <code>vec</code>).</li>
+<code>M.log_p(V)</code>: return a scalar representing the
+log-likelihood of vector <code>V</code> (of type <code>vec</code>).</li>
 <li>
-<code>M.log_p(V, g)</code>: return a scalar representing the log-likelihood of vector <code>V</code> (of type <code>vec</code>), according to Gaussian with index <code>g</code>.</li>
+<code>M.log_p(V, g)</code>: return a scalar representing the
+log-likelihood of vector <code>V</code> (of type <code>vec</code>),
+according to Gaussian with index <code>g</code>.</li>
 <li>
-<code>M.log_p(X)</code>: return a row vector (of type <code>rowvec</code>) containing log-likelihoods of each column vector in matrix <code>X</code> (of type <code>mat</code>).</li>
+<code>M.log_p(X)</code>: return a row vector (of type
+<code>rowvec</code>) containing log-likelihoods of each column vector in
+matrix <code>X</code> (of type <code>mat</code>).</li>
 <li>
-<code>M.log_p(X, g)</code>: return a row vector (of type <code>rowvec</code>) containing log-likelihoods of each column vector in matrix <code>X</code> (of type <code>mat</code>), according to Gaussian with index <code>g</code>.</li>
+<code>M.log_p(X, g)</code>: return a row vector (of type
+<code>rowvec</code>) containing log-likelihoods of each column vector in
+matrix <code>X</code> (of type <code>mat</code>), according to Gaussian
+with index <code>g</code>.</li>
 <li>
-<code>M.sum_log_p(X)</code>: return a scalar representing the sum of log-likelihoods for all column vectors in matrix <code>X</code> (of type <code>mat</code>).</li>
+<code>M.sum_log_p(X)</code>: return a scalar representing the sum of
+log-likelihoods for all column vectors in matrix <code>X</code> (of type
+<code>mat</code>).</li>
 <li>
-<code>M.sum_log_p(X, g)</code>: return a scalar representing the sum of log-likelihoods for all column vectors in matrix <code>X</code> (of type <code>mat</code>), according to Gaussian with index <code>g</code>.</li>
+<code>M.sum_log_p(X, g)</code>: return a scalar representing the sum
+of log-likelihoods for all column vectors in matrix <code>X</code> (of
+type <code>mat</code>), according to Gaussian with index
+<code>g</code>.</li>
 <li>
-<code>M.avg_log_p(X)</code>: return a scalar representing the average log-likelihood of all column vectors in matrix <code>X</code> (of type <code>mat</code>).</li>
+<code>M.avg_log_p(X)</code>: return a scalar representing the
+average log-likelihood of all column vectors in matrix <code>X</code>
+(of type <code>mat</code>).</li>
 <li>
-<code>M.avg_log_p(X, g)</code>: return a scalar representing the average log-likelihood of all column vectors in matrix <code>X</code> (of type <code>mat</code>), according to Gaussian with index <code>g</code>.</li>
+<code>M.avg_log_p(X, g)</code>: return a scalar representing the
+average log-likelihood of all column vectors in matrix <code>X</code>
+(of type <code>mat</code>), according to Gaussian with index
+<code>g</code>.</li>
 <li>
-<code>M.assign(V, dist_mode)</code>: return the index of the closest mean (or Gaussian) to vector <code>V</code> (of type <code>vec</code>); parameter <code>dist_mode</code> is one of:
+<code>M.assign(V, dist_mode)</code>: return the index of the closest
+mean (or Gaussian) to vector <code>V</code> (of type <code>vec</code>);
+parameter <code>dist_mode</code> is one of:
 <ul>
 <li>
-<code>eucl_dist</code>: Euclidean distance (takes only means into account).</li>
+<code>eucl_dist</code>: Euclidean distance (takes only means into
+account).</li>
 <li>
-<code>prob_dist</code>: probabilistic “distance”, defined as the inverse likelihood (takes into account means, covariances, and hefts).</li>
+<code>prob_dist</code>: probabilistic “distance”, defined as the
+inverse likelihood (takes into account means, covariances, and
+hefts).</li>
 </ul>
 </li>
 <li>
-<code>M.assign(X, dist_mode)</code>: return a row vector (of type <code>urowvec</code>) containing the indices of the closest means (or Gaussians) to each column vector in matrix <code>X</code> (of type <code>mat</code>); parameter <code>dist_mode</code> is either <code>eucl_dist</code> or <code>prob_dist</code> (as per the <code>.assign()</code> function above).</li>
+<code>M.assign(X, dist_mode)</code>: return a row vector (of type
+<code>urowvec</code>) containing the indices of the closest means (or
+Gaussians) to each column vector in matrix <code>X</code> (of type
+<code>mat</code>); parameter <code>dist_mode</code> is either
+<code>eucl_dist</code> or <code>prob_dist</code> (as per the
+<code>.assign()</code> function above).</li>
 <li>
-<code>M.raw_hist(X, dist_mode)</code>: return a row vector (of type <code>urowvec</code>) representing the raw histogram of counts; each entry is the number of counts corresponding to a Gaussian; each count is the number times the corresponding Gaussian was the closest to each column vector in matrix <code>X</code>; parameter <code>dist_mode</code> is either <code>eucl_dist</code> or <code>prob_dist</code> (as per the <code>.assign()</code> function above).</li>
+<code>M.raw_hist(X, dist_mode)</code>: return a row vector (of type
+<code>urowvec</code>) representing the raw histogram of counts; each
+entry is the number of counts corresponding to a Gaussian; each count is
+the number times the corresponding Gaussian was the closest to each
+column vector in matrix <code>X</code>; parameter <code>dist_mode</code>
+is either <code>eucl_dist</code> or <code>prob_dist</code> (as per the
+<code>.assign()</code> function above).</li>
 <li>
-<code>M.norm_hist(X, dist_mode)</code>: similar to the <code>.raw_hist()</code> function above; return a row vector (of type <code>rowvec</code>) containing normalised counts; the vector sums to one; parameter <code>dist_mode</code> is either <code>eucl_dist</code> or <code>prob_dist</code> (as per the <code>.assign()</code> function above).</li>
+<code>M.norm_hist(X, dist_mode)</code>: similar to the
+<code>.raw_hist()</code> function above; return a row vector (of type
+<code>rowvec</code>) containing normalised counts; the vector sums to
+one; parameter <code>dist_mode</code> is either <code>eucl_dist</code>
+or <code>prob_dist</code> (as per the <code>.assign()</code> function
+above).</li>
 <li>
-<code>M.generate()</code>: return a column vector (of type <code>vec</code>) representing a random sample generated according to the model’s parameters.</li>
+<code>M.generate()</code>: return a column vector (of type
+<code>vec</code>) representing a random sample generated according to
+the model’s parameters.</li>
 <li>
-<code>M.generate(N)</code>: return a matrix (of type <code>mat</code>) containing <code>N</code> column vectors, with each vector representing a random sample generated according to the model’s parameters.</li>
-<li>M.save(filename): save the model to a file and return a bool indicating either success (true) or failure (false).</li>
-<li>M.load(filename): load the model from a file and return a bool indicating either success (true) or failure (false).</li>
+<code>M.generate(N)</code>: return a matrix (of type
+<code>mat</code>) containing <code>N</code> column vectors, with each
+vector representing a random sample generated according to the model’s
+parameters.</li>
+<li>M.save(filename): save the model to a file and return a bool
+indicating either success (true) or failure (false).</li>
+<li>M.load(filename): load the model from a file and return a bool
+indicating either success (true) or failure (false).</li>
 <li>M.n_gaus(): return the number of means/Gaussians in the model.</li>
-<li>M.n_dims(): return the dimensionality of the means/Gaussians in the model.</li>
-<li>M.reset(n_dims, n_gaus): set the model to have dimensionality <code>n_dims</code>, with <code>n_gaus</code> number of Gaussians; all the means are set to zero, all covariance matrix representations are equivalent to the identity matrix, and all the hefts (weights) are set to be uniform.</li>
-<li>M.hefts: read-only row vector (of type <code>rowvec</code>) containing the hefts (weights).</li>
-<li>M.means: read-only matrix (of type <code>mat</code>) containing the means (centroids), stored as column vectors.</li>
-<li>M.dcovs: read-only matrix (of type <code>mat</code>) containing the representation of diagonal covariance matrices, with the set of diagonal covariances for each Gaussian stored as a column vector; applicable only to the <code>gmm_diag</code> class.</li>
-<li>M.fcovs: read-only cube containing the full covariance matrices, with each covariance matrix stored as a slice within the cube; applicable only to the <code>gmm_full</code> class.</li>
-<li>M.set_hefts(V): set the hefts (weights) of the model to be as specified in row vector <code>V</code> (of type <code>rowvec</code>); the number of hefts must match the existing model.</li>
-<li>M.set_means(X): set the means to be as specified in matrix <code>X</code> (of type <code>mat</code>); the number of means and their dimensionality must match the existing model.</li>
-<li>M.set_dcovs(X): set the diagonal covariances matrices to be as specified in matrix <code>X</code> (of type <code>mat</code>), with the set of diagonal covariances for each Gaussian stored as a column vector; the number of covariance matrices and their dimensionality must match the existing model; applicable only to the <code>gmm_diag</code> class.</li>
-<li>M.set_fcovs(X): set the full covariances matrices to be as specified in cube <code>X</code>, with each covariance matrix stored as a slice within the cube; the number of covariance matrices and their dimensionality must match the existing model; applicable only to the <code>gmm_full</code> class.</li>
-<li>M.set_params(means, covs, hefts): set all the parameters at the same time; the type and layout of the parameters is as per the <code>.set_hefts()</code>, <code>.set_means()</code>, <code>.set_dcovs()</code>, and <code>.set_fcovs()</code> functions above; the number of Gaussians and dimensionality can be different from the existing model.</li>
-<li>M.learn(data, n_gaus, dist_mode, seed_mode, km_iter, em_iter, var_floor, print_mode): learn the model parameters via multi-threaded k-means and/or EM algorithms; return a bool value, with true indicating success, and false indicating failure; the parameters have the following meanings:
+<li>M.n_dims(): return the dimensionality of the means/Gaussians in the
+model.</li>
+<li>M.reset(n_dims, n_gaus): set the model to have dimensionality
+<code>n_dims</code>, with <code>n_gaus</code> number of Gaussians; all
+the means are set to zero, all covariance matrix representations are
+equivalent to the identity matrix, and all the hefts (weights) are set
+to be uniform.</li>
+<li>M.hefts: read-only row vector (of type <code>rowvec</code>)
+containing the hefts (weights).</li>
+<li>M.means: read-only matrix (of type <code>mat</code>) containing the
+means (centroids), stored as column vectors.</li>
+<li>M.dcovs: read-only matrix (of type <code>mat</code>) containing the
+representation of diagonal covariance matrices, with the set of diagonal
+covariances for each Gaussian stored as a column vector; applicable only
+to the <code>gmm_diag</code> class.</li>
+<li>M.fcovs: read-only cube containing the full covariance matrices,
+with each covariance matrix stored as a slice within the cube;
+applicable only to the <code>gmm_full</code> class.</li>
+<li>M.set_hefts(V): set the hefts (weights) of the model to be as
+specified in row vector <code>V</code> (of type <code>rowvec</code>);
+the number of hefts must match the existing model.</li>
+<li>M.set_means(X): set the means to be as specified in matrix
+<code>X</code> (of type <code>mat</code>); the number of means and their
+dimensionality must match the existing model.</li>
+<li>M.set_dcovs(X): set the diagonal covariances matrices to be as
+specified in matrix <code>X</code> (of type <code>mat</code>), with the
+set of diagonal covariances for each Gaussian stored as a column vector;
+the number of covariance matrices and their dimensionality must match
+the existing model; applicable only to the <code>gmm_diag</code>
+class.</li>
+<li>M.set_fcovs(X): set the full covariances matrices to be as specified
+in cube <code>X</code>, with each covariance matrix stored as a slice
+within the cube; the number of covariance matrices and their
+dimensionality must match the existing model; applicable only to the
+<code>gmm_full</code> class.</li>
+<li>M.set_params(means, covs, hefts): set all the parameters at the same
+time; the type and layout of the parameters is as per the
+<code>.set_hefts()</code>, <code>.set_means()</code>,
+<code>.set_dcovs()</code>, and <code>.set_fcovs()</code> functions
+above; the number of Gaussians and dimensionality can be different from
+the existing model.</li>
+<li>M.learn(data, n_gaus, dist_mode, seed_mode, km_iter, em_iter,
+var_floor, print_mode): learn the model parameters via multi-threaded
+k-means and/or EM algorithms; return a bool value, with true indicating
+success, and false indicating failure; the parameters have the following
+meanings:
 <ul>
 <li>
-<code>data</code>: matrix (of type <code>mat</code>) containing training samples; each sample is stored as a column vector.</li>
+<code>data</code>: matrix (of type <code>mat</code>) containing
+training samples; each sample is stored as a column vector.</li>
 <li>
-<code>n_gaus</code>: set the number of Gaussians to <code>n_gaus</code>; to help convergence, it is recommended that the given data matrix (above) contains at least 10 samples for each Gaussian.</li>
+<code>n_gaus</code>: set the number of Gaussians to
+<code>n_gaus</code>; to help convergence, it is recommended that the
+given data matrix (above) contains at least 10 samples for each
+Gaussian.</li>
 <li>
-<code>dist_mode</code>: specifies the distance used during the seeding of initial means and k-means clustering:
+<code>dist_mode</code>: specifies the distance used during the
+seeding of initial means and k-means clustering:
 <ul>
 <li>
 <code>eucl_dist</code>: Euclidean distance.</li>
 <li>
-<code>maha_dist</code>: Mahalanobis distance, which uses a global diagonal covariance matrix estimated from the training samples; this is recommended for probabilistic applications.</li>
+<code>maha_dist</code>: Mahalanobis distance, which uses a global
+diagonal covariance matrix estimated from the training samples; this is
+recommended for probabilistic applications.</li>
 </ul>
 </li>
 <li>
-<code>seed_mode</code>: specifies how the initial means are seeded prior to running k-means and/or EM algorithms:
+<code>seed_mode</code>: specifies how the initial means are seeded
+prior to running k-means and/or EM algorithms:
 <ul>
 <li>
-<code>keep_existing</code>: keep the existing model (do not modify the means, covariances, and hefts).</li>
+<code>keep_existing</code>: keep the existing model (do not modify
+the means, covariances, and hefts).</li>
 <li>
-<code>static_subset</code>: a subset of the training samples (repeatable).</li>
+<code>static_subset</code>: a subset of the training samples
+(repeatable).</li>
 <li>
-<code>random_subset</code>: a subset of the training samples (random).</li>
+<code>random_subset</code>: a subset of the training samples
+(random).</li>
 <li>
-<code>static_spread</code>: a maximally spread subset of training samples (repeatable).</li>
+<code>static_spread</code>: a maximally spread subset of training
+samples (repeatable).</li>
 <li>
-<code>random_spread</code>: a maximally spread subset of training samples (random start).</li>
-<li>Caveat: seeding the initial means with <code>static_spread</code> and <code>random_spread</code> can be much more time consuming than with <code>static_subset</code> and <code>random_subset</code>.</li>
+<code>random_spread</code>: a maximally spread subset of training
+samples (random start).</li>
+<li>Caveat: seeding the initial means with <code>static_spread</code>
+and <code>random_spread</code> can be much more time consuming than with
+<code>static_subset</code> and <code>random_subset</code>.</li>
 </ul>
 </li>
 <li>
-<code>km_iter</code>: the number of iterations of the k-means algorithm; this is data dependent, but typically 10 iterations are sufficient.</li>
+<code>km_iter</code>: the number of iterations of the k-means
+algorithm; this is data dependent, but typically 10 iterations are
+sufficient.</li>
 <li>
-<code>em_iter</code>: the number of iterations of the EM algorithm; this is data dependent, but typically 5 to 10 iterations are sufficient.</li>
+<code>em_iter</code>: the number of iterations of the EM algorithm;
+this is data dependent, but typically 5 to 10 iterations are
+sufficient.</li>
 <li>
-<code>var_floor</code>: the variance floor (smallest allowed value) for the diagonal covariances; setting this to a small non-zero value can help with convergence and/or better quality parameter estimates.</li>
+<code>var_floor</code>: the variance floor (smallest allowed value)
+for the diagonal covariances; setting this to a small non-zero value can
+help with convergence and/or better quality parameter estimates.</li>
 <li>
-<code>print_mode</code>: either <code>true</code> or <code>false</code>; enable or disable printing of progress during the k-means and EM algorithms.</li>
+<code>print_mode</code>: either <code>true</code> or
+<code>false</code>; enable or disable printing of progress during the
+k-means and EM algorithms.</li>
 </ul>
 </li>
 </ul>
@@ -853,83 +1128,94 @@ p(x) = \sum_{g=0}^{n_{\text{gaus}}-1} h_g N(x \mid m_g, C_g)
 </h3>
 <ul>
 <li>
-<code>gmm_diag</code> is tailored for diagonal covariance matrices.</li>
+<code>gmm_diag</code> is tailored for diagonal covariance
+matrices.</li>
 <li>
 <code>gmm_full</code> is tailored for full covariance matrices.</li>
 <li>
-<code>gmm_diag</code> is considerably faster than <code>gmm_full</code>, at the cost of some reduction in modelling accuracy.</li>
-<li>For faster execution on multi-core machines, enable OpenMP in your compiler (e.g., <code>-fopenmp</code> in GCC and clang). Cpp11armadillo finds OpenMP and uses it by default.</li>
+<code>gmm_diag</code> is considerably faster than
+<code>gmm_full</code>, at the cost of some reduction in modelling
+accuracy.</li>
+<li>For faster execution on multi-core machines, enable OpenMP in your
+compiler (e.g., <code>-fopenmp</code> in GCC and clang). Cpp11armadillo
+finds OpenMP and uses it by default.</li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="examples-18">Examples<a class="anchor" aria-label="anchor" href="#examples-18"></a>
 </h3>
-<div class="sourceCode" id="cb34"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">gmm1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n, <span class="at">const</span> <span class="dt">int</span>&amp; d) {</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true"></a>  <span class="co">// create synthetic data with 2 Gaussians</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true"></a>  mat data(d, n, fill::zeros);</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true"></a></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true"></a>  vec mean0 = linspace&lt;vec&gt;(<span class="dv">1</span>, d, d);</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true"></a>  vec mean1 = mean0 + <span class="dv">2</span>;</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true"></a></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true"></a>  <span class="dt">int</span> i = <span class="dv">0</span>;</span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true"></a></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true"></a>  <span class="cf">while</span> (i &lt; n) {</span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true"></a>    <span class="cf">if</span> (i &lt; n) {</span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true"></a>      data.col(i) = mean0 + randn&lt;vec&gt;(d);</span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true"></a>      ++i;</span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true"></a>    }</span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true"></a>    <span class="cf">if</span> (i &lt; n) {</span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true"></a>      data.col(i) = mean0 + randn&lt;vec&gt;(d);</span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true"></a>      ++i;</span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true"></a>    }</span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true"></a>    <span class="cf">if</span> (i &lt; n) {</span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true"></a>      data.col(i) = mean1 + randn&lt;vec&gt;(d);</span>
-<span id="cb34-22"><a href="#cb34-22" aria-hidden="true"></a>      ++i;</span>
-<span id="cb34-23"><a href="#cb34-23" aria-hidden="true"></a>    }</span>
-<span id="cb34-24"><a href="#cb34-24" aria-hidden="true"></a>  }</span>
-<span id="cb34-25"><a href="#cb34-25" aria-hidden="true"></a></span>
-<span id="cb34-26"><a href="#cb34-26" aria-hidden="true"></a>  <span class="co">// model the data as a diagonal GMM with 2 Gaussians</span></span>
-<span id="cb34-27"><a href="#cb34-27" aria-hidden="true"></a></span>
-<span id="cb34-28"><a href="#cb34-28" aria-hidden="true"></a>  gmm_diag model;</span>
-<span id="cb34-29"><a href="#cb34-29" aria-hidden="true"></a></span>
-<span id="cb34-30"><a href="#cb34-30" aria-hidden="true"></a>  <span class="dt">bool</span> status = model.learn(data, <span class="dv">2</span>, maha_dist, random_subset, <span class="dv">10</span>, <span class="dv">5</span>, <span class="fl">1e-5</span>,</span>
-<span id="cb34-31"><a href="#cb34-31" aria-hidden="true"></a>    <span class="kw">true</span>);</span>
-<span id="cb34-32"><a href="#cb34-32" aria-hidden="true"></a></span>
-<span id="cb34-33"><a href="#cb34-33" aria-hidden="true"></a>  <span class="cf">if</span> (status == <span class="kw">false</span>) {</span>
-<span id="cb34-34"><a href="#cb34-34" aria-hidden="true"></a>    stop(<span class="st">"learning failed"</span>);</span>
-<span id="cb34-35"><a href="#cb34-35" aria-hidden="true"></a>  }</span>
-<span id="cb34-36"><a href="#cb34-36" aria-hidden="true"></a></span>
-<span id="cb34-37"><a href="#cb34-37" aria-hidden="true"></a>  model.means.print(<span class="st">"means:"</span>);</span>
-<span id="cb34-38"><a href="#cb34-38" aria-hidden="true"></a></span>
-<span id="cb34-39"><a href="#cb34-39" aria-hidden="true"></a>  <span class="dt">double</span> scalar_likelihood = model.log_p(data.col(<span class="dv">0</span>));</span>
-<span id="cb34-40"><a href="#cb34-40" aria-hidden="true"></a>  rowvec set_likelihood = model.log_p(data.cols(<span class="dv">0</span>, <span class="dv">9</span>));</span>
-<span id="cb34-41"><a href="#cb34-41" aria-hidden="true"></a></span>
-<span id="cb34-42"><a href="#cb34-42" aria-hidden="true"></a>  <span class="dt">double</span> overall_likelihood = model.avg_log_p(data);</span>
-<span id="cb34-43"><a href="#cb34-43" aria-hidden="true"></a></span>
-<span id="cb34-44"><a href="#cb34-44" aria-hidden="true"></a>  uword gaus_id = model.assign(data.col(<span class="dv">0</span>), eucl_dist);</span>
-<span id="cb34-45"><a href="#cb34-45" aria-hidden="true"></a>  urowvec gaus_ids = model.assign(data.cols(<span class="dv">0</span>, <span class="dv">9</span>), prob_dist);</span>
-<span id="cb34-46"><a href="#cb34-46" aria-hidden="true"></a></span>
-<span id="cb34-47"><a href="#cb34-47" aria-hidden="true"></a>  rowvec hist1 = model.norm_hist(data, eucl_dist);</span>
-<span id="cb34-48"><a href="#cb34-48" aria-hidden="true"></a>  urowvec hist2 = model.raw_hist(data, prob_dist);</span>
-<span id="cb34-49"><a href="#cb34-49" aria-hidden="true"></a></span>
-<span id="cb34-50"><a href="#cb34-50" aria-hidden="true"></a>  writable::list res(<span class="dv">9</span>);</span>
-<span id="cb34-51"><a href="#cb34-51" aria-hidden="true"></a></span>
-<span id="cb34-52"><a href="#cb34-52" aria-hidden="true"></a>  res[<span class="dv">0</span>] = writable::logicals({status});</span>
-<span id="cb34-53"><a href="#cb34-53" aria-hidden="true"></a>  res[<span class="dv">1</span>] = as_doubles_matrix(model.means);</span>
-<span id="cb34-54"><a href="#cb34-54" aria-hidden="true"></a>  res[<span class="dv">2</span>] = as_doubles({scalar_likelihood});</span>
-<span id="cb34-55"><a href="#cb34-55" aria-hidden="true"></a>  res[<span class="dv">3</span>] = as_doubles(set_likelihood.t());</span>
-<span id="cb34-56"><a href="#cb34-56" aria-hidden="true"></a>  res[<span class="dv">4</span>] = as_doubles({overall_likelihood});</span>
-<span id="cb34-57"><a href="#cb34-57" aria-hidden="true"></a>  res[<span class="dv">5</span>] = as_integers(gaus_id);</span>
-<span id="cb34-58"><a href="#cb34-58" aria-hidden="true"></a>  res[<span class="dv">6</span>] = as_integers(gaus_ids.t());</span>
-<span id="cb34-59"><a href="#cb34-59" aria-hidden="true"></a>  res[<span class="dv">7</span>] = as_doubles(hist1.t());</span>
-<span id="cb34-60"><a href="#cb34-60" aria-hidden="true"></a>  res[<span class="dv">8</span>] = as_integers(hist2.t());</span>
-<span id="cb34-61"><a href="#cb34-61" aria-hidden="true"></a></span>
-<span id="cb34-62"><a href="#cb34-62" aria-hidden="true"></a>  <span class="cf">return</span> res;</span>
-<span id="cb34-63"><a href="#cb34-63" aria-hidden="true"></a>}</span></code></pre></div>
-<div id="refs" class="references hanging-indent">
-<div id="ref-Sanderson2017">
-<p>Sanderson, Conrad, and Ryan Curtin. 2017. “An Open Source C++ Implementation of Multi-Threaded Gaussian Mixture Models, K-Means and Expectation Maximisation.” In <em>2017 11th International Conference on Signal Processing and Communication Systems (ICSPCS)</em>, 1–8. <a href="https://doi.org/10.1109/ICSPCS.2017.8270510" class="external-link">https://doi.org/10.1109/ICSPCS.2017.8270510</a>.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">gmm1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">,</span> <span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> d<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>  <span class="co">// create synthetic data with 2 Gaussians</span></span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>  mat data<span class="op">(</span>d<span class="op">,</span> n<span class="op">,</span> fill<span class="op">::</span>zeros<span class="op">);</span></span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a>  vec mean0 <span class="op">=</span> linspace<span class="op">&lt;</span>vec<span class="op">&gt;(</span><span class="dv">1</span><span class="op">,</span> d<span class="op">,</span> d<span class="op">);</span></span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>  vec mean1 <span class="op">=</span> mean0 <span class="op">+</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a>  <span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a></span>
+<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>i <span class="op">&lt;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>i <span class="op">&lt;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a>      data<span class="op">.</span>col<span class="op">(</span>i<span class="op">)</span> <span class="op">=</span> mean0 <span class="op">+</span> randn<span class="op">&lt;</span>vec<span class="op">&gt;(</span>d<span class="op">);</span></span>
+<span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a>      <span class="op">++</span>i<span class="op">;</span></span>
+<span id="cb34-15"><a href="#cb34-15" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb34-16"><a href="#cb34-16" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>i <span class="op">&lt;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb34-17"><a href="#cb34-17" tabindex="-1"></a>      data<span class="op">.</span>col<span class="op">(</span>i<span class="op">)</span> <span class="op">=</span> mean0 <span class="op">+</span> randn<span class="op">&lt;</span>vec<span class="op">&gt;(</span>d<span class="op">);</span></span>
+<span id="cb34-18"><a href="#cb34-18" tabindex="-1"></a>      <span class="op">++</span>i<span class="op">;</span></span>
+<span id="cb34-19"><a href="#cb34-19" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb34-20"><a href="#cb34-20" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>i <span class="op">&lt;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb34-21"><a href="#cb34-21" tabindex="-1"></a>      data<span class="op">.</span>col<span class="op">(</span>i<span class="op">)</span> <span class="op">=</span> mean1 <span class="op">+</span> randn<span class="op">&lt;</span>vec<span class="op">&gt;(</span>d<span class="op">);</span></span>
+<span id="cb34-22"><a href="#cb34-22" tabindex="-1"></a>      <span class="op">++</span>i<span class="op">;</span></span>
+<span id="cb34-23"><a href="#cb34-23" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb34-24"><a href="#cb34-24" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb34-25"><a href="#cb34-25" tabindex="-1"></a></span>
+<span id="cb34-26"><a href="#cb34-26" tabindex="-1"></a>  <span class="co">// model the data as a diagonal GMM with 2 Gaussians</span></span>
+<span id="cb34-27"><a href="#cb34-27" tabindex="-1"></a></span>
+<span id="cb34-28"><a href="#cb34-28" tabindex="-1"></a>  gmm_diag model<span class="op">;</span></span>
+<span id="cb34-29"><a href="#cb34-29" tabindex="-1"></a></span>
+<span id="cb34-30"><a href="#cb34-30" tabindex="-1"></a>  <span class="dt">bool</span> status <span class="op">=</span> model<span class="op">.</span>learn<span class="op">(</span>data<span class="op">,</span> <span class="dv">2</span><span class="op">,</span> maha_dist<span class="op">,</span> random_subset<span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="fl">1e-5</span><span class="op">,</span></span>
+<span id="cb34-31"><a href="#cb34-31" tabindex="-1"></a>    <span class="kw">true</span><span class="op">);</span></span>
+<span id="cb34-32"><a href="#cb34-32" tabindex="-1"></a></span>
+<span id="cb34-33"><a href="#cb34-33" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>status <span class="op">==</span> <span class="kw">false</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb34-34"><a href="#cb34-34" tabindex="-1"></a>    stop<span class="op">(</span><span class="st">"learning failed"</span><span class="op">);</span></span>
+<span id="cb34-35"><a href="#cb34-35" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb34-36"><a href="#cb34-36" tabindex="-1"></a></span>
+<span id="cb34-37"><a href="#cb34-37" tabindex="-1"></a>  model<span class="op">.</span>means<span class="op">.</span>print<span class="op">(</span><span class="st">"means:"</span><span class="op">);</span></span>
+<span id="cb34-38"><a href="#cb34-38" tabindex="-1"></a></span>
+<span id="cb34-39"><a href="#cb34-39" tabindex="-1"></a>  <span class="dt">double</span> scalar_likelihood <span class="op">=</span> model<span class="op">.</span>log_p<span class="op">(</span>data<span class="op">.</span>col<span class="op">(</span><span class="dv">0</span><span class="op">));</span></span>
+<span id="cb34-40"><a href="#cb34-40" tabindex="-1"></a>  rowvec set_likelihood <span class="op">=</span> model<span class="op">.</span>log_p<span class="op">(</span>data<span class="op">.</span>cols<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">9</span><span class="op">));</span></span>
+<span id="cb34-41"><a href="#cb34-41" tabindex="-1"></a></span>
+<span id="cb34-42"><a href="#cb34-42" tabindex="-1"></a>  <span class="dt">double</span> overall_likelihood <span class="op">=</span> model<span class="op">.</span>avg_log_p<span class="op">(</span>data<span class="op">);</span></span>
+<span id="cb34-43"><a href="#cb34-43" tabindex="-1"></a></span>
+<span id="cb34-44"><a href="#cb34-44" tabindex="-1"></a>  uword gaus_id <span class="op">=</span> model<span class="op">.</span>assign<span class="op">(</span>data<span class="op">.</span>col<span class="op">(</span><span class="dv">0</span><span class="op">),</span> eucl_dist<span class="op">);</span></span>
+<span id="cb34-45"><a href="#cb34-45" tabindex="-1"></a>  urowvec gaus_ids <span class="op">=</span> model<span class="op">.</span>assign<span class="op">(</span>data<span class="op">.</span>cols<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">9</span><span class="op">),</span> prob_dist<span class="op">);</span></span>
+<span id="cb34-46"><a href="#cb34-46" tabindex="-1"></a></span>
+<span id="cb34-47"><a href="#cb34-47" tabindex="-1"></a>  rowvec hist1 <span class="op">=</span> model<span class="op">.</span>norm_hist<span class="op">(</span>data<span class="op">,</span> eucl_dist<span class="op">);</span></span>
+<span id="cb34-48"><a href="#cb34-48" tabindex="-1"></a>  urowvec hist2 <span class="op">=</span> model<span class="op">.</span>raw_hist<span class="op">(</span>data<span class="op">,</span> prob_dist<span class="op">);</span></span>
+<span id="cb34-49"><a href="#cb34-49" tabindex="-1"></a></span>
+<span id="cb34-50"><a href="#cb34-50" tabindex="-1"></a>  writable<span class="op">::</span>list res<span class="op">(</span><span class="dv">9</span><span class="op">);</span></span>
+<span id="cb34-51"><a href="#cb34-51" tabindex="-1"></a></span>
+<span id="cb34-52"><a href="#cb34-52" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>status<span class="op">});</span></span>
+<span id="cb34-53"><a href="#cb34-53" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>model<span class="op">.</span>means<span class="op">);</span></span>
+<span id="cb34-54"><a href="#cb34-54" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">({</span>scalar_likelihood<span class="op">});</span></span>
+<span id="cb34-55"><a href="#cb34-55" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>set_likelihood<span class="op">.</span>t<span class="op">());</span></span>
+<span id="cb34-56"><a href="#cb34-56" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">4</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">({</span>overall_likelihood<span class="op">});</span></span>
+<span id="cb34-57"><a href="#cb34-57" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">5</span><span class="op">]</span> <span class="op">=</span> as_integers<span class="op">(</span>gaus_id<span class="op">);</span></span>
+<span id="cb34-58"><a href="#cb34-58" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">6</span><span class="op">]</span> <span class="op">=</span> as_integers<span class="op">(</span>gaus_ids<span class="op">.</span>t<span class="op">());</span></span>
+<span id="cb34-59"><a href="#cb34-59" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">7</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>hist1<span class="op">.</span>t<span class="op">());</span></span>
+<span id="cb34-60"><a href="#cb34-60" tabindex="-1"></a>  res<span class="op">[</span><span class="dv">8</span><span class="op">]</span> <span class="op">=</span> as_integers<span class="op">(</span>hist2<span class="op">.</span>t<span class="op">());</span></span>
+<span id="cb34-61"><a href="#cb34-61" tabindex="-1"></a></span>
+<span id="cb34-62"><a href="#cb34-62" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb34-63"><a href="#cb34-63" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Sanderson2017" class="csl-entry">
+Sanderson, Conrad, and Ryan Curtin. 2017. <span>“An Open Source
+<span>C</span>++ Implementation of Multi-Threaded <span>Gaussian</span>
+Mixture Models, k-Means and Expectation Maximisation.”</span> In
+<em>2017 11th <span>International</span> <span>Conference</span> on
+<span>Signal</span> <span>Processing</span> and
+<span>Communication</span> <span>Systems</span>
+(<span>ICSPCS</span>)</em>, 1–8. <a href="https://doi.org/10.1109/ICSPCS.2017.8270510" class="external-link">https://doi.org/10.1109/ICSPCS.2017.8270510</a>.
 </div>
 </div>
 </div>

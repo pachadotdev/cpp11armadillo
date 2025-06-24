@@ -13,15 +13,14 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../deps/jquery-3.6.1/jquery-3.6.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Saving and loading Armadillo objects on C++ side">
 <meta property="og:description" content="cpp11armadillo">
 <meta property="og:image" content="../cpp11armadillo/logo.svg">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<!-- mathjax --><script src="file:///usr/share/javascript/mathjax/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
@@ -89,7 +88,8 @@
 
 
 
-<script src="save-load_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Saving and loading Armadillo objects on C++ side</h1>
             
@@ -104,26 +104,71 @@
 <div class="section level2">
 <h2 id="saving-and-loading-matrices-and-cubes">Saving and loading matrices and cubes<a class="anchor" aria-label="anchor" href="#saving-and-loading-matrices-and-cubes"></a>
 </h2>
-<p>Armadillo provides functions to save and load matrices and cubes to and from files. The following file types are supported:</p>
+<p>Armadillo provides functions to save and load matrices and cubes to
+and from files. The following file types are supported:</p>
 <ul>
 <li>
-<code>arma_binary</code>: Numerical data stored in machine dependent binary format, with a simple header to speed up loading. The header indicates the type and size of matrix/cube.</li>
+<code>arma_binary</code>: Numerical data stored in machine dependent
+binary format, with a simple header to speed up loading. The header
+indicates the type and size of matrix/cube.</li>
 <li>
-<code>arma_ascii</code>: Numerical data stored in human readable text format, with a simple header to speed up loading. The header indicates the type and size of matrix/cube.</li>
+<code>arma_ascii</code>: Numerical data stored in human readable
+text format, with a simple header to speed up loading. The header
+indicates the type and size of matrix/cube.</li>
 <li>
-<code>raw_binary</code>: Numerical data stored in machine dependent raw binary format, without a header. Matrices are loaded to have one column, while cubes are loaded to have one slice with one column. The <code>.reshape()</code> function can be used to alter the size of the loaded matrix/cube without losing data.</li>
+<code>raw_binary</code>: Numerical data stored in machine dependent
+raw binary format, without a header. Matrices are loaded to have one
+column, while cubes are loaded to have one slice with one column. The
+<code>.reshape()</code> function can be used to alter the size of the
+loaded matrix/cube without losing data.</li>
 <li>
-<code>raw_ascii</code>: Numerical data stored in raw ASCII format, without a header. The numbers are separated by whitespace. The number of columns must be the same in each row. Cubes are loaded as one slice. Data which was saved in Matlab/Octave using the <code>-ascii</code> option can be read in Armadillo, except for complex numbers. Complex numbers are stored in standard C++ notation, which is a tuple surrounded by brackets: eg. <code>(1.23,4.56)</code> indicates 1.24 + 4.56i.</li>
+<code>raw_ascii</code>: Numerical data stored in raw ASCII format,
+without a header. The numbers are separated by whitespace. The number of
+columns must be the same in each row. Cubes are loaded as one slice.
+Data which was saved in Matlab/Octave using the <code>-ascii</code>
+option can be read in Armadillo, except for complex numbers. Complex
+numbers are stored in standard C++ notation, which is a tuple surrounded
+by brackets: eg. <code>(1.23,4.56)</code> indicates 1.24 + 4.56i.</li>
 <li>
-<code>csv_ascii</code>: Numerical data stored in comma separated value (CSV) text format, without a header. To save/load with a header, use the <code>csv_name(filename, header)</code> specification instead. Handles complex numbers stored in the compound form of <code>1.24+4.56i</code>. Applicable to <code>Mat</code> and <code>SpMat</code>.</li>
+<code>csv_ascii</code>: Numerical data stored in comma separated
+value (CSV) text format, without a header. To save/load with a header,
+use the <code>csv_name(filename, header)</code> specification instead.
+Handles complex numbers stored in the compound form of
+<code>1.24+4.56i</code>. Applicable to <code>Mat</code> and
+<code>SpMat</code>.</li>
 <li>
-<code>coord_ascii</code>: Numerical data stored as a text file in coordinate list format, without a header. Only non-zero values are stored. For real matrices, each line contains information in the following format: <code>row column value</code>. For complex matrices, each line contains information in the following format: <code>row column real_value imag_value</code>. The rows and columns start at zero. Applicable to <code>Mat</code> and <code>SpMat</code>.</li>
+<code>coord_ascii</code>: Numerical data stored as a text file in
+coordinate list format, without a header. Only non-zero values are
+stored. For real matrices, each line contains information in the
+following format: <code>row column value</code>. For complex matrices,
+each line contains information in the following format:
+<code>row column real_value imag_value</code>. The rows and columns
+start at zero. Applicable to <code>Mat</code> and
+<code>SpMat</code>.</li>
 <li>
-<code>pgm_binary</code>: Image data stored in Portable Gray Map (PGM) format. Applicable to <code>Mat</code> only. Saving int, float or double matrices is a lossy operation, as each element is copied and converted to an 8 bit representation. As such the matrix should have values in the <code>[0,255]</code> interval, otherwise the resulting image may not display correctly.</li>
+<code>pgm_binary</code>: Image data stored in Portable Gray Map
+(PGM) format. Applicable to <code>Mat</code> only. Saving int, float or
+double matrices is a lossy operation, as each element is copied and
+converted to an 8 bit representation. As such the matrix should have
+values in the <code>[0,255]</code> interval, otherwise the resulting
+image may not display correctly.</li>
 <li>
-<code>ppm_binary</code>: Image data stored in Portable Pixel Map (PPM) format. Applicable to <code>Cube</code> only. Saving int, float or double matrices is a lossy operation, as each element is copied and converted to an 8 bit representation. As such the cube/field should have values in the <code>[0,255]</code> interval, otherwise the resulting image may not display correctly.</li>
+<code>ppm_binary</code>: Image data stored in Portable Pixel Map
+(PPM) format. Applicable to <code>Cube</code> only. Saving int, float or
+double matrices is a lossy operation, as each element is copied and
+converted to an 8 bit representation. As such the cube/field should have
+values in the <code>[0,255]</code> interval, otherwise the resulting
+image may not display correctly.</li>
 <li>
-<code>hdf5_binary</code>: Numerical data stored in portable HDF5 binary format. For saving, the default dataset name within the HDF5 file is <code>"dataset"</code>. For loading, the order of operations is: (1) try loading a dataset named <code>"dataset"</code>, (2) try loading a dataset named <code>"value"</code>, (3) try loading the first available dataset. To explicitly control the dataset name, specify it via the <code>hdf5_name(filename, dataset)</code> argument. HDF5 support can be enabled by defining <code>ARMA_USE_HDF5</code> before including the Armadillo header.</li>
+<code>hdf5_binary</code>: Numerical data stored in portable HDF5
+binary format. For saving, the default dataset name within the HDF5 file
+is <code>"dataset"</code>. For loading, the order of operations is: (1)
+try loading a dataset named <code>"dataset"</code>, (2) try loading a
+dataset named <code>"value"</code>, (3) try loading the first available
+dataset. To explicitly control the dataset name, specify it via the
+<code>hdf5_name(filename, dataset)</code> argument. HDF5 support can be
+enabled by defining <code>ARMA_USE_HDF5</code> before including the
+Armadillo header.</li>
 </ul>
 <p>The following file types are supported for fields:</p>
 <ul>
@@ -133,127 +178,160 @@
 <code>ppm_binary</code>: See above.</li>
 </ul>
 <p>Usage:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>.save(filename)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>.load(filename)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>.save(filename, <span class="dt">file_type</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>.load(filename, <span class="dt">file_type</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>.save(stream)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>.load(stream)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>.save(stream, <span class="dt">file_type</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>.load(stream, <span class="dt">file_type</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>.save(hdf5_name(filename, dataset))</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>.load(hdf5_name(filename, dataset))</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>.save(hdf5_name(filename, dataset, settings))</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>.load(hdf5_name(filename, dataset, settings))</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>.save(csv_name(filename, header))</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>.load(csv_name(filename, header))</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>.save(csv_name(filename, header, settings))</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a>.load(csv_name(filename, header, settings))</span></code></pre></div>
-<p>By providing either <code>hdf5_name(filename, dataset)</code> or <code>hdf5_name(filename, dataset, settings)</code>, the <code>file_type</code> type is assumed to be <code>hdf5_binary</code>. The <code>dataset</code> argument specifies an HDF5 dataset name (eg. <code>"my_dataset"</code>) that can include a full path (eg. <code>"/group_name/my_dataset"</code>); if a blank dataset name is specified (ie. <code>""</code>), it is assumed to be <code>"dataset"</code>. The <code>settings</code> argument is optional; it is one of the following, or a combination thereof</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="op">.</span>save<span class="op">(</span>filename<span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="op">.</span>load<span class="op">(</span>filename<span class="op">)</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="op">.</span>save<span class="op">(</span>filename<span class="op">,</span> <span class="dt">file_type</span><span class="op">)</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="op">.</span>load<span class="op">(</span>filename<span class="op">,</span> <span class="dt">file_type</span><span class="op">)</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="op">.</span>save<span class="op">(</span>stream<span class="op">)</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="op">.</span>load<span class="op">(</span>stream<span class="op">)</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="op">.</span>save<span class="op">(</span>stream<span class="op">,</span> <span class="dt">file_type</span><span class="op">)</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="op">.</span>load<span class="op">(</span>stream<span class="op">,</span> <span class="dt">file_type</span><span class="op">)</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="op">.</span>save<span class="op">(</span>hdf5_name<span class="op">(</span>filename<span class="op">,</span> dataset<span class="op">))</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="op">.</span>load<span class="op">(</span>hdf5_name<span class="op">(</span>filename<span class="op">,</span> dataset<span class="op">))</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="op">.</span>save<span class="op">(</span>hdf5_name<span class="op">(</span>filename<span class="op">,</span> dataset<span class="op">,</span> settings<span class="op">))</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="op">.</span>load<span class="op">(</span>hdf5_name<span class="op">(</span>filename<span class="op">,</span> dataset<span class="op">,</span> settings<span class="op">))</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="op">.</span>save<span class="op">(</span>csv_name<span class="op">(</span>filename<span class="op">,</span> header<span class="op">))</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="op">.</span>load<span class="op">(</span>csv_name<span class="op">(</span>filename<span class="op">,</span> header<span class="op">))</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="op">.</span>save<span class="op">(</span>csv_name<span class="op">(</span>filename<span class="op">,</span> header<span class="op">,</span> settings<span class="op">))</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="op">.</span>load<span class="op">(</span>csv_name<span class="op">(</span>filename<span class="op">,</span> header<span class="op">,</span> settings<span class="op">))</span></span></code></pre></div>
+<p>By providing either <code>hdf5_name(filename, dataset)</code> or
+<code>hdf5_name(filename, dataset, settings)</code>, the
+<code>file_type</code> type is assumed to be <code>hdf5_binary</code>.
+The <code>dataset</code> argument specifies an HDF5 dataset name (eg.
+<code>"my_dataset"</code>) that can include a full path (eg.
+<code>"/group_name/my_dataset"</code>); if a blank dataset name is
+specified (ie. <code>""</code>), it is assumed to be
+<code>"dataset"</code>. The <code>settings</code> argument is optional;
+it is one of the following, or a combination thereof</p>
 <ul>
 <li>
-<code>hdf5_opts::trans</code>: Save/load the data with columns transposed to rows (and vice versa).</li>
+<code>hdf5_opts::trans</code>: Save/load the data with columns
+transposed to rows (and vice versa).</li>
 <li>
-<code>hdf5_opts::append</code>: Instead of overwriting the file, append the specified dataset to the file; the specified dataset must not already exist in the file.</li>
+<code>hdf5_opts::append</code>: Instead of overwriting the file,
+append the specified dataset to the file; the specified dataset must not
+already exist in the file.</li>
 <li>
-<code>hdf5_opts::replace</code>: Instead of overwriting the file, replace the specified dataset in the file.</li>
-<li>These settings can be combined using the <code>+</code> operator (e.g., <code>hdf5_opts::trans + hdf5_opts::append</code>)</li>
+<code>hdf5_opts::replace</code>: Instead of overwriting the file,
+replace the specified dataset in the file.</li>
+<li>These settings can be combined using the <code>+</code> operator
+(e.g., <code>hdf5_opts::trans + hdf5_opts::append</code>)</li>
 </ul>
-<p>By providing either <code>csv_name(filename, header)</code> or <code>csv_name(filename, header, settings)</code>, the file is assumed to have data in comma separated value (CSV) text format. The <code>header</code> argument specifies the object which stores the separate elements of the header line; it must have the type <code>field&lt;std::string&gt;</code>. The optional <code>settings</code> argument is one of the following, or a combination thereof</p>
+<p>By providing either <code>csv_name(filename, header)</code> or
+<code>csv_name(filename, header, settings)</code>, the file is assumed
+to have data in comma separated value (CSV) text format. The
+<code>header</code> argument specifies the object which stores the
+separate elements of the header line; it must have the type
+<code>field&lt;std::string&gt;</code>. The optional
+<code>settings</code> argument is one of the following, or a combination
+thereof</p>
 <ul>
 <li>
-<code>csv_opts::trans</code>: Save/load the data with columns transposed to rows (and vice versa).</li>
+<code>csv_opts::trans</code>: Save/load the data with columns
+transposed to rows (and vice versa).</li>
 <li>
-<code>csv_opts::no_header</code>: Assume there is no header line; the header argument is not referenced.</li>
+<code>csv_opts::no_header</code>: Assume there is no header line;
+the header argument is not referenced.</li>
 <li>
-<code>csv_opts::semicolon</code>: Use semicolon (<code>;</code>) instead of comma (<code>,</code>) as the separator character.</li>
+<code>csv_opts::semicolon</code>: Use semicolon (<code>;</code>)
+instead of comma (<code>,</code>) as the separator character.</li>
 <li>
-<code>csv_opts::strict</code>: Interpret missing values as <code>NaN</code> (not applicable to sparse matrices).</li>
-<li>These settings can be combined using the <code>+</code> operator (e.g., <code>csv_opts::trans + csv_opts::no_header</code>)</li>
+<code>csv_opts::strict</code>: Interpret missing values as
+<code>NaN</code> (not applicable to sparse matrices).</li>
+<li>These settings can be combined using the <code>+</code> operator
+(e.g., <code>csv_opts::trans + csv_opts::no_header</code>)</li>
 </ul>
 <div class="section level3">
 <h3 id="caveats">Caveats<a class="anchor" aria-label="anchor" href="#caveats"></a>
 </h3>
 <ul>
-<li>For saving/loading HDF5 files, support for HDF5 must be enabled within Armadillo’s configuration. The <code>hdf5.h</code> header file must be available on your system and you will need to link with the HDF5 library (eg. <code>-lhdf5</code>). HDF5 support can be enabled by defining <code>ARMA_USE_HDF5</code> before including the Armadillo header.</li>
-<li>Enabling HD5 requires to vendor cpp11armadillo in orderto adhere to CRAN compliance.</li>
-<li>Armadillo save and load methods are only accessible from C++ side.</li>
-<li>Once an object is exported to R, it is more efficient to load/save using <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> and <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code>.</li>
+<li>For saving/loading HDF5 files, support for HDF5 must be enabled
+within Armadillo’s configuration. The <code>hdf5.h</code> header file
+must be available on your system and you will need to link with the HDF5
+library (eg. <code>-lhdf5</code>). HDF5 support can be enabled by
+defining <code>ARMA_USE_HDF5</code> before including the Armadillo
+header.</li>
+<li>Enabling HD5 requires to vendor cpp11armadillo in orderto adhere to
+CRAN compliance.</li>
+<li>Armadillo save and load methods are only accessible from C++
+side.</li>
+<li>Once an object is exported to R, it is more efficient to load/save
+using <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> and <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code>.</li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h3>
 <p>Save and load matrices:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] <span class="dt">int</span> <span class="va">saveload1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  arma::mat A(n, n, fill::randu);</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>  <span class="co">// default save format is arma_binary</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  A.save(<span class="st">"A.bin"</span>);</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>  <span class="co">// save in raw_ascii format</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>  A.save(<span class="st">"A.txt"</span>, arma::raw_ascii);</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>  <span class="co">// save in CSV format without a header</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>  A.save(<span class="st">"A.csv"</span>, arma::csv_ascii);</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>  <span class="co">// save in CSV format with a header</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>  arma::field&lt;<span class="bu">std::</span>string&gt; header(A.n_cols);</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>  header(<span class="dv">0</span>) = <span class="st">"foo"</span>;</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>  header(<span class="dv">1</span>) = <span class="st">"bar"</span>;  <span class="co">// etc</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a>  A.save(arma::csv_name(<span class="st">"A.csv"</span>, header));</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a>  <span class="co">// save in HDF5 format with internal dataset named as "my_data"</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a>  <span class="co">// see the caveats</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a>  <span class="co">// A.save(arma::hdf5_name("A.h5", "my_data"));</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a>  <span class="co">// automatically detect format type while loading</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true"></a>  arma::mat B;</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true"></a>  B.load(<span class="st">"A.bin"</span>);</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true"></a>  <span class="co">// force loading in arma_ascii format</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true"></a>  arma::mat C;</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true"></a>  C.load(<span class="st">"A.txt"</span>, arma::arma_ascii);</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true"></a></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true"></a>  <span class="co">// example of testing for success</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true"></a>  arma::mat D;</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true"></a>  <span class="dt">bool</span> ok = D.load(<span class="st">"A.bin"</span>);</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true"></a>  <span class="cf">if</span>(ok == <span class="kw">true</span>) {</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true"></a>    message(<span class="st">"Matrix loaded successfully"</span>);</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true"></a>    stop(<span class="st">"Problem with loading"</span>);</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true"></a>  }</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true"></a></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> <span class="dt">int</span> <span class="va">saveload1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  arma<span class="op">::</span>mat A<span class="op">(</span>n<span class="op">,</span> n<span class="op">,</span> fill<span class="op">::</span>randu<span class="op">);</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="co">// default save format is arma_binary</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  A<span class="op">.</span>save<span class="op">(</span><span class="st">"A.bin"</span><span class="op">);</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="co">// save in raw_ascii format</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  A<span class="op">.</span>save<span class="op">(</span><span class="st">"A.txt"</span><span class="op">,</span> arma<span class="op">::</span>raw_ascii<span class="op">);</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  <span class="co">// save in CSV format without a header</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>  A<span class="op">.</span>save<span class="op">(</span><span class="st">"A.csv"</span><span class="op">,</span> arma<span class="op">::</span>csv_ascii<span class="op">);</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  <span class="co">// save in CSV format with a header</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>  arma<span class="op">::</span>field<span class="op">&lt;</span><span class="bu">std::</span>string<span class="op">&gt;</span> header<span class="op">(</span>A<span class="op">.</span>n_cols<span class="op">);</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>  header<span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">=</span> <span class="st">"foo"</span><span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  header<span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">=</span> <span class="st">"bar"</span><span class="op">;</span>  <span class="co">// etc</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  A<span class="op">.</span>save<span class="op">(</span>arma<span class="op">::</span>csv_name<span class="op">(</span><span class="st">"A.csv"</span><span class="op">,</span> header<span class="op">));</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>  <span class="co">// save in HDF5 format with internal dataset named as "my_data"</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>  <span class="co">// see the caveats</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>  <span class="co">// A.save(arma::hdf5_name("A.h5", "my_data"));</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>  <span class="co">// automatically detect format type while loading</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>  arma<span class="op">::</span>mat B<span class="op">;</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>  B<span class="op">.</span>load<span class="op">(</span><span class="st">"A.bin"</span><span class="op">);</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a>  <span class="co">// force loading in arma_ascii format</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a>  arma<span class="op">::</span>mat C<span class="op">;</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>  C<span class="op">.</span>load<span class="op">(</span><span class="st">"A.txt"</span><span class="op">,</span> arma<span class="op">::</span>arma_ascii<span class="op">);</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a>  <span class="co">// example of testing for success</span></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a>  arma<span class="op">::</span>mat D<span class="op">;</span></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> D<span class="op">.</span>load<span class="op">(</span><span class="st">"A.bin"</span><span class="op">);</span></span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(</span>ok <span class="op">==</span> <span class="kw">true</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a>    message<span class="op">(</span><span class="st">"Matrix loaded successfully"</span><span class="op">);</span></span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a>    stop<span class="op">(</span><span class="st">"Problem with loading"</span><span class="op">);</span></span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Save and load fields:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] <span class="dt">int</span> <span class="va">saveload2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>  arma::field&lt;arma::mat&gt; F(n);</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++) {</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>    F(i) = arma::mat(n, n, fill::randu);</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>  }</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>  <span class="co">// default save format is arma_binary</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>  F.save(<span class="st">"F.bin"</span>);</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>  <span class="co">// save in PPM format</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>  F.save(<span class="st">"F.ppm"</span>, arma::ppm_binary);</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a>  <span class="co">// automatically detect format type while loading</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>  arma::field&lt;arma::mat&gt; G;</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>  G.load(<span class="st">"F.bin"</span>);</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> <span class="dt">int</span> <span class="va">saveload2_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  arma<span class="op">::</span>field<span class="op">&lt;</span>arma<span class="op">::</span>mat<span class="op">&gt;</span> F<span class="op">(</span>n<span class="op">);</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    F<span class="op">(</span>i<span class="op">)</span> <span class="op">=</span> arma<span class="op">::</span>mat<span class="op">(</span>n<span class="op">,</span> n<span class="op">,</span> fill<span class="op">::</span>randu<span class="op">);</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="co">// default save format is arma_binary</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  F<span class="op">.</span>save<span class="op">(</span><span class="st">"F.bin"</span><span class="op">);</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  <span class="co">// save in PPM format</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  F<span class="op">.</span>save<span class="op">(</span><span class="st">"F.ppm"</span><span class="op">,</span> arma<span class="op">::</span>ppm_binary<span class="op">);</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>  <span class="co">// automatically detect format type while loading</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>  arma<span class="op">::</span>field<span class="op">&lt;</span>arma<span class="op">::</span>mat<span class="op">&gt;</span> G<span class="op">;</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>  G<span class="op">.</span>load<span class="op">(</span><span class="st">"F.bin"</span><span class="op">);</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

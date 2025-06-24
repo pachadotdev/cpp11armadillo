@@ -13,15 +13,14 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../deps/jquery-3.6.1/jquery-3.6.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Decompositions, factorisations, inverses and equation solvers (dense matrices)">
 <meta property="og:description" content="cpp11armadillo">
 <meta property="og:image" content="../cpp11armadillo/logo.svg">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<!-- mathjax --><script src="file:///usr/share/javascript/mathjax/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
@@ -89,7 +88,8 @@
 
 
 
-<script src="decompositions-factorisations-inverses-and-equation-solvers-dense_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Decompositions, factorisations, inverses and equation solvers (dense matrices)</h1>
             
@@ -104,24 +104,31 @@
 <div class="section level2">
 <h2 id="chol">Cholesky decomposition of symmetric matrix<a class="anchor" aria-label="anchor" href="#chol"></a>
 </h2>
-<p>Cholesky decomposition of symmetric (or hermitian) matrix <code>X</code> into a triangular matrix <code>R</code>, with an optional permutation vector (or matrix) <code>P</code>. By default, <code>R</code> is upper triangular.</p>
+<p>Cholesky decomposition of symmetric (or hermitian) matrix
+<code>X</code> into a triangular matrix <code>R</code>, with an optional
+permutation vector (or matrix) <code>P</code>. By default,
+<code>R</code> is upper triangular.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>chol(R, P, X, layout, output)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="co">// form 1</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>mat R = chol(X) <span class="co">// chol(X, "upper") or chol(X, "lower") also work</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="co">// form 2</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>chol(R, X) <span class="co">// chol(R, X, "upper") or chol(R, X, "lower") also work</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="co">// form 3</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>chol(R, P, X, <span class="st">"upper"</span>, <span class="st">"vector"</span>) <span class="co">// chol(R, P, X, "lower", "vector") also work</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="co">// form 4</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>chol(R, P, X, <span class="st">"upper"</span>, <span class="st">"matrix"</span>) <span class="co">// chol(R, P, X, "lower", "matrix") also work</span></span></code></pre></div>
-<p>The optional argument <code>layout</code> is either <code>"upper"</code> or <code>"lower"</code>, which specifies whether <code>R</code> is upper or lower triangular.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>chol<span class="op">(</span>R<span class="op">,</span> P<span class="op">,</span> X<span class="op">,</span> layout<span class="op">,</span> output<span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">// form 1</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>mat R <span class="op">=</span> chol<span class="op">(</span>X<span class="op">)</span> <span class="co">// chol(X, "upper") or chol(X, "lower") also work</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">// form 2</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>chol<span class="op">(</span>R<span class="op">,</span> X<span class="op">)</span> <span class="co">// chol(R, X, "upper") or chol(R, X, "lower") also work</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">// form 3</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>chol<span class="op">(</span>R<span class="op">,</span> P<span class="op">,</span> X<span class="op">,</span> <span class="st">"upper"</span><span class="op">,</span> <span class="st">"vector"</span><span class="op">)</span> <span class="co">// chol(R, P, X, "lower", "vector") also work</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">// form 4</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>chol<span class="op">(</span>R<span class="op">,</span> P<span class="op">,</span> X<span class="op">,</span> <span class="st">"upper"</span><span class="op">,</span> <span class="st">"matrix"</span><span class="op">)</span> <span class="co">// chol(R, P, X, "lower", "matrix") also work</span></span></code></pre></div>
+<p>The optional argument <code>layout</code> is either
+<code>"upper"</code> or <code>"lower"</code>, which specifies whether
+<code>R</code> is upper or lower triangular.</p>
 <p>Forms 1 and 2 require <code>X</code> to be positive definite.</p>
-<p>Forms 3 and 4 require <code>X</code> to be positive semi-definite. The pivoted decomposition provides a permutation vector or matrix <code>P</code> with type <code>uvec</code> or <code>umat</code>.</p>
+<p>Forms 3 and 4 require <code>X</code> to be positive semi-definite.
+The pivoted decomposition provides a permutation vector or matrix
+<code>P</code> with type <code>uvec</code> or <code>umat</code>.</p>
 <p>The decomposition has the following form:</p>
 <ul>
 <li>Forms 1 and 2 with <code>layout = "upper"</code>: <span class="math inline">\(X = R^T R\)</span>.</li>
@@ -134,197 +141,251 @@
 <p>Caveats:</p>
 <ul>
 <li>
-<code>R = chol(X)</code> and <code>R = chol(X,layout)</code> reset <code>R</code> and throw an error if the decomposition fails. The other forms reset <code>R</code> and <code>P</code>, and return a bool set to false without an error.</li>
-<li>To find the inverse of a positive definite matrix, use <code>inv_sympd()</code>.</li>
+<code>R = chol(X)</code> and <code>R = chol(X,layout)</code> reset
+<code>R</code> and throw an error if the decomposition fails. The other
+forms reset <code>R</code> and <code>P</code>, and return a bool set to
+false without an error.</li>
+<li>To find the inverse of a positive definite matrix, use
+<code>inv_sympd()</code>.</li>
 </ul>
 <div class="section level3">
 <h3 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">chol1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>                                <span class="at">const</span> <span class="dt">char</span>* layout,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>                                <span class="at">const</span> <span class="dt">char</span>* output) {</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>  mat X = as_mat(x);</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>  mat Y = X.t() * X;</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>  mat R;</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>  umat P;</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>  <span class="dt">bool</span> ok = chol(R, P, Y, layout, output);</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(R);</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">chol1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">,</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>                                <span class="at">const</span> <span class="dt">char</span><span class="op">*</span> layout<span class="op">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>                                <span class="at">const</span> <span class="dt">char</span><span class="op">*</span> output<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  mat X <span class="op">=</span> as_mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  mat Y <span class="op">=</span> X<span class="op">.</span>t<span class="op">()</span> <span class="op">*</span> X<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  mat R<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  umat P<span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> chol<span class="op">(</span>R<span class="op">,</span> P<span class="op">,</span> Y<span class="op">,</span> layout<span class="op">,</span> output<span class="op">);</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>R<span class="op">);</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="eig_sym">Eigen decomposition of a symmetric matrix<a class="anchor" aria-label="anchor" href="#eig_sym"></a>
 </h2>
-<p>Eigen decomposition of dense symmetric (or hermitian) matrix <code>X</code> into eigenvalues <code>eigval</code> and eigenvectors <code>eigvec</code>.</p>
+<p>Eigen decomposition of dense symmetric (or hermitian) matrix
+<code>X</code> into eigenvalues <code>eigval</code> and eigenvectors
+<code>eigvec</code>.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>vec eigval = eig_sym(X)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>eig_sym(eigval, X)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>eig_sym(eigval, eigvec, X, <span class="st">"dc"</span>) <span class="co">// eig_sym(eigval, eigvec, X, "std") also works</span></span></code></pre></div>
-<p>The eigenvalues and corresponding eigenvectors are stored in <code>eigval</code> and <code>eigvec</code>, respectively. The eigenvalues are in ascending order. The eigenvectors are stored as column vectors.</p>
-<p>The optional argument <code>method</code> is either <code>"dc"</code> or <code>"std"</code>, which specifies the method used for the decomposition. The divide-and-conquer method (<code>dc</code>) provides slightly different results than the standard method (<code>std</code>), but is considerably faster for large matrices.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>vec eigval <span class="op">=</span> eig_sym<span class="op">(</span>X<span class="op">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>eig_sym<span class="op">(</span>eigval<span class="op">,</span> X<span class="op">)</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>eig_sym<span class="op">(</span>eigval<span class="op">,</span> eigvec<span class="op">,</span> X<span class="op">,</span> <span class="st">"dc"</span><span class="op">)</span> <span class="co">// eig_sym(eigval, eigvec, X, "std") also works</span></span></code></pre></div>
+<p>The eigenvalues and corresponding eigenvectors are stored in
+<code>eigval</code> and <code>eigvec</code>, respectively. The
+eigenvalues are in ascending order. The eigenvectors are stored as
+column vectors.</p>
+<p>The optional argument <code>method</code> is either <code>"dc"</code>
+or <code>"std"</code>, which specifies the method used for the
+decomposition. The divide-and-conquer method (<code>dc</code>) provides
+slightly different results than the standard method (<code>std</code>),
+but is considerably faster for large matrices.</p>
 <p>If <code>X</code> is not square sized, an error is thrown.</p>
 <p>If the decomposition fails:</p>
 <ul>
 <li>
-<code>eigval = eig_sym(X)</code> resets <code>eigval</code> and throws an error.</li>
+<code>eigval = eig_sym(X)</code> resets <code>eigval</code> and
+throws an error.</li>
 <li>
-<code>eig_sym(eigval, X)</code> resets <code>eigval</code> and returns a bool set to false without an error.</li>
+<code>eig_sym(eigval, X)</code> resets <code>eigval</code> and
+returns a bool set to false without an error.</li>
 <li>
-<code>eig_sym(eigval, eigvec, X)</code> resets <code>eigval</code> and <code>eigvec</code>, and returns a bool set to false without an error.</li>
+<code>eig_sym(eigval, eigvec, X)</code> resets <code>eigval</code>
+and <code>eigvec</code>, and returns a bool set to false without an
+error.</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">eig_sym1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>                                   <span class="at">const</span> <span class="dt">char</span>* method) {</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>  mat X = as_mat(x);</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>  vec eigval;</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>  mat eigvec;</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>  <span class="dt">bool</span> ok = eig_sym(eigval, eigvec, X, method);</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>  writable::list out(<span class="dv">3</span>);</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles(eigval);</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_doubles_matrix(eigvec);</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">eig_sym1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">,</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>                                   <span class="at">const</span> <span class="dt">char</span><span class="op">*</span> method<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  mat X <span class="op">=</span> as_mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  vec eigval<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  mat eigvec<span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> eig_sym<span class="op">(</span>eigval<span class="op">,</span> eigvec<span class="op">,</span> X<span class="op">,</span> method<span class="op">);</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>eigval<span class="op">);</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>eigvec<span class="op">);</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="eig_gen">Eigen decomposition of a general matrix<a class="anchor" aria-label="anchor" href="#eig_gen"></a>
 </h2>
-<p>Eigen decomposition of dense general (non-symmetric/non-hermitian) square matrix <code>X</code> into eigenvalues <code>eigval</code> and eigenvectors <code>eigvec</code>.</p>
+<p>Eigen decomposition of dense general (non-symmetric/non-hermitian)
+square matrix <code>X</code> into eigenvalues <code>eigval</code> and
+eigenvectors <code>eigvec</code>.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>cx_vec eigval = eig_gen(X, bal)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>eig_gen(eigval, X, bal)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>eig_gen(eigval, eigvec, X, bal)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>eig_gen(eigval, leigvec, reigvec, X, bal)</span></code></pre></div>
-<p>The eigenvalues and corresponding right eigenvectors are stored in <code>eigval</code> and <code>eigvec</code>, respectively. If both left and right eigenvectors are requested, they are stored in <code>leigvec</code> and <code>reigvec</code>, respectively. The eigenvectors are stored as column vectors.</p>
-<p>The optional argument <code>balance</code> is either <code>"balance"</code> or <code>"nobalance"</code>, which specifies whether to diagonally scale and permute <code>X</code> to improve conditioning of the eigenvalues. The default operation is <code>"nobalance"</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>cx_vec eigval <span class="op">=</span> eig_gen<span class="op">(</span>X<span class="op">,</span> bal<span class="op">)</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>eig_gen<span class="op">(</span>eigval<span class="op">,</span> X<span class="op">,</span> bal<span class="op">)</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>eig_gen<span class="op">(</span>eigval<span class="op">,</span> eigvec<span class="op">,</span> X<span class="op">,</span> bal<span class="op">)</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>eig_gen<span class="op">(</span>eigval<span class="op">,</span> leigvec<span class="op">,</span> reigvec<span class="op">,</span> X<span class="op">,</span> bal<span class="op">)</span></span></code></pre></div>
+<p>The eigenvalues and corresponding right eigenvectors are stored in
+<code>eigval</code> and <code>eigvec</code>, respectively. If both left
+and right eigenvectors are requested, they are stored in
+<code>leigvec</code> and <code>reigvec</code>, respectively. The
+eigenvectors are stored as column vectors.</p>
+<p>The optional argument <code>balance</code> is either
+<code>"balance"</code> or <code>"nobalance"</code>, which specifies
+whether to diagonally scale and permute <code>X</code> to improve
+conditioning of the eigenvalues. The default operation is
+<code>"nobalance"</code>.</p>
 <p>If <code>X</code> is not square sized, an error is thrown.</p>
 <p>If the decomposition fails:</p>
 <ul>
 <li>
-<code>eigval = eig_gen(X)</code> resets <code>eigval</code> and throws an error.</li>
+<code>eigval = eig_gen(X)</code> resets <code>eigval</code> and
+throws an error.</li>
 <li>
-<code>eig_gen(eigval, X)</code> resets <code>eigval</code> and returns a bool set to false without an error.</li>
+<code>eig_gen(eigval, X)</code> resets <code>eigval</code> and
+returns a bool set to false without an error.</li>
 <li>
-<code>eig_gen(eigval, eigvec, X)</code> resets <code>eigval</code> and <code>eigvec</code>, and returns a bool set to false without an error.</li>
+<code>eig_gen(eigval, eigvec, X)</code> resets <code>eigval</code>
+and <code>eigvec</code>, and returns a bool set to false without an
+error.</li>
 <li>
-<code>eig_gen(eigval, leigvec, reigvec, X)</code> resets <code>eigval</code>, <code>leigvec</code>, and <code>reigvec</code>, and returns a bool set to false without an error.</li>
+<code>eig_gen(eigval, leigvec, reigvec, X)</code> resets
+<code>eigval</code>, <code>leigvec</code>, and <code>reigvec</code>, and
+returns a bool set to false without an error.</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">eig_gen1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>                                   <span class="at">const</span> <span class="dt">char</span>* balance) {</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  mat X = as_mat(x);</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>  cx_vec eigval;</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>  cx_mat eigvec;</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>  <span class="dt">bool</span> ok = eig_gen(eigval, eigvec, X, balance);</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>  writable::list out(<span class="dv">3</span>);</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_complex_doubles(eigval);</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_complex_matrix(eigvec);</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">eig_gen1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">,</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                                   <span class="at">const</span> <span class="dt">char</span><span class="op">*</span> balance<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  mat X <span class="op">=</span> as_mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  cx_vec eigval<span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  cx_mat eigvec<span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> eig_gen<span class="op">(</span>eigval<span class="op">,</span> eigvec<span class="op">,</span> X<span class="op">,</span> balance<span class="op">);</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_complex_doubles<span class="op">(</span>eigval<span class="op">);</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_complex_matrix<span class="op">(</span>eigvec<span class="op">);</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="eig_pair">Eigen decomposition for a pair of general matrices<a class="anchor" aria-label="anchor" href="#eig_pair"></a>
 </h2>
-<p>Eigen decomposition for pair of general dense square matrices A and B of the same size, such that <code>A * eigvec = B * eigvec * diagmat(eigval)</code>. The eigenvalues and corresponding right eigenvectors are stored in <code>eigval</code> and <code>eigvec</code>, respectively. If both left and right eigenvectors are requested, they are stored in <code>leigvec</code> and <code>reigvec</code>, respectively. The eigenvectors are stored as column vectors.</p>
+<p>Eigen decomposition for pair of general dense square matrices A and B
+of the same size, such that
+<code>A * eigvec = B * eigvec * diagmat(eigval)</code>. The eigenvalues
+and corresponding right eigenvectors are stored in <code>eigval</code>
+and <code>eigvec</code>, respectively. If both left and right
+eigenvectors are requested, they are stored in <code>leigvec</code> and
+<code>reigvec</code>, respectively. The eigenvectors are stored as
+column vectors.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>cx_vec eigval = eig_pair(A, B)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>eig_pair(eigval, A, B)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>eig_pair(eigval, eigvec, A, B)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>eig_pair(eigval, leigvec, reigvec, A, B)</span></code></pre></div>
-<p>If <code>A</code> or <code>B</code> is not square sized, an error is thrown.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>cx_vec eigval <span class="op">=</span> eig_pair<span class="op">(</span>A<span class="op">,</span> B<span class="op">)</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>eig_pair<span class="op">(</span>eigval<span class="op">,</span> A<span class="op">,</span> B<span class="op">)</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>eig_pair<span class="op">(</span>eigval<span class="op">,</span> eigvec<span class="op">,</span> A<span class="op">,</span> B<span class="op">)</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>eig_pair<span class="op">(</span>eigval<span class="op">,</span> leigvec<span class="op">,</span> reigvec<span class="op">,</span> A<span class="op">,</span> B<span class="op">)</span></span></code></pre></div>
+<p>If <code>A</code> or <code>B</code> is not square sized, an error is
+thrown.</p>
 <p>If the decomposition fails:</p>
 <ul>
 <li>
-<code>eigval = eig_pair(A, B)</code> resets <code>eigval</code> and throws an error.</li>
+<code>eigval = eig_pair(A, B)</code> resets <code>eigval</code> and
+throws an error.</li>
 <li>
-<code>eig_pair(eigval, A, B)</code> resets <code>eigval</code> and returns a bool set to false without an error.</li>
+<code>eig_pair(eigval, A, B)</code> resets <code>eigval</code> and
+returns a bool set to false without an error.</li>
 <li>
-<code>eig_pair(eigval, eigvec, A, B)</code> resets <code>eigval</code> and <code>eigvec</code>, and returns a bool set to false without an error.</li>
+<code>eig_pair(eigval, eigvec, A, B)</code> resets
+<code>eigval</code> and <code>eigvec</code>, and returns a bool set to
+false without an error.</li>
 <li>
-<code>eig_pair(eigval, leigvec, reigvec, A, B)</code> resets <code>eigval</code>, <code>leigvec</code>, and <code>reigvec</code>, and returns a bool set to false without an error.</li>
+<code>eig_pair(eigval, leigvec, reigvec, A, B)</code> resets
+<code>eigval</code>, <code>leigvec</code>, and <code>reigvec</code>, and
+returns a bool set to false without an error.</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">eig_pair1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>                                    <span class="at">const</span> doubles_matrix&lt;&gt;&amp; b) {</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>  mat A = as_mat(a);</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>  mat B = as_mat(b);</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>  cx_vec eigval;</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>  cx_mat eigvec;</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a>  <span class="dt">bool</span> ok = eig_pair(eigval, eigvec, A, B);</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>  writable::list out(<span class="dv">3</span>);</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_complex_doubles(eigval);</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_complex_matrix(eigvec);</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">eig_pair1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> a<span class="op">,</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>                                    <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> b<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  mat A <span class="op">=</span> as_mat<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  mat B <span class="op">=</span> as_mat<span class="op">(</span>b<span class="op">);</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  cx_vec eigval<span class="op">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  cx_mat eigvec<span class="op">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> eig_pair<span class="op">(</span>eigval<span class="op">,</span> eigvec<span class="op">,</span> A<span class="op">,</span> B<span class="op">);</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_complex_doubles<span class="op">(</span>eigval<span class="op">);</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_complex_matrix<span class="op">(</span>eigvec<span class="op">);</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="hess">Upper Hessenberg decomposition<a class="anchor" aria-label="anchor" href="#hess"></a>
 </h2>
-<p>Upper Hessenberg decomposition of square matrix <code>X</code>, such that <code>X = U * H * U.t()</code>. <code>U</code> is a unitary matrix containing the Hessenberg vectors. <code>H</code> is a square matrix known as the upper Hessenberg matrix, with elements below the first subdiagonal set to zero.</p>
+<p>Upper Hessenberg decomposition of square matrix <code>X</code>, such
+that <code>X = U * H * U.t()</code>. <code>U</code> is a unitary matrix
+containing the Hessenberg vectors. <code>H</code> is a square matrix
+known as the upper Hessenberg matrix, with elements below the first
+subdiagonal set to zero.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>mat H = hess(X)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>hess(U, H, X)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>hess(H, X)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>mat H <span class="op">=</span> hess<span class="op">(</span>X<span class="op">)</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>hess<span class="op">(</span>U<span class="op">,</span> H<span class="op">,</span> X<span class="op">)</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>hess<span class="op">(</span>H<span class="op">,</span> X<span class="op">)</span></span></code></pre></div>
 <p>If <code>X</code> is not square sized, an error is thrown.</p>
 <p>If the decomposition fails:</p>
 <ul>
 <li>
-<code>H = hess(X)</code> resets <code>H</code> and throws an error.</li>
+<code>H = hess(X)</code> resets <code>H</code> and throws an
+error.</li>
 <li>
-<code>hess(H, X)</code> resets <code>H</code> and returns a bool set to false without an error.</li>
+<code>hess(H, X)</code> resets <code>H</code> and returns a bool set
+to false without an error.</li>
 <li>
-<code>hess(U, H, X)</code> resets <code>U</code> and <code>H</code>, and returns a bool set to false without an error.</li>
+<code>hess(U, H, X)</code> resets <code>U</code> and <code>H</code>,
+and returns a bool set to false without an error.</li>
 </ul>
 <p>Caveat: in general, upper Hessenberg decomposition is not unique.</p>
 <div class="section level3">
 <h3 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a>
 </h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">hess1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>  mat X = as_mat(x);</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>  mat H;</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>  <span class="dt">bool</span> ok = hess(H, X);</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(H);</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">hess1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  mat X <span class="op">=</span> as_mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  mat H<span class="op">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> hess<span class="op">(</span>H<span class="op">,</span> X<span class="op">);</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>H<span class="op">);</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -332,620 +393,804 @@
 </h2>
 <p>Inverse of general square matrix <code>A</code>.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>mat B = inv(A)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>mat B = inv(A, settings)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>inv(B, A)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a>inv(B, A, settings)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a>inv(B, rcond, A)</span></code></pre></div>
-<p>The <code>settings</code> argument is optional, it is one of the following:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>mat B <span class="op">=</span> inv<span class="op">(</span>A<span class="op">)</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>mat B <span class="op">=</span> inv<span class="op">(</span>A<span class="op">,</span> settings<span class="op">)</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>inv<span class="op">(</span>B<span class="op">,</span> A<span class="op">)</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>inv<span class="op">(</span>B<span class="op">,</span> A<span class="op">,</span> settings<span class="op">)</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>inv<span class="op">(</span>B<span class="op">,</span> rcond<span class="op">,</span> A<span class="op">)</span></span></code></pre></div>
+<p>The <code>settings</code> argument is optional, it is one of the
+following:</p>
 <ul>
 <li>
-<code>inv_opts::no_ugly</code>: do not provide inverses for poorly conditioned matrices (where <code>rcond &lt; A.n_rows * datum::eps</code>).</li>
+<code>inv_opts::no_ugly</code>: do not provide inverses for poorly
+conditioned matrices (where
+<code>rcond &lt; A.n_rows * datum::eps</code>).</li>
 <li>
-<code>inv_opts::allow_approx</code>: allow approximate inverses for rank deficient or poorly conditioned matrices.</li>
+<code>inv_opts::allow_approx</code>: allow approximate inverses for
+rank deficient or poorly conditioned matrices.</li>
 </ul>
-<p>The reciprocal condition number is optionally calculated and stored in <code>rcond</code>:</p>
+<p>The reciprocal condition number is optionally calculated and stored
+in <code>rcond</code>:</p>
 <ul>
 <li>
-<code>rcond</code> close to 1 suggests that <code>A</code> is well-conditioned.</li>
+<code>rcond</code> close to 1 suggests that <code>A</code> is
+well-conditioned.</li>
 <li>
-<code>rcond</code> close to 0 suggests that <code>A</code> is badly conditioned.</li>
+<code>rcond</code> close to 0 suggests that <code>A</code> is badly
+conditioned.</li>
 </ul>
 <p>If <code>A</code> is not square sized, an error is thrown.</p>
 <p>If <code>A</code> appears to be singular:</p>
 <ul>
 <li>
-<code>B = inv(A)</code> resets <code>B</code> and throws an error.</li>
+<code>B = inv(A)</code> resets <code>B</code> and throws an
+error.</li>
 <li>
-<code>inv(B, A)</code> resets <code>B</code> and returns a bool set to false without an error.</li>
+<code>inv(B, A)</code> resets <code>B</code> and returns a bool set
+to false without an error.</li>
 <li>
-<code>inv(B, rcond, A)</code> resets <code>B</code>, sets <code>rcond</code> to zero, and returns a bool set to false without an error.</li>
+<code>inv(B, rcond, A)</code> resets <code>B</code>, sets
+<code>rcond</code> to zero, and returns a bool set to false without an
+error.</li>
 </ul>
 <p>Caveats:</p>
 <ul>
-<li>If matrix <code>A</code> is known to be symmetric positive definite, <code>inv_sympd()</code> is faster.</li>
-<li>If matrix <code>A</code> is known to be diagonal, use <code>inv(diagmat(A))</code>.</li>
-<li>If matrix <code>A</code> is known to be triangular, use <code>inv(trimatu(A))</code> or <code>inv(trimatl(A))</code>.</li>
+<li>If matrix <code>A</code> is known to be symmetric positive definite,
+<code>inv_sympd()</code> is faster.</li>
+<li>If matrix <code>A</code> is known to be diagonal, use
+<code>inv(diagmat(A))</code>.</li>
+<li>If matrix <code>A</code> is known to be triangular, use
+<code>inv(trimatu(A))</code> or <code>inv(trimatl(A))</code>.</li>
 </ul>
-<p>To solve a system of linear equations, such as <code>Z = inv(X) * Y</code>, <code><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve()</a></code> can be faster and/or more accurate.</p>
+<p>To solve a system of linear equations, such as
+<code>Z = inv(X) * Y</code>, <code><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve()</a></code> can be faster and/or
+more accurate.</p>
 <div class="section level3">
 <h3 id="examples-5">Examples<a class="anchor" aria-label="anchor" href="#examples-5"></a>
 </h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">inv1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>  mat A = as_mat(a);</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a>  mat B;</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>  <span class="dt">bool</span> ok = inv(B, A, inv_opts::allow_approx);</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(B);</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">inv1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  mat A <span class="op">=</span> as_mat<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  mat B<span class="op">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> inv<span class="op">(</span>B<span class="op">,</span> A<span class="op">,</span> inv_opts<span class="op">::</span>allow_approx<span class="op">);</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>B<span class="op">);</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="inv_sympd">Inverse of a symmetric positive definite matrix<a class="anchor" aria-label="anchor" href="#inv_sympd"></a>
 </h2>
-<p>Inverse of symmetric/hermitian positive definite matrix <code>A</code>.</p>
+<p>Inverse of symmetric/hermitian positive definite matrix
+<code>A</code>.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a>mat B = inv_sympd(A)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>mat B = inv_sympd(A, settings)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>inv_sympd(B, A)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a>inv_sympd(B, A, settings)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a>inv_sympd(B, rcond, A)</span></code></pre></div>
-<p>The <code>settings</code> argument is optional, it is one of the following:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>mat B <span class="op">=</span> inv_sympd<span class="op">(</span>A<span class="op">)</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>mat B <span class="op">=</span> inv_sympd<span class="op">(</span>A<span class="op">,</span> settings<span class="op">)</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>inv_sympd<span class="op">(</span>B<span class="op">,</span> A<span class="op">)</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>inv_sympd<span class="op">(</span>B<span class="op">,</span> A<span class="op">,</span> settings<span class="op">)</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>inv_sympd<span class="op">(</span>B<span class="op">,</span> rcond<span class="op">,</span> A<span class="op">)</span></span></code></pre></div>
+<p>The <code>settings</code> argument is optional, it is one of the
+following:</p>
 <ul>
 <li>
-<code>inv_opts::no_ugly</code>: do not provide inverses for poorly conditioned matrices (where <code>rcond &lt; A.n_rows * datum::eps</code>).</li>
+<code>inv_opts::no_ugly</code>: do not provide inverses for poorly
+conditioned matrices (where
+<code>rcond &lt; A.n_rows * datum::eps</code>).</li>
 <li>
-<code>inv_opts::allow_approx</code>: allow approximate inverses for rank deficient or poorly conditioned matrices.</li>
+<code>inv_opts::allow_approx</code>: allow approximate inverses for
+rank deficient or poorly conditioned matrices.</li>
 </ul>
-<p>The reciprocal condition number is optionally calculated and stored in <code>rcond</code>:</p>
+<p>The reciprocal condition number is optionally calculated and stored
+in <code>rcond</code>:</p>
 <ul>
 <li>
-<code>rcond</code> close to 1 suggests that <code>A</code> is well-conditioned.</li>
+<code>rcond</code> close to 1 suggests that <code>A</code> is
+well-conditioned.</li>
 <li>
-<code>rcond</code> close to 0 suggests that <code>A</code> is badly conditioned.</li>
+<code>rcond</code> close to 0 suggests that <code>A</code> is badly
+conditioned.</li>
 </ul>
 <p>If <code>A</code> is not square sized, an error is thrown.</p>
-<p>If <code>A</code> is not symmetric positive definite, an error is thrown.</p>
+<p>If <code>A</code> is not symmetric positive definite, an error is
+thrown.</p>
 <p>If <code>A</code> appears to be singular:</p>
 <ul>
 <li>
-<code>B = inv_sympd(A)</code> resets <code>B</code> and throws an error.</li>
+<code>B = inv_sympd(A)</code> resets <code>B</code> and throws an
+error.</li>
 <li>
-<code>inv_sympd(B, A)</code> resets <code>B</code> and returns a bool set to false without an error.</li>
+<code>inv_sympd(B, A)</code> resets <code>B</code> and returns a
+bool set to false without an error.</li>
 <li>
-<code>inv_sympd(B, rcond, A)</code> resets <code>B</code>, sets <code>rcond</code> to zero, and returns a bool set to false without an error.</li>
+<code>inv_sympd(B, rcond, A)</code> resets <code>B</code>, sets
+<code>rcond</code> to zero, and returns a bool set to false without an
+error.</li>
 </ul>
 <p>Caveats:</p>
 <ul>
-<li>If matrix <code>A</code> is known to be symmetric, use <code>inv_sympd(symmatu(A))</code> or <code>inv_sympd(symmatl(A))</code>.</li>
-<li>If matrix <code>A</code> is known to be diagonal, use <code>inv(diagmat(A))</code>.</li>
-<li>If matrix <code>A</code> is known to be triangular, use <code>inv(trimatu(A))</code> or <code>inv(trimatl(A))</code>.</li>
-<li>To solve a system of linear equations, such as <code>Z = inv(X) * Y</code>, <code><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve()</a></code> can be faster and/or more accurate.</li>
+<li>If matrix <code>A</code> is known to be symmetric, use
+<code>inv_sympd(symmatu(A))</code> or
+<code>inv_sympd(symmatl(A))</code>.</li>
+<li>If matrix <code>A</code> is known to be diagonal, use
+<code>inv(diagmat(A))</code>.</li>
+<li>If matrix <code>A</code> is known to be triangular, use
+<code>inv(trimatu(A))</code> or <code>inv(trimatl(A))</code>.</li>
+<li>To solve a system of linear equations, such as
+<code>Z = inv(X) * Y</code>, <code><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve()</a></code> can be faster and/or
+more accurate.</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-6">Examples<a class="anchor" aria-label="anchor" href="#examples-6"></a>
 </h3>
-<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">inv_sympd1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>  mat A = as_mat(a);</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>  mat B;</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a>  <span class="dt">bool</span> ok = inv_sympd(B, A, inv_opts::allow_approx);</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(B);</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">inv_sympd1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  mat A <span class="op">=</span> as_mat<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  mat B<span class="op">;</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> inv_sympd<span class="op">(</span>B<span class="op">,</span> A<span class="op">,</span> inv_opts<span class="op">::</span>allow_approx<span class="op">);</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>B<span class="op">);</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="lu">Lowe-upper decomposition with partial pivoting<a class="anchor" aria-label="anchor" href="#lu"></a>
 </h2>
-<p>Lower-upper decomposition (with partial pivoting) of matrix <code>X</code>.</p>
+<p>Lower-upper decomposition (with partial pivoting) of matrix
+<code>X</code>.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="co">// form 1</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>lu(L, U, P, X)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a><span class="co">// form 2</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a>lu(L, U, X)</span></code></pre></div>
-<p>The first form provides a lower-triangular matrix <code>L</code>, an upper-triangular matrix <code>U</code>, and a permutation matrix <code>P</code>, such that <code>P.t() * L * U = X</code>.</p>
-<p>The second form provides permuted <code>L</code> and <code>U</code>, such that <code>L * U = X</code>. Note that in this case <code>L</code> is generally not lower-triangular.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co">// form 1</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>lu<span class="op">(</span>L<span class="op">,</span> U<span class="op">,</span> P<span class="op">,</span> X<span class="op">)</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">// form 2</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>lu<span class="op">(</span>L<span class="op">,</span> U<span class="op">,</span> X<span class="op">)</span></span></code></pre></div>
+<p>The first form provides a lower-triangular matrix <code>L</code>, an
+upper-triangular matrix <code>U</code>, and a permutation matrix
+<code>P</code>, such that <code>P.t() * L * U = X</code>.</p>
+<p>The second form provides permuted <code>L</code> and <code>U</code>,
+such that <code>L * U = X</code>. Note that in this case <code>L</code>
+is generally not lower-triangular.</p>
 <p>If the decomposition fails:</p>
 <ul>
 <li>
-<code>lu(L, U, P, X)</code> resets <code>L</code>, <code>U</code>, and <code>P</code>, and returns a bool set to false without an error.</li>
+<code>lu(L, U, P, X)</code> resets <code>L</code>, <code>U</code>,
+and <code>P</code>, and returns a bool set to false without an
+error.</li>
 <li>
-<code>lu(L, U, X)</code> resets <code>L</code> and <code>U</code>, and returns a bool set to false without an error.</li>
+<code>lu(L, U, X)</code> resets <code>L</code> and <code>U</code>,
+and returns a bool set to false without an error.</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-7">Examples<a class="anchor" aria-label="anchor" href="#examples-7"></a>
 </h3>
-<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">lu1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a>  mat X = as_mat(x);</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a>  mat L, U, P;</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a>  <span class="dt">bool</span> ok = lu(L, U, P, X);</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a>  writable::list out(<span class="dv">4</span>);</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(L);</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_doubles_matrix(U);</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true"></a>  out[<span class="dv">3</span>] = as_doubles_matrix(P);</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true"></a></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">lu1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  mat X <span class="op">=</span> as_mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>  mat L<span class="op">,</span> U<span class="op">,</span> P<span class="op">;</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> lu<span class="op">(</span>L<span class="op">,</span> U<span class="op">,</span> P<span class="op">,</span> X<span class="op">);</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>L<span class="op">);</span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>U<span class="op">);</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>P<span class="op">);</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="null">Find the orthonormal basis of the null space of a matrix<a class="anchor" aria-label="anchor" href="#null"></a>
 </h2>
-<p>Find the orthonormal basis of the null space of matrix <code>A</code>.</p>
+<p>Find the orthonormal basis of the null space of matrix
+<code>A</code>.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>mat B = null(A)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a>B = null(A, tolerance)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a>null(B, A)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a>null(B, A, tolerance)</span></code></pre></div>
-<p>The dimension of the range space is the number of singular values of <code>A</code> not greater than <code>tolerance</code>.</p>
-<p>The <code>tolerance</code> argument is optional; by default <code>tolerance = max_rc * max_sv * epsilon</code>, where:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>mat B <span class="op">=</span> null<span class="op">(</span>A<span class="op">)</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>B <span class="op">=</span> null<span class="op">(</span>A<span class="op">,</span> tolerance<span class="op">)</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>null<span class="op">(</span>B<span class="op">,</span> A<span class="op">)</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>null<span class="op">(</span>B<span class="op">,</span> A<span class="op">,</span> tolerance<span class="op">)</span></span></code></pre></div>
+<p>The dimension of the range space is the number of singular values of
+<code>A</code> not greater than <code>tolerance</code>.</p>
+<p>The <code>tolerance</code> argument is optional; by default
+<code>tolerance = max_rc * max_sv * epsilon</code>, where:</p>
 <ul>
-<li><span class="math inline">\(\max_{\text{rc}} = \max(n_\text{rows}, n_\text{cols})\)</span></li>
+<li><span class="math inline">\(\max_{\text{rc}} = \max(n_\text{rows},
+n_\text{cols})\)</span></li>
 <li>
-<span class="math inline">\(\max_{\text{sv}} = \max(\text{maximum singular value of } A)\)</span> (i.e. spectral norm)</li>
-<li><span class="math inline">\(\epsilon = 1 - \text{least value greater than 1 that is representable}\)</span></li>
+<span class="math inline">\(\max_{\text{sv}} = \max(\text{maximum
+singular value of } A)\)</span> (i.e. spectral norm)</li>
+<li><span class="math inline">\(\epsilon = 1 - \text{least value greater
+than 1 that is representable}\)</span></li>
 </ul>
-<p>The computation is based on singular value decomposition. If the decomposition fails:</p>
+<p>The computation is based on singular value decomposition. If the
+decomposition fails:</p>
 <ul>
 <li>
-<code>B = null(A)</code> resets <code>B</code> and throws an error.</li>
+<code>B = null(A)</code> resets <code>B</code> and throws an
+error.</li>
 <li>
-<code>null(B, A)</code> resets <code>B</code> and returns a bool set to false without an error.</li>
+<code>null(B, A)</code> resets <code>B</code> and returns a bool set
+to false without an error.</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-8">Examples<a class="anchor" aria-label="anchor" href="#examples-8"></a>
 </h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">null1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a>  mat A = as_mat(a);</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a>  mat B;</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a>  <span class="dt">bool</span> ok = null(B, A);</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(B);</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true"></a></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">null1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  mat A <span class="op">=</span> as_mat<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>  mat B<span class="op">;</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> null<span class="op">(</span>B<span class="op">,</span> A<span class="op">);</span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>B<span class="op">);</span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="range">Find the orthonormal basis of the range space of a matrix<a class="anchor" aria-label="anchor" href="#range"></a>
 </h2>
-<p>Find the orthonormal basis of the range space of matrix <code>A</code>, so that <span class="math inline">\(B^t B \approx I_{r,r}\)</span>, where <span class="math inline">\(r = \text{rank}(A)\)</span>.</p>
+<p>Find the orthonormal basis of the range space of matrix
+<code>A</code>, so that <span class="math inline">\(B^t B \approx
+I_{r,r}\)</span>, where <span class="math inline">\(r =
+\text{rank}(A)\)</span>.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a>mat B = orth(A)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a>B = orth(A, tolerance)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a>orth(B, A)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true"></a>orth(B, A, tolerance)</span></code></pre></div>
-<p>The dimension of the range space is the number of singular values of <code>A</code> greater than <code>tolerance</code>.</p>
-<p>The <code>tolerance</code> argument is optional; by default <code>tolerance = max_rc * max_sv * epsilon</code>, where:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>mat B <span class="op">=</span> orth<span class="op">(</span>A<span class="op">)</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>B <span class="op">=</span> orth<span class="op">(</span>A<span class="op">,</span> tolerance<span class="op">)</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>orth<span class="op">(</span>B<span class="op">,</span> A<span class="op">)</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>orth<span class="op">(</span>B<span class="op">,</span> A<span class="op">,</span> tolerance<span class="op">)</span></span></code></pre></div>
+<p>The dimension of the range space is the number of singular values of
+<code>A</code> greater than <code>tolerance</code>.</p>
+<p>The <code>tolerance</code> argument is optional; by default
+<code>tolerance = max_rc * max_sv * epsilon</code>, where:</p>
 <ul>
-<li><span class="math inline">\(\max_{\text{rc}} = \max(n_\text{rows}, n_\text{cols})\)</span></li>
+<li><span class="math inline">\(\max_{\text{rc}} = \max(n_\text{rows},
+n_\text{cols})\)</span></li>
 <li>
-<span class="math inline">\(\max_{\text{sv}} = \max(\text{maximum singular value of } A)\)</span> (i.e. spectral norm)</li>
-<li><span class="math inline">\(\epsilon = 1 - \text{least value greater than 1 that is representable}\)</span></li>
+<span class="math inline">\(\max_{\text{sv}} = \max(\text{maximum
+singular value of } A)\)</span> (i.e. spectral norm)</li>
+<li><span class="math inline">\(\epsilon = 1 - \text{least value greater
+than 1 that is representable}\)</span></li>
 </ul>
-<p>The computation is based on singular value decomposition. If the decomposition fails:</p>
+<p>The computation is based on singular value decomposition. If the
+decomposition fails:</p>
 <ul>
 <li>
-<code>B = orth(A)</code> resets <code>B</code> and throws an error.</li>
+<code>B = orth(A)</code> resets <code>B</code> and throws an
+error.</li>
 <li>
-<code>orth(B, A)</code> resets <code>B</code> and returns a bool set to false without an error.</li>
+<code>orth(B, A)</code> resets <code>B</code> and returns a bool set
+to false without an error.</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-9">Examples<a class="anchor" aria-label="anchor" href="#examples-9"></a>
 </h3>
-<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">orth1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a>  mat A = as_mat(a);</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true"></a>  mat B;</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true"></a>  <span class="dt">bool</span> ok = orth(B, A);</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(B);</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true"></a></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">orth1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  mat A <span class="op">=</span> as_mat<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>  mat B<span class="op">;</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> orth<span class="op">(</span>B<span class="op">,</span> A<span class="op">);</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>B<span class="op">);</span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="pinv">Moore-Penrose pseudo-inverse<a class="anchor" aria-label="anchor" href="#pinv"></a>
 </h2>
-<p>Moore-Penrose pseudo-inverse (generalised inverse) of matrix <code>A</code> based on singular value decomposition.</p>
+<p>Moore-Penrose pseudo-inverse (generalised inverse) of matrix
+<code>A</code> based on singular value decomposition.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a>B = pinv(A)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a>B = pinv(A, tolerance)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a>B = pinv(A, tolerance, method)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true"></a>pinv(B, A)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true"></a>pinv(B, A, tolerance)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true"></a>pinv(B, A, tolerance, method)</span></code></pre></div>
-<p>The <code>tolerance</code> argument is optional; by default <code>tolerance = max_rc * max_sv * epsilon</code>, where:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>B <span class="op">=</span> pinv<span class="op">(</span>A<span class="op">)</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>B <span class="op">=</span> pinv<span class="op">(</span>A<span class="op">,</span> tolerance<span class="op">)</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>B <span class="op">=</span> pinv<span class="op">(</span>A<span class="op">,</span> tolerance<span class="op">,</span> method<span class="op">)</span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>pinv<span class="op">(</span>B<span class="op">,</span> A<span class="op">)</span></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>pinv<span class="op">(</span>B<span class="op">,</span> A<span class="op">,</span> tolerance<span class="op">)</span></span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>pinv<span class="op">(</span>B<span class="op">,</span> A<span class="op">,</span> tolerance<span class="op">,</span> method<span class="op">)</span></span></code></pre></div>
+<p>The <code>tolerance</code> argument is optional; by default
+<code>tolerance = max_rc * max_sv * epsilon</code>, where:</p>
 <ul>
-<li><span class="math inline">\(\max_{\text{rc}} = \max(n_\text{rows}, n_\text{cols})\)</span></li>
+<li><span class="math inline">\(\max_{\text{rc}} = \max(n_\text{rows},
+n_\text{cols})\)</span></li>
 <li>
-<span class="math inline">\(\max_{\text{sv}} = \max(\text{maximum singular value of } A)\)</span> (i.e. spectral norm)</li>
-<li><span class="math inline">\(\epsilon = 1 - \text{least value greater than 1 that is representable}\)</span></li>
+<span class="math inline">\(\max_{\text{sv}} = \max(\text{maximum
+singular value of } A)\)</span> (i.e. spectral norm)</li>
+<li><span class="math inline">\(\epsilon = 1 - \text{least value greater
+than 1 that is representable}\)</span></li>
 </ul>
-<p>Any singular values less than <code>tolerance</code> are treated as zero.</p>
-<p>The <code>method</code> argument is optional; <code>method</code> is either <code>"dc"</code> or <code>"std"</code>:</p>
+<p>Any singular values less than <code>tolerance</code> are treated as
+zero.</p>
+<p>The <code>method</code> argument is optional; <code>method</code> is
+either <code>"dc"</code> or <code>"std"</code>:</p>
 <ul>
 <li>
-<code>"dc"</code> indicates divide-and-conquer method (default setting).</li>
+<code>"dc"</code> indicates divide-and-conquer method (default
+setting).</li>
 <li>
 <code>"std"</code> indicates standard method.</li>
-<li>The divide-and-conquer method provides slightly different results than the standard method, but is considerably faster for large matrices.</li>
+<li>The divide-and-conquer method provides slightly different results
+than the standard method, but is considerably faster for large
+matrices.</li>
 </ul>
 <p>If the decomposition fails:</p>
 <ul>
 <li>
-<code>B = pinv(A)</code> resets <code>B</code> and throws an error.</li>
+<code>B = pinv(A)</code> resets <code>B</code> and throws an
+error.</li>
 <li>
-<code>pinv(B, A)</code> resets <code>B</code> and returns a bool set to false without an error.</li>
+<code>pinv(B, A)</code> resets <code>B</code> and returns a bool set
+to false without an error.</li>
 </ul>
 <p>Caveats:</p>
 <ul>
-<li>To find approximate solutions to under-/over-determined or rank deficient systems of linear equations, <code><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve()</a></code> can be considerably faster and/or more accurate.</li>
-<li>If the given matrix <code>A</code> is square-sized and only occasionally rank deficient, using <code>inv()</code> or <code>inv_sympd()</code> with the <code>inv_opts::allow_approx</code> option is faster.</li>
+<li>To find approximate solutions to under-/over-determined or rank
+deficient systems of linear equations, <code><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve()</a></code> can be
+considerably faster and/or more accurate.</li>
+<li>If the given matrix <code>A</code> is square-sized and only
+occasionally rank deficient, using <code>inv()</code> or
+<code>inv_sympd()</code> with the <code>inv_opts::allow_approx</code>
+option is faster.</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-10">Examples<a class="anchor" aria-label="anchor" href="#examples-10"></a>
 </h3>
-<div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">pinv1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a) {</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a>  mat A = as_mat(a);</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true"></a>  mat B = pinv(A);</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true"></a></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true"></a>  writable::list out(<span class="dv">1</span>);</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true"></a>  out[<span class="dv">0</span>] = as_doubles_matrix(B);</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true"></a></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">pinv1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>  mat A <span class="op">=</span> as_mat<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>  mat B <span class="op">=</span> pinv<span class="op">(</span>A<span class="op">);</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>B<span class="op">);</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="qr">QR decomposition<a class="anchor" aria-label="anchor" href="#qr"></a>
 </h2>
-<p>QR decomposition of matrix <code>X</code> into an orthogonal matrix <code>Q</code> and a right triangular matrix <code>R</code>, with an optional permutation matrix/vector <code>P</code>.</p>
+<p>QR decomposition of matrix <code>X</code> into an orthogonal matrix
+<code>Q</code> and a right triangular matrix <code>R</code>, with an
+optional permutation matrix/vector <code>P</code>.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="co">// form 1</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a>qr(Q, R, X)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a><span class="co">// form 2</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true"></a>qr(Q, R, P, X, <span class="st">"vector"</span>)</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true"></a><span class="co">// form 3</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true"></a>qr(Q, R, P, X, <span class="st">"matrix"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co">// form 1</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>qr<span class="op">(</span>Q<span class="op">,</span> R<span class="op">,</span> X<span class="op">)</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co">// form 2</span></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>qr<span class="op">(</span>Q<span class="op">,</span> R<span class="op">,</span> P<span class="op">,</span> X<span class="op">,</span> <span class="st">"vector"</span><span class="op">)</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">// form 3</span></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>qr<span class="op">(</span>Q<span class="op">,</span> R<span class="op">,</span> P<span class="op">,</span> X<span class="op">,</span> <span class="st">"matrix"</span><span class="op">)</span></span></code></pre></div>
 <p>The decomposition has the following form:</p>
 <ul>
 <li>Form 1: <span class="math inline">\(Q * R = X\)</span>.</li>
-<li>Form 2: <span class="math inline">\(Q * R = Y\)</span>, where <code>Y</code> is a non-contiguous view of <code>X</code> with columns permuted by <code>P</code>, and <code>P</code> is a permutation vector with type <code>uvec</code>.</li>
-<li>Form 3: <span class="math inline">\(Q * R = X * P\)</span>, where <code>P</code> is a permutation matrix with type <code>umat</code>.</li>
+<li>Form 2: <span class="math inline">\(Q * R = Y\)</span>, where
+<code>Y</code> is a non-contiguous view of <code>X</code> with columns
+permuted by <code>P</code>, and <code>P</code> is a permutation vector
+with type <code>uvec</code>.</li>
+<li>Form 3: <span class="math inline">\(Q * R = X * P\)</span>, where
+<code>P</code> is a permutation matrix with type <code>umat</code>.</li>
 </ul>
-<p>If <code>P</code> is specified, a column pivoting decomposition is used.</p>
-<p>The diagonal entries of <code>R</code> are ordered from largest to smallest magnitude.</p>
-<p>If the decomposition fails, <code>Q</code>, <code>R</code> and <code>P</code> are reset, and the function returns a bool set to false (an error is not thrown).</p>
+<p>If <code>P</code> is specified, a column pivoting decomposition is
+used.</p>
+<p>The diagonal entries of <code>R</code> are ordered from largest to
+smallest magnitude.</p>
+<p>If the decomposition fails, <code>Q</code>, <code>R</code> and
+<code>P</code> are reset, and the function returns a bool set to false
+(an error is not thrown).</p>
 <div class="section level3">
 <h3 id="examples-11">Examples<a class="anchor" aria-label="anchor" href="#examples-11"></a>
 </h3>
-<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">qr1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true"></a>  mat X = as_mat(x);</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true"></a></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true"></a>  mat Q, R;</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true"></a>  umat P;</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true"></a></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true"></a>  <span class="dt">bool</span> ok = qr(Q, R, P, X, <span class="st">"matrix"</span>);</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true"></a>  writable::list out(<span class="dv">4</span>);</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(Q);</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_doubles_matrix(R);</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true"></a>  out[<span class="dv">3</span>] = as_integers_matrix(P);</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true"></a></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">qr1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>  mat X <span class="op">=</span> as_mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>  mat Q<span class="op">,</span> R<span class="op">;</span></span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>  umat P<span class="op">;</span></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> qr<span class="op">(</span>Q<span class="op">,</span> R<span class="op">,</span> P<span class="op">,</span> X<span class="op">,</span> <span class="st">"matrix"</span><span class="op">);</span></span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
+<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>Q<span class="op">);</span></span>
+<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>R<span class="op">);</span></span>
+<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> as_integers_matrix<span class="op">(</span>P<span class="op">);</span></span>
+<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="qr_econ">Economic QR decomposition<a class="anchor" aria-label="anchor" href="#qr_econ"></a>
 </h2>
-<p>Economical QR decomposition of matrix <code>X</code> into an orthogonal matrix <code>Q</code> and a right triangular matrix <code>R</code>, such that <span class="math inline">\(QR = X\)</span>.</p>
-<p>If the number of rows of <code>X</code> is greater than the number of columns, only the first <code>n</code> rows of <code>R</code> and the first <code>n</code> columns of <code>Q</code> are calculated, where <code>n</code> is the number of columns of <code>X</code>.</p>
-<p>If the decomposition fails, <code>Q</code> and <code>R</code> are reset, and the function returns a bool set to false (an error is not thrown).</p>
+<p>Economical QR decomposition of matrix <code>X</code> into an
+orthogonal matrix <code>Q</code> and a right triangular matrix
+<code>R</code>, such that <span class="math inline">\(QR =
+X\)</span>.</p>
+<p>If the number of rows of <code>X</code> is greater than the number of
+columns, only the first <code>n</code> rows of <code>R</code> and the
+first <code>n</code> columns of <code>Q</code> are calculated, where
+<code>n</code> is the number of columns of <code>X</code>.</p>
+<p>If the decomposition fails, <code>Q</code> and <code>R</code> are
+reset, and the function returns a bool set to false (an error is not
+thrown).</p>
 <div class="section level3">
 <h3 id="examples-12">Examples<a class="anchor" aria-label="anchor" href="#examples-12"></a>
 </h3>
-<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">qr_econ1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a>  mat X = as_mat(x);</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true"></a>  mat Q, R;</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true"></a></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true"></a>  <span class="dt">bool</span> ok = qr_econ(Q, R, X);</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true"></a></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true"></a>  writable::list out(<span class="dv">3</span>);</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(Q);</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_doubles_matrix(R);</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true"></a></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">qr_econ1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  mat X <span class="op">=</span> as_mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>  mat Q<span class="op">,</span> R<span class="op">;</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> qr_econ<span class="op">(</span>Q<span class="op">,</span> R<span class="op">,</span> X<span class="op">);</span></span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>Q<span class="op">);</span></span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>R<span class="op">);</span></span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="qz">Generalized Schur decomposition<a class="anchor" aria-label="anchor" href="#qz"></a>
 </h2>
-<p>Generalised Schur decomposition for pair of general square matrices <code>A</code> and <code>B</code> of the same size, such that <span class="math inline">\(A = Q^T AA Z^T\)</span> and <span class="math inline">\(B = Q^T BB Z^T\)</span>.</p>
-<p>The <code>select</code> argument is optional and specifies the ordering of the top left of the Schur form. It is one of the following:</p>
+<p>Generalised Schur decomposition for pair of general square matrices
+<code>A</code> and <code>B</code> of the same size, such that <span class="math inline">\(A = Q^T AA Z^T\)</span> and <span class="math inline">\(B = Q^T BB Z^T\)</span>.</p>
+<p>The <code>select</code> argument is optional and specifies the
+ordering of the top left of the Schur form. It is one of the
+following:</p>
 <ul>
 <li>
 <code>"none"</code>: no ordering (default operation).</li>
 <li>
-<code>"lhp"</code>: left-half-plane: eigenvalues with real part &lt; 0.</li>
+<code>"lhp"</code>: left-half-plane: eigenvalues with real part &lt;
+0.</li>
 <li>
-<code>"rhp"</code>: right-half-plane: eigenvalues with real part &gt; 0.</li>
+<code>"rhp"</code>: right-half-plane: eigenvalues with real part
+&gt; 0.</li>
 <li>
-<code>"iuc"</code>: inside-unit-circle: eigenvalues with absolute value &lt; 1.</li>
+<code>"iuc"</code>: inside-unit-circle: eigenvalues with absolute
+value &lt; 1.</li>
 <li>
-<code>"ouc"</code>: outside-unit-circle: eigenvalues with absolute value &gt; 1.</li>
+<code>"ouc"</code>: outside-unit-circle: eigenvalues with absolute
+value &gt; 1.</li>
 </ul>
-<p>The left and right Schur vectors are stored in <code>Q</code> and <code>Z</code>, respectively.</p>
-<p>In the complex-valued problem, the generalised eigenvalues are found in <code>diagvec(AA) / diagvec(BB)</code>. If <code>A</code> or <code>B</code> is not square sized, an error is thrown.</p>
-<p>If the decomposition fails, <code>AA</code>, <code>BB</code>, <code>Q</code> and <code>Z</code> are reset, and the function returns a bool set to false (an error is not thrown).</p>
+<p>The left and right Schur vectors are stored in <code>Q</code> and
+<code>Z</code>, respectively.</p>
+<p>In the complex-valued problem, the generalised eigenvalues are found
+in <code>diagvec(AA) / diagvec(BB)</code>. If <code>A</code> or
+<code>B</code> is not square sized, an error is thrown.</p>
+<p>If the decomposition fails, <code>AA</code>, <code>BB</code>,
+<code>Q</code> and <code>Z</code> are reset, and the function returns a
+bool set to false (an error is not thrown).</p>
 <div class="section level3">
 <h3 id="examples-13">Examples<a class="anchor" aria-label="anchor" href="#examples-13"></a>
 </h3>
-<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">qz1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a, <span class="at">const</span> doubles_matrix&lt;&gt;&amp; b,</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true"></a>                                 <span class="at">const</span> <span class="dt">char</span>* select) {</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true"></a>  mat A = as_mat(a);</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true"></a>  mat B = as_mat(b);</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true"></a>  mat AA, BB, Q, Z;</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true"></a>  <span class="dt">bool</span> ok = qz(AA, BB, Q, Z, A, B, select);</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true"></a></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true"></a>  writable::list out(<span class="dv">5</span>);</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(AA);</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_doubles_matrix(BB);</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true"></a>  out[<span class="dv">3</span>] = as_doubles_matrix(Q);</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true"></a>  out[<span class="dv">4</span>] = as_doubles_matrix(Z);</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true"></a></span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">qz1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> a<span class="op">,</span> <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> b<span class="op">,</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>                                 <span class="at">const</span> <span class="dt">char</span><span class="op">*</span> select<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>  mat A <span class="op">=</span> as_mat<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>  mat B <span class="op">=</span> as_mat<span class="op">(</span>b<span class="op">);</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>  mat AA<span class="op">,</span> BB<span class="op">,</span> Q<span class="op">,</span> Z<span class="op">;</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> qz<span class="op">(</span>AA<span class="op">,</span> BB<span class="op">,</span> Q<span class="op">,</span> Z<span class="op">,</span> A<span class="op">,</span> B<span class="op">,</span> select<span class="op">);</span></span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">5</span><span class="op">);</span></span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>AA<span class="op">);</span></span>
+<span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>BB<span class="op">);</span></span>
+<span id="cb26-14"><a href="#cb26-14" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>Q<span class="op">);</span></span>
+<span id="cb26-15"><a href="#cb26-15" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">4</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>Z<span class="op">);</span></span>
+<span id="cb26-16"><a href="#cb26-16" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb26-18"><a href="#cb26-18" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="schur">Schur decomposition of a square matrix<a class="anchor" aria-label="anchor" href="#schur"></a>
 </h2>
-<p>Schur decomposition of square matrix <code>X</code> into an orthogonal matrix <code>U</code> and an upper triangular matrix <code>S</code>, such that <span class="math inline">\(X = U S U^T\)</span>.</p>
+<p>Schur decomposition of square matrix <code>X</code> into an
+orthogonal matrix <code>U</code> and an upper triangular matrix
+<code>S</code>, such that <span class="math inline">\(X = U S
+U^T\)</span>.</p>
 <p>If the decomposition fails:</p>
 <ul>
 <li>
-<code>S = schur(X)</code> resets <code>S</code> and throws an error.</li>
+<code>S = schur(X)</code> resets <code>S</code> and throws an
+error.</li>
 <li>
-<code>schur(S, X)</code> resets <code>S</code> and returns a bool set to false (an error is not thrown).</li>
+<code>schur(S, X)</code> resets <code>S</code> and returns a bool
+set to false (an error is not thrown).</li>
 <li>
-<code>schur(U, S, X)</code> resets <code>U</code> and <code>S</code>, and returns a bool set to false (an error is not thrown).</li>
+<code>schur(U, S, X)</code> resets <code>U</code> and
+<code>S</code>, and returns a bool set to false (an error is not
+thrown).</li>
 </ul>
 <p>Caveat: in general, Schur decomposition is not unique.</p>
 <div class="section level3">
 <h3 id="examples-14">Examples<a class="anchor" aria-label="anchor" href="#examples-14"></a>
 </h3>
-<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">schur1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a>  mat X = as_mat(x);</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true"></a>  mat U, S;</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true"></a>  <span class="dt">bool</span> ok = schur(U, S, X);</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true"></a>  writable::list out(<span class="dv">3</span>);</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(U);</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_doubles_matrix(S);</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true"></a></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">schur1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>  mat X <span class="op">=</span> as_mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>  mat U<span class="op">,</span> S<span class="op">;</span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> schur<span class="op">(</span>U<span class="op">,</span> S<span class="op">,</span> X<span class="op">);</span></span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>U<span class="op">);</span></span>
+<span id="cb27-11"><a href="#cb27-11" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>S<span class="op">);</span></span>
+<span id="cb27-12"><a href="#cb27-12" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb27-14"><a href="#cb27-14" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="solve">Solve a system of linear equations<a class="anchor" aria-label="anchor" href="#solve"></a>
 </h2>
-<p>Solve a dense system of linear equations, <span class="math inline">\(AX = B\)</span>, where <span class="math inline">\(X\)</span> is unknown. This is similar functionality to the <code>\</code> operator in Matlab/Octave (e.g., <code>X = A \ B</code>). The implementation details are available in <span class="citation">Sanderson and Curtin (2017)</span>.</p>
-<p><span class="math inline">\(A\)</span> can be square sized (critically determined system), non-square (under/over-determined system), or rank deficient.</p>
+<p>Solve a dense system of linear equations, <span class="math inline">\(AX = B\)</span>, where <span class="math inline">\(X\)</span> is unknown. This is similar
+functionality to the <code>\</code> operator in Matlab/Octave (e.g.,
+<code>X = A \ B</code>). The implementation details are available in
+<span class="citation">Sanderson and Curtin (2017)</span>.</p>
+<p><span class="math inline">\(A\)</span> can be square sized
+(critically determined system), non-square (under/over-determined
+system), or rank deficient.</p>
 <p><span class="math inline">\(B\)</span> can be a vector or matrix.</p>
-<p>The number of rows in <code>A</code> and <code>B</code> must be the same.</p>
-<p>By default, matrix <code>A</code> is analysed to automatically determine whether it is a general matrix, band matrix, diagonal matrix, or symmetric/hermitian positive definite (sympd) matrix. Based on the detected matrix structure, a specialised solver is used for faster execution. If no solution is found, an approximate solver is automatically used as a fallback.</p>
-<p>If <code>A</code> is known to be a triangular matrix, the solution can be computed faster by explicitly indicating that <code>A</code> is triangular through <code>trimatu()</code> or <code>trimatl()</code> (see examples below).</p>
-<p>The <code>settings</code> argument is optional; it is one of the following, or a combination thereof:</p>
+<p>The number of rows in <code>A</code> and <code>B</code> must be the
+same.</p>
+<p>By default, matrix <code>A</code> is analysed to automatically
+determine whether it is a general matrix, band matrix, diagonal matrix,
+or symmetric/hermitian positive definite (sympd) matrix. Based on the
+detected matrix structure, a specialised solver is used for faster
+execution. If no solution is found, an approximate solver is
+automatically used as a fallback.</p>
+<p>If <code>A</code> is known to be a triangular matrix, the solution
+can be computed faster by explicitly indicating that <code>A</code> is
+triangular through <code>trimatu()</code> or <code>trimatl()</code> (see
+examples below).</p>
+<p>The <code>settings</code> argument is optional; it is one of the
+following, or a combination thereof:</p>
 <ul>
 <li>
-<code>solve_opts::fast</code>: fast mode: disable determining solution quality via <code>rcond</code>, disable iterative refinement, disable equilibration.</li>
+<code>solve_opts::fast</code>: fast mode: disable determining
+solution quality via <code>rcond</code>, disable iterative refinement,
+disable equilibration.</li>
 <li>
-<code>solve_opts::refine</code>: apply iterative refinement to improve solution quality (matrix <code>A</code> must be square).</li>
+<code>solve_opts::refine</code>: apply iterative refinement to
+improve solution quality (matrix <code>A</code> must be square).</li>
 <li>
-<code>solve_opts::equilibrate</code>: equilibrate the system before solving (matrix <code>A</code> must be square).</li>
+<code>solve_opts::equilibrate</code>: equilibrate the system before
+solving (matrix <code>A</code> must be square).</li>
 <li>
-<code>solve_opts::likely_sympd</code>: indicate that matrix <code>A</code> is likely symmetric/hermitian positive definite (sympd).</li>
+<code>solve_opts::likely_sympd</code>: indicate that matrix
+<code>A</code> is likely symmetric/hermitian positive definite
+(sympd).</li>
 <li>
-<code>solve_opts::allow_ugly</code>: keep solutions of systems that are singular to working precision.</li>
+<code>solve_opts::allow_ugly</code>: keep solutions of systems that
+are singular to working precision.</li>
 <li>
-<code>solve_opts::no_approx</code>: do not find approximate solutions for rank deficient systems.</li>
+<code>solve_opts::no_approx</code>: do not find approximate
+solutions for rank deficient systems.</li>
 <li>
-<code>solve_opts::force_sym</code>: force use of the symmetric/hermitian solver (not limited to sympd matrices).</li>
+<code>solve_opts::force_sym</code>: force use of the
+symmetric/hermitian solver (not limited to sympd matrices).</li>
 <li>
-<code>solve_opts::force_approx</code>: force use of the approximate solver.</li>
+<code>solve_opts::force_approx</code>: force use of the approximate
+solver.</li>
 </ul>
-<p>The above settings can be combined using the <code>+</code> operator; for example:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true"></a>solve_opts::fast + solve_opts::no_approx</span></code></pre></div>
-<p>If a rank deficient system is detected and the <code>solve_opts::no_approx</code> option is not enabled, a warning is emitted and an approximate solution is attempted. Since Armadillo 10.4, this warning can be disabled by setting <code>ARMA_WARN_LEVEL</code> to 1 before including the armadillo header:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a><span class="pp">#define ARMA_WARN_LEVEL </span><span class="dv">1</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo&gt;</span></span></code></pre></div>
+<p>The above settings can be combined using the <code>+</code> operator;
+for example:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>solve_opts<span class="op">::</span>fast <span class="op">+</span> solve_opts<span class="op">::</span>no_approx</span></code></pre></div>
+<p>If a rank deficient system is detected and the
+<code>solve_opts::no_approx</code> option is not enabled, a warning is
+emitted and an approximate solution is attempted. Since Armadillo 10.4,
+this warning can be disabled by setting <code>ARMA_WARN_LEVEL</code> to
+1 before including the armadillo header:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="pp">#define ARMA_WARN_LEVEL </span><span class="dv">1</span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;armadillo&gt;</span></span></code></pre></div>
 <p>Caveats:</p>
 <ul>
-<li>Using <code>solve_opts::fast</code> will speed up finding the solution, but for poorly conditioned systems the solution may have lower quality.</li>
-<li>Not all sympd matrices are automatically detected; to directly indicate that matrix <code>A</code> is likely sympd, use <code>solve_opts::likely_sympd</code>.</li>
-<li>Using <code>solve_opts::force_approx</code> is only advised if the system is known to be rank deficient; the approximate solver is considerably slower.</li>
+<li>Using <code>solve_opts::fast</code> will speed up finding the
+solution, but for poorly conditioned systems the solution may have lower
+quality.</li>
+<li>Not all sympd matrices are automatically detected; to directly
+indicate that matrix <code>A</code> is likely sympd, use
+<code>solve_opts::likely_sympd</code>.</li>
+<li>Using <code>solve_opts::force_approx</code> is only advised if the
+system is known to be rank deficient; the approximate solver is
+considerably slower.</li>
 </ul>
 <p>If no solution is found:</p>
 <ul>
 <li>
-<code>X = solve(A,B)</code> resets <code>X</code> and throws an error.</li>
+<code>X = solve(A,B)</code> resets <code>X</code> and throws an
+error.</li>
 <li>
-<code>solve(X,A,B)</code> resets <code>X</code> and returns a bool set to false (an error is not thrown).</li>
+<code>solve(X,A,B)</code> resets <code>X</code> and returns a bool
+set to false (an error is not thrown).</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-15">Examples<a class="anchor" aria-label="anchor" href="#examples-15"></a>
 </h3>
-<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">solve1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a,</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a>                                             <span class="at">const</span> doubles_matrix&lt;&gt;&amp; b) {</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true"></a>  mat A = as_mat(a);</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true"></a>  mat B = as_mat(b);</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true"></a></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true"></a>  mat X = solve(A, B);</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true"></a></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(X);</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">solve1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> a<span class="op">,</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>                                             <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> b<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>  mat A <span class="op">=</span> as_mat<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>  mat B <span class="op">=</span> as_mat<span class="op">(</span>b<span class="op">);</span></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a>  mat X <span class="op">=</span> solve<span class="op">(</span>A<span class="op">,</span> B<span class="op">);</span></span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="svd">Singular value decomposition<a class="anchor" aria-label="anchor" href="#svd"></a>
 </h2>
 <p>Singular value decomposition of dense matrix <code>X</code>.</p>
-<p>If <code>X</code> is square, it can be reconstructed using <span class="math inline">\(X = U S V^T\)</span>, where <span class="math inline">\(S\)</span> is a diagonal matrix containing the singular values.</p>
+<p>If <code>X</code> is square, it can be reconstructed using <span class="math inline">\(X = U S V^T\)</span>, where <span class="math inline">\(S\)</span> is a diagonal matrix containing the
+singular values.</p>
 <p>The singular values are in descending order.</p>
-<p>The <code>method</code> argument is optional; <code>method</code> is either <code>"dc"</code> or <code>"std"</code>:</p>
+<p>The <code>method</code> argument is optional; <code>method</code> is
+either <code>"dc"</code> or <code>"std"</code>:</p>
 <ul>
 <li>
-<code>"dc"</code> indicates divide-and-conquer method (default setting).</li>
+<code>"dc"</code> indicates divide-and-conquer method (default
+setting).</li>
 <li>
 <code>"std"</code> indicates standard method.</li>
-<li>The divide-and-conquer method provides slightly different results than the standard method, but is considerably faster for large matrices.</li>
+<li>The divide-and-conquer method provides slightly different results
+than the standard method, but is considerably faster for large
+matrices.</li>
 </ul>
 <p>If the decomposition fails:</p>
 <ul>
 <li>
-<code>s = svd(X)</code> resets <code>s</code> and throws an error.</li>
+<code>s = svd(X)</code> resets <code>s</code> and throws an
+error.</li>
 <li>
-<code>svd(s, X)</code> resets <code>s</code> and returns a bool set to false (an error is not thrown).</li>
+<code>svd(s, X)</code> resets <code>s</code> and returns a bool set
+to false (an error is not thrown).</li>
 <li>
-<code>svd(U, s, V, X)</code> resets <code>U</code>, <code>s</code>, and <code>V</code>, and returns a bool set to false (an error is not thrown).</li>
+<code>svd(U, s, V, X)</code> resets <code>U</code>, <code>s</code>,
+and <code>V</code>, and returns a bool set to false (an error is not
+thrown).</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-16">Examples<a class="anchor" aria-label="anchor" href="#examples-16"></a>
 </h3>
-<div class="sourceCode" id="cb31"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">svd1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a>  mat X = as_mat(x);</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true"></a>  mat U;</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true"></a>  vec s;</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true"></a>  mat V;</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true"></a></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true"></a>  <span class="dt">bool</span> ok = svd(U, s, V, X);</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true"></a></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true"></a>  writable::list out(<span class="dv">4</span>);</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true"></a>  out[<span class="dv">0</span>] = writable::logicals({ok});</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(U);</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_doubles(s);</span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true"></a>  out[<span class="dv">3</span>] = as_doubles_matrix(V);</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true"></a></span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">svd1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>  mat X <span class="op">=</span> as_mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>  mat U<span class="op">;</span></span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>  vec s<span class="op">;</span></span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>  mat V<span class="op">;</span></span>
+<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a>  <span class="dt">bool</span> ok <span class="op">=</span> svd<span class="op">(</span>U<span class="op">,</span> s<span class="op">,</span> V<span class="op">,</span> X<span class="op">);</span></span>
+<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
+<span id="cb31-11"><a href="#cb31-11" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> writable<span class="op">::</span>logicals<span class="op">({</span>ok<span class="op">});</span></span>
+<span id="cb31-12"><a href="#cb31-12" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>U<span class="op">);</span></span>
+<span id="cb31-13"><a href="#cb31-13" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>s<span class="op">);</span></span>
+<span id="cb31-14"><a href="#cb31-14" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>V<span class="op">);</span></span>
+<span id="cb31-15"><a href="#cb31-15" tabindex="-1"></a></span>
+<span id="cb31-16"><a href="#cb31-16" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb31-17"><a href="#cb31-17" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="svd_econ">Economic singular value decomposition<a class="anchor" aria-label="anchor" href="#svd_econ"></a>
 </h2>
-<p>Economical singular value decomposition of dense matrix <code>X</code>.</p>
+<p>Economical singular value decomposition of dense matrix
+<code>X</code>.</p>
 <p>The singular values are in descending order.</p>
-<p>The <code>mode</code> argument is optional; <code>mode</code> is one of:</p>
+<p>The <code>mode</code> argument is optional; <code>mode</code> is one
+of:</p>
 <ul>
 <li>
-<code>"both"</code>: compute both left and right singular vectors (default operation).</li>
+<code>"both"</code>: compute both left and right singular vectors
+(default operation).</li>
 <li>
 <code>"left"</code>: compute only left singular vectors.</li>
 <li>
 <code>"right"</code>: compute only right singular vectors.</li>
 </ul>
-<p>The <code>method</code> argument is optional; <code>method</code> is either <code>"dc"</code> or <code>"std"</code>:</p>
+<p>The <code>method</code> argument is optional; <code>method</code> is
+either <code>"dc"</code> or <code>"std"</code>:</p>
 <ul>
 <li>
-<code>"dc"</code> indicates divide-and-conquer method (default setting).</li>
+<code>"dc"</code> indicates divide-and-conquer method (default
+setting).</li>
 <li>
 <code>"std"</code> indicates standard method.</li>
-<li>The divide-and-conquer method provides slightly different results than the standard method, but is considerably faster for large matrices.</li>
+<li>The divide-and-conquer method provides slightly different results
+than the standard method, but is considerably faster for large
+matrices.</li>
 </ul>
-<p>If the decomposition fails, <code>U</code>, <code>s</code>, and <code>V</code> are reset, and a bool set to false is returned (an error is not thrown).</p>
+<p>If the decomposition fails, <code>U</code>, <code>s</code>, and
+<code>V</code> are reset, and a bool set to false is returned (an error
+is not thrown).</p>
 <div class="section level3">
 <h3 id="examples-17">Examples<a class="anchor" aria-label="anchor" href="#examples-17"></a>
 </h3>
-<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">svd_econ1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true"></a>  mat X = as_mat(x);</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true"></a>  mat U;</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true"></a>  vec s;</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true"></a>  mat V;</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true"></a></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true"></a>  svd_econ(U, s, V, X);</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true"></a></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true"></a>  writable::list out(<span class="dv">3</span>);</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true"></a>  out[<span class="dv">0</span>] = as_doubles_matrix(U);</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles(s);</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true"></a>  out[<span class="dv">2</span>] = as_doubles_matrix(V);</span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true"></a></span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">svd_econ1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>  mat X <span class="op">=</span> as_mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>  mat U<span class="op">;</span></span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a>  vec s<span class="op">;</span></span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a>  mat V<span class="op">;</span></span>
+<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a>  svd_econ<span class="op">(</span>U<span class="op">,</span> s<span class="op">,</span> V<span class="op">,</span> X<span class="op">);</span></span>
+<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>U<span class="op">);</span></span>
+<span id="cb32-12"><a href="#cb32-12" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>s<span class="op">);</span></span>
+<span id="cb32-13"><a href="#cb32-13" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>V<span class="op">);</span></span>
+<span id="cb32-14"><a href="#cb32-14" tabindex="-1"></a></span>
+<span id="cb32-15"><a href="#cb32-15" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb32-16"><a href="#cb32-16" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="syl">Sylvester equation solver<a class="anchor" aria-label="anchor" href="#syl"></a>
 </h2>
-<p>Solve the Sylvester equation, i.e., <span class="math inline">\(AX + XB + C = 0\)</span>, where <span class="math inline">\(X\)</span> is unknown.</p>
-<p>Matrices <code>A</code>, <code>B</code>, and <code>C</code> must be square sized.</p>
+<p>Solve the Sylvester equation, i.e., <span class="math inline">\(AX +
+XB + C = 0\)</span>, where <span class="math inline">\(X\)</span> is
+unknown.</p>
+<p>Matrices <code>A</code>, <code>B</code>, and <code>C</code> must be
+square sized.</p>
 <p>If no solution is found:</p>
 <ul>
 <li>
-<code>syl(A,B,C)</code> resets <code>X</code> and throws an error.</li>
+<code>syl(A,B,C)</code> resets <code>X</code> and throws an
+error.</li>
 <li>
-<code>syl(X,A,B,C)</code> resets <code>X</code> and returns a bool set to false (an error is not thrown).</li>
+<code>syl(X,A,B,C)</code> resets <code>X</code> and returns a bool
+set to false (an error is not thrown).</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-18">Examples<a class="anchor" aria-label="anchor" href="#examples-18"></a>
 </h3>
-<div class="sourceCode" id="cb33"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">syl1_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; a,</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a>                                          <span class="at">const</span> doubles_matrix&lt;&gt;&amp; b,</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true"></a>                                          <span class="at">const</span> doubles_matrix&lt;&gt;&amp; c) {</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true"></a>  mat A = as_mat(a);</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true"></a>  mat B = as_mat(b);</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true"></a>  mat C = as_mat(c);</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true"></a></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true"></a>  mat X = syl(A, B, C);</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true"></a></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(X);</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true"></a>}</span></code></pre></div>
-<div id="refs" class="references hanging-indent">
-<div id="ref-Sanderson2017">
-<p>Sanderson, Conrad, and Ryan Curtin. 2017. “An Open Source C++ Implementation of Multi-Threaded Gaussian Mixture Models, K-Means and Expectation Maximisation.” In <em>2017 11th International Conference on Signal Processing and Communication Systems (ICSPCS)</em>, 1–8. <a href="https://doi.org/10.1109/ICSPCS.2017.8270510" class="external-link">https://doi.org/10.1109/ICSPCS.2017.8270510</a>.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">syl1_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> a<span class="op">,</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>                                          <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> b<span class="op">,</span></span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>                                          <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> c<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>  mat A <span class="op">=</span> as_mat<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a>  mat B <span class="op">=</span> as_mat<span class="op">(</span>b<span class="op">);</span></span>
+<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a>  mat C <span class="op">=</span> as_mat<span class="op">(</span>c<span class="op">);</span></span>
+<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a>  mat X <span class="op">=</span> syl<span class="op">(</span>A<span class="op">,</span> B<span class="op">,</span> C<span class="op">);</span></span>
+<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Sanderson2017" class="csl-entry">
+Sanderson, Conrad, and Ryan Curtin. 2017. <span>“An Open Source
+<span>C</span>++ Implementation of Multi-Threaded <span>Gaussian</span>
+Mixture Models, k-Means and Expectation Maximisation.”</span> In
+<em>2017 11th <span>International</span> <span>Conference</span> on
+<span>Signal</span> <span>Processing</span> and
+<span>Communication</span> <span>Systems</span>
+(<span>ICSPCS</span>)</em>, 1–8. <a href="https://doi.org/10.1109/ICSPCS.2017.8270510" class="external-link">https://doi.org/10.1109/ICSPCS.2017.8270510</a>.
 </div>
 </div>
 </div>

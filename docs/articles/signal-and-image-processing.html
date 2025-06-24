@@ -13,15 +13,14 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../deps/jquery-3.6.1/jquery-3.6.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Signal and image processing">
 <meta property="og:description" content="cpp11armadillo">
 <meta property="og:image" content="../cpp11armadillo/logo.svg">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<!-- mathjax --><script src="file:///usr/share/javascript/mathjax/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
@@ -89,7 +88,8 @@
 
 
 
-<script src="signal-and-image-processing_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Signal and image processing</h1>
             
@@ -104,324 +104,398 @@
 <div class="section level2">
 <h2 id="conv">One-dimensional convolution<a class="anchor" aria-label="anchor" href="#conv"></a>
 </h2>
-<p>The <code>conv()</code> function performs a one-dimensional convolution of two vectors. The orientation of the result vector is the same as the orientation of the first input vector.</p>
+<p>The <code>conv()</code> function performs a one-dimensional
+convolution of two vectors. The orientation of the result vector is the
+same as the orientation of the first input vector.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>vec conv(x, y, shape);</span></code></pre></div>
-<p>The <code>shape</code> argument is optional and can be one of the following:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>vec conv<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> shape<span class="op">);</span></span></code></pre></div>
+<p>The <code>shape</code> argument is optional and can be one of the
+following:</p>
 <ul>
 <li>
-<code>"full"</code>: return the full convolution (default setting), with the size equal to <code>x.n_elem + y.n_elem - 1</code>.</li>
+<code>"full"</code>: return the full convolution (default setting),
+with the size equal to <code>x.n_elem + y.n_elem - 1</code>.</li>
 <li>
-<code>"same"</code>: return the central part of the convolution, with the same size as vector <code>x</code>.</li>
+<code>"same"</code>: return the central part of the convolution,
+with the same size as vector <code>x</code>.</li>
 </ul>
-<p>The convolution operation is also equivalent to finite impulse response (FIR) filtering.</p>
+<p>The convolution operation is also equivalent to finite impulse
+response (FIR) filtering.</p>
 <div class="section level3">
 <h3 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">conv1_</span>(<span class="at">const</span> doubles&amp; x, <span class="at">const</span> doubles&amp; y) {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  vec a = as_col(x);</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  vec b = as_col(y);</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  vec c = conv(a, b);</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>  vec d = conv(a, b, <span class="st">"same"</span>);</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>  out[<span class="dv">0</span>] = as_doubles(c);</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles(d);</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">conv1_</span><span class="op">(</span><span class="at">const</span> doubles<span class="op">&amp;</span> x<span class="op">,</span> <span class="at">const</span> doubles<span class="op">&amp;</span> y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  vec a <span class="op">=</span> as_col<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  vec b <span class="op">=</span> as_col<span class="op">(</span>y<span class="op">);</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  vec c <span class="op">=</span> conv<span class="op">(</span>a<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  vec d <span class="op">=</span> conv<span class="op">(</span>a<span class="op">,</span> b<span class="op">,</span> <span class="st">"same"</span><span class="op">);</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>c<span class="op">);</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>d<span class="op">);</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="conv2">Two-dimensional convolution<a class="anchor" aria-label="anchor" href="#conv2"></a>
 </h2>
-<p>The <code>conv2()</code> function performs a two-dimensional convolution of two matrices. The orientation of the result matrix is the same as the orientation of the first input matrix.</p>
+<p>The <code>conv2()</code> function performs a two-dimensional
+convolution of two matrices. The orientation of the result matrix is the
+same as the orientation of the first input matrix.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>mat conv2(A, B, shape);</span></code></pre></div>
-<p>The <code>shape</code> argument is optional and can be one of the following:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>mat conv2<span class="op">(</span>A<span class="op">,</span> B<span class="op">,</span> shape<span class="op">);</span></span></code></pre></div>
+<p>The <code>shape</code> argument is optional and can be one of the
+following:</p>
 <ul>
 <li>
-<code>"full"</code>: return the full convolution (default setting), with the size equal to <code>size(A) + size(B) - 1</code>.</li>
+<code>"full"</code>: return the full convolution (default setting),
+with the size equal to <code>size(A) + size(B) - 1</code>.</li>
 <li>
-<code>"same"</code>: return the central part of the convolution, with the same size as matrix <code>A</code>.</li>
+<code>"same"</code>: return the central part of the convolution,
+with the same size as matrix <code>A</code>.</li>
 </ul>
 <div class="section level3">
 <h3 id="caveats">Caveats<a class="anchor" aria-label="anchor" href="#caveats"></a>
 </h3>
-<p>The implementation of 2D convolution in this version is preliminary.</p>
+<p>The implementation of 2D convolution in this version is
+preliminary.</p>
 </div>
 <div class="section level3">
 <h3 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">conv2_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  <span class="at">const</span> doubles_matrix&lt;&gt;&amp; y) {</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>  mat a = as_mat(x);</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>  mat b = as_mat(y);</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>  mat c = conv2(a, b);</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>  mat d = conv2(a, b, <span class="st">"same"</span>);</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>  out[<span class="dv">0</span>] = as_doubles_matrix(c);</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>  out[<span class="dv">1</span>] = as_doubles_matrix(d);</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">conv2_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">,</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  mat a <span class="op">=</span> as_mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  mat b <span class="op">=</span> as_mat<span class="op">(</span>y<span class="op">);</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  mat c <span class="op">=</span> conv2<span class="op">(</span>a<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  mat d <span class="op">=</span> conv2<span class="op">(</span>a<span class="op">,</span> b<span class="op">,</span> <span class="st">"same"</span><span class="op">);</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>c<span class="op">);</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles_matrix<span class="op">(</span>d<span class="op">);</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="fft-ifft">One-dimensional Fast Fourier Transform<a class="anchor" aria-label="anchor" href="#fft-ifft"></a>
 </h2>
-<p>The <code><a href="https://rdrr.io/r/stats/fft.html" class="external-link">fft()</a></code> function computes the fast Fourier transform (FFT) of a vector or matrix. The function returns a complex matrix.</p>
-<p>Similarly, <code>ifft()</code> computes the inverse fast Fourier transform (IFFT) of a complex matrix.</p>
+<p>The <code><a href="https://rdrr.io/r/stats/fft.html" class="external-link">fft()</a></code> function computes the fast Fourier transform
+(FFT) of a vector or matrix. The function returns a complex matrix.</p>
+<p>Similarly, <code>ifft()</code> computes the inverse fast Fourier
+transform (IFFT) of a complex matrix.</p>
 <p>The transform is done on each column vector of the input matrix.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="co">// real or complex</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>cx_vec Y = fft(X);</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>cx_vec Y = fft(X, n);</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="co">// complex only</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>cx_mat Z = ifft(cx_mat Y);</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>cx_mat Z = ifft(cx_mat Y, n);</span></code></pre></div>
-<p>The optional <code>n</code> argument specifies the transform length:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co">// real or complex</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>cx_vec Y <span class="op">=</span> fft<span class="op">(</span>X<span class="op">);</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>cx_vec Y <span class="op">=</span> fft<span class="op">(</span>X<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">// complex only</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>cx_mat Z <span class="op">=</span> ifft<span class="op">(</span>cx_mat Y<span class="op">);</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>cx_mat Z <span class="op">=</span> ifft<span class="op">(</span>cx_mat Y<span class="op">,</span> n<span class="op">);</span></span></code></pre></div>
+<p>The optional <code>n</code> argument specifies the transform
+length:</p>
 <ul>
-<li>If <code>n</code> is larger than the length of the input vector, a zero-padded version of the vector is used.</li>
-<li>If <code>n</code> is smaller than the length of the input vector, only the first <code>n</code> elements of the vector are used.</li>
+<li>If <code>n</code> is larger than the length of the input vector, a
+zero-padded version of the vector is used.</li>
+<li>If <code>n</code> is smaller than the length of the input vector,
+only the first <code>n</code> elements of the vector are used.</li>
 </ul>
 <div class="section level3">
 <h3 id="caveats-1">Caveats<a class="anchor" aria-label="anchor" href="#caveats-1"></a>
 </h3>
 <ul>
-<li>The transform is fastest when the transform length is a power of 2 (<span class="math inline">\(2^k,\: k = 1, 2, 3, \ldots\)</span>).</li>
-<li>By default, the function uses an internal FFT algorithm based on KISS FFT. With vendoring, it is possible to use the FFTW3 library for faster execution by modifying the cpp11armadillo header to:</li>
+<li>The transform is fastest when the transform length is a power of 2
+(<span class="math inline">\(2^k,\: k = 1, 2, 3, \ldots\)</span>).</li>
+<li>By default, the function uses an internal FFT algorithm based on
+KISS FFT. With vendoring, it is possible to use the FFTW3 library for
+faster execution by modifying the cpp11armadillo header to:</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>...</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;Rmath.h&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="pp">#define ARMA_USE_FFTW3 </span><span class="co">// add this line</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>...</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Rmath.h&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="pp">#define ARMA_USE_FFTW3 </span><span class="co">// add this line</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="op">...</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">fft1_</span>(<span class="at">const</span> doubles&amp; x) {</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>  vec a = as_Col(x);</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>  cx_vec b = fft(a);</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>  cx_vec c = ifft(b);</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>  writable::list out2(<span class="dv">2</span>);</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a>  writable::list out3(<span class="dv">2</span>);</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>  out2[<span class="dv">0</span>] = as_doubles(real(b));</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a>  out2[<span class="dv">1</span>] = as_doubles(imag(b));</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a>  out3[<span class="dv">0</span>] = as_doubles(real(c));</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a>  out3[<span class="dv">1</span>] = as_doubles(imag(c));</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true"></a>  out[<span class="dv">0</span>] = out2;</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true"></a>  out[<span class="dv">1</span>] = out3;</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true"></a></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">fft1_</span><span class="op">(</span><span class="at">const</span> doubles<span class="op">&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  vec a <span class="op">=</span> as_Col<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  cx_vec b <span class="op">=</span> fft<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  cx_vec c <span class="op">=</span> ifft<span class="op">(</span>b<span class="op">);</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>  writable<span class="op">::</span>list out2<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>  writable<span class="op">::</span>list out3<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>  out2<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>real<span class="op">(</span>b<span class="op">));</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>  out2<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>imag<span class="op">(</span>b<span class="op">));</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>  out3<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>real<span class="op">(</span>c<span class="op">));</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>  out3<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>imag<span class="op">(</span>c<span class="op">));</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> out2<span class="op">;</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> out3<span class="op">;</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="fft-ifft-2">Two-dimensional Fast Fourier Transform<a class="anchor" aria-label="anchor" href="#fft-ifft-2"></a>
 </h2>
-<p>The <code>fft2()</code> function computes the two-dimensional fast Fourier transform (FFT) of a matrix. The function returns a complex matrix.</p>
-<p>Similarly, <code>ifft2()</code> computes the inverse fast Fourier transform (IFFT) of a complex matrix.</p>
+<p>The <code>fft2()</code> function computes the two-dimensional fast
+Fourier transform (FFT) of a matrix. The function returns a complex
+matrix.</p>
+<p>Similarly, <code>ifft2()</code> computes the inverse fast Fourier
+transform (IFFT) of a complex matrix.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="co">// real or complex</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>cx_mat Y = fft2(mat X);</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>cx_mat Y = fft2(mat X, <span class="dt">int</span> n_rows, <span class="dt">int</span> n_cols);</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="co">// complex only</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>cx_mat Z = ifft2(cx_mat Y);</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>cx_mat Z = ifft2(cx_mat Y, <span class="dt">int</span> n_rows, <span class="dt">int</span> n_cols);</span></code></pre></div>
-<p>The optional <code>n_rows</code> and <code>n_cols</code> arguments specify the transform size:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">// real or complex</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>cx_mat Y <span class="op">=</span> fft2<span class="op">(</span>mat X<span class="op">);</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>cx_mat Y <span class="op">=</span> fft2<span class="op">(</span>mat X<span class="op">,</span> <span class="dt">int</span> n_rows<span class="op">,</span> <span class="dt">int</span> n_cols<span class="op">);</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">// complex only</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>cx_mat Z <span class="op">=</span> ifft2<span class="op">(</span>cx_mat Y<span class="op">);</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>cx_mat Z <span class="op">=</span> ifft2<span class="op">(</span>cx_mat Y<span class="op">,</span> <span class="dt">int</span> n_rows<span class="op">,</span> <span class="dt">int</span> n_cols<span class="op">);</span></span></code></pre></div>
+<p>The optional <code>n_rows</code> and <code>n_cols</code> arguments
+specify the transform size:</p>
 <ul>
-<li>If <code>n_rows</code> and <code>n_cols</code> are larger than the size of the input matrix, a zero-padded version of the matrix is used.</li>
-<li>If <code>n_rows</code> and <code>n_cols</code> are smaller than the size of the input matrix, only the first <code>n_rows</code> and <code>n_cols</code> elements of the matrix are used.</li>
+<li>If <code>n_rows</code> and <code>n_cols</code> are larger than the
+size of the input matrix, a zero-padded version of the matrix is
+used.</li>
+<li>If <code>n_rows</code> and <code>n_cols</code> are smaller than the
+size of the input matrix, only the first <code>n_rows</code> and
+<code>n_cols</code> elements of the matrix are used.</li>
 </ul>
 <div class="section level3">
 <h3 id="caveats-2">Caveats<a class="anchor" aria-label="anchor" href="#caveats-2"></a>
 </h3>
 <ul>
-<li>The implementation of the 2D transform in this version is preliminary.</li>
-<li>The transform is fastest when both <code>n_rows</code> and <code>n_cols</code> are a power of 2 (<span class="math inline">\(2^k,\: k = 1, 2, 3, \ldots\)</span>).</li>
-<li>By default, the function uses an internal FFT algorithm based on KISS FFT. With vendoring, it is possible to use the FFTW3 library for faster execution by modifying the cpp11armadillo header to:</li>
+<li>The implementation of the 2D transform in this version is
+preliminary.</li>
+<li>The transform is fastest when both <code>n_rows</code> and
+<code>n_cols</code> are a power of 2 (<span class="math inline">\(2^k,\:
+k = 1, 2, 3, \ldots\)</span>).</li>
+<li>By default, the function uses an internal FFT algorithm based on
+KISS FFT. With vendoring, it is possible to use the FFTW3 library for
+faster execution by modifying the cpp11armadillo header to:</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>...</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;Rmath.h&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="pp">#define ARMA_USE_FFTW3 </span><span class="co">// add this line</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>...</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Rmath.h&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="pp">#define ARMA_USE_FFTW3 </span><span class="co">// add this line</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;armadillo.hpp&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="op">...</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a>
 </h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] list <span class="va">fft2_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>  mat a = as_mat(x);</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>  cx_mat b = fft2(a);</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>  cx_mat c = ifft2(b);</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>  writable::list out(<span class="dv">2</span>);</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a>  writable::list out2(<span class="dv">2</span>);</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a>  writable::list out3(<span class="dv">2</span>);</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a>  out2[<span class="dv">0</span>] = as_doubles(real(b));</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a>  out2[<span class="dv">1</span>] = as_doubles(imag(b));</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a>  out3[<span class="dv">0</span>] = as_doubles(real(c));</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a>  out3[<span class="dv">1</span>] = as_doubles(imag(c));</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true"></a></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true"></a>  out[<span class="dv">0</span>] = out2;</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true"></a>  out[<span class="dv">1</span>] = out3;</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true"></a></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true"></a>  <span class="cf">return</span> out;</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> list <span class="va">fft2_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  mat a <span class="op">=</span> as_mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  cx_mat b <span class="op">=</span> fft2<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  cx_mat c <span class="op">=</span> ifft2<span class="op">(</span>b<span class="op">);</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  writable<span class="op">::</span>list out<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>  writable<span class="op">::</span>list out2<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>  writable<span class="op">::</span>list out3<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>  out2<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>real<span class="op">(</span>b<span class="op">));</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>  out2<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>imag<span class="op">(</span>b<span class="op">));</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>  out3<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>real<span class="op">(</span>c<span class="op">));</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>  out3<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> as_doubles<span class="op">(</span>imag<span class="op">(</span>c<span class="op">));</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> out2<span class="op">;</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> out3<span class="op">;</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="interp1">One-dimensional interpolation<a class="anchor" aria-label="anchor" href="#interp1"></a>
 </h2>
-<p>The <code>interp1()</code> function performs one-dimensional interpolation of a function specified by vectors <code>X</code> and <code>Y</code>. The function generates a vector <code>YI</code> that contains interpolated values at locations <code>XI</code>.</p>
+<p>The <code>interp1()</code> function performs one-dimensional
+interpolation of a function specified by vectors <code>X</code> and
+<code>Y</code>. The function generates a vector <code>YI</code> that
+contains interpolated values at locations <code>XI</code>.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>vec interp1(X, Y, XI, YI);</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>vec interp1(X, Y, XI, YI, method);</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>vec interp1(X, Y, XI, YI, method, extrapolation_value);</span></code></pre></div>
-<p>The <code>method</code> argument is optional and can be one of the following:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>vec interp1<span class="op">(</span>X<span class="op">,</span> Y<span class="op">,</span> XI<span class="op">,</span> YI<span class="op">);</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>vec interp1<span class="op">(</span>X<span class="op">,</span> Y<span class="op">,</span> XI<span class="op">,</span> YI<span class="op">,</span> method<span class="op">);</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>vec interp1<span class="op">(</span>X<span class="op">,</span> Y<span class="op">,</span> XI<span class="op">,</span> YI<span class="op">,</span> method<span class="op">,</span> extrapolation_value<span class="op">);</span></span></code></pre></div>
+<p>The <code>method</code> argument is optional and can be one of the
+following:</p>
 <ul>
 <li>
-<code>"nearest"</code>: interpolate using single nearest neighbour.</li>
+<code>"nearest"</code>: interpolate using single nearest
+neighbour.</li>
 <li>
-<code>"linear"</code>: linear interpolation between two nearest neighbours (default setting).</li>
+<code>"linear"</code>: linear interpolation between two nearest
+neighbours (default setting).</li>
 <li>
-<code>"*nearest"</code>: as per <code>"nearest"</code>, but faster by assuming that <code>X</code> and <code>XI</code> are monotonically increasing.</li>
+<code>"*nearest"</code>: as per <code>"nearest"</code>, but faster
+by assuming that <code>X</code> and <code>XI</code> are monotonically
+increasing.</li>
 <li>
-<code>"*linear"</code>: as per <code>"linear"</code>, but faster by assuming that <code>X</code> and <code>XI</code> are monotonically increasing.</li>
+<code>"*linear"</code>: as per <code>"linear"</code>, but faster by
+assuming that <code>X</code> and <code>XI</code> are monotonically
+increasing.</li>
 </ul>
-<p>If a location in <code>XI</code> is outside the domain of <code>X</code>, the corresponding value in <code>YI</code> is set to <code>extrapolation_value</code>.</p>
-<p>The <code>extrapolation_value</code> argument is optional; by default, it is <code>datum::nan</code> (not-a-number).</p>
+<p>If a location in <code>XI</code> is outside the domain of
+<code>X</code>, the corresponding value in <code>YI</code> is set to
+<code>extrapolation_value</code>.</p>
+<p>The <code>extrapolation_value</code> argument is optional; by
+default, it is <code>datum::nan</code> (not-a-number).</p>
 <div class="section level3">
 <h3 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a>
 </h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">interp1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>  vec x = linspace&lt;vec&gt;(<span class="dv">0</span>, <span class="dv">3</span>, n);</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>  vec y = square(x);</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>  vec xx = linspace&lt;vec&gt;(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">2</span> * n);</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>  vec yy;</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a>  interp1(x, y, xx, yy);             <span class="co">// use linear interpolation by default</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>  interp1(x, y, xx, yy, <span class="st">"*linear"</span>);  <span class="co">// faster than "linear"</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a>  interp1(x, y, xx, yy, <span class="st">"nearest"</span>);</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(yy);</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles <span class="va">interp1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  vec x <span class="op">=</span> linspace<span class="op">&lt;</span>vec<span class="op">&gt;(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  vec y <span class="op">=</span> square<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  vec xx <span class="op">=</span> linspace<span class="op">&lt;</span>vec<span class="op">&gt;(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> n<span class="op">);</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  vec yy<span class="op">;</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>  interp1<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> xx<span class="op">,</span> yy<span class="op">);</span>             <span class="co">// use linear interpolation by default</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>  interp1<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> xx<span class="op">,</span> yy<span class="op">,</span> <span class="st">"*linear"</span><span class="op">);</span>  <span class="co">// faster than "linear"</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>  interp1<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> xx<span class="op">,</span> yy<span class="op">,</span> <span class="st">"nearest"</span><span class="op">);</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>  <span class="cf">return</span> as_doubles<span class="op">(</span>yy<span class="op">);</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="interp2">Two-dimensional interpolation<a class="anchor" aria-label="anchor" href="#interp2"></a>
 </h2>
-<p>The <code>interp2()</code> function performs two-dimensional interpolation of a function specified by matrix <code>Z</code> with coordinates given by vectors <code>X</code> and <code>Y</code>. The function generates a matrix <code>ZI</code> that contains interpolated values at the coordinates given by vectors <code>XI</code> and <code>YI</code>.</p>
+<p>The <code>interp2()</code> function performs two-dimensional
+interpolation of a function specified by matrix <code>Z</code> with
+coordinates given by vectors <code>X</code> and <code>Y</code>. The
+function generates a matrix <code>ZI</code> that contains interpolated
+values at the coordinates given by vectors <code>XI</code> and
+<code>YI</code>.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a>mat interp2(X, Y, Z, XI, YI, ZI);</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>mat interp2(X, Y, Z, XI, YI, ZI, method);</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a>mat interp2(X, Y, Z, XI, YI, ZI, method, extrapolation_value);</span></code></pre></div>
-<p>The <code>method</code> argument is optional and can be one of the following:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>mat interp2<span class="op">(</span>X<span class="op">,</span> Y<span class="op">,</span> Z<span class="op">,</span> XI<span class="op">,</span> YI<span class="op">,</span> ZI<span class="op">);</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>mat interp2<span class="op">(</span>X<span class="op">,</span> Y<span class="op">,</span> Z<span class="op">,</span> XI<span class="op">,</span> YI<span class="op">,</span> ZI<span class="op">,</span> method<span class="op">);</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>mat interp2<span class="op">(</span>X<span class="op">,</span> Y<span class="op">,</span> Z<span class="op">,</span> XI<span class="op">,</span> YI<span class="op">,</span> ZI<span class="op">,</span> method<span class="op">,</span> extrapolation_value<span class="op">);</span></span></code></pre></div>
+<p>The <code>method</code> argument is optional and can be one of the
+following:</p>
 <ul>
 <li>
 <code>"nearest"</code>: interpolate using nearest neighbours.</li>
 <li>
-<code>"linear"</code>: linear interpolation between nearest neighbours (default setting).</li>
+<code>"linear"</code>: linear interpolation between nearest
+neighbours (default setting).</li>
 </ul>
-<p>If a coordinate in the 2D grid specified by <code>(XI, YI)</code> is outside the domain of the 2D grid specified by <code>(X, Y)</code>, the corresponding value in <code>ZI</code> is set to <code>extrapolation_value</code>.</p>
-<p>The <code>extrapolation_value</code> argument is optional; by default, it is <code>datum::nan</code> (not-a-number).</p>
+<p>If a coordinate in the 2D grid specified by <code>(XI, YI)</code> is
+outside the domain of the 2D grid specified by <code>(X, Y)</code>, the
+corresponding value in <code>ZI</code> is set to
+<code>extrapolation_value</code>.</p>
+<p>The <code>extrapolation_value</code> argument is optional; by
+default, it is <code>datum::nan</code> (not-a-number).</p>
 <div class="section level3">
 <h3 id="examples-5">Examples<a class="anchor" aria-label="anchor" href="#examples-5"></a>
 </h3>
-<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">interp2_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n) {</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>  mat Z(n, n, fill::randu);</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>  vec X = regspace(<span class="dv">1</span>, Z.n_cols);  <span class="co">// X = horizontal spacing</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a>  vec Y = regspace(<span class="dv">1</span>, Z.n_rows);  <span class="co">// Y = vertical spacing</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>  vec XI = regspace(X.min(), <span class="fl">1.0</span>/<span class="fl">2.0</span>, X.max()); <span class="co">// magnify by approx 2</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a>  vec YI = regspace(Y.min(), <span class="fl">1.0</span>/<span class="fl">3.0</span>, Y.max()); <span class="co">// magnify by approx 3</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a>  mat ZI;</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true"></a></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true"></a>  interp2(X, Y, Z, XI, YI, ZI); <span class="co">// use linear interpolation by default</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true"></a></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(ZI);</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">interp2_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  mat Z<span class="op">(</span>n<span class="op">,</span> n<span class="op">,</span> fill<span class="op">::</span>randu<span class="op">);</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  vec X <span class="op">=</span> regspace<span class="op">(</span><span class="dv">1</span><span class="op">,</span> Z<span class="op">.</span>n_cols<span class="op">);</span>  <span class="co">// X = horizontal spacing</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  vec Y <span class="op">=</span> regspace<span class="op">(</span><span class="dv">1</span><span class="op">,</span> Z<span class="op">.</span>n_rows<span class="op">);</span>  <span class="co">// Y = vertical spacing</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  vec XI <span class="op">=</span> regspace<span class="op">(</span>X<span class="op">.</span>min<span class="op">(),</span> <span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span><span class="op">,</span> X<span class="op">.</span>max<span class="op">());</span> <span class="co">// magnify by approx 2</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>  vec YI <span class="op">=</span> regspace<span class="op">(</span>Y<span class="op">.</span>min<span class="op">(),</span> <span class="fl">1.0</span><span class="op">/</span><span class="fl">3.0</span><span class="op">,</span> Y<span class="op">.</span>max<span class="op">());</span> <span class="co">// magnify by approx 3</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>  mat ZI<span class="op">;</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>  interp2<span class="op">(</span>X<span class="op">,</span> Y<span class="op">,</span> Z<span class="op">,</span> XI<span class="op">,</span> YI<span class="op">,</span> ZI<span class="op">);</span> <span class="co">// use linear interpolation by default</span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>ZI<span class="op">);</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="polyfit">Find polynomial coefficients for data fitting<a class="anchor" aria-label="anchor" href="#polyfit"></a>
 </h2>
-<p>The <code>polyfit()</code> function finds the polynomial coefficients for data fitting. The function models a 1D function specified by vectors <code>X</code> and <code>Y</code> as a polynomial of order <code>N</code> and stores the polynomial coefficients in a column vector <code>P</code>.</p>
+<p>The <code>polyfit()</code> function finds the polynomial coefficients
+for data fitting. The function models a 1D function specified by vectors
+<code>X</code> and <code>Y</code> as a polynomial of order
+<code>N</code> and stores the polynomial coefficients in a column vector
+<code>P</code>.</p>
 <p>The given function is modelled as:</p>
 <p><span class="math display">\[
 y = p_0 x^N + p_1 x^{N-1} + p_2 x^{N-2} + \ldots + p_{N-1} x^1 + p_N
 \]</span></p>
-<p>where <span class="math inline">\(p_i\)</span> is the <span class="math inline">\(i\)</span>-th polynomial coefficient. The coefficients are selected to minimise the overall error of the fit (least squares).</p>
+<p>where <span class="math inline">\(p_i\)</span> is the <span class="math inline">\(i\)</span>-th polynomial coefficient. The
+coefficients are selected to minimise the overall error of the fit
+(least squares).</p>
 <p>The column vector <code>P</code> has <span class="math inline">\(N+1\)</span> coefficients.</p>
-<p><code>N</code> must be smaller than the number of elements in <code>X</code>.</p>
+<p><code>N</code> must be smaller than the number of elements in
+<code>X</code>.</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>P = polyfit(X, Y, N);</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>polyfit(P, X, Y, N);</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>P <span class="op">=</span> polyfit<span class="op">(</span>X<span class="op">,</span> Y<span class="op">,</span> N<span class="op">);</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>polyfit<span class="op">(</span>P<span class="op">,</span> X<span class="op">,</span> Y<span class="op">,</span> N<span class="op">);</span></span></code></pre></div>
 <p>If the polynomial coefficients cannot be found:</p>
 <ul>
 <li>
-<code>P = polyfit(X, Y, N)</code> resets <code>P</code> and returns an error.</li>
+<code>P = polyfit(X, Y, N)</code> resets <code>P</code> and returns
+an error.</li>
 <li>
-<code>polyfit(P, X, Y, N)</code> resets <code>P</code> and returns a <code>bool</code> set to <code>false</code> without an error.</li>
+<code>polyfit(P, X, Y, N)</code> resets <code>P</code> and returns a
+<code>bool</code> set to <code>false</code> without an error.</li>
 </ul>
 <div class="section level3">
 <h3 id="examples-6">Examples<a class="anchor" aria-label="anchor" href="#examples-6"></a>
 </h3>
-<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">polyfit1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n, <span class="at">const</span> <span class="dt">int</span>&amp; m) {</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a>  vec x = linspace&lt;vec&gt;(<span class="dv">0</span>, <span class="dv">1</span>, n);</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a>  vec y = <span class="dv">2</span>*pow(x,<span class="dv">2</span>) + <span class="dv">2</span>*x + ones&lt;vec&gt;(n);</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a>  vec p = polyfit(x, y, m);</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(p);</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles <span class="va">polyfit1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">,</span> <span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> m<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  vec x <span class="op">=</span> linspace<span class="op">&lt;</span>vec<span class="op">&gt;(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  vec y <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>pow<span class="op">(</span>x<span class="op">,</span><span class="dv">2</span><span class="op">)</span> <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>x <span class="op">+</span> ones<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>  vec p <span class="op">=</span> polyfit<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> m<span class="op">);</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>  <span class="cf">return</span> as_doubles<span class="op">(</span>p<span class="op">);</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="polyval">Evaluate polynomial<a class="anchor" aria-label="anchor" href="#polyval"></a>
 </h2>
-<p>The <code>polyval()</code> function evaluates a polynomial. Given a vector <code>P</code> of polynomial coefficients and a vector <code>X</code> containing the independent values of a 1D function, the function generates a vector <code>Y</code> that contains the corresponding dependent values.</p>
-<p>For each <code>x</code> value in vector <code>X</code>, the corresponding <code>y</code> value in vector <code>Y</code> is generated using:</p>
+<p>The <code>polyval()</code> function evaluates a polynomial. Given a
+vector <code>P</code> of polynomial coefficients and a vector
+<code>X</code> containing the independent values of a 1D function, the
+function generates a vector <code>Y</code> that contains the
+corresponding dependent values.</p>
+<p>For each <code>x</code> value in vector <code>X</code>, the
+corresponding <code>y</code> value in vector <code>Y</code> is generated
+using:</p>
 <p><span class="math display">\[
 y = p_0 x^N + p_1 x^{N-1} + p_2 x^{N-2} + \ldots + p_{N-1} x^1 + p_N
 \]</span></p>
-<p>where <span class="math inline">\(p_i\)</span> is the <span class="math inline">\(i\)</span>-th polynomial coefficient in vector <code>P</code>.</p>
-<p><code>P</code> must contain polynomial coefficients in descending powers (e.g., generated by the <code>polyfit()</code> function).</p>
+<p>where <span class="math inline">\(p_i\)</span> is the <span class="math inline">\(i\)</span>-th polynomial coefficient in vector
+<code>P</code>.</p>
+<p><code>P</code> must contain polynomial coefficients in descending
+powers (e.g., generated by the <code>polyfit()</code> function).</p>
 <p>Usage:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>Y = polyval(P, X);</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>Y <span class="op">=</span> polyval<span class="op">(</span>P<span class="op">,</span> X<span class="op">);</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="examples-7">Examples<a class="anchor" aria-label="anchor" href="#examples-7"></a>
 </h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">polyval1_</span>(<span class="at">const</span> <span class="dt">int</span>&amp; n, <span class="at">const</span> <span class="dt">int</span>&amp; m) {</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a>  vec x = linspace&lt;vec&gt;(<span class="dv">0</span>, <span class="dv">1</span>, n);</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a>  vec y = <span class="dv">2</span>*pow(x,<span class="dv">2</span>) + <span class="dv">2</span>*x + ones&lt;vec&gt;(n);</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a>  vec p = polyfit(x, y, m);</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a>  vec q = polyval(p, x);</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(q);</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles <span class="va">polyval1_</span><span class="op">(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> n<span class="op">,</span> <span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> m<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  vec x <span class="op">=</span> linspace<span class="op">&lt;</span>vec<span class="op">&gt;(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  vec y <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>pow<span class="op">(</span>x<span class="op">,</span><span class="dv">2</span><span class="op">)</span> <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>x <span class="op">+</span> ones<span class="op">&lt;</span>vec<span class="op">&gt;(</span>n<span class="op">);</span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>  vec p <span class="op">=</span> polyfit<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> m<span class="op">);</span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>  vec q <span class="op">=</span> polyval<span class="op">(</span>p<span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>  <span class="cf">return</span> as_doubles<span class="op">(</span>q<span class="op">);</span></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

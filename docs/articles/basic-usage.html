@@ -13,15 +13,14 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../deps/jquery-3.6.1/jquery-3.6.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Basic 'cpp11armadillo' usage">
 <meta property="og:description" content="cpp11armadillo">
 <meta property="og:image" content="../cpp11armadillo/logo.svg">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<!-- mathjax --><script src="file:///usr/share/javascript/mathjax/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
@@ -89,7 +88,8 @@
 
 
 
-<script src="basic-usage_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Basic 'cpp11armadillo' usage</h1>
             
@@ -103,60 +103,85 @@
 <div class="section level2">
 <h2 id="ordinary-least-squares">Ordinary Least Squares<a class="anchor" aria-label="anchor" href="#ordinary-least-squares"></a>
 </h2>
-<p>The Ordinary Least Squares (OLS) estimator is <span class="math inline">\(\hat{\beta} = (X^tX)^{-1}(X^tY)\)</span> for a design matrix <span class="math inline">\(X\)</span> and an outcome vector <span class="math inline">\(Y\)</span> <span class="citation">(Hansen 2022)</span>.</p>
-<p>The following code shows how to compute the OLS estimator using Armadillo and sending data from R to C++ and viceversa using <code>cpp11</code> and <code>cpp11armadillo</code> <span class="citation">(Sanderson and Curtin 2016)</span>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> arma;</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> cpp11;</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">ols_mat_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Y = as_Mat(x); <span class="co">// convert from R to C++</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Yinv = inv(Y); <span class="co">// Y^(-1)</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(Yinv); <span class="co">// convert from C++ to R</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>}</span></code></pre></div>
-<p>The previous code includes the <code>cpp11</code> and <code>cpp11armadillo</code> libraries (cpp11armadillo calls Armadillo) to allow interfacing C++ with R. It also loads the corresponding namespaces in order to simplify the notation (i.e., using <code>Mat</code> instead of <code>arma::Mat</code>), and the function <code>as_Mat()</code> and <code>as_doubles_mat()</code> are provided by <code>cpp11armadillo</code> to pass a <code>matrix</code> object from R to C++ and that Armadillo can read and then pass it back to R.</p>
-<p>The use of <code>const</code> and <code>&amp;</code> are specific to the C++ language and allow to pass data from R to C++ without copying the data, and therefore saving time and memory.</p>
-<p><code>cpp11armadillo</code> provides flexibility and in the case of the resulting vector of OLS coefficients, it can be returned as a matrix or a vector. The following code shows how to create three functions to compute the OLS estimator and return the result as a matrix or a vector avoiding repeated code:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>Mat&lt;<span class="dt">double</span>&gt; <span class="va">ols_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; y, <span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; Y = as_Mat(y);  <span class="co">// Col&lt;double&gt; Y = as_Col(y); also works</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; X = as_Mat(x);</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; XtX = X.t() * X;             <span class="co">// X'X</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; XtX_inv = inv(XtX);          <span class="co">// (X'X)^(-1)</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; beta = XtX_inv * X.t() * Y;  <span class="co">// (X'X)^(-1)(X'Y)</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>  <span class="cf">return</span> beta;</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>}</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles_matrix&lt;&gt; <span class="va">ols_mat_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; y,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>                                              <span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; beta = <span class="va">ols_</span>(y, x);</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles_matrix(beta);</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>}</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a>[[<span class="at">cpp11</span>::<span class="at">register</span>]] doubles <span class="va">ols_dbl_</span>(<span class="at">const</span> doubles_matrix&lt;&gt;&amp; y,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a>                                     <span class="at">const</span> doubles_matrix&lt;&gt;&amp; x) {</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a>  Mat&lt;<span class="dt">double</span>&gt; beta = <span class="va">ols_</span>(y, x);</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a>  <span class="cf">return</span> as_doubles(beta);</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a>}</span></code></pre></div>
-<p>In the previous code, the <code>ols_mat_()</code> function receives inputs from R and calls <code>ols_()</code> to do the computation on C++ side, and <code>ols_dbl_()</code> does the same but it returns a vector instead of a matrix.</p>
+<p>The Ordinary Least Squares (OLS) estimator is <span class="math inline">\(\hat{\beta} = (X^tX)^{-1}(X^tY)\)</span> for a
+design matrix <span class="math inline">\(X\)</span> and an outcome
+vector <span class="math inline">\(Y\)</span> <span class="citation">(Hansen 2022)</span>.</p>
+<p>The following code shows how to compute the OLS estimator using
+Armadillo and sending data from R to C++ and viceversa using
+<code>cpp11</code> and <code>cpp11armadillo</code> <span class="citation">(Sanderson and Curtin 2016)</span>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cpp11.hpp&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cpp11armadillo.hpp&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> arma<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> cpp11<span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">ols_mat_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> Y <span class="op">=</span> as_Mat<span class="op">(</span>x<span class="op">);</span> <span class="co">// convert from R to C++</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> Yinv <span class="op">=</span> inv<span class="op">(</span>Y<span class="op">);</span> <span class="co">// Y^(-1)</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>Yinv<span class="op">);</span> <span class="co">// convert from C++ to R</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>The previous code includes the <code>cpp11</code> and
+<code>cpp11armadillo</code> libraries (cpp11armadillo calls Armadillo)
+to allow interfacing C++ with R. It also loads the corresponding
+namespaces in order to simplify the notation (i.e., using
+<code>Mat</code> instead of <code>arma::Mat</code>), and the function
+<code>as_Mat()</code> and <code>as_doubles_mat()</code> are provided by
+<code>cpp11armadillo</code> to pass a <code>matrix</code> object from R
+to C++ and that Armadillo can read and then pass it back to R.</p>
+<p>The use of <code>const</code> and <code>&amp;</code> are specific to
+the C++ language and allow to pass data from R to C++ without copying
+the data, and therefore saving time and memory.</p>
+<p><code>cpp11armadillo</code> provides flexibility and in the case of
+the resulting vector of OLS coefficients, it can be returned as a matrix
+or a vector. The following code shows how to create three functions to
+compute the OLS estimator and return the result as a matrix or a vector
+avoiding repeated code:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> <span class="va">ols_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> y<span class="op">,</span> <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> Y <span class="op">=</span> as_Mat<span class="op">(</span>y<span class="op">);</span>  <span class="co">// Col&lt;double&gt; Y = as_Col(y); also works</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> X <span class="op">=</span> as_Mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> XtX <span class="op">=</span> X<span class="op">.</span>t<span class="op">()</span> <span class="op">*</span> X<span class="op">;</span>             <span class="co">// X'X</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> XtX_inv <span class="op">=</span> inv<span class="op">(</span>XtX<span class="op">);</span>          <span class="co">// (X'X)^(-1)</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> beta <span class="op">=</span> XtX_inv <span class="op">*</span> X<span class="op">.</span>t<span class="op">()</span> <span class="op">*</span> Y<span class="op">;</span>  <span class="co">// (X'X)^(-1)(X'Y)</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  <span class="cf">return</span> beta<span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">ols_mat_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> y<span class="op">,</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>                                              <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> beta <span class="op">=</span> <span class="va">ols_</span><span class="op">(</span>y<span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>beta<span class="op">);</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles <span class="va">ols_dbl_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> y<span class="op">,</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>                                     <span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> beta <span class="op">=</span> <span class="va">ols_</span><span class="op">(</span>y<span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>  <span class="cf">return</span> as_doubles<span class="op">(</span>beta<span class="op">);</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In the previous code, the <code>ols_mat_()</code> function receives
+inputs from R and calls <code>ols_()</code> to do the computation on C++
+side, and <code>ols_dbl_()</code> does the same but it returns a vector
+instead of a matrix.</p>
 </div>
 <div class="section level2">
 <h2 id="additional-examples">Additional Examples<a class="anchor" aria-label="anchor" href="#additional-examples"></a>
 </h2>
-<p>The package repository includes the directory <code>cpp11armadillotest</code>, which contains an R package that uses Armadillo, and that provides additional examples for eigenvalues, Cholesky and QR decomposition, and linear models.</p>
+<p>The package repository includes the directory
+<code>cpp11armadillotest</code>, which contains an R package that uses
+Armadillo, and that provides additional examples for eigenvalues,
+Cholesky and QR decomposition, and linear models.</p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references hanging-indent">
-<div id="ref-Hansen2022">
-<p>Hansen, Bruce. 2022. <em>Econometrics</em>. Princeton University Press.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Hansen2022" class="csl-entry">
+Hansen, Bruce. 2022. <em>Econometrics</em>. Princeton University Press.
 </div>
-<div id="ref-Sanderson2016">
-<p>Sanderson, Conrad, and Ryan Curtin. 2016. “Armadillo: A Template-Based C++ Library for Linear Algebra.” <em>Journal of Open Source Software</em> 1 (2): 26. <a href="https://doi.org/10.21105/joss.00026" class="external-link">https://doi.org/10.21105/joss.00026</a>.</p>
+<div id="ref-Sanderson2016" class="csl-entry">
+Sanderson, Conrad, and Ryan Curtin. 2016. <span>“Armadillo: A
+Template-Based c++ Library for Linear Algebra.”</span> <em>Journal of
+Open Source Software</em> 1 (2): 26. <a href="https://doi.org/10.21105/joss.00026" class="external-link">https://doi.org/10.21105/joss.00026</a>.
 </div>
 </div>
 </div>
