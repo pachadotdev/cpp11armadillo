@@ -131,6 +131,8 @@ inline integers as_integers(const uvec& x) {
   return y;
 }
 
+// Handle ivec carefully - define if it's a different type
+#if !defined(ARMA_32BIT_WORD)
 inline integers as_integers(const ivec& x) {
   const size_t n = x.n_elem;
 
@@ -140,6 +142,7 @@ inline integers as_integers(const ivec& x) {
 
   return y;
 }
+#endif
 
 inline integers as_integers(const uword& x) {
   writable::integers y(1);

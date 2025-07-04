@@ -1,3 +1,8 @@
+# cpp11armadillo 0.5.4
+
+* Conditionally declares wrappers for `ivec`/`uvec` on 32-bit systems.
+  Thanks to @barracuda156 for reporting the issue.
+
 # cpp11armadillo 0.5.3
 
 * Allows aliases (i.e., `vec`) when converting matrices to R.

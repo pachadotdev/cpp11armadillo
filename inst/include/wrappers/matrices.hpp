@@ -149,26 +149,38 @@ inline integers_matrix<> as_integers_matrix(const Mat<int>& A) {
 
 // Convert umat/imat to integers_matrix<>
 
-template <typename SourceMatType>
-inline integers_matrix<> as_integers_matrix(const SourceMatType& A) {
+template <typename T>
+inline integers_matrix<> as_integers_matrix_template(const Mat<T>& A) {
   const size_t n = A.n_rows;
   const size_t m = A.n_cols;
+  const size_t nm = n * m;
 
   writable::integers_matrix<> B(n, m);
   int* B_data = INTEGER(B);
 
-  std::memcpy(B_data, A.memptr(), n * m * sizeof(int));
+  // Convert element by element to handle different types
+  //   const T* A_data = A.memptr();
+
+  // #pragma omp parallel for if (nm > 10000)
+  //   for (size_t idx = 0; idx < nm; ++idx) {
+  //     B_data[idx] = static_cast<int>(A_data[idx]);
+  //   }
+
+  std::memcpy(B_data, A.memptr(), nm * sizeof(int));
 
   return B;
 }
 
 inline integers_matrix<> as_integers_matrix(const umat& A) {
-  return as_integers_matrix<umat>(A);
+  return as_integers_matrix_template(A);
 }
 
+// Handle imat carefully - define if it's a different type
+#if !defined(ARMA_32BIT_WORD)
 inline integers_matrix<> as_integers_matrix(const imat& A) {
-  return as_integers_matrix<imat>(A);
+  return as_integers_matrix_template(A);
 }
+#endif
 
 // Complex
 
