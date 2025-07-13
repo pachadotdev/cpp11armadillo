@@ -114,7 +114,19 @@ inline U Col_to_dblint_(const Col<T>& x) {
 }
 
 inline integers as_integers(const Col<int>& x) {
+  // Fast path: int to int
   return Col_to_dblint_<int, integers>(x);
+}
+
+inline integers as_integers(const Col<long long>& x) {
+  // Explicit cast for long long to int
+  const size_t n = x.n_elem;
+  writable::integers y(n);
+  const long long* x_data = x.memptr();
+  for (size_t i = 0; i < n; ++i) {
+    y[i] = static_cast<int>(x_data[i]);
+  }
+  return y;
 }
 
 inline doubles as_doubles(const Col<double>& x) {
@@ -130,13 +142,6 @@ inline integers as_integers(const uvec& x) {
 
   return y;
 }
-
-// On 64-bit word systems, ivec is Col<long>
-#if defined(ARMA_64BIT_WORD)
-inline integers as_integers(const Col<long>& x) {
-  return Col_to_dblint_<long, integers>(x);
-}
-#endif
 
 inline integers as_integers(const uword& x) {
   writable::integers y(1);

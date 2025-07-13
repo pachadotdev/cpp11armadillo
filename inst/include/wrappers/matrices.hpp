@@ -144,7 +144,21 @@ inline doubles_matrix<> as_doubles_matrix(const Mat<double>& A) {
 }
 
 inline integers_matrix<> as_integers_matrix(const Mat<int>& A) {
+  // Fast path: int to int
   return Mat_to_dblint_matrix_<int, integers_matrix<>>(A);
+}
+
+inline integers_matrix<> as_integers_matrix(const Mat<long long>& A) {
+  // Explicit cast for long long to int
+  const int n = A.n_rows;
+  const int m = A.n_cols;
+  writable::integers_matrix<> B(n, m);
+  int* B_data = INTEGER(B);
+  const long long* A_data = A.memptr();
+  for (int i = 0; i < n * m; ++i) {
+    B_data[i] = static_cast<int>(A_data[i]);
+  }
+  return B;
 }
 
 // Convert umat/imat to integers_matrix<>
@@ -174,17 +188,6 @@ inline integers_matrix<> as_integers_matrix_template(const Mat<T>& A) {
 inline integers_matrix<> as_integers_matrix(const umat& A) {
   return as_integers_matrix_template(A);
 }
-
-// Always provide for Mat<int>
-inline integers_matrix<> as_integers_matrix(const Mat<int>& A) {
-  return Mat_to_dblint_matrix_<int, integers_matrix<>>(A);
-}
-// On 64-bit word systems, imat is Mat<long>
-#if defined(ARMA_64BIT_WORD)
-inline integers_matrix<> as_integers_matrix(const Mat<long>& A) {
-  return Mat_to_dblint_matrix_<long, integers_matrix<>>(A);
-}
-#endif
 
 // Complex
 

@@ -131,13 +131,6 @@ inline integers_matrix<> as_integers_matrix(const SpMat<int>& A) {
   return SpMat_to_dblint_matrix_<int, integers_matrix<>>(A);
 }
 
-// On 64-bit word systems, SpMat<sword> is SpMat<long>
-#if defined(ARMA_64BIT_WORD)
-inline integers_matrix<> as_integers_matrix(const SpMat<long>& A) {
-  return SpMat_to_dblint_matrix_<long, integers_matrix<>>(A);
-}
-#endif
-
 inline doubles_matrix<> as_doubles_matrix(const SpMat<float>& A) {
   SpMat<double> B = arma::conv_to<SpMat<double>>::from(A);
   return as_doubles_matrix(B);
