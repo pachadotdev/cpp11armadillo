@@ -131,16 +131,10 @@ inline integers as_integers(const uvec& x) {
   return y;
 }
 
-// Handle ivec carefully - define if it's a different type
-#if !defined(ARMA_32BIT_WORD)
-inline integers as_integers(const ivec& x) {
-  const size_t n = x.n_elem;
-
-  writable::integers y(n);
-
-  std::copy(x.begin(), x.end(), y.begin());
-
-  return y;
+// On 64-bit word systems, ivec is Col<long>
+#if defined(ARMA_64BIT_WORD)
+inline integers as_integers(const Col<long>& x) {
+  return Col_to_dblint_<long, integers>(x);
 }
 #endif
 

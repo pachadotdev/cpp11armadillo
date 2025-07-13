@@ -175,10 +175,14 @@ inline integers_matrix<> as_integers_matrix(const umat& A) {
   return as_integers_matrix_template(A);
 }
 
-// Handle imat carefully - define if it's a different type
-#if !defined(ARMA_32BIT_WORD)
-inline integers_matrix<> as_integers_matrix(const imat& A) {
-  return as_integers_matrix_template(A);
+// Always provide for Mat<int>
+inline integers_matrix<> as_integers_matrix(const Mat<int>& A) {
+  return Mat_to_dblint_matrix_<int, integers_matrix<>>(A);
+}
+// On 64-bit word systems, imat is Mat<long>
+#if defined(ARMA_64BIT_WORD)
+inline integers_matrix<> as_integers_matrix(const Mat<long>& A) {
+  return Mat_to_dblint_matrix_<long, integers_matrix<>>(A);
 }
 #endif
 
