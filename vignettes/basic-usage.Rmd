@@ -32,9 +32,17 @@ using namespace arma;
 using namespace cpp11;
 
 [[cpp11::register]] doubles_matrix<> ols_mat_(const doubles_matrix<>& x) {
-  Mat<double> Y = as_Mat(x); // convert from R to C++
-  Mat<double> Yinv = inv(Y); // Y^(-1)
-  return as_doubles_matrix(Yinv); // convert from C++ to R
+  // Convert from R to C++
+  Mat<double> Y = as_Mat(y);  // Col<double> Y = as_Col(y); also works
+  Mat<double> X = as_Mat(x);
+
+  // Armadillo operations
+  Mat<double> XtX = X.t() * X;             // X'X
+  Mat<double> XtX_inv = inv(XtX);          // (X'X)^(-1)
+  Mat<double> beta = XtX_inv * X.t() * Y;  // (X'X)^(-1)(X'Y)
+
+  // Convert from C++ to R
+  return as_doubles_matrix(beta);
 }
 ```
 

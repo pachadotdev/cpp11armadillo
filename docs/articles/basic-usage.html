@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cpp11armadillo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,10 +116,18 @@ Armadillo and sending data from R to C++ and viceversa using
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> cpp11<span class="op">;</span></span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="op">[[</span><span class="at">cpp11</span><span class="op">::</span><span class="at">register</span><span class="op">]]</span> doubles_matrix<span class="op">&lt;&gt;</span> <span class="va">ols_mat_</span><span class="op">(</span><span class="at">const</span> doubles_matrix<span class="op">&lt;&gt;&amp;</span> x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> Y <span class="op">=</span> as_Mat<span class="op">(</span>x<span class="op">);</span> <span class="co">// convert from R to C++</span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> Yinv <span class="op">=</span> inv<span class="op">(</span>Y<span class="op">);</span> <span class="co">// Y^(-1)</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>Yinv<span class="op">);</span> <span class="co">// convert from C++ to R</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="co">// Convert from R to C++</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> Y <span class="op">=</span> as_Mat<span class="op">(</span>y<span class="op">);</span>  <span class="co">// Col&lt;double&gt; Y = as_Col(y); also works</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> X <span class="op">=</span> as_Mat<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="co">// Armadillo operations</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> XtX <span class="op">=</span> X<span class="op">.</span>t<span class="op">()</span> <span class="op">*</span> X<span class="op">;</span>             <span class="co">// X'X</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> XtX_inv <span class="op">=</span> inv<span class="op">(</span>XtX<span class="op">);</span>          <span class="co">// (X'X)^(-1)</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  Mat<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> beta <span class="op">=</span> XtX_inv <span class="op">*</span> X<span class="op">.</span>t<span class="op">()</span> <span class="op">*</span> Y<span class="op">;</span>  <span class="co">// (X'X)^(-1)(X'Y)</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>  <span class="co">// Convert from C++ to R</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>  <span class="cf">return</span> as_doubles_matrix<span class="op">(</span>beta<span class="op">);</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>The previous code includes the <code>cpp11</code> and
 <code>cpp11armadillo</code> libraries (cpp11armadillo calls Armadillo)
 to allow interfacing C++ with R. It also loads the corresponding
