@@ -1,0 +1,68 @@
+---
+title: "Using SEXP and cpp conversions"
+output: rmarkdown::html_vignette
+bibliography: "references.bib"
+vignette: >
+  %\VignetteIndexEntry{Using SEXP and cpp conversions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+`as_sexp()` allows to pass objects from Armadillo to R while `as_cpp<>` allows to
+pass objects from R to Armadillo. `as_sexp()` allows to convert `mat` to `doubles_matrix<>`
+and `imat` to `integers_matrix<>`. `as_cpp<>` allows to convert `doubles_matrix<>` to `mat`
+and `integers_matrix<>` to `mat`.
+
+The following functions illustrate this:
+
+```cpp
+[[cpp11::register]] SEXP implicit_conversion_double(SEXP x) {
+  mat y = as_cpp<mat>(x);
+  return as_sexp(y);
+}
+
+[[cpp11::register]] SEXP implicit_conversion_int(SEXP x) {
+  imat y = as_cpp<imat>(x);
+  return as_sexp(y);
+}
+```
+
+Both of these would work if we pass a matrix $M$ defined in any of the following ways:
+
+```r
+M <- matrix(1:4, nrow = 4, ncol = 4)
+storage.mode(M)
+# > [1] "integer"
+
+implicit_conversion_double(M)
+
+storage.mode(M) <- "double"
+implicit_conversion_int(M)
+```
+
+It is similar for other Armadillo types, such as `fmat`, `imat` and `umat` with both
+`as_sexp()` and `as_cpp<>`.
+
+Besides `SEXP` conversions, `cpp11armadillo` enforces strict types when using
+`doubles_matrix<>` and `integers_matrix<>`. For example, the following
+function would only work if we pass a matrix of doubles to it:
+
+```cpp
+[[cpp11::register]] doubles_matrix<> strict_conversion_double(doubles_matrix<> x) {
+  mat y = as_mat(x);
+  return as_doubles_matrix(y);
+}
+```
+
+Otherwise, when passing a matrix of integers to it, we would get an error:
+
+```r
+Error: Invalid input type, expected 'double' actual 'integer'
+```

@@ -1776,6 +1776,34 @@ extern "C" SEXP _cpp11armadillotest_test_dgCMatrix_to_SpMat(SEXP x) {
     return cpp11::as_sexp(test_dgCMatrix_to_SpMat(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
   END_CPP11
 }
+// 11_sexp_conversion.cpp
+SEXP implicit_conversion_double(SEXP x);
+extern "C" SEXP _cpp11armadillotest_implicit_conversion_double(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(implicit_conversion_double(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
+  END_CPP11
+}
+// 11_sexp_conversion.cpp
+SEXP implicit_conversion_float(SEXP x);
+extern "C" SEXP _cpp11armadillotest_implicit_conversion_float(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(implicit_conversion_float(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
+  END_CPP11
+}
+// 11_sexp_conversion.cpp
+SEXP implicit_conversion_int(SEXP x);
+extern "C" SEXP _cpp11armadillotest_implicit_conversion_int(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(implicit_conversion_int(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
+  END_CPP11
+}
+// 11_sexp_conversion.cpp
+SEXP implicit_conversion_uint(SEXP x);
+extern "C" SEXP _cpp11armadillotest_implicit_conversion_uint(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(implicit_conversion_uint(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
@@ -1862,6 +1890,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cpp11armadillotest_imag1_",                            (DL_FUNC) &_cpp11armadillotest_imag1_,                            1},
     {"_cpp11armadillotest_imbue1_",                           (DL_FUNC) &_cpp11armadillotest_imbue1_,                           1},
     {"_cpp11armadillotest_imbue2_",                           (DL_FUNC) &_cpp11armadillotest_imbue2_,                           1},
+    {"_cpp11armadillotest_implicit_conversion_double",        (DL_FUNC) &_cpp11armadillotest_implicit_conversion_double,        1},
+    {"_cpp11armadillotest_implicit_conversion_float",         (DL_FUNC) &_cpp11armadillotest_implicit_conversion_float,         1},
+    {"_cpp11armadillotest_implicit_conversion_int",           (DL_FUNC) &_cpp11armadillotest_implicit_conversion_int,           1},
+    {"_cpp11armadillotest_implicit_conversion_uint",          (DL_FUNC) &_cpp11armadillotest_implicit_conversion_uint,          1},
     {"_cpp11armadillotest_in_range1_",                        (DL_FUNC) &_cpp11armadillotest_in_range1_,                        1},
     {"_cpp11armadillotest_ind2sub1_",                         (DL_FUNC) &_cpp11armadillotest_ind2sub1_,                         1},
     {"_cpp11armadillotest_index_maxmin1_",                    (DL_FUNC) &_cpp11armadillotest_index_maxmin1_,                    1},

@@ -13,6 +13,27 @@
 #include <wrappers/sparse_matrices.hpp>
 #include <wrappers/vectors.hpp>
 
+using mat = arma::mat;
+using fmat = arma::fmat;
+using imat = arma::imat;
+using umat = arma::umat;
+using vec = arma::vec;
+using ivec = arma::ivec;
+using uvec = arma::uvec;
+using fvec = arma::fvec;
+using rowvec = arma::rowvec;
+using irowvec = arma::irowvec;
+using urowvec = arma::urowvec;
+using frowvec = arma::frowvec;
+using cube = arma::cube;
+using icube = arma::icube;
+using ucube = arma::ucube;
+using fcube = arma::fcube;
+using cx_mat = arma::cx_mat;
+using cx_vec = arma::cx_vec;
+using cx_rowvec = arma::cx_rowvec;
+using cx_cube = arma::cx_cube;
+
 ////////////////////////////////////////////////////////////////////////////////
 
 // Custom RNG class to ensure synchronization with R's RNG state
@@ -117,3 +138,203 @@ class arma_rng {
     }
   };
 };
+
+////////////////////////////////////////////////////////////////////////////////
+
+namespace cpp11 {
+
+// Specializations for as_cpp - converting from R objects to Armadillo types
+
+template <>
+inline arma::mat as_cpp<arma::mat>(SEXP x) {
+  // Handle both integer and double matrices
+  if (TYPEOF(x) == INTSXP) {
+    cpp11::integers_matrix<> temp = cpp11::as_cpp<cpp11::integers_matrix<>>(x);
+    arma::Mat<int> imat = ::as_Mat(temp);
+    return arma::conv_to<arma::mat>::from(imat);
+  } else {
+    return ::as_Mat(cpp11::as_cpp<cpp11::doubles_matrix<>>(x));
+  }
+}
+
+template <>
+inline arma::fmat as_cpp<arma::fmat>(SEXP x) {
+  // Handle both integer and double matrices
+  if (TYPEOF(x) == INTSXP) {
+    cpp11::integers_matrix<> temp = cpp11::as_cpp<cpp11::integers_matrix<>>(x);
+    arma::Mat<int> imat = ::as_Mat(temp);
+    return arma::conv_to<arma::fmat>::from(imat);
+  } else {
+    return ::as_fmat(cpp11::as_cpp<cpp11::doubles_matrix<>>(x));
+  }
+}
+
+template <>
+inline arma::imat as_cpp<arma::imat>(SEXP x) {
+  // Handle both integer and double matrices  
+  if (TYPEOF(x) == REALSXP) {
+    cpp11::doubles_matrix<> temp = cpp11::as_cpp<cpp11::doubles_matrix<>>(x);
+    arma::mat dmat = ::as_Mat(temp);
+    return arma::conv_to<arma::imat>::from(dmat);
+  } else {
+    return ::as_imat(cpp11::as_cpp<cpp11::integers_matrix<>>(x));
+  }
+}
+
+template <>
+inline arma::umat as_cpp<arma::umat>(SEXP x) {
+  // Handle both integer and double matrices
+  if (TYPEOF(x) == REALSXP) {
+    cpp11::doubles_matrix<> temp = cpp11::as_cpp<cpp11::doubles_matrix<>>(x);
+    arma::mat dmat = ::as_Mat(temp);
+    return arma::conv_to<arma::umat>::from(dmat);
+  } else {
+    return ::as_umat(cpp11::as_cpp<cpp11::integers_matrix<>>(x));
+  }
+}
+
+template <>
+inline arma::vec as_cpp<arma::vec>(SEXP x) {
+  // Handle both integer and double vectors
+  if (TYPEOF(x) == INTSXP) {
+    cpp11::integers temp = cpp11::as_cpp<cpp11::integers>(x);
+    arma::Col<int> icol = ::as_Col(temp);
+    return arma::conv_to<arma::vec>::from(icol);
+  } else {
+    return ::as_Col(cpp11::as_cpp<cpp11::doubles>(x));
+  }
+}
+
+template <>
+inline arma::ivec as_cpp<arma::ivec>(SEXP x) {
+  // Handle both integer and double vectors
+  if (TYPEOF(x) == REALSXP) {
+    cpp11::doubles temp = cpp11::as_cpp<cpp11::doubles>(x);
+    arma::vec dvec = ::as_Col(temp);
+    return arma::conv_to<arma::ivec>::from(dvec);
+  } else {
+    cpp11::integers temp = cpp11::as_cpp<cpp11::integers>(x);
+    arma::Col<int> temp_col = ::as_Col(temp);
+    return arma::conv_to<arma::ivec>::from(temp_col);
+  }
+}
+
+template <>
+inline arma::uvec as_cpp<arma::uvec>(SEXP x) {
+  // Handle both integer and double vectors
+  if (TYPEOF(x) == REALSXP) {
+    cpp11::doubles temp = cpp11::as_cpp<cpp11::doubles>(x);
+    arma::vec dvec = ::as_Col(temp);
+    return arma::conv_to<arma::uvec>::from(dvec);
+  } else {
+    arma::ivec temp = as_cpp<arma::ivec>(x);
+    return arma::conv_to<arma::uvec>::from(temp);
+  }
+}
+
+template <>
+inline arma::fvec as_cpp<arma::fvec>(SEXP x) {
+  // Handle both integer and double vectors
+  if (TYPEOF(x) == INTSXP) {
+    cpp11::integers temp = cpp11::as_cpp<cpp11::integers>(x);
+    arma::Col<int> icol = ::as_Col(temp);
+    return arma::conv_to<arma::fvec>::from(icol);
+  } else {
+    arma::vec temp = as_cpp<arma::vec>(x);
+    return arma::conv_to<arma::fvec>::from(temp);
+  }
+}
+
+template <>
+inline arma::rowvec as_cpp<arma::rowvec>(SEXP x) {
+  arma::vec temp = as_cpp<arma::vec>(x);
+  return temp.t();
+}
+
+template <>
+inline arma::irowvec as_cpp<arma::irowvec>(SEXP x) {
+  arma::ivec temp = as_cpp<arma::ivec>(x);
+  return temp.t();
+}
+
+template <>
+inline arma::urowvec as_cpp<arma::urowvec>(SEXP x) {
+  arma::uvec temp = as_cpp<arma::uvec>(x);
+  return temp.t();
+}
+
+template <>
+inline arma::frowvec as_cpp<arma::frowvec>(SEXP x) {
+  arma::fvec temp = as_cpp<arma::fvec>(x);
+  return temp.t();
+}
+
+// Specializations for as_sexp - converting from Armadillo types to R objects
+
+template <>
+inline SEXP as_sexp(const arma::mat& x) {
+  return ::as_doubles_matrix(x);
+}
+
+template <>
+inline SEXP as_sexp(const arma::fmat& x) {
+  arma::mat temp = arma::conv_to<arma::mat>::from(x);
+  return ::as_doubles_matrix(temp);
+}
+
+template <>
+inline SEXP as_sexp(const arma::imat& x) {
+  return ::as_integers_matrix(x);
+}
+
+template <>
+inline SEXP as_sexp(const arma::umat& x) {
+  arma::Mat<int> temp = arma::conv_to<arma::Mat<int>>::from(x);
+  return ::as_integers_matrix(temp);
+}
+
+template <>
+inline SEXP as_sexp(const arma::vec& x) {
+  return ::as_doubles_matrix(x);
+}
+
+template <>
+inline SEXP as_sexp(const arma::ivec& x) {
+  return ::as_integers_matrix(x);
+}
+
+template <>
+inline SEXP as_sexp(const arma::uvec& x) {
+  arma::Col<int> temp = arma::conv_to<arma::Col<int>>::from(x);
+  return ::as_integers_matrix(temp);
+}
+
+template <>
+inline SEXP as_sexp(const arma::fvec& x) {
+  arma::vec temp = arma::conv_to<arma::vec>::from(x);
+  return ::as_doubles_matrix(temp);
+}
+
+template <>
+inline SEXP as_sexp(const arma::rowvec& x) {
+  return ::as_doubles_matrix(x);
+}
+
+template <>
+inline SEXP as_sexp(const arma::irowvec& x) {
+  return ::as_integers_matrix(x);
+}
+
+template <>
+inline SEXP as_sexp(const arma::urowvec& x) {
+  arma::Row<int> temp = arma::conv_to<arma::Row<int>>::from(x);
+  return ::as_integers_matrix(temp);
+}
+
+template <>
+inline SEXP as_sexp(const arma::frowvec& x) {
+  arma::rowvec temp = arma::conv_to<arma::rowvec>::from(x);
+  return ::as_doubles_matrix(temp);
+}
+
+} // namespace cpp11

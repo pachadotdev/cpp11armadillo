@@ -1,3 +1,10 @@
+# cpp11armadillo 0.5.5
+
+* Provides less strict wrappers for `SEXP` (R) to Armadillo data types and vice
+  versa. This provides generic conversions using cpp11's `as_sexp()` with exchangeable
+  `doubles_matrix<>` and `integers_matrix<>` types (similar for vectors), while `*_matrix<>`
+  enforce strict types.
+
 # cpp11armadillo 0.5.4
 
 * Conditionally declares wrappers for `ivec`/`uvec` on 32-bit systems.

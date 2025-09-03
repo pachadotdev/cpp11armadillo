@@ -1011,3 +1011,19 @@ poisson_ <- function(x, y) {
 test_dgCMatrix_to_SpMat <- function(x) {
   .Call(`_cpp11armadillotest_test_dgCMatrix_to_SpMat`, x)
 }
+
+implicit_conversion_double <- function(x) {
+  .Call(`_cpp11armadillotest_implicit_conversion_double`, x)
+}
+
+implicit_conversion_float <- function(x) {
+  .Call(`_cpp11armadillotest_implicit_conversion_float`, x)
+}
+
+implicit_conversion_int <- function(x) {
+  .Call(`_cpp11armadillotest_implicit_conversion_int`, x)
+}
+
+implicit_conversion_uint <- function(x) {
+  .Call(`_cpp11armadillotest_implicit_conversion_uint`, x)
+}
